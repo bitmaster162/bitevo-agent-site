@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="BitEvo — Consulting & Digital Entity Setup">
+	<section class="consulting-section">
+		<div class="container">
+			<div class="consulting-header">
+				<div class="kicker">Premium Services</div>
+				<h1 class="display">Services & Offerings</h1>
+				<p class="copy">
+					Специализированные консалтинговые услуги и разработка цифровых сущностей (Digital Entities) для автоматизации бизнес-процессов.
+				</p>
+			</div>
+
+			<!-- Services Grid -->
+			<div class="services-grid">
+				<!-- B2B AI Consulting -->
+				<div class="service-card">
+					<div class="service-meta">Tier 1 · B2B</div>
+					<h2 class="display-sm">B2B AI Consulting</h2>
+					<p class="service-desc">
+						Быстрый аудит и консалтинговые спринты для интеграции искусственного интеллекта в рабочие процессы вашей компании.
+					</p>
+					<ul class="bullets">
+						<li><strong>Аудит воркфлоу</strong> — поиск узких мест и рутинных операций.</li>
+						<li><strong>Триаж автоматизации</strong> — выбор оптимального стека и инструментов.</li>
+						<li><strong>Консалтинговый спринт</strong> — быстрая интеграция ИИ под ключ за 1-2 недели.</li>
+					</ul>
+					<div class="price">от $1,500 <span class="period">/ спринт</span></div>
+					<a href="/intake" class="button">Submit Request</a>
+				</div>
+
+				<!-- Digital Entity Setup -->
+				<div class="service-card highlighted">
+					<div class="service-meta">Premium · Operator Path</div>
+					<h2 class="display-sm">Digital Entity Setup (DES)</h2>
+					<p class="service-desc">
+						Проектирование и развертывание персональных цифровых клонов (Digital Twins) и автономных AI-агентов на вашей инфраструктуре.
+					</p>
+					<ul class="bullets">
+						<li><strong>Архитектура памяти (MemIR)</strong> — база знаний на основе ваших материалов.</li>
+						<li><strong>Интеграция голоса (Callable)</strong> — настройка голосового ассистента.</li>
+						<li><strong>Durable Orchestrator</strong> — развертывание в изолированном контуре.</li>
+					</ul>
+					<div class="price">от $5,000 <span class="period">/ проект</span></div>
+					<a href="/intake" class="button highlight-btn">Initialize Setup</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.consulting-section {
+		padding-block: 40px 60px;
+	}
+	.consulting-header {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+	.kicker {
+		color: var(--gold);
+		font-size: 0.72rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		margin-bottom: 6px;
+	}
+	.display {
+		font-family: 'Playfair Display', serif;
+		font-size: 2.4rem;
+		margin: 0;
+	}
+	.copy {
+		font-family: 'Lora', serif;
+		color: var(--muted);
+		max-width: 600px;
+		margin: 12px auto 0;
+		font-size: 1rem;
+	}
+
+	/* Grid */
+	.services-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 24px;
+		max-width: 1000px;
+		margin-inline: auto;
+	}
+	@media (max-width: 768px) {
+		.services-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.service-card {
+		background: var(--paper-soft);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 30px;
+		display: flex;
+		flex-direction: column;
+		transition: all 0.2s ease;
+	}
+	.service-card.highlighted {
+		border-color: rgba(189,179,146,0.3);
+		background: linear-gradient(180deg, rgba(189,179,146,0.04), rgba(7, 10, 12, 0));
+		box-shadow: 0 0 20px rgba(189,179,146,0.03);
+	}
+	.service-card:hover {
+		transform: translateY(-2px);
+		border-color: var(--blue);
+	}
+	.service-card.highlighted:hover {
+		border-color: var(--gold);
+	}
+
+	.service-meta {
+		font-size: 0.68rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--muted);
+		margin-bottom: 12px;
+	}
+	.service-card.highlighted .service-meta {
+		color: var(--gold);
+	}
+
+	.display-sm {
+		font-family: 'Playfair Display', serif;
+		font-size: 1.4rem;
+		margin: 0 0 12px;
+	}
+
+	.service-desc {
+		color: var(--muted);
+		font-size: 0.88rem;
+		margin: 0 0 20px;
+		line-height: 1.5;
+	}
+
+	.bullets {
+		padding-left: 18px;
+		margin: 0 0 30px;
+		font-size: 0.85rem;
+		color: var(--muted);
+	}
+	.bullets li {
+		margin-bottom: 8px;
+	}
+	.bullets strong {
+		color: var(--ink);
+	}
+
+	.price {
+		font-size: 1.6rem;
+		font-weight: 900;
+		color: var(--ink);
+		margin-top: auto;
+		margin-bottom: 20px;
+		border-top: 1px solid var(--line);
+		padding-top: 16px;
+	}
+	.period {
+		font-size: 0.8rem;
+		color: var(--muted);
+		font-weight: 500;
+	}
+
+	.button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 40px;
+		font-size: 0.8rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		background: transparent;
+		border: 1px solid var(--line-strong);
+		border-radius: var(--radius);
+		transition: all 0.2s ease;
+	}
+	.button:hover {
+		border-color: var(--blue);
+		color: #fff;
+		background: rgba(120, 175, 208, 0.05);
+	}
+
+	.highlight-btn {
+		background: linear-gradient(135deg, rgba(189,179,146,0.15), rgba(7, 10, 12, 0.1)) !important;
+		border-color: rgba(189,179,146,0.4) !important;
+		color: var(--gold) !important;
+	}
+	.highlight-btn:hover {
+		border-color: var(--gold) !important;
+		background: linear-gradient(135deg, rgba(189,179,146,0.25), rgba(7, 10, 12, 0.15)) !important;
+		color: #fff !important;
+		transform: translateY(-1px);
+	}
+</style>

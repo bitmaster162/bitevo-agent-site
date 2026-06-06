@@ -1,0 +1,404 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="BitEvo — Get Started / Intake">
+	<section class="intake-section">
+		<div class="container">
+			<div class="intake-header">
+				<div class="kicker">Intake Form</div>
+				<h1 class="display">Get Started</h1>
+				<p class="copy">
+					Заполните опросник ниже, скопируйте сгенерированный бриф и отправьте его нашему агенту-координатору в Telegram.
+				</p>
+			</div>
+
+			<!-- Form & Preview Grid -->
+			<div class="intake-grid">
+				<!-- Left Card: Form -->
+				<div class="card form-card">
+					<h2>Questionnaire</h2>
+					<form id="intake-form" class="space-y-4">
+						<div class="form-row">
+							<label>
+								<span>Full Name / Company</span>
+								<input type="text" id="name" placeholder="John Doe" required />
+							</label>
+							<label>
+								<span>Telegram Handle / Contact</span>
+								<input type="text" id="contact" placeholder="@johndoe" required />
+							</label>
+						</div>
+
+						<label>
+							<span>Your Role / Title</span>
+							<input type="text" id="role" placeholder="CTO / Founder" required />
+						</label>
+
+						<label>
+							<span>Current Workflow & Processes</span>
+							<textarea id="currentWork" placeholder="Describe what tasks you or your team repeat daily..." rows="3" required></textarea>
+						</label>
+
+						<label>
+							<span>Tools & Stack Used</span>
+							<textarea id="tools" placeholder="Python, Node, PostgreSQL, Salesforce, etc..." rows="2" required></textarea>
+						</label>
+
+						<label>
+							<span>Main Bottleneck / Problem</span>
+							<textarea id="bottleneck" placeholder="What is currently slowing you down or causing failures?" rows="2" required></textarea>
+						</label>
+
+						<div class="form-row-three">
+							<label>
+								<span>Desired Path</span>
+								<select id="desiredPath" required>
+									<option value="">-</option>
+									<option value="B2B AI Consulting">B2B AI Consulting</option>
+									<option value="Digital Entity Setup">Digital Entity Setup (DES)</option>
+									<option value="General Advisory">General Advisory</option>
+								</select>
+							</label>
+							<label>
+								<span>Estimated Budget</span>
+								<select id="budget" required>
+									<option value="">-</option>
+									<option value="<$1,500">&lt; $1,500</option>
+									<option value="$1,500 - $5,000">$1,500 - $5,000</option>
+									<option value="$5,000 - $15,000">$5,000 - $15,000</option>
+									<option value=">$15,000">&gt; $15,000</option>
+								</select>
+							</label>
+							<label>
+								<span>Timeline</span>
+								<select id="timeline" required>
+									<option value="">-</option>
+									<option value="Immediate (< 1 week)">Immediate (&lt; 1 week)</option>
+									<option value="1 - 4 weeks">1 - 4 weeks</option>
+									<option value="1 - 3 months">1 - 3 months</option>
+								</select>
+							</label>
+						</div>
+
+						<div class="form-actions">
+							<button type="submit" class="btn-submit">Generate Brief</button>
+							<button type="reset" id="btn-reset" class="btn-reset">Reset</button>
+						</div>
+					</form>
+				</div>
+
+				<!-- Right Card: Preview & Action -->
+				<div class="card preview-card">
+					<h2>Your Project Brief</h2>
+					<p class="preview-desc">Бриф сформируется автоматически после отправки формы. Скопируйте его и отправьте в Telegram.</p>
+					<div class="brief-box">
+						<textarea id="brief-output" readonly placeholder="Ваш бриф появится здесь..."></textarea>
+					</div>
+					<div class="preview-actions">
+						<button id="btn-copy" class="btn-copy" disabled>Copy to Clipboard</button>
+						<a href="https://t.me/elpaspace" target="_blank" rel="noopener" class="btn-telegram">Send to Coordinator (Telegram)</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	const form = document.getElementById('intake-form') as HTMLFormElement;
+	const briefOutput = document.getElementById('brief-output') as HTMLTextAreaElement;
+	const btnCopy = document.getElementById('btn-copy') as HTMLButtonElement;
+	const btnReset = document.getElementById('btn-reset') as HTMLButtonElement;
+
+	form.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const name = (document.getElementById('name') as HTMLInputElement).value;
+		const contact = (document.getElementById('contact') as HTMLInputElement).value;
+		const role = (document.getElementById('role') as HTMLInputElement).value;
+		const currentWork = (document.getElementById('currentWork') as HTMLTextAreaElement).value;
+		const tools = (document.getElementById('tools') as HTMLTextAreaElement).value;
+		const bottleneck = (document.getElementById('bottleneck') as HTMLTextAreaElement).value;
+		const desiredPath = (document.getElementById('desiredPath') as HTMLSelectElement).value;
+		const budget = (document.getElementById('budget') as HTMLSelectElement).value;
+		const timeline = (document.getElementById('timeline') as HTMLSelectElement).value;
+
+		const brief = [
+			`=== BITEVO INTAKE BRIEF ===`,
+			`Name/Company: ${name || '-'}`,
+			`Contact: ${contact || '-'}`,
+			`Role: ${role || '-'}`,
+			`Current Work: ${currentWork || '-'}`,
+			`Tools/Stack: ${tools || '-'}`,
+			`Bottleneck: ${bottleneck || '-'}`,
+			`Desired Path: ${desiredPath || '-'}`,
+			`Budget Estimate: ${budget || '-'}`,
+			`Timeline: ${timeline || '-'}`,
+			`===========================`
+		].join('\n');
+
+		briefOutput.value = brief;
+		btnCopy.disabled = false;
+	});
+
+	btnCopy.addEventListener('click', async () => {
+		if (!briefOutput.value) return;
+		try {
+			await navigator.clipboard.writeText(briefOutput.value);
+			const originalText = btnCopy.textContent;
+			btnCopy.textContent = 'Copied!';
+			btnCopy.classList.add('copied');
+			setTimeout(() => {
+				btnCopy.textContent = originalText;
+				btnCopy.classList.remove('copied');
+			}, 1800);
+		} catch (err) {
+			console.error('Failed to copy text: ', err);
+		}
+	});
+
+	btnReset.addEventListener('click', () => {
+		briefOutput.value = '';
+		btnCopy.disabled = true;
+	});
+</script>
+
+<style>
+	.intake-section {
+		padding-block: 40px 60px;
+	}
+	.intake-header {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+	.kicker {
+		color: var(--gold);
+		font-size: 0.72rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		margin-bottom: 6px;
+	}
+	.display {
+		font-family: 'Playfair Display', serif;
+		font-size: 2.4rem;
+		margin: 0;
+	}
+	.copy {
+		font-family: 'Lora', serif;
+		color: var(--muted);
+		max-width: 600px;
+		margin: 12px auto 0;
+		font-size: 1rem;
+	}
+
+	/* Layout Grid */
+	.intake-grid {
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: 24px;
+		max-width: 1100px;
+		margin-inline: auto;
+	}
+	@media (max-width: 900px) {
+		.intake-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.card {
+		background: var(--paper-soft);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 30px;
+	}
+
+	.card h2 {
+		font-family: 'Playfair Display', serif;
+		font-size: 1.3rem;
+		margin: 0 0 20px;
+		color: var(--gold);
+	}
+
+	/* Form Elements */
+	form label {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		font-size: 0.8rem;
+		color: var(--muted);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 14px;
+	}
+
+	form label span {
+		color: var(--muted);
+	}
+
+	form input, form textarea, form select {
+		width: 100%;
+		background: rgba(255,255,255,0.03);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 10px 14px;
+		color: var(--ink);
+		font-family: inherit;
+		font-size: 0.88rem;
+		outline: none;
+		transition: border-color 0.2s ease;
+	}
+
+	form input:focus, form textarea:focus, form select:focus {
+		border-color: var(--gold);
+	}
+
+	.form-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+	.form-row-three {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 12px;
+	}
+	@media (max-width: 500px) {
+		.form-row, .form-row-three {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.form-actions {
+		display: flex;
+		gap: 12px;
+		margin-top: 20px;
+	}
+
+	.btn-submit {
+		background: linear-gradient(135deg, rgba(189,179,146,0.18), rgba(7,10,12,0.1));
+		border: 1px solid rgba(189,179,146,0.4);
+		color: var(--gold);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 10px 20px;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 0.8rem;
+		transition: all 0.2s ease;
+	}
+	.btn-submit:hover {
+		border-color: var(--gold);
+		background: linear-gradient(135deg, rgba(189,179,146,0.28), rgba(7,10,12,0.15));
+		transform: translateY(-1px);
+	}
+
+	.btn-reset {
+		background: transparent;
+		border: 1px solid var(--line);
+		color: var(--muted);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 10px 20px;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 0.8rem;
+		transition: border-color 0.2s ease;
+	}
+	.btn-reset:hover {
+		border-color: var(--ink);
+		color: var(--ink);
+	}
+
+	/* Preview Card */
+	.preview-card {
+		border-color: rgba(189,179,146,0.2);
+		background: linear-gradient(180deg, rgba(189,179,146,0.02), rgba(7,10,12,0));
+		display: flex;
+		flex-direction: column;
+	}
+	.preview-desc {
+		color: var(--muted);
+		font-size: 0.82rem;
+		margin: 0 0 16px;
+		line-height: 1.5;
+	}
+	.brief-box {
+		flex-grow: 1;
+		background: #090d0f;
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 14px;
+		margin-bottom: 20px;
+	}
+	.brief-box textarea {
+		width: 100%;
+		height: 100%;
+		min-height: 250px;
+		background: transparent;
+		border: none;
+		color: var(--ink);
+		font-family: monospace;
+		font-size: 0.82rem;
+		resize: none;
+		outline: none;
+	}
+
+	.preview-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.btn-copy {
+		background: var(--ink);
+		border: 1px solid var(--ink);
+		color: var(--paper);
+		font-weight: 850;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 10px;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 0.8rem;
+		transition: all 0.2s ease;
+	}
+	.btn-copy:hover:not(:disabled) {
+		background: #fff;
+		border-color: #fff;
+		box-shadow: 0 4px 12px rgba(255,255,255,0.15);
+	}
+	.btn-copy:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+	.btn-copy.copied {
+		background: var(--green) !important;
+		border-color: var(--green) !important;
+		color: var(--paper) !important;
+	}
+
+	.btn-telegram {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, rgba(120, 175, 208, 0.15), rgba(63, 86, 96, 0.10));
+		border: 1px solid var(--line-strong);
+		color: var(--ink);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 10px;
+		border-radius: 6px;
+		font-size: 0.78rem;
+		transition: all 0.2s ease;
+	}
+	.btn-telegram:hover {
+		border-color: var(--blue);
+		background: linear-gradient(135deg, rgba(120, 175, 208, 0.25), rgba(63, 86, 96, 0.15));
+		transform: translateY(-1px);
+	}
+</style>

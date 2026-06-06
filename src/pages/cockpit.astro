@@ -1,0 +1,361 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="BitEvo Cockpit — Active Telemetry">
+	<section class="cockpit-section">
+		<div class="container">
+			<div class="cockpit-header">
+				<div class="kicker">System Terminal</div>
+				<h1 class="display">BitEvo Agent Cockpit</h1>
+				<p class="meta">Live telemetry of OODA loops and server states.</p>
+			</div>
+
+			<!-- Dashboard Grid -->
+			<div class="dashboard-grid">
+				<!-- Left Pane: OODA & Bots -->
+				<div class="pane left-pane">
+					<div class="panel">
+						<h2>OODA Loop Coordinator</h2>
+						<div class="ooda-stages">
+							<div class="stage active">
+								<div class="stage-num">01</div>
+								<div class="stage-name">Observe</div>
+								<p>Поллинг RPC нод, маркет-цен и API бирж (Jito, OKX, BingX).</p>
+							</div>
+							<div class="stage active">
+								<div class="stage-num">02</div>
+								<div class="stage-name">Orient</div>
+								<p>Вычисление confluences, тренд-фильтров и разметки режимов.</p>
+							</div>
+							<div class="stage pending">
+								<div class="stage-num">03</div>
+								<div class="stage-name">Decide</div>
+								<p>Генерация предложений (proposals) и прохождение Anti-Self вето.</p>
+							</div>
+							<div class="stage pending">
+								<div class="stage-num">04</div>
+								<div class="stage-name">Act</div>
+								<p>Отправка транзакции или бандла, логирование в контракт-журнал.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel">
+						<h2>Active Service Bots</h2>
+						<div class="bots-list">
+							<div class="bot-row">
+								<span class="bot-status up">●</span>
+								<span class="bot-id">sovereign-1h-btc</span>
+								<span class="bot-server">win185</span>
+								<span class="bot-type">Trading</span>
+							</div>
+							<div class="bot-row">
+								<span class="bot-status up">●</span>
+								<span class="bot-id">sovereign-15m-scalp</span>
+								<span class="bot-server">win185</span>
+								<span class="bot-type">Scalp</span>
+							</div>
+							<div class="bot-row">
+								<span class="bot-status up">●</span>
+								<span class="bot-id">arena-bots</span>
+								<span class="bot-server">arena-vps</span>
+								<span class="bot-type">Swarm (93/152)</span>
+							</div>
+							<div class="bot-row sunsetting">
+								<span class="bot-status sunset">●</span>
+								<span class="bot-id">okx-nft-counterbidder</span>
+								<span class="bot-server">fin35</span>
+								<span class="bot-type">NFT [SUNSET]</span>
+							</div>
+							<div class="bot-row sunsetting">
+								<span class="bot-status sunset">●</span>
+								<span class="bot-id">binance-nft-new8</span>
+								<span class="bot-server">win185</span>
+								<span class="bot-type">NFT [SUNSET]</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Pane: Servers & Logs -->
+				<div class="pane right-pane">
+					<div class="panel">
+						<h2>Fleet Infrastructure</h2>
+						<div class="servers-grid">
+							<div class="server-card">
+								<div class="srv-header">
+									<span class="indicator up"></span>
+									<span class="srv-name">arena-vps</span>
+									<span class="srv-ping">31ms</span>
+								</div>
+								<div class="srv-ip">34.70.171.152</div>
+								<div class="srv-desc">Sovereign Arena (93 active bots)</div>
+							</div>
+							<div class="server-card">
+								<div class="srv-header">
+									<span class="indicator up"></span>
+									<span class="srv-name">win185</span>
+									<span class="srv-ping">15ms</span>
+								</div>
+								<div class="srv-ip">185.231.154.149</div>
+								<div class="srv-desc">BitEvo API & Core Sovereign</div>
+							</div>
+							<div class="server-card">
+								<div class="srv-header">
+									<span class="indicator partial"></span>
+									<span class="srv-name">fin35</span>
+									<span class="srv-ping">45ms</span>
+								</div>
+								<div class="srv-ip">35.217.10.153</div>
+								<div class="srv-desc">OKX Bot & Parasites Brain</div>
+							</div>
+							<div class="server-card down">
+								<div class="srv-header">
+									<span class="indicator down"></span>
+									<span class="srv-name">old144</span>
+									<span class="srv-ping">timeout</span>
+								</div>
+								<div class="srv-ip">144.124.250.14</div>
+								<div class="srv-desc">Legacy (Decommissioned)</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel">
+						<h2>Live Log Feed</h2>
+						<div class="terminal-body">
+							<div class="log-line"><span class="time">[02:15:01]</span> <span class="tag info">INFO</span> Syncing canon block from main Google Drive...</div>
+							<div class="log-line"><span class="time">[02:15:02]</span> <span class="tag success">PASS</span> Doctor check: 0 violations, STATUS: OK.</div>
+							<div class="log-line"><span class="time">[02:15:05]</span> <span class="tag warn">WARN</span> binance-nft-new8: market sunset mode activated. Bids capped.</div>
+							<div class="log-line"><span class="time">[02:15:10]</span> <span class="tag info">INFO</span> Jito bundle RPC ping: Jito Block Engine is reachable.</div>
+							<div class="log-line"><span class="time">[02:15:15]</span> <span class="tag success">PASS</span> Telemetry snapshot written to unified_state.json.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.cockpit-section {
+		padding-block: 40px;
+	}
+	.cockpit-header {
+		margin-bottom: 30px;
+	}
+	.kicker {
+		color: var(--gold);
+		font-size: 0.72rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		margin-bottom: 6px;
+	}
+	.display {
+		font-family: 'Playfair Display', serif;
+		font-size: 2.2rem;
+		margin: 0;
+	}
+	.meta {
+		color: var(--muted);
+		font-size: 0.9rem;
+		margin-top: 6px;
+	}
+
+	/* Layout Grid */
+	.dashboard-grid {
+		display: grid;
+		grid-template-columns: 1fr 1.2fr;
+		gap: 20px;
+	}
+	@media (max-width: 900px) {
+		.dashboard-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.pane {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.panel {
+		background: var(--paper-soft);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 20px;
+		box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+	}
+
+	.panel h2 {
+		font-family: 'Playfair Display', serif;
+		font-size: 1.15rem;
+		margin: 0 0 16px;
+		color: var(--gold);
+		border-bottom: 1px solid var(--line);
+		padding-bottom: 8px;
+	}
+
+	/* OODA Stages */
+	.ooda-stages {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+	.stage {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 4px 12px;
+		padding: 10px;
+		border-radius: 6px;
+		background: rgba(255,255,255,0.02);
+		border: 1px solid var(--line);
+	}
+	.stage.active {
+		border-color: rgba(125,168,155,0.3);
+		background: rgba(125,168,155,0.05);
+	}
+	.stage.active .stage-name {
+		color: var(--green);
+	}
+	.stage-num {
+		grid-row: span 2;
+		font-size: 1.6rem;
+		font-weight: 950;
+		color: var(--blue);
+		opacity: 0.8;
+		font-family: 'Playfair Display', serif;
+	}
+	.stage-name {
+		font-weight: 800;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+	.stage p {
+		margin: 0;
+		font-size: 0.8rem;
+		color: var(--muted);
+		line-height: 1.4;
+	}
+
+	/* Bots List */
+	.bots-list {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	.bot-row {
+		display: flex;
+		align-items: center;
+		padding: 8px 12px;
+		background: rgba(255,255,255,0.01);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		font-size: 0.82rem;
+	}
+	.bot-row.sunsetting {
+		opacity: 0.5;
+	}
+	.bot-status {
+		margin-right: 10px;
+	}
+	.bot-status.up { color: var(--green); }
+	.bot-status.sunset { color: var(--high); }
+	.bot-id {
+		font-weight: 750;
+		flex-grow: 1;
+	}
+	.bot-server {
+		color: var(--muted);
+		font-size: 0.76rem;
+		margin-right: 16px;
+	}
+	.bot-type {
+		font-size: 0.72rem;
+		padding: 2px 6px;
+		background: rgba(120, 175, 208, 0.12);
+		border-radius: 4px;
+		color: var(--blue);
+	}
+
+	/* Servers Grid */
+	.servers-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 12px;
+	}
+	.server-card {
+		padding: 12px;
+		background: rgba(255,255,255,0.01);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+	}
+	.server-card.down {
+		opacity: 0.55;
+	}
+	.srv-header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-weight: 800;
+		font-size: 0.85rem;
+		margin-bottom: 4px;
+	}
+	.indicator {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+	}
+	.indicator.up { background: var(--green); }
+	.indicator.partial { background: var(--gold); }
+	.indicator.down { background: var(--red); }
+	.srv-ping {
+		margin-left: auto;
+		font-size: 0.7rem;
+		color: var(--muted);
+	}
+	.srv-ip {
+		font-family: monospace;
+		font-size: 0.76rem;
+		color: var(--muted);
+	}
+	.srv-desc {
+		font-size: 0.74rem;
+		color: var(--muted);
+		margin-top: 4px;
+	}
+
+	/* Log Feed */
+	.terminal-body {
+		background: #090d0f;
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 14px;
+		font-family: monospace;
+		font-size: 0.78rem;
+		height: 220px;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.log-line {
+		color: var(--muted);
+	}
+	.time {
+		color: var(--blue);
+	}
+	.tag {
+		font-weight: 800;
+		padding: 1px 4px;
+		border-radius: 3px;
+		font-size: 0.68rem;
+	}
+	.tag.info { background: rgba(120, 175, 208, 0.15); color: var(--blue); }
+	.tag.success { background: rgba(125, 168, 155, 0.15); color: var(--green); }
+	.tag.warn { background: rgba(255, 138, 61, 0.15); color: var(--high); }
+</style>
