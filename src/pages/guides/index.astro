@@ -1,0 +1,209 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const guides = [
+	{
+		slug: 'd3-tool-io-bridge-contract',
+		title: 'D3: Tool-IO Bridge Спецификация и Контракт',
+		date: '2026-06-08',
+		category: 'Security',
+		kicker: 'Security Sandbox',
+		desc: 'Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.',
+		tags: ['security', 'sandbox', 'd3', 'bitevo']
+	},
+	{
+		slug: 'state-authority-plane-evolution',
+		title: 'State Authority Plane: Управление привилегиями агентов',
+		date: '2026-06-08',
+		category: 'Governance',
+		kicker: 'Agent Governance',
+		desc: 'Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с паспортами способностей и проверкой подписей.',
+		tags: ['governance', 'sap', 'authority', 'continuity']
+	},
+	{
+		slug: 'reflex-layer-ooda-monitoring',
+		title: 'Reflex Layer: Автономный OODA-мониторинг',
+		date: '2026-06-08',
+		category: 'Automation',
+		kicker: 'OODA Loop',
+		desc: 'Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.',
+		tags: ['automation', 'reflex', 'ooda', 'monitoring']
+	},
+	{
+		slug: 'multi-agent-system-safety',
+		title: 'Управляемая коэволюция и безопасность многоагентных систем (MAS)',
+		date: '2026-06-08',
+		category: 'Security',
+		kicker: 'Multi-Agent Safety',
+		desc: 'Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.',
+		tags: ['multi-agent', 'safety', 'sandboxing', 'coevolution']
+	}
+];
+---
+
+<Layout title="AI & Agent Security Guides Portal">
+	<!-- Hero Section -->
+	<section class="hero-section">
+		<div class="container hero-inner">
+			<div class="kicker">Security & Governance</div>
+			<h1 class="display">AI Agent Playbooks</h1>
+			<p class="copy">
+				Технические спецификации, стандарты безопасности и протоколы управления для автономных многоагентных сред.
+			</p>
+		</div>
+	</section>
+
+	<!-- Guides List -->
+	<section class="guides-section">
+		<div class="container">
+			<div class="guides-grid">
+				{guides.map(guide => (
+					<article class="guide-card">
+						<div class="card-meta">
+							<span class="category">{guide.category}</span>
+							<span class="dot">·</span>
+							<span class="date">{guide.date}</span>
+						</div>
+						<a href={`/guides/${guide.slug}`} class="title-link">
+							<h2 class="display-sm">{guide.title}</h2>
+						</a>
+						<p class="desc">{guide.desc}</p>
+						<div class="card-footer">
+							<div class="tags">
+								{guide.tags.map(tag => (
+									<span class="tag">#{tag}</span>
+								))}
+							</div>
+							<a href={`/guides/${guide.slug}`} class="read-more">Read Playbook →</a>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.hero-section {
+		padding-block: 60px 30px;
+		text-align: center;
+	}
+	.kicker {
+		color: var(--blue);
+		font-size: 0.72rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		margin-bottom: 6px;
+	}
+	.display {
+		font-family: 'Playfair Display', serif;
+		font-size: clamp(2.2rem, 5vw, 3.4rem);
+		font-weight: 900;
+		line-height: 1.15;
+		margin: 0;
+	}
+	.copy {
+		font-family: 'Lora', serif;
+		color: var(--muted);
+		max-width: 600px;
+		margin: 12px auto 0;
+		font-size: 1rem;
+		line-height: 1.6;
+	}
+
+	/* Grid */
+	.guides-section {
+		padding-block: 20px 60px;
+	}
+	.guides-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 24px;
+		max-width: 1000px;
+		margin-inline: auto;
+	}
+	@media (max-width: 768px) {
+		.guides-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.guide-card {
+		background: var(--paper-soft);
+		border: 1px solid var(--line);
+		border-radius: var(--radius);
+		padding: 30px;
+		display: flex;
+		flex-direction: column;
+		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	.guide-card:hover {
+		transform: translateY(-2px);
+		border-color: var(--blue);
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+	}
+
+	.card-meta {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.72rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--muted);
+		margin-bottom: 12px;
+	}
+	.category {
+		color: var(--green);
+	}
+
+	.display-sm {
+		font-family: 'Playfair Display', serif;
+		font-size: 1.35rem;
+		margin: 0 0 12px;
+		line-height: 1.25;
+		transition: color 0.2s ease;
+	}
+	.display-sm:hover {
+		color: var(--blue);
+	}
+
+	.desc {
+		font-family: 'Lora', serif;
+		color: var(--muted);
+		font-size: 0.92rem;
+		line-height: 1.6;
+		margin: 0 0 20px;
+	}
+
+	.card-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: auto;
+		border-top: 1px solid var(--line);
+		padding-top: 14px;
+	}
+
+	.tags {
+		display: flex;
+		gap: 8px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--muted);
+	}
+
+	.read-more {
+		font-size: 0.75rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--blue);
+		transition: transform 0.2s ease;
+	}
+	.read-more:hover {
+		transform: translateX(2px);
+	}
+</style>

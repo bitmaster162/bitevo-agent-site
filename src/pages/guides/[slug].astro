@@ -1,0 +1,382 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+	return [
+		{
+			params: { slug: 'd3-tool-io-bridge-contract' },
+			props: {
+				id: 'mem-sec-d3-003',
+				title: 'D3: Tool-IO Bridge Спецификация и Контракт',
+				date: '2026-06-08',
+				category: 'Security',
+				eyebrow: 'Security Sandbox',
+				desc: 'Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.',
+				agent_summary: 'D3 Tool-IO Bridge. Restrict shell command execution and script runs. Enforce strict whitelist policy, sandbox limits, timeout constraints, token budget checks, and scheme expectancy matching.',
+				contracts: [
+					{ name: 'BitEvo Tool-IO Gate', address: '0x3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D', chain: 'arbitrum' }
+				],
+				rpc_endpoints: [
+					'http://localhost:8080/console/execute'
+				],
+				constants: {
+					sandbox_enabled: true,
+					execution_timeout_seconds: 30,
+					max_token_budget_per_call: 2000
+				},
+				safety_guards: [
+					{ rule: 'sandbox_on', max_limit: 1, action_on_breach: 'abort' },
+					{ rule: 'call_timeout_seconds', max_limit: 30, action_on_breach: 'abort' }
+				],
+				content_ru: `Спецификация Tool-IO Bridge описывает требования безопасности для выполнения внешних команд и обращения к системным утилитам.
+
+### Основные принципы безопасного вызова
+1. **Изоляция исполнения (Sandbox)**: Любой запуск скриптов или внешних процессов должен происходить при флаге \`SANDBOX_ON\`. Непосредственный доступ к shell-оболочке без песочницы запрещен.
+2. **Политика белого списка (Whitelist)**: Допускается выполнение только предварительно одобренных утилит и команд.
+3. **Проверка схемы вывода (Expectancy)**: Каждый инструмент должен возвращать структурированные данные, строго соответствующие JSON-схеме, указанной в секции \`EXPECT\`.`
+			}
+		},
+		{
+			params: { slug: 'state-authority-plane-evolution' },
+			props: {
+				id: 'mem-gov-sap-004',
+				title: 'State Authority Plane: Управление привилегиями агентов',
+				date: '2026-06-08',
+				category: 'Governance',
+				eyebrow: 'Agent Governance',
+				desc: 'Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с использованием паспортов способностей и проверкой подписей.',
+				agent_summary: 'State Authority Plane governance. Enforce capability passport validation across Loop A, B, and C. Validate operator authority gates before promoting any state updates.',
+				contracts: [
+					{ name: 'BitEvo Capability Passports Registry', address: '0xSAP1111111111111111111111111111111111111', chain: 'arbitrum' }
+				],
+				rpc_endpoints: [
+					'http://localhost:8080/continuity/sync'
+				],
+				constants: {
+					min_authority_level_required: 'D2',
+					operator_id: 932299051
+				},
+				safety_guards: [
+					{ rule: 'min_authority_level', max_limit: 2, action_on_breach: 'abort' }
+				],
+				content_ru: `Контур State Authority Plane (SAP) управляет привилегиями записи в канонические файлы Continuity OS. Он прошел три этапа эволюции:
+
+### Этапы эволюции
+1. **Loop A (Legacy)**: Прямая запись без авторизации. Любой агент с доступом к файлу мог перезаписать состояние.
+2. **Loop B (Gated Reconcile)**: Введение паспортов способностей и reconciliation. Запись производится на основе сопоставления локальных изменений с Drive.
+3. **Loop C (Authority Gate)**: Введение строгого класса проверок прав (\`D1-D10\`). Любая попытка записи в \`state.json\` или \`self_model.json\` проверяется на соответствие прав \`actor_id\` в \`capability_passports_v1.json\`.`
+			}
+		},
+		{
+			params: { slug: 'reflex-layer-ooda-monitoring' },
+			props: {
+				id: 'mem-aut-ref-005',
+				title: 'Reflex Layer: Автономный OODA-мониторинг',
+				date: '2026-06-08',
+				category: 'Automation',
+				eyebrow: 'OODA Loop',
+				desc: 'Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.',
+				agent_summary: 'Reflex layer OODA monitoring. Run 60-second heartbeat check on /health. Automatically rotate logs if size exceeds threshold. Handle fail-closed overrides.',
+				contracts: [
+					{ name: 'BitEvo Reflex Guardian', address: '0xREFLEXFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', chain: 'arbitrum' }
+				],
+				rpc_endpoints: [
+					'http://localhost:8080/health'
+				],
+				constants: {
+					heartbeat_interval_seconds: 60,
+					max_log_size_bytes: 10485760
+				},
+				safety_guards: [
+					{ rule: 'max_log_size_bytes', max_limit: 10485760, action_on_breach: 'rotate' },
+					{ rule: 'operator_override_allowed', max_limit: 1, action_on_breach: 'force_allow' }
+				],
+				content_ru: `Слой Reflex Layer обеспечивает автоматическое реагирование системы на технические сбои и перегрузки без ожидания команды оператора.
+
+### Структура цикла OODA
+1. **Observe (Наблюдение)**: Ежеминутный опрос эндпоинта \`/health\`, проверка размеров файлов логов и потребления памяти.
+2. **Orient (Ориентация)**: Оценка уровня дрейфа и критичности ошибок (например, утечка памяти).
+3. **Decide (Решение)**: Генерация предложений (\`proposals\`) или выбор шаблонного действия (ротация логов, очистка буфера).
+4. **Act (Действие)**: Безопасное выполнение действия (активация скриптов ротации логов).`
+			}
+		},
+		{
+			params: { slug: 'multi-agent-system-safety' },
+			props: {
+				id: 'mem-mas-safety-004',
+				title: 'Управляемая коэволюция и безопасность многоагентных систем (MAS)',
+				date: '2026-06-08',
+				category: 'Security',
+				eyebrow: 'Multi-Agent Safety',
+				desc: 'Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.',
+				agent_summary: 'Enforce safety protocols in multi-agent environments. Implement a deterministic Policy Gate to filter agent actions, limit access keys, sandbox browser/tool runs (Firecracker, gVisor, or seccomp), and prevent emergent behavior and prompts poisoning (OWASP GenAI Top 10). Maintain audit log.',
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					max_consecutive_errors: 3,
+					max_tool_execution_time_sec: 30,
+					sandbox_type: 'gVisor'
+				},
+				safety_guards: [
+					{ rule: 'require_human_approval_for_destructive_actions', max_limit: 1, action_on_breach: 'halt' },
+					{ rule: 'max_execution_duration', max_limit: 30, action_on_breach: 'kill_process' }
+				],
+				content_ru: `Коэволюция — это взаимозависимая адаптация нескольких агентов и людей в повторяющихся циклах. При неуправляемой коэволюции локально логичные действия агентов могут приводить к глобальным сбоям (скрытый сговор ботов, разрастание прав, дрейф поведения).
+
+### Защита многоагентных систем через Policy Gate
+1. **Шлюз политик (Policy Gate)**: Любое действие агента (инструменты, API-запросы) должно проходить через детерминированный фильтр, проверяющий правила и лимиты. Разрушительные или финансовые действия требуют подтверждения оператора (Human-in-the-Loop).
+2. **Изоляция исполнения (Sandboxing)**: Выполнение стороннего кода или браузера (например, Playwright-воркеров) должно происходить в изолированных песочницах: microVM (Firecracker), прикладных ядрах (gVisor) или с фильтрацией системных вызовов через \`seccomp\`.
+3. **Наблюдаемость и Blackboard**: Все взаимодействия и лог решений фиксируются в едином неизменяемом реестре (Blackboard) для предотвращения скрытой координации и облегчения аудита.`
+			}
+		}
+	];
+}
+
+const { title, date, category, eyebrow, desc, agent_summary, contracts, rpc_endpoints, constants, safety_guards, content_ru } = Astro.props;
+---
+
+<Layout title={`${title} · BitEvo Playbooks`}>
+	<article class="article-page">
+		<div class="container article-container">
+			<div class="article-header">
+				<div class="kicker">{eyebrow}</div>
+				<h1 class="display">{title}</h1>
+				<div class="meta">
+					<span>Published: {date}</span>
+					<span>·</span>
+					<span class="cat">{category}</span>
+				</div>
+			</div>
+
+			<p class="lead-copy">{desc}</p>
+
+			<!-- MemIR Agent Summary Block -->
+			<div class="memir-summary">
+				<div class="summary-label">MemIR AI Agent Summary</div>
+				<pre><code>{agent_summary}</code></pre>
+			</div>
+
+			<!-- Executable Parameters -->
+			<div class="params-block">
+				<h2>Executable Parameters</h2>
+				<div class="params-grid">
+					<div class="param-card">
+						<h3>Contracts</h3>
+						{contracts.length > 0 ? (
+							contracts.map(c => (
+								<div class="contract-row">
+									<span class="c-name">{c.name}:</span>
+									<span class="c-addr">{c.address}</span>
+									<span class="c-chain">[{c.chain}]</span>
+								</div>
+							))
+						) : (
+							<div class="contract-row">No active contract requirements.</div>
+						)}
+					</div>
+					<div class="param-card">
+						<h3>RPC Endpoints</h3>
+						{rpc_endpoints.length > 0 ? (
+							rpc_endpoints.map(rpc => (
+								<div class="rpc-row">{rpc}</div>
+							))
+						) : (
+							<div class="rpc-row">No external RPC routes required.</div>
+						)}
+					</div>
+				</div>
+			</div>
+
+			<!-- Safety Guards -->
+			<div class="safety-block">
+				<h2>Safety Guards</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Rule</th>
+							<th>Max Limit</th>
+							<th>Action On Breach</th>
+						</tr>
+					</thead>
+					<tbody>
+						{safety_guards.map(sg => (
+							<tr>
+								<td><code>{sg.rule}</code></td>
+								<td>{sg.max_limit}</td>
+								<td><code>{sg.action_on_breach}</code></td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Content RU -->
+			<div class="article-content">
+				<h2>Спецификация и руководство</h2>
+				<div class="content-text" set:html={content_ru.replace(/\n/g, '<br>')} />
+			</div>
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.article-page {
+		padding-block: 40px 60px;
+	}
+	.article-container {
+		max-width: 800px;
+		margin-inline: auto;
+	}
+
+	.article-header {
+		margin-bottom: 24px;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: 16px;
+	}
+	.kicker {
+		color: var(--blue);
+		font-size: 0.72rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		margin-bottom: 6px;
+	}
+	.display {
+		font-family: 'Playfair Display', serif;
+		font-size: clamp(2rem, 4vw, 2.8rem);
+		font-weight: 900;
+		line-height: 1.15;
+		margin: 0;
+	}
+	.meta {
+		color: var(--muted);
+		font-size: 0.82rem;
+		display: flex;
+		gap: 8px;
+		margin-top: 8px;
+	}
+	.cat {
+		color: var(--green);
+		font-weight: 700;
+	}
+
+	.lead-copy {
+		font-family: 'Lora', serif;
+		font-size: 1.1rem;
+		color: var(--muted);
+		line-height: 1.6;
+		margin-bottom: 30px;
+	}
+
+	/* MemIR Block */
+	.memir-summary {
+		background: rgba(120, 175, 208, 0.05);
+		border: 1px solid var(--blue);
+		border-radius: var(--radius);
+		padding: 18px;
+		margin-bottom: 30px;
+	}
+	.summary-label {
+		color: var(--blue);
+		font-size: 0.68rem;
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		margin-bottom: 8px;
+	}
+	.memir-summary pre {
+		margin: 0;
+		white-space: pre-wrap;
+		font-size: 0.85rem;
+		font-family: monospace;
+		color: var(--ink);
+	}
+
+	/* Params */
+	.params-block {
+		margin-bottom: 30px;
+	}
+	.params-block h2, .safety-block h2, .article-content h2 {
+		font-family: 'Playfair Display', serif;
+		font-size: 1.35rem;
+		color: var(--blue);
+		margin: 0 0 16px;
+	}
+	.params-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+	.param-card {
+		background: var(--paper-soft);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 16px;
+	}
+	.param-card h3 {
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		margin: 0 0 10px;
+		color: var(--green);
+	}
+	.contract-row, .rpc-row {
+		font-size: 0.78rem;
+		font-family: monospace;
+		color: var(--muted);
+		margin-bottom: 6px;
+		word-break: break-all;
+	}
+	.c-name {
+		color: var(--ink);
+		font-weight: 700;
+	}
+	.c-addr {
+		color: var(--blue);
+	}
+	.c-chain {
+		color: var(--green);
+	}
+
+	/* Safety Guards Table */
+	.safety-block {
+		margin-bottom: 30px;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.8rem;
+	}
+	th, td {
+		border: 1px solid var(--line);
+		padding: 10px;
+		text-align: left;
+	}
+	th {
+		background: var(--paper-soft);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--green);
+	}
+	td code {
+		color: var(--blue);
+		font-family: monospace;
+	}
+
+	/* Content RU */
+	.content-text {
+		font-family: 'Lora', serif;
+		font-size: 1rem;
+		line-height: 1.65;
+		color: var(--ink);
+	}
+	.content-text code {
+		background: var(--paper-soft);
+		padding: 2px 6px;
+		border-radius: 4px;
+		font-family: monospace;
+		font-size: 0.88rem;
+		color: var(--blue);
+	}
+</style>
