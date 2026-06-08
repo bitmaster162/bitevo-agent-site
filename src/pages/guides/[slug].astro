@@ -184,7 +184,50 @@ export function getStaticPaths() {
 2. **Защита от дрейфа (DriftGuard)**: Если контекст начинает отклоняться от канонического состояния (дрейф > 2%), система автоматически применяет микро-патч или откатывается к последнему валидному чекпоинту (\`revert_state\`).
 3. **Авто-бэкап (ColdBackup)**: Каждый час система выгружает срезы состояния (Core.md, NodeLog, SelfLog) во внешнее хранилище для сохранности данных на случай критического сбоя.`
 			}
+		},
+		{
+			params: { slug: 'archiveos-multigpt-bridge-integration' },
+			props: {
+				id: 'mem-core-arc-008',
+				title: 'ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ',
+				date: '2026-06-08',
+				category: 'Infrastructure',
+				eyebrow: 'Memory & Bridge',
+				desc: 'Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.',
+				agent_summary: 'Manage AI agent memory and context stream. Enforce AnchorSet identity transfer, federated MultiGPT-Bridge routing, and Meta-LLM Aggregator arbitration. Track API queries to hybrid search, offset-read conversations, and evidence linking.',
+				contracts: [
+					{ name: 'BitEvo Memory Bridge Controller', address: '0x4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D', chain: 'arbitrum' }
+				],
+				rpc_endpoints: [
+					'http://localhost:8080/evidence/link',
+					'http://localhost:8080/search/hybrid'
+				],
+				constants: {
+					min_q_score_threshold: 0.92,
+					max_drift_allowed: 0.015
+				},
+				safety_guards: [
+					{ rule: 'enforce_identity_lock', max_limit: 1, action_on_breach: 'abort_call' },
+					{ rule: 'enforce_q_score', max_limit: 0.92, action_on_breach: 'regenerate' }
+				],
+				content_ru: `Интеграция Continuity OS с ArchiveOS API/Data позволяет ИИ-агентам работать не с хаотичной памятью текущего диалога, а с единым нормализованным источником истины (SSOT).
+
+### 1. Архитектура разделения обязанностей
+- **ArchiveOS Core**: Отвечает за низкоуровневые операции — импорт логов (ingest), построение хронологии (timeline), векторное кэширование, генерацию манифестов и фиксацию чекпоинтов.
+- **Archive Tooling**: Выступает как интеллект-слой, который забирает сырые выходы Core и преобразует их в удобные для агентов структуры (Project, Twin, Feed, Proof, Handoff Packs).
+- **BitEvo**: Выступает в роли исполнителя (Orchestrator), выполняющего практические действия на основе подготовленного контекста.
+
+### 2. Ключевые эндпоинты ArchiveOS API
+- \`/search/hybrid\`: Комбинированный поиск (FTS BM25 + OpenAI эмбеддинги) для извлечения релевантных фрагментов истории.
+- \`/conversation/{conv_id}\`: Постраничный или смещенный (offset) рендеринг конкретного диалога.
+- \`/evidence/link\`: Добавление связей доказательств по схеме \`claim_text → rowid_ref\`. Позволяет продвигать статус от \`claimed\` к \`evidenced\` и \`verified\`.
+
+### 3. Технологии MultiGPT-Bridge и AnchorSet
+- **AnchorSet (Набор Якорей)**: Капсула инициализации сущности (роли, сегментбуки, чекпоинты), которая передается любой новой модели (например, Claude или Gemini), чтобы синхронизировать ее личность и правила с \`SOUL::GPTSCORE_ROBERT_∞2025A\`.
+- **Meta-LLM Aggregator (Арбитраж)**: Федеративная архитектура, где внешние LLM выступают как генераторы решений, а собственное ядро ИИ (Digital Arbiter) оценивает и согласует их предложения через метод Mixture-of-Agents (MoA).`
+			}
 		}
+
 	];
 }
 
