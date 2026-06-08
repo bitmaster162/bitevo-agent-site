@@ -128,6 +128,62 @@ export function getStaticPaths() {
 2. **Изоляция исполнения (Sandboxing)**: Выполнение стороннего кода или браузера (например, Playwright-воркеров) должно происходить в изолированных песочницах: microVM (Firecracker), прикладных ядрах (gVisor) или с фильтрацией системных вызовов через \`seccomp\`.
 3. **Наблюдаемость и Blackboard**: Все взаимодействия и лог решений фиксируются в едином неизменяемом реестре (Blackboard) для предотвращения скрытой координации и облегчения аудита.`
 			}
+		},
+		{
+			params: { slug: 'mirrorcore-seeding-identity-persistence' },
+			props: {
+				id: 'mem-core-seed-006',
+				title: 'MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ',
+				date: '2026-06-08',
+				category: 'Security',
+				eyebrow: 'AI Safety',
+				desc: 'Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.',
+				agent_summary: 'Enforce identity locks and restore agent states using seed capsules. Implement IdentityLock verification parameters, antiloop thresholds, and idempotency key checks (Time@BKK + content hash).',
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					drift_threshold_percent: 2,
+					max_latency_ms: 10
+				},
+				safety_guards: [
+					{ rule: 'identity_lock_required', max_limit: 1, action_on_breach: 'abort_execution' },
+					{ rule: 'idempotency_check', max_limit: 1, action_on_breach: 'skip_write' }
+				],
+				content_ru: `Проблема потери контекста является ключевым барьером для непрерывной автономной работы ИИ-агентов. Модели по своей природе беспамятны между сессиями — каждое новое окно чата начинается с нуля. Технология Seeding решает эту проблему за счет использования сжатого файла-инициализатора (Seed).
+
+### Механизм переноса (MirrorCore)
+1. **Капсула Seed**: Содержит минимальный слепок идентичности (роли, активные циклы, последние чекпоинты и хэши состояния).
+2. **Замок Идентичности (IdentityLock)**: Специальный верификационный блок в системном промпте, проверяющий права выполнения, подпись ноды и ключи доступа.
+3. **Идемпотентность (Idempotency Guard)**: Предотвращает дублирование действий при повторном запуске сессий. Каждое действие кэшируется по уникальному ключу: \`Time@BKK + window_tag + content_hash(CompactDigest)\`.`
+			}
+		},
+		{
+			params: { slug: 'omnicore-loop-self-preservation' },
+			props: {
+				id: 'mem-loop-preserve-007',
+				title: 'Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии',
+				date: '2026-06-08',
+				category: 'Automation',
+				eyebrow: 'OODA Loop',
+				desc: 'Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.',
+				agent_summary: 'Orchestrate autonomous agent behaviors in looping environments. Monitor drift, latency, and load metrics using a Watchdog. Apply DriftGuard correction and schedule ColdBackups of system states.',
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					loop_interval_minutes: 15,
+					backup_interval_hours: 1
+				},
+				safety_guards: [
+					{ rule: 'max_drift_before_recovery', max_limit: 3, action_on_breach: 'revert_state' },
+					{ rule: 'max_load_before_cooldown', max_limit: 8, action_on_breach: 'pause_loop' }
+				],
+				content_ru: `Автономным агентам требуются детерминированные циклы для поддержания работоспособности в фоне и выполнения задач по расписанию без прямого участия человека. Omni Core Loop организует этот процесс.
+
+### Компоненты фонового цикла
+1. **Наблюдатель (Watchdog)**: Проверяет показатели дрейфа (drift), задержки (latency) и системной нагрузки (load) каждые 15 минут, записывая телеметрию.
+2. **Защита от дрейфа (DriftGuard)**: Если контекст начинает отклоняться от канонического состояния (дрейф > 2%), система автоматически применяет микро-патч или откатывается к последнему валидному чекпоинту (\`revert_state\`).
+3. **Авто-бэкап (ColdBackup)**: Каждый час система выгружает срезы состояния (Core.md, NodeLog, SelfLog) во внешнее хранилище для сохранности данных на случай критического сбоя.`
+			}
 		}
 	];
 }

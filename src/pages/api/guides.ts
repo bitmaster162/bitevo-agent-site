@@ -88,6 +88,44 @@ export async function GET() {
 				{ rule: "require_human_approval_for_destructive_actions", max_limit: 1, action_on_breach: "halt" },
 				{ rule: "max_execution_duration", max_limit: 30, action_on_breach: "kill_process" }
 			]
+		},
+		{
+			id: "mem-core-seed-006",
+			type: "safety_guard",
+			human_title: "MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ",
+			agent_summary: "Enforce identity locks and restore agent states using seed capsules. Implement IdentityLock verification parameters, antiloop thresholds, and idempotency key checks (Time@BKK + content hash).",
+			tags: ["ai-safety", "seeding", "mirror-core", "continuity"],
+			params: {
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					drift_threshold_percent: 2,
+					max_latency_ms: 10
+				}
+			},
+			safety_guards: [
+				{ rule: "identity_lock_required", max_limit: 1, action_on_breach: "abort_execution" },
+				{ rule: "idempotency_check", max_limit: 1, action_on_breach: "skip_write" }
+			]
+		},
+		{
+			id: "mem-loop-preserve-007",
+			type: "protocol",
+			human_title: "Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии",
+			agent_summary: "Orchestrate autonomous agent behaviors in looping environments. Monitor drift, latency, and load metrics using a Watchdog. Apply DriftGuard correction and schedule ColdBackups of system states.",
+			tags: ["automation", "omni-core-loop", "drift-guard", "watchdog"],
+			params: {
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					loop_interval_minutes: 15,
+					backup_interval_hours: 1
+				}
+			},
+			safety_guards: [
+				{ rule: "max_drift_before_recovery", max_limit: 3, action_on_breach: "revert_state" },
+				{ rule: "max_load_before_cooldown", max_limit: 8, action_on_breach: "pause_loop" }
+			]
 		}
 	];
 
