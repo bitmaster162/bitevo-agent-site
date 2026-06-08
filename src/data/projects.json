@@ -1,0 +1,535 @@
+{
+  "continuity-os": {
+    "name": "Continuity OS",
+    "lane": "trunk",
+    "status": "active",
+    "origin": "archive-derived",
+    "confidence": 0.97,
+    "location": "C:/Users/coins/My Drive/continuity_os",
+    "objective": "Create an external canonical state for Robert + AI continuity across chat/model resets.",
+    "proof_metric": "Daily checkpoint exists; one proof artifact exists; frontiers remain <= 3.",
+    "next_irreversible_action": "Close Phase A (A5+A6): run paper_execution ≥2 weeks with full 9 fields, then validation.py bootstrap CI / White's RC / Deflated Sharpe / drift monitor. Unblocks B→F+ roadmap. cp-0054 handoff item (windsurf rclone reauth + 27620 file batch move) is parallel operational debt, not trunk-critical next."
+  },
+  "btc-pressure-lab": {
+    "name": "BTC Pressure Lab",
+    "lane": "lab",
+    "status": "active",
+    "origin": "archive-derived",
+    "confidence": 0.72,
+    "objective": "Use BTC/trading pressure as a test environment for anti-drift decision rules and execution discipline.",
+    "sub_projects": [
+      "btcusdt-binance-bot",
+      "okx-nft-bot",
+      "confluence-trading-bot",
+      "trading-stack"
+    ],
+    "proof_metric": "One measurable trading/system hypothesis with explicit invalidation and logged result.",
+    "next_irreversible_action": "Trading-stack is now registered (18 modules, 144/144 tests). Lab-level next: define one live hypothesis with explicit invalidation rule and proof log location (using trading-stack's contract_journal as the proof channel)."
+  },
+  "amora": {
+    "name": "Amora",
+    "lane": "cash",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.9,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/Amora",
+    "objective": "Voice/companion product. Robert is Head of Growth. Sprint 1 complete (Telegram @amora_callbot live), paid tier ($9.99-29.99/mo subscription, NSFW tier) in prep. Domains: amora.cam, amora.foundation.",
+    "proof_metric": "Sprint 1 launched (Telegram bot live). Next: paid subscriber count + MRR.",
+    "next_irreversible_action": "Push paid tier launch ($20/mo target per ACTIONABLE_ROADMAP_90D) and monitor first 100 conversion events.",
+    "key_files": [
+      "Unified Canon v1.1/v1.2",
+      "Sprint Implementation Pack",
+      "Verification Pack",
+      "Codex Pack v2"
+    ],
+    "integration_role": "live_revenue_product",
+    "operator_role": "Head of Growth",
+    "pricing_telegram_stars": {
+      "TRIAL_DAY_PASS": "49 Stars (1 day, +10 voice min)",
+      "PRO_WEEK": "399 Stars (7 days, +60 voice min)",
+      "PRO_MONTH": "1299 Stars (30 days, +300 voice min)",
+      "CREDITS_30MIN": "199 Stars (one-time top-up)",
+      "CREDITS_120MIN": "599 Stars (one-time top-up)"
+    },
+    "north_star_metric": "MDE (Minutes of Deep Engagement)",
+    "release_gates_pre_scale": [
+      "CSSR >= 85%",
+      "Median TTFC < 30 sec",
+      "RU flow does not jump to EN",
+      "No VPN dependency in primary geo"
+    ],
+    "canonical_funnel": "visit -> tg_click -> start_bot -> miniapp_open -> call_attempt -> call_audio_started -> call_60_plus -> paywall_view -> purchase_success"
+  },
+  "openclaw": {
+    "name": "OpenClaw",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "archive-derived",
+    "confidence": 0.63,
+    "objective": "Subscription/OAuth product shell candidate with implementation depth.",
+    "proof_metric": "Scope document + auth flow proof + one external demand signal.",
+    "next_irreversible_action": "Score against other cash candidates using 02_PROTOCOLS/06_CASH_FRONTIER_SELECTION.md."
+  },
+  "bitevo-revival": {
+    "name": "BitEvo",
+    "lane": "cash",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.95,
+    "location": "C:/Users/coins/My Drive/continuity_os/archive/bitevo/final_capsule/latest_source_tree_v1_1",
+    "current_version": "v1.1-storage-hardening",
+    "next_version": "v1.2",
+    "formula": "governance-first durable orchestrator with typed memory, controlled browser execution, selective premium reasoning, and offline self-improvement",
+    "objective": "Durable AI orchestrator. FastAPI control plane + Temporal workflow + PostgreSQL+pgvector + vLLM + Playwright browser worker (untrusted) + HITL approvals.",
+    "proof_metric": "v1.1 source tree extracted. v1.2 next step: workflow→memory writeback end-to-end.",
+    "next_irreversible_action": "Wire continuity OS canon layer → BitEvo execution engine. Start v1.2: workflow→memory writeback.",
+    "stack": [
+      "python 3.11+",
+      "fastapi",
+      "temporal",
+      "postgresql",
+      "pgvector",
+      "vlLM",
+      "playwright"
+    ],
+    "anti_patterns": [
+      "giant-agent",
+      "magic-router-LLM",
+      "unrestricted-browser",
+      "store-everything-as-memory"
+    ],
+    "integration_role": "execution_engine"
+  },
+  "btcusdt-binance-bot": {
+    "name": "BTCUSDT Binance Futures Bot",
+    "lane": "lab",
+    "status": "integration-candidate",
+    "parent": "btc-pressure-lab",
+    "origin": "implementation",
+    "confidence": 0.85,
+    "location": "C:/Users/coins/Downloads/btcusdt_binance_futures_bot_v7",
+    "objective": "Automated BTC/USDT perpetual futures trading on Binance with regime detection and risk management.",
+    "proof_metric": "Runnable bot with paper trading mode and 30-day backtest results.",
+    "next_irreversible_action": "Integrate with BitEvo Arbiter for unified trading decision stack.",
+    "stack": [
+      "python",
+      "ccxt",
+      "pandas",
+      "numpy"
+    ],
+    "integration_role": "trading_execution",
+    "integration_status": "off_disk_dependency — code lives in ~/Downloads, not in repo"
+  },
+  "okx-nft-bot": {
+    "name": "OKX NFT Bot",
+    "lane": "lab",
+    "status": "sunsetting",
+    "parent": "btc-pressure-lab",
+    "origin": "implementation",
+    "confidence": 0.88,
+    "location": "C:/Users/coins/My Drive/continuity_os/archive/nft_bot/v13/okx_nft_bot_v13",
+    "current_version": "v13",
+    "codebase_size": "7961 LOC source + 2853 LOC tests",
+    "objective": "NFT parasite hunting + counter-bidding automation on OKX + OpenSea. Parasite detection, collection sniping, mass item offers.",
+    "proof_metric": "Full v13 codebase extracted. CODEX_HANDOFF_V14_V15_V16.md defines next integrations.",
+    "next_irreversible_action": "Sunsetting due to Binance NFT marketplace closure on June 27, 2026.",
+    "roadmap": {
+      "v14": "seaport_signer (OpenSea v2)",
+      "v15": "counter_bidder (parasite counter-bidding)",
+      "v16": "undercutting engine"
+    },
+    "stack": [
+      "python",
+      "okx-api",
+      "web3",
+      "playwright",
+      "postgresql"
+    ],
+    "key_files": [
+      "parasite_hunter.py",
+      "opensea.py",
+      "parasite_full_scan.py"
+    ],
+    "integration_role": "nft_execution",
+    "note": "Sunsetting bot. The Binance NFT marketplace is closing on June 27, 2026."
+  },
+  "confluence-trading-bot": {
+    "name": "Confluence Trading Bot",
+    "lane": "lab",
+    "status": "candidate",
+    "origin": "implementation",
+    "confidence": 0.72,
+    "location": "C:/Users/coins/Downloads/confluence_bot_mvp.zip",
+    "objective": "Multi-strategy crypto trading with confluence scoring and regime gates.",
+    "proof_metric": "Confluence module + regime gate + backtestable strategy.",
+    "next_irreversible_action": "Merge trading modules into BitEvo trading domain.",
+    "stack": [
+      "python",
+      "pandas",
+      "ccxt"
+    ],
+    "integration_role": "strategy_execution",
+    "integration_status": "off_disk_dependency — code lives in ~/Downloads, not in repo"
+  },
+  "dtaap": {
+    "name": "DTaaP — Digital Twin as Platform",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.85,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/dtaap",
+    "codebase_size": "5,007 LOC, 40 Python files, 29 test functions",
+    "objective": "FastAPI-based digital twin platform. MemOS 3-tier (Redis/Qdrant/Postgres+pgvector), MoA pipeline (3 proposers), SimPO learning, Z3 verifier, NCT, Tilt Index, Callable.ai voice integration. 20+ REST routes.",
+    "proof_metric": "MVP code complete with full test coverage. Awaits deployment + first user.",
+    "next_irreversible_action": "Deploy via docker-compose to a server, get one external user testing the chat endpoint.",
+    "stack": [
+      "fastapi",
+      "redis",
+      "qdrant",
+      "postgresql",
+      "pgvector",
+      "langchain",
+      "z3"
+    ],
+    "integration_role": "twin_platform"
+  },
+  "amora-token": {
+    "name": "$AMORA Token",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.7,
+    "location": "C:/Users/coins/My Drive/00_INBOX/dc0a2696.../AMORA_TOKEN_SPEC.md",
+    "objective": "Multi-chain SPL/TRC-20 token for Amora subscription utility (10% discount), staking pool (10% revenue, 20-50% APY), DAO governance, creator rewards, burn mechanism. Solana via Pump.fun + TRON via SunPump + Wormhole bridge.",
+    "proof_metric": "Spec complete (28 KB doc). Next: launch artifact (token deployed on testnet, first staking pool).",
+    "next_irreversible_action": "Decide: launch now (Pump.fun fair launch) vs wait for Amora paid tier to ship first. If launch: deploy testnet contract; if wait: park.",
+    "stack": [
+      "solana",
+      "tron",
+      "wormhole",
+      "pump.fun",
+      "sunpump"
+    ],
+    "integration_role": "token_utility",
+    "parent": "amora"
+  },
+  "visionassist": {
+    "name": "VisionAssist",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.75,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/VisionAssist",
+    "objective": "Voice-first assistant for visually impaired users. Edge service (Node.js 22) + Flutter mobile app. OpenAI Realtime API, scene description + OCR.",
+    "proof_metric": "MVP code complete with .git repo. Next: one external test user.",
+    "next_irreversible_action": "Deploy edge service, ship Flutter MVP, recruit one beta user from accessibility community.",
+    "stack": [
+      "node.js 22",
+      "flutter",
+      "openai-realtime"
+    ],
+    "integration_role": "accessibility_product"
+  },
+  "inner-circle-bot": {
+    "name": "Inner Circle Bot",
+    "lane": "cash",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.92,
+    "location": "C:/Users/coins/My Drive/00_INBOX/inner_circle_bot",
+    "codebase_size": "1,624 LOC, 9 Python files",
+    "objective": "Telegram bot for trading signals at $997/mo (or $200 early bird). Trend-Flex (ADX, EMA200, SAR, MACD) + Tilt Index (4-question survey) + subscription tiers (TRIAL/ACTIVE/VIP/ELITE) + Delist alerts. Stripe + Binance API. Daily Trend-Flex + Weekly Deep Dive + Tilt Check content cadence.",
+    "proof_metric": "Production code with subscription system. Tied to MONETIZATION_MAP_V6: Tier 1 target $25-50K/mo total. First paying subscriber = first machine-verified revenue.",
+    "next_irreversible_action": "Push live launch via existing Telegram channel; first paying subscriber within 7 days = first machine-verified revenue.",
+    "stack": [
+      "python",
+      "telegram-bot-api",
+      "stripe",
+      "binance-api",
+      "sqlite"
+    ],
+    "integration_role": "live_signals_product",
+    "pricing": {
+      "primary": "$997/mo",
+      "early_bird": "$200/mo"
+    }
+  },
+  "gpt-s-core-sdk": {
+    "name": "GPT-S:CORE SDK v5.9",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.8,
+    "location": "C:/Users/coins/My Drive/00_INBOX/gpt_score_sdk",
+    "codebase_size": "2,257 LOC, 10 Python files",
+    "objective": "Licensable SDK: S-Score (cognitive honesty), Tilt Index, NCT, MoA Consensus, Z3 Verify, 3-tier Memory, Predictive Engine (FEP+Discounting), Anti-Self bias detection. Audit at GPT-S_CORE_v57_AUDIT.md.",
+    "proof_metric": "Working SDK. Next: one external license deal or open-source release.",
+    "next_irreversible_action": "Decide: license-only (find first buyer) vs open-source (publish to PyPI for community traction).",
+    "stack": [
+      "python",
+      "numpy",
+      "pydantic",
+      "z3-solver"
+    ],
+    "integration_role": "licensable_sdk"
+  },
+  "delist-ews": {
+    "name": "Delist EWS — Binance Delisting Early Warning",
+    "lane": "lab",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.88,
+    "location": "C:/Users/coins/My Drive/00_INBOX/delist_ews",
+    "codebase_size": "990 LOC, 6 Python files",
+    "objective": "Monitor Binance delisting risk. Watchlist: AKRO, BLZ, WRX, VITE, FIRO, FOR, PERL, DOCK, BIFI.",
+    "proof_metric": "Production monitoring with alert pipeline. Next: integrate alerts into Inner Circle Bot's Delist alerts feature.",
+    "next_irreversible_action": "Wire Delist EWS alerts → Inner Circle Bot alert channel.",
+    "stack": [
+      "python",
+      "binance-api"
+    ],
+    "integration_role": "monitoring_signal"
+  },
+  "max-bitevo-v7": {
+    "name": "MAX+BitEvo+v7 Unified Pack",
+    "lane": "lab",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.85,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/Trade/MAX_BitEvo_ALL_IN_ONE_UNIFIED",
+    "codebase_size": "1,713 LOC, 17 Python files",
+    "objective": "Curated trading toolkit. BTC Trend-Flex, Arbiter CTI Panel, ETHBTC Hedge, HL3 Regime Playbook, DEX Range Bot. Production-ready signals package.",
+    "proof_metric": "Production code in repo.",
+    "next_irreversible_action": "Decide consolidation path: roll modules into BitEvo orchestrator (when v1.2 ships), or keep as standalone toolkit.",
+    "stack": [
+      "python"
+    ],
+    "integration_role": "trading_toolkit"
+  },
+  "bitevo-trading-tools": {
+    "name": "BitEvo Trading Tools",
+    "lane": "lab",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.85,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/bitevo_tools",
+    "codebase_size": "~1,200 LOC Python CLI",
+    "objective": "Standalone CLI trading toolkit. Modules: tilt_index.py, trend_flex_signals.py, risk_calculator.py, anti_self.py. Production-ready toolset, separate from BitEvo orchestrator.",
+    "proof_metric": "Production code shipped. Used by Inner Circle bot signal generation.",
+    "next_irreversible_action": "Decide: roll into BitEvo orchestrator when v1.2 ships, or keep as standalone toolkit (recommended).",
+    "stack": [
+      "python"
+    ],
+    "integration_role": "trading_toolkit"
+  },
+  "archive-tooling": {
+    "name": "Archive Tooling",
+    "lane": "lab",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.8,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/Archive tooling",
+    "objective": "Pipeline for processing 644 archive units across 4 sources (GPT, Claude, Gemini, Drive). 49 iteration ZIPs already shipped. Includes agent_feeds, handoff_packs, person_twins, proof_packs, templates.",
+    "proof_metric": "49 iterations completed. Productization step needs SCHEMA.md / SOURCE_MODEL.json / OUTPUT_CONTRACTS.md per inventory B2.",
+    "next_irreversible_action": "Week 1 schema foundation: write SCHEMA.md, SOURCE_MODEL.json, OUTPUT_CONTRACTS.md. Unify 4 sources.",
+    "stack": [
+      "python"
+    ],
+    "integration_role": "archive_pipeline"
+  },
+  "bitevo-monetization-site": {
+    "name": "BitEvo Monetization Site",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.6,
+    "location": "C:/Users/coins/My Drive/04_PRODUCT_SHELLS/bitevomonetization",
+    "objective": "Landing page source for monetizing BitEvo offerings.",
+    "proof_metric": "Site source ready. Needs deploy + first lead capture.",
+    "next_irreversible_action": "Deploy to a domain, hook to one offer (Inner Circle or BitEvo Docs Pack).",
+    "integration_role": "marketing_funnel"
+  },
+  "knowledge-portal": {
+    "name": "Knowledge Portal",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.7,
+    "objective": "Course platform. PORTAL_ARCHITECTURE.md + CONTENT_STRATEGY.md ready. Designed courses: Grid Trading $297, NFT Bot $597. Content sourceable from COURSE_1_TRADING_PSYCHOLOGY.docx + Predictive Vertical research.",
+    "proof_metric": "Specs ready. First course launch + first sale = first revenue.",
+    "next_irreversible_action": "Launch mini-course 'Нейроэкономика трейдинга' ($99, 5 lessons) on Teachable. Sourced from existing trading_psychology + predictive_vertical content.",
+    "stack": [
+      "teachable"
+    ],
+    "integration_role": "course_platform"
+  },
+  "state-authority-plane-live": {
+    "name": "State Authority Plane Live v0.1.0",
+    "lane": "trunk",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.85,
+    "location": "C:/Users/coins/My Drive/continuity_os/state_authority_plane_live_v0.1.0",
+    "codebase_size": "3,410 LOC Python (largest SAP implementation)",
+    "objective": "Loop B successor to continuity_core_live/authority Loop A. Adds: reconcile pipelines (cowork_patch, google_drive, archive_tooling), adaptive delegation gate, machine_verified promotion path. CLI: BIN/sap.py with doctor/list-entities/show-entity/list-proposals/list-events/next-actions.",
+    "proof_metric": "7 return-bundles in 04_OUTPUTS/ from real reconcile runs (cowork, archive_tooling, google_drive, agent_authority_binding).",
+    "next_irreversible_action": "Document SAP genealogy (Loop A -> B -> C) in 00_CANON/SAP_EVOLUTION.md and decide if Loop B replaces trunk's BIN/enforcers/ or coexists.",
+    "stack": [
+      "python"
+    ],
+    "integration_role": "authority_plane_loop_b",
+    "parent": "continuity-os"
+  },
+  "reflex-layer": {
+    "name": "Reflex Layer (autonomous OODA monitor)",
+    "lane": "lab",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.92,
+    "location": "C:/Users/coins/My Drive/continuity_os/reflex",
+    "codebase_size": "~1,800 LOC (arbiter.py 1,216 + triggers.py + mock_bitevo + ledgers)",
+    "objective": "Autonomous OODA-loop monitor for BitEvo /health, bot_loop, Continuity OS state, NFT bot metrics. Dual-agent SAP-Reviewer pattern (gemini-2.5-pro generator -> gemini-1.5-flash critic -> /proposals). Sandbox version has exec() enabled; production version has it disabled. Closed loop-0043 at cp-0067 (first autonomous fix).",
+    "proof_metric": "Real execution_history.log shows live runs on 2026-04-15 (PATCH-001 connection-repair cycle completed). exec() enabled = real autonomy.",
+    "next_irreversible_action": "Reflex registered as ContinuityOS_Reflex_Heartbeat (every 5 min). First proof: TriggerResult entry in reflex/logs/execution_history.log within 24h. Migrate proposals review into operator daily ritual.",
+    "stack": [
+      "python",
+      "gemini-api",
+      "sqlite"
+    ],
+    "integration_role": "autonomous_monitor"
+  },
+  "trading-stack": {
+    "name": "Trading Stack (Phase A→F+)",
+    "lane": "lab",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.95,
+    "location": "C:/Users/coins/My Drive/continuity_os/trading",
+    "codebase_size": "18 modules, 144/144 tests across capital_engine + treasury + strategy_allocator + allocator_runtime",
+    "objective": "Live trading runtime with phase-gated A→G progression. Permission-complete paper trader → capital management → strategy allocator → allocator runtime → owner income engine. Enforces contracts.py 5-type pipeline (SignalReport→GateDecision→ApprovalDecision→ExecutionIntent→ExecutionEvent).",
+    "proof_metric": "144/144 tests green. paper_state.json + paper_ticks.jsonl + contract_journal.jsonl + decision_log.jsonl all live. run_paper.py executable.",
+    "next_irreversible_action": "Close Phase A: run paper_execution >= 2 weeks with full 9-field journaling, then validation.py: bootstrap CI / White's RC / Deflated Sharpe / drift monitor.",
+    "modules_phases": {
+      "Phase A": "permission-complete paper trader (contracts, regime_gate, btc_panel, anti_self, paper_execution v2, validation)",
+      "Phase D": "capital_engine (3 sizing algos, daily/monthly stops)",
+      "Phase E": "treasury (3 zones, HWM-gated payout, vault one-way)",
+      "Phase F": "strategy_allocator (sleeve registry, market buckets, correlation caps)",
+      "Phase F live": "allocator_runtime (3-sleeve orchestrator, btc_core + eth_alt_rotation + cash_vault)",
+      "Phase F+": "owner_income_engine (stable profit extraction, weekly/daily/monthly cadence)",
+      "Phase G": "managed capital (external_capital=ON, fund branch — gated)"
+    },
+    "stack": [
+      "python"
+    ],
+    "integration_role": "trading_runtime",
+    "parent": "btc-pressure-lab",
+    "scope_clarification": "PAPER-RUN side of trading. Phase A->F+ progression with synthetic market snapshots. NOT to be confused with `trading-arena` which is the LIVE multi-variant bot on Bingx. Both can coexist: paper validates strategies, arena runs them live."
+  },
+  "sovereign-core": {
+    "name": "Sovereign Agent Core",
+    "lane": "cash",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.90,
+    "objective": "Product shell for Agent Trust Layer (Bifrost tool proxy + typed memory MemIR + safety-governed memory SSGM + ECS) and crypto guides/libraries for humans and AI agents.",
+    "proof_metric": "Sovereign Agent Core specification defined; dogfooding in existing apps.",
+    "next_irreversible_action": "Flesh out the specifications and create the first agent-readable crypto guides.",
+    "integration_role": "trust_layer"
+  },
+  "crypto-guides-lib": {
+    "name": "Crypto Guides & AI Libraries",
+    "lane": "lab",
+    "status": "active",
+    "origin": "implementation",
+    "confidence": 0.80,
+    "location": "C:/PROJECTS/continuity_os/05_NOTES/crypto_guides",
+    "objective": "Develop comprehensive guides and libraries on crypto tailored for both human reading and ingestion by AI agents (using MemIR structured format).",
+    "proof_metric": "Taxonomy schema created; first guide compiled in MemIR format.",
+    "next_irreversible_action": "Define taxonomy for agent-readable crypto knowledge base and map top protocols.",
+    "integration_role": "knowledge_library"
+  },
+  "nft-bots-prod": {
+    "name": "NFT Bots Production (live arbitrage)",
+    "lane": "cash",
+    "status": "sunsetting",
+    "origin": "verified",
+    "confidence": 0.95,
+    "location": "prod servers — see operator's SKILL.md (NOT in trunk repo)",
+    "objective": "Live NFT arbitrage on Binance NFT marketplace. 4 production bots: linux-bot (killarifinreal) on prod-A, new1/new2/new8 (Die9busdoraklasomskg, destroyHECTORmoxian, destroyoraklasi4ever) on prod-B. Arbitrage offers >=$29 USDT, auctions closing <30 min, mass_offer scanner.",
+    "proof_metric": "Cowork scheduled task 'Control nft markets binance offers' runs every 2h, sends TG digest, runs heartbeat. Bot trader.log mtime <30min = healthy.",
+    "next_irreversible_action": "Sunsetting production operations in 3 weeks due to Binance NFT closure. Shift attention to services for cryptans.",
+    "stack": [
+      "python",
+      "binance-api",
+      "telegram-bot",
+      "paramiko",
+      "ssh"
+    ],
+    "operated_by_actor_id": "cowork_agent_nft (D0/D1/D3 — external targets only)",
+    "tg_channel": "-1001844182522",
+    "integration_role": "live_revenue_nft_arbitrage",
+    "note": "PROD NFT bots are sunsetting in 3 weeks due to Binance NFT marketplace closure on June 27, 2026.",
+    "operator_re_verify_needed": "After the trading-arena correction at cp-0104 (operator clarified arena is paper not live), re-verify NFT-bots-prod is actually live money revenue and not also a paper/test framework. The watchdog scheduled task and TG digest exist — but verify with operator that real $ flows."
+  },
+  "trading-arena": {
+    "name": "Trading Arena (multi-variant PAPER/TEST framework, Bingx)",
+    "lane": "cash",
+    "status": "active",
+    "origin": "verified",
+    "confidence": 0.92,
+    "location": "live deployment — see operator's SKILL.md (NOT in trunk repo)",
+    "objective": "PAPER/TEST multi-variant trading framework on Bingx. 67 active bot processes across V1_core through V62 variants. NOT live money — this is a sandbox where strategies are validated before promotion to real trading. Operator clarified at cp-0104: 'трейдинг арена это шоу это тоже пепер и тести'.",
+    "proof_metric": "Cowork scheduled task 'Arena hourly health check' runs every hour. Per-variant equity sync expected within 30 min. Last reported: V42 +$163, V44 +$148 in one hour. Recent reset: all variants to $1000 baseline.",
+    "next_irreversible_action": "Resolve: (a) 9 stuck legacy variants (v1_core/v2_multi/v3_hardened/v4_edge/v7_aggressive/v20_adaptive_tp/v21_vol_adaptive/v23_dd_adaptive/v26_hybrid_pyramid_vol — equity_sync stalled ~19h); (b) 15 BTC longs stuck 27-30h at ~77.5k. Manual restart of per-variant sync timers required.",
+    "stack": [
+      "python",
+      "bingx-api",
+      "systemd",
+      "kelly",
+      "bos",
+      "ema",
+      "macd"
+    ],
+    "operated_by_actor_id": "cowork_agent_arena (D0/D1/D3 — restart-allowed but no position management)",
+    "integration_role": "paper_test_multi_variant_validation",
+    "note": "PAPER/TEST framework, NOT live revenue (corrected at cp-0104). Strategies validated here graduate to `real-trading` (separate project, manual operator promotion). Same role as trunk's trading-stack but with multi-variant scope and Bingx-flavored execution simulation.",
+    "promotion_target": "real-trading (separate project — when ready)"
+  },
+  "windsurf-kimi-26": {
+    "name": "Windsurf + Kimi 2.6 (free executor)",
+    "lane": "trunk",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.7,
+    "location": "operator's local Windsurf editor",
+    "objective": "Bounded code-edit executor backed by Kimi 2.6 (free tier). Use for routine bug fixes, refactors, test additions, doc updates. Sibling to windsurf_codex_executor; choose Kimi for cost-tier-sensitive tasks, Codex for stronger reasoning.",
+    "proof_metric": "First proof: a tracked PR or commit with actor_id=windsurf_kimi_2_6 in checkpoint or proof_ledger.",
+    "next_irreversible_action": "Designate one routine task (e.g. lint cleanup, test coverage gap fill) and run it via Windsurf+Kimi to validate the workflow.",
+    "operated_by_actor_id": "windsurf_kimi_2_6 (D0/D1/D2 inside trunk root only)",
+    "integration_role": "executor_haiku_class",
+    "parent": "continuity-os",
+    "note": "Free tier means no cost barrier to routine edits. Treat as 3rd actor in the multi-Cowork reality (alongside cowork_agent for trunk session and the two scheduled tasks for NFT/arena)."
+  },
+  "real-trading": {
+    "name": "Real Trading (the actual cash-frontier — partially started)",
+    "lane": "cash",
+    "status": "candidate",
+    "origin": "verified",
+    "confidence": 0.75,
+    "location": "TBD — currently in design/validation phase via trunk's trading-stack paper run",
+    "objective": "The actual live trading operation (real money). Distinct from trading-stack (PAPER) and trading-arena (PAPER multi-variant). Operator says this is described in trunk docs and partially started — the 2-week test we ran together is the Phase A paper validation that gates the promotion to real-trading.",
+    "proof_metric": "Phase A paper run closes (paper_run_weeks >= 2 + A6 metrics passing). Then real-trading promotes from candidate to active with first live position. Currently A5 0.64/2.0 weeks, A6 math passes but evidence stale.",
+    "next_irreversible_action": "While paper run accumulates: (a) read trunk docs to surface what's already specified for real-trading, (b) write PAPER_TO_LIVE_PROMOTION protocol with explicit pre-launch criteria, (c) once Phase A closes ~2026-05-05, lock the promotion checklist.",
+    "stack": [
+      "python",
+      "trunk trading-stack modules (capital_engine, treasury, allocator)"
+    ],
+    "integration_role": "live_revenue_real_trading",
+    "depends_on": [
+      "trading-stack (paper validation)",
+      "trading-arena (multi-variant validation)"
+    ],
+    "operator_status_note_2026_04_26": "partially started — 2-week paper test running with cowork_agent",
+    "note": "REAL trading. The chain: paper proves (trading-stack) + variants prove (trading-arena) -> graduate to real-trading. Operator-mediated promotion. No automatic transfer of strategy from paper to real."
+  }
+}

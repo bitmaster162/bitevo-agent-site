@@ -1,5 +1,5 @@
-import state from '../../../../01_RUNTIME/state.json';
-import projects from '../../../../01_RUNTIME/projects.json';
+import state from '../data/state.json';
+import projects from '../data/projects.json';
 
 export async function GET() {
 	const frontiers = state.frontiers || {};

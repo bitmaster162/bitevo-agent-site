@@ -1,0 +1,165 @@
+{
+  "os_name": "Robert Continuity OS",
+  "version": "0.1.0",
+  "owner": "Роберт",
+  "timezone": "Asia/Bangkok",
+  "bootstrapped_at": "2026-04-09T21:30:00+07:00",
+  "status": "active",
+  "design_goal": "Preserve continuity of intent, reasoning, and execution across chat/model resets.",
+  "source_of_truth": {
+    "human_canon": "00_CANON/HUMAN_CANON.md",
+    "invariants": "00_CANON/INVARIANTS.md",
+    "agents": "00_CANON/INTERNAL_AGENTS.md",
+    "machine_state": "01_RUNTIME/state.json",
+    "project_registry": "01_RUNTIME/projects.json",
+    "open_loops": "01_RUNTIME/open_loops.json",
+    "checkpoints": "01_RUNTIME/checkpoints.jsonl",
+    "proof_ledger": "01_RUNTIME/proof_ledger.jsonl"
+  },
+  "principles": [
+    "semantic_integrity_over_fluency",
+    "external_state_over_chat_memory",
+    "proof_over_promise",
+    "closure_over_branching",
+    "unknown_over_invented_certainty"
+  ],
+  "language_split": {
+    "human_canon": "ru",
+    "machine_runtime": "en"
+  },
+  "frontiers": {
+    "trunk": {
+      "project_id": "continuity-os",
+      "status": "locked",
+      "confidence": 0.97
+    },
+    "cash": {
+      "project_id": "bitevo-revival",
+      "status": "selected",
+      "confidence": 0.91,
+      "selected_at": "cp-0009",
+      "rule": "select_exactly_one"
+    },
+    "lab": {
+      "project_id": "btc-pressure-lab",
+      "status": "active",
+      "confidence": 0.72,
+      "rule": "at_most_one"
+    }
+  },
+  "limits": {
+    "max_active_frontiers": 3,
+    "max_open_loops_per_project": 4,
+    "max_total_open_loops": 9
+  },
+  "protocols": {
+    "session_must_end_with_checkpoint": true,
+    "new_branch_requires_classification": true,
+    "daily_proof_artifact_target": 1,
+    "daily_contract": "1 trunk task + 1 cash task + 1 proof artifact"
+  },
+  "current_mode": "operational",
+  "last_archive_ingest": "2026-04-14",
+  "last_checkpoint_id": "cp-0187",
+  "drift_risks": [
+    "branch_explosion",
+    "reboot_without_closure",
+    "chat_as_runtime",
+    "phase_skip_temptation"
+  ],
+  "trading_phase": {
+    "current": "A",
+    "gate_status": "4/6 pass (A1-A4 built, A5-A6 need paper run)",
+    "next_unlock": "B (semi-auto micro-live)",
+    "phases_total": 8,
+    "phase_sequence": "A → B → C → D → E → F → (F+ Owner Income default) OR (G Shadow Managed optional) → H → [Ecosystem Ceiling]",
+    "roadmap_mode": "forked_after_F",
+    "default_branch": "owner_income_mode",
+    "optional_branch": "managed_capital_shadow_mode",
+    "ecosystem_ceiling": "strategy_marketplace_kernel_v1 (documented, NOT-NEXT, separate business)",
+    "owner_income_target_cycles": "6-12 clean cycles",
+    "pattern": "trader → capital allocator → FORK: income branch (default) | capital-platform branch (optional) → [ecosystem = different business]",
+    "practical_endpoint": "auto + capital engine + vault/payout + limited diversification + owner income engine (Phase F+)",
+    "phase_gate_file": "trading/phase_gate.json",
+    "phase_map_doc": "04_OPERATIONS/TRADING_PHASE_MAP.md",
+    "paper_results": {
+      "trades": 15,
+      "wins": 9,
+      "losses": 6,
+      "win_rate": 0.6,
+      "total_pnl_usd": 143.3,
+      "avg_pnl_usd": 9.5533,
+      "best_trade_usd": 29.4,
+      "worst_trade_usd": -10.0,
+      "tp_count": 9,
+      "sl_count": 6,
+      "long_count": 5,
+      "short_count": 10,
+      "last_trade_at": "2026-04-26T21:24:52.814750+00:00",
+      "mode": "virtual_scalp",
+      "paper_run_weeks": 0.807,
+      "snapshot_at": "2026-05-06T14:11:18.339356+00:00"
+    },
+    "last_updated_at": "2026-05-06T14:11:18.342020+00:00"
+  },
+  "trading_stack": {
+    "status": "operational",
+    "source": "archive_full_ingest_458_convs",
+    "modules": [
+      "regime_gate.py — 8-bucket scoring, OVERHEAT/RESET/BALANCE/UNRESOLVED",
+      "btc_panel.py — L1-L6 crowd state, squeeze_risk",
+      "anti_self.py — 4 hard stops + soft scoring + cooldown",
+      "confluence.py — 7 signal families, SIGNAL/WATCH/NO_TRADE",
+      "portfolio_canvas.py — real baskets from archive (69 b1, 22 b2)",
+      "paper_execution.py — full OrderLifecycle (8 states), kill-switch, guards, ContractJournal",
+      "validation.py — expectancy contour: bootstrap CI, White's RC, Deflated Sharpe, drift monitor",
+      "btc_panel_store.py — JSONL time-series persistence, backfill, WS migration",
+      "anti_self_gate.py — fail-closed gate on order path, staleness check",
+      "phase_gate.py — A→G gate logic (7 phases), persistent criteria, binary transitions",
+      "btc_alert_bot.py — LONG_READY/SHORT_READY/NO_TRADE/RISK_OFF scoring",
+      "cti_panel.py — CTI 0-100, ALT_MODE/NEUTRAL/BTC_DEFENSIVE",
+      "capital_engine.py — Phase D: sizing (FF/Kelly/OptF), daily+monthly stops, scale rules, HWM",
+      "treasury.py — Phase E: core/vault/lab zones, HWM-gated payout, one-way vault",
+      "strategy_allocator.py — Phase F: sleeve registry, bucket budgets, correlation caps, scale rules",
+      "allocator_runtime.py — Phase F live: 3-sleeve orchestrator (btc_core + eth_alt_rotation + cash_vault), journal, explain",
+      "owner_income_engine.py — Phase F+ Owner Income Mode: payout policy, vault router, block guard, income journal, tax/ops buffer"
+    ],
+    "tests_pass": true,
+    "built_at": "2026-04-12",
+    "sprint_status": "phase_F_plus_owner_income_engine_built",
+    "phase_gate": "trading/phase_gate.json"
+  },
+  "archive_ingest": {
+    "total_conversations": 465,
+    "total_artifacts": 599,
+    "wanted_builds": 316,
+    "safe_line_rows": 108795,
+    "chronology_passes": 42,
+    "date_range": "2025-06-02 to 2026-04-03",
+    "key_artifacts_extracted": true,
+    "outputs": "archive/extracted/ + archive/final/",
+    "master_synthesis": "archive_master_synthesis_v1/",
+    "master_synthesis_date": "2026-04-14",
+    "trunks": [
+      "continuity_archiveos (main)",
+      "trading_runtime",
+      "infra_sovereignty",
+      "product_shells",
+      "monetization_router",
+      "nft_web3_ops",
+      "investigation_casework",
+      "human_care_anti_self",
+      "root_pressure_mixed"
+    ],
+    "codex": "archive_master_synthesis_v1/03_CODEX/archiveos_master_codex_v1.md",
+    "last_curation": {
+      "curation_id": "curation-369a2ced",
+      "timestamp": "2026-05-05T01:32:52.698973+00:00",
+      "curated_facts": 2,
+      "new_projects": 9,
+      "new_loops": 4,
+      "merge_note": "Phase 1: 8 prompt files to gpt-s-core-sdk/prompts/awakening/. Phase 2: surgical state.json update. Phase 3 pending: open_loops append. Phase 4: projects dedup (9 sandbox duplicates rejected)."
+    }
+  },
+  "notes": "[TRUNCATED at cp-0148 due to Drive-sync race incident #6 — recovered cp-0148, see DRIVE_SYNC_RACE_HARDENING.md]"
+}
