@@ -60,7 +60,7 @@
   },
   "current_mode": "operational",
   "last_archive_ingest": "2026-04-14",
-  "last_checkpoint_id": "cp-0187",
+  "last_checkpoint_id": "cp-0207",
   "drift_risks": [
     "branch_explosion",
     "reboot_without_closure",
@@ -68,9 +68,9 @@
     "phase_skip_temptation"
   ],
   "trading_phase": {
-    "current": "A",
-    "gate_status": "4/6 pass (A1-A4 built, A5-A6 need paper run)",
-    "next_unlock": "B (semi-auto micro-live)",
+    "current": "B",
+    "gate_status": "6/6 pass (Phase A closed, Phase B entered)",
+    "next_unlock": "C (full auto trader)",
     "phases_total": 8,
     "phase_sequence": "A → B → C → D → E → F → (F+ Owner Income default) OR (G Shadow Managed optional) → H → [Ecosystem Ceiling]",
     "roadmap_mode": "forked_after_F",
@@ -83,24 +83,27 @@
     "phase_gate_file": "trading/phase_gate.json",
     "phase_map_doc": "04_OPERATIONS/TRADING_PHASE_MAP.md",
     "paper_results": {
-      "trades": 15,
-      "wins": 9,
-      "losses": 6,
-      "win_rate": 0.6,
-      "total_pnl_usd": 143.3,
-      "avg_pnl_usd": 9.5533,
+      "trades": 36,
+      "wins": 20,
+      "losses": 16,
+      "win_rate": 0.5556,
+      "total_pnl_usd": 263.3,
+      "avg_pnl_usd": 7.3139,
       "best_trade_usd": 29.4,
       "worst_trade_usd": -10.0,
-      "tp_count": 9,
-      "sl_count": 6,
+      "tp_count": 20,
+      "sl_count": 16,
       "long_count": 5,
-      "short_count": 10,
-      "last_trade_at": "2026-04-26T21:24:52.814750+00:00",
+      "short_count": 31,
+      "last_trade_at": "2026-06-08T00:56:22.688598+00:00",
       "mode": "virtual_scalp",
-      "paper_run_weeks": 0.807,
-      "snapshot_at": "2026-05-06T14:11:18.339356+00:00"
+      "paper_run_weeks": 6.828,
+      "snapshot_at": "2026-06-08T16:54:35.360030+00:00"
     },
-    "last_updated_at": "2026-05-06T14:11:18.342020+00:00"
+    "last_updated_at": "2026-06-09T13:18:00+00:00",
+    "canon_writer_enabled": true,
+    "canon_writer_output": "01_RUNTIME/trading_deltas.jsonl",
+    "auto_startup": "start_all_services.ps1 via Windows Startup folder"
   },
   "trading_stack": {
     "status": "operational",

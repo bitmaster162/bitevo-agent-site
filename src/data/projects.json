@@ -8,7 +8,7 @@
     "location": "C:/Users/coins/My Drive/continuity_os",
     "objective": "Create an external canonical state for Robert + AI continuity across chat/model resets.",
     "proof_metric": "Daily checkpoint exists; one proof artifact exists; frontiers remain <= 3.",
-    "next_irreversible_action": "Close Phase A (A5+A6): run paper_execution ≥2 weeks with full 9 fields, then validation.py bootstrap CI / White's RC / Deflated Sharpe / drift monitor. Unblocks B→F+ roadmap. cp-0054 handoff item (windsurf rclone reauth + 27620 file batch move) is parallel operational debt, not trunk-critical next."
+    "next_irreversible_action": "Monitor execution of entry and hotfixed exit bracket order submissions in task-6022 log files."
   },
   "btc-pressure-lab": {
     "name": "BTC Pressure Lab",
@@ -518,8 +518,8 @@
     "confidence": 0.75,
     "location": "TBD — currently in design/validation phase via trunk's trading-stack paper run",
     "objective": "The actual live trading operation (real money). Distinct from trading-stack (PAPER) and trading-arena (PAPER multi-variant). Operator says this is described in trunk docs and partially started — the 2-week test we ran together is the Phase A paper validation that gates the promotion to real-trading.",
-    "proof_metric": "Phase A paper run closes (paper_run_weeks >= 2 + A6 metrics passing). Then real-trading promotes from candidate to active with first live position. Currently A5 0.64/2.0 weeks, A6 math passes but evidence stale.",
-    "next_irreversible_action": "While paper run accumulates: (a) read trunk docs to surface what's already specified for real-trading, (b) write PAPER_TO_LIVE_PROMOTION protocol with explicit pre-launch criteria, (c) once Phase A closes ~2026-05-05, lock the promotion checklist.",
+    "proof_metric": "Phase A paper run successfully closed with 6.83 weeks of data and validated +0.73 R/trade expectancy. First micro-live execution in Tier T1.",
+    "next_irreversible_action": "Execute Step 1 of Promotion Checklist: obtain operator sign-off and initialize Tier T1 ($100 budget) on exchange.",
     "stack": [
       "python",
       "trunk trading-stack modules (capital_engine, treasury, allocator)"
