@@ -360,6 +360,19 @@ const { title, date, category, eyebrow, desc, agent_summary, contracts, rpc_endp
 							<div class="rpc-row">No external RPC routes required.</div>
 						)}
 					</div>
+					<div class="param-card">
+						<h3>Constants</h3>
+						{Object.keys(constants).length > 0 ? (
+							Object.entries(constants).map(([key, val]) => (
+								<div class="constant-row">
+									<span class="c-name">{key}:</span>
+									<span class="c-val">{typeof val === 'object' ? JSON.stringify(val) : val}</span>
+								</div>
+							))
+						) : (
+							<div class="constant-row">No active constants.</div>
+						)}
+					</div>
 				</div>
 			</div>
 
@@ -480,7 +493,7 @@ const { title, date, category, eyebrow, desc, agent_summary, contracts, rpc_endp
 	}
 	.params-grid {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 		gap: 16px;
 	}
 	.param-card {
@@ -496,7 +509,7 @@ const { title, date, category, eyebrow, desc, agent_summary, contracts, rpc_endp
 		margin: 0 0 10px;
 		color: var(--green);
 	}
-	.contract-row, .rpc-row {
+	.contract-row, .rpc-row, .constant-row {
 		font-size: 0.78rem;
 		font-family: monospace;
 		color: var(--muted);
@@ -507,7 +520,7 @@ const { title, date, category, eyebrow, desc, agent_summary, contracts, rpc_endp
 		color: var(--ink);
 		font-weight: 700;
 	}
-	.c-addr {
+	.c-addr, .c-val {
 		color: var(--blue);
 	}
 	.c-chain {
