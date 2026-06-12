@@ -304,6 +304,44 @@ export function getStaticPaths() {
 - Дистанция трейлинга: \`trail_distance = ATR(14) * 1.5\`.
 - Это позволяет стопу расширяться при росте волатильности и сужаться при затишье, защищая прибыль от случайных колебаний.`
 			}
+		},
+		{
+			params: { slug: 'postgres-backup-sync-daemon' },
+			props: {
+				id: 'mem-inf-pgb-010',
+				title: 'PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов',
+				date: '2026-06-13',
+				category: 'Infrastructure',
+				eyebrow: 'Infrastructure Sovereignty',
+				desc: 'Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.',
+				agent_summary: 'PostgreSQL backup sync daemon. Verify container health, execute pg_dump via docker exec, compress output with gzip, store in Server backup directory, rotate old files (keep 10), and write statuses to postgres_backup_history.jsonl and proof_ledger.jsonl.',
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					backup_retention_count: 10,
+					backup_interval_hours: 24,
+					backup_dir: "C:/Users/coins/My Drive/Server backup/postgres_backups",
+					container_name: "bitevo_postgres"
+				},
+				safety_guards: [
+					{ rule: 'verify_container_running', max_limit: 1, action_on_breach: 'start_container' },
+					{ rule: 'backup_file_min_size_kb', max_limit: 1024, action_on_breach: 'alert_operator' }
+				],
+				content_ru: `Руководство по развертыванию и настройке автоматического демона бэкапов PostgreSQL для BitEvo.
+
+### 1. Архитектурный паттерн резервного копирования
+Для обеспечения отказоустойчивости СУБД в автономных средах резервные копии должны делаться без прямого сетевого доступа к хост-системе (чтобы уменьшить площадь атаки) и сохраняться в изолированное синхронизируемое хранилище.
+
+### 2. Алгоритм работы демона
+1. **Проверка контейнера**: Скрипт запрашивает статус контейнера \`bitevo_postgres\`. Если он остановлен, производится попытка запуска через \`docker compose up -d postgres\`.
+2. **Экспорт (pg_dump)**: База данных \`bitevo\` экспортируется с помощью утилиты \`pg_dump\` через безопасный вызов \`docker exec\`.
+3. **Сжатие и Хранение**: Полученный SQL-файл упаковывается с помощью \`gzip\` и сохраняется в каталог \`C:\\Users\\coins\\My Drive\\Server backup\\postgres_backups\\\`.
+4. **Ротация (Retention)**: Для предотвращения переполнения диска скрипт сортирует файлы бэкапов по дате создания и удаляет все, кроме последних 10.
+5. **Журналирование**: Успех/неудача логируются в \`postgres_backup_history.jsonl\`, критические ошибки записываются в \`proof_ledger.jsonl\`.
+
+### 3. Автоматизация в Windows Task Scheduler
+Для автоматического запуска используется планировщик Windows. Регистрация задачи выполняется через PowerShell-сценарий \`BIN/setup_postgres_backup_cron.ps1\`, который настраивает интерактивный запуск от имени текущего пользователя раз в сутки.`
+			}
 		}
 	];
 }
