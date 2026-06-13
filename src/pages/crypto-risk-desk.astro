@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Crypto Risk Intelligence Desk — BitEvo">
+	<section class="lp">
+		<div class="container">
+
+			<div class="hero">
+				<div class="kicker">Tier 2 · Crypto Risk</div>
+				<h1 class="display">Не сигналы. Не новости. Решения.</h1>
+				<p class="lead">
+					Ежедневный риск-бриф для крипто-трейдеров и проектов: режим рынка, токсичность потока,
+					события — и на каждый сигнал конкретное действие. Пишем <strong>только когда что-то меняется</strong>.
+					Демо: <a href="https://sovereign-arena-site.vercel.app/">флот 150 ботов с публичными логами и честными убытками</a>.
+				</p>
+				<a href="/intake" class="cta">Получить доступ · первым неделя бесплатно</a>
+				<div class="proofbar">Формат <strong>signal → decision → action</strong> · аналоги дают информацию, мы даём действия</div>
+			</div>
+
+			<div class="block">
+				<h2 class="h2">Проблема</h2>
+				<p class="copy">Взлом, делистинг, памп проходят за <strong>часы</strong>. Ньюслеттеры и платные дашборды (Messari/Delphi ~$5k/год) сыплют данными и прогнозами, но не говорят <strong>что с этим делать прямо сейчас</strong>. Информационный паралич вместо решения.</p>
+			</div>
+
+			<div class="block">
+				<h2 class="h2">Что в брифе каждое утро</h2>
+				<div class="grid">
+					<div class="item"><span class="num">◢</span><div><strong>Режим рынка</strong> — тренд/флэт/риск-офф, мультитаймфрейм.</div></div>
+					<div class="item"><span class="num">◢</span><div><strong>Токсичность потока (VPIN)</strong> — умные деньги против тебя? агрессивный дисбаланс ордеров.</div></div>
+					<div class="item"><span class="num">◢</span><div><strong>События</strong> — взломы, делистинги, регуляторка, разлоки.</div></div>
+					<div class="item"><span class="num">◢</span><div><strong>Действие</strong> — резать риск / ждать / хеджировать. Без воды.</div></div>
+				</div>
+			</div>
+
+			<div class="block">
+				<h2 class="h2">Тарифы</h2>
+				<div class="tiers">
+					<div class="tier"><div class="tname">Alerts</div><div class="tdesc">ежедневный риск-бриф, алерты при изменении</div><div class="tprice">$300/мес</div></div>
+					<div class="tier"><div class="tname">Alerts + Weekly</div><div class="tdesc">+ еженедельный разбор режима и зон</div><div class="tprice">$600/мес</div></div>
+					<div class="tier hl"><div class="tname">+ Personal risk-check</div><div class="tdesc">+ персональная проверка твоего портфеля/риска</div><div class="tprice">$1000/мес</div></div>
+				</div>
+			</div>
+
+			<div class="block proof">
+				<h2 class="h2">Почему нам можно верить</h2>
+				<p class="copy">Мы <strong>не врём про прибыль</strong>. Наш флот из 150 ботов и все его убытки — публичны. Это редкий в крипте moat честности: мы продаём управление риском, а не мечту о профите. Risk Desk работает на той же живой инфраструктуре.</p>
+				<a href="/intake" class="cta">Получить доступ · первым неделя бесплатно</a>
+			</div>
+
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.lp { padding-block: 36px 64px; }
+	.hero { text-align: center; max-width: 760px; margin: 0 auto 40px; }
+	.kicker { color: var(--gold); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+	.display { font-family: 'Playfair Display', serif; font-size: 2.4rem; line-height: 1.15; margin: 0 0 16px; }
+	.lead { font-family: 'Lora', serif; color: var(--muted); font-size: 1.08rem; line-height: 1.6; margin: 0 auto 24px; max-width: 640px; }
+	.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding-inline: 26px; font-size: 0.84rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-radius: var(--radius); background: linear-gradient(135deg, rgba(189,179,146,0.18), rgba(7,10,12,0.1)); border: 1px solid rgba(189,179,146,0.4); color: var(--gold); transition: all 0.2s ease; }
+	.cta:hover { border-color: var(--gold); color: #fff; transform: translateY(-1px); }
+	.proofbar { margin-top: 24px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; }
+	.block { max-width: 820px; margin: 0 auto 36px; }
+	.h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0 0 14px; }
+	.copy { font-family: 'Lora', serif; color: var(--muted); font-size: 1rem; line-height: 1.65; }
+	.grid { display: grid; gap: 12px; }
+	.item { display: flex; gap: 14px; align-items: flex-start; background: var(--paper-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; color: var(--muted); font-size: 0.92rem; }
+	.item strong { color: var(--ink); }
+	.num { flex: none; width: 26px; height: 26px; border-radius: 50%; background: rgba(189,179,146,0.12); color: var(--gold); font-weight: 800; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+	.tiers { display: grid; gap: 10px; }
+	.tier { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; background: var(--paper-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; }
+	.tier.hl { border-color: rgba(189,179,146,0.4); background: linear-gradient(180deg, rgba(189,179,146,0.05), rgba(7,10,12,0)); }
+	.tname { font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+	.tdesc { grid-column: 1 / 2; color: var(--muted); font-size: 0.84rem; }
+	.tprice { grid-row: 1 / 3; align-self: center; font-size: 1.3rem; font-weight: 900; color: var(--ink); white-space: nowrap; }
+	.proof { text-align: center; }
+	.proof .cta { margin-top: 18px; }
+	@media (max-width: 768px) { .display { font-size: 1.9rem; } }
+</style>
