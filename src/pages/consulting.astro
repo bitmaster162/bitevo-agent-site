@@ -46,6 +46,22 @@ import Layout from '../layouts/Layout.astro';
 					<div class="price">от $5,000 <span class="period">/ проект</span></div>
 					<a href="/intake" class="button highlight-btn">Initialize Setup</a>
 				</div>
+				<!-- Crypto Risk Intelligence Desk -->
+				<div class="service-card">
+					<div class="service-meta">Tier 2 · Crypto Risk</div>
+					<h2 class="display-sm">Crypto Risk Intelligence Desk</h2>
+					<p class="service-desc">
+						Не сигналы и не новости — ежедневный риск-бриф: режим рынка, токсичность потока (VPIN), события (взломы, делистинги, регуляторка) и на каждый сигнал конкретное действие. Постит только при изменении.
+					</p>
+					<ul class="bullets">
+						<li><strong>Режим + токсичность потока</strong> — умные деньги против тебя?</li>
+						<li><strong>signal → decision → action</strong> — резать риск, ждать или хеджировать.</li>
+						<li><strong>Без шума</strong> — алерт только когда что-то меняется.</li>
+					</ul>
+					<div class="price">$300–1000 <span class="period">/ мес</span></div>
+					<a href="/intake" class="button">Get Risk Desk</a>
+				</div>
+
 				<!-- Flagship: AI-Agent Reliability Audit -->
 				<div class="service-card">
 					<div class="service-meta">Flagship · Reliability</div>
@@ -167,53 +183,4 @@ import Layout from '../layouts/Layout.astro';
 		margin-bottom: 8px;
 	}
 	.bullets strong {
-		color: var(--ink);
-	}
-
-	.price {
-		font-size: 1.6rem;
-		font-weight: 900;
-		color: var(--ink);
-		margin-top: auto;
-		margin-bottom: 20px;
-		border-top: 1px solid var(--line);
-		padding-top: 16px;
-	}
-	.period {
-		font-size: 0.8rem;
-		color: var(--muted);
-		font-weight: 500;
-	}
-
-	.button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 40px;
-		font-size: 0.8rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background: transparent;
-		border: 1px solid var(--line-strong);
-		border-radius: var(--radius);
-		transition: all 0.2s ease;
-	}
-	.button:hover {
-		border-color: var(--blue);
-		color: #fff;
-		background: rgba(120, 175, 208, 0.05);
-	}
-
-	.highlight-btn {
-		background: linear-gradient(135deg, rgba(189,179,146,0.15), rgba(7, 10, 12, 0.1)) !important;
-		border-color: rgba(189,179,146,0.4) !important;
-		color: var(--gold) !important;
-	}
-	.highlight-btn:hover {
-		border-color: var(--gold) !important;
-		background: linear-gradient(135deg, rgba(189,179,146,0.25), rgba(7, 10, 12, 0.15)) !important;
-		color: #fff !important;
-		transform: translateY(-1px);
-	}
-</style>
+		color: var(--ink)
