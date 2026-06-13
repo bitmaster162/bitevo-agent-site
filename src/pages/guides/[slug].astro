@@ -358,6 +358,46 @@ export function getStaticPaths() {
 - **Порог триггера**: Прирост объема сырого лога диалога на \`> 1.5 MB\` за \`12 часов\`.
 - **Действие**: Автоматический запуск конвейера компрессии, генерация инкрементального дайджеста и перезагрузка контекста агента с добавлением новой дельты в Memory Cache.`
 			}
+		},
+		{
+			params: { slug: 'mas-managed-coevolution-sandbox-isolation' },
+			props: {
+				id: 'mem-mas-coev-013',
+				title: 'D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)',
+				date: '2026-06-13',
+				category: 'Security',
+				eyebrow: 'Multi-Agent Safety',
+				desc: 'Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.',
+				agent_summary: 'Enforce safety protocols in multi-agent environments. Implement a deterministic Policy Gate to filter agent actions, limit access keys, sandbox browser/tool runs (Firecracker, gVisor, or seccomp), and prevent emergent behavior and prompts poisoning (OWASP GenAI Top 10). Maintain audit log.',
+				contracts: [],
+				rpc_endpoints: [],
+				constants: {
+					max_consecutive_errors: 3,
+					max_tool_execution_time_sec: 30,
+					sandbox_type: 'gVisor'
+				},
+				safety_guards: [
+					{ rule: 'require_human_approval_for_destructive_actions', max_limit: 1, action_on_breach: 'halt' },
+					{ rule: 'max_execution_duration', max_limit: 30, action_on_breach: 'kill_process' }
+				],
+				content_ru: `Коэволюция в многоагентных ИИ-системах (MAS) представляет собой взаимозависимый процесс адаптации, в котором действия одного агента непосредственно влияют на состояние, стимулы и правила поведения других.
+
+### 1. Архитектура общего поля (Blackboard) и аудит
+Децентрализованная координация без общего координационного слоя склонна к скрытому сговору (collusion) и неконтролируемому дрейфу поведения. 
+- **Blackboard (Общая доска)**: Все агенты публикуют свои планы, промежуточные выводы и запросы к инструментам на едином проверяемом реестре. Это обеспечивает 100% прозрачность и наблюдаемость.
+- **Двухэтапный аудит**: Любое решение, выгружаемое агентом, валидируется независимой ролью критика/аудитора перед совершением действий.
+
+### 2. Детерминированный Policy Gate (Шлюз политик)
+Policy Gate действует на уровне выполнения инструментов. Агенту запрещено напрямую взаимодействовать с внешним миром:
+- **Фильтрация интентов**: Любая команда или API-запрос проверяются на соответствие правам роли (схема passports v1) и жестким лимитам на расход токенов.
+- **Human-in-the-Loop**: Любые действия деструктивного характера (удаление данных, транзакции, изменение прав доступа) требуют ручного аппрува оператора.
+
+### 3. Изоляция исполнения (Sandboxing)
+Для снижения рисков prompt-инъекций (OWASP GenAI Top 10) и удаленного выполнения произвольного кода (RCE), запуск Playwright-клиентов и пользовательских скриптов производится в песочницах:
+- **gVisor**: Использование прикладного ядра, перехватывающего системные вызовы контейнера, для изоляции хост-ОС.
+- **Firecracker**: Быстрые и легкие микро-VM с изоляцией на уровне гипервизора (KVM).
+- **seccomp**: Строгая фильтрация разрешенных системных вызовов в Linux.`
+			}
 		}
 	];
 }
