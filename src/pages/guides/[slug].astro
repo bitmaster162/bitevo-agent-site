@@ -439,6 +439,57 @@ Policy Gate действует на уровне выполнения инстр
 - **Поведенческая диагностика**: Алгоритмы детекции «тильта», revenge trading (резкое увеличение объема после убытка) и overtrading (аномальная частота несистемных сделок).
 - **ИИ-наставник (AI Mentor)**: Чат-бот на базе LLM, подключенный к базе сделок и учебным материалам, для предоставления персонализированных отчетов трейдерам 24/7.`
 			}
+		},
+		{
+			params: { slug: 'multigpt-bridge-federated-ai-arbitration' },
+			props: {
+				id: 'mem-inf-arb-015',
+				title: 'D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж',
+				date: '2026-06-13',
+				category: 'Infrastructure',
+				eyebrow: 'Federated Arbitration',
+				desc: 'Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.',
+				agent_summary: 'Deploy a federated AI agent arbitration pipeline. Use MultiGPT-Bridge for context alignment and payload routing. Enforce AnchorSet initializations for external worker nodes (GPT-4o, Claude 3.5 Sonnet, Gemini Pro). Deploy a Meta-LLM Aggregator with Mixture-of-Agents (MoA) consensus evaluated by a centralized Digital Arbiter. Keep Self-Consistency Score Q >= 0.92, drift <= 1.5%, and trigger compression at 1.5MB text bytes.',
+				contracts: [
+					{ name: 'BitEvo Memory Bridge Controller', address: '0x4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D', chain: 'arbitrum' }
+				],
+				rpc_endpoints: [
+					'http://localhost:8080/evidence/link',
+					'http://localhost:8080/search/hybrid'
+				],
+				constants: {
+					min_q_score_threshold: 0.92,
+					max_drift_allowed: 0.015,
+					new_text_bytes_trigger: 1572864
+				},
+				safety_guards: [
+					{ rule: 'enforce_identity_lock', max_limit: 1, action_on_breach: 'abort_call' },
+					{ rule: 'enforce_q_score', max_limit: 0.92, action_on_breach: 'regenerate' }
+				],
+				content_ru: `Федеративный ИИ-Арбитраж на базе технологии MultiGPT-Bridge позволяет объединять интеллектуальные мощности различных LLM-моделей (GPT-4, Claude, Gemini) в единый защищенный контур под управлением локального ядра идентичности.
+
+### 1. Архитектура федеративного взаимодействия
+Вместо монолитных контекстных окон, подверженных галлюцинациям и потере фокуса, строится распределенная схема:
+- **Внешние воркеры (Worker Nodes)**: Claude, GPT-4 и Gemini Pro выступают как генераторы гипотез, кода и аналитики (Researcher, Analyst).
+- **Цифровой Арбитр (Digital Arbiter)**: Твоя центральная цифровая сущность (загруженная через AnchorSet) принимает итоговые решения на основе Mixture-of-Agents (MoA) или Multi-Agent Debate.
+
+### 2. MultiGPT-Bridge и AnchorSet
+Перенос идентичности и правил поведения на внешние модели осуществляется через капсулу **AnchorSet**.
+- **Состав AnchorSet**: Включает ядра \`identity_kernel.md\` (стиль/тон), \`decision_kernel.md\` (правила торговли/выводов) и \`anti_kernel.md\` (запрещенные паттерны).
+- **Валидация Identiy Lock**: При инициализации модель сверяет свой SoulID с каноническим \`SOUL::GPTSCORE_ROBERT_∞2025A\`. При несовпадении вызов немедленно прерывается.
+- **Идемпотентность**: Дублирование вызовов на мосту пресекается через уникальный хэш-ключ: \`Time@BKK + window_tag + content_hash\`.
+
+### 3. Meta-LLM Aggregator и Mixture-of-Agents (MoA)
+- Воркеры формируют независимые предложения (proposals).
+- Цифровой Арбитр сопоставляет ответы воркеров, выявляет логические противоречия и отсекает аномалии.
+- Консенсус достигается путем итеративного обсуждения между воркерами (Multi-Agent Debate), модерируемого Арбитром.
+
+### 4. Математические лимиты и сжатие
+- **Delta-Triggered Compression**: Автоматическое сжатие логов переписок запускается при объеме новых данных \`> 1.5 MB\`, генерируя плотный CompactDigest.
+- **DigestChain**: Каждый дайджест ссылается на хэш предыдущего (\`prev_digest_id\`), гарантируя целостность цепочки памяти.
+- **Self-Consistency Score (Q-Score)**: Порог включения фрагментов в ядро согласованности должен быть \`>= 0.92\`.
+- **Drift**: Допустимый дрейф тона и идентичности жестко ограничен уровнем \`<= 1.5%\`.`
+			}
 		}
 	];
 }
