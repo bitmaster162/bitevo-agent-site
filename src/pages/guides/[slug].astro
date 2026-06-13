@@ -264,6 +264,54 @@ export function getStaticPaths() {
 ### 3. Автоматизация в Windows Task Scheduler
 Для автоматического запуска используется планировщик Windows. Регистрация задачи выполняется через PowerShell-сценарий \`BIN/setup_postgres_backup_cron.ps1\`, который настраивает интерактивный запуск от имени текущего пользователя раз в сутки.`
 			}
+		},
+		{
+			params: { slug: 'fleet-coordinator-drift-monitoring' },
+			props: {
+				id: 'mem-gov-flt-011',
+				title: 'D11: Fleet Coordinator и технический дрейф',
+				date: '2026-06-13',
+				category: 'Governance',
+				eyebrow: 'Fleet Coordination',
+				desc: 'Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.',
+				agent_summary: 'Fleet Coordinator protocol. Reconcile fleet servers (arena-vps, win185, fin35, old144) and agents state against fleet_registry.json. Detect and log technical drifts D1-D8, output unified_state.json and unified_state.js, and post audit trail observations to BitEvo API.',
+				contracts: [],
+				rpc_endpoints: [
+					'http://localhost:8080/journal/entries'
+				],
+				constants: {
+					fleet_check_interval_minutes: 15,
+					hosts_count: 4,
+					drift_rules_count: 8,
+					state_output_file: "fleet/unified_state.json"
+				},
+				safety_guards: [
+					{ rule: 'connectivity_guard_isolated_failures', max_limit: 1, action_on_breach: 'set_unknown' },
+					{ rule: 'zero_secrets_leaked_check', max_limit: 0, action_on_breach: 'block_write' }
+				],
+				content_ru: `Протокол Fleet Coordinator описывает правила и механизмы координации над всем флотом серверов, проектов и агентов в экосистеме Continuity OS.
+
+### 1. Архитектура и состав флота
+Координатор сидит поверх существующих реестров и агрегирует живое состояние из 4 серверов:
+- **arena-vps** (34.70.171.152) — Sovereign Arena, запуск paper-тестов стратегий.
+- **win185** (185.231.154.149) — BitEvo API, PostgreSQL, Inner Circle и боты автоматизации.
+- **fin35** (35.217.10.153) — OKX NFT бот, Dashboard и парсеры.
+- **old144** (144.124.250.14) — устаревший legacy-хост.
+
+### 2. Алгоритм выявления дрейфа (Drift-Register)
+Координатор сверяет реальное состояние хостов с реестром \`fleet_registry.json\` и выявляет 8 типов рассогласования (дрейфа):
+- **D1**: Рассогласование версий \`state.json\`, \`self_model.json\` и вершины ledger. Решается через \`BIN/continuity.py doctor\`.
+- **D2**: Расхождение числа активных \`open_loops\` в \`self_model\` и в файле реестра.
+- **D3**: Статус \`defunct\` для активных инстансов BitEvo в файле инфраструктуры.
+- **D4**: Расхождение флагов жизни/смерти (ALIVE/DEAD) на legacy-хосте 144.
+- **D5**: Конфликт указателей «Brain» (активный parasites на fin35 против мертвого на 144).
+- **D6**: Незакрепленный канонический хост для Inner Circle.
+- **D7**: Отсутствие чекпоинтов запуска Inner Circle в ledger.
+- **D8**: Отсутствие хоста arena-vps в \`infrastructure.json\`.
+
+### 3. Автоматизация запуска и выгрузка результатов
+Скрипт \`fleet_coordinator.py\` запускается каждые 15 минут через Windows Task Scheduler (задача \`Fleet-Coordinator\`). Результаты записываются в \`unified_state.json\` и \`unified_state.js\` (для отображения в Mission Control без проблем с CORS). При наличии ключа \`BITEVO_API_KEY\` отчет отсылается в централизованный аудит-лог BitEvo.`
+			}
 		}
 	];
 }
