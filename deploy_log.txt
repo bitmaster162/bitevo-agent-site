@@ -1,1 +1,10 @@
 === deploy start 13.06.2026 13:09:23,83 
+[main 51f8202] site: fix consulting + add ai-audit and crypto-risk-desk landings
+ 5 files changed, 410 insertions(+), 186 deletions(-)
+ create mode 100644 deploy_log.txt
+ create mode 100644 deploy_site.bat
+ create mode 100644 src/pages/ai-audit.astro
+ create mode 100644 src/pages/crypto-risk-desk.astro
+To https://github.com/bitmaster162/bitevo-agent-site.git
+   bf1d5c2..51f8202  main -> main
+=== DONE exit=0 
