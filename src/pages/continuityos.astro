@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="ContinuityOS — durable memory + continuity for AI agents">
+	<section class="lp">
+		<div class="container">
+
+			<div class="hero">
+				<div class="kicker">Open-source · Apache-2.0 · local-first</div>
+				<h1 class="display">ContinuityOS</h1>
+				<p class="lead">
+					Долговременная <strong>память + continuity-слой</strong> для AI-агентов и человека.
+					Гибридный recall (структура + вектор) плюс canon, frontiers, open loops, checkpoints,
+					анти-дрифт doctor и handoff-паки. Один локальный SQLite. Ничего не уходит наружу.
+				</p>
+				<a href="#quickstart" class="cta">pip install continuityos</a>
+				<div class="proofbar">MCP-сервер для Claude Desktop / Claude Code · ядро на stdlib, ноль обязательных зависимостей · Apache-2.0</div>
+			</div>
+
+			<h2 class="sec">Зачем</h2>
+			<div class="grid3">
+				<div class="c"><h3>🔀 Гибридный recall</h3><p>Только keyword — мимо перефразировок; только вектор — мимо точных фактов. ContinuityOS смешивает оба.</p></div>
+				<div class="c"><h3>🗂️ Структура как папки</h3><p>namespace: identity / projects / rules / facts / events / notes. Поиск можно сузить, человек может листать.</p></div>
+				<div class="c"><h3>🧭 Continuity, не только память</h3><p>canon (медленные истины), frontiers (1 trunk+1 cash+1 lab), open loops, checkpoints, doctor (анти-дрифт), handoff.</p></div>
+				<div class="c"><h3>🔒 Local-first</h3><p>Один SQLite-файл на твоём диске. Ни облака, ни аккаунта, ни телеметрии. Apache-2.0.</p></div>
+			</div>
+
+			<h2 class="sec" id="quickstart">Quick start</h2>
+			<pre class="code">pip install continuityos
+
+cos remember "Robert prefers Apache-2.0" -n rules -t license
+cos recall  "which license should I pick?"
+# 0.54 [rules] Robert prefers Apache-2.0  (semantic + keyword)
+
+# continuity-слой:
+cos frontier cash inner-circle
+cos checkpoint --summary "shipped v0.2" --next "update sites" --proof continuity.py
+cos doctor       # ✅ healthy 5/5  (или ловит дрифт)
+cos handoff      # блок контекста для новой сессии</pre>
+
+			<h2 class="sec">MCP — агент сам помнит и держит нить</h2>
+			<pre class="code">{`{
+  "mcpServers": {
+    "continuityos": {
+      "command": "cos",
+      "args": ["--db", "~/.continuityos/memory.db", "serve"]
+    }
+  }
+}`}</pre>
+			<p class="muted">Тулзы: remember · recall · context · forget · list_namespaces · checkpoint · handoff · doctor · set_frontier.</p>
+
+			<div class="cta-box">
+				<h3>Open-source, Apache-2.0</h3>
+				<p>Свободно встраивай куда угодно, включая коммерческое. Никаких данных мы не собираем. Часть стека <a href="/">BitEvo</a> — тот же continuity-фундамент, что держит флот автономных агентов.</p>
+				<a href="/" class="cta">← BitEvo Durable AI Orchestrator</a>
+			</div>
+
+		</div>
+	</section>
+
+	<style>
+		.lp { padding-block: 50px 70px; }
+		.hero { text-align:center; max-width:760px; margin:0 auto 50px; }
+		.kicker { color:var(--gold); font-size:.75rem; font-weight:900; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; }
+		.display { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,6vw,4rem); font-weight:900; margin:0 0 18px;
+			background:linear-gradient(90deg,#78afd0,#7da89b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+		.lead { font-family:'Lora',serif; color:var(--muted); font-size:1.12rem; margin:0 auto 26px; }
+		.cta { display:inline-flex; align-items:center; min-height:44px; padding:0 24px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; font-size:.82rem;
+			background:linear-gradient(135deg,#78afd033,#3f56601a); border:1px solid rgba(126,160,170,.3); border-radius:10px; color:var(--ink); }
+		.cta:hover { border-color:var(--gold); }
+		.proofbar { margin-top:22px; font-size:.78rem; color:var(--muted); }
+		.sec { font-size:1rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gold); margin:44px 0 20px; text-align:center; }
+		.grid3 { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+		.c { background:var(--paper-soft); border:1px solid var(--line); border-radius:10px; padding:22px; }
+		.c h3 { font-family:'Playfair Display',serif; font-size:1.15rem; margin:0 0 10px; }
+		.c p { color:var(--muted); font-size:.86rem; margin:0; }
+		.code { background:#070d10; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; font-size:.82rem; color:#cfe6f2; font-family:ui-monospace,monospace; }
+		.muted { color:var(--muted); font-size:.85rem; }
+		.cta-box { background:linear-gradient(135deg,#78afd014,#3f56600a); border:1px solid var(--line); border-radius:12px; padding:28px; margin-top:44px; text-align:center; }
+		.cta-box h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin:0 0 10px; }
+		.cta-box p { color:var(--muted); max-width:600px; margin:0 auto 18px; }
+	</style>
+</Layout>

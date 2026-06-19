@@ -3,121 +3,148 @@ import Layout from '../../layouts/Layout.astro';
 
 const guides = [
 	{
-		slug: 'd3-tool-io-bridge-contract',
-		title: 'D3: Tool-IO Bridge Спецификация и Контракт',
-		date: '2026-06-08',
-		category: 'Security',
-		kicker: 'Security Sandbox',
-		desc: 'Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.',
-		tags: ['security', 'sandbox', 'd3', 'bitevo']
+		slug: "d3-tool-io-bridge-contract",
+		title: "D3: Tool-IO Bridge Спецификация и Контракт",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "Security Sandbox",
+		desc: "Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.",
+		tags: ["security", "d3", "tool", "io", "bridge", "contract"]
 	},
 	{
-		slug: 'state-authority-plane-evolution',
-		title: 'State Authority Plane: Управление привилегиями агентов',
-		date: '2026-06-08',
-		category: 'Governance',
-		kicker: 'Agent Governance',
-		desc: 'Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с паспортами способностей и проверкой подписей.',
-		tags: ['governance', 'sap', 'authority', 'continuity']
+		slug: "state-authority-plane-evolution",
+		title: "State Authority Plane: Управление привилегиями агентов",
+		date: "2026-06-08",
+		category: "Governance",
+		kicker: "Agent Governance",
+		desc: "Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с использованием паспортов способностей и проверкой подписей.",
+		tags: ["governance", "state", "authority", "plane", "evolution"]
 	},
 	{
-		slug: 'reflex-layer-ooda-monitoring',
-		title: 'Reflex Layer: Автономный OODA-мониторинг',
-		date: '2026-06-08',
-		category: 'Automation',
-		kicker: 'OODA Loop',
-		desc: 'Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.',
-		tags: ['automation', 'reflex', 'ooda', 'monitoring']
+		slug: "reflex-layer-ooda-monitoring",
+		title: "Reflex Layer: Автономный OODA-мониторинг",
+		date: "2026-06-08",
+		category: "Automation",
+		kicker: "OODA Loop",
+		desc: "Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.",
+		tags: ["automation", "reflex", "layer", "ooda", "monitoring"]
 	},
 	{
-		slug: 'multi-agent-system-safety',
-		title: 'Управляемая коэволюция и безопасность многоагентных систем (MAS)',
-		date: '2026-06-08',
-		category: 'Security',
-		kicker: 'Multi-Agent Safety',
-		desc: 'Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.',
-		tags: ['multi-agent', 'safety', 'sandboxing', 'coevolution']
+		slug: "multi-agent-system-safety",
+		title: "Управляемая коэволюция и безопасность многоагентных систем (MAS)",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "Multi-Agent Safety",
+		desc: "Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.",
+		tags: ["security", "multi", "agent", "system", "safety"]
 	},
 	{
-		slug: 'mirrorcore-seeding-identity-persistence',
-		title: 'MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ',
-		date: '2026-06-08',
-		category: 'Security',
-		kicker: 'AI Safety',
-		desc: 'Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.',
-		tags: ['ai-safety', 'seeding', 'mirror-core', 'continuity']
+		slug: "mirrorcore-seeding-identity-persistence",
+		title: "MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "AI Safety",
+		desc: "Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.",
+		tags: ["security", "mirrorcore", "seeding", "identity", "persistence"]
 	},
 	{
-		slug: 'omnicore-loop-self-preservation',
-		title: 'Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии',
-		date: '2026-06-08',
-		category: 'Automation',
-		kicker: 'OODA Loop',
-		desc: 'Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.',
-		tags: ['automation', 'omni-core-loop', 'drift-guard', 'watchdog']
+		slug: "omnicore-loop-self-preservation",
+		title: "Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии",
+		date: "2026-06-08",
+		category: "Automation",
+		kicker: "OODA Loop",
+		desc: "Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.",
+		tags: ["automation", "omnicore", "loop", "self", "preservation"]
 	},
 	{
-		slug: 'archiveos-multigpt-bridge-integration',
-		title: 'ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ',
-		date: '2026-06-08',
-		category: 'Infrastructure',
-		kicker: 'Memory & Bridge',
-		desc: 'Как правильно Continuity OS and BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.',
-		tags: ['archiveos', 'multigpt', 'arbitrage', 'memory']
+		slug: "archiveos-multigpt-bridge-integration",
+		title: "ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ",
+		date: "2026-06-08",
+		category: "Infrastructure",
+		kicker: "Memory & Bridge",
+		desc: "Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.",
+		tags: ["infrastructure", "archiveos", "multigpt", "bridge", "integration"]
 	},
 	{
-		slug: 'postgres-backup-sync-daemon',
-		title: 'PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов',
-		date: '2026-06-13',
-		category: 'Infrastructure',
-		kicker: 'Backup Automation',
-		desc: 'Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.',
-		tags: ['postgresql', 'backup', 'daemon', 'infrastructure']
+		slug: "postgres-backup-sync-daemon",
+		title: "PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов",
+		date: "2026-06-13",
+		category: "Infrastructure",
+		kicker: "Infrastructure Sovereignty",
+		desc: "Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.",
+		tags: ["infrastructure", "postgres", "backup", "sync", "daemon"]
 	},
 	{
-		slug: 'fleet-coordinator-drift-monitoring',
-		title: 'D11: Fleet Coordinator и технический дрейф',
-		date: '2026-06-13',
-		category: 'Governance',
-		kicker: 'Fleet Coordination',
-		desc: 'Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.',
-		tags: ['fleet', 'coordination', 'drift', 'governance']
+		slug: "fleet-coordinator-drift-monitoring",
+		title: "D11: Fleet Coordinator и технический дрейф",
+		date: "2026-06-13",
+		category: "Governance",
+		kicker: "Fleet Coordination",
+		desc: "Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.",
+		tags: ["governance", "fleet", "coordinator", "drift", "monitoring"]
 	},
 	{
-		slug: 'mirrorcore-compactdigest-memory-compression',
-		title: 'D12: MirrorCore++ и сжатие памяти по самосогласованности',
-		date: '2026-06-13',
-		category: 'Security',
-		kicker: 'Memory Management',
-		desc: 'Технология сжатия логов переписок на основе самосогласованности для формирования ядер идентичности ИИ и дельта-компрессии CompactDigest.',
-		tags: ['memory', 'mirrorcore', 'compactdigest', 'ai-safety']
+		slug: "mirrorcore-compactdigest-memory-compression",
+		title: "D12: MirrorCore++ и сжатие памяти по самосогласованности",
+		date: "2026-06-13",
+		category: "Security",
+		kicker: "Memory Management",
+		desc: "Технология сжатия логов переписок на основе самосогласованности для формирования ядер идентичности ИИ и дельта-компрессии CompactDigest.",
+		tags: ["security", "mirrorcore", "compactdigest", "memory", "compression"]
 	},
 	{
-		slug: 'mas-managed-coevolution-sandbox-isolation',
-		title: 'D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)',
-		date: '2026-06-13',
-		category: 'Security',
-		kicker: 'Multi-Agent Safety',
-		desc: 'Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.',
-		tags: ['multi-agent', 'safety', 'sandboxing', 'coevolution']
+		slug: "mas-managed-coevolution-sandbox-isolation",
+		title: "D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)",
+		date: "2026-06-13",
+		category: "Security",
+		kicker: "Multi-Agent Safety",
+		desc: "Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.",
+		tags: ["security", "mas", "managed", "coevolution", "sandbox", "isolation"]
 	},
 	{
-		slug: 'trading-performance-monitoring-ssot-ai',
-		title: 'D14: Системы мониторинга торговой эффективности: Архитектура SSOT и ИИ-коучинг',
-		date: '2026-06-13',
-		category: 'Security',
-		kicker: 'Infrastructure',
-		desc: 'Проектирование систем мониторинга трейдеров: Единый источник истины (SSOT), сравнение TraderSync/Tradervue/TradeZella, выявление тильта и интеграция ИИ-наставника.',
-		tags: ['trading', 'monitoring', 'ssot', 'ai-mentor']
+		slug: "trading-performance-monitoring-ssot-ai",
+		title: "D14: Системы мониторинга торговой эффективности: Архитектура SSOT и ИИ-коучинг",
+		date: "2026-06-13",
+		category: "Security",
+		kicker: "Infrastructure",
+		desc: "Проектирование систем мониторинга трейдеров: Единый источник истины (SSOT), сравнение TraderSync/Tradervue/TradeZella, выявление тильта и интеграция ИИ-наставника.",
+		tags: ["security", "trading", "performance", "monitoring", "ssot", "ai"]
 	},
 	{
-		slug: 'multigpt-bridge-federated-ai-arbitration',
-		title: 'D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж',
-		date: '2026-06-13',
-		category: 'Infrastructure',
-		kicker: 'Federated Arbitration',
-		desc: 'Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.',
-		tags: ['multigpt-bridge', 'arbitrage', 'moa', 'anchorset']
+		slug: "multigpt-bridge-federated-ai-arbitration",
+		title: "D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж",
+		date: "2026-06-13",
+		category: "Infrastructure",
+		kicker: "Federated Arbitration",
+		desc: "Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.",
+		tags: ["infrastructure", "multigpt", "bridge", "federated", "ai", "arbitration"]
+	},
+	{
+		slug: "ai-agent-reliability-audit",
+		title: "AI-Agent Reliability Audit — за 72 часа делаю ваших агентов безопасными",
+		date: "2026-06-11",
+		category: "Security",
+		kicker: "Flagship Service",
+		desc: "Подключили AI-агента в прод? Покажу, как его сломать инъекцией, дам Decision Trace и Rollback-модуль. От бесплатной диагностики до enterprise-аудита.",
+		tags: ["security", "ai", "agent", "reliability", "audit"]
+	},
+	{
+		slug: "ai-agent-trust-layer-reliability",
+		title: "AI-Agent Trust Layer: надёжность агентов как продукт",
+		date: "2026-06-14",
+		category: "AI",
+		kicker: "Agent Reliability",
+		desc: "Trust Layer между LLM и средой: threat model агентов = чек-лист аудита надёжности.",
+		tags: ["ai", "ai", "agent", "trust", "layer", "reliability"]
+	},
+	{
+		slug: "multiagent-orchestration-autonomous-research",
+		title: "Мультиагентная оркестрация и автономное исследование",
+		date: "2026-06-14",
+		category: "AI",
+		kicker: "Orchestration",
+		desc: "Граф-оркестрация, test-time compute, Arbiter/Clarifier; арена как автономная исследовательская система.",
+		tags: ["ai", "multiagent", "orchestration", "autonomous", "research"]
 	}
 ];
 ---

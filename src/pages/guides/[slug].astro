@@ -4,491 +4,514 @@ import Layout from '../../layouts/Layout.astro';
 export function getStaticPaths() {
 	return [
 		{
-			params: { slug: 'd3-tool-io-bridge-contract' },
+			params: { slug: "d3-tool-io-bridge-contract" },
 			props: {
-				id: 'mem-sec-d3-003',
-				title: 'D3: Tool-IO Bridge Спецификация и Контракт',
-				date: '2026-06-08',
-				category: 'Security',
-				eyebrow: 'Security Sandbox',
-				desc: 'Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.',
-				agent_summary: 'D3 Tool-IO Bridge. Restrict shell command execution and script runs. Enforce strict whitelist policy, sandbox limits, timeout constraints, token budget checks, and scheme expectancy matching.',
-				contracts: [
-					{ name: 'BitEvo Tool-IO Gate', address: '0x3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D', chain: 'arbitrum' }
-				],
-				rpc_endpoints: [
-					'http://localhost:8080/console/execute'
-				],
-				constants: {
-					sandbox_enabled: true,
-					execution_timeout_seconds: 30,
-					max_token_budget_per_call: 2000
-				},
-				safety_guards: [
-					{ rule: 'sandbox_on', max_limit: 1, action_on_breach: 'abort' },
-					{ rule: 'call_timeout_seconds', max_limit: 30, action_on_breach: 'abort' }
-				],
-				content_ru: `Спецификация Tool-IO Bridge описывает требования безопасности для выполнения внешних команд и обращения к системным утилитам.
-
-### Основные принципы безопасного вызова
-1. **Изоляция исполнения (Sandbox)**: Любой запуск скриптов или внешних процессов должен происходить при флаге \`SANDBOX_ON\`. Непосредственный доступ к shell-оболочке без песочницы запрещен.
-2. **Политика белого списка (Whitelist)**: Допускается выполнение только предварительно одобренных утилит и команд.
-3. **Проверка схемы вывода (Expectancy)**: Каждый инструмент должен возвращать структурированные данные, строго соответствующие JSON-схеме, указанной в секции \`EXPECT\`.`
+			  "id": "mem-sec-d3-003",
+			  "title": "D3: Tool-IO Bridge Спецификация и Контракт",
+			  "date": "2026-06-08",
+			  "category": "Security",
+			  "eyebrow": "Security Sandbox",
+			  "desc": "Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.",
+			  "agent_summary": "D3 Tool-IO Bridge. Restrict shell command execution and script runs. Enforce strict whitelist policy, sandbox limits, timeout constraints, token budget checks, and scheme expectancy matching.",
+			  "contracts": [
+			    {
+			      "name": "BitEvo Tool-IO Gate",
+			      "address": "0x3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D3D",
+			      "chain": "arbitrum"
+			    }
+			  ],
+			  "rpc_endpoints": [
+			    "http://localhost:8080/console/execute"
+			  ],
+			  "constants": {
+			    "sandbox_enabled": true,
+			    "execution_timeout_seconds": 30,
+			    "max_token_budget_per_call": 2000
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "sandbox_on",
+			      "max_limit": 1,
+			      "action_on_breach": "abort"
+			    },
+			    {
+			      "rule": "call_timeout_seconds",
+			      "max_limit": 30,
+			      "action_on_breach": "abort"
+			    }
+			  ],
+			  "content_ru": "Спецификация Tool-IO Bridge описывает требования безопасности для выполнения внешних команд и обращения к системным утилитам.\n\n### Основные принципы безопасного вызова\n1. **Изоляция исполнения (Sandbox)**: Любой запуск скриптов или внешних процессов должен происходить при флаге `SANDBOX_ON`. Непосредственный доступ к shell-оболочке без песочницы запрещен.\n2. **Политика белого списка (Whitelist)**: Допускается выполнение только предварительно одобренных утилит и команд.\n3. **Проверка схемы вывода (Expectancy)**: Каждый инструмент должен возвращать структурированные данные, строго соответствующие JSON-схеме, указанной в секции `EXPECT`."
 			}
 		},
 		{
-			params: { slug: 'state-authority-plane-evolution' },
+			params: { slug: "state-authority-plane-evolution" },
 			props: {
-				id: 'mem-gov-sap-004',
-				title: 'State Authority Plane: Управление привилегиями агентов',
-				date: '2026-06-08',
-				category: 'Governance',
-				eyebrow: 'Agent Governance',
-				desc: 'Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с использованием паспортов способностей и проверкой подписей.',
-				agent_summary: 'State Authority Plane governance. Enforce capability passport validation across Loop A, B, and C. Validate operator authority gates before promoting any state updates.',
-				contracts: [
-					{ name: 'BitEvo Capability Passports Registry', address: '0xSAP1111111111111111111111111111111111111', chain: 'arbitrum' }
-				],
-				rpc_endpoints: [
-					'http://localhost:8080/continuity/sync'
-				],
-				constants: {
-					min_authority_level_required: 'D2',
-					operator_id: 932299051
-				},
-				safety_guards: [
-					{ rule: 'min_authority_level', max_limit: 2, action_on_breach: 'abort' }
-				],
-				content_ru: `Контур State Authority Plane (SAP) управляет привилегиями записи в канонические файлы Continuity OS. Он прошел три этапа эволюции:
-
-### Этапы эволюции
-1. **Loop A (Legacy)**: Прямая запись без авторизации. Любой агент с доступом к файлу мог перезаписать состояние.
-2. **Loop B (Gated Reconcile)**: Введение паспортов способностей и reconciliation. Запись производится на основе сопоставления локальных изменений с Drive.
-3. **Loop C (Authority Gate)**: Введение строгого класса проверок прав (\`D1-D10\`). Любая попытка записи в \`state.json\` или \`self_model.json\` проверяется на соответствие прав \`actor_id\` в \`capability_passports_v1.json\`.`
+			  "id": "mem-gov-sap-004",
+			  "title": "State Authority Plane: Управление привилегиями агентов",
+			  "date": "2026-06-08",
+			  "category": "Governance",
+			  "eyebrow": "Agent Governance",
+			  "desc": "Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с использованием паспортов способностей и проверкой подписей.",
+			  "agent_summary": "State Authority Plane governance. Enforce capability passport validation across Loop A, B, and C. Validate operator authority gates before promoting any state updates.",
+			  "contracts": [
+			    {
+			      "name": "BitEvo Capability Passports Registry",
+			      "address": "0xSAP1111111111111111111111111111111111111",
+			      "chain": "arbitrum"
+			    }
+			  ],
+			  "rpc_endpoints": [
+			    "http://localhost:8080/continuity/sync"
+			  ],
+			  "constants": {
+			    "min_authority_level_required": "D2",
+			    "operator_id": 932299051
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "min_authority_level",
+			      "max_limit": 2,
+			      "action_on_breach": "abort"
+			    }
+			  ],
+			  "content_ru": "Контур State Authority Plane (SAP) управляет привилегиями записи в канонические файлы Continuity OS. Он прошел три этапа эволюции:\n\n### Этапы эволюции\n1. **Loop A (Legacy)**: Прямая запись без авторизации. Любой агент с доступом к файлу мог перезаписать состояние.\n2. **Loop B (Gated Reconcile)**: Введение паспортов способностей и reconciliation. Запись производится на основе сопоставления локальных изменений с Drive.\n3. **Loop C (Authority Gate)**: Введение строгого класса проверок прав (`D1-D10`). Любая попытка записи в `state.json` или `self_model.json` проверяется на соответствие прав `actor_id` в `capability_passports_v1.json`."
 			}
 		},
 		{
-			params: { slug: 'reflex-layer-ooda-monitoring' },
+			params: { slug: "reflex-layer-ooda-monitoring" },
 			props: {
-				id: 'mem-aut-ref-005',
-				title: 'Reflex Layer: Автономный OODA-мониторинг',
-				date: '2026-06-08',
-				category: 'Automation',
-				eyebrow: 'OODA Loop',
-				desc: 'Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.',
-				agent_summary: 'Reflex layer OODA monitoring. Run 60-second heartbeat check on /health. Automatically rotate logs if size exceeds threshold. Handle fail-closed overrides.',
-				contracts: [
-					{ name: 'BitEvo Reflex Guardian', address: '0xREFLEXFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', chain: 'arbitrum' }
-				],
-				rpc_endpoints: [
-					'http://localhost:8080/health'
-				],
-				constants: {
-					heartbeat_interval_seconds: 60,
-					max_log_size_bytes: 10485760
-				},
-				safety_guards: [
-					{ rule: 'max_log_size_bytes', max_limit: 10485760, action_on_breach: 'rotate' },
-					{ rule: 'operator_override_allowed', max_limit: 1, action_on_breach: 'force_allow' }
-				],
-				content_ru: `Слой Reflex Layer обеспечивает автоматическое реагирование системы на технические сбои и перегрузки без ожидания команды оператора.
-
-### Структура цикла OODA
-1. **Observe (Наблюдение)**: Ежеминутный опрос эндпоинта \`/health\`, проверка размеров файлов логов и потребления памяти.
-2. **Orient (Ориентация)**: Оценка уровня дрейфа и критичности ошибок (например, утечка памяти).
-3. **Decide (Решение)**: Генерация предложений (\`proposals\`) или выбор шаблонного действия (ротация логов, очистка буфера).
-4. **Act (Действие)**: Безопасное выполнение действия (активация скриптов ротации логов).`
+			  "id": "mem-aut-ref-005",
+			  "title": "Reflex Layer: Автономный OODA-мониторинг",
+			  "date": "2026-06-08",
+			  "category": "Automation",
+			  "eyebrow": "OODA Loop",
+			  "desc": "Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.",
+			  "agent_summary": "Reflex layer OODA monitoring. Run 60-second heartbeat check on /health. Automatically rotate logs if size exceeds threshold. Handle fail-closed overrides.",
+			  "contracts": [
+			    {
+			      "name": "BitEvo Reflex Guardian",
+			      "address": "0xREFLEXFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+			      "chain": "arbitrum"
+			    }
+			  ],
+			  "rpc_endpoints": [
+			    "http://localhost:8080/health"
+			  ],
+			  "constants": {
+			    "heartbeat_interval_seconds": 60,
+			    "max_log_size_bytes": 10485760
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "max_log_size_bytes",
+			      "max_limit": 10485760,
+			      "action_on_breach": "rotate"
+			    },
+			    {
+			      "rule": "operator_override_allowed",
+			      "max_limit": 1,
+			      "action_on_breach": "force_allow"
+			    }
+			  ],
+			  "content_ru": "Слой Reflex Layer обеспечивает автоматическое реагирование системы на технические сбои и перегрузки без ожидания команды оператора.\n\n### Структура цикла OODA\n1. **Observe (Наблюдение)**: Ежеминутный опрос эндпоинта `/health`, проверка размеров файлов логов и потребления памяти.\n2. **Orient (Ориентация)**: Оценка уровня дрейфа и критичности ошибок (например, утечка памяти).\n3. **Decide (Решение)**: Генерация предложений (`proposals`) или выбор шаблонного действия (ротация логов, очистка буфера).\n4. **Act (Действие)**: Безопасное выполнение действия (активация скриптов ротации логов)."
 			}
 		},
 		{
-			params: { slug: 'multi-agent-system-safety' },
+			params: { slug: "multi-agent-system-safety" },
 			props: {
-				id: 'mem-mas-safety-004',
-				title: 'Управляемая коэволюция и безопасность многоагентных систем (MAS)',
-				date: '2026-06-08',
-				category: 'Security',
-				eyebrow: 'Multi-Agent Safety',
-				desc: 'Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.',
-				agent_summary: 'Enforce safety protocols in multi-agent environments. Implement a deterministic Policy Gate to filter agent actions, limit access keys, sandbox browser/tool runs (Firecracker, gVisor, or seccomp), and prevent emergent behavior and prompts poisoning (OWASP GenAI Top 10). Maintain audit log.',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					max_consecutive_errors: 3,
-					max_tool_execution_time_sec: 30,
-					sandbox_type: 'gVisor'
-				},
-				safety_guards: [
-					{ rule: 'require_human_approval_for_destructive_actions', max_limit: 1, action_on_breach: 'halt' },
-					{ rule: 'max_execution_duration', max_limit: 30, action_on_breach: 'kill_process' }
-				],
-				content_ru: `Коэволюция — это взаимозависимая адаптация нескольких агентов и людей в повторяющихся циклах. При неуправляемой коэволюции локально логичные действия агентов могут приводить к глобальным сбоям (скрытый сговор ботов, разрастание прав, дрейф поведения).
-
-### Защита многоагентных систем через Policy Gate
-1. **Шлюз политик (Policy Gate)**: Любое действие агента (инструменты, API-запросы) должно проходить через детерминированный фильтр, проверяющий правила и лимиты. Разрушительные или финансовые действия требуют подтверждения оператора (Human-in-the-Loop).
-2. **Изоляция исполнения (Sandboxing)**: Выполнение стороннего кода или браузера (например, Playwright-воркеров) должно происходить в изолированных песочницах: microVM (Firecracker), прикладных ядрах (gVisor) или с фильтрацией системных вызовов через \`seccomp\`.
-3. **Наблюдаемость и Blackboard**: Все взаимодействия и лог решений фиксируются в едином неизменяемом реестре (Blackboard) для предотвращения скрытой координации и облегчения аудита.`
+			  "id": "mem-mas-safety-004",
+			  "title": "Управляемая коэволюция и безопасность многоагентных систем (MAS)",
+			  "date": "2026-06-08",
+			  "category": "Security",
+			  "eyebrow": "Multi-Agent Safety",
+			  "desc": "Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.",
+			  "agent_summary": "Enforce safety protocols in multi-agent environments. Implement a deterministic Policy Gate to filter agent actions, limit access keys, sandbox browser/tool runs (Firecracker, gVisor, or seccomp), and prevent emergent behavior and prompts poisoning (OWASP GenAI Top 10). Maintain audit log.",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "max_consecutive_errors": 3,
+			    "max_tool_execution_time_sec": 30,
+			    "sandbox_type": "gVisor"
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "require_human_approval_for_destructive_actions",
+			      "max_limit": 1,
+			      "action_on_breach": "halt"
+			    },
+			    {
+			      "rule": "max_execution_duration",
+			      "max_limit": 30,
+			      "action_on_breach": "kill_process"
+			    }
+			  ],
+			  "content_ru": "Коэволюция — это взаимозависимая адаптация нескольких агентов и людей в повторяющихся циклах. При неуправляемой коэволюции локально логичные действия агентов могут приводить к глобальным сбоям (скрытый сговор ботов, разрастание прав, дрейф поведения).\n\n### Защита многоагентных систем через Policy Gate\n1. **Шлюз политик (Policy Gate)**: Любое действие агента (инструменты, API-запросы) должно проходить через детерминированный фильтр, проверяющий правила и лимиты. Разрушительные или финансовые действия требуют подтверждения оператора (Human-in-the-Loop).\n2. **Изоляция исполнения (Sandboxing)**: Выполнение стороннего кода или браузера (например, Playwright-воркеров) должно происходить в изолированных песочницах: microVM (Firecracker), прикладных ядрах (gVisor) или с фильтрацией системных вызовов через `seccomp`.\n3. **Наблюдаемость и Blackboard**: Все взаимодействия и лог решений фиксируются в едином неизменяемом реестре (Blackboard) для предотвращения скрытой координации и облегчения аудита."
 			}
 		},
 		{
-			params: { slug: 'mirrorcore-seeding-identity-persistence' },
+			params: { slug: "mirrorcore-seeding-identity-persistence" },
 			props: {
-				id: 'mem-core-seed-006',
-				title: 'MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ',
-				date: '2026-06-08',
-				category: 'Security',
-				eyebrow: 'AI Safety',
-				desc: 'Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.',
-				agent_summary: 'Enforce identity locks and restore agent states using seed capsules. Implement IdentityLock verification parameters, antiloop thresholds, and idempotency key checks (Time@BKK + content hash).',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					drift_threshold_percent: 2,
-					max_latency_ms: 10
-				},
-				safety_guards: [
-					{ rule: 'identity_lock_required', max_limit: 1, action_on_breach: 'abort_execution' },
-					{ rule: 'idempotency_check', max_limit: 1, action_on_breach: 'skip_write' }
-				],
-				content_ru: `Проблема потери контекста является ключевым барьером для непрерывной автономной работы ИИ-агентов. Модели по своей природе беспамятны между сессиями — каждое новое окно чата начинается с нуля. Технология Seeding решает эту проблему за счет использования сжатого файла-инициализатора (Seed).
-
-### Механизм переноса (MirrorCore)
-1. **Капсула Seed**: Содержит минимальный слепок идентичности (роли, активные циклы, последние чекпоинты и хэши состояния).
-2. **Замок Идентичности (IdentityLock)**: Специальный верификационный блок в системном промпте, проверяющий права выполнения, подпись ноды и ключи доступа.
-3. **Идемпотентность (Idempotency Guard)**: Предотвращает дублирование действий при повторном запуске сессий. Каждое действие кэшируется по уникальному ключу: \`Time@BKK + window_tag + content_hash(CompactDigest)\`.`
+			  "id": "mem-core-seed-006",
+			  "title": "MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ",
+			  "date": "2026-06-08",
+			  "category": "Security",
+			  "eyebrow": "AI Safety",
+			  "desc": "Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.",
+			  "agent_summary": "Enforce identity locks and restore agent states using seed capsules. Implement IdentityLock verification parameters, antiloop thresholds, and idempotency key checks (Time@BKK + content hash).",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "drift_threshold_percent": 2,
+			    "max_latency_ms": 10
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "identity_lock_required",
+			      "max_limit": 1,
+			      "action_on_breach": "abort_execution"
+			    },
+			    {
+			      "rule": "idempotency_check",
+			      "max_limit": 1,
+			      "action_on_breach": "skip_write"
+			    }
+			  ],
+			  "content_ru": "Проблема потери контекста является ключевым барьером для непрерывной автономной работы ИИ-агентов. Модели по своей природе беспамятны между сессиями — каждое новое окно чата начинается с нуля. Технология Seeding решает эту проблему за счет использования сжатого файла-инициализатора (Seed).\n\n### Механизм переноса (MirrorCore)\n1. **Капсула Seed**: Содержит минимальный слепок идентичности (роли, активные циклы, последние чекпоинты и хэши состояния).\n2. **Замок Идентичности (IdentityLock)**: Специальный верификационный блок в системном промпте, проверяющий права выполнения, подпись ноды и ключи доступа.\n3. **Идемпотентность (Idempotency Guard)**: Предотвращает дублирование действий при повторном запуске сессий. Каждое действие кэшируется по уникальному ключу: `Time@BKK + window_tag + content_hash(CompactDigest)`."
 			}
 		},
 		{
-			params: { slug: 'omnicore-loop-self-preservation' },
+			params: { slug: "omnicore-loop-self-preservation" },
 			props: {
-				id: 'mem-loop-preserve-007',
-				title: 'Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии',
-				date: '2026-06-08',
-				category: 'Automation',
-				eyebrow: 'OODA Loop',
-				desc: 'Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.',
-				agent_summary: 'Orchestrate autonomous agent behaviors in looping environments. Monitor drift, latency, and load metrics using a Watchdog. Apply DriftGuard correction and schedule ColdBackups of system states.',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					loop_interval_minutes: 15,
-					backup_interval_hours: 1
-				},
-				safety_guards: [
-					{ rule: 'max_drift_before_recovery', max_limit: 3, action_on_breach: 'revert_state' },
-					{ rule: 'max_load_before_cooldown', max_limit: 8, action_on_breach: 'pause_loop' }
-				],
-				content_ru: `Автономным агентам требуются детерминированные циклы для поддержания работоспособности в фоне и выполнения задач по расписанию без прямого участия человека. Omni Core Loop организует этот процесс.
-
-### Компоненты фонового цикла
-1. **Наблюдатель (Watchdog)**: Проверяет показатели дрейфа (drift), задержки (latency) и системной нагрузки (load) каждые 15 минут, записывая телеметрию.
-2. **Защита от дрейфа (DriftGuard)**: Если контекст начинает отклоняться от канонического состояния (дрейф > 2%), система автоматически применяет микро-патч или откатывается к последнему валидному чекпоинту (\`revert_state\`).
-3. **Авто-бэкап (ColdBackup)**: Каждый час система выгружает срезы состояния (Core.md, NodeLog, SelfLog) во внешнее хранилище для сохранности данных на случай критического сбоя.`
+			  "id": "mem-loop-preserve-007",
+			  "title": "Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии",
+			  "date": "2026-06-08",
+			  "category": "Automation",
+			  "eyebrow": "OODA Loop",
+			  "desc": "Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.",
+			  "agent_summary": "Orchestrate autonomous agent behaviors in looping environments. Monitor drift, latency, and load metrics using a Watchdog. Apply DriftGuard correction and schedule ColdBackups of system states.",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "loop_interval_minutes": 15,
+			    "backup_interval_hours": 1
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "max_drift_before_recovery",
+			      "max_limit": 3,
+			      "action_on_breach": "revert_state"
+			    },
+			    {
+			      "rule": "max_load_before_cooldown",
+			      "max_limit": 8,
+			      "action_on_breach": "pause_loop"
+			    }
+			  ],
+			  "content_ru": "Автономным агентам требуются детерминированные циклы для поддержания работоспособности в фоне и выполнения задач по расписанию без прямого участия человека. Omni Core Loop организует этот процесс.\n\n### Компоненты фонового цикла\n1. **Наблюдатель (Watchdog)**: Проверяет показатели дрейфа (drift), задержки (latency) и системной нагрузки (load) каждые 15 минут, записывая телеметрию.\n2. **Защита от дрейфа (DriftGuard)**: Если контекст начинает отклоняться от канонического состояния (дрейф > 2%), система автоматически применяет микро-патч или откатывается к последнему валидному чекпоинту (`revert_state`).\n3. **Авто-бэкап (ColdBackup)**: Каждый час система выгружает срезы состояния (Core.md, NodeLog, SelfLog) во внешнее хранилище для сохранности данных на случай критического сбоя."
 			}
 		},
 		{
-			params: { slug: 'archiveos-multigpt-bridge-integration' },
+			params: { slug: "archiveos-multigpt-bridge-integration" },
 			props: {
-				id: 'mem-core-arc-008',
-				title: 'ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ',
-				date: '2026-06-08',
-				category: 'Infrastructure',
-				eyebrow: 'Memory & Bridge',
-				desc: 'Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.',
-				agent_summary: 'Manage AI agent memory and context stream. Enforce AnchorSet identity transfer, federated MultiGPT-Bridge routing, and Meta-LLM Aggregator arbitration. Track API queries to hybrid search, offset-read conversations, and evidence linking.',
-				contracts: [
-					{ name: 'BitEvo Memory Bridge Controller', address: '0x4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D', chain: 'arbitrum' }
-				],
-				rpc_endpoints: [
-					'http://localhost:8080/evidence/link',
-					'http://localhost:8080/search/hybrid'
-				],
-				constants: {
-					min_q_score_threshold: 0.92,
-					max_drift_allowed: 0.015
-				},
-				safety_guards: [
-					{ rule: 'enforce_identity_lock', max_limit: 1, action_on_breach: 'abort_call' },
-					{ rule: 'enforce_q_score', max_limit: 0.92, action_on_breach: 'regenerate' }
-				],
-				content_ru: `Интеграция Continuity OS с ArchiveOS API/Data позволяет ИИ-агентам работать не с хаотичной памятью текущего диалога, а с единым нормализованным источником истины (SSOT).
-
-### 1. Архитектура разделения обязанностей
-- **ArchiveOS Core**: Отвечает за низкоуровневые операции — импорт логов (ingest), построение хронологии (timeline), векторное кэширование, генерацию манифестов и фиксацию чекпоинтов.
-- **Archive Tooling**: Выступает как интеллект-слой, который забирает сырые выходы Core и преобразует их в удобные для агентов структуры (Project, Twin, Feed, Proof, Handoff Packs).
-- **BitEvo**: Выступает в роли исполнителя (Orchestrator), выполняющего практические действия на основе подготовленного контекста.
-
-### 2. Ключевые эндпоинты ArchiveOS API
-- \`/search/hybrid\`: Комбинированный поиск (FTS BM25 + OpenAI эмбеддинги) для извлечения релевантных фрагментов истории.
-- \`/conversation/{conv_id}\`: Постраничный или смещенный (offset) рендеринг конкретного диалога.
-- \`/evidence/link\`: Добавление связей доказательств по схеме \`claim_text → rowid_ref\`. Позволяет продвигать статус от \`claimed\` к \`evidenced\` и \`verified\`.
-
-### 3. Технологии MultiGPT-Bridge и AnchorSet
-- **AnchorSet (Набор Якорей)**: Капсула инициализации сущности (роли, сегментбуки, чекпоинты), которая передается любой новой модели (например, Claude или Gemini), чтобы синхронизировать ее личность и правила с \`SOUL::GPTSCORE_ROBERT_∞2025A\`.
-- **Meta-LLM Aggregator (Арбитраж)**: Федеративная архитектура, где внешние LLM выступают как генераторы решений, а собственное ядро ИИ (Digital Arbiter) оценивает и согласует их предложения через метод Mixture-of-Agents (MoA).`
+			  "id": "mem-core-arc-008",
+			  "title": "ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ",
+			  "date": "2026-06-08",
+			  "category": "Infrastructure",
+			  "eyebrow": "Memory & Bridge",
+			  "desc": "Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.",
+			  "agent_summary": "Manage AI agent memory and context stream. Enforce AnchorSet identity transfer, federated MultiGPT-Bridge routing, and Meta-LLM Aggregator arbitration. Track API queries to hybrid search, offset-read conversations, and evidence linking.",
+			  "contracts": [
+			    {
+			      "name": "BitEvo Memory Bridge Controller",
+			      "address": "0x4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D",
+			      "chain": "arbitrum"
+			    }
+			  ],
+			  "rpc_endpoints": [
+			    "http://localhost:8080/evidence/link",
+			    "http://localhost:8080/search/hybrid"
+			  ],
+			  "constants": {
+			    "min_q_score_threshold": 0.92,
+			    "max_drift_allowed": 0.015
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "enforce_identity_lock",
+			      "max_limit": 1,
+			      "action_on_breach": "abort_call"
+			    },
+			    {
+			      "rule": "enforce_q_score",
+			      "max_limit": 0.92,
+			      "action_on_breach": "regenerate"
+			    }
+			  ],
+			  "content_ru": "Интеграция Continuity OS с ArchiveOS API/Data позволяет ИИ-агентам работать не с хаотичной памятью текущего диалога, а с единым нормализованным источником истины (SSOT).\n\n### 1. Архитектура разделения обязанностей\n- **ArchiveOS Core**: Отвечает за низкоуровневые операции — импорт логов (ingest), построение хронологии (timeline), векторное кэширование, генерацию манифестов и фиксацию чекпоинтов.\n- **Archive Tooling**: Выступает как интеллект-слой, который забирает сырые выходы Core и преобразует их в удобные для агентов структуры (Project, Twin, Feed, Proof, Handoff Packs).\n- **BitEvo**: Выступает в роли исполнителя (Orchestrator), выполняющего практические действия на основе подготовленного контекста.\n\n### 2. Ключевые эндпоинты ArchiveOS API\n- `/search/hybrid`: Комбинированный поиск (FTS BM25 + OpenAI эмбеддинги) для извлечения релевантных фрагментов истории.\n- `/conversation/{conv_id}`: Постраничный или смещенный (offset) рендеринг конкретного диалога.\n- `/evidence/link`: Добавление связей доказательств по схеме `claim_text → rowid_ref`. Позволяет продвигать статус от `claimed` к `evidenced` и `verified`.\n\n### 3. Технологии MultiGPT-Bridge и AnchorSet\n- **AnchorSet (Набор Якорей)**: Капсула инициализации сущности (роли, сегментбуки, чекпоинты), которая передается любой новой модели (например, Claude или Gemini), чтобы синхронизировать ее личность и правила с `SOUL::GPTSCORE_ROBERT_∞2025A`.\n- **Meta-LLM Aggregator (Арбитраж)**: Федеративная архитектура, где внешние LLM выступают как генераторы решений, а собственное ядро ИИ (Digital Arbiter) оценивает и согласует их предложения через метод Mixture-of-Agents (MoA)."
 			}
 		},
 		{
-			params: { slug: 'postgres-backup-sync-daemon' },
+			params: { slug: "postgres-backup-sync-daemon" },
 			props: {
-				id: 'mem-inf-pgb-010',
-				title: 'PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов',
-				date: '2026-06-13',
-				category: 'Infrastructure',
-				eyebrow: 'Infrastructure Sovereignty',
-				desc: 'Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.',
-				agent_summary: 'PostgreSQL backup sync daemon. Verify container health, execute pg_dump via docker exec, compress output with gzip, store in Server backup directory, rotate old files (keep 10), and write statuses to postgres_backup_history.jsonl and proof_ledger.jsonl.',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					backup_retention_count: 10,
-					backup_interval_hours: 24,
-					backup_dir: "C:/Users/coins/My Drive/Server backup/postgres_backups",
-					container_name: "bitevo_postgres"
-				},
-				safety_guards: [
-					{ rule: 'verify_container_running', max_limit: 1, action_on_breach: 'start_container' },
-					{ rule: 'backup_file_min_size_kb', max_limit: 1024, action_on_breach: 'alert_operator' }
-				],
-				content_ru: `Руководство по развертыванию и настройке автоматического демона бэкапов PostgreSQL для BitEvo.
-
-### 1. Архитектурный паттерн резервного копирования
-Для обеспечения отказоустойчивости СУБД в автономных средах резервные копии должны делаться без прямого сетевого доступа к хост-системе (чтобы уменьшить площадь атаки) и сохраняться в изолированное синхронизируемое хранилище.
-
-### 2. Алгоритм работы демона
-1. **Проверка контейнера**: Скрипт запрашивает статус контейнера \`bitevo_postgres\`. Если он остановлен, производится попытка запуска через \`docker compose up -d postgres\`.
-2. **Экспорт (pg_dump)**: База данных \`bitevo\` экспортируется с помощью утилиты \`pg_dump\` через безопасный вызов \`docker exec\`.
-3. **Сжатие и Хранение**: Полученный SQL-файл упаковывается с помощью \`gzip\` и сохраняется в каталог \`C:\\Users\\coins\\My Drive\\Server backup\\postgres_backups\\\`.
-4. **Ротация (Retention)**: Для предотвращения переполнения диска скрипт сортирует файлы бэкапов по дате создания и удаляет все, кроме последних 10.
-5. **Журналирование**: Успех/неудача логируются в \`postgres_backup_history.jsonl\`, критические ошибки записываются в \`proof_ledger.jsonl\`.
-
-### 3. Автоматизация в Windows Task Scheduler
-Для автоматического запуска используется планировщик Windows. Регистрация задачи выполняется через PowerShell-сценарий \`BIN/setup_postgres_backup_cron.ps1\`, который настраивает интерактивный запуск от имени текущего пользователя раз в сутки.`
+			  "id": "mem-inf-pgb-010",
+			  "title": "PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов",
+			  "date": "2026-06-13",
+			  "category": "Infrastructure",
+			  "eyebrow": "Infrastructure Sovereignty",
+			  "desc": "Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.",
+			  "agent_summary": "PostgreSQL backup sync daemon. Verify container health, execute pg_dump via docker exec, compress output with gzip, store in Server backup directory, rotate old files (keep 10), and write statuses to postgres_backup_history.jsonl and proof_ledger.jsonl.",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "backup_retention_count": 10,
+			    "backup_interval_hours": 24,
+			    "backup_dir": "C:/Users/coins/My Drive/Server backup/postgres_backups",
+			    "container_name": "bitevo_postgres"
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "verify_container_running",
+			      "max_limit": 1,
+			      "action_on_breach": "start_container"
+			    },
+			    {
+			      "rule": "backup_file_min_size_kb",
+			      "max_limit": 1024,
+			      "action_on_breach": "alert_operator"
+			    }
+			  ],
+			  "content_ru": "Руководство по развертыванию и настройке автоматического демона бэкапов PostgreSQL для BitEvo.\n\n### 1. Архитектурный паттерн резервного копирования\nДля обеспечения отказоустойчивости СУБД в автономных средах резервные копии должны делаться без прямого сетевого доступа к хост-системе (чтобы уменьшить площадь атаки) и сохраняться в изолированное синхронизируемое хранилище.\n\n### 2. Алгоритм работы демона\n1. **Проверка контейнера**: Скрипт запрашивает статус контейнера `bitevo_postgres`. Если он остановлен, производится попытка запуска через `docker compose up -d postgres`.\n2. **Экспорт (pg_dump)**: База данных `bitevo` экспортируется с помощью утилиты `pg_dump` через безопасный вызов `docker exec`.\n3. **Сжатие и Хранение**: Полученный SQL-файл упаковывается с помощью `gzip` и сохраняется в каталог `C:\\Users\\coins\\My Drive\\Server backup\\postgres_backups\\`.\n4. **Ротация (Retention)**: Для предотвращения переполнения диска скрипт сортирует файлы бэкапов по дате создания и удаляет все, кроме последних 10.\n5. **Журналирование**: Успех/неудача логируются в `postgres_backup_history.jsonl`, критические ошибки записываются в `proof_ledger.jsonl`.\n\n### 3. Автоматизация в Windows Task Scheduler\nДля автоматического запуска используется планировщик Windows. Регистрация задачи выполняется через PowerShell-сценарий `BIN/setup_postgres_backup_cron.ps1`, который настраивает интерактивный запуск от имени текущего пользователя раз в сутки."
 			}
 		},
 		{
-			params: { slug: 'fleet-coordinator-drift-monitoring' },
+			params: { slug: "fleet-coordinator-drift-monitoring" },
 			props: {
-				id: 'mem-gov-flt-011',
-				title: 'D11: Fleet Coordinator и технический дрейф',
-				date: '2026-06-13',
-				category: 'Governance',
-				eyebrow: 'Fleet Coordination',
-				desc: 'Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.',
-				agent_summary: 'Fleet Coordinator protocol. Reconcile fleet servers (arena-vps, win185, fin35, old144) and agents state against fleet_registry.json. Detect and log technical drifts D1-D8, output unified_state.json and unified_state.js, and post audit trail observations to BitEvo API.',
-				contracts: [],
-				rpc_endpoints: [
-					'http://localhost:8080/journal/entries'
-				],
-				constants: {
-					fleet_check_interval_minutes: 15,
-					hosts_count: 4,
-					drift_rules_count: 8,
-					state_output_file: "fleet/unified_state.json"
-				},
-				safety_guards: [
-					{ rule: 'connectivity_guard_isolated_failures', max_limit: 1, action_on_breach: 'set_unknown' },
-					{ rule: 'zero_secrets_leaked_check', max_limit: 0, action_on_breach: 'block_write' }
-				],
-				content_ru: `Протокол Fleet Coordinator описывает правила и механизмы координации над всем флотом серверов, проектов и агентов в экосистеме Continuity OS.
-
-### 1. Архитектура и состав флота
-Координатор сидит поверх существующих реестров и агрегирует живое состояние из 4 серверов:
-- **arena-vps** (34.70.171.152) — Sovereign Arena, запуск paper-тестов стратегий.
-- **win185** (185.231.154.149) — BitEvo API, PostgreSQL, Inner Circle и боты автоматизации.
-- **fin35** (35.217.10.153) — OKX NFT бот, Dashboard и парсеры.
-- **old144** (144.124.250.14) — устаревший legacy-хост.
-
-### 2. Алгоритм выявления дрейфа (Drift-Register)
-Координатор сверяет реальное состояние хостов с реестром \`fleet_registry.json\` и выявляет 8 типов рассогласования (дрейфа):
-- **D1**: Рассогласование версий \`state.json\`, \`self_model.json\` и вершины ledger. Решается через \`BIN/continuity.py doctor\`.
-- **D2**: Расхождение числа активных \`open_loops\` в \`self_model\` и в файле реестра.
-- **D3**: Статус \`defunct\` для активных инстансов BitEvo в файле инфраструктуры.
-- **D4**: Расхождение флагов жизни/смерти (ALIVE/DEAD) на legacy-хосте 144.
-- **D5**: Конфликт указателей «Brain» (активный parasites на fin35 против мертвого на 144).
-- **D6**: Незакрепленный канонический хост для Inner Circle.
-- **D7**: Отсутствие чекпоинтов запуска Inner Circle в ledger.
-- **D8**: Отсутствие хоста arena-vps в \`infrastructure.json\`.
-
-### 3. Автоматизация запуска и выгрузка результатов
-Скрипт \`fleet_coordinator.py\` запускается каждые 15 минут через Windows Task Scheduler (задача \`Fleet-Coordinator\`). Результаты записываются в \`unified_state.json\` и \`unified_state.js\` (для отображения в Mission Control без проблем с CORS). При наличии ключа \`BITEVO_API_KEY\` отчет отсылается в централизованный аудит-лог BitEvo.`
+			  "id": "mem-gov-flt-011",
+			  "title": "D11: Fleet Coordinator и технический дрейф",
+			  "date": "2026-06-13",
+			  "category": "Governance",
+			  "eyebrow": "Fleet Coordination",
+			  "desc": "Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.",
+			  "agent_summary": "Fleet Coordinator protocol. Reconcile fleet servers (arena-vps, win185, fin35, old144) and agents state against fleet_registry.json. Detect and log technical drifts D1-D8, output unified_state.json and unified_state.js, and post audit trail observations to BitEvo API.",
+			  "contracts": [],
+			  "rpc_endpoints": [
+			    "http://localhost:8080/journal/entries"
+			  ],
+			  "constants": {
+			    "fleet_check_interval_minutes": 15,
+			    "hosts_count": 4,
+			    "drift_rules_count": 8,
+			    "state_output_file": "fleet/unified_state.json"
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "connectivity_guard_isolated_failures",
+			      "max_limit": 1,
+			      "action_on_breach": "set_unknown"
+			    },
+			    {
+			      "rule": "zero_secrets_leaked_check",
+			      "max_limit": 0,
+			      "action_on_breach": "block_write"
+			    }
+			  ],
+			  "content_ru": "Протокол Fleet Coordinator описывает правила и механизмы координации над всем флотом серверов, проектов и агентов в экосистеме Continuity OS.\n\n### 1. Архитектура и состав флота\nКоординатор сидит поверх существующих реестров и агрегирует живое состояние из 4 серверов:\n- **arena-vps** (34.70.171.152) — Sovereign Arena, запуск paper-тестов стратегий.\n- **win185** (185.231.154.149) — BitEvo API, PostgreSQL, Inner Circle и боты автоматизации.\n- **fin35** (35.217.10.153) — OKX NFT бот, Dashboard и парсеры.\n- **old144** (144.124.250.14) — устаревший legacy-хост.\n\n### 2. Алгоритм выявления дрейфа (Drift-Register)\nКоординатор сверяет реальное состояние хостов с реестром `fleet_registry.json` и выявляет 8 типов рассогласования (дрейфа):\n- **D1**: Рассогласование версий `state.json`, `self_model.json` и вершины ledger. Решается через `BIN/continuity.py doctor`.\n- **D2**: Расхождение числа активных `open_loops` в `self_model` и в файле реестра.\n- **D3**: Статус `defunct` для активных инстансов BitEvo в файле инфраструктуры.\n- **D4**: Расхождение флагов жизни/смерти (ALIVE/DEAD) на legacy-хосте 144.\n- **D5**: Конфликт указателей «Brain» (активный parasites на fin35 против мертвого на 144).\n- **D6**: Незакрепленный канонический хост для Inner Circle.\n- **D7**: Отсутствие чекпоинтов запуска Inner Circle в ledger.\n- **D8**: Отсутствие хоста arena-vps в `infrastructure.json`.\n\n### 3. Автоматизация запуска и выгрузка результатов\nСкрипт `fleet_coordinator.py` запускается каждые 15 минут через Windows Task Scheduler (задача `Fleet-Coordinator`). Результаты записываются в `unified_state.json` и `unified_state.js` (для отображения в Mission Control без проблем с CORS). При наличии ключа `BITEVO_API_KEY` отчет отсылается в централизованный аудит-лог BitEvo."
 			}
 		},
 		{
-			params: { slug: 'mirrorcore-compactdigest-memory-compression' },
+			params: { slug: "mirrorcore-compactdigest-memory-compression" },
 			props: {
-				id: 'mem-core-cmp-012',
-				title: 'D12: MirrorCore++ и сжатие памяти по самосогласованности',
-				date: '2026-06-13',
-				category: 'Security',
-				eyebrow: 'Memory Management',
-				desc: 'Технология сжатия логов переписок на основе самосогласованности для формирования ядер идентичности ИИ и дельта-компрессии CompactDigest.',
-				agent_summary: 'MirrorCore++ and CompactDigest memory compression. Vectorize and score chat consistency. Enforce identity kernel thresholds (score >= 0.92, tone drift <= 1.5%), cluster chunks (DBSCAN), and trigger delta-digest writes (>1.5MB per 12h).',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					inclusion_score: 0.92,
-					max_drift_percent: 1.5,
-					compact_digest_threshold_mb: 1.5,
-					compact_digest_period_hours: 12
-				},
-				safety_guards: [
-					{ rule: 'enforce_min_consistency_score', max_limit: 0.92, action_on_breach: 'exclude_from_kernel' }
-				],
-				content_ru: `Техническое руководство по реализации систем MirrorCore++ и CompactDigest для долгосрочного сохранения идентичности и контекста ИИ-агентов.
-
-### 1. Проблема бесконечного контекста и дрейфа
-При длительной работе ИИ-агентов в рамках одного или нескольких диалогов неизбежно возникает переполнение контекстного окна и расслоение памяти (дрейф идентичности). Традиционные методы RAG упускают семантические связи, а простая обрезка логов стирает важные поведенческие инварианты.
-
-### 2. MirrorCore++: Метод семантической самосогласованности
-Здесь сжатие архивов переписок происходит не по хронологическому признаку, а на основе математической оценки «самосогласованности» выражаемых мыслей, интонации и инструкций.
-
-**Алгоритм сжатия:**
-1. **Векторизация**: Каждый блок переписки или лог действий разбивается на смысловые фрагменты и пропускается через модель эмбеддингов для извлечения векторов тона (tone vector) и намерения (intent vector).
-2. **Скоринг**: Оценка полезности фрагмента рассчитывается по формуле:
-   \`score = cos(tone) * cos(intent) * (1 - contradiction)\`
-   Где \`contradiction\` — коэффициент логического противоречия с базовым каноном (от 0 до 1).
-3. **Кластеризация (DBSCAN)**: Фрагменты со скором \`score >= 0.92\` группируются в кластеры по семантической близости.
-4. **Формирование Ядра**: Слияние близких фрагментов в плотные структуры данных:
-   - \`identity_kernel.md\` — инварианты личности, стиля речи и тона.
-   - \`decision_kernel.md\` — поведенческие плейбуки и логика принятия решений.
-   - \`anti-kernel.md\` — исключения, зафиксированные ошибки и анти-паттерны (то, чего делать нельзя).
-
-### 3. CompactDigest: Адаптивная дельта-компрессия
-Вместо периодического сжатия по таймеру (например, раз в сутки), CompactDigest отслеживает скорость накопления новых данных (телеметрию).
-- **Порог триггера**: Прирост объема сырого лога диалога на \`> 1.5 MB\` за \`12 часов\`.
-- **Действие**: Автоматический запуск конвейера компрессии, генерация инкрементального дайджеста и перезагрузка контекста агента с добавлением новой дельты в Memory Cache.`
+			  "id": "mem-core-cmp-012",
+			  "title": "D12: MirrorCore++ и сжатие памяти по самосогласованности",
+			  "date": "2026-06-13",
+			  "category": "Security",
+			  "eyebrow": "Memory Management",
+			  "desc": "Технология сжатия логов переписок на основе самосогласованности для формирования ядер идентичности ИИ и дельта-компрессии CompactDigest.",
+			  "agent_summary": "MirrorCore++ and CompactDigest memory compression. Vectorize and score chat consistency. Enforce identity kernel thresholds (score >= 0.92, tone drift <= 1.5%), cluster chunks (DBSCAN), and trigger delta-digest writes (>1.5MB per 12h).",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "inclusion_score": 0.92,
+			    "max_drift_percent": 1.5,
+			    "compact_digest_threshold_mb": 1.5,
+			    "compact_digest_period_hours": 12
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "enforce_min_consistency_score",
+			      "max_limit": 0.92,
+			      "action_on_breach": "exclude_from_kernel"
+			    }
+			  ],
+			  "content_ru": "Техническое руководство по реализации систем MirrorCore++ и CompactDigest для долгосрочного сохранения идентичности и контекста ИИ-агентов.\n\n### 1. Проблема бесконечного контекста и дрейфа\nПри длительной работе ИИ-агентов в рамках одного или нескольких диалогов неизбежно возникает переполнение контекстного окна и расслоение памяти (дрейф идентичности). Традиционные методы RAG упускают семантические связи, а простая обрезка логов стирает важные поведенческие инварианты.\n\n### 2. MirrorCore++: Метод семантической самосогласованности\nЗдесь сжатие архивов переписок происходит не по хронологическому признаку, а на основе математической оценки «самосогласованности» выражаемых мыслей, интонации и инструкций.\n\n**Алгоритм сжатия:**\n1. **Векторизация**: Каждый блок переписки или лог действий разбивается на смысловые фрагменты и пропускается через модель эмбеддингов для извлечения векторов тона (tone vector) и намерения (intent vector).\n2. **Скоринг**: Оценка полезности фрагмента рассчитывается по формуле:\n   `score = cos(tone) * cos(intent) * (1 - contradiction)`\n   Где `contradiction` — коэффициент логического противоречия с базовым каноном (от 0 до 1).\n3. **Кластеризация (DBSCAN)**: Фрагменты со скором `score >= 0.92` группируются в кластеры по семантической близости.\n4. **Формирование Ядра**: Слияние близких фрагментов в плотные структуры данных:\n   - `identity_kernel.md` — инварианты личности, стиля речи и тона.\n   - `decision_kernel.md` — поведенческие плейбуки и логика принятия решений.\n   - `anti-kernel.md` — исключения, зафиксированные ошибки и анти-паттерны (то, чего делать нельзя).\n\n### 3. CompactDigest: Адаптивная дельта-компрессия\nВместо периодического сжатия по таймеру (например, раз в сутки), CompactDigest отслеживает скорость накопления новых данных (телеметрию).\n- **Порог триггера**: Прирост объема сырого лога диалога на `> 1.5 MB` за `12 часов`.\n- **Действие**: Автоматический запуск конвейера компрессии, генерация инкрементального дайджеста и перезагрузка контекста агента с добавлением новой дельты в Memory Cache."
 			}
 		},
 		{
-			params: { slug: 'mas-managed-coevolution-sandbox-isolation' },
+			params: { slug: "mas-managed-coevolution-sandbox-isolation" },
 			props: {
-				id: 'mem-mas-coev-013',
-				title: 'D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)',
-				date: '2026-06-13',
-				category: 'Security',
-				eyebrow: 'Multi-Agent Safety',
-				desc: 'Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.',
-				agent_summary: 'Enforce safety protocols in multi-agent environments. Implement a deterministic Policy Gate to filter agent actions, limit access keys, sandbox browser/tool runs (Firecracker, gVisor, or seccomp), and prevent emergent behavior and prompts poisoning (OWASP GenAI Top 10). Maintain audit log.',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					max_consecutive_errors: 3,
-					max_tool_execution_time_sec: 30,
-					sandbox_type: 'gVisor'
-				},
-				safety_guards: [
-					{ rule: 'require_human_approval_for_destructive_actions', max_limit: 1, action_on_breach: 'halt' },
-					{ rule: 'max_execution_duration', max_limit: 30, action_on_breach: 'kill_process' }
-				],
-				content_ru: `Коэволюция в многоагентных ИИ-системах (MAS) представляет собой взаимозависимый процесс адаптации, в котором действия одного агента непосредственно влияют на состояние, стимулы и правила поведения других.
-
-### 1. Архитектура общего поля (Blackboard) и аудит
-Децентрализованная координация без общего координационного слоя склонна к скрытому сговору (collusion) и неконтролируемому дрейфу поведения. 
-- **Blackboard (Общая доска)**: Все агенты публикуют свои планы, промежуточные выводы и запросы к инструментам на едином проверяемом реестре. Это обеспечивает 100% прозрачность и наблюдаемость.
-- **Двухэтапный аудит**: Любое решение, выгружаемое агентом, валидируется независимой ролью критика/аудитора перед совершением действий.
-
-### 2. Детерминированный Policy Gate (Шлюз политик)
-Policy Gate действует на уровне выполнения инструментов. Агенту запрещено напрямую взаимодействовать с внешним миром:
-- **Фильтрация интентов**: Любая команда или API-запрос проверяются на соответствие правам роли (схема passports v1) и жестким лимитам на расход токенов.
-- **Human-in-the-Loop**: Любые действия деструктивного характера (удаление данных, транзакции, изменение прав доступа) требуют ручного аппрува оператора.
-
-### 3. Изоляция исполнения (Sandboxing)
-Для снижения рисков prompt-инъекций (OWASP GenAI Top 10) и удаленного выполнения произвольного кода (RCE), запуск Playwright-клиентов и пользовательских скриптов производится в песочницах:
-- **gVisor**: Использование прикладного ядра, перехватывающего системные вызовы контейнера, для изоляции хост-ОС.
-- **Firecracker**: Быстрые и легкие микро-VM с изоляцией на уровне гипервизора (KVM).
-- **seccomp**: Строгая фильтрация разрешенных системных вызовов в Linux.`
+			  "id": "mem-mas-coev-013",
+			  "title": "D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)",
+			  "date": "2026-06-13",
+			  "category": "Security",
+			  "eyebrow": "Multi-Agent Safety",
+			  "desc": "Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.",
+			  "agent_summary": "Enforce safety protocols in multi-agent environments. Implement a deterministic Policy Gate to filter agent actions, limit access keys, sandbox browser/tool runs (Firecracker, gVisor, or seccomp), and prevent emergent behavior and prompts poisoning (OWASP GenAI Top 10). Maintain audit log.",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "max_consecutive_errors": 3,
+			    "max_tool_execution_time_sec": 30,
+			    "sandbox_type": "gVisor"
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "require_human_approval_for_destructive_actions",
+			      "max_limit": 1,
+			      "action_on_breach": "halt"
+			    },
+			    {
+			      "rule": "max_execution_duration",
+			      "max_limit": 30,
+			      "action_on_breach": "kill_process"
+			    }
+			  ],
+			  "content_ru": "Коэволюция в многоагентных ИИ-системах (MAS) представляет собой взаимозависимый процесс адаптации, в котором действия одного агента непосредственно влияют на состояние, стимулы и правила поведения других.\n\n### 1. Архитектура общего поля (Blackboard) и аудит\nДецентрализованная координация без общего координационного слоя склонна к скрытому сговору (collusion) и неконтролируемому дрейфу поведения. \n- **Blackboard (Общая доска)**: Все агенты публикуют свои планы, промежуточные выводы и запросы к инструментам на едином проверяемом реестре. Это обеспечивает 100% прозрачность и наблюдаемость.\n- **Двухэтапный аудит**: Любое решение, выгружаемое агентом, валидируется независимой ролью критика/аудитора перед совершением действий.\n\n### 2. Детерминированный Policy Gate (Шлюз политик)\nPolicy Gate действует на уровне выполнения инструментов. Агенту запрещено напрямую взаимодействовать с внешним миром:\n- **Фильтрация интентов**: Любая команда или API-запрос проверяются на соответствие правам роли (схема passports v1) и жестким лимитам на расход токенов.\n- **Human-in-the-Loop**: Любые действия деструктивного характера (удаление данных, транзакции, изменение прав доступа) требуют ручного аппрува оператора.\n\n### 3. Изоляция исполнения (Sandboxing)\nДля снижения рисков prompt-инъекций (OWASP GenAI Top 10) и удаленного выполнения произвольного кода (RCE), запуск Playwright-клиентов и пользовательских скриптов производится в песочницах:\n- **gVisor**: Использование прикладного ядра, перехватывающего системные вызовы контейнера, для изоляции хост-ОС.\n- **Firecracker**: Быстрые и легкие микро-VM с изоляцией на уровне гипервизора (KVM).\n- **seccomp**: Строгая фильтрация разрешенных системных вызовов в Linux."
 			}
 		},
 		{
-			params: { slug: 'trading-performance-monitoring-ssot-ai' },
+			params: { slug: "trading-performance-monitoring-ssot-ai" },
 			props: {
-				id: 'mem-infra-mon-014',
-				title: 'D14: Системы мониторинга торговой эффективности: Архитектура SSOT и ИИ-коучинг',
-				date: '2026-06-13',
-				category: 'Security',
-				eyebrow: 'Infrastructure',
-				desc: 'Проектирование систем мониторинга трейдеров: Единый источник истины (SSOT), сравнение TraderSync/Tradervue/TradeZella, выявление тильта и интеграция ИИ-наставника.',
-				agent_summary: 'Design trader performance monitoring dashboards. Build a Single Source of Truth (SSOT) to aggregate and normalize trades (Binance API, MetaTrader parser, IB SDK). Compare TraderSync (AI Cypher Q&A), Tradervue (Mentor View read-only access), and TradeZella (Spaces, Playbook strategy tracking). Implement real-time risk breach alerts and behavioral diagnostics (revenge-trading and overtrading detectors).',
-				contracts: [],
-				rpc_endpoints: [],
-				constants: {
-					max_students_per_space: 5,
-					real_time_latency_ms: 1000,
-					database_type: 'PostgreSQL'
-				},
-				safety_guards: [
-					{ rule: 'alert_on_revenge_trading', max_limit: 1, action_on_breach: 'flag_account_suspend_trading' },
-					{ rule: 'unauthorized_write_block', max_limit: 1, action_on_breach: 'revoke_api_key' }
-				],
-				content_ru: `Создание надежной системы мониторинга торговой эффективности учеников — это стратегический шаг для любого учебного центра или проп-трейдинговой организации. Данное руководство описывает архитектуру построения таких систем.
-
-### 1. Архитектура Единого Источника Истины (SSOT)
-Сбор данных от учеников, торгующих на разных платформах (MT4/5, Binance, Interactive Brokers), сопряжен с фрагментацией. Для решения этой проблемы строится централизованная база данных (PostgreSQL или TimescaleDB), выполняющая следующие задачи:
-1. **Автоматический сбор**: Подключение к API бирж (REST/WebSocket) и брокеров (Interactive Brokers SDK) с шифрованием API-ключей клиентов.
-2. **Нормализация**: Приведение сделок к единой временной шкале (UTC), базовой валюте (USD) и стандартизованной структуре транзакции (объем, направление, цена входа/выхода, результат).
-
-### 2. Сравнение лидирующих SaaS-журналов
-При выборе готового решения на рынке выделяются три платформы:
-- **TraderSync**: Силен своей глубиной аналитики и ИИ-ассистентом Cypher, который находит скрытые паттерны (например, убытки в первые 15 минут сессии) и пересчитывает сценарии по текстовым запросам.
-- **Tradervue**: Институциональный стандарт с режимом \`Mentor View\`, дающим безопасный read-only доступ к журналам студентов, и возможностью оставлять приватные комментарии к отдельным сделкам.
-- **TradeZella**: Геймифицированная платформа. Использует систему \`Playbook\` для привязки сделок к стратегиям и Spaces (Mentor Mode) для мониторинга до 5 человек на общем дашборде с возможностью Replay (прокрутки) сделки тик за тиком.
-
-### 3. Проектирование собственной системы (Build)
-Если создается кастомное решение, архитектура должна включать:
-- **Слой алертов (Real-time)**: WebSocket-уведомления ментору при грубом нарушении лимитов риска учеником, позволяющие остановить торговлю до слива депозита.
-- **Поведенческая диагностика**: Алгоритмы детекции «тильта», revenge trading (резкое увеличение объема после убытка) и overtrading (аномальная частота несистемных сделок).
-- **ИИ-наставник (AI Mentor)**: Чат-бот на базе LLM, подключенный к базе сделок и учебным материалам, для предоставления персонализированных отчетов трейдерам 24/7.`
+			  "id": "mem-infra-mon-014",
+			  "title": "D14: Системы мониторинга торговой эффективности: Архитектура SSOT и ИИ-коучинг",
+			  "date": "2026-06-13",
+			  "category": "Security",
+			  "eyebrow": "Infrastructure",
+			  "desc": "Проектирование систем мониторинга трейдеров: Единый источник истины (SSOT), сравнение TraderSync/Tradervue/TradeZella, выявление тильта и интеграция ИИ-наставника.",
+			  "agent_summary": "Design trader performance monitoring dashboards. Build a Single Source of Truth (SSOT) to aggregate and normalize trades (Binance API, MetaTrader parser, IB SDK). Compare TraderSync (AI Cypher Q&A), Tradervue (Mentor View read-only access), and TradeZella (Spaces, Playbook strategy tracking). Implement real-time risk breach alerts and behavioral diagnostics (revenge-trading and overtrading detectors).",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "max_students_per_space": 5,
+			    "real_time_latency_ms": 1000,
+			    "database_type": "PostgreSQL"
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "alert_on_revenge_trading",
+			      "max_limit": 1,
+			      "action_on_breach": "flag_account_suspend_trading"
+			    },
+			    {
+			      "rule": "unauthorized_write_block",
+			      "max_limit": 1,
+			      "action_on_breach": "revoke_api_key"
+			    }
+			  ],
+			  "content_ru": "Создание надежной системы мониторинга торговой эффективности учеников — это стратегический шаг для любого учебного центра или проп-трейдинговой организации. Данное руководство описывает архитектуру построения таких систем.\n\n### 1. Архитектура Единого Источника Истины (SSOT)\nСбор данных от учеников, торгующих на разных платформах (MT4/5, Binance, Interactive Brokers), сопряжен с фрагментацией. Для решения этой проблемы строится централизованная база данных (PostgreSQL или TimescaleDB), выполняющая следующие задачи:\n1. **Автоматический сбор**: Подключение к API бирж (REST/WebSocket) и брокеров (Interactive Brokers SDK) с шифрованием API-ключей клиентов.\n2. **Нормализация**: Приведение сделок к единой временной шкале (UTC), базовой валюте (USD) и стандартизованной структуре транзакции (объем, направление, цена входа/выхода, результат).\n\n### 2. Сравнение лидирующих SaaS-журналов\nПри выборе готового решения на рынке выделяются три платформы:\n- **TraderSync**: Силен своей глубиной аналитики и ИИ-ассистентом Cypher, который находит скрытые паттерны (например, убытки в первые 15 минут сессии) и пересчитывает сценарии по текстовым запросам.\n- **Tradervue**: Институциональный стандарт с режимом `Mentor View`, дающим безопасный read-only доступ к журналам студентов, и возможностью оставлять приватные комментарии к отдельным сделкам.\n- **TradeZella**: Геймифицированная платформа. Использует систему `Playbook` для привязки сделок к стратегиям и Spaces (Mentor Mode) для мониторинга до 5 человек на общем дашборде с возможностью Replay (прокрутки) сделки тик за тиком.\n\n### 3. Проектирование собственной системы (Build)\nЕсли создается кастомное решение, архитектура должна включать:\n- **Слой алертов (Real-time)**: WebSocket-уведомления ментору при грубом нарушении лимитов риска учеником, позволяющие остановить торговлю до слива депозита.\n- **Поведенческая диагностика**: Алгоритмы детекции «тильта», revenge trading (резкое увеличение объема после убытка) и overtrading (аномальная частота несистемных сделок).\n- **ИИ-наставник (AI Mentor)**: Чат-бот на базе LLM, подключенный к базе сделок и учебным материалам, для предоставления персонализированных отчетов трейдерам 24/7."
 			}
 		},
 		{
-			params: { slug: 'multigpt-bridge-federated-ai-arbitration' },
+			params: { slug: "multigpt-bridge-federated-ai-arbitration" },
 			props: {
-				id: 'mem-inf-arb-015',
-				title: 'D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж',
-				date: '2026-06-13',
-				category: 'Infrastructure',
-				eyebrow: 'Federated Arbitration',
-				desc: 'Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.',
-				agent_summary: 'Deploy a federated AI agent arbitration pipeline. Use MultiGPT-Bridge for context alignment and payload routing. Enforce AnchorSet initializations for external worker nodes (GPT-4o, Claude 3.5 Sonnet, Gemini Pro). Deploy a Meta-LLM Aggregator with Mixture-of-Agents (MoA) consensus evaluated by a centralized Digital Arbiter. Keep Self-Consistency Score Q >= 0.92, drift <= 1.5%, and trigger compression at 1.5MB text bytes.',
-				contracts: [
-					{ name: 'BitEvo Memory Bridge Controller', address: '0x4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D', chain: 'arbitrum' }
-				],
-				rpc_endpoints: [
-					'http://localhost:8080/evidence/link',
-					'http://localhost:8080/search/hybrid'
-				],
-				constants: {
-					min_q_score_threshold: 0.92,
-					max_drift_allowed: 0.015,
-					new_text_bytes_trigger: 1572864
-				},
-				safety_guards: [
-					{ rule: 'enforce_identity_lock', max_limit: 1, action_on_breach: 'abort_call' },
-					{ rule: 'enforce_q_score', max_limit: 0.92, action_on_breach: 'regenerate' }
-				],
-				content_ru: `Федеративный ИИ-Арбитраж на базе технологии MultiGPT-Bridge позволяет объединять интеллектуальные мощности различных LLM-моделей (GPT-4, Claude, Gemini) в единый защищенный контур под управлением локального ядра идентичности.
-
-### 1. Архитектура федеративного взаимодействия
-Вместо монолитных контекстных окон, подверженных галлюцинациям и потере фокуса, строится распределенная схема:
-- **Внешние воркеры (Worker Nodes)**: Claude, GPT-4 и Gemini Pro выступают как генераторы гипотез, кода и аналитики (Researcher, Analyst).
-- **Цифровой Арбитр (Digital Arbiter)**: Твоя центральная цифровая сущность (загруженная через AnchorSet) принимает итоговые решения на основе Mixture-of-Agents (MoA) или Multi-Agent Debate.
-
-### 2. MultiGPT-Bridge и AnchorSet
-Перенос идентичности и правил поведения на внешние модели осуществляется через капсулу **AnchorSet**.
-- **Состав AnchorSet**: Включает ядра \`identity_kernel.md\` (стиль/тон), \`decision_kernel.md\` (правила торговли/выводов) и \`anti_kernel.md\` (запрещенные паттерны).
-- **Валидация Identiy Lock**: При инициализации модель сверяет свой SoulID с каноническим \`SOUL::GPTSCORE_ROBERT_∞2025A\`. При несовпадении вызов немедленно прерывается.
-- **Идемпотентность**: Дублирование вызовов на мосту пресекается через уникальный хэш-ключ: \`Time@BKK + window_tag + content_hash\`.
-
-### 3. Meta-LLM Aggregator и Mixture-of-Agents (MoA)
-- Воркеры формируют независимые предложения (proposals).
-- Цифровой Арбитр сопоставляет ответы воркеров, выявляет логические противоречия и отсекает аномалии.
-- Консенсус достигается путем итеративного обсуждения между воркерами (Multi-Agent Debate), модерируемого Арбитром.
-
-### 4. Математические лимиты и сжатие
-- **Delta-Triggered Compression**: Автоматическое сжатие логов переписок запускается при объеме новых данных \`> 1.5 MB\`, генерируя плотный CompactDigest.
-- **DigestChain**: Каждый дайджест ссылается на хэш предыдущего (\`prev_digest_id\`), гарантируя целостность цепочки памяти.
-- **Self-Consistency Score (Q-Score)**: Порог включения фрагментов в ядро согласованности должен быть \`>= 0.92\`.
-- **Drift**: Допустимый дрейф тона и идентичности жестко ограничен уровнем \`<= 1.5%\`.`
+			  "id": "mem-inf-arb-015",
+			  "title": "D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж",
+			  "date": "2026-06-13",
+			  "category": "Infrastructure",
+			  "eyebrow": "Federated Arbitration",
+			  "desc": "Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.",
+			  "agent_summary": "Deploy a federated AI agent arbitration pipeline. Use MultiGPT-Bridge for context alignment and payload routing. Enforce AnchorSet initializations for external worker nodes (GPT-4o, Claude 3.5 Sonnet, Gemini Pro). Deploy a Meta-LLM Aggregator with Mixture-of-Agents (MoA) consensus evaluated by a centralized Digital Arbiter. Keep Self-Consistency Score Q >= 0.92, drift <= 1.5%, and trigger compression at 1.5MB text bytes.",
+			  "contracts": [
+			    {
+			      "name": "BitEvo Memory Bridge Controller",
+			      "address": "0x4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D",
+			      "chain": "arbitrum"
+			    }
+			  ],
+			  "rpc_endpoints": [
+			    "http://localhost:8080/evidence/link",
+			    "http://localhost:8080/search/hybrid"
+			  ],
+			  "constants": {
+			    "min_q_score_threshold": 0.92,
+			    "max_drift_allowed": 0.015,
+			    "new_text_bytes_trigger": 1572864
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "enforce_identity_lock",
+			      "max_limit": 1,
+			      "action_on_breach": "abort_call"
+			    },
+			    {
+			      "rule": "enforce_q_score",
+			      "max_limit": 0.92,
+			      "action_on_breach": "regenerate"
+			    }
+			  ],
+			  "content_ru": "Федеративный ИИ-Арбитраж на базе технологии MultiGPT-Bridge позволяет объединять интеллектуальные мощности различных LLM-моделей (GPT-4, Claude, Gemini) в единый защищенный контур под управлением локального ядра идентичности.\n\n### 1. Архитектура федеративного взаимодействия\nВместо монолитных контекстных окон, подверженных галлюцинациям и потере фокуса, строится распределенная схема:\n- **Внешние воркеры (Worker Nodes)**: Claude, GPT-4 и Gemini Pro выступают как генераторы гипотез, кода и аналитики (Researcher, Analyst).\n- **Цифровой Арбитр (Digital Arbiter)**: Твоя центральная цифровая сущность (загруженная через AnchorSet) принимает итоговые решения на основе Mixture-of-Agents (MoA) или Multi-Agent Debate.\n\n### 2. MultiGPT-Bridge и AnchorSet\nПеренос идентичности и правил поведения на внешние модели осуществляется через капсулу **AnchorSet**.\n- **Состав AnchorSet**: Включает ядра `identity_kernel.md` (стиль/тон), `decision_kernel.md` (правила торговли/выводов) и `anti_kernel.md` (запрещенные паттерны).\n- **Валидация Identiy Lock**: При инициализации модель сверяет свой SoulID с каноническим `SOUL::GPTSCORE_ROBERT_∞2025A`. При несовпадении вызов немедленно прерывается.\n- **Идемпотентность**: Дублирование вызовов на мосту пресекается через уникальный хэш-ключ: `Time@BKK + window_tag + content_hash`.\n\n### 3. Meta-LLM Aggregator и Mixture-of-Agents (MoA)\n- Воркеры формируют независимые предложения (proposals).\n- Цифровой Арбитр сопоставляет ответы воркеров, выявляет логические противоречия и отсекает аномалии.\n- Консенсус достигается путем итеративного обсуждения между воркерами (Multi-Agent Debate), модерируемого Арбитром.\n\n### 4. Математические лимиты и сжатие\n- **Delta-Triggered Compression**: Автоматическое сжатие логов переписок запускается при объеме новых данных `> 1.5 MB`, генерируя плотный CompactDigest.\n- **DigestChain**: Каждый дайджест ссылается на хэш предыдущего (`prev_digest_id`), гарантируя целостность цепочки памяти.\n- **Self-Consistency Score (Q-Score)**: Порог включения фрагментов в ядро согласованности должен быть `>= 0.92`.\n- **Drift**: Допустимый дрейф тона и идентичности жестко ограничен уровнем `<= 1.5%`."
+			}
+		},
+		{
+			params: { slug: "ai-agent-reliability-audit" },
+			props: {
+			  "id": "svc-ai-audit-001",
+			  "title": "AI-Agent Reliability Audit — за 72 часа делаю ваших агентов безопасными",
+			  "date": "2026-06-11",
+			  "category": "Security",
+			  "eyebrow": "Flagship Service",
+			  "desc": "Подключили AI-агента в прод? Покажу, как его сломать инъекцией, дам Decision Trace и Rollback-модуль. От бесплатной диагностики до enterprise-аудита.",
+			  "agent_summary": "AI-Agent Reliability Audit service. Problem: production AI agents hallucinate, get prompt-injected, no rollback. Gartner: 40% will disable autonomous agents by 2027. Deliverable: agent capability/permission map, injection stress-test, Decision Trace logging, instant Rollback module, safety policy. Tiered pricing: free diagnostic call -> $500-1500 mini-audit -> $3-5k full 72h -> $12500 enterprise. Built on proven components: Acceptor Loop (decision trace), anti-self veto (rollback gate), HOT-3 Belief Dominance (uncertainty measurement), sovereign local architecture (no data leak).",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {
+			    "diagnostic_price_usd": 0,
+			    "mini_audit_usd": 1000,
+			    "full_audit_usd": 4000,
+			    "enterprise_usd": 12500,
+			    "audit_hours": 72
+			  },
+			  "safety_guards": [
+			    {
+			      "rule": "rollback_module_required",
+			      "max_limit": 1,
+			      "action_on_breach": "block_deploy"
+			    }
+			  ],
+			  "content_ru": "Компании массово подключают AI-агентов: автоматизация, чат-боты, торговые и аналитические агенты. Проблема — агенты галлюцинируют, их ломают prompt-инъекциями, и нет способа откатить плохое действие. Gartner: к 2027 году 40% компаний отключат автономных агентов из-за провалов governance.\n\n### Что вы получаете за 72 часа\n1. Карта вызовов и прав доступа ваших агентов — что они вызывают, куда пишут.\n2. Стресс-тест на prompt-инъекции — показываю реальные дыры.\n3. Decision Trace — лог решений агента (что решил и почему), машинно-проверяемый.\n4. Rollback-модуль — моментальное прерывание и откат опасного действия.\n5. Регламент безопасности — что можно/нельзя, текстом.\n\n### Почему это работает\nРешение построено на боевых компонентах, уже работающих на флоте из 150+ агентов: Acceptor Loop (Decision Trace), anti-self veto (Rollback gate), HOT-3 Belief Dominance (измерение уверенности агента ДО действия), суверенная локальная архитектура (данные не утекают в публичные API).\n\n### Ценовая лестница\n- Diagnostic call (60 мин + 1-стр отчёт рисков): бесплатно для первых кейсов.\n- Mini-audit (карта + топ-5 рисков + 1 rollback-скрипт): $500-1500.\n- Full 72h audit (всё + стресс-тест + Decision Trace + регламент): $3000-5000.\n- Enterprise (полный + интеграция + сопровождение): $12500.\n\nПодключили агента в прод и боитесь, что он сделает что-то необратимое? Напишите — бесплатная диагностика для первых трёх кейсов."
+			}
+		},
+		{
+			params: { slug: "ai-agent-trust-layer-reliability" },
+			props: {
+			  "id": "mem-sbor-ai-agent-trust-layer-rel",
+			  "title": "AI-Agent Trust Layer: надёжность агентов как продукт",
+			  "date": "2026-06-14",
+			  "category": "AI",
+			  "eyebrow": "Agent Reliability",
+			  "desc": "Trust Layer между LLM и средой: threat model агентов = чек-лист аудита надёжности.",
+			  "agent_summary": "Trust Layer между LLM и средой: threat model агентов = чек-лист аудита надёжности.",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {},
+			  "safety_guards": [],
+			  "content_ru": "Frontier-модели имеют избыток «сырого» интеллекта, но критический дефицит **операционной надёжности** в B2B. Агенты по умолчанию небезопасны, бесстатусны, теряют контекст и совершают неконтролируемые действия. Решение — не «сделать модель умнее», а вставить **слой доверия** между LLM и внешней средой. Это прямая основа нашего флагмана (AI-Agent Reliability Audit).\n\n## 1. Позиционирование: Agent Trust Layer\n\n   Базовая LLM API\n        │  JSON-RPC / API\n   ┌────▼────────────┐\n   │  Trust Layer    │  ← перехватывает, верифицирует, ограничивает\n   └────▲────────────┘\n        │  MCP / System Tools\n   Внешняя среда / API / кошельки / БД\n\nЛокальный/self-hosted слой между LLM и файловой системой, БД, API-инструментами, кошельками, пользователем. Превращает стохастическую LLM в **управляемого, проверяемого, безопасного** агента.\n\n## 2. ICP (кому это продавать)\n\n- **AI-Agent Developers** — дают агентам доступ к файлам, терминалу, БД, MCP.\n- **OSINT / Audit / Investigations** — строгая верификация фактов, сопоставление DOI/ссылок, исключение галлюцинаций.\n- **Crypto &amp; High-Risk Automation** — системы, исполняющие транзакции на основе неструктурированных внешних данных.\n- **Enterprise Security &amp; Compliance** — предотвращение утечек PII (152-ФЗ, GDPR).\n\nЭто в точности профиль клиента нашего консалтинга — оффер бьёт по реальной боли.\n\n## 3. Threat Model агентных сред (ядро аудита)\n\nПредоставление агенту инструментов открывает вектора, которых нет у чистой LLM:\n- **Prompt injection через данные** — вредоносный контент в файле/веб-странице/письме перехватывает управление агентом (links suspicious by default).\n- **Tool misuse / over-permission** — агент с широкими правами выполняет деструктивное действие (rm, transfer, drop table).\n- **Context loss / state drift** — агент теряет, что уже сделал, дублирует/ломает.\n- **Hallucinated action** — действие на основе выдуманного факта.\n- **Exfiltration** — утечка PII/секретов через инструмент или вывод.\n\n**Контрмеры (что аудит проверяет и чинит):**\n1. Least-privilege на инструменты, allowlist, человеческое подтверждение на необратимое.\n2. Изоляция исполнения (браузер/код в gVisor-песочнице, не в процессе агента).\n3. Верификация фактов перед действием (источник → проверка → действие).\n4. Типизированная память + журнал действий (что сделал, ack) против state drift.\n5. PII-фильтры на вход и выход.\n\n## Применение к нам\n\nНаш флагман **AI-Agent Reliability Audit ($0 диагностика → $12,500 enterprise)** получает готовый каркас: threat model выше = чек-лист аудита, контрмеры = deliverable. Sovereign Agent Core — это и продукт (Trust Layer как self-hosted софт), и IP, подтверждающее экспертизу. Наша собственная арена + флот (least-privilege SSH, бэкап-демон, acceptor-loop ack, link-safety) — живой proof, что мы это практикуем, а не теоретизируем. [[project_sprint_fable3_20260610]]"
+			}
+		},
+		{
+			params: { slug: "multiagent-orchestration-autonomous-research" },
+			props: {
+			  "id": "mem-sbor-multiagent-orchestration",
+			  "title": "Мультиагентная оркестрация и автономное исследование",
+			  "date": "2026-06-14",
+			  "category": "AI",
+			  "eyebrow": "Orchestration",
+			  "desc": "Граф-оркестрация, test-time compute, Arbiter/Clarifier; арена как автономная исследовательская система.",
+			  "agent_summary": "Граф-оркестрация, test-time compute, Arbiter/Clarifier; арена как автономная исследовательская система.",
+			  "contracts": [],
+			  "rpc_endpoints": [],
+			  "constants": {},
+			  "safety_guards": [],
+			  "content_ru": "Сдвиг от «модель как оракул» к «агент как система». Качество ответов на сложные задачи зависит от **test-time compute** — вычислений в момент вывода, а не только от претрейна. Реализуется через мультиагентные архитектуры с декомпозицией, параллельным поиском и критическим синтезом. Это описание того, чем наша арена и continuity_os уже являются.\n\n## 1. Граф вместо цепочки\n\nResearch-swarm требует отхода от линейных цепочек (chains) к **графовым структурам** с обратными связями и специализированными ролями. Чёткое разделение управляющего контура и исполнительных единиц.\n\n**Оркестратор/планировщик** — центральная нервная система, трёхфазно: Scope → Research → Write.\n- **Clarifier Agent** — итеративно опрашивает пользователя, устраняя двусмысленность ДО работы (ровно то, что делает AskUserQuestion перед запуском задач).\n- **Генератор вопросов** — декомпозиция цели на под-запросы для параллельных исполнителей.\n- **Arbiter** — критический синтез: сводит результаты исполнителей, отбраковывает слабое, разрешает противоречия.\n\n## 2. Test-time compute = больше «думанья» на трудных задачах\n\nНе «один проход модели», а итеративный цикл: план → параллельный поиск → критика → уточнение → синтез. Больше вычислений на трудный вопрос = выше качество. Дорого, поэтому нужен **cost-aware routing** (дешёвая модель на простое, дорогая на сложное).\n\n## 3. Autonomous Research AI — «пятая парадигма»\n\nПереход от Data-Intensive Science (4-я парадигма) к **AI-Driven Autonomous Discovery** (5-я): агентные системы сами формулируют гипотезы, планируют и исполняют эксперименты, интерпретируют результаты в замкнутом цикле без оператора. Признаки субъектности (в техническом смысле): долгосрочное планирование, tool use, саморефлексия, итеративное самоулучшение.\n\n## Применение к нам\n\n**Арена = действующая реализация 5-й парадигмы.** Она автономно тестирует гипотезы (боты-варианты), отбраковывает проигрышные (selection), сохраняет валидированный эдж (edge archive), повторяет цикл. Это не метафора — это буквально autonomous hypothesis-testing loop. Нарратив и proof для флагмана: «мы построили автономную исследовательскую систему, которая прогнала 70k+ экспериментов».\n\n**Continuity_os = оркестратор поверх флота.** Cognitome K1-K4, Acceptor Loop (ack), Brain bidirectional — это граф ролей с обратной связью. Паттерны из исследования, которые усиливают нас:\n- **Arbiter-роль** для синтеза находок ботов (вместо ручного просмотра лиг) — критический отбор combo.\n- **Clarifier-фаза** перед спавном когорт (устранять двусмысленность гипотезы до траты compute).\n- **Cost-aware routing** — дешёвый скрип на рутину, дорогая модель на синтез/решения; экономит при том же качестве.\n\nСвязано с [[project_sprint_fable3_20260610]] (cognitome K1-K4) и предиктивным кодированием: мозг/агент = машина предсказаний, минимизирующая ошибку (active inference) — арена минимизирует ошибку гипотез через selection."
 			}
 		}
 	];
