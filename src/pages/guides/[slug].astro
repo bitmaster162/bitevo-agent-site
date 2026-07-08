@@ -1365,6 +1365,55 @@ export function getStaticPaths() {
 }
 
 	const { title, date, category, eyebrow, desc, agent_summary, contracts, rpc_endpoints, constants, safety_guards, content_ru } = Astro.props;
+
+// GEO Phase 4 (ported from crypto latest format): Quick Answer + Article/FAQ JSON-LD
+const qaPoints = (agent_summary || desc || "")
+	.split(/(?<=[.!?])\s+/)
+	.map(x => x.trim())
+	.filter(x => x.length > 25)
+	.slice(0, 4);
+const _faqM = (content_ru || "").match(/##\s*([^\n]+)\n+([\s\S]+?)(?:\n\n|<)/);
+const faqQ = _faqM ? _faqM[1].trim() : title;
+let faqA = (_faqM ? _faqM[2] : (desc || "")).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 600);
+if (faqA.split(/\s+/).filter(Boolean).length < 25 && desc) faqA = (desc || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 600);
+const _slugUrl = `https://bitevoagentsite.vercel.app/guides/${Astro.params.slug}`;
+const ldArticle = JSON.stringify({
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "Article",
+			"@id": `${_slugUrl}#article`,
+			"headline": title.slice(0, 110),
+			"description": desc,
+			"datePublished": date,
+			"dateModified": date,
+			"inLanguage": "ru",
+			"author": { "@id": "https://bitevoagentsite.vercel.app/#org" },
+			"publisher": { "@id": "https://bitevoagentsite.vercel.app/#org" },
+			"mainEntityOfPage": _slugUrl
+		},
+		{
+			"@type": "FAQPage",
+			"@id": `${_slugUrl}#faq`,
+			"mainEntity": [{
+				"@type": "Question",
+				"name": faqQ,
+				"acceptedAnswer": { "@type": "Answer", "text": faqA }
+			}]
+		},
+		{
+			"@type": "Organization",
+			"@id": "https://bitevoagentsite.vercel.app/#org",
+			"name": "BitEvo",
+			"url": "https://bitevoagentsite.vercel.app/",
+			"sameAs": [
+				"https://sovereign-arena-site.vercel.app/",
+				"https://cryptoguidessite.vercel.app/",
+				"https://github.com/bitmaster162/bitevo-agent-site"
+			]
+		}
+	]
+});
 ---
 
 <Layout title={`${title} · BitEvo Playbooks`}>
@@ -1381,6 +1430,15 @@ export function getStaticPaths() {
 			</div>
 
 			<p class="lead-copy">{desc}</p>
+
+			<!-- Quick Answer (GEO Phase 4) -->
+			<div class="quick-answer" style="background:#0c1428;border:1px solid #00ffe133;border-radius:12px;padding:16px 20px;margin:18px 0">
+				<h2 style="font-size:16px;margin:0 0 8px;color:#ffd166">⚡ Быстрый ответ</h2>
+				<ul style="margin:0 0 0 18px;padding:0">
+					{qaPoints.map(pt => (<li style="margin-bottom:6px;font-size:14.5px;line-height:1.55">{pt}</li>))}
+				</ul>
+			</div>
+			<script type="application/ld+json" set:html={ldArticle} />
 
 			<!-- MemIR Agent Summary Block -->
 			<div class="memir-summary">
