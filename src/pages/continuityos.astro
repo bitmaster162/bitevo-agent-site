@@ -53,7 +53,7 @@ for h in m.recall("best grid setup", k=3):
     print(h.score, h.namespace, h.text)
 print(m.context("what about grid trading?"))  # готовый блок в промпт агента</code></pre>
     <h3 style="color:#66ffe0;margin:16px 0 6px">MCP-сервер (Claude Desktop / Claude Code)</h3>
-    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>{"mcpServers": {"continuityos": {"command": "cos", "args": ["--db", "~/.continuityos/memory.db", "serve"]}}}</code></pre>
+    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>&#123;"mcpServers": &#123;"continuityos": &#123;"command": "cos", "args": ["--db", "~/.continuityos/memory.db", "serve"]&#125;&#125;&#125;</code></pre>
     <p style="color:var(--muted);font-size:0.9rem">Тулзы: remember · recall · context · forget · list_namespaces — агент подтягивает нужную память сам и дописывает новые факты по ходу.</p>
 
     <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:30px 0 12px">Честно про статус</h2>
