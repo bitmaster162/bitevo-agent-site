@@ -17,69 +17,401 @@ const guides = [
 	{"slug": "security-sandboxing", "title": "Security Sandboxing: Изоляция выполнения и контроль лимитов инструментов ИИ", "date": "2026-06-25", "category": "Security", "kicker": "Security Sandboxing", "desc": "Введение\nПри интеграции ИИ-агентов с внешним окружением (базы данных, локальная ОС, внешние API) ключевым риском является неконтролируемое выполнение команд (untrusted tool execution).", "tags": ["ai-safety", "sandboxing", "tool-isolation", "security", "runtime-protection"]},
 	{"slug": "tee-agent-secrets", "title": "TEE & MPC: Безопасное управление ключами автономных ИИ-агентов", "date": "2026-06-25", "category": "Security", "kicker": "Tee Agent Secrets", "desc": "Введение\nПредоставление автономному ИИ-агенту прямого доступа к API-ключам биржи или приватным ключам блокчейна несет критическую уязвимость.", "tags": ["ai-safety", "security", "tee", "mpc", "key-management"]},
 	{
-		slug: 'd3-tool-io-bridge-contract',
-		title: 'D3: Tool-IO Bridge Спецификация и Контракт',
-		date: '2026-06-08',
-		category: 'Security',
-		kicker: 'Security Sandbox',
-		desc: 'Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.',
-		tags: ['security', 'sandbox', 'd3', 'bitevo']
+		slug: "regime-playbook-what-to-trade",
+		title: "Regime Playbook: что торговать в каждом режиме BTC",
+		date: "2026-06-19",
+		category: "Trading",
+		kicker: "Regime Playbook",
+		desc: "Из живой матрицы эджа: эдж это связка сигнал × направление × режим. Зелёные связки +$4457, красные −$25452 за 7 дней.",
+		tags: ["trading","regime","playbook","what","to","trade"]
 	},
 	{
-		slug: 'state-authority-plane-evolution',
-		title: 'State Authority Plane: Управление привилегиями агентов',
-		date: '2026-06-08',
-		category: 'Governance',
-		kicker: 'Agent Governance',
-		desc: 'Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с паспортами способностей и проверкой подписей.',
-		tags: ['governance', 'sap', 'authority', 'continuity']
+		slug: "ai-agent-trust-layer-reliability",
+		title: "AI-Agent Trust Layer: надёжность агентов как продукт",
+		date: "2026-06-14",
+		category: "AI",
+		kicker: "Agent Reliability",
+		desc: "Trust Layer между LLM и средой: threat model агентов = чек-лист аудита надёжности.",
+		tags: ["ai","ai","agent","trust","layer","reliability"]
 	},
 	{
-		slug: 'reflex-layer-ooda-monitoring',
-		title: 'Reflex Layer: Автономный OODA-мониторинг',
-		date: '2026-06-08',
-		category: 'Automation',
-		kicker: 'OODA Loop',
-		desc: 'Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.',
-		tags: ['automation', 'reflex', 'ooda', 'monitoring']
+		slug: "blockchain-forensics-onchain-investigations",
+		title: "Blockchain-форензика: методология ончейн-расследований",
+		date: "2026-06-14",
+		category: "Security",
+		kicker: "Forensics",
+		desc: "Ончейн-форензика: gas trail, Sybil-фермы, идентификация контрактов — продаваемый OSINT-сервис.",
+		tags: ["security","blockchain","forensics","onchain","investigations"]
 	},
 	{
-		slug: 'multi-agent-system-safety',
-		title: 'Управляемая коэволюция и безопасность многоагентных систем (MAS)',
-		date: '2026-06-08',
-		category: 'Security',
-		kicker: 'Multi-Agent Safety',
-		desc: 'Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.',
-		tags: ['multi-agent', 'safety', 'sandboxing', 'coevolution']
+		slug: "compression-no-mans-land-trap",
+		title: "S15: Паттерн «Compression / No-Man’s-Land» (Сжатие и Капкан-удушение)",
+		date: "2026-06-14",
+		category: "Trading",
+		kicker: "Range Compression",
+		desc: "Сжатие волатильности внутри диапазона и капкан для спешащих. Как не отдавать ликвидность в середине свинга.",
+		tags: ["trading","compression","no","mans","land","trap"]
 	},
 	{
-		slug: 'mirrorcore-seeding-identity-persistence',
-		title: 'MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ',
-		date: '2026-06-08',
-		category: 'Security',
-		kicker: 'AI Safety',
-		desc: 'Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.',
-		tags: ['ai-safety', 'seeding', 'mirror-core', 'continuity']
+		slug: "grid-trading-os-institutional-spec",
+		title: "Grid Trading OS — институциональная спецификация (2026)",
+		date: "2026-06-14",
+		category: "Trading",
+		kicker: "Grid OS",
+		desc: "ATR-калибровка шага, fee-firewall, ±3σ range, GER soft-stop, regime switching — институциональная грид-спека.",
+		tags: ["trading","grid","trading","os","institutional","spec"]
 	},
 	{
-		slug: 'omnicore-loop-self-preservation',
-		title: 'Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии',
-		date: '2026-06-08',
-		category: 'Automation',
-		kicker: 'OODA Loop',
-		desc: 'Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.',
-		tags: ['automation', 'omni-core-loop', 'drift-guard', 'watchdog']
+		slug: "microstructure-delisting-data-integrity-2026",
+		title: "Микроструктура и риск делистинга 2026: data-integrity для квант-движка",
+		date: "2026-06-14",
+		category: "Trading",
+		kicker: "Microstructure",
+		desc: "Bybit unilateral-OI (11.06.2026) ломает бэктесты; Delist-Risk Score для авто-флага токсичных активов.",
+		tags: ["trading","microstructure","delisting","data","integrity","2026"]
 	},
 	{
-		slug: 'archiveos-multigpt-bridge-integration',
-		title: 'ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ',
-		date: '2026-06-08',
-		category: 'Infrastructure',
-		kicker: 'Memory & Bridge',
-		desc: 'Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.',
-		tags: ['archiveos', 'multigpt', 'arbitrage', 'memory']
+		slug: "monetization-matrix-4x3",
+		title: "Матрица монетизации: от быстрых денег к инфраструктуре",
+		date: "2026-06-14",
+		category: "Business",
+		kicker: "Monetization",
+		desc: "Матрица 4 уровня × 3 горизонта: быстрые деньги финансируют moonshots, anti-кассовый-разрыв.",
+		tags: ["business","monetization","matrix","4x3"]
+	},
+	{
+		slug: "multiagent-orchestration-autonomous-research",
+		title: "Мультиагентная оркестрация и автономное исследование",
+		date: "2026-06-14",
+		category: "AI",
+		kicker: "Orchestration",
+		desc: "Граф-оркестрация, test-time compute, Arbiter/Clarifier; арена как автономная исследовательская система.",
+		tags: ["ai","multiagent","orchestration","autonomous","research"]
+	},
+	{
+		slug: "sector-divergence-fake-crown",
+		title: "S14: Паттерн «Один говорит, а три молчат» (Фейковая корона)",
+		date: "2026-06-14",
+		category: "Trading",
+		kicker: "Sector Divergence",
+		desc: "Резонанс сектора против ложного лидерства. Почему памп одного актива при тишине остальных — это приманка, и как это фильтровать.",
+		tags: ["trading","sector","divergence","fake","crown"]
+	},
+	{
+		slug: "survival-math-ergodicity-kelly",
+		title: "Математика выживания: эргодичность, Келли и expectancy",
+		date: "2026-06-14",
+		category: "Risk",
+		kicker: "Survival Math",
+		desc: "Эргодичность, Келли, expectancy: почему +EV может банкротить и как судить ботов по геом. росту.",
+		tags: ["risk","survival","math","ergodicity","kelly"]
+	},
+	{
+		slug: "trading-discipline-journal-mae-mfe",
+		title: "Дисциплина трейдинга: дневник, MAE/MFE и психология убытков",
+		date: "2026-06-14",
+		category: "Trading",
+		kicker: "Discipline",
+		desc: "Дневник, MAE/MFE-калибровка стопов/тейков, эффект диспозиции и как не зашить его в код.",
+		tags: ["trading","trading","discipline","journal","mae","mfe"]
+	},
+	{
+		slug: "anti-self-attention-trading-psychology",
+		title: "S10: Системы Внимания и контр-индикаторы «Анти-Я»",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Trading Psychology",
+		desc: "Управление поведенческим дрейфом в трейдинге: от ментальных якорей до контр-интуитивной торговли по сигналам реактивного «Анти-Я» и аватара Членикус.",
+		tags: ["trading","anti","self","attention","trading","psychology"]
+	},
+	{
+		slug: "candle-confirmation-data-alignment",
+		title: "Data Alignment: Правила подтверждения свечей и синхронизация",
+		date: "2026-06-13",
+		category: "Infrastructure",
+		kicker: "Trading Infrastructure",
+		desc: "Руководство по правильной обработке свечей, фильтрации незакрытых баров и синхронизации шага опроса для предотвращения пропусков данных и ложных входов.",
+		tags: ["infrastructure","candle","confirmation","data","alignment"]
+	},
+	{
+		slug: "crowd-fade-long-short-ratio",
+		title: "Crowd-fade: как читать long/short ratio фьючерсов и торговать против толпы",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Positioning",
+		desc: "Когда ритейл-толпа экстремально длинная, а смарт-мани нет — сигнал на разворот. Как читать данные позиционирования.",
+		tags: ["trading","crowd","fade","long","short","ratio"]
+	},
+	{
+		slug: "diversification-illusion-bots",
+		title: "Иллюзия диверсификации: почему 150 ботов — это часто 1 стратегия в 150 копиях",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Risk",
+		desc: "Много ботов ≠ много независимых эджей. Когда движок не в фазе с рынком — минусуют все разом.",
+		tags: ["trading","diversification","illusion","bots"]
+	},
+	{
+		slug: "fleet-coordinator-drift-monitoring",
+		title: "D11: Fleet Coordinator и технический дрейф",
+		date: "2026-06-13",
+		category: "Governance",
+		kicker: "Fleet Coordination",
+		desc: "Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.",
+		tags: ["governance","fleet","coordinator","drift","monitoring"]
+	},
+	{
+		slug: "fractal-intelligence-scouts-scribes-attention",
+		title: "S12: Фрактальный интеллект: Роли внимания, Q-score и AutoDigest",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Attention Networks",
+		desc: "Концепция фрактального интеллекта в трейдинге: роли Scout, Scribe, Sentinel, расчет Q-score сетапа и автоматическое сжатие AutoDigest.",
+		tags: ["trading","fractal","intelligence","scouts","scribes","attention"]
+	},
+	{
+		slug: "grid-trading-breakout-recentering-management",
+		title: "S11: Сеточные боты и управление выходом из диапазона (Recentering)",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Grid Trading",
+		desc: "Механика работы сеточных ботов, расчет шага под волатильность, Unit Economics комиссий и стратегии рецентрирования (Stop & Rebuild) при выходе из диапазона.",
+		tags: ["trading","grid","trading","breakout","recentering","management"]
+	},
+	{
+		slug: "how-to-validate-edge-oos-bootstrap",
+		title: "Как проверить торговый эдж по-честному: OOS, bootstrap CI и почему in-sample врёт",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Validation",
+		desc: "Методология, которая отсеяла 99% наших гипотез. Out-of-sample split, bootstrap доверительный интервал, бенчмарки.",
+		tags: ["trading","how","to","validate","edge","oos","bootstrap"]
+	},
+	{
+		slug: "macro-liquidity-eth-btc-relativity-gap",
+		title: "S13: Макро-режимы ликвидности и ETH-BTC Relativity Gap",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Liquidity Regimes",
+		desc: "Анализ расхождения относительной стоимости ETH/BTC в зависимости от макро-ликвидности ФРС, динамики индекса доллара DXY и протокола накопления ETH-Core.",
+		tags: ["trading","macro","liquidity","eth","btc","relativity","gap"]
+	},
+	{
+		slug: "mas-managed-coevolution-sandbox-isolation",
+		title: "D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)",
+		date: "2026-06-13",
+		category: "Security",
+		kicker: "Multi-Agent Safety",
+		desc: "Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.",
+		tags: ["security","mas","managed","coevolution","sandbox","isolation"]
+	},
+	{
+		slug: "mild-vs-strong-trend-reversal",
+		title: "Парадокс mild-тренда: почему развороты работают в слабом тренде и сливают в сильном",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Regime Strength",
+		desc: "На данных 1450 сделок: разворотные сигналы дают +$8,599 в mild-трендах и −$2,923 в strong. Контринтуитивно, но объяснимо.",
+		tags: ["trading","mild","vs","strong","trend","reversal"]
+	},
+	{
+		slug: "mirrorcore-compactdigest-memory-compression",
+		title: "D12: MirrorCore++ и сжатие памяти по самосогласованности",
+		date: "2026-06-13",
+		category: "Security",
+		kicker: "Memory Management",
+		desc: "Технология сжатия логов переписок на основе самосогласованности для формирования ядер идентичности ИИ и дельта-компрессии CompactDigest.",
+		tags: ["security","mirrorcore","compactdigest","memory","compression"]
+	},
+	{
+		slug: "multigpt-bridge-federated-ai-arbitration",
+		title: "D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж",
+		date: "2026-06-13",
+		category: "Infrastructure",
+		kicker: "Federated Arbitration",
+		desc: "Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.",
+		tags: ["infrastructure","multigpt","bridge","federated","ai","arbitration"]
+	},
+	{
+		slug: "postgres-backup-sync-daemon",
+		title: "PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов",
+		date: "2026-06-13",
+		category: "Infrastructure",
+		kicker: "Infrastructure Sovereignty",
+		desc: "Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.",
+		tags: ["infrastructure","postgres","backup","sync","daemon"]
+	},
+	{
+		slug: "regime-timing-30-120-min",
+		title: "Тайминг регима: входить через 30-120 минут после смены тренда",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Regime Timing",
+		desc: "Возраст тренда на момент входа предсказывает результат: 30-120мин = +$14.88, а 2-6ч = −$2.93.",
+		tags: ["trading","regime","timing","30","120","min"]
+	},
+	{
+		slug: "sovereign-scalper-drawdown-analysis",
+		title: "Sovereign Scalper: Глубокий анализ просадки",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "Drawdown Deep-dive",
+		desc: "Анализ пяти критических уязвимостей в логике ведения позиций и фильтрации сигналов робота Sovereign Core, приведших к полной просадке виртуального капитала.",
+		tags: ["trading","sovereign","scalper","drawdown","analysis"]
+	},
+	{
+		slug: "trading-performance-monitoring-ssot-ai",
+		title: "D14: Системы мониторинга торговой эффективности: Архитектура SSOT и ИИ-коучинг",
+		date: "2026-06-13",
+		category: "Security",
+		kicker: "Infrastructure",
+		desc: "Проектирование систем мониторинга трейдеров: Единый источник истины (SSOT), сравнение TraderSync/Tradervue/TradeZella, выявление тильта и интеграция ИИ-наставника.",
+		tags: ["security","trading","performance","monitoring","ssot","ai"]
+	},
+	{
+		slug: "trend-following-r-multiple-math",
+		title: "Как 50% winrate приносит прибыль: математика R-кратности в трендследовании",
+		date: "2026-06-13",
+		category: "Trading",
+		kicker: "R-Multiples",
+		desc: "На trend-aligned сделках средний тейк +$77.52 против стопа −$8.01 — асимметрия 6.8×. Редкие победы, но огромные.",
+		tags: ["trading","trend","following","r","multiple","math"]
+	},
+	{
+		slug: "ai-agent-reliability-audit",
+		title: "AI-Agent Reliability Audit — за 72 часа делаю ваших агентов безопасными",
+		date: "2026-06-11",
+		category: "Service",
+		kicker: "Flagship Service",
+		desc: "Подключили AI-агента в прод? Покажу, как его сломать инъекцией, дам Decision Trace и Rollback-модуль. От бесплатной диагностики до enterprise-аудита.",
+		tags: ["service","ai","agent","reliability","audit"]
+	},
+	{
+		slug: "read-market-risk-fng-funding",
+		title: "Как читать риск рынка за 60 секунд: FNG + funding + режим",
+		date: "2026-06-11",
+		category: "Trading",
+		kicker: "Risk Intelligence",
+		desc: "Три бесплатных индикатора, которые ловят риск ликвидационного каскада и разворота раньше графика. Методология Crypto Risk Desk.",
+		tags: ["trading","read","market","risk","fng","funding"]
+	},
+	{
+		slug: "why-90-percent-strategies-lose",
+		title: "Почему 90% paper-trading стратегий теряют: 3 механических дефекта на 66k сделок",
+		date: "2026-06-10",
+		category: "Trading",
+		kicker: "Strategy Reality Check",
+		desc: "Разбор на реальных данных Sovereign Arena: мёртвые монеты, геометрия R:R и театр индикаторов — почему большинство стратегий обречены до запуска.",
+		tags: ["trading","why","90","percent","strategies","lose"]
+	},
+	{
+		slug: "archiveos-multigpt-bridge-integration",
+		title: "ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ",
+		date: "2026-06-08",
+		category: "Infrastructure",
+		kicker: "Memory & Bridge",
+		desc: "Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.",
+		tags: ["infrastructure","archiveos","multigpt","bridge","integration"]
+	},
+	{
+		slug: "d3-tool-io-bridge-contract",
+		title: "D3: Tool-IO Bridge Спецификация и Контракт",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "Security Sandbox",
+		desc: "Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.",
+		tags: ["security","d3","tool","io","bridge","contract"]
+	},
+	{
+		slug: "eth-btc-relativity-gap",
+		title: "ETH-BTC Relativity Gap: Торговля относительной силой и макро-индикаторы",
+		date: "2026-06-08",
+		category: "Trading",
+		kicker: "Regime Indicators",
+		desc: "Анализ расхождения относительной цены ETH к BTC, макроэкономических индикаторов (ставка ФРС, DXY) и механики принудительного делевериджа фьючерсов.",
+		tags: ["trading","eth","btc","relativity","gap"]
+	},
+	{
+		slug: "evm-approval-safety-flashbots",
+		title: "EVM: Безопасность аппрувов и защита от фронтраннинга через Flashbots",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "EVM Safety",
+		desc: "Спецификация безопасного управления аппрувами токенов в EVM-сетях и защиты транзакций от фронтраннинга с помощью Flashbots.",
+		tags: ["security","evm","approval","safety","flashbots"]
+	},
+	{
+		slug: "mirrorcore-seeding-identity-persistence",
+		title: "MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "AI Safety",
+		desc: "Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.",
+		tags: ["security","mirrorcore","seeding","identity","persistence"]
+	},
+	{
+		slug: "multi-agent-system-safety",
+		title: "Управляемая коэволюция и безопасность многоагентных систем (MAS)",
+		date: "2026-06-08",
+		category: "Security",
+		kicker: "Multi-Agent Safety",
+		desc: "Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.",
+		tags: ["security","multi","agent","system","safety"]
+	},
+	{
+		slug: "omnicore-loop-self-preservation",
+		title: "Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии",
+		date: "2026-06-08",
+		category: "Automation",
+		kicker: "OODA Loop",
+		desc: "Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.",
+		tags: ["automation","omnicore","loop","self","preservation"]
+	},
+	{
+		slug: "reflex-layer-ooda-monitoring",
+		title: "Reflex Layer: Автономный OODA-мониторинг",
+		date: "2026-06-08",
+		category: "Automation",
+		kicker: "OODA Loop",
+		desc: "Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.",
+		tags: ["automation","reflex","layer","ooda","monitoring"]
+	},
+	{
+		slug: "state-authority-plane-evolution",
+		title: "State Authority Plane: Управление привилегиями агентов",
+		date: "2026-06-08",
+		category: "Governance",
+		kicker: "Agent Governance",
+		desc: "Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с использованием паспортов способностей и проверкой подписей.",
+		tags: ["governance","state","authority","plane","evolution"]
+	},
+	{
+		slug: "trading-system-v2-range-farm",
+		title: "Trading System v2.final: Сетки, дивергенции и ловушки маркет-мейкеров",
+		date: "2026-06-08",
+		category: "Trading",
+		kicker: "Trading System",
+		desc: "Техническая спецификация торговой системы v2.final: от борьбы со своими слабостями через ИИ-контр-индикаторы до сеточных стратегий (Si-Zi), Range-Farm BTC и Alt-Scouting.",
+		tags: ["trading","trading","system","v2","range","farm"]
+	},
+	{
+		slug: "solana-mev-sandwich-protection",
+		title: "Solana MEV: Защита от сэндвич-атак",
+		date: "2026-06-07",
+		category: "Infrastructure",
+		kicker: "MEV Mitigation",
+		desc: "Как защитить транзакции в Solana от сэндвич-атак MEV-ботов, используя Jito Block Engine и оптимизацию проскальзывания Jupiter API.",
+		tags: ["infrastructure","solana","mev","sandwich","protection"]
+	},
+	{
+		slug: "okx-nft-parasite-hunter",
+		title: "OKX NFT: Охота на паразитарные кошельки",
+		date: "2026-06-03",
+		category: "Trading",
+		kicker: "NFT Botting",
+		desc: "Стратегия выявления и мгновенного перебивания ставок паразитарных снайперов на OKX NFT и OpenSea.",
+		tags: ["trading","okx","nft","parasite","hunter"]
 	}
-
 ];
 ---
 
