@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BITEVO UNIVERSE — навигатор экосистемы</title>
+<style>
+  :root{
+    --bg:#05060a; --ink:#e7ecf3; --dim:#8792a6; --line:#1b2230;
+    --gold:#f4b41a; --green:#29c95f; --cyan:#7fd0ff; --violet:#b98cff; --card:#0b0f18;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:radial-gradient(1200px 600px at 50% -10%, #0d1424 0%, var(--bg) 60%);
+       color:var(--ink);font:15px/1.55 -apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+  .wrap{max-width:1100px;margin:0 auto;padding:48px 24px 80px}
+  header{text-align:center;margin-bottom:40px}
+  .kicker{color:var(--gold);letter-spacing:.28em;font-size:12px;font-weight:700;text-transform:uppercase}
+  h1{font-size:44px;margin:10px 0 6px;letter-spacing:.02em;
+     background:linear-gradient(90deg,#fff,#9fd0ff 60%,#b98cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);max-width:640px;margin:0 auto}
+  .status{display:inline-flex;gap:8px;align-items:center;margin-top:14px;font-size:12px;color:var(--dim);
+          background:#0a0e16aa;border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .sect{margin:34px 0 14px;color:var(--dim);font:700 11px/1 system-ui;letter-spacing:.18em;text-transform:uppercase}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  a.card{display:block;text-decoration:none;color:inherit;background:var(--card);
+         border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;
+         transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+  a.card:hover{transform:translateY(-3px);border-color:#2b3852;box-shadow:0 12px 30px #0008}
+  .card .ic{font-size:26px;margin-bottom:10px}
+  .card h3{margin:0 0 4px;font-size:17px}
+  .card p{margin:0;color:var(--dim);font-size:13px}
+  .card .go{margin-top:12px;color:var(--cyan);font-size:12px;font-weight:600}
+  .tag{position:absolute;top:16px;right:16px;font-size:10px;font-weight:700;letter-spacing:.06em;
+       padding:3px 8px;border-radius:999px;border:1px solid var(--line)}
+  .live{color:var(--green);border-color:#1c5a33}
+  .local{color:var(--gold);border-color:#5a4a12}
+  .oss{color:var(--cyan);border-color:#1c4a5a}
+  .note{margin-top:10px;font-size:12px;color:var(--dim)}
+  code{background:#0a0e16;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12px}
+  footer{margin-top:50px;text-align:center;color:var(--dim);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Единый навигатор</div>
+    <h1>BITEVO UNIVERSE</h1>
+    <p class="sub">Одна точка входа во всю нашу экосистему: сайты, торговля, память, наблюдаемость.
+       Всё, что мы построили — на одной панели.</p>
+    <div class="status"><span class="dot"></span> Brain-канон живой · systemd cos-bus · цепочка цела</div>
+  </header>
+
+  <div class="sect">🟢 Наши сайты (живые, проверено 200)</div>
+  <div class="grid">
+    <a class="card" href="https://bitevoagentsite.vercel.app/" target="_blank" rel="noopener">
+      <span class="tag live">LIVE</span>
+      <div class="ic">🟣</div><h3>BitEvo — сайт агента</h3>
+      <p>Витрина BitEvo (агент/торговая система). Прайсинг, VIP-тиры, буклет экосистемы.</p>
+      <div class="go">Открыть BitEvo →</div>
+    </a>
+    <a class="card" href="https://sovereign-arena-site.vercel.app/" target="_blank" rel="noopener">
+      <span class="tag live">LIVE</span>
+      <div class="ic">⚔️</div><h3>Sovereign Arena — сайт</h3>
+      <p>Лендинг арены: форвард-пейпер, backtest-лидерборды, честный Dataset (0/29 gate-pass).</p>
+      <div class="go">Открыть Arena →</div>
+    </a>
+    <a class="card" href="https://cryptoguidessite-eight.vercel.app/" target="_blank" rel="noopener">
+      <span class="tag live">LIVE</span>
+      <div class="ic">📚</div><h3>Crypto & Trading Guides</h3>
+      <p>160 GEO-гайдов: Trading · AI · Security · Infrastructure · Governance. Лид-магнит + твин-память.</p>
+      <div class="go">Открыть портал →</div>
+    </a>
+  </div>
+
+  <div class="sect">🛠️ Наши инструменты (собственные, не чужие)</div>
+  <div class="grid">
+    <a class="card" href="./_ARCHIVE/continuity-os-graph/epoch_graph_3d.html" target="_blank" rel="noopener">
+      <span class="tag local">НАШЕ · ЛОКАЛЬНО</span>
+      <div class="ic">🌌</div><h3>Pandora — наш граф-viz</h3>
+      <p><b>continuity-os-graph</b>: Three.js git-DAG эпох + Pandora Universe (Closure(P,R), physics),
+         + <code>pandora_compute_glsl.html</code>. Наш код. Не задеплоен — кандидат в UNIVERSE.</p>
+      <div class="go">Открыть локально (_SERVE_GRAPH.bat) →</div>
+    </a>
+    <a class="card" href="./SYSTEM_DASHBOARD.html" target="_blank" rel="noopener">
+      <span class="tag local">ЛОКАЛЬНО</span>
+      <div class="ic">🧠</div><h3>Mission Control</h3>
+      <p>SYSTEM_DASHBOARD.html — 12 панелей всей Rift/ContinuityOS-системы, live-connect к Brain.</p>
+      <div class="go">Открыть Mission Control →</div>
+    </a>
+    <a class="card" href="http://localhost:8084/" target="_blank" rel="noopener">
+      <span class="tag local">ЛОКАЛЬНО</span>
+      <div class="ic">📉</div><h3>SCFT мониторинг</h3>
+      <p>SCFT-дашборд (<code>dashboard/app.py</code>, :8084) + Grafana (<code>scft-grafana</code> docker, :3000):
+         PnL, WR, риск, здоровье коллекторов/арены. Prometheus + Pushgateway 9091. Публично не выставлены.</p>
+      <div class="go">:8084 дашборд · :3000 Grafana →</div>
+    </a>
+  </div>
+
+  <div class="sect">🛡️ Ядро (ContinuityOS / OSS)</div>
+  <div class="grid">
+    <a class="card" href="https://github.com/bitmaster162/continuityos" target="_blank" rel="noopener">
+      <span class="tag oss">GITHUB</span>
+      <div class="ic">🛡️</div><h3>ContinuityOS (ядро)</h3>
+      <p>Event-sourced identity + gate (Default-DENY) + hash-chain. <code>pip install continuityos</code> 0.9.0.
+         Ради этого и строим — чтобы контекст НЕ терялся.</p>
+      <div class="go">Репозиторий →</div>
+    </a>
+    <a class="card" href="https://pypi.org/project/continuityos/" target="_blank" rel="noopener">
+      <span class="tag oss">PYPI</span>
+      <div class="ic">📦</div><h3>PyPI · continuityos</h3>
+      <p>Опубликованный пакет: 6-вендорный импорт, bench, advocate/audit/bus, авто-гейт, Orca-оркестратор.</p>
+      <div class="go">На PyPI →</div>
+    </a>
+    <a class="card" href="https://www.remoteopenclaw.com/mcp/bitmaster162/continuityos" target="_blank" rel="noopener">
+      <span class="tag oss">MCP</span>
+      <div class="ic">🔌</div><h3>OpenClaw · MCP</h3>
+      <p>ContinuityOS в MCP-каталоге OpenClaw. Cosmos подключён к оркестратору как агент-адаптер.</p>
+      <div class="go">Листинг MCP →</div>
+    </a>
+  </div>
+
+  <p class="note">Всё — НАШЕ и живое. Внешний hondidio9-Pandora убран (это была чужая заготовка).
+     Локальные инструменты (Pandora-граф, Mission Control, Grafana) — кандидаты на деплой в UNIVERSE следующим шагом.</p>
+
+  <footer>BITEVO UNIVERSE · навигатор экосистемы · v0.2 (реальные URL) · собран из канона</footer>
+</div>
+</body>
+</html>

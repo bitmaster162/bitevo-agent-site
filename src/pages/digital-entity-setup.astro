@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const problems = [
+	"Fragmented chats and scattered context",
+	"Repeated context loss between sessions",
+	"Duplicated effort across tools",
+	"Weak handoffs between tools and agents",
+	"No clear memory or operating logic",
+];
+const gains = [
+	"Structured AI architecture",
+	"Clearer memory and context rules",
+	"Workflow routing for different tasks",
+	"A usable day-to-day operating system",
+	"Less friction, less overload, more leverage",
+];
+---
+
+<Layout title="Digital Entity Setup · BitEvo">
+	<section class="hero-section">
+		<div class="container hero-inner" style="text-align:center;padding-block:64px 24px">
+			<div class="kicker" style="color:var(--blue)">Done-for-you · Flagship offer</div>
+			<h1 class="display" style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;margin:0">
+				Build your personal AI operating system.
+			</h1>
+			<p class="copy" style="max-width:680px;margin:16px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.6">
+				I help founders, traders, and serious operators build personal AI operating systems that reduce cognitive
+				overload, preserve context, and turn scattered tools into one coherent system.
+			</p>
+			<a href="/intake" class="cta-btn" style="display:inline-block;margin-top:26px;padding:13px 28px;background:var(--gold,#ffd166);color:#0a0a0a;font-weight:800;border-radius:10px;text-decoration:none">
+				Book an intake →
+			</a>
+		</div>
+	</section>
+
+	<section class="container" style="max-width:900px;padding-block:20px 60px">
+		<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px" class="de-grid">
+			<div style="background:#12080c;border:1px solid #ff6b6b33;border-radius:14px;padding:22px 24px">
+				<h2 style="font-size:1.05rem;color:#ff8f8f;margin:0 0 12px">Most people don't need more AI tools. They need architecture.</h2>
+				<p style="color:var(--muted);font-size:0.92rem;margin:0 0 10px">Without architecture, AI becomes noise:</p>
+				<ul style="margin:0;padding-left:18px;color:#cbd5e1;line-height:1.7;font-size:0.95rem">
+					{problems.map(p => (<li>{p}</li>))}
+				</ul>
+			</div>
+			<div style="background:#08121a;border:1px solid #00ffe133;border-radius:14px;padding:22px 24px">
+				<h2 style="font-size:1.05rem;color:#66ffe0;margin:0 0 12px">With BitEvo Digital Entity Setup, you get:</h2>
+				<ul style="margin:0;padding-left:18px;color:#cbd5e1;line-height:1.7;font-size:0.95rem">
+					{gains.map(g => (<li>{g}</li>))}
+				</ul>
+			</div>
+		</div>
+
+		<div style="text-align:center;margin-top:40px;padding:28px;background:#0c1428;border:1px solid #2a3550;border-radius:14px">
+			<p style="color:#e2e8f0;font-size:1.05rem;max-width:640px;margin:0 auto 18px;line-height:1.6">
+				Book an intake. I'll review your current stack, identify the bottlenecks, and tell you whether a Digital
+				Entity Setup makes sense for you.
+			</p>
+			<a href="/intake" style="display:inline-block;padding:13px 28px;background:var(--gold,#ffd166);color:#0a0a0a;font-weight:800;border-radius:10px;text-decoration:none">Get started →</a>
+		</div>
+	</section>
+
+	<style>
+		@media (max-width: 720px) { .de-grid { grid-template-columns: 1fr !important; } }
+	</style>
+</Layout>
