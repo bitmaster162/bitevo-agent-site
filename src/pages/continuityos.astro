@@ -1,84 +1,69 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const why = [
+  { icon: "🔀", title: "Гибридный recall", body: "Только ключевые слова — мимо перефразировок. Только вектор — мимо точных фактов и структуры. ContinuityOS смешивает оба: 0.6·семантика + 0.4·keyword (настраивается)." },
+  { icon: "🗂️", title: "Структура как папки", body: "Память живёт в namespace: identity, projects, rules, facts, events, notes — или свои. Поиск можно сузить, человек может листать." },
+  { icon: "🤖", title: "Для агентов и людей", body: "Из кода, из CLI, из MCP-клиента (Claude Desktop / Claude Code) или по крошечному HTTP API. Агент сам помнит и вспоминает." },
+  { icon: "🔒", title: "Local-first & приватно", body: "Ядро — только stdlib, ноль обязательных зависимостей и сервисов. Один SQLite-файл на твоём диске. Ни облака, ни аккаунта, ни телеметрии." },
+];
 ---
 
-<Layout title="ContinuityOS — durable memory + continuity for AI agents">
-	<section class="lp">
-		<div class="container">
+<Layout title="ContinuityOS — durable hybrid memory for AI agents & humans">
+  <section class="hero-section">
+    <div class="container hero-inner" style="text-align:center;padding-block:56px 20px">
+      <div class="kicker" style="color:var(--gold,#ffd166)">Apache-2.0 · local-first · zero external services</div>
+      <h1 class="display" style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;margin:0">ContinuityOS</h1>
+      <p class="copy" style="max-width:680px;margin:16px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.6">
+        Долговременная <b>гибридная память</b> для AI-агентов и человека. Структурный поиск (папки + ключевые слова)
+        <b>+</b> семантический (вектор) — в одном локальном SQLite-файле. Ничего не уходит наружу.
+      </p>
+      <div style="margin-top:22px"><code style="background:#0c1428;border:1px solid #2a3550;border-radius:8px;padding:10px 18px;font-size:1rem">pip install continuityos</code></div>
+      <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#quickstart" style="padding:11px 22px;background:var(--gold,#ffd166);color:#0a0a0a;font-weight:800;border-radius:9px;text-decoration:none">⚡ Quick start</a>
+        <a href="https://github.com/bitmaster162/continuityos" style="padding:11px 22px;border:1px solid #2a3550;color:#e2e8f0;border-radius:9px;text-decoration:none">🐙 GitHub</a>
+      </div>
+    </div>
+  </section>
 
-			<div class="hero">
-				<div class="kicker">Open-source · Apache-2.0 · local-first</div>
-				<h1 class="display">ContinuityOS</h1>
-				<p class="lead">
-					Долговременная <strong>память + continuity-слой</strong> для AI-агентов и человека.
-					Гибридный recall (структура + вектор) плюс canon, frontiers, open loops, checkpoints,
-					анти-дрифт doctor и handoff-паки. Один локальный SQLite. Ничего не уходит наружу.
-				</p>
-				<a href="#quickstart" class="cta">pip install continuityos</a>
-				<div class="proofbar">MCP-сервер для Claude Desktop / Claude Code · ядро на stdlib, ноль обязательных зависимостей · Apache-2.0</div>
-			</div>
+  <section class="container" style="max-width:920px;padding-block:10px 20px">
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:0 0 10px">Проблема, которую решает</h2>
+    <p style="color:var(--muted);line-height:1.65">Claude / ChatGPT / любой агент забывает всё между сессиями — каждый раз начинает с нуля. ContinuityOS ставится локально и хранит то, что важно: кто ты, какие проекты, какие правила, какие решения уже принял. Когда задаёшь новый вопрос — нужная память подтягивается сама, по смыслу <i>или</i> по словам. Структурно, как файлы в папках, чтобы и агент, и человек могли с ней работать.</p>
 
-			<h2 class="sec">Зачем</h2>
-			<div class="grid3">
-				<div class="c"><h3>🔀 Гибридный recall</h3><p>Только keyword — мимо перефразировок; только вектор — мимо точных фактов. ContinuityOS смешивает оба.</p></div>
-				<div class="c"><h3>🗂️ Структура как папки</h3><p>namespace: identity / projects / rules / facts / events / notes. Поиск можно сузить, человек может листать.</p></div>
-				<div class="c"><h3>🧭 Continuity, не только память</h3><p>canon (медленные истины), frontiers (1 trunk+1 cash+1 lab), open loops, checkpoints, doctor (анти-дрифт), handoff.</p></div>
-				<div class="c"><h3>🔒 Local-first</h3><p>Один SQLite-файл на твоём диске. Ни облака, ни аккаунта, ни телеметрии. Apache-2.0.</p></div>
-			</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:28px 0 14px">Почему именно так</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="cos-why">
+      {why.map(w => (
+        <div style="background:#0b1220;border:1px solid #1e2b45;border-radius:14px;padding:20px">
+          <div style="font-size:1.5rem">{w.icon}</div>
+          <h3 style="margin:8px 0 6px;font-size:1.05rem;color:#e2e8f0">{w.title}</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.93rem;line-height:1.55">{w.body}</p>
+        </div>
+      ))}
+    </div>
 
-			<h2 class="sec" id="quickstart">Quick start</h2>
-			<pre class="code">pip install continuityos
-
-cos remember "Robert prefers Apache-2.0" -n rules -t license
+    <h2 id="quickstart" style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:32px 0 14px;scroll-margin-top:80px">Quick start</h2>
+    <h3 style="color:#66ffe0;margin:14px 0 6px">CLI</h3>
+    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>cos remember "Robert prefers Apache-2.0" -n rules -t license
 cos recall  "which license should I pick?"
-# 0.54 [rules] Robert prefers Apache-2.0  (semantic + keyword)
+# 0.54 [rules] Robert prefers Apache-2.0  (semantic + keyword)</code></pre>
+    <h3 style="color:#66ffe0;margin:16px 0 6px">Python</h3>
+    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>from continuityos import Memory
+m = Memory("memory.db")
+m.remember("grid K=0.04 led +$1405/3d", namespace="facts", tags=["trading"])
+for h in m.recall("best grid setup", k=3):
+    print(h.score, h.namespace, h.text)
+print(m.context("what about grid trading?"))  # готовый блок в промпт агента</code></pre>
+    <h3 style="color:#66ffe0;margin:16px 0 6px">MCP-сервер (Claude Desktop / Claude Code)</h3>
+    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>{"mcpServers": {"continuityos": {"command": "cos", "args": ["--db", "~/.continuityos/memory.db", "serve"]}}}</code></pre>
+    <p style="color:var(--muted);font-size:0.9rem">Тулзы: remember · recall · context · forget · list_namespaces — агент подтягивает нужную память сам и дописывает новые факты по ходу.</p>
 
-# continuity-слой:
-cos frontier cash inner-circle
-cos checkpoint --summary "shipped v0.2" --next "update sites" --proof continuity.py
-cos doctor       # ✅ healthy 5/5  (или ловит дрифт)
-cos handoff      # блок контекста для новой сессии</pre>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:30px 0 12px">Честно про статус</h2>
+    <div style="background:#12080c;border:1px solid #ffd16633;border-radius:14px;padding:20px;color:#cbd5e1;line-height:1.6">
+      v0.1 — рабочее ядро: движок (store + FTS + вектор + гибридный recall), CLI, MCP-сервер, HTTP API, тесты.
+      Дальше: инкрементальный векторный индекс для больших хранилищ, реранкинг, импорт-адаптеры (экспорты чатов, заметки), веб-браузер памяти.
+      Open-source, Apache-2.0 — свободно встраивай куда угодно, включая коммерческое. Никаких данных мы не собираем.
+    </div>
+    <p style="text-align:center;margin-top:22px;color:var(--muted)">Local-first. Один SQLite-файл. Ничего не уходит наружу.</p>
+  </section>
 
-			<h2 class="sec">MCP — агент сам помнит и держит нить</h2>
-			<pre class="code">{`{
-  "mcpServers": {
-    "continuityos": {
-      "command": "cos",
-      "args": ["--db", "~/.continuityos/memory.db", "serve"]
-    }
-  }
-}`}</pre>
-			<p class="muted">Тулзы: remember · recall · context · forget · list_namespaces · checkpoint · handoff · doctor · set_frontier.</p>
-
-			<div class="cta-box">
-				<h3>Open-source, Apache-2.0</h3>
-				<p>Свободно встраивай куда угодно, включая коммерческое. Никаких данных мы не собираем. Часть стека <a href="/">BitEvo</a> — тот же continuity-фундамент, что держит флот автономных агентов.</p>
-				<a href="/" class="cta">← BitEvo Durable AI Orchestrator</a>
-			</div>
-
-		</div>
-	</section>
-
-	<style>
-		.lp { padding-block: 50px 70px; }
-		.hero { text-align:center; max-width:760px; margin:0 auto 50px; }
-		.kicker { color:var(--gold); font-size:.75rem; font-weight:900; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; }
-		.display { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,6vw,4rem); font-weight:900; margin:0 0 18px;
-			background:linear-gradient(90deg,#78afd0,#7da89b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-		.lead { font-family:'Lora',serif; color:var(--muted); font-size:1.12rem; margin:0 auto 26px; }
-		.cta { display:inline-flex; align-items:center; min-height:44px; padding:0 24px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; font-size:.82rem;
-			background:linear-gradient(135deg,#78afd033,#3f56601a); border:1px solid rgba(126,160,170,.3); border-radius:10px; color:var(--ink); }
-		.cta:hover { border-color:var(--gold); }
-		.proofbar { margin-top:22px; font-size:.78rem; color:var(--muted); }
-		.sec { font-size:1rem; text-transform:uppercase; letter-spacing:.1em; color:var(--gold); margin:44px 0 20px; text-align:center; }
-		.grid3 { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
-		.c { background:var(--paper-soft); border:1px solid var(--line); border-radius:10px; padding:22px; }
-		.c h3 { font-family:'Playfair Display',serif; font-size:1.15rem; margin:0 0 10px; }
-		.c p { color:var(--muted); font-size:.86rem; margin:0; }
-		.code { background:#070d10; border:1px solid var(--line); border-radius:10px; padding:18px; overflow-x:auto; font-size:.82rem; color:#cfe6f2; font-family:ui-monospace,monospace; }
-		.muted { color:var(--muted); font-size:.85rem; }
-		.cta-box { background:linear-gradient(135deg,#78afd014,#3f56600a); border:1px solid var(--line); border-radius:12px; padding:28px; margin-top:44px; text-align:center; }
-		.cta-box h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin:0 0 10px; }
-		.cta-box p { color:var(--muted); max-width:600px; margin:0 auto 18px; }
-	</style>
+  <style>@media (max-width:720px){ .cos-why { grid-template-columns:1fr !important; } }</style>
 </Layout>
