@@ -100,7 +100,7 @@
   <header>
     <div class="logo" data-nav="home"><span class="mk">◢◤</span> BITEVO <span class="u">UNIVERSE</span></div>
     <nav class="links">
-      <a data-nav="home">Universe</a><a>Cockpit</a><a data-nav="des">Consulting</a>
+      <a data-nav="universe" data-name="universe">Universe</a><a>Cockpit</a><a data-nav="des">Consulting</a>
       <a>AI Guides</a><a>Crypto Library ↗</a><a data-nav="pricing" data-name="pricing">Pricing</a>
     </nav>
     <div class="hend"><button class="btn primary sm" data-nav="des"><span>◢◤</span> Get Started</button></div>
@@ -297,6 +297,39 @@ function screenDes(){
   <section class="bd-top dotbg"><div style="max-width:var(--container-narrow);margin:0 auto;border:1px solid var(--gold-600);border-radius:var(--r-xl);padding:40px;background:linear-gradient(180deg,#1a140f,var(--surface));box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
     <div><h2 style="font-size:var(--fs-h3);margin:0 0 8px">Готов собрать своего агента?</h2><p style="color:var(--text-muted);margin:0;font-size:var(--fs-sm)">Заполни intake — вернёмся со сметой по объёму за 72 часа.</p></div>${btn("→ Начать intake","primary")}</div></section>`;
 }
+function screenUniverse(){
+  const zones=[
+    {t:"Продукты", items:[
+      {ic:"🟣",n:"BitEvo — агент",d:"Этот сайт: Durable AI Orchestrator, Digital Entity Setup, AI-Audit.",p:"LIVE",tone:"live",h:"/"},
+      {ic:"⚔️",n:"Sovereign Arena",d:"Форвард-пейпер лаба + каталог продуктов + честный Dataset (0/29).",p:"LIVE",tone:"live",h:"https://sovereign-arena-site.vercel.app"},
+      {ic:"📚",n:"Crypto & Trading Guides",d:"124 Trading GEO-гайда — SEO лид-магнит.",p:"LIVE",tone:"live",h:"https://cryptoguidessite.vercel.app"},
+      {ic:"🛡️",n:"ContinuityOS",d:"Open-source ядро памяти. pip install continuityos.",p:"OSS",tone:"info",h:"/continuityos"}]},
+    {t:"Наблюдаемость · за авторизацией", items:[
+      {ic:"🧭",n:"Arena · Grafana",d:"Regime Radar · Edge Matrix · Live League · Battle of AI · 3 Битвы.",p:"INT",tone:"info",h:"http://34.70.171.152:3000/d/arena-hub"},
+      {ic:"🧠",n:"Mission Control",d:"Панели всей Rift/ContinuityOS-системы, live к Brain.",p:"LOCAL",tone:"idle",h:"http://34.70.171.152:3000/d/arena-hub"},
+      {ic:"📉",n:"SCFT мониторинг",d:"PnL/WR/риск, здоровье коллекторов. Публично не выставлено.",p:"LOCAL",tone:"idle",h:"http://34.70.171.152:3000"}]},
+    {t:"Ядро · OSS", items:[
+      {ic:"🐙",n:"GitHub",d:"bitmaster162/continuityos — identity + gate + hash-chain.",p:"GITHUB",tone:"info",h:"https://github.com/bitmaster162/continuityos"},
+      {ic:"📦",n:"PyPI",d:"continuityos — bus, advocate/audit, Orca-оркестратор.",p:"PYPI",tone:"info",h:"https://pypi.org/project/continuityos/"},
+      {ic:"🔌",n:"OpenClaw · MCP",d:"ContinuityOS в MCP-каталоге, Cosmos как агент-адаптер.",p:"MCP",tone:"info",h:"https://www.remoteopenclaw.com/mcp/bitmaster162/continuityos"}]}
+  ];
+  return `
+  <section class="dotbg" style="text-align:center;padding:56px clamp(18px,4vw,44px) 24px;max-width:var(--container-max);margin:0 auto">
+    <div class="eyebrow" style="color:var(--gold-400)">Единый навигатор</div>
+    <h1 style="font-size:var(--fs-display);margin:10px 0 0">BITEVO UNIVERSE</h1>
+    <p class="lead" style="max-width:640px;margin:16px auto 0">Одна точка входа во всю экосистему: продукты, наблюдаемость, open-source ядро. Всё, что мы построили — на одной панели.</p>
+  </section>
+  ${zones.map(z=>`<section style="padding:8px clamp(18px,4vw,44px) 20px;max-width:var(--container-max);margin:0 auto">
+    <div class="eyebrow" style="margin-bottom:16px">${z.t}</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+      ${z.items.map(i=>`<a class="card lift" href="${i.h}" ${i.h.startsWith('http')?'target="_blank" rel="noopener"':''} style="padding:22px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:24px">${i.ic}</span>${badge(i.p,i.tone)}</div>
+        <h3 style="font-size:var(--fs-h4);margin:0">${i.n}</h3>
+        <p style="color:var(--text-muted);font-size:var(--fs-sm);margin:0;flex:1">${i.d}</p>
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--gold-400)">Открыть →</span></a>`).join('')}
+    </div></section>`).join('')}
+  <div style="height:40px"></div>`;
+}
 function renderFooter(){
   document.getElementById('footer').innerHTML=`
    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px">
@@ -306,7 +339,7 @@ function renderFooter(){
    </div>
    <div style="border-top:1px solid var(--border);margin-top:36px;padding-top:20px" class="note"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>© 2026 BitEvo Universe · Powered by ContinuityOS · Apache-2.0</span><span>Not financial advice · forward-paper only</span></div></div>`;
 }
-const screens={home:screenHome,pricing:screenPricing,inner:screenInner,des:screenDes};
+const screens={home:screenHome,universe:screenUniverse,pricing:screenPricing,inner:screenInner,des:screenDes};
 function nav(p){
   document.getElementById('screen').innerHTML=(screens[p]||screenHome)();
   document.querySelectorAll('nav.links a').forEach(a=>a.classList.toggle('active',a.dataset.name===p));
