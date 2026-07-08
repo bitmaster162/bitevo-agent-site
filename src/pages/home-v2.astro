@@ -1,173 +1,325 @@
 ---
-// PREVIEW of the BITEVO UNIVERSE redesign (Home). Additive route /home-v2 — does NOT touch the live Home.
-// Hybrid palette (locked): gold #f4b41a = brand/display, green = live/positive signal, on #05060a. Serif display, mono numbers. 0 fake numbers.
-const nav = [
-  { label: "Universe", href: "/universe" },
-  { label: "Cockpit", href: "/cockpit" },
-  { label: "Consulting", href: "/consulting" },
-  { label: "AI Guides", href: "/guides" },
-  { label: "Pricing", href: "/pricing" },
-];
-const ticker = [
-  { k: "TRADING", v: "PAPER · PHASE A", live: true },
-  { k: "CONTINUITY", v: "PROVEN ACROSS MODEL SWAPS", live: true },
-  { k: "LEDGER", v: "HASH-CHAINED", live: true },
-  { k: "DATA", v: "LOCAL-FIRST", live: false },
-];
-const ops = [
-  { icon: "🧠", title: "Durable memory", body: "ContinuityOS: гибридная память (FTS+вектор), event-sourced identity, переживает смену модели и контейнера. Apache-2.0, на PyPI." },
-  { icon: "🛡️", title: "Governance gate", body: "Default-DENY гейт, capability-паспорта, hash-chain журнал каждого решения — воспроизводимо под аудит (EU AI Act Art-12)." },
-  { icon: "🎛️", title: "Orchestrator", body: "Orca: мульти-модельный оркестратор (Claude + Hermes + OpenClaw) под одним каноном, с fork/merge и anti-looping." },
-];
-const proof = [
-  { n: "70,946", l: "paper-сделок в логе" },
-  { n: "0 / 29", l: "gate-pass (честно)" },
-  { n: "2", l: "OOS-верифицированных эджа" },
-  { n: "3×", l: "continuity через смену модели" },
-];
+// FAITHFUL port of Claude Design's BitevoUniverse.dc.html → self-contained preview (all 4 screens + nav routing + hero A/B).
+// Tokens/components reconstructed as plain CSS (DS _ds assets not available locally). Additive route /home-v2, noindex. Not prod.
 ---
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex" />
-  <title>BitEvo Universe — Durable AI Orchestrator (preview)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root{
-      --bg:#05060a; --ink:#e7ecf3; --dim:#8792a6; --line:#1b2230; --card:#0b0f18;
-      --gold:#f4b41a; --green:#34e57a; --cyan:#7fd0ff; --violet:#b98cff;
-      --serif:'Playfair Display',Georgia,serif; --sans:'Space Grotesk',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:radial-gradient(1200px 620px at 50% -12%, #0d1424 0%, var(--bg) 62%);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
-    /* header */
-    header{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:#05060acc;border-bottom:1px solid var(--line)}
-    .bar{display:flex;align-items:center;gap:22px;height:62px}
-    .brand{font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:.02em}
-    .brand b{color:var(--gold)}
-    nav.main{display:flex;gap:20px;margin-left:8px;font-size:14px;color:var(--dim)}
-    nav.main a:hover{color:var(--ink)}
-    .cta{margin-left:auto;display:flex;gap:10px}
-    .btn{padding:9px 16px;border-radius:9px;font-weight:700;font-size:14px}
-    .btn-gold{background:var(--gold);color:#0a0a0a}
-    .btn-ghost{border:1px solid var(--line);color:var(--ink)}
-    .btn:hover{transform:translateY(-1px)}
-    /* ticker */
-    .ticker{display:flex;flex-wrap:wrap;gap:8px 26px;padding:11px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--dim)}
-    .ticker b{color:var(--ink);font-weight:600}
-    .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);margin-right:6px;vertical-align:middle}
-    .dot.off{background:#3a4353;box-shadow:none}
-    /* hero */
-    .hero{text-align:center;padding:74px 0 46px}
-    .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
-    h1{font-family:var(--serif);font-weight:900;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.04;margin:16px 0 0;
-       background:linear-gradient(96deg,#fff,#cfe6ff 55%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .sub{max-width:660px;margin:20px auto 0;color:var(--dim);font-size:1.08rem}
-    .hero-cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    /* sections */
-    section{padding:44px 0}
-    .h2{font-family:var(--serif);font-weight:800;font-size:1.7rem;margin-bottom:20px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;transition:transform .15s,border-color .15s,box-shadow .15s}
-    .card:hover{transform:translateY(-3px);border-color:#2b3852;box-shadow:0 12px 30px #0008}
-    .card .ic{font-size:24px}
-    .card h3{font-size:1.08rem;margin:10px 0 6px}
-    .card p{color:var(--dim);font-size:.93rem}
-    /* proof */
-    .proof{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:#0a0e16;border:1px solid var(--line);border-radius:18px;padding:26px}
-    .proof .n{font-family:var(--mono);font-weight:600;font-size:2rem;color:var(--gold);font-variant-numeric:tabular-nums}
-    .proof .l{color:var(--dim);font-size:.82rem;margin-top:4px}
-    .proof .note{grid-column:1/-1;color:var(--dim);font-size:.8rem;border-top:1px solid var(--line);padding-top:12px}
-    /* cta band */
-    .band{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:linear-gradient(100deg,#12080c,#0b0f18);border:1px solid #ffd16633;border-radius:18px;padding:28px}
-    .band h3{font-family:var(--serif);font-size:1.5rem}
-    footer{border-top:1px solid var(--line);margin-top:30px;padding:28px 0 60px;color:var(--dim);font-size:13px}
-    .preview-flag{position:fixed;bottom:12px;left:12px;z-index:50;background:#12080c;border:1px solid var(--gold);color:var(--gold);font-family:var(--mono);font-size:11px;padding:6px 12px;border-radius:999px}
-    @media(max-width:820px){ .grid3,.proof{grid-template-columns:1fr 1fr} nav.main{display:none} }
-    @media(max-width:520px){ .proof{grid-template-columns:1fr} }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>BITEVO UNIVERSE — redesign preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --page-bg:#05060a; --ink-950:#080a11; --ink-850:#0e1220;
+    --surface:#0b0f18; --surface-sunken:#080b12;
+    --border:#1b2230; --border-strong:#2b3852;
+    --text:#e7ecf3; --text-muted:#8b96a9; --text-faint:#5c6678;
+    --gold-600:#d99a10; --gold-500:#f4b41a; --gold-400:#ffc94a; --gold-glow:rgba(244,180,26,.28);
+    --positive:#34e57a; --negative:#ff5c72; --accent:#34e57a; --cyan-400:#7fd0ff; --amber-500:#f4b41a; --red-400:#ff8a8a;
+    --font-display:'Playfair Display',Georgia,serif; --font-body:'Space Grotesk',system-ui,sans-serif; --font-mono:'JetBrains Mono',ui-monospace,monospace;
+    --r-sm:7px; --r-md:10px; --r-lg:16px; --r-xl:22px; --r-pill:999px;
+    --fs-display:clamp(2.4rem,6vw,4rem); --fs-h1:clamp(2rem,4.5vw,3rem); --fs-h2:clamp(1.55rem,3vw,2.1rem); --fs-h3:1.4rem; --fs-h4:1.1rem; --fs-body-lg:1.1rem; --fs-sm:.9rem;
+    --section-y:clamp(48px,7vw,86px); --container-max:1140px; --container-narrow:820px;
+    --grid-dot:radial-gradient(circle at 1px 1px,#ffffff0a 1px,transparent 0); --grid-dot-size:22px 22px;
+    --shadow-card:0 14px 34px #00000055;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--page-bg);color:var(--text);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--font-display);line-height:1.06;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint)}
+  .wrapx{max-width:var(--container-max);margin:0 auto}
+  /* header */
+  header{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:22px;padding:14px clamp(18px,4vw,44px);background:#05060add;backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .logo{display:flex;align-items:center;gap:9px;font-family:var(--font-display);font-weight:800;font-size:18px;cursor:pointer}
+  .logo .mk{color:var(--gold-500);letter-spacing:-3px;font-size:19px}
+  .logo .u{color:var(--text-faint);font-weight:500;font-size:11px;font-family:var(--font-mono);letter-spacing:.14em}
+  nav.links{display:flex;gap:2px;margin-left:12px}
+  nav.links a{font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;padding:7px 10px;border-radius:var(--r-sm);color:var(--text-muted);cursor:pointer}
+  nav.links a:hover,nav.links a.active{color:var(--gold-400)}
+  .hend{margin-left:auto}
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-body);font-weight:700;font-size:14px;padding:11px 18px;border-radius:var(--r-md);cursor:pointer;border:1px solid transparent;transition:transform .12s,border-color .12s,background .12s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.sm{padding:7px 14px;font-size:13px}
+  .btn.full{width:100%;justify-content:center}
+  .btn.primary{background:var(--gold-500);color:#1a1400}
+  .btn.secondary{border-color:var(--border-strong);color:var(--text)}
+  .btn.ghost{color:var(--text-muted)}
+  .btn.ghost:hover{color:var(--text)}
+  /* tag & badge */
+  .tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;padding:4px 10px;border-radius:var(--r-pill);border:1px solid}
+  .tag.green{color:var(--positive);border-color:#1c5a33;background:#0c1f15}
+  .tag.amber{color:var(--gold-400);border-color:#5a4a12;background:#1c1608}
+  .tag.cyan{color:var(--cyan-400);border-color:#1c4a5a;background:#08161c}
+  .tag.solid{background:var(--positive);color:#05130b;border-color:transparent}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;padding:4px 9px;border-radius:var(--r-pill);border:1px solid var(--border)}
+  .badge .d{width:6px;height:6px;border-radius:50%}
+  .badge.live{color:var(--positive)} .badge.live .d{background:var(--positive);box-shadow:0 0 7px var(--positive)}
+  .badge.info{color:var(--cyan-400)} .badge.info .d{background:var(--cyan-400)}
+  .badge.idle{color:var(--text-faint)} .badge.idle .d{background:#3a4353}
+  /* metric */
+  .metric .ml{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:6px}
+  .metric .mv{font-family:var(--font-mono);font-size:1.35rem;font-weight:700;color:var(--text)}
+  .mv.negative{color:var(--negative)} .mv.positive{color:var(--positive)} .mv.info{color:var(--cyan-400)}
+  /* ticker */
+  .ticker{display:flex;flex-wrap:wrap;gap:7px 24px;padding:11px clamp(18px,4vw,44px);border-bottom:1px solid var(--border);background:var(--ink-950);font-family:var(--font-mono);font-size:11px}
+  .ticker .ti{color:var(--text-faint)} .ticker .ti b{margin-left:5px}
+  .tv-info{color:var(--cyan-400)} .tv-warn{color:var(--gold-400)} .tv-negative{color:var(--negative)} .tv-positive{color:var(--positive)}
+  /* layout helpers */
+  section{padding:var(--section-y) clamp(18px,4vw,44px)}
+  .bd-top{border-top:1px solid var(--border)}
+  .dotbg{background-image:var(--grid-dot);background-size:var(--grid-dot-size)}
+  .card{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);box-shadow:var(--shadow-card)}
+  .lift{transition:transform .15s,border-color .15s} .lift:hover{transform:translateY(-3px);border-color:var(--border-strong)}
+  .grid-auto{display:grid;gap:16px}
+  .console{border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);box-shadow:var(--shadow-card)}
+  .console .hd{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface-sunken);font-family:var(--font-mono);font-size:11px;color:var(--text-faint)}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center;max-width:var(--container-max);margin:0 auto}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:var(--container-max);margin:0 auto}
+  code.pill{display:inline-block;font-family:var(--font-mono);font-size:14px;color:var(--text-muted);background:var(--surface-sunken);border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 14px}
+  code.pill span{color:var(--accent)}
+  .hero-h1{font-size:var(--fs-display);margin:0 0 22px;font-weight:900}
+  .lead{font-size:var(--fs-body-lg);color:var(--text-muted);margin-bottom:28px}
+  .gold{color:var(--gold-500)}
+  .note{font-family:var(--font-mono);font-size:11px;color:var(--text-faint)}
+  .heroToggle{display:flex;align-items:center;gap:10px;padding:16px clamp(18px,4vw,44px) 0;max-width:var(--container-max);margin:0 auto}
+  .heroToggle .tg{display:flex;border:1px solid var(--border);border-radius:var(--r-pill);overflow:hidden;font-family:var(--font-mono);font-size:11px}
+  .heroToggle button{cursor:pointer;padding:6px 14px;border:0;letter-spacing:.1em;background:transparent;color:var(--text-muted)}
+  .heroToggle button.on{background:var(--gold-500);color:#1a1400}
+  .flag{position:fixed;bottom:12px;left:12px;z-index:60;background:#12080c;border:1px solid var(--gold-500);color:var(--gold-400);font-family:var(--font-mono);font-size:11px;padding:6px 12px;border-radius:var(--r-pill)}
+  footer{border-top:1px solid var(--border);padding:52px clamp(18px,4vw,44px) 40px;background:var(--ink-950)}
+  @media(max-width:820px){ nav.links{display:none} .hero-grid,.split{grid-template-columns:1fr!important;gap:30px} }
+</style>
 </head>
 <body>
   <header>
-    <div class="wrap">
-      <div class="bar">
-        <a href="/" class="brand">◢◤ BIT<b>EVO</b></a>
-        <nav class="main">{nav.map(n => <a href={n.href}>{n.label}</a>)}</nav>
-        <div class="cta">
-          <a class="btn btn-ghost" href="https://cryptoguidessite.vercel.app">Crypto Library ↗</a>
-          <a class="btn btn-gold" href="/intake">Get Started</a>
-        </div>
-      </div>
-      <div class="ticker">
-        {ticker.map(t => (<span><span class={t.live ? "dot" : "dot off"}></span>{t.k}: <b>{t.v}</b></span>))}
-      </div>
-    </div>
+    <div class="logo" data-nav="home"><span class="mk">◢◤</span> BITEVO <span class="u">UNIVERSE</span></div>
+    <nav class="links">
+      <a data-nav="home">Universe</a><a>Cockpit</a><a data-nav="des">Consulting</a>
+      <a>AI Guides</a><a>Crypto Library ↗</a><a data-nav="pricing" data-name="pricing">Pricing</a>
+    </nav>
+    <div class="hend"><button class="btn primary sm" data-nav="des"><span>◢◤</span> Get Started</button></div>
   </header>
+  <main id="screen"></main>
+  <footer><div class="wrapx" id="footer"></div></footer>
+  <div class="flag">PREVIEW /home-v2 · Claude Design port · не прод</div>
 
-  <div class="wrap">
-    <div class="hero">
-      <div class="kicker">Durable AI · Governance-first · Local-first</div>
-      <h1>Durable AI Orchestrator</h1>
-      <p class="sub">Мы строим AI-агентов, которые <b>помнят</b>, работают <b>под гейтом</b> и оставляют
-        <b>воспроизводимый след</b> каждого решения. Ядро — open-source. Торговля — на paper, цифры честные.</p>
-      <div class="hero-cta">
-        <a class="btn btn-gold" href="/digital-entity-setup">🧬 Digital Entity Setup</a>
-        <a class="btn btn-ghost" href="/pricing">Смотреть цены</a>
+<script is:inline>
+const D = {
+  ticker:[
+    {l:"MODE",v:"FORWARD-PAPER",t:"info"},{l:"ARENA GATE",v:"0 / 29 PASS",t:"warn"},
+    {l:"PAPER PnL",v:"−$240,494",t:"negative"},{l:"WIN RATE",v:"20.1%",t:"negative"},
+    {l:"PROFITABLE BOTS",v:"16 / 183",t:"info"},{l:"VERIFIED EDGES",v:"2",t:"positive"},
+    {l:"AI GUIDES",v:"58",t:"info"},{l:"CORE",v:"APACHE-2.0",t:"positive"}],
+  coreStatus:[
+    {k:"CORE STATUS",v:"RUNNING",c:"var(--positive)"},{k:"CONTINUITY",v:"3× PROVEN",c:"var(--text)"},
+    {k:"MEMORY",v:"FTS + VECTOR",c:"var(--cyan-400)"},{k:"STORE",v:"1 LOCAL FILE",c:"var(--text)"},
+    {k:"MCP · CLAUDE",v:"READY",c:"var(--positive)"},{k:"LICENSE",v:"APACHE-2.0",c:"var(--gold-400)"}],
+  proof:[
+    {l:"Trading mode",v:"Forward-paper",t:"info"},{l:"Arena gate-pass",v:"0 / 29",t:"negative"},
+    {l:"Paper trades",v:"70,946",t:""},{l:"Lifetime paper PnL",v:"−$240,494",t:"negative"},
+    {l:"Win rate",v:"20.1%",t:"negative"},{l:"Profitable bots",v:"16 / 183",t:""},
+    {l:"Verified edges",v:"2",t:"positive"},{l:"Continuity",v:"3× proven",t:"positive"}],
+  edges:[
+    {tag:"sfp · BTCUSDT",pnl:"+$2,473",detail:"404 trades · WR 52.2%"},
+    {tag:"sfp · ETHUSDT",pnl:"+$1,295",detail:"187 trades · WR 52.4%"}],
+  coreOps:[
+    {g:"🤖",pill:"LOCAL",tone:"idle",title:"Orchestrate",body:"ContinuityOS: durable-память и непрерывность агентов через смену модели. Один локальный файл, ничего наружу.",cta:"ContinuityOS",go:"des"},
+    {g:"🏁",pill:"LIVE",tone:"live",title:"Observe",body:"Sovereign Arena на forward-paper. Публичные победы и поражения — 2 подтверждённых эджа, остальное честный минус.",cta:"Inner Circle",go:"inner"},
+    {g:"🛡️",pill:"INT",tone:"info",title:"Audit",body:"AI-Agent Reliability Audit. Триаж 72ч бесплатно, готовим к EU AI Act Article 12. Флагман консалтинга.",cta:"Pricing",go:"pricing"}],
+  pricingGroups:[
+    {g:"🛡️",name:"AI-Agent Reliability Audit",note:"флагман · 72ч триаж",tiers:[
+      {name:"Triage",price:"$0",unit:"72ч",pc:"var(--text)",bc:"var(--border)",desc:"Бесплатная диагностика надёжности агента.",f:["Скан памяти и непрерывности","Отчёт по рискам","Рекомендации"],cta:"Начать бесплатно",cv:"secondary",feat:false},
+      {name:"Standard",price:"$1,500",unit:"разово",pc:"var(--gold-400)",bc:"var(--gold-600)",desc:"Полный аудит + план по Article 12.",f:["Всё из Triage","Трассируемость и логи","EU AI Act Article-12 readiness","Сессия разбора"],cta:"Заказать аудит",cv:"primary",feat:true},
+      {name:"Deep",price:"$12,500",unit:"разово",pc:"var(--text)",bc:"var(--border)",desc:"Глубокий аудит критичных агент-флотов.",f:["Всё из Standard","Аудит мульти-агент оркестрации","Внедрение фиксов","30 дней сопровождения"],cta:"Обсудить объём",cv:"secondary",feat:false}]},
+    {g:"🤖",name:"Digital Entity Setup",note:"done-for-you · цена по объёму",tiers:[
+      {name:"Core",price:"По объёму",unit:"",pc:"var(--text)",bc:"var(--border)",desc:"Durable-агент на ContinuityOS под ключ.",f:["Память FTS + вектор","Непрерывность через смену модели","MCP для Claude","Локальный SQLite"],cta:"Получить смету",cv:"primary",feat:false},
+      {name:"Fleet",price:"По объёму",unit:"",pc:"var(--text)",bc:"var(--border)",desc:"Оркестрация нескольких агентов.",f:["Всё из Core","Мульти-агент control plane","Наблюдаемость","Хендофф-документация"],cta:"Получить смету",cv:"secondary",feat:false}]},
+    {g:"🏁",name:"Inner Circle",note:"месячно · @bitevo_inner_circle_bot",tiers:[
+      {name:"Access",price:"$97",unit:"/ мес",pc:"var(--text)",bc:"var(--border)",desc:"Живая арена и разборы.",f:["Forward-paper арена live","Публичный edge-ledger","Разборы стратегий"],cta:"Оформить",cv:"secondary",feat:false},
+      {name:"Pro",price:"$297",unit:"/ мес",pc:"var(--gold-400)",bc:"var(--gold-600)",desc:"Инструменты риск-деска.",f:["Всё из Access","Risk Desk инструменты","Trade Gate «анти-я»","Приоритетный канал"],cta:"Оформить",cv:"primary",feat:true},
+      {name:"Circle",price:"$797",unit:"/ мес",pc:"var(--text)",bc:"var(--border)",desc:"Максимальный доступ.",f:["Всё из Pro","Ранний доступ к эджам","1:1 сессии","Grid Lab + Copy"],cta:"Оформить",cv:"secondary",feat:false}]}],
+  innerTiers:[
+    {name:"Access",price:"$97",pc:"var(--text)",bc:"var(--border)",f:["Forward-paper арена в реальном времени","Публичный edge-ledger","Разборы стратегий и провалов"],cta:"t.me/bitevo_inner",cv:"secondary",feat:false},
+    {name:"Pro",price:"$297",pc:"var(--gold-400)",bc:"var(--gold-600)",f:["Всё из Access","Инструменты Risk Desk","Trade Gate «анти-я»","Приоритетный канал"],cta:"t.me/bitevo_inner",cv:"primary",feat:true},
+    {name:"Circle",price:"$797",pc:"var(--text)",bc:"var(--border)",f:["Всё из Pro","Ранний доступ к новым эджам","1:1 сессии разбора","Grid Lab + Sovereign Copy"],cta:"t.me/bitevo_inner",cv:"secondary",feat:false}],
+  desPains:[{g:"🧠",t:"Память исчезает",b:"Смена модели или рестарт — знание обнуляется."},{g:"🔁",t:"Двойная оплата",b:"Ты платишь за одну и ту же работу снова."},{g:"🔍",t:"Не аудируемо",b:"Поведение агента не воспроизвести и не проверить."}],
+  desSolutions:[{g:"🧠",t:"Гибридная память",b:"FTS + вектор в одном локальном SQLite-файле."},{g:"🧵",t:"Непрерывность",b:"Нить переживает смену модели — 3× proven."},{g:"🔌",t:"MCP для Claude",b:"Инструменты доступны агенту нативно через MCP."}],
+  desIncludes:[{g:"🧠",t:"ContinuityOS core",b:"Настроенное ядро памяти и непрерывности."},{g:"🔒",t:"Local-first",b:"Данные на твоём диске, ничего наружу."},{g:"🔌",t:"MCP-интеграция",b:"11 инструментов для Claude из коробки."},{g:"📦",t:"Open-source",b:"Apache-2.0 на PyPI и GitHub — проверяемо."},{g:"📖",t:"Хендофф-док",b:"Документация для твоей команды."},{g:"🛡️",t:"Reliability check",b:"Триаж надёжности перед сдачей."}],
+  footerCols:[
+    {title:"Продукты",links:["ContinuityOS","Digital Entity Setup","Inner Circle","Pricing"]},
+    {title:"Экосистема",links:["Universe хаб","Sovereign Arena ↗","Crypto Guides ↗","GitHub · PyPI ↗"]},
+    {title:"Контакты",links:["t.me/bitevo_inner","x.com/bitevo_io","cal.com ↗"]}]
+};
+const esc=s=>String(s);
+const btn=(label,variant,extra="")=>`<button class="btn ${variant} ${extra}">${label}</button>`;
+const tag=(txt,tone,glyph="",solid=false)=>`<span class="tag ${tone}${solid?' solid':''}">${glyph?glyph+' ':''}${txt}</span>`;
+const badge=(txt,tone)=>`<span class="badge ${tone}"><span class="d"></span>${txt}</span>`;
+const metric=(m,size="")=>`<div class="metric"><div class="ml">${m.l}</div><div class="mv ${m.t||''}" style="${size==='sm'?'font-size:1.1rem':''}">${m.v}</div></div>`;
+const feat=arr=>arr.map(f=>`<div style="display:flex;gap:9px;font-size:var(--fs-sm);color:var(--text-muted)"><span style="color:var(--accent);flex-shrink:0">▸</span><span>${f}</span></div>`).join('');
+
+let hero="A";
+function heroBlock(){
+  const A=`
+   <section class="hero-grid dotbg" style="padding:56px clamp(18px,4vw,44px) 72px">
+    <div>
+      <div style="margin-bottom:20px">${tag("Open-source ядро · Apache-2.0 · local-first","green","🔒")}</div>
+      <h1 class="hero-h1" style="max-width:640px">Агенты забывают.<br><span class="gold">BitEvo держит нить.</span></h1>
+      <p class="lead" style="max-width:560px">Durable AI Orchestrator поверх <strong>ContinuityOS</strong> — open-source движка долговременной памяти и непрерывности. Память переживает смену модели. Один локальный файл. Ничего не уходит наружу.</p>
+      <div style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap">${btn("→ Digital Entity Setup","primary")}${btn("Смотреть Pricing","secondary")}</div>
+      <code class="pill"><span>$</span> pip install continuityos</code>
+    </div>
+    <div class="console">
+      <div class="hd">${badge("Core Running","live")}<span style="margin-left:auto">~/continuityos</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+        ${D.coreStatus.map(s=>`<div style="background:var(--surface);padding:16px 18px"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--text-faint);margin-bottom:6px">${s.k}</div><div style="font-family:var(--font-mono);font-size:17px;font-weight:700;color:${s.c}">${s.v}</div></div>`).join('')}
       </div>
     </div>
-
-    <section>
-      <div class="h2">Core Operations</div>
-      <div class="grid3">
-        {ops.map(o => (
-          <div class="card">
-            <div class="ic">{o.icon}</div>
-            <h3>{o.title}</h3>
-            <p>{o.body}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
-      <div class="h2">Proof — честные цифры арены</div>
-      <div class="proof">
-        {proof.map(p => (<div><div class="n">{p.n}</div><div class="l">{p.l}</div></div>))}
-        <div class="note">Всё на paper — реальными деньгами не торгуем. Lifetime paper-результат отрицательный,
-          и мы показываем это открыто. 150+ ботов — коррелированные вариации гипотез, не 150 доказательств. Не финансовый совет.</div>
-      </div>
-    </section>
-
-    <section>
-      <div class="band">
-        <div>
-          <h3>Готов собрать свою AI-операционную систему?</h3>
-          <p style="color:var(--dim);margin-top:6px">Память + гейт + журнал + оркестратор под ключ. Или начни с бесплатной диагностики агента.</p>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn btn-gold" href="/intake">Оставить заявку</a>
-          <a class="btn btn-ghost" href="/ai-audit">AI-Audit (free триаж)</a>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div style="display:flex;gap:26px;flex-wrap:wrap;justify-content:space-between">
-        <div>◢◤ <b style="color:var(--gold)">BITEVO UNIVERSE</b> · Durable AI Orchestrator</div>
-        <div style="display:flex;gap:18px;flex-wrap:wrap">
-          <a href="/universe">Universe</a><a href="https://sovereign-arena-site.vercel.app">Arena</a>
-          <a href="/guides">Guides</a><a href="https://github.com/bitmaster162/continuityos">GitHub</a>
-          <a href="https://pypi.org/project/continuityos/">PyPI</a>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <div class="preview-flag">PREVIEW /home-v2 · редизайн-направление · не прод</div>
+   </section>`;
+  const B=`
+   <section class="dotbg" style="padding:52px clamp(18px,4vw,44px) 68px;max-width:var(--container-max);margin:0 auto">
+     <div style="text-align:center;max-width:820px;margin:0 auto 40px">
+       <div style="margin-bottom:20px;display:flex;justify-content:center">${tag("Radical transparency · публикуем и победы, и поражения","amber","🏁")}</div>
+       <h1 class="hero-h1">Платформы, что показывают<br>только победы, <span class="gold">врут.</span></h1>
+       <p class="lead" style="max-width:640px;margin:0 auto 28px">Мы торгуем только на forward-paper. Каждая цифра ниже — реальная выгрузка из арены. Минус на минусе — и ровно <strong>2 подтверждённых эджа</strong>. Мы продаём прозрачность и инструменты, не сигналы.</p>
+       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">${btn("→ Inner Circle","primary")}${btn("Pricing","secondary")}</div>
+     </div>
+     <div class="console" style="max-width:960px;margin:0 auto">
+       <div class="hd">${badge("Edge Ledger · forward-paper","info")}<span style="margin-left:auto">arena / public log</span></div>
+       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border)">
+         ${D.proof.map(m=>`<div style="background:var(--surface);padding:18px">${metric(m,'sm')}</div>`).join('')}
+       </div>
+       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--border)">
+         ${D.edges.map(e=>`<div style="background:var(--ink-850);padding:18px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">${tag(e.tag,"green","",true)}<span style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--positive)">${e.pnl}</span></div><div class="note">${e.detail}</div></div>`).join('')}
+       </div>
+     </div>
+     <p class="note" style="text-align:center;margin-top:16px">Not financial advice · forward-paper только · реальными деньгами не торгуем</p>
+   </section>`;
+  return `
+   <div class="heroToggle"><span class="eyebrow">Hero direction</span>
+     <div class="tg"><button id="hA" class="${hero==='A'?'on':''}">A · DURABLE</button><button id="hB" class="${hero==='B'?'on':''}">B · TRANSPARENCY</button></div>
+   </div>${hero==='A'?A:B}`;
+}
+function screenHome(){
+  return `
+  <div style="border-bottom:1px solid var(--border)">${screenTicker()}</div>
+  <div id="heroWrap">${heroBlock()}</div>
+  <section class="bd-top"><div class="wrapx">
+     <div class="eyebrow" style="margin-bottom:10px">Core operations</div>
+     <h2 style="font-size:var(--fs-h2);margin:0 0 8px">Три узла одной экосистемы</h2>
+     <p style="color:var(--text-muted);max-width:560px;margin-bottom:36px">Оркестрируй агентов, наблюдай за ареной, проверяй надёжность. Один бренд, один вход.</p>
+     <div class="grid-auto" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+       ${D.coreOps.map(op=>`<div class="card lift" data-nav="${op.go}" style="padding:24px;cursor:pointer;display:flex;flex-direction:column;gap:12px;min-height:220px">
+         <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:26px">${op.g}</span>${badge(op.pill,op.tone)}</div>
+         <h3 style="font-size:var(--fs-h3);margin:0">${op.title}</h3>
+         <p style="color:var(--text-muted);font-size:var(--fs-sm);margin:0;flex:1">${op.body}</p>
+         <span style="font-family:var(--font-mono);font-size:12px;color:var(--gold-400)">${op.cta} →</span></div>`).join('')}
+     </div>
+  </div></section>
+  <section class="bd-top" style="background:var(--ink-950)"><div class="wrapx">
+     <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px"><div class="eyebrow">Proof · real numbers</div>${tag("forward-paper","cyan")}</div>
+     <h2 style="font-size:var(--fs-h2);margin:0 0 8px">Ничего не приукрашиваем</h2>
+     <p style="color:var(--text-muted);max-width:600px;margin-bottom:32px">Живая выгрузка арены. Минус на балансе — это не баг презентации, это позиция. Continuity доказана на смене моделей.</p>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+       ${D.proof.map(m=>`<div style="background:var(--surface);padding:22px 20px">${metric(m)}</div>`).join('')}
+     </div>
+  </div></section>
+  <section class="bd-top"><div class="wrapx" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px">
+     <div style="border:1px solid var(--gold-600);border-radius:var(--r-lg);padding:32px;background:linear-gradient(180deg,#1a140f,var(--surface));box-shadow:var(--shadow-card)">
+       <div class="eyebrow" style="color:var(--gold-400);margin-bottom:12px">Done-for-you</div><h3 style="font-size:var(--fs-h3);margin:0 0 10px">Digital Entity Setup</h3>
+       <p style="color:var(--text-muted);font-size:var(--fs-sm);margin-bottom:20px">Соберём durable AI-агента под ключ: память, непрерывность, MCP для Claude. Флагман DFY.</p>${btn("→ Начать intake","primary")}</div>
+     <div class="card" style="padding:32px">
+       <div class="eyebrow" style="margin-bottom:12px">Trading · transparency</div><h3 style="font-size:var(--fs-h3);margin:0 0 10px">Inner Circle</h3>
+       <p style="color:var(--text-muted);font-size:var(--fs-sm);margin-bottom:20px">Прозрачный доступ к арене и инструментам. Тиры $97 / $297 / $797. Продаём прозрачность, не сигналы.</p>${btn("Смотреть тиры","secondary")}</div>
+  </div></section>`;
+}
+function screenTicker(){ return `<div class="ticker">${D.ticker.map(t=>`<span class="ti">${t.l}<b class="tv-${t.t}">${t.v}</b></span>`).join('')}</div>`; }
+function tierCard(t,unitDefault){
+  return `<div style="border:1px solid ${t.bc};border-radius:var(--r-lg);background:var(--surface);padding:26px 22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-card);position:relative">
+    ${t.feat?`<span style="position:absolute;top:-10px;left:22px;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;background:var(--gold-500);color:#1a1400;padding:3px 9px;border-radius:var(--r-pill)">POPULAR</span>`:''}
+    <div><div style="font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px">${t.name}</div>
+    <div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:var(--font-mono);font-size:30px;font-weight:700;color:${t.pc}">${t.price}</span><span style="font-family:var(--font-mono);font-size:12px;color:var(--text-faint)">${t.unit!==undefined?t.unit:unitDefault}</span></div></div>
+    ${t.desc?`<p style="color:var(--text-muted);font-size:var(--fs-sm);margin:0">${t.desc}</p>`:''}
+    <div style="display:flex;flex-direction:column;gap:8px;flex:1">${feat(t.f)}</div>
+    ${btn(t.cta,t.cv==='primary'?'primary':'secondary','full')}</div>`;
+}
+function screenPricing(){
+  return `<div class="wrapx" style="padding:56px clamp(18px,4vw,44px) 40px">
+    <div class="eyebrow" style="margin-bottom:12px">Pricing</div>
+    <h1 style="font-size:var(--fs-h1);margin:0 0 12px;max-width:720px">Плати за прозрачность и надёжность,<br><span class="gold">не за обещания.</span></h1>
+    <p style="color:var(--text-muted);max-width:620px;margin-bottom:20px">Три линейки: аудит надёжности AI-агентов, done-for-you сборка и месячный Inner Circle. Каждая цифра реальная.</p>
+    <div style="display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-left:3px solid var(--gold-500);border-radius:var(--r-md);padding:14px 18px;background:var(--surface);margin-bottom:44px;max-width:760px"><span style="font-size:20px">🛡️</span><p style="margin:0;font-size:var(--fs-sm);color:var(--text-muted)"><strong>EU AI Act · Article 12.</strong> Логи и трассируемость агентов — теперь регуляторное требование. Наш аудит готовит тебя к нему заранее.</p></div>
+    ${D.pricingGroups.map(g=>`<section style="margin-bottom:52px"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px"><span style="font-size:20px">${g.g}</span><h2 style="font-size:var(--fs-h3);margin:0">${g.name}</h2><span class="note">${g.note}</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px">${g.tiers.map(t=>tierCard(t,'')).join('')}</div></section>`).join('')}
+    <p class="note" style="border-top:1px solid var(--border);padding-top:20px">Not financial advice. Inner Circle — доступ и инструменты, не сигналы. Торговля только forward-paper. Цены Digital Entity Setup — по объёму, финальная смета после intake.</p>
+  </div>`;
+}
+function screenInner(){
+  return `<section class="split dotbg" style="grid-template-columns:1.1fr .9fr;padding:56px clamp(18px,4vw,44px) 48px">
+    <div><div style="margin-bottom:18px">${tag("Inner Circle · @bitevo_inner_circle_bot","amber","🏁")}</div>
+      <h1 style="font-size:var(--fs-h1);margin:0 0 18px">Внутри арены,<br><span class="gold">без прикрас.</span></h1>
+      <p class="lead" style="max-width:520px">Доступ к живой forward-paper арене, разборам стратегий и инструментам риск-деска. Ты видишь и эджи, и провалы — в реальном времени, как есть.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">${btn("→ t.me/bitevo_inner","primary")}${btn("Все линейки Pricing","ghost")}</div></div>
+    <div class="console"><div class="hd">${badge("2 verified edges","info")}</div>
+      ${D.edges.map(e=>`<div style="padding:18px;border-bottom:1px solid var(--border)"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">${tag(e.tag,"green","",true)}<span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--positive)">${e.pnl}</span></div><div class="note">${e.detail}</div></div>`).join('')}
+      <div style="padding:16px 18px;background:var(--ink-850)"><div class="note" style="line-height:1.6">Остальное — честный минус. Lifetime paper PnL <span style="color:var(--negative)">−$240,494</span> · WR 20.1% · 16 / 183 прибыльных ботов.</div></div></div>
+  </section>
+  <section style="padding:8px clamp(18px,4vw,44px) 40px;max-width:var(--container-max);margin:0 auto">
+    <div class="eyebrow" style="margin-bottom:20px">Тиры · месячно</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">${D.innerTiers.map(t=>tierCard(t,'/ мес')).join('')}</div>
+    <div style="display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);border-left:3px solid var(--amber-500);border-radius:var(--r-md);padding:16px 18px;background:var(--surface);margin-top:32px"><span style="font-size:18px">⚠️</span><p style="margin:0;font-size:var(--fs-sm);color:var(--text-muted)"><strong>Честный disclaimer.</strong> Это не финансовый совет. Мы торгуем только на forward-paper — реальными деньгами нет. Эджи подтверждены на бумаге и могут перестать работать. Платформы, что показывают только победы, врут; мы показываем всё.</p></div>
+  </section>`;
+}
+function screenDes(){
+  return `<section class="dotbg" style="max-width:var(--container-max);margin:0 auto;padding:60px clamp(18px,4vw,44px) 44px;text-align:center">
+    <div style="margin-bottom:20px;display:flex;justify-content:center">${tag("Флагман · Done-for-you","green","🤖")}</div>
+    <h1 style="font-size:var(--fs-display);margin:0 0 20px">Digital Entity Setup</h1>
+    <p class="lead" style="max-width:640px;margin:0 auto 30px">Соберём тебе durable AI-агента под ключ — с долговременной памятью, непрерывностью через смену модели и MCP для Claude. Ты владеешь всем: код open-source, данные локально.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">${btn("→ Начать intake","primary")}${btn("Пакеты и цены","secondary")}</div></section>
+  <section class="bd-top"><div class="split wrapx" style="grid-template-columns:.9fr 1.1fr">
+    <div><div class="eyebrow" style="color:var(--red-400);margin-bottom:12px">Проблема</div><h2 style="font-size:var(--fs-h2);margin:0 0 14px">Агенты забывают всё<br>между сессиями.</h2><p style="color:var(--text-muted);max-width:480px">Смена модели, рестарт, новый контекст — и накопленное знание исчезает. Ты платишь за одну и ту же работу снова и снова, а поведение агента не воспроизводимо и не аудируемо.</p></div>
+    <div class="card" style="padding:22px">${D.desPains.map(p=>`<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)"><span style="font-size:18px">${p.g}</span><div><div style="font-weight:600;font-size:var(--fs-sm);margin-bottom:2px">${p.t}</div><div style="color:var(--text-faint);font-size:var(--fs-sm)">${p.b}</div></div></div>`).join('')}</div>
+  </div></section>
+  <section class="bd-top" style="background:var(--ink-950)"><div class="wrapx">
+    <div class="eyebrow" style="color:var(--accent);margin-bottom:12px">Решение</div><h2 style="font-size:var(--fs-h2);margin:0 0 8px">ContinuityOS держит нить</h2>
+    <p style="color:var(--text-muted);max-width:600px;margin-bottom:36px">Гибридная память (FTS + вектор) в одном локальном SQLite-файле. Непрерывность переживает смену модели. Apache-2.0 — проверяемо и твоё.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">${D.desSolutions.map(s=>`<div class="card" style="padding:22px"><div style="font-size:24px;margin-bottom:12px">${s.g}</div><h3 style="font-size:var(--fs-h4);margin:0 0 6px">${s.t}</h3><p style="color:var(--text-muted);font-size:var(--fs-sm);margin:0">${s.b}</p></div>`).join('')}</div>
+  </div></section>
+  <section class="bd-top"><div class="wrapx">
+    <div class="eyebrow" style="margin-bottom:12px">Что входит</div><h2 style="font-size:var(--fs-h2);margin:0 0 36px">Под ключ, ничего скрытого</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden">${D.desIncludes.map(i=>`<div style="background:var(--surface);padding:22px;display:flex;gap:12px"><span style="font-size:20px">${i.g}</span><div><div style="font-weight:600;font-size:var(--fs-sm);margin-bottom:4px">${i.t}</div><div style="color:var(--text-muted);font-size:var(--fs-sm)">${i.b}</div></div></div>`).join('')}</div>
+  </div></section>
+  <section class="bd-top dotbg"><div style="max-width:var(--container-narrow);margin:0 auto;border:1px solid var(--gold-600);border-radius:var(--r-xl);padding:40px;background:linear-gradient(180deg,#1a140f,var(--surface));box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div><h2 style="font-size:var(--fs-h3);margin:0 0 8px">Готов собрать своего агента?</h2><p style="color:var(--text-muted);margin:0;font-size:var(--fs-sm)">Заполни intake — вернёмся со сметой по объёму за 72 часа.</p></div>${btn("→ Начать intake","primary")}</div></section>`;
+}
+function renderFooter(){
+  document.getElementById('footer').innerHTML=`
+   <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px">
+     <div><div class="logo" data-nav="home" style="margin-bottom:12px"><span class="mk">◢◤</span> BITEVO <span class="u">UNIVERSE</span></div>
+       <p style="color:var(--text-muted);max-width:320px;font-size:var(--fs-sm)">Durable, transparent, agent-readable системы, которыми ты реально владеешь. Local-first · open-source ядро · публичные логи.</p></div>
+     ${D.footerCols.map(c=>`<div><div class="eyebrow" style="margin-bottom:14px">${c.title}</div><div style="display:flex;flex-direction:column;gap:10px">${c.links.map(l=>`<a class="note" style="cursor:pointer">${l}</a>`).join('')}</div></div>`).join('')}
+   </div>
+   <div style="border-top:1px solid var(--border);margin-top:36px;padding-top:20px" class="note"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><span>© 2026 BitEvo Universe · Powered by ContinuityOS · Apache-2.0</span><span>Not financial advice · forward-paper only</span></div></div>`;
+}
+const screens={home:screenHome,pricing:screenPricing,inner:screenInner,des:screenDes};
+function nav(p){
+  document.getElementById('screen').innerHTML=(screens[p]||screenHome)();
+  document.querySelectorAll('nav.links a').forEach(a=>a.classList.toggle('active',a.dataset.name===p));
+  window.scrollTo(0,0);
+  if(p==='home'){ const a=document.getElementById('hA'),b=document.getElementById('hB');
+    if(a)a.onclick=()=>{hero='A';document.getElementById('heroWrap').innerHTML=heroBlock();bindHero();};
+    if(b)b.onclick=()=>{hero='B';document.getElementById('heroWrap').innerHTML=heroBlock();bindHero();}; }
+}
+function bindHero(){ const a=document.getElementById('hA'),b=document.getElementById('hB');
+  if(a)a.onclick=()=>{hero='A';document.getElementById('heroWrap').innerHTML=heroBlock();bindHero();};
+  if(b)b.onclick=()=>{hero='B';document.getElementById('heroWrap').innerHTML=heroBlock();bindHero();}; }
+document.addEventListener('click',e=>{const el=e.target.closest('[data-nav]'); if(el){nav(el.dataset.nav);}});
+renderFooter(); nav('home');
+</script>
 </body>
 </html>
