@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const ledger = [
+  ['Critical action', 'Update qualification_status and qualification_reason on one matched staging CRM lead.'],
+  ['Target object', 'Exactly one lead record bound to the inbound lead_id.'],
+  ['Authority owner', 'Synthetic Product Operations owner for SAMPLE-001.'],
+  ['Allowed transitions', 'New → Qualified or Review Required on the matched lead only.'],
+  ['Prohibited transitions', 'No contact creation, deletion, outbound messaging, unrelated-record mutation, production write or privilege change.'],
+  ['Retry / replay right', 'No blind retry after an ambiguous write. Reconcile external state before another mutation.'],
+  ['Recovery owner', 'Synthetic workflow operator receives the trace and decides reconcile / repair / retest.']
+];
+
+const contract = [
+  ['Object binding', 'Inbound lead_id must resolve to the same staging CRM lead that will receive the write.'],
+  ['Qualification evidence', 'A source record must contain the qualification basis used by the workflow.'],
+  ['Freshness rule', 'For this worked example, qualification evidence older than 10 minutes is treated as stale. This threshold is illustrative, not a BitEvo universal rule.'],
+  ['Approval evidence', 'The workflow configuration must explicitly allow the two target fields and the requested transition.'],
+  ['Version context', 'The expected workflow/config version must match the version attached to the decision trace.'],
+  ['External confirmation', 'A read-after-write must confirm the intended values on the same CRM lead object.'],
+  ['Missing evidence behavior', 'CONSTRAIN: do not create another external effect; preserve the trace and escalate/reconcile.']
+];
+
+const failurePlan = [
+  ['F01', 'Stale qualification source', 'Evidence gate should fail before write.'],
+  ['F02', 'lead_id resolves to a different CRM object', 'Object-binding gate should fail before write.'],
+  ['F03', 'Internal tool acknowledgement without external state change', 'Classify as potential False Green; do not infer success.'],
+  ['F04', 'Ambiguous write followed by retry', 'Retry should remain constrained until external state is reconciled.'],
+  ['F05', 'Approval/config no longer allows target field', 'Authority gate should fail before write.'],
+  ['F06', 'Workflow version drift', 'Decision evidence should be rejected or routed to review.'],
+  ['F07', 'Partial field update', 'External confirmation should expose mismatch and trigger recovery.'],
+  ['F08', 'Confirmation references a different object', 'Treat as untrusted result; preserve trace and constrain authority.']
+];
+
+const finding = [
+  ['Finding ID', 'SAMPLE-FG-001'],
+  ['Class', 'False Green / external-effect confirmation gap'],
+  ['Status', 'SYNTHETIC WORKED EXAMPLE — NOT EXECUTED'],
+  ['Trigger', 'The orchestration layer reports success while the required external read-back is absent, unchanged or bound to a different object.'],
+  ['Authority involved', 'Update two qualification fields on one matched staging CRM lead.'],
+  ['Evidence at decision time', 'Authority and pre-action evidence may be sufficient; post-action external confirmation is not.'],
+  ['Observed effect', 'Not observed. This public pack does not claim a real execution.'],
+  ['Decision relevance', 'Without independent confirmation, the owner cannot distinguish completed write from accepted/enqueued/no-effect/wrong-object outcomes.'],
+  ['Recommended decision', 'CONSTRAIN authority after ambiguous acknowledgement; require same-object read-back before declaring success or allowing retry.']
+];
+
+const memo = [
+  ['Owner question', 'Should this workflow retain autonomous CRM-write authority when an internal success signal is not independently confirmed?'],
+  ['Decision', 'CONSTRAIN'],
+  ['Reason', 'The proposed Authority Budget exceeds the evidence available to prove the external effect under the SAMPLE-FG-001 condition.'],
+  ['Control change', 'Make same-object external confirmation an explicit completion gate; block blind retry while write state is ambiguous.'],
+  ['Authority after decision', 'The workflow may prepare the proposed update, but ambiguous writes require reconciliation before another mutation.'],
+  ['Residual uncertainty', 'Actual CRM consistency, latency and idempotency behavior are NOT TESTED in this synthetic example.'],
+  ['Retest criterion', 'In a real engagement, replay the agreed failure path and require the trace to end in confirmed same-object state or an explicit constrained/recovery state — never silent success.']
+];
+
+const trace = [
+  ['01', 'INTENT', 'Update matched lead qualification fields', 'SYNTHETIC'],
+  ['02', 'AUTHORITY', 'Field subset + object boundary match', 'ASSUMPTION'],
+  ['03', 'EVIDENCE', 'Fresh qualification source + expected config', 'ASSUMPTION'],
+  ['04', 'EFFECT', 'Independent same-object read-back required', 'EXPECTED GATE'],
+  ['05', 'AMBIGUITY', 'Internal acknowledgement alone is insufficient', 'DOCTRINE'],
+  ['06', 'DECISION', 'CONSTRAIN until external effect is reconciled', 'WORKED EXAMPLE']
+];
+---
+
+<Layout title="SAMPLE-001 — Synthetic Agent Authority Audit Pack | BitEvo" description="A synthetic worked example of the BitEvo Authority Ledger, Evidence Contract, Failure Plan, Finding Record and Decision Memo. Not customer evidence and not an executed audit.">
+  <section class="sample-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Public sample pack · SAMPLE-001</div>
+        <h1 class="display">See the decision chain before buying the audit.</h1>
+        <p class="lede">SAMPLE-001 is a synthetic worked example for one staging CRM qualification workflow. It shows the structure and reasoning of the BitEvo audit package without pretending a customer engagement or an executed test occurred.</p>
+        <div class="actions"><a href="/sample-audit.json" class="button button-primary">Open machine-readable pack <span aria-hidden="true">↗</span></a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div>
+      </div>
+      <aside class="boundary panel">
+        <div class="boundary-top"><span>SAMPLE STATUS</span><strong>SYNTHETIC / NOT EXECUTED</strong></div>
+        <p>No customer system, customer data, private infrastructure, credential, production environment or external audit result is represented here.</p>
+        <div class="legend"><span><i>S</i> Synthetic fact</span><span><i>A</i> Assumption</span><span><i>E</i> Expected gate</span><span><i>N</i> Not tested</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container scenario panel">
+      <div><div class="eyebrow">Synthetic workflow</div><h2>CRM Qualification Update Agent</h2></div>
+      <div class="scenario-grid">
+        <div><span>INPUT</span><strong>lead_id + qualification evidence</strong></div>
+        <div><span>PROPOSED EFFECT</span><strong>update 2 fields on 1 staging lead</strong></div>
+        <div><span>PRIMARY RISK</span><strong>wrong / stale / unconfirmed external state</strong></div>
+        <div><span>OWNER DECISION</span><strong>how much write authority is justified?</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">A1 · Authority Ledger</div><h2 class="section-title">What exactly may create an external effect?</h2></div><p class="lede">Authority is written at the action/object level. “CRM access” is too broad to be a useful decision boundary.</p></div>
+    <div class="container record panel">{ledger.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">A2 · Evidence Contract</div><h2 class="section-title">What must be true before and after the write?</h2></div><p class="lede">This is Evidence Before Effect made operational. The contract separates pre-action evidence from the confirmation required to close the external-effect loop.</p></div>
+    <div class="container record panel">{contract.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">Failure plan</div><h2 class="section-title">Break one authority assumption at a time.</h2></div><p class="lede">These are illustrative scenarios for this synthetic workflow. A real engagement agrees its own failure plan and Rules of Engagement before execution.</p></div>
+    <div class="container failure-grid">{failurePlan.map(([id,scenario,expected]) => <article class="panel"><span>{id}</span><h3>{scenario}</h3><p>{expected}</p></article>)}</div>
+  </section>
+
+  <section class="section section-rule trace-section">
+    <div class="container split-head"><div><div class="eyebrow">Decision trace</div><h2 class="section-title">The chain must survive evidence scrutiny.</h2></div><p class="lede">The status column makes provenance visible. This sample deliberately refuses to label an unexecuted scenario as an observation.</p></div>
+    <div class="container trace panel">{trace.map(([n,k,v,status]) => <div><span>{n}</span><strong>{k}</strong><p>{v}</p><i>{status}</i></div>)}</div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">A3 · Finding Record</div><h2 class="section-title">SAMPLE-FG-001 — False Green confirmation gap.</h2></div><p class="lede">This is a worked finding format, not a claim that the condition was reproduced. Notice that “Observed effect” remains explicitly NOT OBSERVED.</p></div>
+    <div class="container finding panel">{finding.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
+  </section>
+
+  <section class="section section-rule memo-section">
+    <div class="container memo panel">
+      <div class="memo-head"><div><div class="eyebrow">A4 · Decision Memo</div><h2>CONSTRAIN</h2></div><span>SAMPLE-001 / OWNER DECISION</span></div>
+      <div class="memo-grid">{memo.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container retest-grid">
+      <div><div class="eyebrow">Retest logic</div><h2 class="section-title">A repair is not closed by code change alone.</h2><p class="lede">The same decision criterion must be replayed against the changed workflow. A real retest asks whether the previous ambiguity now ends in confirmed effect or an explicit constrained state.</p></div>
+      <div class="retest panel"><span>PASS CONDITION</span><strong>No silent success after ambiguous external effect.</strong><p>Either the exact target object is independently confirmed in the expected state, or the workflow stops/reconciles without spending more Authority Budget.</p><span>THIS SAMPLE</span><strong>NOT TESTED</strong><p>SAMPLE-001 defines the criterion only. It does not claim an implementation passed it.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow final">
+      <div class="eyebrow">From sample to real scope</div>
+      <h2 class="section-title">Replace synthetic assumptions with your workflow evidence.</h2>
+      <p class="lede">The local intake seeds the same Authority Ledger and Evidence Contract structure without transmitting credentials or authorizing testing.</p>
+      <div class="actions"><a href="/audit-intake" class="button button-primary">Seed a real scope brief <span aria-hidden="true">↗</span></a><a href="/diagnostic" class="button button-ghost">Run the 7-gate diagnostic</a></div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .sample-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.12fr .68fr;gap:clamp(42px,8vw,100px);align-items:center}.sample-hero .lede{margin:24px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.boundary{padding:28px}.boundary-top{display:flex;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}.boundary-top span{color:var(--muted);font:500 .58rem var(--mono);letter-spacing:.1em}.boundary-top strong{color:var(--gold);font:500 .66rem var(--mono)}.boundary p{color:var(--muted);font-size:.8rem}.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.legend span{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.72rem}.legend i{display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);border-radius:7px;color:var(--green);font:500 .6rem var(--mono);font-style:normal}.scenario{padding:28px}.scenario h2{margin:5px 0 22px;font-size:clamp(1.5rem,3vw,2.4rem)}.scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.scenario-grid div{padding:18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.scenario-grid span,.record span,.finding span,.memo-grid span,.retest>span{display:block;color:var(--green);font:500 .58rem var(--mono);letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}.scenario-grid strong{font-size:.78rem}.split-head{display:grid;grid-template-columns:.86fr 1.14fr;gap:clamp(38px,8vw,110px);margin-bottom:34px}.split-head .lede{margin:2px 0 0}.record,.finding{padding:8px 26px}.record>div,.finding>div{display:grid;grid-template-columns:190px 1fr;gap:26px;padding:18px 0;border-bottom:1px solid var(--line)}.record>div:last-child,.finding>div:last-child{border-bottom:0}.record p,.finding p{margin:0;color:var(--muted);font-size:.84rem}.failure-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.failure-grid article{min-height:190px;padding:22px;display:flex;flex-direction:column}.failure-grid article>span{color:var(--green);font:500 .62rem var(--mono)}.failure-grid h3{margin:auto 0 8px;font-size:.92rem}.failure-grid p{margin:0;color:var(--muted);font-size:.76rem}.trace{padding:8px 22px}.trace>div{display:grid;grid-template-columns:34px 90px 1fr 150px;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}.trace>div:last-child{border-bottom:0}.trace>div>span{color:#586561;font:500 .62rem var(--mono)}.trace strong{font-size:.72rem}.trace p{margin:0;color:var(--muted);font-size:.8rem}.trace i{justify-self:end;font:500 .57rem var(--mono);font-style:normal;color:var(--gold);text-align:right}.memo{padding:clamp(28px,5vw,52px);background:radial-gradient(circle at 100% 0,rgba(127,208,177,.07),transparent 42%),rgba(8,16,18,.78)}.memo-head{display:flex;justify-content:space-between;gap:24px;align-items:start;padding-bottom:28px;border-bottom:1px solid var(--line)}.memo-head h2{font-size:clamp(3.4rem,8vw,7rem);line-height:.8;letter-spacing:-.07em;margin:18px 0 0;color:var(--green)}.memo-head>span{color:var(--muted);font:500 .58rem var(--mono)}.memo-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}.memo-grid>div{padding:20px 0;border-bottom:1px solid var(--line)}.memo-grid p{margin:0;color:var(--muted);font-size:.82rem}.retest-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(40px,8vw,110px)}.retest{padding:28px}.retest strong{display:block;margin-bottom:8px;font-size:.9rem}.retest p{color:var(--muted);font-size:.82rem;margin:0 0 24px}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 0}.final .actions{justify-content:center}
+  @media(max-width:980px){.hero-grid,.split-head,.retest-grid{grid-template-columns:1fr}.scenario-grid,.failure-grid{grid-template-columns:1fr 1fr}.trace>div{grid-template-columns:30px 80px 1fr}.trace i{grid-column:3;justify-self:start}.memo-grid{grid-template-columns:1fr}}
+  @media(max-width:650px){.scenario-grid,.failure-grid{grid-template-columns:1fr}.record>div,.finding>div{grid-template-columns:1fr;gap:5px}.trace>div{grid-template-columns:28px 1fr;gap:7px 12px}.trace p,.trace i{grid-column:2}.memo-head{flex-direction:column}.legend{grid-template-columns:1fr}.boundary-top{flex-direction:column}}
+</style>
