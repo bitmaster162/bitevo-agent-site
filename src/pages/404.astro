@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Page not found | BitEvo" description="The requested BitEvo page could not be found." robots="noindex, follow">
+  <section class="lost section">
+    <div class="narrow lost-shell panel">
+      <div class="code">404</div>
+      <div class="eyebrow">Route not found</div>
+      <h1>Nothing reliable at this address.</h1>
+      <p>The page may have moved, been retired, or never existed. Use a known public surface instead.</p>
+      <div class="actions">
+        <a class="button button-primary" href="/">Return home</a>
+        <a class="button" href="/agent-authority-audit">Audit overview</a>
+        <a class="button" href="/guides">Research library</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .lost{min-height:68vh;display:grid;place-items:center}.lost-shell{padding:clamp(32px,7vw,72px);text-align:center}.code{font:500 clamp(4.5rem,14vw,10rem)/.9 var(--mono);letter-spacing:-.08em;color:rgba(127,208,177,.16);margin-bottom:16px}.lost h1{max-width:720px;margin:0 auto;font-size:clamp(2rem,5vw,4rem);line-height:1;letter-spacing:-.05em}.lost p{max-width:620px;margin:20px auto 28px;color:var(--muted)}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+</style>
