@@ -36,7 +36,7 @@ const findingAnatomy = [
         <h1 class="display">Decide how much authority this workflow has earned.</h1>
         <p class="lede">The audit answers one operational question: does this action-capable workflow have enough evidence, confirmation and recovery control for the authority it already holds — or the authority you are about to give it?</p>
         <div class="actions">
-          <a href="/audit-intake" class="button button-primary">Map the workflow <span aria-hidden="true">↗</span></a>
+          <a href="/mapper" class="button button-primary">Map the workflow <span aria-hidden="true">↗</span></a>
           <a href="/doctrine" class="button button-ghost">BitEvo Doctrine</a>
         </div>
       </div>
@@ -125,9 +125,9 @@ const findingAnatomy = [
         <p class="lede">The deliverables are organized around action, not theatre: what authority exists, what evidence supports it, what failed, what must change and what can be retested.</p>
       </div>
       <div class="deliverables panel">
-        <div><span>A</span><section><strong>Authority Budget map</strong><p>Critical actions, objects, approvals, integrations, retry paths and prohibited transitions in the agreed scope.</p></section></div>
-        <div><span>B</span><section><strong>Reproducible evidence pack</strong><p>Accepted findings with trigger, Evidence Before Effect state, observed external effect and recovery behavior.</p></section></div>
-        <div><span>C</span><section><strong>Owner decision backlog</strong><p>Prioritized expand / constrain / repair actions tied directly to the evidence and consequence.</p></section></div>
+        <div><span>A</span><section><strong>Authority Ledger + Evidence Contract</strong><p>Critical actions, objects, approvals, integrations, retry paths, prohibited transitions and the evidence required to justify action in the agreed scope.</p></section></div>
+        <div><span>B</span><section><strong>Reproducible Finding Records</strong><p>Accepted findings with trigger, Evidence Before Effect state, observed external effect and recovery behavior.</p></section></div>
+        <div><span>C</span><section><strong>Decision Memo + owner backlog</strong><p>Bounded owner decision plus prioritized expand / constrain / repair actions tied directly to the evidence and consequence.</p></section></div>
         <div><span>D</span><section><strong>One retest</strong><p>Re-run against the same agreed finding criteria after relevant remediation is available.</p></section></div>
       </div>
     </div>
@@ -156,7 +156,7 @@ const findingAnatomy = [
         <p><strong>Before testing:</strong> written scope, allowed tests, prohibited actions, access approver, data classification, minimum necessary data and safe replay conditions.</p>
         <p><strong>Public intake:</strong> prepares a scope brief only. It does not authorize testing and must not contain API keys, passwords, tokens, private keys, wallet seeds, production credentials or customer secrets.</p>
         <p><strong>Default boundary:</strong> staging/test workflow. Production penetration testing is not included by default.</p>
-        <a href="/audit-intake" class="button button-primary">Map one workflow <span aria-hidden="true">↗</span></a>
+        <a href="/mapper" class="button button-primary">Map one workflow <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>

@@ -21,10 +21,10 @@ const decisionMoments = [
 ];
 
 const deliverables = [
-  ['Authority map', 'A bounded map of critical actions, tools, objects, approvals and explicitly prohibited transitions.'],
-  ['Evidence contract', 'The evidence that must exist before, during and after each critical action for the result to be trusted.'],
-  ['Failure record', 'Reproducible findings tied to observed consequence, evidence quality and recovery behavior — with hypotheses kept separate.'],
-  ['Decision backlog', 'Prioritized changes tied to an owner decision: expand authority, constrain it, repair the workflow or retest.']
+  ['Authority Ledger', 'A bounded map of critical actions, tools, objects, approvals and explicitly prohibited transitions.'],
+  ['Evidence Contract', 'The evidence that must exist before, during and after each critical action for the result to be trusted.'],
+  ['Finding Record', 'Reproducible findings tied to observed consequence, evidence quality and recovery behavior — with hypotheses kept separate.'],
+  ['Decision Memo', 'A bounded owner decision with supporting evidence, residual uncertainty, required control change and retest criterion.']
 ];
 
 const proofSurfaces = [
@@ -185,13 +185,13 @@ const structuredData = {
         <h2 class="section-title">Agent Authority & Evidence Audit</h2>
         <p class="lede">For teams that need to decide whether one write-capable workflow is ready for more authority — or needs to be constrained first.</p>
         <div class="offer-price"><strong>$4,900</strong><span>fixed · 5 working days</span></div>
-        <div class="hero-actions"><a class="button button-primary" href="/audit-intake">Map the workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
+        <div class="hero-actions"><a class="button button-primary" href="/mapper">Map the workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
       </div>
       <div class="scope-card panel">
         <div class="scope-row"><span>Object</span><strong>1 staging/test workflow</strong></div>
         <div class="scope-row"><span>Authority Budget</span><strong>Up to 3 tools / APIs / MCP servers</strong></div>
         <div class="scope-row"><span>Failure plan</span><strong>10–20 agreed scenarios</strong></div>
-        <div class="scope-row"><span>Evidence</span><strong>Authority map + reproducible finding pack</strong></div>
+        <div class="scope-row"><span>Evidence</span><strong>Authority Ledger + Evidence Contract + reproducible Finding Records</strong></div>
         <div class="scope-row"><span>Decision</span><strong>Expand / constrain / repair backlog</strong></div>
         <div class="scope-row"><span>Verification</span><strong>One retest</strong></div>
       </div>
@@ -207,7 +207,7 @@ const structuredData = {
     </div>
   </section>
 
-  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 days</strong></span><a href="/audit-intake">Map it ↗</a></div>
+  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 days</strong></span><a href="/mapper">Map it ↗</a></div>
 </Layout>
 
 <style>

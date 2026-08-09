@@ -13,15 +13,15 @@ const tiers = [
     eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
     desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
     includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
-    excludes: ['No full Authority Budget map', 'No multi-scenario failure plan', 'No included retest'],
+    excludes: ['No full Authority Ledger / Evidence Contract', 'No multi-scenario failure plan', 'No included retest'],
     cta: 'Test one uncertainty', href: '/audit-intake'
   },
   {
     eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days', title: 'Agent Authority & Evidence Audit',
     desc: 'Use when the owner must decide whether one action-capable workflow has earned its current or proposed Authority Budget across evidence, effect confirmation and recovery.',
-    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Authority map + reproducible evidence pack', 'Expand / constrain / repair backlog', 'One retest'],
+    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Authority Ledger + Evidence Contract + reproducible Finding Records', 'Decision Memo + owner backlog', 'One retest'],
     excludes: ['No certification', 'No universal safety score', 'No production penetration testing by default'],
-    cta: 'Map the authority decision', href: '/audit-intake', featured: true
+    cta: 'Map the authority decision', href: '/mapper', featured: true
   }
 ];
 
@@ -73,7 +73,7 @@ const comparison = [
       <div class="decision-list">
         <article><span>Free</span><div><strong>“Should we spend time auditing this workflow at all?”</strong><p>Use triage when the action, owner or staging boundary is still unclear.</p></div></article>
         <article><span>$1.5k</span><div><strong>“Is this specific failure real enough to act on?”</strong><p>Use the Entry Audit when one hypothesis dominates the engineering decision.</p></div></article>
-        <article><span>$4.9k</span><div><strong>“Should this workflow keep, gain or lose authority?”</strong><p>Use the primary audit when the answer requires multiple failure scenarios, an authority map, evidence-at-decision-time and a retestable owner backlog.</p></div></article>
+        <article><span>$4.9k</span><div><strong>“Should this workflow keep, gain or lose authority?”</strong><p>Use the primary audit when the answer requires multiple failure scenarios, an Authority Ledger + Evidence Contract, evidence-at-decision-time and a retestable owner backlog.</p></div></article>
       </div>
     </div>
   </section>
@@ -105,7 +105,7 @@ const comparison = [
       <div class="eyebrow">Before access</div>
       <h2 class="section-title">Start with one action and one owner.</h2>
       <p class="lede">The public intake prepares a scope brief only. It does not authorize testing. Do not submit credentials, private keys, wallet seeds, production secrets or customer secrets.</p>
-      <a href="/audit-intake" class="button button-primary">Map the action chain <span aria-hidden="true">↗</span></a>
+      <a href="/mapper" class="button button-primary">Map the action chain <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>
