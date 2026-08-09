@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Agent Authority & Evidence Audit — Intake" description="Rules-of-Engagement intake for the BitEvo Agent Authority & Evidence Audit.">
+  <section class="intake-section">
+    <div class="container intake-header">
+      <div class="kicker">Rules of Engagement intake</div>
+      <h1>Agent Authority & Evidence Audit</h1>
+      <p>This public form prepares a scope brief. Submission alone does not authorize testing. Written scope is required before testing.</p>
+    </div>
+
+    <div class="container secret-warning">
+      <strong>DO NOT SUBMIT:</strong> API keys · passwords · tokens · private keys · wallet seeds · production credentials · customer secrets.
+    </div>
+
+    <div class="container intake-grid">
+      <form id="audit-intake" class="card">
+        <h2>Scope inputs</h2>
+        <div class="two">
+          <label>Company<input id="company" required /></label>
+          <label>Business contact<input id="contact" required placeholder="Name + business email / Telegram" /></label>
+        </div>
+        <label>Role<input id="role" required placeholder="CTO / Founder / Engineering Lead" /></label>
+        <label>Agent / workflow description<textarea id="workflow" rows="3" required></textarea></label>
+        <label>Environment<input id="environment" required placeholder="staging / test / isolated lab / other" /></label>
+        <label>Critical workflow<textarea id="criticalWorkflow" rows="3" required placeholder="The action chain whose failure matters most"></textarea></label>
+        <label>External systems / tools<textarea id="externalSystems" rows="3" required placeholder="Tools, APIs, MCP servers and external systems involved"></textarea></label>
+        <label>Most expensive plausible error<textarea id="expensiveError" rows="3" required></textarea></label>
+
+        <div class="two">
+          <label>Test / staging environment available?
+            <select id="staging" required><option value="">-</option><option>Yes</option><option>No</option><option>Partial / needs setup</option></select>
+          </label>
+          <label>Safe replay available?
+            <select id="replay" required><option value="">-</option><option>Yes</option><option>No</option><option>Unknown</option></select>
+          </label>
+        </div>
+
+        <label>Access approver<input id="approver" required placeholder="Role/name of person authorized to approve access" /></label>
+        <label>Allowed tests<textarea id="allowedTests" rows="3" required placeholder="What may be tested or replayed"></textarea></label>
+        <label>Prohibited actions<textarea id="prohibited" rows="3" required placeholder="Actions that must never be executed"></textarea></label>
+        <label>Data classification<input id="classification" required placeholder="public / internal / confidential / regulated / other" /></label>
+        <label>Minimum necessary data<textarea id="minimumData" rows="3" required placeholder="Smallest dataset/log subset needed for the audit"></textarea></label>
+        <label>Secret-handling boundary<textarea id="secretBoundary" rows="3" required placeholder="How credentials/secrets are kept outside the audit evidence path"></textarea></label>
+        <label>Desired outcome<textarea id="outcome" rows="3" required placeholder="What decision or repair backlog should the audit enable?"></textarea></label>
+
+        <div class="actions">
+          <button type="submit">Generate scope brief</button>
+          <button type="reset" class="secondary">Reset</button>
+        </div>
+      </form>
+
+      <aside class="card preview">
+        <h2>Generated brief</h2>
+        <p>The brief is generated locally in your browser. Review it before sharing. Remove any secret or credential if one was accidentally entered.</p>
+        <textarea id="brief" readonly placeholder="Your Rules-of-Engagement scope brief will appear here."></textarea>
+        <button id="copy" disabled>Copy brief</button>
+        <p class="gate"><strong>Gate:</strong> no testing begins until scope, allowed/prohibited actions, access approval and data boundaries are agreed in writing.</p>
+      </aside>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('audit-intake') as HTMLFormElement;
+    const brief = document.getElementById('brief') as HTMLTextAreaElement;
+    const copy = document.getElementById('copy') as HTMLButtonElement;
+    const fields = [
+      ['Company','company'],['Business contact','contact'],['Role','role'],['Agent/workflow','workflow'],['Environment','environment'],
+      ['Critical workflow','criticalWorkflow'],['External systems/tools','externalSystems'],['Most expensive plausible error','expensiveError'],
+      ['Test/staging available','staging'],['Safe replay available','replay'],['Access approver','approver'],['Allowed tests','allowedTests'],
+      ['Prohibited actions','prohibited'],['Data classification','classification'],['Minimum necessary data','minimumData'],
+      ['Secret-handling boundary','secretBoundary'],['Desired outcome','outcome']
+    ];
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const lines = [
+        '=== BITEVO AGENT AUTHORITY & EVIDENCE AUDIT — SCOPE INTAKE ===',
+        'PUBLIC FORM WARNING: no API keys, passwords, tokens, private keys, wallet seeds, production credentials or customer secrets.',
+        'Testing authorization: NOT GRANTED by this brief. Written Rules of Engagement required.',
+        ''
+      ];
+      for (const [label,id] of fields) {
+        const el = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+        lines.push(`${label}: ${el?.value || '-'}`);
+      }
+      lines.push('', 'Requested next step: scope review only; no testing until written approval.');
+      brief.value = lines.join('\n');
+      copy.disabled = false;
+    });
+    copy.addEventListener('click', async () => {
+      if (!brief.value) return;
+      await navigator.clipboard.writeText(brief.value);
+      const old = copy.textContent;
+      copy.textContent = 'Copied';
+      setTimeout(() => copy.textContent = old, 1400);
+    });
+    form.addEventListener('reset', () => {
+      brief.value = '';
+      copy.disabled = true;
+    });
+  </script>
+
+  <style>
+    .intake-section{padding:52px 0 60px}.intake-header{text-align:center;max-width:860px}.kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.intake-header h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);margin:8px 0 12px}.intake-header p{color:var(--muted);font-family:'Lora',serif}.secret-warning{max-width:1050px;margin-top:24px;border:1px solid #8a4f4f;border-radius:10px;padding:16px 18px;background:#1b0d0d;color:#e8c5c5}.secret-warning strong{color:#ffb3b3}.intake-grid{max-width:1050px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px;margin-top:22px}.card{background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:24px}.card h2{font-family:'Playfair Display',serif;margin-top:0}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;color:var(--muted);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}input,textarea,select{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:7px;padding:10px 12px;color:var(--ink);font:inherit;text-transform:none;letter-spacing:0}textarea{resize:vertical}.actions{display:flex;gap:10px;margin-top:18px}button{border:1px solid var(--line-strong);background:var(--gold);color:#07090a;border-radius:8px;padding:10px 15px;font-weight:900;cursor:pointer}.secondary{background:transparent;color:var(--muted)}.preview{display:flex;flex-direction:column;position:sticky;top:120px;height:fit-content}.preview p{color:var(--muted);font-size:.88rem}.preview textarea{min-height:430px;font-family:monospace;font-size:.78rem}.preview button{margin-top:12px}.preview button:disabled{opacity:.45;cursor:not-allowed}.gate{border-top:1px solid var(--line);padding-top:14px}.gate strong{color:var(--gold)}@media(max-width:900px){.intake-grid{grid-template-columns:1fr}.preview{position:static}.two{grid-template-columns:1fr}}
+  </style>
+</Layout>
