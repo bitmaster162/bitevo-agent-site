@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Tool I/O Bridge Contract — BitEvo" description="Public-safe overview of agent tool-call boundaries, validation and evidence without internal operator endpoints.">
+  <section class="guide">
+    <div class="container card">
+      <div class="kicker">Agent controls · public-safe reference</div>
+      <h1>Tool I/O Bridge: bounded execution contract</h1>
+      <p>A tool bridge should separate model intent from physical execution. Publicly useful design principles are explicit schemas, least-privilege capabilities, deterministic validation, bounded resources and reconstructable evidence.</p>
+
+      <h2>Public contract pattern</h2>
+      <ul>
+        <li>Accept only declared tool names and schema-valid arguments.</li>
+        <li>Resolve authority before execution; model output alone is not permission.</li>
+        <li>Apply workflow-specific limits, approval gates and prohibited-action rules.</li>
+        <li>Record request, authorization decision, execution result and relevant provenance.</li>
+        <li>Fail closed when required authority or evidence is absent.</li>
+      </ul>
+
+      <p class="boundary">Internal execution routes, service addresses, hostnames, IP addresses, credentials, registry paths and operator-control interfaces are intentionally omitted from this public reference.</p>
+
+      <div class="actions">
+        <a href="/agent-authority-audit">Agent Authority & Evidence Audit</a>
+        <a href="/audit-intake">Audit intake</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .guide{padding:60px 0}.card{max-width:860px;background:var(--paper-soft);border:1px solid var(--line);border-radius:14px;padding:32px}.kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.card h1,.card h2{font-family:'Playfair Display',serif}.card p,.card li{color:var(--muted);line-height:1.7}.boundary{border:1px solid var(--line);border-radius:10px;padding:16px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.actions a{padding:10px 16px;border:1px solid var(--line-strong);border-radius:8px;font-weight:900}.actions a:first-child{background:var(--gold);color:#07090a}
+</style>
