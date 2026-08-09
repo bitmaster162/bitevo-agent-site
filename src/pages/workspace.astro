@@ -1,0 +1,344 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Decision Workspace — Compare Agent Authority Maps | BitEvo" description="A local BitEvo workspace for saving and comparing Authority Mapper artifacts, inspecting before/after evidence-gate changes and generating a bounded Decision Memo. Browser-only storage; no trust score or testing authorization.">
+  <section class="workspace-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Local mini-product · Decision Workspace</div><h1 class="display">Compare authority before and after the repair.</h1></div>
+      <div><p class="lede">Save multiple Authority Mapper artifacts on this device, compare exact gate and contract changes, then generate a bounded <strong>Decision Memo</strong>. The workspace does not infer a safety score or silently expand authority.</p><div class="hero-actions"><a href="/mapper" class="button button-primary">Build another map ↗</a><a href="/proof" class="button button-ghost">Worked proof packs</a></div></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container warning panel"><div class="warning-mark">!</div><div><strong>Browser-only working state.</strong><p>Saved maps use this browser's localStorage. Imported or handed-off artifacts are not uploaded by this page. Do not store credentials, tokens, private keys, wallet seeds, production secrets or customer data.</p></div></div>
+
+    <div class="container incoming panel">
+      <div><div class="eyebrow">Bring evidence structure in</div><h2>Save a mapper artifact as a decision checkpoint.</h2><p id="incomingState">No incoming map detected. Build one in Mapper or import a BitEvo mapper JSON file.</p></div>
+      <div class="incoming-actions">
+        <label>Checkpoint label<input id="checkpointLabel" placeholder="Example: CRM workflow · before repair" /></label>
+        <div class="button-row"><button id="saveIncoming" type="button" class="button button-primary" disabled>Save checkpoint</button><label class="button import-button">Import mapper JSON<input id="importJson" type="file" accept="application/json,.json" /></label></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container workspace-grid">
+      <aside class="library panel">
+        <div class="panel-head"><div><div class="eyebrow">Local library</div><h2>Saved checkpoints</h2></div><span id="savedCount">0</span></div>
+        <div id="savedList" class="saved-list"></div>
+        <div id="savedEmpty" class="empty"><strong>No saved maps yet.</strong><p>Save the incoming Mapper artifact or import a mapper JSON file.</p></div>
+      </aside>
+
+      <div class="compare panel">
+        <div class="panel-head"><div><div class="eyebrow">Before / after</div><h2>Authority Budget comparison</h2></div><span id="compareState">Select two checkpoints</span></div>
+        <p class="microcopy">“Authority Budget” is shown as exact authority-surface and evidence-contract changes. The workspace does not infer a numerical authority score.</p>
+        <div class="select-grid">
+          <label>Before<select id="beforeSelect"><option value="">Select checkpoint</option></select></label>
+          <label>After<select id="afterSelect"><option value="">Select checkpoint</option></select></label>
+        </div>
+        <button id="compareButton" type="button" class="button button-primary">Compare checkpoints →</button>
+
+        <div id="comparison" hidden>
+          <div id="comparisonWarning" class="comparison-warning" hidden></div>
+          <div class="summary-grid">
+            <article><span>UNRESOLVED GATES</span><strong id="unresolvedDelta">—</strong><p>Count only, not a trust score.</p></article>
+            <article><span>GATE MOVEMENT</span><strong id="gateMovement">—</strong><p>Resolved / regressed / unchanged.</p></article>
+            <article><span>AUTHORITY SURFACE</span><strong id="authorityMovement">—</strong><p>Exact field changes; no semantic guess.</p></article>
+          </div>
+
+          <div class="detail-grid">
+            <section><h3>Gate transitions</h3><div id="gateTransitions" class="transition-list"></div></section>
+            <section><h3>Authority Ledger delta</h3><pre id="authorityDelta"></pre></section>
+            <section><h3>Evidence Contract delta</h3><pre id="evidenceDelta"></pre></section>
+            <section><h3>Residual uncertainty</h3><pre id="residual"></pre></section>
+          </div>
+
+          <section class="memo-builder">
+            <div class="memo-head"><div><div class="eyebrow">Owner decision</div><h3>Generate Decision Memo</h3></div><span>NOT AUTHORIZATION</span></div>
+            <div class="memo-grid">
+              <label>Decision<select id="decision"><option>CONSTRAIN</option><option>REPAIR</option><option>RETEST</option><option>EXPAND</option></select></label>
+              <label>Decision owner<input id="decisionOwner" placeholder="Role accountable for the authority decision" /></label>
+            </div>
+            <label>Decision rationale<textarea id="decisionReason" rows="3" placeholder="Why this decision is justified by the before/after evidence state"></textarea></label>
+            <label>Retest criterion<textarea id="retestCriterion" rows="3" placeholder="What exact original decision condition must pass on replay?"></textarea></label>
+            <div class="button-row"><button id="buildMemo" type="button" class="button button-primary">Build Decision Memo</button><button id="copyMemo" type="button" class="button" disabled>Copy memo</button><button id="downloadTxt" type="button" class="button button-ghost" disabled>TXT</button><button id="downloadJson" type="button" class="button button-ghost" disabled>JSON</button></div>
+            <div id="decisionConflict" class="decision-conflict" hidden></div>
+            <pre id="memoOutput" class="memo-output">Select two checkpoints, compare them, then build a Decision Memo.</pre>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container principles">
+      <article><span>01</span><div><strong>Local checkpoints are not audit evidence by themselves.</strong><p>They preserve what the owner described at a point in time. Implementation behavior still requires observation.</p></div></article>
+      <article><span>02</span><div><strong>Fewer unresolved gates is not a safety score.</strong><p>It means fewer explicit unknowns in the decision structure. A retest still has to exercise the original failure condition.</p></div></article>
+      <article><span>03</span><div><strong>Authority change stays owner-controlled.</strong><p>The workspace exposes the delta and flags evidence conflicts; it never grants permissions or testing authority.</p></div></article>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const STORAGE_KEY = 'bitevo.workspace.maps.v1';
+  const INCOMING_KEY = 'bitevo.workspace.incoming.v1';
+  const MAPPER_HANDOFF_KEY = 'bitevo.mapper.workspace.v1';
+  const incomingState = document.getElementById('incomingState');
+  const checkpointLabel = document.getElementById('checkpointLabel');
+  const saveIncoming = document.getElementById('saveIncoming');
+  const importJson = document.getElementById('importJson');
+  const savedList = document.getElementById('savedList');
+  const savedEmpty = document.getElementById('savedEmpty');
+  const savedCount = document.getElementById('savedCount');
+  const beforeSelect = document.getElementById('beforeSelect');
+  const afterSelect = document.getElementById('afterSelect');
+  const compareButton = document.getElementById('compareButton');
+  const comparison = document.getElementById('comparison');
+  const compareState = document.getElementById('compareState');
+  const comparisonWarning = document.getElementById('comparisonWarning');
+  const unresolvedDelta = document.getElementById('unresolvedDelta');
+  const gateMovement = document.getElementById('gateMovement');
+  const authorityMovement = document.getElementById('authorityMovement');
+  const gateTransitions = document.getElementById('gateTransitions');
+  const authorityDelta = document.getElementById('authorityDelta');
+  const evidenceDelta = document.getElementById('evidenceDelta');
+  const residual = document.getElementById('residual');
+  const decision = document.getElementById('decision');
+  const decisionOwner = document.getElementById('decisionOwner');
+  const decisionReason = document.getElementById('decisionReason');
+  const retestCriterion = document.getElementById('retestCriterion');
+  const buildMemo = document.getElementById('buildMemo');
+  const copyMemo = document.getElementById('copyMemo');
+  const downloadTxt = document.getElementById('downloadTxt');
+  const downloadJson = document.getElementById('downloadJson');
+  const decisionConflict = document.getElementById('decisionConflict');
+  const memoOutput = document.getElementById('memoOutput');
+
+  let incoming = null;
+  let activeComparison = null;
+  let memoPayload = null;
+
+  const safeParse = (value, fallback) => { try { return JSON.parse(value); } catch { return fallback; } };
+  const loadMaps = () => safeParse(localStorage.getItem(STORAGE_KEY) || '[]', []);
+  const storeMaps = maps => localStorage.setItem(STORAGE_KEY, JSON.stringify(maps));
+  const isMapperMap = map => !!(map && map.authority_ledger && map.evidence_contract && Array.isArray(map.gates));
+  const unresolved = map => (map.gates || []).filter(g => g.answer !== 'YES');
+  const text = value => String(value ?? '').trim();
+  const uid = () => (globalThis.crypto?.randomUUID?.() || `map-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+
+  const setIncoming = (map, source) => {
+    if (!isMapperMap(map)) return false;
+    incoming = map;
+    const workflow = text(map.authority_ledger.workflow) || 'Authority map';
+    checkpointLabel.value = `${workflow} · checkpoint`;
+    incomingState.textContent = `${source} loaded locally · ${unresolved(map).length} unresolved gate(s) · review label then save`;
+    saveIncoming.disabled = false;
+    return true;
+  };
+
+  const sessionIncoming = safeParse(sessionStorage.getItem(MAPPER_HANDOFF_KEY) || sessionStorage.getItem(INCOMING_KEY) || 'null', null);
+  if (sessionIncoming && setIncoming(sessionIncoming, 'Mapper handoff')) {
+    sessionStorage.removeItem(MAPPER_HANDOFF_KEY);
+    sessionStorage.removeItem(INCOMING_KEY);
+  }
+
+  importJson?.addEventListener('change', async () => {
+    const file = importJson.files?.[0];
+    if (!file) return;
+    try {
+      const map = JSON.parse(await file.text());
+      if (!setIncoming(map, 'Imported mapper JSON')) throw new Error('Unsupported mapper JSON');
+    } catch {
+      incoming = null;
+      saveIncoming.disabled = true;
+      incomingState.textContent = 'Import rejected · expected BitEvo mapper JSON with authority_ledger + evidence_contract + gates';
+    } finally { importJson.value = ''; }
+  });
+
+  saveIncoming?.addEventListener('click', () => {
+    if (!incoming) return;
+    const label = text(checkpointLabel.value) || text(incoming.authority_ledger.workflow) || 'Authority checkpoint';
+    const maps = loadMaps();
+    maps.unshift({ id: uid(), label, saved_at: new Date().toISOString(), map: incoming });
+    storeMaps(maps.slice(0, 30));
+    incomingState.textContent = `${label} saved on this device · no server upload`;
+    incoming = null;
+    saveIncoming.disabled = true;
+    checkpointLabel.value = '';
+    renderLibrary();
+  });
+
+  const makeOption = (entry) => {
+    const option = document.createElement('option');
+    option.value = entry.id;
+    option.textContent = `${entry.label} · ${new Date(entry.saved_at).toLocaleString()}`;
+    return option;
+  };
+
+  const renderLibrary = () => {
+    const maps = loadMaps();
+    savedCount.textContent = String(maps.length);
+    savedEmpty.hidden = maps.length > 0;
+    savedList.replaceChildren();
+    beforeSelect.innerHTML = '<option value="">Select checkpoint</option>';
+    afterSelect.innerHTML = '<option value="">Select checkpoint</option>';
+
+    maps.forEach(entry => {
+      const card = document.createElement('article');
+      const top = document.createElement('div');
+      top.className = 'saved-top';
+      const title = document.createElement('strong');
+      title.textContent = entry.label;
+      const del = document.createElement('button');
+      del.type = 'button'; del.className = 'delete'; del.textContent = 'Delete';
+      del.addEventListener('click', () => { storeMaps(loadMaps().filter(x => x.id !== entry.id)); renderLibrary(); });
+      top.append(title, del);
+      const meta = document.createElement('p');
+      meta.textContent = `${entry.map.action_class || 'custom'} · ${unresolved(entry.map).length} unresolved · ${new Date(entry.saved_at).toLocaleString()}`;
+      const action = document.createElement('p');
+      action.textContent = text(entry.map.authority_ledger.critical_action);
+      card.append(top, meta, action);
+      savedList.append(card);
+      beforeSelect.append(makeOption(entry));
+      afterSelect.append(makeOption(entry));
+    });
+  };
+
+  const getEntry = id => loadMaps().find(x => x.id === id);
+  const fieldDelta = (beforeObj, afterObj, fields) => fields.map(([key,label]) => {
+    const before = text(beforeObj?.[key]);
+    const after = text(afterObj?.[key]);
+    return { key, label, before, after, changed: before !== after };
+  });
+  const deltaText = deltas => {
+    const changed = deltas.filter(x => x.changed);
+    if (!changed.length) return 'No textual field changes.';
+    return changed.flatMap(x => [`${x.label}`, `BEFORE: ${x.before || '-'}`, `AFTER:  ${x.after || '-'}`, '']).join('\n');
+  };
+
+  const compareMaps = (beforeEntry, afterEntry) => {
+    const b = beforeEntry.map; const a = afterEntry.map;
+    const gateIds = [...new Set([...(b.gates || []).map(g => g.id), ...(a.gates || []).map(g => g.id)])];
+    const transitions = gateIds.map(id => {
+      const bg = (b.gates || []).find(g => g.id === id) || { id, label:id, answer:'UNKNOWN' };
+      const ag = (a.gates || []).find(g => g.id === id) || { id, label:bg.label || id, answer:'UNKNOWN' };
+      const resolved = bg.answer !== 'YES' && ag.answer === 'YES';
+      const regressed = bg.answer === 'YES' && ag.answer !== 'YES';
+      return { id, label:ag.label || bg.label || id, before:bg.answer, after:ag.answer, resolved, regressed, changed:bg.answer !== ag.answer };
+    });
+    const authority = fieldDelta(b.authority_ledger, a.authority_ledger, [
+      ['critical_action','Critical action'],['target_binding','Target binding'],['authority_owner','Authority owner'],['environment','Environment'],['allowed_authority','Allowed authority'],['prohibited_authority','Prohibited authority'],['recovery_owner','Recovery owner'],['expensive_error','Most expensive plausible error']
+    ]);
+    const evidence = fieldDelta(b.evidence_contract, a.evidence_contract, [
+      ['pre_action_evidence','Pre-action evidence'],['freshness_rule','Freshness / validity'],['approval_evidence','Approval evidence'],['version_context','Version context'],['external_confirmation','External confirmation'],['recovery_behavior','Recovery behavior']
+    ]);
+    return { beforeEntry, afterEntry, before:b, after:a, transitions, authority, evidence, beforeUnresolved:unresolved(b), afterUnresolved:unresolved(a) };
+  };
+
+  compareButton?.addEventListener('click', () => {
+    const beforeEntry = getEntry(beforeSelect.value); const afterEntry = getEntry(afterSelect.value);
+    if (!beforeEntry || !afterEntry) { compareState.textContent = 'Select two saved checkpoints'; return; }
+    if (beforeEntry.id === afterEntry.id) { compareState.textContent = 'Choose different checkpoints'; return; }
+    activeComparison = compareMaps(beforeEntry, afterEntry);
+    memoPayload = null; copyMemo.disabled = true; downloadTxt.disabled = true; downloadJson.disabled = true;
+    const c = activeComparison;
+    const resolvedCount = c.transitions.filter(t => t.resolved).length;
+    const regressedCount = c.transitions.filter(t => t.regressed).length;
+    const authorityChanged = c.authority.filter(x => x.changed).length;
+    unresolvedDelta.textContent = `${c.beforeUnresolved.length} → ${c.afterUnresolved.length}`;
+    gateMovement.textContent = `${resolvedCount} resolved · ${regressedCount} regressed`;
+    authorityMovement.textContent = authorityChanged ? `${authorityChanged} field change(s)` : 'No textual change';
+    authorityDelta.textContent = deltaText(c.authority);
+    evidenceDelta.textContent = deltaText(c.evidence);
+    residual.textContent = c.afterUnresolved.length ? c.afterUnresolved.map(g => `${g.answer} — ${g.label}: ${g.question || ''}`).join('\n') : 'No unresolved mapper gates in the after checkpoint. This is still not proof of implementation behavior.';
+    gateTransitions.replaceChildren();
+    c.transitions.forEach(t => {
+      const row = document.createElement('div');
+      const name = document.createElement('strong'); name.textContent = t.label;
+      const move = document.createElement('span'); move.textContent = `${t.before} → ${t.after}`;
+      if (t.resolved) move.dataset.state = 'resolved'; else if (t.regressed) move.dataset.state = 'regressed'; else if (t.changed) move.dataset.state = 'changed';
+      row.append(name, move); gateTransitions.append(row);
+    });
+    const comparable = text(c.before.action_class) === text(c.after.action_class);
+    comparisonWarning.hidden = comparable;
+    comparisonWarning.textContent = comparable ? '' : 'Action class changed between checkpoints. Treat this as a cross-workflow comparison, not before/after retest evidence.';
+    decision.value = c.afterUnresolved.length ? 'CONSTRAIN' : 'RETEST';
+    compareState.textContent = `${beforeEntry.label} → ${afterEntry.label}`;
+    comparison.hidden = false;
+    memoOutput.textContent = 'Comparison ready. Add owner decision, rationale and retest criterion.';
+    decisionConflict.hidden = true;
+  });
+
+  const download = (filename, body, type) => {
+    const blob = new Blob([body], { type }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+  };
+
+  buildMemo?.addEventListener('click', () => {
+    if (!activeComparison) return;
+    const c = activeComparison;
+    const owner = text(decisionOwner.value) || 'UNSET';
+    const reason = text(decisionReason.value) || 'UNSET — owner rationale required';
+    const retest = text(retestCriterion.value) || 'UNSET — exact retest criterion required';
+    const selectedDecision = decision.value;
+    const conflict = selectedDecision === 'EXPAND' && c.afterUnresolved.length > 0;
+    decisionConflict.hidden = !conflict;
+    decisionConflict.textContent = conflict ? `EVIDENCE CONFLICT: EXPAND selected while ${c.afterUnresolved.length} gate(s) remain NO/UNKNOWN. Workspace does not support authority expansion from this evidence state.` : '';
+    const resolvedNames = c.transitions.filter(t => t.resolved).map(t => t.label);
+    const regressedNames = c.transitions.filter(t => t.regressed).map(t => t.label);
+    const changedAuthority = c.authority.filter(x => x.changed).map(x => x.label);
+    const changedEvidence = c.evidence.filter(x => x.changed).map(x => x.label);
+    const lines = [
+      '=== BITEVO DECISION MEMO — LOCAL DRAFT ===',
+      `Generated: ${new Date().toISOString()}`,
+      'No certification. No trust score. Testing authorization: NOT GRANTED.',
+      '',
+      `Before checkpoint: ${c.beforeEntry.label}`,
+      `After checkpoint: ${c.afterEntry.label}`,
+      `Action class: ${text(c.after.action_class) || '-'}`,
+      `Workflow: ${text(c.after.authority_ledger.workflow) || '-'}`,
+      '',
+      '--- EVIDENCE DELTA ---',
+      `Unresolved gates: ${c.beforeUnresolved.length} -> ${c.afterUnresolved.length}`,
+      `Resolved gates: ${resolvedNames.length ? resolvedNames.join(', ') : 'none'}`,
+      `Regressed gates: ${regressedNames.length ? regressedNames.join(', ') : 'none'}`,
+      `Authority Ledger fields changed: ${changedAuthority.length ? changedAuthority.join(', ') : 'none'}`,
+      `Evidence Contract fields changed: ${changedEvidence.length ? changedEvidence.join(', ') : 'none'}`,
+      '',
+      '--- OWNER DECISION ---',
+      `Decision: ${selectedDecision}`,
+      `Decision owner: ${owner}`,
+      `Rationale: ${reason}`,
+      `Evidence conflict: ${conflict ? 'YES — EXPAND selected with unresolved gates' : 'none detected by deterministic workspace rule'}`,
+      '',
+      '--- RESIDUAL UNCERTAINTY ---',
+      ...(c.afterUnresolved.length ? c.afterUnresolved.map(g => `${g.answer} — ${g.label}: ${g.question || ''}`) : ['No unresolved mapper gates in the after checkpoint; implementation behavior remains to be evidenced.']),
+      '',
+      '--- RETEST CRITERION ---',
+      retest,
+      '',
+      'Authority change remains an owner decision. This memo does not grant permissions or authorize testing.'
+    ];
+    const memo = lines.join('\n');
+    memoOutput.textContent = memo;
+    memoPayload = {
+      schema:'bitevo.decision-memo.local.v1', generated_at:new Date().toISOString(), boundary:{ local_only:true, testing_authorization:false, certification:false, trust_score:false },
+      before:{ id:c.beforeEntry.id, label:c.beforeEntry.label }, after:{ id:c.afterEntry.id, label:c.afterEntry.label },
+      comparison:{ unresolved_before:c.beforeUnresolved.length, unresolved_after:c.afterUnresolved.length, resolved_gates:resolvedNames, regressed_gates:regressedNames, changed_authority_fields:changedAuthority, changed_evidence_fields:changedEvidence },
+      owner_decision:{ decision:selectedDecision, owner, rationale:reason, evidence_conflict:conflict, retest_criterion:retest }, memo
+    };
+    copyMemo.disabled = false; downloadTxt.disabled = false; downloadJson.disabled = false;
+  });
+
+  copyMemo?.addEventListener('click', async () => { if (!memoPayload) return; await navigator.clipboard.writeText(memoPayload.memo); const old = copyMemo.textContent; copyMemo.textContent = 'Copied'; setTimeout(() => copyMemo.textContent = old, 1200); });
+  downloadTxt?.addEventListener('click', () => { if (memoPayload) download('bitevo-decision-memo.txt', memoPayload.memo, 'text/plain;charset=utf-8'); });
+  downloadJson?.addEventListener('click', () => { if (memoPayload) download('bitevo-decision-memo.json', JSON.stringify(memoPayload, null, 2), 'application/json;charset=utf-8'); });
+
+  renderLibrary();
+</script>
+
+<style>
+  .workspace-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 22px}.hero-actions,.button-row{display:flex;gap:9px;flex-wrap:wrap}.warning{padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:14px;border-color:rgba(239,186,92,.24);margin-bottom:18px}.warning-mark{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(239,186,92,.35);border-radius:50%;color:var(--gold);font:500 .72rem var(--mono)}.warning p,.incoming p,.microcopy{margin:4px 0 0;color:var(--muted);font-size:.78rem}.incoming{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.incoming h2{margin:4px 0 7px;font-size:1.3rem}.incoming-actions label{margin:0}.import-button{cursor:pointer;text-transform:none;letter-spacing:0;font-family:var(--sans)}.import-button input{display:none}.workspace-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:18px;align-items:start}.library,.compare{padding:24px}.panel-head,.memo-head,.saved-top{display:flex;justify-content:space-between;gap:16px;align-items:start}.panel-head h2,.memo-head h3{margin:4px 0 0;font-size:1.3rem}.panel-head>span,.memo-head>span{padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .56rem var(--mono)}.saved-list{display:grid;gap:9px;margin-top:18px}.saved-list article{padding:14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.018)}.saved-list strong{font-size:.82rem}.saved-list p{margin:5px 0 0;color:var(--muted);font-size:.7rem}.delete{border:0;background:transparent;color:var(--red);font:500 .58rem var(--mono);cursor:pointer}.empty{padding:70px 0;text-align:center;color:var(--muted)}.empty strong{color:var(--ink)}.select-grid,.memo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 14px}label{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;color:#96a29f;font:500 .63rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase}input,textarea,select{width:100%;border:1px solid var(--line-strong);border-radius:11px;background:rgba(255,255,255,.025);color:var(--ink);padding:11px 12px;font:500 .82rem/1.55 var(--sans);letter-spacing:0;text-transform:none;outline:none}textarea{resize:vertical}input:focus,textarea:focus,select:focus{border-color:rgba(127,208,177,.55);box-shadow:0 0 0 3px rgba(127,208,177,.06)}.comparison-warning,.decision-conflict{margin-top:20px;padding:13px 14px;border:1px solid rgba(239,186,92,.28);border-radius:11px;color:#d9c999;background:rgba(239,186,92,.04);font-size:.76rem}.decision-conflict{border-color:rgba(228,139,139,.35);color:#e7b2b2;background:rgba(228,139,139,.05)}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.summary-grid article{padding:17px;border:1px solid var(--line);border-radius:12px}.summary-grid span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.08em}.summary-grid strong{display:block;margin:7px 0 4px;font-size:1rem}.summary-grid p{margin:0;color:var(--muted);font-size:.68rem}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.detail-grid section{padding:18px;border:1px solid var(--line);border-radius:12px}.detail-grid h3{margin:0 0 12px;font-size:.9rem}.detail-grid pre,.memo-output{min-height:220px;max-height:420px;overflow:auto;margin:0;padding:14px;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.18);white-space:pre-wrap;color:var(--ink-soft);font:500 .62rem/1.65 var(--mono)}.transition-list{display:grid}.transition-list>div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.72rem}.transition-list span{font-family:var(--mono);color:var(--muted)}.transition-list span[data-state="resolved"]{color:var(--green)}.transition-list span[data-state="regressed"]{color:var(--red)}.transition-list span[data-state="changed"]{color:var(--gold)}.memo-builder{margin-top:16px;padding-top:22px;border-top:1px solid var(--line)}.memo-output{min-height:300px;margin-top:14px}.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.principles article{padding:22px;border-top:1px solid var(--line)}.principles article>span{color:var(--green);font:500 .62rem var(--mono)}.principles strong{display:block;margin:14px 0 7px}.principles p{margin:0;color:var(--muted);font-size:.78rem}
+  @media(max-width:980px){.hero-grid,.incoming,.workspace-grid{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}}
+  @media(max-width:720px){.summary-grid,.principles,.select-grid,.memo-grid{grid-template-columns:1fr}.button-row .button,.hero-actions .button{width:100%}}
+</style>
