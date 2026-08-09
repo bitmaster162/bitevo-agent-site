@@ -2,76 +2,67 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="BitEvo — Consulting & Agent Authority Audit" description="BitEvo engineering audit and bounded consulting services for AI-agent authority, evidence and controls.">
-  <section class="consulting-section">
-    <div class="container">
-      <div class="consulting-header">
-        <div class="kicker">Engineering Services</div>
-        <h1 class="display">Services & Offerings</h1>
-        <p class="copy">Evidence-bounded engineering work for AI-agent authority, traceability, logging and operational controls. Claims are limited to what can be reproduced from the agreed test scope.</p>
+<Layout title="BitEvo — Agent Systems Engineering Services" description="Bounded engineering services for AI-agent authority, evidence, failure controls and remediation.">
+  <section class="services-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Engineering services</div><h1 class="display">Start with evidence. Repair what the evidence supports.</h1></div>
+      <div><p class="lede">BitEvo works on the operational boundary between an AI agent and the systems it can affect: authority, traceability, external confirmation, retry behavior and recovery.</p><a class="button button-primary" href="/audit-intake">Scope a workflow <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container service-stack">
+      <article class="service primary panel">
+        <div class="service-index">01</div>
+        <div class="service-copy"><div class="eyebrow">Primary</div><h2>Agent Authority & Evidence Audit</h2><p>The main engagement for a write-capable workflow that needs a bounded answer across authority, evidence, failure handling and recovery.</p><div class="chips"><span>5 working days</span><span>1 staging workflow</span><span>up to 3 integrations</span><span>10–20 scenarios</span><span>1 retest</span></div></div>
+        <div class="service-side"><strong>$4,900</strong><small>fixed</small><a class="button button-primary" href="/agent-authority-audit">Audit details →</a></div>
+      </article>
+
+      <article class="service panel">
+        <div class="service-index">02</div>
+        <div class="service-copy"><div class="eyebrow">Reduced scope</div><h2>Entry Audit</h2><p>One critical action chain, one primary failure hypothesis and limited reproduction when the decision is narrower than a full authority/evidence audit.</p><div class="chips"><span>1 action chain</span><span>1 hypothesis</span><span>finding memo</span><span>no included retest</span></div></div>
+        <div class="service-side"><strong>$1,500</strong><small>fixed</small><a class="button" href="/audit-intake">Scope entry audit →</a></div>
+      </article>
+
+      <article class="service panel">
+        <div class="service-index">03</div>
+        <div class="service-copy"><div class="eyebrow">Qualification</div><h2>Scope / Authority Triage</h2><p>A short call to decide whether the workflow has a concrete external effect, a testable authority boundary and a usable staging/test environment.</p><div class="chips"><span>20 minutes</span><span>qualification only</span><span>no exploit work</span></div></div>
+        <div class="service-side"><strong>Free</strong><small>20 min</small><a class="button" href="/audit-intake">Start triage →</a></div>
+      </article>
+
+      <article class="service panel">
+        <div class="service-index">04</div>
+        <div class="service-copy"><div class="eyebrow">After verified findings</div><h2>Hardening & Repair</h2><p>Implementation work is scoped from accepted findings, change risk, rollback requirements and retest criteria. No fixed repair price is promised before the actual repair surface is known.</p><div class="chips"><span>finding-led</span><span>separate scope</span><span>rollback-aware</span><span>retest criteria</span></div></div>
+        <div class="service-side"><strong>Quoted</strong><small>separately</small><a class="button" href="/pricing">Pricing rules →</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container principles-grid">
+      <div><div class="eyebrow">Operating principles</div><h2 class="section-title">What does not change between engagements.</h2></div>
+      <div class="principles">
+        <article><span>01</span><div><strong>Scope before access</strong><p>Testing starts only after written Rules of Engagement define allowed actions, prohibited actions and data boundaries.</p></div></article>
+        <article><span>02</span><div><strong>Evidence before severity</strong><p>A hypothesis is not promoted to a finding until the observed behavior is reproducible within the agreed scope.</p></div></article>
+        <article><span>03</span><div><strong>External effect matters</strong><p>Internal “success” is not treated as proof when the workflow is supposed to modify another system.</p></div></article>
+        <article><span>04</span><div><strong>No universal safety claim</strong><p>The work does not certify an agent, guarantee security, guarantee defect absence or replace legal advice.</p></div></article>
       </div>
+    </div>
+  </section>
 
-      <div class="services-grid">
-        <article class="service-card highlighted">
-          <div class="service-meta">Primary · Fixed scope</div>
-          <h2>Agent Authority & Evidence Audit</h2>
-          <p>5 рабочих дней, 1 staging/test workflow, до 3 tools / APIs / MCP servers и 10–20 согласованных failure scenarios.</p>
-          <ul>
-            <li>Authority/action-chain review and bounded failure testing.</li>
-            <li>Executive report + reproducible evidence pack.</li>
-            <li>Prioritized repair backlog + one retest.</li>
-          </ul>
-          <div class="price">$4,900 fixed</div>
-          <a class="button highlight-btn" href="/agent-authority-audit">Audit details</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-meta">Entry · Reduced scope</div>
-          <h2>Reduced-Scope Entry Audit</h2>
-          <p>Одна critical action chain и одна main failure hypothesis с ограниченным воспроизведением и коротким finding memo.</p>
-          <ul>
-            <li>No full authority map.</li>
-            <li>No included retest.</li>
-            <li>Written scope required before testing.</li>
-          </ul>
-          <div class="price">$1,500 fixed</div>
-          <a class="button" href="/audit-intake">Open intake</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-meta">Free · Qualification</div>
-          <h2>Scope / Authority Triage</h2>
-          <p>20-минутный разговор для определения критического действия агента, доступной test/staging среды и того, подходит ли кейс для аудита.</p>
-          <ul>
-            <li>No written security conclusion.</li>
-            <li>No exploit work.</li>
-            <li>No deep log analysis.</li>
-          </ul>
-          <div class="price">Free · 20 min</div>
-          <a class="button" href="/audit-intake">Start triage</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-meta">After findings</div>
-          <h2>Hardening / Repair</h2>
-          <p>Ремедиация оценивается отдельно после verified findings. До аудита фиксированная цена внедрения публично не обещается.</p>
-          <ul>
-            <li>Scope follows verified findings.</li>
-            <li>Change risk and rollback are assessed per repair.</li>
-            <li>Retest criteria are tied to the finding.</li>
-          </ul>
-          <div class="price">Quoted separately</div>
-          <a class="button" href="/pricing">See pricing rules</a>
-        </article>
-      </div>
-
-      <div class="boundary">
-        <strong>Boundary:</strong> this is an engineering audit, not certification or legal advice. It does not guarantee security, absence of defects, or production safety. Production penetration testing is not included by default.
-      </div>
+  <section class="section section-rule">
+    <div class="narrow closing">
+      <div class="eyebrow">First step</div>
+      <h2 class="section-title">Describe the workflow, not the whole company.</h2>
+      <p class="lede">The intake is designed to isolate one critical action chain and the minimum evidence needed to decide whether an audit is useful.</p>
+      <a class="button button-primary" href="/audit-intake">Open audit intake <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>
 
 <style>
-  .consulting-section{padding-block:48px 60px}.consulting-header{text-align:center;margin-bottom:38px}.kicker{color:var(--gold);font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.display{font-family:'Playfair Display',serif;font-size:2.5rem;margin:6px 0 10px}.copy{font-family:'Lora',serif;color:var(--muted);max-width:760px;margin:0 auto}.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1040px;margin-inline:auto}.service-card{background:var(--paper-soft);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column}.service-card.highlighted{border-color:rgba(189,179,146,.55)}.service-meta{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}.service-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin:0 0 12px}.service-card p,.service-card li{color:var(--muted);font-size:.9rem}.service-card ul{padding-left:18px;margin:0 0 24px}.price{font-size:1.45rem;font-weight:900;margin-top:auto;padding-top:16px;border-top:1px solid var(--line);margin-bottom:16px}.button{display:inline-flex;justify-content:center;padding:10px 16px;border:1px solid var(--line-strong);border-radius:8px;font-weight:800}.highlight-btn{background:var(--gold);color:#080a0b}.boundary{max-width:1040px;margin:26px auto 0;border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--muted)}.boundary strong{color:var(--gold)}@media(max-width:780px){.services-grid{grid-template-columns:1fr}}
+  .services-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.service-stack{display:grid;gap:14px}.service{display:grid;grid-template-columns:52px 1fr 170px;gap:28px;align-items:center;padding:28px 30px}.service.primary{border-color:rgba(127,208,177,.35)}.service-index{align-self:start;color:#57635f;font:500 .66rem var(--mono)}.service-copy .eyebrow{margin-bottom:8px}.service-copy h2{margin:0 0 9px;font-size:clamp(1.25rem,2.5vw,1.75rem);letter-spacing:-.025em}.service-copy p{margin:0;color:var(--muted);max-width:720px}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.chips span{padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:#7c8986;font:500 .58rem var(--mono)}.service-side{display:flex;flex-direction:column;align-items:flex-end}.service-side>strong{font-size:1.65rem;letter-spacing:-.04em}.service-side>small{color:var(--muted);font:500 .62rem var(--mono);margin-bottom:18px}.service-side .button{width:100%}
+  .principles-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(44px,8vw,110px)}.principles{border-top:1px solid var(--line)}.principles article{display:grid;grid-template-columns:42px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}.principles article>span{color:#57635f;font:500 .64rem var(--mono)}.principles strong{font-size:.9rem}.principles p{margin:5px 0 0;color:var(--muted);font-size:.82rem}.closing{text-align:center}.closing .section-title{margin-inline:auto}.closing .lede{margin:18px auto 28px}
+  @media(max-width:900px){.hero-grid,.principles-grid{grid-template-columns:1fr}.service{grid-template-columns:40px 1fr}.service-side{grid-column:2;align-items:flex-start;flex-direction:row;gap:12px;flex-wrap:wrap}.service-side>small{margin:0;align-self:center}.service-side .button{width:auto;margin-left:auto}}
+  @media(max-width:620px){.service{grid-template-columns:1fr;padding:24px}.service-index{display:none}.service-side{grid-column:auto;flex-direction:column;align-items:flex-start}.service-side .button{width:100%;margin-left:0}.chips{margin-top:14px}}
 </style>
