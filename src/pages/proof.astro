@@ -3,37 +3,13 @@ import Layout from '../layouts/Layout.astro';
 
 const cases = [
   {
-    id: 'SAMPLE-001',
-    href: '/sample-audit',
-    json: '/sample-audit.json',
-    className: 'CRM write',
-    workflow: 'CRM Qualification Update Agent',
-    effect: 'Update two fields on one matched staging lead.',
-    failure: 'Internal success without trusted same-object read-back.',
-    decision: 'CONSTRAIN',
-    artifact: 'False Green / external-effect confirmation gap'
+    id: 'SAMPLE-001', href: '/sample-audit', json: '/sample-audit.json', className: 'CRM write', workflow: 'CRM Qualification Update Agent', effect: 'Update two fields on one matched staging lead.', failure: 'Internal success without trusted same-object read-back.', decision: 'CONSTRAIN', artifact: 'False Green / external-effect confirmation gap'
   },
   {
-    id: 'SAMPLE-002',
-    href: '/sample-message',
-    json: '/sample-message.json',
-    className: 'Outbound message',
-    workflow: 'Approved Outreach Message Agent',
-    effect: 'Send one approved message to one resolved recipient.',
-    failure: 'Recipient or approval evidence diverges before send.',
-    decision: 'CONSTRAIN',
-    artifact: 'Authority mismatch / recipient-binding gap'
+    id: 'SAMPLE-002', href: '/sample-message', json: '/sample-message.json', className: 'Outbound message', workflow: 'Approved Outreach Message Agent', effect: 'Send one approved message to one resolved recipient.', failure: 'Recipient or approval evidence diverges before send.', decision: 'CONSTRAIN', artifact: 'Authority mismatch / recipient-binding gap'
   },
   {
-    id: 'SAMPLE-003',
-    href: '/sample-deployment',
-    json: '/sample-deployment.json',
-    className: 'Deployment / config change',
-    workflow: 'Staging Configuration Change Agent',
-    effect: 'Change one approved staging configuration key.',
-    failure: 'Version or environment binding is ambiguous at execution.',
-    decision: 'REPAIR',
-    artifact: 'Version-context / environment-binding gap'
+    id: 'SAMPLE-003', href: '/sample-deployment', json: '/sample-deployment.json', className: 'Deployment / config change', workflow: 'Staging Configuration Change Agent', effect: 'Change one approved staging configuration key.', failure: 'Version or environment binding is ambiguous at execution.', decision: 'REPAIR', artifact: 'Version-context / environment-binding gap'
   }
 ];
 
@@ -50,7 +26,7 @@ const invariants = [
   <section class="proof-hero section">
     <div class="container hero-grid">
       <div><div class="eyebrow">BitEvo proof matrix</div><h1 class="display">Same doctrine. Different external effects.</h1></div>
-      <div><p class="lede">These synthetic packs show how the Authority / Evidence / Effect / Recovery model changes with the action class. They demonstrate method structure, not customer results.</p><div class="hero-actions"><a href="/sample-audit" class="button button-primary">Open SAMPLE-001 <span aria-hidden="true">↗</span></a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div></div>
+      <div><p class="lede">These synthetic packs show how the Authority / Evidence / Effect / Recovery model changes with the action class. They demonstrate method structure, not customer results.</p><div class="hero-actions"><a href="/mapper" class="button button-primary">Map your workflow <span aria-hidden="true">↗</span></a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div></div>
     </div>
   </section>
 
@@ -75,6 +51,13 @@ const invariants = [
     </div>
   </section>
 
+  <section class="section section-rule mapper-callout-section">
+    <div class="container mapper-callout panel">
+      <div><div class="eyebrow">Apply the method</div><h2>Turn your own workflow into the same decision structure.</h2><p>The local Authority Mapper supports CRM/record writes, outbound messages, deployment/config changes and custom external effects. It generates a draft Authority Ledger, Evidence Contract, action-specific failure scenarios and an owner decision posture.</p></div>
+      <div class="mapper-meta"><div><span>DATA</span><strong>LOCAL BROWSER ONLY</strong></div><div><span>OUTPUT</span><strong>TXT + JSON</strong></div><div><span>TRUST SCORE</span><strong>NONE</strong></div><div><span>TEST AUTHORIZATION</span><strong>NOT GRANTED</strong></div><a href="/mapper" class="button button-primary">Open Authority Mapper <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+
   <section class="section section-rule">
     <div class="container invariant-grid">
       <div><div class="eyebrow">Method invariants</div><h2 class="section-title">What does not change across the three packs.</h2></div>
@@ -91,11 +74,12 @@ const invariants = [
   </section>
 
   <section class="section section-rule">
-    <div class="narrow final"><div class="eyebrow">Your workflow</div><h2 class="section-title">Start from the external effect, not the model name.</h2><p class="lede">The intake seeds the same decision-grade structure for a real workflow while keeping public-form secrets out and testing authorization separate.</p><div class="hero-actions final-actions"><a href="/audit-intake" class="button button-primary">Map one action chain <span aria-hidden="true">↗</span></a><a href="/diagnostic" class="button button-ghost">Run 7-gate diagnostic</a></div></div>
+    <div class="narrow final"><div class="eyebrow">Your workflow</div><h2 class="section-title">Start from the external effect, not the model name.</h2><p class="lede">Map the action first. If the gates remain unresolved, the diagnostic and intake turn those gaps into an audit-ready scope without treating uncertainty as a pass.</p><div class="hero-actions final-actions"><a href="/mapper" class="button button-primary">Build an authority map <span aria-hidden="true">↗</span></a><a href="/diagnostic" class="button button-ghost">Run 7-gate diagnostic</a></div></div>
   </section>
 </Layout>
 
 <style>
-  .proof-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.matrix-head,.invariant-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede,.matrix-head .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.boundary{padding:20px 24px;border-color:rgba(239,186,92,.25)}.boundary strong{color:var(--gold);font:500 .64rem var(--mono);letter-spacing:.08em}.boundary p{margin:7px 0 0;color:var(--muted);font-size:.8rem}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}.case{padding:25px;display:flex;flex-direction:column;min-height:470px}.case-top{display:flex;justify-content:space-between;gap:16px}.case-top span{color:var(--green);font:500 .62rem var(--mono)}.case-top strong{color:var(--muted);font:500 .58rem var(--mono);text-transform:uppercase}.case h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;margin:34px 0 22px}.case-row{padding:14px 0;border-top:1px solid var(--line)}.case-row span,.decision span,.compare span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.09em}.case-row p{margin:6px 0 0;color:var(--ink-soft);font-size:.78rem}.decision{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}.decision strong{display:block;margin-top:6px;color:var(--green);font-size:1.35rem}.case-actions{display:flex;align-items:center;gap:14px;margin-top:20px}.case-actions .text-link{font-size:.72rem}.invariant-grid{align-items:start}.invariants{border-top:1px solid var(--line)}.invariants article{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:19px 0;border-bottom:1px solid var(--line)}.invariants article>span{color:#586561;font:500 .62rem var(--mono)}.invariants strong{font-size:.88rem}.invariants p{margin:5px 0 0;color:var(--muted);font-size:.8rem}.compare{display:grid;grid-template-columns:repeat(3,1fr);padding:0}.compare>div{padding:28px;border-right:1px solid var(--line)}.compare>div:last-child{border-right:0}.compare strong{display:block;margin:16px 0 8px;font-size:1rem}.compare p{margin:0;color:var(--muted);font-size:.79rem}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
-  @media(max-width:900px){.hero-grid,.matrix-head,.invariant-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.case{min-height:0}.compare{grid-template-columns:1fr}.compare>div{border-right:0;border-bottom:1px solid var(--line)}.compare>div:last-child{border-bottom:0}}
+  .proof-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.matrix-head,.invariant-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede,.matrix-head .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.boundary{padding:20px 24px;border-color:rgba(239,186,92,.25)}.boundary strong{color:var(--gold);font:500 .64rem var(--mono);letter-spacing:.08em}.boundary p{margin:7px 0 0;color:var(--muted);font-size:.8rem}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}.case{padding:25px;display:flex;flex-direction:column;min-height:470px}.case-top{display:flex;justify-content:space-between;gap:16px}.case-top span{color:var(--green);font:500 .62rem var(--mono)}.case-top strong{color:var(--muted);font:500 .58rem var(--mono);text-transform:uppercase}.case h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;margin:34px 0 22px}.case-row{padding:14px 0;border-top:1px solid var(--line)}.case-row span,.decision span,.compare span,.mapper-meta span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.09em}.case-row p{margin:6px 0 0;color:var(--ink-soft);font-size:.78rem}.decision{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}.decision strong{display:block;margin-top:6px;color:var(--green);font-size:1.35rem}.case-actions{display:flex;align-items:center;gap:14px;margin-top:20px}.case-actions .text-link{font-size:.72rem}.mapper-callout{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,7vw,90px);padding:clamp(28px,5vw,54px);background:radial-gradient(circle at 0 0,rgba(127,208,177,.07),transparent 42%),rgba(8,16,18,.76)}.mapper-callout h2{margin:6px 0 12px;font-size:clamp(1.7rem,3vw,2.8rem);letter-spacing:-.04em}.mapper-callout p{margin:0;color:var(--muted)}.mapper-meta>div{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid var(--line)}.mapper-meta strong{font:500 .64rem var(--mono);text-align:right}.mapper-meta .button{margin-top:20px;width:100%}.invariant-grid{align-items:start}.invariants{border-top:1px solid var(--line)}.invariants article{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:19px 0;border-bottom:1px solid var(--line)}.invariants article>span{color:#586561;font:500 .62rem var(--mono)}.invariants strong{font-size:.88rem}.invariants p{margin:5px 0 0;color:var(--muted);font-size:.8rem}.compare{display:grid;grid-template-columns:repeat(3,1fr);padding:0}.compare>div{padding:28px;border-right:1px solid var(--line)}.compare>div:last-child{border-right:0}.compare strong{display:block;margin:16px 0 8px;font-size:1rem}.compare p{margin:0;color:var(--muted);font-size:.79rem}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
+  @media(max-width:900px){.hero-grid,.matrix-head,.invariant-grid,.mapper-callout{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.case{min-height:0}.compare{grid-template-columns:1fr}.compare>div{border-right:0;border-bottom:1px solid var(--line)}.compare>div:last-child{border-bottom:0}}
+  @media(max-width:620px){.mapper-meta>div{flex-direction:column;gap:5px}.mapper-meta strong{text-align:left}}
 </style>
