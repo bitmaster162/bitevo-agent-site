@@ -13,12 +13,12 @@ const tiers = [
     eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
     desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
     includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
-    excludes: ['No full authority map', 'No multi-scenario failure plan', 'No included retest'],
+    excludes: ['No full Authority Budget map', 'No multi-scenario failure plan', 'No included retest'],
     cta: 'Test one uncertainty', href: '/audit-intake'
   },
   {
     eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days', title: 'Agent Authority & Evidence Audit',
-    desc: 'Use when the owner must decide whether one action-capable workflow has earned its current or proposed authority across evidence, effect confirmation and recovery.',
+    desc: 'Use when the owner must decide whether one action-capable workflow has earned its current or proposed Authority Budget across evidence, effect confirmation and recovery.',
     includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Authority map + reproducible evidence pack', 'Expand / constrain / repair backlog', 'One retest'],
     excludes: ['No certification', 'No universal safety score', 'No production penetration testing by default'],
     cta: 'Map the authority decision', href: '/audit-intake', featured: true
@@ -26,11 +26,12 @@ const tiers = [
 ];
 
 const comparison = [
-  ['Owner question', 'Is this worth auditing?', 'Is this one failure real?', 'Has this workflow earned its authority?'],
+  ['Owner question', 'Is this worth auditing?', 'Is this one failure real?', 'Has this workflow earned its Authority Budget?'],
   ['Audit object', '1 proposed action', '1 critical action chain', '1 staging/test workflow'],
   ['Failure depth', 'No failure tested', '1 primary hypothesis', '10–20 agreed scenarios'],
   ['Authority analysis', 'Owner + boundary only', 'Only what the finding requires', 'Action/object/approval map included'],
-  ['Evidence depth', 'Qualification evidence only', 'Enough to accept/reject one finding', 'Evidence-at-decision-time + effect + recovery'],
+  ['Evidence depth', 'Qualification evidence only', 'Enough to accept/reject one finding', 'Evidence Before Effect + confirmation + recovery'],
+  ['False Green coverage', 'Not tested', 'Only if part of the hypothesis', 'Explicitly tested where applicable'],
   ['Primary output', 'Audit / do not audit', 'Repair / reject hypothesis', 'Expand / constrain / repair / retest'],
   ['Retest', 'No', 'Not included', '1 included']
 ];
@@ -40,7 +41,7 @@ const comparison = [
   <section class="pricing-hero section">
     <div class="container hero-grid">
       <div><div class="eyebrow">Decision depth</div><h1 class="display">Buy the smallest amount of evidence that can change the decision.</h1></div>
-      <div><p class="lede">The tiers are not “more safety for more money.” They answer different owner questions with different evidence ceilings. Choose the cheapest scope that can resolve the uncertainty you actually have.</p><a class="button" href="/agent-authority-audit">See the authority decision model →</a></div>
+      <div><p class="lede">The tiers are not “more safety for more money.” They answer different owner questions with different evidence ceilings. Choose the cheapest scope that can resolve the uncertainty you actually have.</p><div class="hero-actions"><a class="button" href="/agent-authority-audit">See the authority decision model →</a><a class="button button-ghost" href="/doctrine">BitEvo Doctrine</a></div></div>
     </div>
   </section>
 
@@ -55,6 +56,14 @@ const comparison = [
           <a href={t.href} class:list={['button', t.featured && 'button-primary']}>{t.cta} <span aria-hidden="true">↗</span></a>
         </article>
       ))}
+    </div>
+  </section>
+
+  <section class="section section-rule doctrine-pricing">
+    <div class="container doctrine-grid">
+      <article class="panel"><div class="eyebrow">Authority Budget</div><h2>What permission surface are you deciding about?</h2><p>Scope expands when the owner needs a defensible answer about more actions, objects, approvals or integrations — not because a higher price buys a stronger guarantee.</p></article>
+      <article class="panel"><div class="eyebrow">Evidence Before Effect</div><h2>How much proof must exist before the action?</h2><p>The commercial ladder buys different evidence depth. The primary audit tests whether decision-time evidence and external confirmation are strong enough for the authority being exercised.</p></article>
+      <article class="panel"><div class="eyebrow">False Green</div><h2>How broadly do we test apparent success?</h2><p>A narrow audit may test one suspected mismatch. The primary audit can include multiple agreed scenarios where internal success, freshness or external state may diverge.</p></article>
     </div>
   </section>
 
@@ -102,10 +111,10 @@ const comparison = [
 </Layout>
 
 <style>
-  .pricing-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.tier{position:relative;padding:28px;display:flex;flex-direction:column;min-height:690px;transition:transform .2s ease,border-color .2s ease}.tier:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.24)}.tier.featured{border-color:rgba(127,208,177,.4);box-shadow:0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(127,208,177,.08)}.recommended{position:absolute;right:18px;top:18px;padding:5px 9px;border:1px solid rgba(127,208,177,.3);border-radius:999px;color:var(--green);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.tier-top>span{color:var(--muted);font:500 .63rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.price{margin-top:22px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;font-weight:700;letter-spacing:-.06em}.tier-top small{display:block;color:var(--green);font:500 .64rem var(--mono);margin:7px 0 24px}.tier h2{font-size:1.15rem;margin:0 0 10px}.tier p{margin:0;color:var(--muted);font-size:.84rem}.feature-group{padding-top:20px;margin-top:22px;border-top:1px solid var(--line)}.feature-group strong{color:var(--ink-soft);font:500 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.feature-group ul{list-style:none;margin:11px 0 0;padding:0}.feature-group li{position:relative;padding:5px 0 5px 17px;color:var(--ink-soft);font-size:.78rem}.feature-group li::before{content:'+';position:absolute;left:0;color:var(--green);font-family:var(--mono)}.feature-group.muted li{color:var(--muted)}.feature-group.muted li::before{content:'–';color:#697673}.tier>.button{margin-top:auto}
-  .compare-grid,.section-head{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(42px,8vw,110px)}.decision-list{border-top:1px solid var(--line)}.decision-list article{display:grid;grid-template-columns:72px 1fr;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}.decision-list article>span{color:var(--green);font:500 .66rem var(--mono)}.decision-list strong{font-size:.92rem}.decision-list p{margin:5px 0 0;color:var(--muted);font-size:.82rem}.section-head{margin-bottom:34px}.section-head .lede{margin:2px 0 0}
+  .pricing-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.tier{position:relative;padding:28px;display:flex;flex-direction:column;min-height:690px;transition:transform .2s ease,border-color .2s ease}.tier:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.24)}.tier.featured{border-color:rgba(127,208,177,.4);box-shadow:0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(127,208,177,.08)}.recommended{position:absolute;right:18px;top:18px;padding:5px 9px;border:1px solid rgba(127,208,177,.3);border-radius:999px;color:var(--green);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.tier-top>span{color:var(--muted);font:500 .63rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.price{margin-top:22px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;font-weight:700;letter-spacing:-.06em}.tier-top small{display:block;color:var(--green);font:500 .64rem var(--mono);margin:7px 0 24px}.tier h2{font-size:1.15rem;margin:0 0 10px}.tier p{margin:0;color:var(--muted);font-size:.84rem}.feature-group{padding-top:20px;margin-top:22px;border-top:1px solid var(--line)}.feature-group strong{color:var(--ink-soft);font:500 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.feature-group ul{list-style:none;margin:11px 0 0;padding:0}.feature-group li{position:relative;padding:5px 0 5px 17px;color:var(--ink-soft);font-size:.78rem}.feature-group li::before{content:'+';position:absolute;left:0;color:var(--green);font-family:var(--mono)}.feature-group.muted li{color:var(--muted)}.feature-group.muted li::before{content:'–';color:#697673}.tier>.button{margin-top:auto}
+  .doctrine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.doctrine-grid article{padding:28px;min-height:260px;display:flex;flex-direction:column}.doctrine-grid h2{margin:auto 0 10px;font-size:1.25rem;letter-spacing:-.025em}.doctrine-grid p{margin:0;color:var(--muted);font-size:.82rem}.compare-grid,.section-head{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(42px,8vw,110px)}.decision-list{border-top:1px solid var(--line)}.decision-list article{display:grid;grid-template-columns:72px 1fr;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}.decision-list article>span{color:var(--green);font:500 .66rem var(--mono)}.decision-list strong{font-size:.92rem}.decision-list p{margin:5px 0 0;color:var(--muted);font-size:.82rem}.section-head{margin-bottom:34px}.section-head .lede{margin:2px 0 0}
   .table-shell{padding:0;overflow:auto}.comparison-table{min-width:900px}.table-row{display:grid;grid-template-columns:.78fr 1fr 1fr 1.2fr}.table-row>*{padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.78rem;line-height:1.5}.table-row>*:last-child{border-right:0}.table-row:last-child>*{border-bottom:0}.table-row>strong:first-child{color:var(--ink)}.table-row span{color:var(--muted)}.table-head{position:sticky;top:0;background:rgba(11,21,23,.98);z-index:1}.table-head strong{color:var(--green)!important;font:500 .62rem var(--mono);letter-spacing:.09em;text-transform:uppercase}
   .boundary-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.boundary-card{padding:32px}.boundary-card h2{margin:2px 0 12px;font-size:1.3rem}.boundary-card p{margin:0;color:var(--muted)}.final-note{text-align:center}.final-note .section-title{margin-inline:auto}.final-note .lede{margin:20px auto 28px}
-  @media(max-width:980px){.pricing-grid{grid-template-columns:1fr}.tier{min-height:auto}.tier>.button{margin-top:28px}.hero-grid,.compare-grid,.section-head{grid-template-columns:1fr}.boundary-grid{grid-template-columns:1fr}}
+  @media(max-width:980px){.pricing-grid,.doctrine-grid{grid-template-columns:1fr}.tier{min-height:auto}.tier>.button{margin-top:28px}.hero-grid,.compare-grid,.section-head{grid-template-columns:1fr}.boundary-grid{grid-template-columns:1fr}.doctrine-grid article{min-height:auto}}
   @media(prefers-reduced-motion:reduce){.tier{transition:none}}
 </style>
