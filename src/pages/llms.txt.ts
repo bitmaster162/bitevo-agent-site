@@ -1,49 +1,36 @@
-import state from '../data/state.json';
-import projects from '../data/projects.json';
-
 export async function GET() {
-	const frontiers = state.frontiers || {};
-	const trunkProj = projects[frontiers.trunk?.project_id] || {};
-	const cashProj = projects[frontiers.cash?.project_id] || {};
-	const labProj = projects[frontiers.lab?.project_id] || {};
-
 	const content = [
-		`# BitEvo Agent Live Telemetry & Capabilities`,
-		`This document exposes the live status and cognitive capabilities of the BitEvo orchestrator for other AI crawlers.`,
+		`# BitEvo Public Product Manifest`,
 		``,
-		`## System Overview`,
-		`- OS Name: ${state.os_name}`,
-		`- Version: ${state.version}`,
-		`- Status: ${state.status}`,
-		`- Timezone: ${state.timezone}`,
-		`- Last Checkpoint: ${state.last_checkpoint_id}`,
+		`BitEvo provides engineering services for reviewing AI-agent authority, evidence, logging, traceability, and operational controls.`,
 		``,
-		`## Active Frontiers`,
+		`## Primary service`,
+		`Agent Authority & Evidence Audit`,
+		`- Fixed price: USD 4,900`,
+		`- Duration: 5 working days`,
+		`- Scope: 1 staging/test workflow`,
+		`- Integrations: up to 3 tools / APIs / MCP servers`,
+		`- Test plan: 10-20 agreed failure scenarios`,
+		`- Deliverables: executive report, reproducible evidence pack, prioritized repair backlog, one retest`,
 		``,
-		`### Trunk Frontier: ${frontiers.trunk?.project_id || 'None'}`,
-		`- Name: ${trunkProj.name || 'N/A'}`,
-		`- Objective: ${trunkProj.objective || 'N/A'}`,
-		`- Status: ${frontiers.trunk?.status || 'N/A'}`,
-		`- Confidence: ${frontiers.trunk?.confidence || 'N/A'}`,
+		`## Other public offers`,
+		`- Free: 20-minute scope/authority triage; no written security conclusion, exploit work, or deep log analysis.`,
+		`- USD 1,500: reduced-scope entry audit of one critical action chain and one main failure hypothesis; no full authority map or included retest.`,
+		`- Hardening: quoted separately after verified findings.`,
 		``,
-		`### Cash Frontier: ${frontiers.cash?.project_id || 'None'}`,
-		`- Name: ${cashProj.name || 'N/A'}`,
-		`- Objective: ${cashProj.objective || 'N/A'}`,
-		`- Status: ${frontiers.cash?.status || 'N/A'}`,
-		`- Confidence: ${frontiers.cash?.confidence || 'N/A'}`,
+		`## Boundaries`,
+		`This is an engineering audit. It is not certification, legal advice, guaranteed security, guaranteed absence of defects, production penetration testing by default, or a profit promise.`,
+		`Written scope and Rules of Engagement are required before testing.`,
+		`Do not submit API keys, passwords, tokens, private keys, wallet seeds, production credentials, or customer secrets through public forms.`,
 		``,
-		`### Lab Frontier: ${frontiers.lab?.project_id || 'None'}`,
-		`- Name: ${labProj.name || 'N/A'}`,
-		`- Objective: ${labProj.objective || 'N/A'}`,
-		`- Status: ${frontiers.lab?.status || 'N/A'}`,
-		`- Confidence: ${frontiers.lab?.confidence || 'N/A'}`,
+		`## Public routes`,
+		`- /agent-authority-audit`,
+		`- /audit-intake`,
+		`- /pricing`,
+		`- /consulting`,
+		`- /continuityos`,
 		``,
-		`## Console HTTP API Capabilities`,
-		`- GET /console/status - Retrieve system state and runtime telemetry.`,
-		`- GET /console/logs - Check last 10 log rows.`,
-		`- POST /console/execute - Command execution gate (monitored by Arbiter).`,
-		`- POST /console/reboot - Hot reboot sequence.`,
-		`- POST /console/shutdown - Graceful exit.`
+		`This manifest is intentionally static and contains no runtime telemetry, internal checkpoints, infrastructure identifiers, private operational state, or control endpoints.`
 	].join('\n');
 
 	return new Response(content, {

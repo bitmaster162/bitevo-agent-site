@@ -1,69 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const why = [
-  { icon: "🔀", title: "Гибридный recall", body: "Только ключевые слова — мимо перефразировок. Только вектор — мимо точных фактов и структуры. ContinuityOS смешивает оба: 0.6·семантика + 0.4·keyword (настраивается)." },
-  { icon: "🗂️", title: "Структура как папки", body: "Память живёт в namespace: identity, projects, rules, facts, events, notes — или свои. Поиск можно сузить, человек может листать." },
-  { icon: "🤖", title: "Для агентов и людей", body: "Из кода, из CLI, из MCP-клиента (Claude Desktop / Claude Code) или по крошечному HTTP API. Агент сам помнит и вспоминает." },
-  { icon: "🔒", title: "Local-first & приватно", body: "Ядро — только stdlib, ноль обязательных зависимостей и сервисов. Один SQLite-файл на твоём диске. Ни облака, ни аккаунта, ни телеметрии." },
-];
 ---
 
-<Layout title="ContinuityOS — durable hybrid memory for AI agents & humans">
+<Layout title="ContinuityOS — durable local memory for agent workflows" description="Public source project for durable local memory and governance-oriented agent workflows.">
   <section class="hero-section">
-    <div class="container hero-inner" style="text-align:center;padding-block:56px 20px">
-      <div class="kicker" style="color:var(--gold,#ffd166)">Apache-2.0 · local-first · zero external services</div>
-      <h1 class="display" style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;margin:0">ContinuityOS</h1>
-      <p class="copy" style="max-width:680px;margin:16px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.6">
-        Долговременная <b>гибридная память</b> для AI-агентов и человека. Структурный поиск (папки + ключевые слова)
-        <b>+</b> семантический (вектор) — в одном локальном SQLite-файле. Ничего не уходит наружу.
-      </p>
-      <div style="margin-top:22px"><code style="background:#0c1428;border:1px solid #2a3550;border-radius:8px;padding:10px 18px;font-size:1rem">pip install continuityos</code></div>
-      <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="#quickstart" style="padding:11px 22px;background:var(--gold,#ffd166);color:#0a0a0a;font-weight:800;border-radius:9px;text-decoration:none">⚡ Quick start</a>
-        <a href="https://github.com/bitmaster162/continuityos" style="padding:11px 22px;border:1px solid #2a3550;color:#e2e8f0;border-radius:9px;text-decoration:none">🐙 GitHub</a>
+    <div class="container hero-inner">
+      <div class="kicker">Public source · local-first</div>
+      <h1>ContinuityOS</h1>
+      <p>ContinuityOS is presented here as a public source project for durable local memory and governance-oriented agent workflows.</p>
+      <p class="boundary"><strong>Evidence boundary:</strong> structured memory and provenance can reduce retrieval ambiguity; they do not eliminate model errors.</p>
+      <div class="actions">
+        <a href="https://github.com/bitmaster162/continuityos" target="_blank" rel="noopener" class="button">Install from public GitHub source</a>
+        <a href="/agent-authority-audit" class="button secondary">Audit methodology</a>
       </div>
     </div>
   </section>
 
-  <section class="container" style="max-width:920px;padding-block:10px 20px">
-    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:0 0 10px">Проблема, которую решает</h2>
-    <p style="color:var(--muted);line-height:1.65">Claude / ChatGPT / любой агент забывает всё между сессиями — каждый раз начинает с нуля. ContinuityOS ставится локально и хранит то, что важно: кто ты, какие проекты, какие правила, какие решения уже принял. Когда задаёшь новый вопрос — нужная память подтягивается сама, по смыслу <i>или</i> по словам. Структурно, как файлы в папках, чтобы и агент, и человек могли с ней работать.</p>
-
-    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:28px 0 14px">Почему именно так</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" class="cos-why">
-      {why.map(w => (
-        <div style="background:#0b1220;border:1px solid #1e2b45;border-radius:14px;padding:20px">
-          <div style="font-size:1.5rem">{w.icon}</div>
-          <h3 style="margin:8px 0 6px;font-size:1.05rem;color:#e2e8f0">{w.title}</h3>
-          <p style="margin:0;color:var(--muted);font-size:0.93rem;line-height:1.55">{w.body}</p>
-        </div>
-      ))}
+  <section class="container content">
+    <h2>What it is for</h2>
+    <div class="grid">
+      <article><h3>Durable local records</h3><p>Keep structured facts, rules, notes and provenance in a local store that can be inspected outside one model session.</p></article>
+      <article><h3>Retrieval with provenance</h3><p>Use structured namespaces and retrieval signals to make the source of recalled context easier to inspect and challenge.</p></article>
+      <article><h3>Governance-oriented workflows</h3><p>Separate remembered content from authority to act. Memory is context; it is not permission, proof of correctness, or a safety guarantee.</p></article>
     </div>
 
-    <h2 id="quickstart" style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:32px 0 14px;scroll-margin-top:80px">Quick start</h2>
-    <h3 style="color:#66ffe0;margin:14px 0 6px">CLI</h3>
-    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>cos remember "Robert prefers Apache-2.0" -n rules -t license
-cos recall  "which license should I pick?"
-# 0.54 [rules] Robert prefers Apache-2.0  (semantic + keyword)</code></pre>
-    <h3 style="color:#66ffe0;margin:16px 0 6px">Python</h3>
-    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>from continuityos import Memory
-m = Memory("memory.db")
-m.remember("grid K=0.04 led +$1405/3d", namespace="facts", tags=["trading"])
-for h in m.recall("best grid setup", k=3):
-    print(h.score, h.namespace, h.text)
-print(m.context("what about grid trading?"))  # готовый блок в промпт агента</code></pre>
-    <h3 style="color:#66ffe0;margin:16px 0 6px">MCP-сервер (Claude Desktop / Claude Code)</h3>
-    <pre style="background:#0a0f1c;border:1px solid #1e2b45;border-radius:10px;padding:16px;overflow:auto;font-size:0.9rem"><code>&#123;"mcpServers": &#123;"continuityos": &#123;"command": "cos", "args": ["--db", "~/.continuityos/memory.db", "serve"]&#125;&#125;&#125;</code></pre>
-    <p style="color:var(--muted);font-size:0.9rem">Тулзы: remember · recall · context · forget · list_namespaces — агент подтягивает нужную память сам и дописывает новые факты по ходу.</p>
-
-    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin:30px 0 12px">Честно про статус</h2>
-    <div style="background:#12080c;border:1px solid #ffd16633;border-radius:14px;padding:20px;color:#cbd5e1;line-height:1.6">
-      v0.1 — рабочее ядро: движок (store + FTS + вектор + гибридный recall), CLI, MCP-сервер, HTTP API, тесты.
-      Дальше: инкрементальный векторный индекс для больших хранилищ, реранкинг, импорт-адаптеры (экспорты чатов, заметки), веб-браузер памяти.
-      Open-source, Apache-2.0 — свободно встраивай куда угодно, включая коммерческое. Никаких данных мы не собираем.
+    <div class="status">
+      <h2>Public-install status</h2>
+      <p>For this public site, the independently verified installation path is the public GitHub source. A <code>pip install continuityos</code> claim is intentionally not advertised until the public package/release and a clean installation are independently verified.</p>
     </div>
-    <p style="text-align:center;margin-top:22px;color:var(--muted)">Local-first. Один SQLite-файл. Ничего не уходит наружу.</p>
   </section>
 
-  <style>@media (max-width:720px){ .cos-why { grid-template-columns:1fr !important; } }</style>
+  <style>
+    .hero-section{padding:64px 0 34px}.hero-inner{text-align:center;max-width:860px}.kicker{color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.hero-inner h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,3.6rem);margin:8px 0 14px}.hero-inner>p{color:var(--muted);font-family:'Lora',serif;font-size:1.05rem}.boundary{border:1px solid var(--line);border-radius:10px;padding:14px 16px}.boundary strong{color:var(--gold)}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}.button{padding:11px 18px;border-radius:8px;border:1px solid var(--line-strong);font-weight:800}.button.secondary{color:var(--muted)}.content{max-width:980px;padding-block:20px 50px}.content h2{font-family:'Playfair Display',serif}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid article,.status{background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:20px}.grid h3{margin:0 0 8px}.grid p,.status p{margin:0;color:var(--muted)}.status{margin-top:22px}.status code{color:var(--gold)}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+  </style>
 </Layout>

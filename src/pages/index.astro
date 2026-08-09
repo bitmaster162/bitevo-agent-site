@@ -2,247 +2,48 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="BitEvo — Durable AI Orchestrator & B2B Automation">
-	<!-- Compute Index Ticker -->
-	<section class="ticker-section">
-		<div class="container">
-			<div class="compute-index">
-				<div class="compute-label">System Active</div>
-				<div class="compute-ticker-wrap">
-					<div class="compute-ticker">
-						<span class="ticker-item">CORE STATUS: <strong>RUNNING</strong></span>
-						<span class="ticker-item">OODA LOOP: <strong>READY</strong></span>
-						<span class="ticker-item">TRADING: <strong>PAPER · PHASE A</strong></span>
-						<span class="ticker-item">CONTINUITY: <strong>PROVEN ACROSS MODEL SWAPS</strong></span>
-						<span class="ticker-item">LEDGER: <strong>HASH-CHAINED</strong></span>
-						<span class="ticker-item">HEARTBEAT: <strong>OK</strong></span>
-						<span class="ticker-item">DATA: <strong>LOCAL-FIRST</strong></span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<Layout title="BitEvo — Agent Authority & Evidence Audit" description="Engineering audit of AI-agent authority, evidence, logging, traceability and operational controls.">
+  <section class="hero-section">
+    <div class="container hero-inner">
+      <div class="kicker">Agent Authority & Evidence Audit</div>
+      <h1 class="display">Can your agent prove what it was allowed to do?</h1>
+      <p class="copy">BitEvo reviews agent authority, action chains, evidence, logging, traceability and operational controls against an agreed staging/test workflow. Findings are bounded to reproducible evidence; this is not certification or a guarantee of safety.</p>
+      <div class="actions">
+        <a href="/agent-authority-audit" class="button">See audit scope</a>
+        <a href="/audit-intake" class="button secondary">Open audit intake</a>
+      </div>
+    </div>
+  </section>
 
-	<!-- Hero Banner -->
-	<section class="hero-section">
-		<div class="container hero-inner">
-			<div class="kicker">Cognitive Sovereignty</div>
-			<h1 class="display">BitEvo Durable AI Orchestrator</h1>
-			<p class="copy">
-				Каноническая операционная среда для управления автономными агентами и обеспечения абсолютной непрерывности намерений. На ядре <b>ContinuityOS</b>: одна истина <b>между моделями</b> (Claude / GPT / Gemini) и версиями кода — знание из одной сессии доступно другой и сверяется с «code reality» репозитория. Каждое решение агента — в tamper-evident <b>observability-журнале</b> (что · почему · откат). Local-first, твои данные у тебя.
-			</p>
-			<div class="actions">
-				<a href="/cockpit" class="button">Open Cockpit</a>
-				<a href="/consulting" class="button secondary">Services & Offers</a>
-			</div>
-		</div>
-	</section>
+  <section class="features-section">
+    <div class="container">
+      <h2 class="section-title">What the audit examines</h2>
+      <div class="grid cols3">
+        <article class="card"><div class="card-icon">🧭</div><h3>Authority</h3><p>Which actions, tools and external systems the agent can invoke, where approval boundaries sit, and what happens when authority is ambiguous.</p></article>
+        <article class="card"><div class="card-icon">🧾</div><h3>Evidence</h3><p>Whether decisions and actions can be reconstructed from logs, inputs, approvals, outputs and source freshness without inventing missing provenance.</p></article>
+        <article class="card"><div class="card-icon">🛡️</div><h3>Failure controls</h3><p>Agreed failure scenarios, prohibited actions, replay boundaries, least-necessary data handling, and whether controls fail closed when evidence is insufficient.</p></article>
+      </div>
+    </div>
+  </section>
 
-	<!-- Main Features Grid -->
-	<section class="features-section">
-		<div class="container">
-			<h2 class="section-title">Core Operations</h2>
-			<div class="grid cols3">
-				<div class="card">
-					<div class="card-icon">⚡</div>
-					<h3>Durable Workflows</h3>
-					<p>Гарантированное исполнение сложных цепочек задач с помощью Temporal backend. Агент не потеряет состояние даже при сбое хоста или перезагрузке.</p>
-				</div>
-				<div class="card">
-					<div class="card-icon">🧠</div>
-					<h3>Typed Memory (MemIR)</h3>
-					<p>Типизированное хранение опыта: разделение на факты (claims), доказательства (evidence), правила (safety guards) и гипотезы. Исключает галлюцинации.</p>
-				</div>
-				<div class="card">
-					<div class="card-icon">🛡️</div>
-					<h3>Agent Trust Layer</h3>
-					<p>Встроенный брандмауэр для MCP-инструментов, фильтрация инъекций (prompt injection) и изоляция чувствительных API-ключей.</p>
-				</div>
-			</div>
-		</div>
-	</section>
+  <section class="proof-section">
+    <div class="container proof-card">
+      <div class="kicker">Internal lab example · redacted</div>
+      <h2>LAB-001 — “Healthy service, stale truth”</h2>
+      <p>Services appeared healthy while the underlying source freshness had stopped advancing. Finding class: <strong>false-green observability</strong>.</p>
+      <div class="labels"><span>INTERNAL_LAB_CASE_REDACTED</span><span>customer_case=false</span><span>independent_certification=false</span></div>
+      <p class="small">No private IP addresses, hostnames, credentials, customer data or secret-bearing logs are exposed in this public example.</p>
+    </div>
+  </section>
+
+  <section class="offer-section">
+    <div class="container offer-card">
+      <div><div class="kicker">Primary commercial pilot</div><h2>$4,900 fixed · 5 working days</h2><p>1 staging/test workflow · up to 3 tools / APIs / MCP servers · 10–20 agreed failure scenarios · executive report · reproducible evidence pack · prioritized repair backlog · one retest.</p></div>
+      <a href="/audit-intake" class="button">Start scope</a>
+    </div>
+  </section>
 </Layout>
 
 <style>
-	/* Ticker styles */
-	.ticker-section {
-		padding-top: 24px;
-	}
-	.compute-index {
-		display: flex;
-		align-items: center;
-		gap: 16px;
-		min-height: 46px;
-		padding: 8px 16px;
-		background: linear-gradient(90deg, rgba(63, 86, 96, 0.16), rgba(7, 10, 12, 0.38));
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		font-size: 0.72rem;
-		overflow: hidden;
-		backdrop-filter: blur(12px);
-	}
-	.compute-label {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-weight: 900;
-		color: var(--green);
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		border-right: 1px solid var(--line);
-		padding-right: 16px;
-		white-space: nowrap;
-	}
-	.compute-label::before {
-		content: "";
-		display: inline-block;
-		width: 6px;
-		height: 6px;
-		background-color: var(--blue);
-		border-radius: 50%;
-		box-shadow: 0 0 6px var(--blue);
-		animation: pulse 1.8s infinite;
-	}
-	.compute-ticker-wrap {
-		overflow: hidden;
-		width: 100%;
-	}
-	.compute-ticker {
-		display: inline-flex;
-		gap: 32px;
-		white-space: nowrap;
-		animation: ticker-slide 20s linear infinite;
-	}
-	.ticker-item {
-		color: var(--muted);
-	}
-	.ticker-item strong {
-		color: var(--ink);
-	}
-
-	/* Hero */
-	.hero-section {
-		padding-block: 60px 40px;
-		position: relative;
-	}
-	.hero-inner {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-	}
-	.kicker {
-		color: var(--gold);
-		font-size: 0.75rem;
-		font-weight: 900;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		margin-bottom: 12px;
-	}
-	.display {
-		font-family: 'Playfair Display', serif;
-		font-size: clamp(2.2rem, 5vw, 3.8rem);
-		font-weight: 900;
-		line-height: 1.15;
-		margin: 0 0 20px;
-		max-width: 800px;
-	}
-	.copy {
-		font-family: 'Lora', serif;
-		color: var(--muted);
-		font-size: 1.1rem;
-		max-width: 650px;
-		margin: 0 auto 30px;
-	}
-	.actions {
-		display: flex;
-		gap: 16px;
-	}
-	.button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 44px;
-		padding: 0 24px;
-		font-size: 0.82rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background: linear-gradient(135deg, rgba(120, 175, 208, 0.2), rgba(63, 86, 96, 0.1));
-		border: 1px solid var(--line-strong);
-		border-radius: var(--radius);
-		box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-		transition: all 0.2s ease;
-	}
-	.button:hover {
-		border-color: var(--gold);
-		background: linear-gradient(135deg, rgba(120, 175, 208, 0.3), rgba(63, 86, 96, 0.15));
-		transform: translateY(-1px);
-	}
-	.button.secondary {
-		background: transparent;
-		color: var(--muted);
-		border-color: var(--line);
-	}
-	.button.secondary:hover {
-		color: var(--ink);
-		border-color: var(--gold);
-	}
-
-	/* Features */
-	.features-section {
-		padding-block: 40px;
-	}
-	.section-title {
-		font-size: 1rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--gold);
-		margin-bottom: 24px;
-		text-align: center;
-	}
-	.grid {
-		display: grid;
-		gap: 20px;
-	}
-	.cols3 {
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	}
-	.card {
-		background: var(--paper-soft);
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		padding: 24px;
-		transition: border-color 0.2s ease, transform 0.2s ease;
-	}
-	.card:hover {
-		border-color: rgba(120, 175, 208, 0.3);
-		transform: translateY(-2px);
-	}
-	.card-icon {
-		font-size: 28px;
-		margin-bottom: 16px;
-	}
-	.card h3 {
-		font-family: 'Playfair Display', serif;
-		font-size: 1.25rem;
-		margin: 0 0 12px;
-	}
-	.card p {
-		color: var(--muted);
-		font-size: 0.88rem;
-		margin: 0;
-		line-height: 1.6;
-	}
-
-	/* Animations */
-	@keyframes pulse {
-		0% { transform: scale(0.95); opacity: 0.6; }
-		50% { transform: scale(1.1); opacity: 1; }
-		100% { transform: scale(0.95); opacity: 0.6; }
-	}
-	@keyframes ticker-slide {
-		0% { transform: translate3d(0, 0, 0); }
-		100% { transform: translate3d(-50%, 0, 0); }
-	}
+  .hero-section{padding-block:70px 44px}.hero-inner{display:flex;flex-direction:column;align-items:center;text-align:center}.kicker{color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}.display{font-family:'Playfair Display',serif;font-size:clamp(2.3rem,5vw,4rem);font-weight:900;line-height:1.12;margin:0 0 20px;max-width:900px}.copy{font-family:'Lora',serif;color:var(--muted);font-size:1.08rem;max-width:760px;margin:0 auto 28px}.actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;background:linear-gradient(135deg,rgba(120,175,208,.2),rgba(63,86,96,.1));border:1px solid var(--line-strong);border-radius:var(--radius)}.button.secondary{background:transparent;color:var(--muted)}.features-section,.proof-section,.offer-section{padding-block:34px}.section-title{text-align:center;font-size:.92rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:24px}.grid{display:grid;gap:20px}.cols3{grid-template-columns:repeat(3,1fr)}.card,.proof-card,.offer-card{background:var(--paper-soft);border:1px solid var(--line);border-radius:var(--radius);padding:26px}.card-icon{font-size:28px;margin-bottom:14px}.card h3,.proof-card h2,.offer-card h2{font-family:'Playfair Display',serif;margin:0 0 10px}.card p,.proof-card p,.offer-card p{color:var(--muted);margin:0;line-height:1.65}.proof-card{max-width:920px}.labels{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.labels span{border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:.72rem;color:var(--muted)}.small{font-size:.82rem}.offer-card{max-width:980px;display:flex;align-items:center;justify-content:space-between;gap:24px}.offer-card .button{white-space:nowrap}@media(max-width:820px){.cols3{grid-template-columns:1fr}.offer-card{flex-direction:column;align-items:flex-start}}
 </style>

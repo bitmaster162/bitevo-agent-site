@@ -2,235 +2,76 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="BitEvo — Consulting & Digital Entity Setup">
-	<section class="consulting-section">
-		<div class="container">
-			<div class="consulting-header">
-				<div class="kicker">Premium Services</div>
-				<h1 class="display">Services & Offerings</h1>
-				<p class="copy">
-					Специализированные консалтинговые услуги и разработка цифровых сущностей (Digital Entities) для автоматизации бизнес-процессов. Живой proof — наш флот из 150+ автономных агентов: <a href="https://sovereign-arena-site.vercel.app/" style="color:var(--gold)">Sovereign Arena</a> (все логи публичны).
-				</p>
-			</div>
+<Layout title="BitEvo — Consulting & Agent Authority Audit" description="BitEvo engineering audit and bounded consulting services for AI-agent authority, evidence and controls.">
+  <section class="consulting-section">
+    <div class="container">
+      <div class="consulting-header">
+        <div class="kicker">Engineering Services</div>
+        <h1 class="display">Services & Offerings</h1>
+        <p class="copy">Evidence-bounded engineering work for AI-agent authority, traceability, logging and operational controls. Claims are limited to what can be reproduced from the agreed test scope.</p>
+      </div>
 
-			<!-- Services Grid -->
-			<div class="services-grid">
-				<!-- B2B AI Consulting -->
-				<div class="service-card">
-					<div class="service-meta">Tier 1 · B2B</div>
-					<h2 class="display-sm">B2B AI Consulting</h2>
-					<p class="service-desc">
-						Быстрый аудит и консалтинговые спринты для интеграции искусственного интеллекта в рабочие процессы вашей компании.
-					</p>
-					<ul class="bullets">
-						<li><strong>Аудит воркфлоу</strong> — поиск узких мест и рутинных операций.</li>
-						<li><strong>Триаж автоматизации</strong> — выбор оптимального стека и инструментов.</li>
-						<li><strong>Консалтинговый спринт</strong> — быстрая интеграция ИИ под ключ за 1-2 недели.</li>
-					</ul>
-					<div class="price">от $1,500 <span class="period">/ спринт</span></div>
-					<a href="/intake" class="button">Submit Request</a>
-				</div>
+      <div class="services-grid">
+        <article class="service-card highlighted">
+          <div class="service-meta">Primary · Fixed scope</div>
+          <h2>Agent Authority & Evidence Audit</h2>
+          <p>5 рабочих дней, 1 staging/test workflow, до 3 tools / APIs / MCP servers и 10–20 согласованных failure scenarios.</p>
+          <ul>
+            <li>Authority/action-chain review and bounded failure testing.</li>
+            <li>Executive report + reproducible evidence pack.</li>
+            <li>Prioritized repair backlog + one retest.</li>
+          </ul>
+          <div class="price">$4,900 fixed</div>
+          <a class="button highlight-btn" href="/agent-authority-audit">Audit details</a>
+        </article>
 
-				<!-- Digital Entity Setup -->
-				<div class="service-card highlighted">
-					<div class="service-meta">Premium · Operator Path</div>
-					<h2 class="display-sm">Digital Entity Setup (DES)</h2>
-					<p class="service-desc">
-						Проектирование и развертывание персональных цифровых клонов (Digital Twins) и автономных AI-агентов на вашей инфраструктуре.
-					</p>
-					<ul class="bullets">
-						<li><strong>Архитектура памяти (MemIR)</strong> — база знаний на основе ваших материалов.</li>
-						<li><strong>Интеграция голоса (Callable)</strong> — настройка голосового ассистента.</li>
-						<li><strong>Durable Orchestrator</strong> — развертывание в изолированном контуре.</li>
-					</ul>
-					<div class="price">от $5,000 <span class="period">/ проект</span></div>
-					<a href="/intake" class="button highlight-btn">Initialize Setup</a>
-				</div>
+        <article class="service-card">
+          <div class="service-meta">Entry · Reduced scope</div>
+          <h2>Reduced-Scope Entry Audit</h2>
+          <p>Одна critical action chain и одна main failure hypothesis с ограниченным воспроизведением и коротким finding memo.</p>
+          <ul>
+            <li>No full authority map.</li>
+            <li>No included retest.</li>
+            <li>Written scope required before testing.</li>
+          </ul>
+          <div class="price">$1,500 fixed</div>
+          <a class="button" href="/audit-intake">Open intake</a>
+        </article>
 
-				<!-- Crypto Risk Intelligence Desk -->
-				<div class="service-card">
-					<div class="service-meta">Tier 2 · Crypto Risk</div>
-					<h2 class="display-sm">Crypto Risk Intelligence Desk</h2>
-					<p class="service-desc">
-						Не сигналы и не новости — ежедневный риск-бриф: режим рынка, токсичность потока (VPIN), события (взломы, делистинги, регуляторка) и на каждый сигнал конкретное действие. Постит только при изменении.
-					</p>
-					<ul class="bullets">
-						<li><strong>Режим + токсичность потока</strong> — умные деньги против тебя?</li>
-						<li><strong>signal → decision → action</strong> — резать риск, ждать или хеджировать.</li>
-						<li><strong>Без шума</strong> — алерт только когда что-то меняется.</li>
-					</ul>
-					<div class="price">$300–1000 <span class="period">/ мес</span></div>
-					<a href="/intake" class="button">Get Risk Desk</a>
-				</div>
+        <article class="service-card">
+          <div class="service-meta">Free · Qualification</div>
+          <h2>Scope / Authority Triage</h2>
+          <p>20-минутный разговор для определения критического действия агента, доступной test/staging среды и того, подходит ли кейс для аудита.</p>
+          <ul>
+            <li>No written security conclusion.</li>
+            <li>No exploit work.</li>
+            <li>No deep log analysis.</li>
+          </ul>
+          <div class="price">Free · 20 min</div>
+          <a class="button" href="/audit-intake">Start triage</a>
+        </article>
 
-				<!-- Flagship: AI-Agent Reliability Audit -->
-				<div class="service-card">
-					<div class="service-meta">Flagship · Reliability</div>
-					<h2 class="display-sm">AI-Agent Reliability Audit</h2>
-					<p class="service-desc">
-						Делаю ваших production AI-агентов безопасными за 72 часа. Gartner: к 2027 40% компаний отключат автономных агентов из-за провалов governance — пока не поздно, закрываем дыры.
-					</p>
-					<ul class="bullets">
-						<li><strong>Карта вызовов и прав</strong> — что агенты вызывают, куда пишут.</li>
-						<li><strong>Стресс-тест инъекций + Decision Trace</strong> — лог решений «что и почему».</li>
-						<li><strong>Rollback-модуль</strong> — моментальное прерывание и откат опасного действия.</li>
-					</ul>
-					<div class="price">free диагностика <span class="period">→ до $12,500</span></div>
-					<a href="/intake" class="button">Book Diagnostic</a>
-				</div>
+        <article class="service-card">
+          <div class="service-meta">After findings</div>
+          <h2>Hardening / Repair</h2>
+          <p>Ремедиация оценивается отдельно после verified findings. До аудита фиксированная цена внедрения публично не обещается.</p>
+          <ul>
+            <li>Scope follows verified findings.</li>
+            <li>Change risk and rollback are assessed per repair.</li>
+            <li>Retest criteria are tied to the finding.</li>
+          </ul>
+          <div class="price">Quoted separately</div>
+          <a class="button" href="/pricing">See pricing rules</a>
+        </article>
+      </div>
 
-			</div>
-		</div>
-	</section>
+      <div class="boundary">
+        <strong>Boundary:</strong> this is an engineering audit, not certification or legal advice. It does not guarantee security, absence of defects, or production safety. Production penetration testing is not included by default.
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style>
-	.consulting-section {
-		padding-block: 40px 60px;
-	}
-	.consulting-header {
-		text-align: center;
-		margin-bottom: 40px;
-	}
-	.kicker {
-		color: var(--gold);
-		font-size: 0.72rem;
-		font-weight: 900;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		margin-bottom: 6px;
-	}
-	.display {
-		font-family: 'Playfair Display', serif;
-		font-size: 2.4rem;
-		margin: 0;
-	}
-	.copy {
-		font-family: 'Lora', serif;
-		color: var(--muted);
-		max-width: 600px;
-		margin: 12px auto 0;
-		font-size: 1rem;
-	}
-
-	/* Grid */
-	.services-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 24px;
-		max-width: 1000px;
-		margin-inline: auto;
-	}
-	@media (max-width: 768px) {
-		.services-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.service-card {
-		background: var(--paper-soft);
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		padding: 30px;
-		display: flex;
-		flex-direction: column;
-		transition: all 0.2s ease;
-	}
-	.service-card.highlighted {
-		border-color: rgba(189,179,146,0.3);
-		background: linear-gradient(180deg, rgba(189,179,146,0.04), rgba(7, 10, 12, 0));
-		box-shadow: 0 0 20px rgba(189,179,146,0.03);
-	}
-	.service-card:hover {
-		transform: translateY(-2px);
-		border-color: var(--blue);
-	}
-	.service-card.highlighted:hover {
-		border-color: var(--gold);
-	}
-
-	.service-meta {
-		font-size: 0.68rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--muted);
-		margin-bottom: 12px;
-	}
-	.service-card.highlighted .service-meta {
-		color: var(--gold);
-	}
-
-	.display-sm {
-		font-family: 'Playfair Display', serif;
-		font-size: 1.4rem;
-		margin: 0 0 12px;
-	}
-
-	.service-desc {
-		color: var(--muted);
-		font-size: 0.88rem;
-		margin: 0 0 20px;
-		line-height: 1.5;
-	}
-
-	.bullets {
-		padding-left: 18px;
-		margin: 0 0 30px;
-		font-size: 0.85rem;
-		color: var(--muted);
-	}
-	.bullets li {
-		margin-bottom: 8px;
-	}
-	.bullets strong {
-		color: var(--ink);
-	}
-
-	.price {
-		font-size: 1.6rem;
-		font-weight: 900;
-		color: var(--ink);
-		margin-top: auto;
-		margin-bottom: 20px;
-		border-top: 1px solid var(--line);
-		padding-top: 16px;
-	}
-	.period {
-		font-size: 0.8rem;
-		color: var(--muted);
-		font-weight: 500;
-	}
-
-	.button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 40px;
-		font-size: 0.8rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background: transparent;
-		border: 1px solid var(--line-strong);
-		border-radius: var(--radius);
-		transition: all 0.2s ease;
-	}
-	.button:hover {
-		border-color: var(--blue);
-		color: #fff;
-		background: rgba(120, 175, 208, 0.05);
-	}
-
-	.highlight-btn {
-		background: linear-gradient(135deg, rgba(189,179,146,0.15), rgba(7, 10, 12, 0.1)) !important;
-		border-color: rgba(189,179,146,0.4) !important;
-		color: var(--gold) !important;
-	}
-	.highlight-btn:hover {
-		border-color: var(--gold) !important;
-		background: linear-gradient(135deg, rgba(189,179,146,0.25), rgba(7, 10, 12, 0.15)) !important;
-		color: #fff !important;
-		transform: translateY(-1px);
-	}
+  .consulting-section{padding-block:48px 60px}.consulting-header{text-align:center;margin-bottom:38px}.kicker{color:var(--gold);font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.display{font-family:'Playfair Display',serif;font-size:2.5rem;margin:6px 0 10px}.copy{font-family:'Lora',serif;color:var(--muted);max-width:760px;margin:0 auto}.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1040px;margin-inline:auto}.service-card{background:var(--paper-soft);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column}.service-card.highlighted{border-color:rgba(189,179,146,.55)}.service-meta{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}.service-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin:0 0 12px}.service-card p,.service-card li{color:var(--muted);font-size:.9rem}.service-card ul{padding-left:18px;margin:0 0 24px}.price{font-size:1.45rem;font-weight:900;margin-top:auto;padding-top:16px;border-top:1px solid var(--line);margin-bottom:16px}.button{display:inline-flex;justify-content:center;padding:10px 16px;border:1px solid var(--line-strong);border-radius:8px;font-weight:800}.highlight-btn{background:var(--gold);color:#080a0b}.boundary{max-width:1040px;margin:26px auto 0;border:1px solid var(--line);border-radius:12px;padding:18px;color:var(--muted)}.boundary strong{color:var(--gold)}@media(max-width:780px){.services-grid{grid-template-columns:1fr}}
 </style>

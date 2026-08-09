@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Fleet Coordination & Drift Monitoring — BitEvo" description="Public-safe governance overview of fleet drift detection without infrastructure identifiers.">
+  <section class="guide"><div class="container card">
+    <div class="kicker">Governance · public-safe reference</div>
+    <h1>Fleet coordination and technical drift monitoring</h1>
+    <p>A fleet coordinator compares declared state with observed state and records material drift across services, agents and deployment boundaries. The useful public pattern is reconciliation and evidence, not publication of the infrastructure map.</p>
+    <h2>Public pattern</h2>
+    <ul><li>Define the expected state and authority source.</li><li>Compare observations against that source on a controlled cadence.</li><li>Classify drift by impact and reversibility.</li><li>Record evidence for remediation and retest.</li><li>Keep infrastructure identity and operator-control surfaces private.</li></ul>
+    <p class="boundary">Server names, IP addresses, private registry paths, control endpoints, credentials and secret-bearing logs are intentionally redacted from this public guide.</p>
+    <div class="actions"><a href="/agent-authority-audit">Agent Authority & Evidence Audit</a><a href="/audit-intake">Audit intake</a></div>
+  </div></section>
+</Layout>
+
+<style>.guide{padding:60px 0}.card{max-width:860px;background:var(--paper-soft);border:1px solid var(--line);border-radius:14px;padding:32px}.kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.card h1,.card h2{font-family:'Playfair Display',serif}.card p,.card li{color:var(--muted);line-height:1.7}.boundary{border:1px solid var(--line);border-radius:10px;padding:16px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.actions a{padding:10px 16px;border:1px solid var(--line-strong);border-radius:8px;font-weight:900}.actions a:first-child{background:var(--gold);color:#07090a}</style>
