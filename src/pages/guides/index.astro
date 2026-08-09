@@ -1,99 +1,78 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-const collections = [
+const published = [
   {
-    name: 'Agent authority & safety',
-    text: 'Architecture notes around delegated authority, sandboxing, review gates and evidence boundaries.',
-    items: [
-      ['Agent Authority & Evidence Audit — methodology note', '/guides/ai-agent-reliability-audit'],
-      ['Capability Passports & State Authority Plane', '/guides/capability-passports-sap'],
-      ['ReviewerGate and SandboxPreflight split', '/guides/reviewer-sandbox-split'],
-      ['Security sandboxing for tool execution', '/guides/security-sandboxing'],
-      ['TEE & MPC for agent secrets', '/guides/tee-agent-secrets'],
-      ['Multi-agent system safety', '/guides/multi-agent-system-safety'],
-      ['State Authority Plane evolution', '/guides/state-authority-plane-evolution'],
-      ['Tool-I/O bridge contract', '/guides/d3-tool-io-bridge-contract']
-    ]
+    type: 'Method',
+    title: 'Agent Authority & Evidence Audit — Reliability Method',
+    href: '/guides/ai-agent-reliability-audit',
+    text: 'Public-safe methodology note for bounded authority, evidence and failure-control review.'
   },
   {
-    name: 'Memory & retrieval',
-    text: 'Research notes on durable context, retrieval architecture and the limits of remembered state.',
-    items: [
-      ['Long-term memory systems for AI', '/guides/best-longterm-memory-systems-for-ai'],
-      ['Vector, graph and hybrid search', '/guides/vector-graph-hybrid-search'],
-      ['MirrorCore compact memory compression', '/guides/mirrorcore-compactdigest-memory-compression'],
-      ['MirrorCore seeding & identity persistence', '/guides/mirrorcore-seeding-identity-persistence'],
-      ['ArchiveOS & MultiGPT bridge integration', '/guides/archiveos-multigpt-bridge-integration']
-    ]
+    type: 'Security',
+    title: 'Security Sandboxing',
+    href: '/guides/security-sandboxing',
+    text: 'Public-safe note on isolation boundaries and tool-execution controls without private infrastructure disclosure.'
   },
   {
-    name: 'Infrastructure & investigation',
-    text: 'Method and architecture notes spanning observability, forensics and operational infrastructure.',
-    items: [
-      ['Blockchain forensics methodology', '/guides/blockchain-forensics-methodology'],
-      ['PostgreSQL backup sync daemon', '/guides/postgres-backup-sync-daemon'],
-      ['Python real-time architecture', '/guides/python-rt-architecture'],
-      ['Fleet coordinator drift monitoring', '/guides/fleet-coordinator-drift-monitoring']
-    ]
+    type: 'Operations',
+    title: 'Fleet Coordinator Drift Monitoring',
+    href: '/guides/fleet-coordinator-drift-monitoring',
+    text: 'Public-safe architecture note focused on drift concepts rather than live internal telemetry.'
   },
   {
-    name: 'Trading research archive',
-    text: 'Historical strategy and risk notes. Research material only; not a current signal service or profit claim.',
-    items: [
-      ['How to validate edge with OOS & bootstrap', '/guides/how-to-validate-edge-oos-bootstrap'],
-      ['Trading discipline journal: MAE / MFE', '/guides/trading-discipline-journal-mae-mfe'],
-      ['Survival math: ergodicity & Kelly', '/guides/survival-math-ergodicity-kelly'],
-      ['Trend-following R-multiple math', '/guides/trend-following-r-multiple-math'],
-      ['Candle confirmation & data alignment', '/guides/candle-confirmation-data-alignment']
-    ]
+    type: 'Contract',
+    title: 'Tool-I/O Bridge Contract',
+    href: '/guides/d3-tool-io-bridge-contract',
+    text: 'Public-safe interface contract that excludes private operator-control routes and internal endpoints.'
   }
 ];
 ---
 
-<Layout title="BitEvo Research Library — Agent Systems, Security & Methods" description="Curated BitEvo research notes on agent authority, safety, memory, infrastructure and historical trading methods.">
+<Layout title="BitEvo Research Library — Reviewed Public Notes" description="Reviewed public BitEvo research notes on AI-agent authority, sandboxing, drift monitoring and tool-I/O contracts.">
   <section class="research-hero section">
     <div class="container hero-grid">
-      <div><div class="eyebrow">Research library</div><h1 class="display">Notes, methods and architecture — separated from commercial proof.</h1></div>
-      <div><p class="lede">This library contains technical research and historical working notes. A research page may describe hypotheses, prototypes or time-sensitive observations; it should not be read as customer proof, certification or a current runtime claim.</p></div>
+      <div><div class="eyebrow">Reviewed public research</div><h1 class="display">Publish less. Stand behind more.</h1></div>
+      <div><p class="lede">This library now exposes only notes that have been reviewed for the current public evidence boundary. Historical research remains in source history until its time-sensitive claims and disclosure surface are re-verified.</p></div>
     </div>
   </section>
 
   <section class="section-tight section-rule">
     <div class="container research-boundary panel">
-      <div><span>EVIDENCE CLASS</span><strong>Research / technical notes</strong></div>
-      <p>Verify time-sensitive facts against current primary sources before relying on them. Trading material is informational research, not financial advice or a promise of returns.</p>
+      <div><span>PUBLICATION POLICY</span><strong>Reviewed before public indexing</strong></div>
+      <p>Research material is not customer proof, certification, legal advice or a current runtime claim. Time-sensitive facts should be re-verified against primary sources before operational use.</p>
     </div>
   </section>
 
   <section class="section section-rule">
-    <div class="container collection-stack">
-      {collections.map((collection, i) => (
-        <section class="collection">
-          <div class="collection-head">
-            <span>{String(i + 1).padStart(2, '0')}</span>
-            <div><h2>{collection.name}</h2><p>{collection.text}</p></div>
-          </div>
-          <div class="collection-links">
-            {collection.items.map(([title, href]) => (
-              <a href={href}><span>{title}</span><i aria-hidden="true">↗</i></a>
-            ))}
-          </div>
-        </section>
+    <div class="container notes-grid">
+      {published.map((note, i) => (
+        <a class="note-card panel" href={note.href}>
+          <div class="note-top"><span>{String(i + 1).padStart(2, '0')}</span><small>{note.type}</small></div>
+          <div><h2>{note.title}</h2><p>{note.text}</p></div>
+          <div class="open">Read reviewed note <span aria-hidden="true">↗</span></div>
+        </a>
       ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container archive-grid">
+      <div><div class="eyebrow">Legacy archive</div><h2 class="section-title">Historical notes are offline from the public build.</h2></div>
+      <div class="archive-copy"><p>Older pages mixed research, historical metrics and time-sensitive technology claims. Rather than present them as current evidence, BitEvo keeps them out of the public build until each note is reviewed against present sources and disclosure rules.</p><p>Removing a public route does not delete its Git history.</p></div>
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="narrow closing">
       <div class="eyebrow">Commercial boundary</div>
-      <h2 class="section-title">Research is not the audit deliverable.</h2>
-      <p class="lede">The Agent Authority & Evidence Audit uses an agreed workflow, Rules of Engagement and reproducible evidence criteria. Public research notes are context, not a substitute for scoped testing.</p>
+      <h2 class="section-title">The audit uses scoped evidence, not public research as proof.</h2>
+      <p class="lede">Commercial findings are produced against an agreed workflow, Rules of Engagement and reproducible evidence criteria.</p>
       <a class="button button-primary" href="/agent-authority-audit">See audit methodology <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>
 
 <style>
-  .research-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,8vw,110px);align-items:end}.hero-grid .lede{margin:0}.research-boundary{display:grid;grid-template-columns:.7fr 1.3fr;gap:30px;padding:22px 26px;align-items:center}.research-boundary div{display:flex;flex-direction:column;gap:5px}.research-boundary span{color:var(--green);font:500 .6rem var(--mono);letter-spacing:.1em}.research-boundary strong{font-size:.82rem}.research-boundary p{margin:0;color:var(--muted);font-size:.78rem}.collection-stack{border-top:1px solid var(--line)}.collection{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(38px,7vw,90px);padding:38px 0;border-bottom:1px solid var(--line)}.collection-head{display:grid;grid-template-columns:34px 1fr;gap:14px}.collection-head>span{color:#596560;font:500 .64rem var(--mono)}.collection h2{margin:0 0 8px;font-size:1.2rem}.collection p{margin:0;color:var(--muted);font-size:.8rem}.collection-links{border-top:1px solid var(--line)}.collection-links a{display:flex;justify-content:space-between;gap:18px;padding:14px 2px;border-bottom:1px solid var(--line);color:var(--ink-soft);font-size:.8rem}.collection-links a:hover{color:var(--green)}.collection-links i{font-style:normal;color:#64716d}.closing{text-align:center}.closing .section-title{margin-inline:auto}.closing .lede{margin:18px auto 28px}@media(max-width:820px){.hero-grid,.research-boundary,.collection{grid-template-columns:1fr}.collection{gap:24px}}
+  .research-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,8vw,110px);align-items:end}.hero-grid .lede{margin:0}.research-boundary{display:grid;grid-template-columns:.7fr 1.3fr;gap:30px;padding:22px 26px;align-items:center}.research-boundary div{display:flex;flex-direction:column;gap:5px}.research-boundary span{color:var(--green);font:500 .6rem var(--mono);letter-spacing:.1em}.research-boundary strong{font-size:.82rem}.research-boundary p{margin:0;color:var(--muted);font-size:.78rem}.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.note-card{min-height:290px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease}.note-card:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.32)}.note-top{display:flex;justify-content:space-between;color:#58645f;font:500 .61rem var(--mono)}.note-top small{color:var(--green);letter-spacing:.08em;text-transform:uppercase}.note-card h2{margin:0 0 10px;font-size:1.15rem}.note-card p{margin:0;color:var(--muted);font-size:.81rem}.open{color:var(--ink-soft);font-size:.76rem;font-weight:650}.archive-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(40px,8vw,110px)}.archive-copy{border-top:1px solid var(--line)}.archive-copy p{margin:0;padding:18px 0;border-bottom:1px solid var(--line);color:var(--muted)}.closing{text-align:center}.closing .section-title{margin-inline:auto}.closing .lede{margin:18px auto 28px}@media(max-width:820px){.hero-grid,.research-boundary,.archive-grid{grid-template-columns:1fr}.notes-grid{grid-template-columns:1fr}}
 </style>
