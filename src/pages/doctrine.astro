@@ -25,6 +25,13 @@ const concepts = [
   }
 ];
 
+const artifacts = [
+  ['Authority Ledger', 'Records the action, target object, authority owner, approvals, allowed transitions, prohibited transitions and replay/recovery rights.'],
+  ['Evidence Contract', 'Defines what must be present, fresh, attributable and object-bound before a critical effect is allowed.'],
+  ['Finding Record', 'Preserves trigger, authority, evidence, external effect, recovery and uncertainty so another engineer can reproduce the claim.'],
+  ['Decision Memo', 'Converts accepted evidence into one bounded owner action: expand, constrain, repair or retest.']
+];
+
 const rules = [
   ['Scope before access', 'No public form or conversation authorizes testing. The workflow, actions, data ceiling and prohibited transitions are written down first.'],
   ['Authority follows evidence', 'A workflow should not gain more consequential capability than the team can justify, reconstruct and contain.'],
@@ -78,6 +85,18 @@ const rules = [
     </div>
   </section>
 
+  <section class="section section-rule artifacts-section">
+    <div class="container section-head">
+      <div><div class="eyebrow">Doctrine → artifact</div><h2 class="section-title">The vocabulary becomes four inspectable work products.</h2></div>
+      <div><p class="lede">The doctrine is only useful if it changes how the workflow is described, tested and governed. These artifacts carry the model from scope to owner decision.</p><a href="/artifacts" class="artifact-link">Inspect the artifact anatomy →</a></div>
+    </div>
+    <div class="container artifact-grid">
+      {artifacts.map(([title, text], i) => (
+        <article class="artifact-card panel"><span>{String(i + 1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
+    </div>
+  </section>
+
   <section class="section section-rule false-green">
     <div class="container fg-grid panel">
       <div><div class="eyebrow">Failure class</div><div class="fg-label">FALSE GREEN</div></div>
@@ -105,7 +124,7 @@ const rules = [
       <div class="eyebrow">Commercial translation</div>
       <h2 class="section-title">The audit buys a decision about authority.</h2>
       <p class="lede">The primary engagement applies this doctrine to one staging/test workflow and returns a bounded evidence package for an owner decision — not a universal trust score.</p>
-      <div class="actions"><a class="button button-primary" href="/audit-intake">Map one workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare decision depth</a></div>
+      <div class="actions"><a class="button button-primary" href="/audit-intake">Map one workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/artifacts">See the work products</a></div>
     </div>
   </section>
 </Layout>
@@ -113,9 +132,11 @@ const rules = [
 <style>
   .doctrine-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 26px}.hero-grid .lede strong{color:var(--ink)}
   .concept-stack{display:grid;gap:14px}.concept{display:grid;grid-template-columns:55px .72fr 1.28fr;gap:28px;padding:32px;align-items:start}.concept-code{color:#586561;font:500 .66rem var(--mono)}.concept-name h2{font-size:clamp(1.6rem,3vw,2.6rem);letter-spacing:-.04em;margin:4px 0 10px}.concept-name>strong{display:block;color:var(--green);font-size:.86rem}.concept-copy>p{margin:0;color:var(--muted);font-size:.92rem}.test{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}.test span{color:var(--gold);font:500 .58rem var(--mono);letter-spacing:.1em}.test p{margin:7px 0 0;color:var(--ink-soft);font-size:.82rem}
-  .loop-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px);align-items:start}.loop-grid>.container{}.loop{list-style:none;margin:0;padding:6px 24px}.loop li{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}.loop li:last-child{border-bottom:0}.loop li>span{color:var(--green);font:500 .62rem var(--mono)}.loop strong{font-size:.9rem}.loop p{margin:4px 0 0;color:var(--muted);font-size:.81rem}
+  .loop-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px);align-items:start}.loop{list-style:none;margin:0;padding:6px 24px}.loop li{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}.loop li:last-child{border-bottom:0}.loop li>span{color:var(--green);font:500 .62rem var(--mono)}.loop strong{font-size:.9rem}.loop p{margin:4px 0 0;color:var(--muted);font-size:.81rem}
+  .section-head{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(44px,8vw,110px);margin-bottom:34px}.section-head .lede{margin:2px 0 14px}.artifact-link{color:var(--ink);font-weight:700;font-size:.82rem}.artifact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.artifact-card{min-height:260px;padding:24px;display:flex;flex-direction:column}.artifact-card>span{color:var(--green);font:500 .62rem var(--mono)}.artifact-card h3{margin:auto 0 10px;font-size:1.15rem}.artifact-card p{margin:0;color:var(--muted);font-size:.8rem}
   .fg-grid{display:grid;grid-template-columns:.66fr 1.34fr;gap:clamp(40px,7vw,90px);padding:clamp(30px,5vw,58px);background:radial-gradient(circle at 0 0,rgba(239,186,92,.08),transparent 38%),rgba(8,16,18,.75)}.fg-label{font-size:clamp(2.8rem,7vw,6.2rem);font-weight:750;letter-spacing:-.065em;line-height:.9;margin-top:16px;color:var(--gold)}.fg-grid h2{font-size:clamp(1.7rem,3vw,2.8rem);line-height:1.08;letter-spacing:-.04em;margin:0 0 18px}.fg-grid p{color:var(--muted)}.fg-grid .boundary{font-size:.76rem;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
   .rules-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px)}.rules{border-top:1px solid var(--line)}.rules article{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}.rules article>span{color:#586561;font:500 .62rem var(--mono)}.rules strong{font-size:.9rem}.rules p{margin:5px 0 0;color:var(--muted);font-size:.82rem}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  @media(max-width:900px){.hero-grid,.loop-grid,.fg-grid,.rules-grid{grid-template-columns:1fr}.concept{grid-template-columns:42px 1fr}.concept-copy{grid-column:2}.fg-label{font-size:3.8rem}}
-  @media(max-width:620px){.concept{grid-template-columns:1fr;padding:24px}.concept-code{display:none}.concept-copy{grid-column:auto}.fg-label{font-size:3rem}}
+  @media(max-width:1000px){.artifact-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:900px){.hero-grid,.loop-grid,.fg-grid,.rules-grid,.section-head{grid-template-columns:1fr}.concept{grid-template-columns:42px 1fr}.concept-copy{grid-column:2}.fg-label{font-size:3.8rem}}
+  @media(max-width:620px){.concept{grid-template-columns:1fr;padding:24px}.concept-code{display:none}.concept-copy{grid-column:auto}.fg-label{font-size:3rem}.artifact-grid{grid-template-columns:1fr}.artifact-card{min-height:210px}}
 </style>
