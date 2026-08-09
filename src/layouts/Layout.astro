@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title,
-  description = "BitEvo — engineering review of AI-agent authority, evidence, logging and operational controls",
+  description = "BitEvo — Authority Budget, Evidence Before Effect and bounded recovery for action-capable AI workflows",
   robots = "max-image-preview:large, index, follow",
   ogType = "website"
 } = Astro.props;
@@ -18,10 +18,10 @@ const canonicalUrl = new URL(path, "https://bitevoagentsite.vercel.app").toStrin
 const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
 const nav = [
   ["Overview", "/"],
+  ["Doctrine", "/doctrine"],
+  ["Proof", "/proof"],
+  ["Mapper", "/mapper"],
   ["Audit", "/agent-authority-audit"],
-  ["Services", "/consulting"],
-  ["Research", "/guides"],
-  ["Universe", "/universe"],
   ["Pricing", "/pricing"]
 ];
 ---
@@ -60,23 +60,11 @@ const nav = [
           <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
           <span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span>
         </a>
-
-        <nav class="desktop-nav" aria-label="Primary navigation">
-          {nav.map(([label, href]) => (
-            <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>
-          ))}
-        </nav>
-
+        <nav class="desktop-nav" aria-label="Primary navigation">{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}</nav>
         <a class="header-cta" href="/audit-intake">Scope an audit <span aria-hidden="true">↗</span></a>
-
         <details class="mobile-menu">
           <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav aria-label="Mobile navigation">
-            {nav.map(([label, href]) => (
-              <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>
-            ))}
-            <a class="mobile-cta" href="/audit-intake">Scope an audit →</a>
-          </nav>
+          <nav aria-label="Mobile navigation">{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}<a href="/consulting">Services</a><a href="/guides">Research</a><a class="mobile-cta" href="/audit-intake">Scope an audit →</a></nav>
         </details>
       </div>
     </header>
@@ -86,45 +74,21 @@ const nav = [
     <footer class="site-footer">
       <div class="container footer-shell">
         <section class="footer-cta" aria-labelledby="footer-cta-title">
-          <div>
-            <div class="eyebrow">Bounded engineering work</div>
-            <h2 id="footer-cta-title">Make agent actions explainable before they become expensive.</h2>
-          </div>
-          <a class="button button-primary" href="/audit-intake">Open audit intake <span aria-hidden="true">↗</span></a>
+          <div><div class="eyebrow">Authority before effect</div><h2 id="footer-cta-title">Map what the agent may change before testing whether it should.</h2></div>
+          <a class="button button-primary" href="/mapper">Open Authority Mapper <span aria-hidden="true">↗</span></a>
         </section>
 
         <div class="footer-grid">
           <div class="footer-brand">
-            <a href="/" class="brand" aria-label="BitEvo home">
-              <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
-              <span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span>
-            </a>
-            <p>Engineering review of AI-agent authority, evidence, logging, traceability and operational controls.</p>
+            <a href="/" class="brand" aria-label="BitEvo home"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
+            <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.</p>
           </div>
-          <div class="footer-col">
-            <strong>Work</strong>
-            <a href="/agent-authority-audit">Authority & Evidence Audit</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/consulting">Services</a>
-            <a href="/audit-intake">Audit intake</a>
-          </div>
-          <div class="footer-col">
-            <strong>Build</strong>
-            <a href="/continuityos">ContinuityOS</a>
-            <a href="/guides">Research library</a>
-            <a href="/universe">BitEvo Universe</a>
-            <a href="/llms.txt">LLMs.txt</a>
-          </div>
-          <div class="footer-col">
-            <strong>Boundary</strong>
-            <p>No internal infrastructure identifiers, credentials, private operational state or runtime control surfaces are published here.</p>
-          </div>
+          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/mapper">Authority Mapper</a><a href="/diagnostic">7-gate diagnostic</a></div>
+          <div class="footer-col"><strong>Work</strong><a href="/agent-authority-audit">Authority & Evidence Audit</a><a href="/pricing">Pricing</a><a href="/consulting">Services</a><a href="/audit-intake">Audit intake</a></div>
+          <div class="footer-col"><strong>Build</strong><a href="/continuityos">ContinuityOS</a><a href="/guides">Research library</a><a href="/universe">BitEvo Universe</a><a href="/llms.txt">LLMs.txt</a></div>
         </div>
 
-        <div class="footer-bottom">
-          <span>© 2026 BitEvo</span>
-          <span>Evidence over confidence.</span>
-        </div>
+        <div class="footer-bottom"><span>© 2026 BitEvo</span><span>Authority is earned by evidence.</span></div>
       </div>
     </footer>
   </body>
@@ -200,91 +164,26 @@ const nav = [
   .section-tight { padding-block: clamp(36px, 5vw, 64px); }
   .section-rule { border-top: 1px solid var(--line); }
 
-  .eyebrow, .kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 14px;
-    color: var(--green);
-    font: 500 .72rem/1.2 var(--mono);
-    letter-spacing: .13em;
-    text-transform: uppercase;
-  }
+  .eyebrow, .kicker { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; color: var(--green); font: 500 .72rem/1.2 var(--mono); letter-spacing: .13em; text-transform: uppercase; }
   .eyebrow::before, .kicker::before { content: ''; width: 18px; height: 1px; background: currentColor; opacity: .7; }
-
   h1, h2, h3, p { text-wrap: pretty; }
-  .display, .page-title {
-    max-width: 920px;
-    margin: 0;
-    font-size: clamp(2.75rem, 7vw, 5.9rem);
-    line-height: .98;
-    letter-spacing: -.055em;
-    font-weight: 700;
-  }
-  .section-title {
-    margin: 0;
-    font-size: clamp(1.9rem, 3.8vw, 3.25rem);
-    line-height: 1.08;
-    letter-spacing: -.04em;
-  }
-  .lede, .copy {
-    max-width: 760px;
-    color: var(--muted);
-    font-size: clamp(1.02rem, 1.7vw, 1.22rem);
-    line-height: 1.75;
-  }
+  .display, .page-title { max-width: 920px; margin: 0; font-size: clamp(2.75rem, 7vw, 5.9rem); line-height: .98; letter-spacing: -.055em; font-weight: 700; }
+  .section-title { margin: 0; font-size: clamp(1.9rem, 3.8vw, 3.25rem); line-height: 1.08; letter-spacing: -.04em; }
+  .lede, .copy { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.7vw, 1.22rem); line-height: 1.75; }
 
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    min-height: 46px;
-    padding: 0 18px;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    color: var(--ink);
-    background: rgba(255,255,255,.025);
-    font-size: .82rem;
-    font-weight: 700;
-    transition: transform .18s ease, border-color .18s ease, background .18s ease;
-  }
+  .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 0 18px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.025); font-size: .82rem; font-weight: 700; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
   .button:hover { transform: translateY(-1px); border-color: rgba(127,208,177,.55); background: rgba(127,208,177,.055); }
   .button-primary { background: var(--ink); color: #071012; border-color: var(--ink); }
   .button-primary:hover { background: #fff; border-color: #fff; }
   .button-ghost { color: var(--muted); }
+  .panel { background: linear-gradient(180deg, rgba(14,27,29,.82), rgba(8,16,18,.84)); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: inset 0 1px 0 rgba(255,255,255,.018); }
 
-  .panel {
-    background: linear-gradient(180deg, rgba(14,27,29,.82), rgba(8,16,18,.84));
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.018);
-  }
-
-  .skip-link {
-    position: fixed;
-    top: 8px;
-    left: 8px;
-    z-index: 1000;
-    transform: translateY(-150%);
-    padding: 9px 12px;
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 8px;
-  }
+  .skip-link { position: fixed; top: 8px; left: 8px; z-index: 1000; transform: translateY(-150%); padding: 9px 12px; background: var(--ink); color: var(--paper); border-radius: 8px; }
   .skip-link:focus { transform: translateY(0); }
 
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid transparent;
-    background: rgba(5, 9, 10, .72);
-    backdrop-filter: blur(20px) saturate(130%);
-  }
+  .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid transparent; background: rgba(5, 9, 10, .72); backdrop-filter: blur(20px) saturate(130%); }
   .site-header::after { content: ''; position: absolute; inset: auto 0 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line-strong), transparent); }
   .header-inner { min-height: 76px; display: flex; align-items: center; gap: 28px; }
-
   .brand { display: inline-flex; align-items: center; gap: 11px; flex: 0 0 auto; }
   .brand-mark { position: relative; width: 30px; height: 27px; display: inline-block; }
   .brand-mark i { position: absolute; width: 16px; height: 22px; top: 2px; background: linear-gradient(180deg, var(--green), #477e70); transform: skewX(-21deg); border-radius: 2px; box-shadow: 0 0 20px rgba(127,208,177,.12); }
@@ -295,27 +194,10 @@ const nav = [
   .brand-copy small { color: var(--muted); font: 500 .54rem/1.2 var(--mono); letter-spacing: .12em; }
 
   .desktop-nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
-  .desktop-nav a {
-    padding: 9px 11px;
-    border-radius: 999px;
-    color: var(--muted);
-    font-size: .74rem;
-    font-weight: 650;
-  }
+  .desktop-nav a { padding: 9px 11px; border-radius: 999px; color: var(--muted); font-size: .74rem; font-weight: 650; }
   .desktop-nav a:hover, .desktop-nav a[aria-current="page"] { color: var(--ink); background: rgba(255,255,255,.04); }
   .desktop-nav a[aria-current="page"]::before { content: '•'; color: var(--green); margin-right: 6px; }
-
-  .header-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    font-size: .76rem;
-    font-weight: 700;
-    background: rgba(255,255,255,.035);
-  }
+  .header-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: .76rem; font-weight: 700; background: rgba(255,255,255,.035); }
   .header-cta:hover { border-color: rgba(127,208,177,.5); }
   .mobile-menu { display: none; margin-left: auto; position: relative; }
   .mobile-menu summary { width: 42px; height: 42px; display: grid; place-content: center; gap: 5px; border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer; list-style: none; }
@@ -327,43 +209,22 @@ const nav = [
   .mobile-menu .mobile-cta { color: var(--ink); border: 1px solid var(--line); margin-top: 4px; }
 
   main { min-height: 58vh; }
-
   .site-footer { margin-top: clamp(60px, 9vw, 120px); border-top: 1px solid var(--line); background: rgba(4,8,9,.78); }
   .footer-shell { padding-block: clamp(46px, 7vw, 78px) 24px; }
   .footer-cta { display: flex; align-items: end; justify-content: space-between; gap: 32px; padding-bottom: clamp(42px, 6vw, 68px); }
   .footer-cta h2 { max-width: 760px; margin: 0; font-size: clamp(2rem, 4.2vw, 3.8rem); line-height: 1.04; letter-spacing: -.045em; }
-  .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr .8fr 1.25fr; gap: 38px; padding-block: 34px; border-top: 1px solid var(--line); }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr .8fr .8fr; gap: 38px; padding-block: 34px; border-top: 1px solid var(--line); }
   .footer-brand p, .footer-col p { color: var(--muted); max-width: 390px; font-size: .82rem; margin: 16px 0 0; }
+  .footer-brand p strong { color: var(--ink-soft); }
   .footer-col { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
   .footer-col strong { margin-bottom: 4px; color: var(--ink-soft); font: 500 .68rem/1.2 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
   .footer-col a { color: var(--muted); font-size: .8rem; }
   .footer-col a:hover { color: var(--ink); }
   .footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 20px; border-top: 1px solid var(--line); color: #65716f; font: 500 .66rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
-
   :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
-  @media (max-width: 980px) {
-    .desktop-nav, .header-cta { display: none; }
-    .mobile-menu { display: block; }
-    .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
-    .footer-grid .footer-col:last-child { grid-column: 1 / -1; }
-  }
-  @media (max-width: 720px) {
-    .container, .narrow { width: min(100% - 30px, 1180px); }
-    .header-inner { min-height: 68px; }
-    .brand-copy small { display: none; }
-    .footer-cta { align-items: flex-start; flex-direction: column; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .footer-brand { grid-column: 1 / -1; }
-    .footer-grid .footer-col:last-child { grid-column: 1 / -1; }
-    .footer-bottom { flex-direction: column; }
-  }
-  @media (max-width: 460px) {
-    .footer-grid { grid-template-columns: 1fr; }
-    .footer-brand, .footer-grid .footer-col:last-child { grid-column: auto; }
-    .button { width: 100%; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-  }
+  @media (max-width: 980px) { .desktop-nav, .header-cta { display: none; } .mobile-menu { display: block; } .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; } .footer-grid .footer-col:last-child { grid-column: 2 / -1; } }
+  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .footer-cta { align-items: flex-start; flex-direction: column; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
+  @media (max-width: 460px) { .footer-grid { grid-template-columns: 1fr; } .footer-brand, .footer-grid .footer-col:last-child { grid-column: auto; } .button { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
