@@ -5,6 +5,7 @@ const routes = [
   '/',
   '/doctrine',
   '/artifacts',
+  '/sample-audit',
   '/diagnostic',
   '/agent-authority-audit',
   '/audit-intake',
