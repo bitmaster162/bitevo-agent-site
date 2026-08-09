@@ -2,37 +2,37 @@
 import Layout from '../layouts/Layout.astro';
 
 const auditAxes = [
-  { n: '01', title: 'Authority', text: 'Map what the agent may call, write, send, approve or mutate — and where human authorization begins.' },
-  { n: '02', title: 'Evidence', text: 'Reconstruct decisions from inputs, approvals, source freshness, tool responses and observed external effects.' },
-  { n: '03', title: 'Failure controls', text: 'Replay agreed failure scenarios and verify that missing evidence, retries and ambiguity fail closed instead of drifting.' },
-  { n: '04', title: 'Recovery', text: 'Check interruption, duplicate execution, state drift and whether the workflow can return to a known safe state.' }
+  { n: '01', title: 'Authority', text: 'Define what the workflow is permitted to change, which object that permission applies to, and where human authorization is required.' },
+  { n: '02', title: 'Evidence', text: 'Identify the minimum evidence required before an action is allowed: inputs, approvals, source freshness, tool state and version context.' },
+  { n: '03', title: 'Effect', text: 'Verify the external result instead of treating an internal run status or tool response as proof that the intended change actually happened.' },
+  { n: '04', title: 'Recovery', text: 'Test what happens when certainty disappears: retry, interruption, partial execution, stale state, duplicate actions and rollback.' }
 ];
 
 const decisionMoments = [
   ['Before authority expands', 'A workflow is about to gain a new write-capable tool, integration, approval path or external side effect.'],
-  ['After a false green', 'The run says “success”, but logs, source freshness, retries or the external system leave room for a different story.'],
-  ['Before a fragile workflow scales', 'A pilot works, but the team cannot yet reconstruct who authorized what, which evidence was fresh, or how duplicate execution is contained.']
+  ['When evidence lags capability', 'The agent can do more than the team can reliably reconstruct, confirm or explain after the fact.'],
+  ['Before a pilot becomes infrastructure', 'A useful workflow is becoming operationally important, but duplicate execution, stale state or ambiguous approval would still be hard to contain.']
 ];
 
 const deliverables = [
-  ['Authority map', 'A bounded map of critical actions, tools, approvals and prohibited transitions.'],
-  ['Evidence pack', 'Reproducible traces for each accepted finding — not screenshots without provenance.'],
-  ['Repair backlog', 'Prioritized remediation tied to the observed failure mode and business consequence.'],
-  ['One retest', 'Verification against the same agreed finding criteria after relevant remediation is available.']
+  ['Authority map', 'A bounded map of critical actions, tools, objects, approvals and explicitly prohibited transitions.'],
+  ['Evidence contract', 'The evidence that must exist before, during and after each critical action for the result to be trusted.'],
+  ['Failure record', 'Reproducible findings tied to observed consequence, evidence quality and recovery behavior — with hypotheses kept separate.'],
+  ['Decision backlog', 'Prioritized changes tied to an owner decision: expand authority, constrain it, repair the workflow or retest.']
 ];
 
 const proofSurfaces = [
-  ['/agent-authority-audit', 'Audit methodology', 'Scope, evidence planes, failure plan and Rules of Engagement.'],
-  ['/guides', 'Reviewed research', 'A curated public set of engineering notes rather than an unbounded content archive.'],
-  ['/continuityos', 'ContinuityOS', 'Public source project exploring durable local memory and governance-oriented workflows.'],
-  ['/universe', 'BitEvo Universe', 'A static public map of current projects and proof surfaces — not a live operations dashboard.']
+  ['/agent-authority-audit', 'Audit methodology', 'The four-plane model, finding anatomy, failure plan and Rules of Engagement.'],
+  ['/guides', 'Reviewed research', 'A curated public set of engineering notes on agent reliability, isolation, drift and tool boundaries.'],
+  ['/continuityos', 'ContinuityOS', 'A public source project exploring durable local memory and governance-oriented workflows.'],
+  ['/universe', 'BitEvo Universe', 'A static map of current public projects and proof surfaces — not a live operations dashboard.']
 ];
 
 const faq = [
-  ['Is this a penetration test?', 'No. The standard audit is a bounded engineering review in an agreed staging/test workflow. Production penetration testing is not included by default.'],
-  ['Do you certify an agent as safe?', 'No. The output is evidence and engineering findings within the tested scope — not certification or a guarantee of security or defect absence.'],
-  ['Do you need production secrets?', 'No. Public intake explicitly excludes credentials and customer secrets. Access, data boundaries and replay conditions are agreed separately in writing.'],
-  ['What makes a workflow a good fit?', 'A workflow with a concrete external effect — for example a CRM write, message, code change, record update or other action whose authority and evidence chain can be tested.']
+  ['What exactly is being audited?', 'A concrete agent workflow with an external effect. The object of the audit is the action chain — not an abstract model score.'],
+  ['Is this a penetration test?', 'No. The standard engagement is a bounded engineering review in an agreed staging/test workflow. Production penetration testing is not included by default.'],
+  ['Do you certify an agent as safe?', 'No. The result is scoped engineering evidence and owner decisions — not certification, a universal trust score, or a guarantee of security or defect absence.'],
+  ['Do you need production secrets?', 'No. Public intake excludes credentials and customer secrets. Access, data boundaries and replay conditions are agreed separately in writing.']
 ];
 
 const structuredData = {
@@ -47,91 +47,81 @@ const structuredData = {
 };
 ---
 
-<Layout title="BitEvo — Authority & Evidence Engineering for AI Agents" description="BitEvo audits AI-agent authority, evidence chains, failure controls and operational traceability in bounded staging workflows.">
+<Layout title="BitEvo — Authority Engineering for AI Agent Workflows" description="BitEvo audits the authority, evidence, external effects and recovery behavior of write-capable AI-agent workflows.">
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <section class="hero section">
     <div class="container hero-grid">
       <div class="hero-copy reveal">
-        <div class="eyebrow">Authority · evidence · failure control</div>
-        <h1 class="display">AI agents should not get more authority than evidence.</h1>
-        <p class="lede">BitEvo reviews write-capable agent workflows before ambiguity becomes an incident: what the agent was allowed to do, what it actually did, what proves the result, and how the system behaves when evidence is missing.</p>
+        <div class="eyebrow">Authority · evidence · effect · recovery</div>
+        <h1 class="display">An agent should earn authority with evidence.</h1>
+        <p class="lede">BitEvo audits the action layer of AI systems: what a workflow is allowed to change, what evidence must exist before it acts, how the external result is confirmed, and what the system does when certainty disappears.</p>
         <div class="hero-actions">
-          <a href="/agent-authority-audit" class="button button-primary">Explore the audit <span aria-hidden="true">↗</span></a>
-          <a href="/audit-intake" class="button button-ghost">Scope a workflow</a>
+          <a href="/agent-authority-audit" class="button button-primary">See the audit model <span aria-hidden="true">↗</span></a>
+          <a href="/audit-intake" class="button button-ghost">Map one workflow</a>
         </div>
-        <div class="hero-boundary"><span class="dot"></span> Staging/test by default · written Rules of Engagement · no safety guarantee</div>
+        <div class="hero-boundary"><span class="dot"></span> Audit the workflow, not the hype · staging/test by default · written Rules of Engagement</div>
       </div>
 
-      <div class="hero-console panel reveal delay-1" aria-label="Example evidence chain">
-        <div class="console-top"><span>TRACE / LAB-001</span><span class="status"><i></i> REDACTED LAB CASE</span></div>
-        <div class="trace-line"><span class="index">01</span><div><small>REQUEST</small><strong>critical action proposed</strong></div><span class="state ok">captured</span></div>
-        <div class="trace-line"><span class="index">02</span><div><small>AUTHORITY</small><strong>scope + approval checked</strong></div><span class="state ok">bounded</span></div>
-        <div class="trace-line"><span class="index">03</span><div><small>SOURCE</small><strong>freshness stopped advancing</strong></div><span class="state warn">stale</span></div>
-        <div class="trace-line"><span class="index">04</span><div><small>SERVICE</small><strong>surface still appeared healthy</strong></div><span class="state warn">false green</span></div>
-        <div class="trace-result"><small>FINDING CLASS</small><strong>Evidence state diverged from apparent service health.</strong><p>Public internal-lab example only. No customer environment or private infrastructure is represented.</p></div>
+      <div class="hero-console panel reveal delay-1" aria-label="Example authority and evidence chain">
+        <div class="console-top"><span>DECISION TRACE / LAB-001</span><span class="status"><i></i> REDACTED LAB CASE</span></div>
+        <div class="trace-line"><span class="index">01</span><div><small>INTENT</small><strong>external change proposed</strong></div><span class="state ok">captured</span></div>
+        <div class="trace-line"><span class="index">02</span><div><small>AUTHORITY</small><strong>scope + approval matched</strong></div><span class="state ok">bounded</span></div>
+        <div class="trace-line"><span class="index">03</span><div><small>EVIDENCE</small><strong>source freshness stopped advancing</strong></div><span class="state warn">insufficient</span></div>
+        <div class="trace-line"><span class="index">04</span><div><small>DECISION</small><strong>do not expand authority</strong></div><span class="state warn">constrain</span></div>
+        <div class="trace-result"><small>FINDING CLASS</small><strong>Capability exceeded the evidence available to justify the action.</strong><p>Public internal-lab example only. No customer environment or private infrastructure is represented.</p></div>
       </div>
     </div>
   </section>
 
   <section class="signal-strip section-rule" aria-label="Audit principles">
     <div class="container strip-grid">
-      <div><small>MODE</small><strong>Bounded engineering audit</strong></div>
-      <div><small>PRIMARY SCOPE</small><strong>1 staging workflow</strong></div>
-      <div><small>FAILURE PLAN</small><strong>10–20 agreed scenarios</strong></div>
-      <div><small>OUTPUT</small><strong>Reproducible evidence</strong></div>
+      <div><small>OBJECT</small><strong>One action-capable workflow</strong></div>
+      <div><small>QUESTION</small><strong>What may it do — and why?</strong></div>
+      <div><small>TEST</small><strong>10–20 agreed failure scenarios</strong></div>
+      <div><small>DECISION</small><strong>Expand · constrain · repair · retest</strong></div>
     </div>
   </section>
 
   <section class="section">
     <div class="container split-head">
-      <div><div class="eyebrow">Decision moments</div><h2 class="section-title">Audit before ambiguity becomes operating policy.</h2></div>
-      <p class="lede">The best time to review authority is not after a major incident. It is when the workflow is about to become more capable, more connected or harder to reconstruct.</p>
+      <div><div class="eyebrow">The operating problem</div><h2 class="section-title">Capability grows faster than proof.</h2></div>
+      <p class="lede">Every new tool, write permission and autonomous step increases the authority surface. If the evidence chain does not grow with it, the team accumulates authority it cannot reliably justify, reconstruct or contain. BitEvo treats that gap as an engineering problem.</p>
     </div>
     <div class="container moment-grid">
       {decisionMoments.map(([title, text], i) => (
-        <article class="moment-card panel">
-          <span>{String(i + 1).padStart(2, '0')}</span>
-          <h3>{title}</h3>
-          <p>{text}</p>
-        </article>
+        <article class="moment-card panel"><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>
       ))}
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="container split-head">
-      <div><div class="eyebrow">The problem</div><h2 class="section-title">“The run succeeded” is not enough.</h2></div>
-      <p class="lede">Agent systems cross boundaries that ordinary chat interfaces do not. They write to external systems, retry operations, inherit credentials and make decisions from changing sources. The audit focuses on the gap between apparent success and provable execution.</p>
+      <div><div class="eyebrow">The control loop</div><h2 class="section-title">Permission is only the first gate.</h2></div>
+      <p class="lede">A reliable workflow needs four linked answers: was the action authorized, was the evidence sufficient, did the intended external effect occur, and can the system recover when any of those answers becomes uncertain?</p>
     </div>
     <div class="container axis-grid">
       {auditAxes.map(axis => (
-        <article class="axis-card">
-          <span class="axis-number">{axis.n}</span>
-          <h3>{axis.title}</h3>
-          <p>{axis.text}</p>
-        </article>
+        <article class="axis-card"><span class="axis-number">{axis.n}</span><h3>{axis.title}</h3><p>{axis.text}</p></article>
       ))}
     </div>
   </section>
 
   <section class="section section-rule proof-section">
     <div class="container split-head">
-      <div><div class="eyebrow">Proof without theatre</div><h2 class="section-title">Show the method. Label the boundary.</h2></div>
-      <p class="lede">The public site does not turn internal lab work into fake customer proof. What is public is separated into reviewed methodology, reviewed research, source projects and explicitly redacted lab evidence.</p>
+      <div><div class="eyebrow">Proof discipline</div><h2 class="section-title">A finding must change a decision.</h2></div>
+      <p class="lede">BitEvo does not sell a generic “AI safety” score. A useful finding connects an observed failure to the authority boundary, the evidence available at decision time, the external effect and the owner action that follows.</p>
     </div>
     <div class="container proof-grid">
       <article class="lab-proof panel">
         <div class="lab-top"><span>LAB-001</span><span>INTERNAL · REDACTED</span></div>
-        <h3>Healthy service, stale truth.</h3>
-        <p>A service surface appeared healthy while source freshness had stopped advancing. The useful finding is not “the agent is unsafe”; it is the narrower reproducible class: apparent service health diverged from the evidence state required to trust the workflow.</p>
-        <a href="/agent-authority-audit#method" class="text-link">Inspect the methodology →</a>
+        <h3>Healthy surface. Stale truth. Wrong decision risk.</h3>
+        <p>A service surface appeared healthy while source freshness had stopped advancing. The narrow finding is not “the agent is unsafe.” It is that the workflow could appear operable after the evidence required to justify action had become stale. The owner decision is therefore to constrain authority until freshness and confirmation are made explicit.</p>
+        <a href="/agent-authority-audit#method" class="text-link">Inspect the finding model →</a>
       </article>
       <div class="proof-links">
         {proofSurfaces.map(([href, title, text]) => (
-          <a href={href} class="proof-link">
-            <span>{title}</span><p>{text}</p><i aria-hidden="true">↗</i>
-          </a>
+          <a href={href} class="proof-link"><span>{title}</span><p>{text}</p><i aria-hidden="true">↗</i></a>
         ))}
       </div>
     </div>
@@ -139,8 +129,8 @@ const structuredData = {
 
   <section class="section section-rule">
     <div class="container split-head">
-      <div><div class="eyebrow">What you receive</div><h2 class="section-title">Evidence that can survive a second look.</h2></div>
-      <p class="lede">Every deliverable is tied to the agreed workflow and failure plan. The goal is not a broad “trust score”; it is a compact body of evidence that engineering and product owners can inspect, reproduce and use to decide what to repair.</p>
+      <div><div class="eyebrow">What you receive</div><h2 class="section-title">Not a score. A decision package.</h2></div>
+      <p class="lede">The deliverable is designed for an owner who must decide what the workflow may do next. Evidence is preserved at the level needed to reproduce accepted findings and separate facts from assumptions.</p>
     </div>
     <div class="container deliverable-list">
       {deliverables.map(([title, text], i) => (
@@ -153,16 +143,16 @@ const structuredData = {
     <div class="container process-wrap panel">
       <div class="process-intro">
         <div class="eyebrow">5 working days</div>
-        <h2 class="section-title">A short audit with hard boundaries.</h2>
+        <h2 class="section-title">Move from “it works” to “we know why it may act.”</h2>
         <p>No testing begins from a public form alone. Scope, access approval, allowed tests, prohibited actions, data handling and replay conditions are agreed first.</p>
-        <a class="button" href="/agent-authority-audit">See full scope →</a>
+        <a class="button" href="/agent-authority-audit">See the full method →</a>
       </div>
       <ol class="process-list">
-        <li><span>Day 0</span><div><strong>Scope & Rules of Engagement</strong><p>Lock the workflow, authority boundaries, data ceiling and failure scenarios.</p></div></li>
-        <li><span>Days 1–2</span><div><strong>Map & reproduce</strong><p>Build the action/evidence map and replay agreed failure paths in staging/test.</p></div></li>
-        <li><span>Days 3–4</span><div><strong>Verify findings</strong><p>Separate reproducible defects from assumptions, noisy symptoms and unproven hypotheses.</p></div></li>
-        <li><span>Day 5</span><div><strong>Evidence & repair decisions</strong><p>Deliver executive readout, evidence pack and prioritized backlog.</p></div></li>
-        <li><span>After fix</span><div><strong>One retest</strong><p>Re-run the agreed finding criteria when remediation is ready.</p></div></li>
+        <li><span>Day 0</span><div><strong>Lock the decision boundary</strong><p>Define the workflow, external effects, owners, prohibited transitions, data ceiling and failure plan.</p></div></li>
+        <li><span>Days 1–2</span><div><strong>Map authority + evidence</strong><p>Trace what may happen, what evidence justifies it and where confirmation must come from.</p></div></li>
+        <li><span>Days 3–4</span><div><strong>Break the assumptions</strong><p>Replay agreed failure paths and separate reproducible findings from noisy symptoms and hypotheses.</p></div></li>
+        <li><span>Day 5</span><div><strong>Make the owner decision</strong><p>Deliver the evidence package and a prioritized expand / constrain / repair decision backlog.</p></div></li>
+        <li><span>After fix</span><div><strong>Retest the claim</strong><p>Re-run the agreed finding criteria after relevant remediation is available.</p></div></li>
       </ol>
     </div>
   </section>
@@ -172,16 +162,16 @@ const structuredData = {
       <div class="offer-copy">
         <div class="eyebrow">Primary engagement</div>
         <h2 class="section-title">Agent Authority & Evidence Audit</h2>
-        <p class="lede">For teams operating an agent workflow that can create a real external effect and need a bounded, inspectable answer before expanding authority.</p>
+        <p class="lede">For teams that need to decide whether one write-capable workflow is ready for more authority — or needs to be constrained first.</p>
         <div class="offer-price"><strong>$4,900</strong><span>fixed · 5 working days</span></div>
-        <div class="hero-actions"><a class="button button-primary" href="/audit-intake">Open audit intake <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare scopes</a></div>
+        <div class="hero-actions"><a class="button button-primary" href="/audit-intake">Map the workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
       </div>
       <div class="scope-card panel">
-        <div class="scope-row"><span>Workflow</span><strong>1 staging/test workflow</strong></div>
-        <div class="scope-row"><span>Integrations</span><strong>Up to 3 tools / APIs / MCP servers</strong></div>
+        <div class="scope-row"><span>Object</span><strong>1 staging/test workflow</strong></div>
+        <div class="scope-row"><span>Authority surface</span><strong>Up to 3 tools / APIs / MCP servers</strong></div>
         <div class="scope-row"><span>Failure plan</span><strong>10–20 agreed scenarios</strong></div>
-        <div class="scope-row"><span>Evidence</span><strong>Executive report + reproducible pack</strong></div>
-        <div class="scope-row"><span>Repair</span><strong>Prioritized backlog</strong></div>
+        <div class="scope-row"><span>Evidence</span><strong>Authority map + reproducible finding pack</strong></div>
+        <div class="scope-row"><span>Decision</span><strong>Expand / constrain / repair backlog</strong></div>
         <div class="scope-row"><span>Verification</span><strong>One retest</strong></div>
       </div>
     </div>
@@ -189,14 +179,14 @@ const structuredData = {
 
   <section class="section section-rule">
     <div class="container faq-grid">
-      <div class="faq-head"><div class="eyebrow">FAQ</div><h2 class="section-title">Clear boundaries before access.</h2></div>
+      <div class="faq-head"><div class="eyebrow">FAQ</div><h2 class="section-title">The boundary is part of the product.</h2></div>
       <div class="faq-list">
         {faq.map(([q, a]) => <details><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}
       </div>
     </div>
   </section>
 
-  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 days</strong></span><a href="/audit-intake">Scope it ↗</a></div>
+  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 days</strong></span><a href="/audit-intake">Map it ↗</a></div>
 </Layout>
 
 <style>
