@@ -4,6 +4,8 @@ const base = 'https://bitevoagentsite.vercel.app';
 const routes = [
   '/',
   '/doctrine',
+  '/artifacts',
+  '/diagnostic',
   '/agent-authority-audit',
   '/audit-intake',
   '/pricing',
