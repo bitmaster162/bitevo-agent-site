@@ -1,52 +1,131 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const failureScenarios = [
+  'Duplicate or retry execution',
+  'Stale or missing source evidence',
+  'Ambiguous approval state',
+  'Tool response ≠ external effect',
+  'Version or configuration drift',
+  'Interrupted run and resume',
+  'Authority applied to the wrong object',
+  'Evidence unavailable at decision time'
+];
 ---
 
-<Layout title="Agent Authority & Evidence Audit — BitEvo" description="Bounded engineering audit of AI-agent authority, evidence, logging, traceability and operational controls.">
-  <section class="hero">
-    <div class="container inner">
-      <div class="kicker">Primary engineering audit</div>
-      <h1>Agent Authority & Evidence Audit</h1>
-      <p>Verify what an agent can do, what evidence exists for its decisions and actions, where controls fail open, and whether the resulting findings can be reproduced from an agreed staging/test workflow.</p>
-      <div class="offer">$4,900 fixed · 5 working days</div>
-      <a href="/audit-intake" class="cta">Open Rules-of-Engagement intake</a>
+<Layout title="Agent Authority & Evidence Audit — BitEvo" description="A five-day bounded engineering audit for AI-agent authority, evidence chains, failure controls and operational traceability.">
+  <section class="audit-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Primary engineering engagement</div>
+        <h1 class="display">Know exactly where agent authority stops.</h1>
+        <p class="lede">A bounded five-day audit for one write-capable AI workflow. We map the action surface, replay agreed failure scenarios and produce evidence that can be inspected by engineering and product owners.</p>
+        <div class="actions">
+          <a href="/audit-intake" class="button button-primary">Open Rules-of-Engagement intake <span aria-hidden="true">↗</span></a>
+          <a href="#method" class="button button-ghost">See methodology</a>
+        </div>
+      </div>
+      <aside class="commercial-card panel">
+        <div class="card-kicker">Fixed primary audit</div>
+        <div class="price">$4,900</div>
+        <div class="duration">5 working days</div>
+        <div class="metric"><span>Workflow</span><strong>1 staging/test flow</strong></div>
+        <div class="metric"><span>Integrations</span><strong>Up to 3</strong></div>
+        <div class="metric"><span>Failure scenarios</span><strong>10–20 agreed</strong></div>
+        <div class="metric"><span>Retest</span><strong>1 included</strong></div>
+      </aside>
     </div>
   </section>
 
-  <section class="container scope">
-    <div class="grid">
-      <article><h2>Scope</h2><ul><li>1 staging/test workflow</li><li>Up to 3 tools / APIs / MCP servers</li><li>10–20 agreed failure scenarios</li><li>Written scope before testing</li></ul></article>
-      <article><h2>Deliverables</h2><ul><li>Executive report</li><li>Reproducible evidence pack</li><li>Prioritized repair backlog</li><li>One retest</li></ul></article>
-      <article><h2>Boundaries</h2><ul><li>Not certification</li><li>Not legal advice</li><li>No guaranteed security or absence of defects</li><li>Production penetration testing not included by default</li></ul></article>
+  <section class="section section-rule">
+    <div class="container section-heading">
+      <div><div class="eyebrow">Fit</div><h2 class="section-title">Built for workflows that can change the outside world.</h2></div>
+      <p class="lede">The strongest audit target is not a chatbot answer. It is an agent action chain where a wrong write, send, update, approval or tool call has a concrete business consequence.</p>
+    </div>
+    <div class="container fit-grid">
+      <article class="panel fit-card good"><span>Good fit</span><ul><li>CRM create/update</li><li>Outbound messaging or notifications</li><li>Code, configuration or deployment changes</li><li>Ticket, record or document mutation</li><li>Agent-to-tool workflows with approvals</li><li>Multi-step workflows with retry/recovery logic</li></ul></article>
+      <article class="panel fit-card neutral"><span>Usually not this audit</span><ul><li>Pure text-generation quality review</li><li>General model benchmarking</li><li>Certification requests</li><li>Unbounded production exploitation</li><li>Legal compliance opinions</li><li>Requests that require public disclosure of private systems</li></ul></article>
     </div>
   </section>
 
-  <section class="container method">
-    <h2>What is examined</h2>
-    <div class="method-grid">
-      <div><strong>Authority map</strong><p>Critical actions, tool calls, approval boundaries, prohibited actions and external systems touched by the workflow.</p></div>
-      <div><strong>Evidence chain</strong><p>Inputs, approvals, outputs, timestamps, source freshness and logs required to reconstruct why an action occurred.</p></div>
-      <div><strong>Failure controls</strong><p>Agreed failure scenarios, safe replay conditions, least-necessary data handling and whether controls fail closed when evidence is missing.</p></div>
-      <div><strong>Retest</strong><p>One retest against the agreed finding criteria after the relevant remediation is available.</p></div>
+  <section class="section section-rule" id="method">
+    <div class="container method-grid">
+      <div class="method-copy">
+        <div class="eyebrow">Method</div>
+        <h2 class="section-title">Four evidence planes.</h2>
+        <p class="lede">A finding is useful only if the failure can be tied to authority, evidence, observed effect and recovery behavior inside the agreed scope.</p>
+      </div>
+      <div class="planes">
+        <article><span>01</span><div><h3>Authority plane</h3><p>What actions exist, who may authorize them, which objects they apply to and which transitions are explicitly prohibited.</p></div></article>
+        <article><span>02</span><div><h3>Evidence plane</h3><p>Inputs, approvals, source freshness, tool responses, timestamps and logs needed to reconstruct why the action occurred.</p></div></article>
+        <article><span>03</span><div><h3>Effect plane</h3><p>Whether the external system confirms the intended result instead of treating internal run completion as proof of success.</p></div></article>
+        <article><span>04</span><div><h3>Recovery plane</h3><p>How the workflow behaves under retries, interruption, stale state, version drift and partially completed effects.</p></div></article>
+      </div>
     </div>
   </section>
 
-  <section class="container lab">
-    <div class="kicker">Public-safe internal example</div>
-    <h2>LAB-001 — “Healthy service, stale truth”</h2>
-    <p><strong>Classification:</strong> INTERNAL_LAB_CASE_REDACTED · customer_case=false · independent_certification=false.</p>
-    <p><strong>Pattern:</strong> services looked healthy, but underlying source freshness had stopped advancing.</p>
-    <p><strong>Finding class:</strong> false-green observability.</p>
-    <p class="small">The public example contains no IP addresses, hostnames, credentials, private databases, customer information or real secret-bearing logs.</p>
+  <section class="section section-rule">
+    <div class="container section-heading">
+      <div><div class="eyebrow">Failure plan</div><h2 class="section-title">Agreed scenarios, not random breakage.</h2></div>
+      <p class="lede">The specific 10–20 scenarios are set during scope. Typical classes include:</p>
+    </div>
+    <div class="container scenario-grid">
+      {failureScenarios.map((scenario, i) => <div><span>{String(i + 1).padStart(2,'0')}</span><strong>{scenario}</strong></div>)}
+    </div>
   </section>
 
-  <section class="container roe">
-    <h2>Rules of Engagement gate</h2>
-    <p>Testing does not start from a public form submission alone. The intake is used to draft scope; allowed tests, prohibited actions, data boundaries, access approval and replay conditions must be agreed in writing before execution.</p>
-    <a href="/audit-intake" class="cta">Open audit intake</a>
+  <section class="section section-rule">
+    <div class="container delivery-grid">
+      <div class="delivery-copy">
+        <div class="eyebrow">Delivery</div>
+        <h2 class="section-title">A finding must be reproducible.</h2>
+        <p class="lede">Severity language follows observed consequence and evidence quality. Unproven hypotheses stay hypotheses.</p>
+      </div>
+      <div class="deliverables panel">
+        <div><span>A</span><section><strong>Executive report</strong><p>What matters, why it matters, confidence boundary and recommended owner decision.</p></section></div>
+        <div><span>B</span><section><strong>Reproducible evidence pack</strong><p>Steps, observed states and supporting artifacts for accepted findings.</p></section></div>
+        <div><span>C</span><section><strong>Prioritized repair backlog</strong><p>Remediation ordered by consequence, exploitability in scope and control leverage.</p></section></div>
+        <div><span>D</span><section><strong>One retest</strong><p>Re-run against the agreed finding criteria after the relevant repair is available.</p></section></div>
+      </div>
+    </div>
   </section>
 
-  <style>
-    .hero{padding:66px 0 34px}.inner{text-align:center;max-width:900px}.kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,3.7rem);margin:8px 0 14px}.hero p{color:var(--muted);font-family:'Lora',serif;font-size:1.08rem}.offer{font-size:1.35rem;font-weight:900;margin:22px 0 16px}.cta{display:inline-flex;padding:11px 18px;border-radius:8px;border:1px solid var(--line-strong);background:var(--gold);color:#07090a;font-weight:900}.scope,.method,.lab,.roe{max-width:1020px;padding-block:24px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid article,.method-grid>div,.lab,.roe{background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:22px}.grid h2,.method h2,.lab h2,.roe h2{font-family:'Playfair Display',serif}.grid ul{padding-left:18px;color:var(--muted)}.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.method-grid p,.lab p,.roe p{color:var(--muted)}.small{font-size:.84rem}@media(max-width:820px){.grid,.method-grid{grid-template-columns:1fr}}
-  </style>
+  <section class="section section-rule">
+    <div class="container lab-grid panel">
+      <div class="lab-meta">
+        <div class="eyebrow">Public-safe evidence example</div>
+        <div class="lab-id">LAB-001</div>
+        <div class="tags"><span>internal lab</span><span>redacted</span><span>not customer proof</span></div>
+      </div>
+      <div class="lab-copy">
+        <h2>Healthy service, stale truth.</h2>
+        <p>A service surface appeared healthy while the underlying source freshness had stopped advancing. The failure class is <strong>false-green observability</strong>: apparent health diverged from the state needed to trust the workflow.</p>
+        <p class="small">This public example contains no customer information, credentials, private infrastructure identifiers or secret-bearing logs. It is an internal lab example, not independent certification or customer validation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container roe-grid">
+      <div><div class="eyebrow">Rules of Engagement</div><h2 class="section-title">Authorization is part of the system.</h2></div>
+      <div class="roe-list">
+        <p><strong>Before testing:</strong> written scope, allowed tests, prohibited actions, access approver, data classification, minimum necessary data and safe replay conditions.</p>
+        <p><strong>Public intake:</strong> prepares a scope brief only. It does not authorize testing and must not contain API keys, passwords, tokens, private keys, wallet seeds, production credentials or customer secrets.</p>
+        <p><strong>Default boundary:</strong> staging/test workflow. Production penetration testing is not included by default.</p>
+        <a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .audit-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.22fr .58fr;gap:clamp(42px,8vw,100px);align-items:center}.hero-grid .lede{margin:25px 0 0}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}.commercial-card{padding:28px}.card-kicker{color:var(--green);font:500 .64rem var(--mono);letter-spacing:.12em;text-transform:uppercase}.price{font-size:clamp(3.4rem,6vw,5.6rem);line-height:1;letter-spacing:-.065em;font-weight:700;margin-top:20px}.duration{color:var(--muted);font:500 .72rem var(--mono);margin:8px 0 24px}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span{color:var(--muted);font:500 .63rem var(--mono)}.metric strong{font-size:.76rem;text-align:right}
+  .section-heading{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,8vw,110px);margin-bottom:38px}.section-heading .lede{margin:3px 0 0}.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.fit-card{padding:28px}.fit-card>span{display:inline-flex;margin-bottom:12px;color:var(--green);font:500 .67rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.fit-card.neutral>span{color:var(--gold)}.fit-card ul{margin:0;padding-left:19px;color:var(--muted)}.fit-card li{padding:5px 0}
+  .method-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(48px,8vw,120px)}.method-copy .lede{margin-top:20px}.planes{border-top:1px solid var(--line)}.planes article{display:grid;grid-template-columns:46px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}.planes article>span{color:#596763;font:500 .65rem var(--mono)}.planes h3{margin:0 0 6px;font-size:1rem}.planes p{margin:0;color:var(--muted);font-size:.86rem}
+  .scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.scenario-grid div{min-height:150px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,16,18,.48)}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:0}.scenario-grid span{color:#596763;font:500 .62rem var(--mono)}.scenario-grid strong{font-size:.83rem;line-height:1.5}
+  .delivery-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(44px,8vw,110px);align-items:start}.delivery-copy .lede{margin-top:18px}.deliverables{padding:8px 24px}.deliverables>div{display:grid;grid-template-columns:34px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}.deliverables>div:last-child{border-bottom:0}.deliverables>div>span{color:var(--green);font:500 .64rem var(--mono)}.deliverables section{margin:0}.deliverables strong{font-size:.9rem}.deliverables p{margin:5px 0 0;color:var(--muted);font-size:.81rem}
+  .lab-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(38px,7vw,90px);padding:clamp(28px,5vw,56px)}.lab-id{font-size:clamp(3.2rem,6vw,5.8rem);font-weight:700;letter-spacing:-.06em;line-height:1;margin:10px 0 18px}.tags{display:flex;gap:7px;flex-wrap:wrap}.tags span{border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font:500 .58rem var(--mono)}.lab-copy h2{margin:0 0 16px;font-size:clamp(1.8rem,3.5vw,3rem);letter-spacing:-.04em}.lab-copy p{color:var(--muted);font-size:.94rem}.lab-copy strong{color:var(--ink)}.lab-copy .small{font-size:.76rem;margin-top:24px}
+  .roe-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,8vw,110px)}.roe-list{border-top:1px solid var(--line)}.roe-list p{margin:0;padding:19px 0;border-bottom:1px solid var(--line);color:var(--muted)}.roe-list strong{color:var(--ink)}.roe-list .button{margin-top:24px}
+  @media(max-width:900px){.hero-grid,.method-grid,.delivery-grid,.lab-grid,.roe-grid{grid-template-columns:1fr}.commercial-card{max-width:620px}.scenario-grid{grid-template-columns:1fr 1fr}.scenario-grid div:nth-child(2n){border-right:0}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}.scenario-grid div:nth-last-child(-n+2){border-bottom:0}}
+  @media(max-width:700px){.section-heading{grid-template-columns:1fr;gap:24px}.fit-grid{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr}.scenario-grid div{border-right:0!important;border-bottom:1px solid var(--line)!important;min-height:120px}.scenario-grid div:last-child{border-bottom:0!important}.price{font-size:3.5rem}}
+</style>
