@@ -17,10 +17,10 @@ const path = Astro.url.pathname;
 const canonicalUrl = new URL(path, "https://bitevoagentsite.vercel.app").toString();
 const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
 const nav = [
-  ["Overview", "/"],
   ["Doctrine", "/doctrine"],
   ["Proof", "/proof"],
   ["Mapper", "/mapper"],
+  ["Workspace", "/workspace"],
   ["Audit", "/agent-authority-audit"],
   ["Pricing", "/pricing"]
 ];
@@ -64,7 +64,7 @@ const nav = [
         <a class="header-cta" href="/audit-intake">Scope an audit <span aria-hidden="true">↗</span></a>
         <details class="mobile-menu">
           <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav aria-label="Mobile navigation">{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}<a href="/consulting">Services</a><a href="/guides">Research</a><a class="mobile-cta" href="/audit-intake">Scope an audit →</a></nav>
+          <nav aria-label="Mobile navigation"><a href="/" aria-current={path === "/" ? "page" : undefined}>Overview</a>{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}<a href="/consulting">Services</a><a href="/guides">Research</a><a class="mobile-cta" href="/audit-intake">Scope an audit →</a></nav>
         </details>
       </div>
     </header>
@@ -74,7 +74,7 @@ const nav = [
     <footer class="site-footer">
       <div class="container footer-shell">
         <section class="footer-cta" aria-labelledby="footer-cta-title">
-          <div><div class="eyebrow">Authority before effect</div><h2 id="footer-cta-title">Map what the agent may change before testing whether it should.</h2></div>
+          <div><div class="eyebrow">Authority before effect</div><h2 id="footer-cta-title">Map the authority. Compare the repair. Then make the owner decision.</h2></div>
           <a class="button button-primary" href="/mapper">Open Authority Mapper <span aria-hidden="true">↗</span></a>
         </section>
 
@@ -83,7 +83,7 @@ const nav = [
             <a href="/" class="brand" aria-label="BitEvo home"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
             <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.</p>
           </div>
-          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/mapper">Authority Mapper</a><a href="/diagnostic">7-gate diagnostic</a></div>
+          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/mapper">Authority Mapper</a><a href="/workspace">Decision Workspace</a><a href="/diagnostic">7-gate diagnostic</a></div>
           <div class="footer-col"><strong>Work</strong><a href="/agent-authority-audit">Authority & Evidence Audit</a><a href="/pricing">Pricing</a><a href="/consulting">Services</a><a href="/audit-intake">Audit intake</a></div>
           <div class="footer-col"><strong>Build</strong><a href="/continuityos">ContinuityOS</a><a href="/guides">Research library</a><a href="/universe">BitEvo Universe</a><a href="/llms.txt">LLMs.txt</a></div>
         </div>
