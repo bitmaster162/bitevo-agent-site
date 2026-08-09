@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const cases = [
+  {
+    id: 'SAMPLE-001',
+    href: '/sample-audit',
+    json: '/sample-audit.json',
+    className: 'CRM write',
+    workflow: 'CRM Qualification Update Agent',
+    effect: 'Update two fields on one matched staging lead.',
+    failure: 'Internal success without trusted same-object read-back.',
+    decision: 'CONSTRAIN',
+    artifact: 'False Green / external-effect confirmation gap'
+  },
+  {
+    id: 'SAMPLE-002',
+    href: '/sample-message',
+    json: '/sample-message.json',
+    className: 'Outbound message',
+    workflow: 'Approved Outreach Message Agent',
+    effect: 'Send one approved message to one resolved recipient.',
+    failure: 'Recipient or approval evidence diverges before send.',
+    decision: 'CONSTRAIN',
+    artifact: 'Authority mismatch / recipient-binding gap'
+  },
+  {
+    id: 'SAMPLE-003',
+    href: '/sample-deployment',
+    json: '/sample-deployment.json',
+    className: 'Deployment / config change',
+    workflow: 'Staging Configuration Change Agent',
+    effect: 'Change one approved staging configuration key.',
+    failure: 'Version or environment binding is ambiguous at execution.',
+    decision: 'REPAIR',
+    artifact: 'Version-context / environment-binding gap'
+  }
+];
+
+const invariants = [
+  ['Authority is object-bound', 'The permission must name the action, target object or environment and the owner of that authority.'],
+  ['Evidence exists before effect', 'Identity, approval, freshness and version context are decision gates, not post-hoc explanations.'],
+  ['External effect closes the loop', 'A tool acknowledgement alone does not prove the intended external state exists.'],
+  ['Ambiguity reduces authority', 'Unknown recipient, object, environment, version or external state routes to constrain, reconcile or repair.'],
+  ['Retest uses the same criterion', 'A code/config change is not closure; the original decision condition must be replayed.']
+];
+---
+
+<Layout title="Proof Matrix — Synthetic Agent Authority Audit Packs | BitEvo" description="Three synthetic BitEvo audit packs across CRM writes, outbound messages and staging configuration changes. Worked examples only; not customer evidence or executed audits.">
+  <section class="proof-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">BitEvo proof matrix</div><h1 class="display">Same doctrine. Different external effects.</h1></div>
+      <div><p class="lede">These synthetic packs show how the Authority / Evidence / Effect / Recovery model changes with the action class. They demonstrate method structure, not customer results.</p><div class="hero-actions"><a href="/sample-audit" class="button button-primary">Open SAMPLE-001 <span aria-hidden="true">↗</span></a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container boundary panel"><strong>SYNTHETIC PROOF SURFACE</strong><p>All three cases are designed worked examples. No customer environment, production execution, private data or external audit result is represented. Each pack keeps assumptions, expected gates and NOT TESTED states explicit.</p></div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container matrix-head"><div><div class="eyebrow">Three action classes</div><h2 class="section-title">Authority breaks differently depending on what the agent can change.</h2></div><p class="lede">The invariant method stays fixed while object binding, evidence gates, confirmation and recovery become specific to the external effect.</p></div>
+    <div class="container case-grid">
+      {cases.map(c => (
+        <article class="case panel">
+          <div class="case-top"><span>{c.id}</span><strong>{c.className}</strong></div>
+          <h3>{c.workflow}</h3>
+          <div class="case-row"><span>EXTERNAL EFFECT</span><p>{c.effect}</p></div>
+          <div class="case-row"><span>WORKED FAILURE</span><p>{c.failure}</p></div>
+          <div class="case-row"><span>FINDING CLASS</span><p>{c.artifact}</p></div>
+          <div class="decision"><span>OWNER DECISION</span><strong>{c.decision}</strong></div>
+          <div class="case-actions"><a href={c.href} class="button">Open pack →</a><a href={c.json} class="text-link">JSON ↗</a></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container invariant-grid">
+      <div><div class="eyebrow">Method invariants</div><h2 class="section-title">What does not change across the three packs.</h2></div>
+      <div class="invariants">{invariants.map(([title,text],i) => <article><span>{String(i+1).padStart(2,'0')}</span><div><strong>{title}</strong><p>{text}</p></div></article>)}</div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container compare panel">
+      <div><span>CRM WRITE</span><strong>same-object read-back</strong><p>Primary ambiguity: did the intended record actually reach the intended state?</p></div>
+      <div><span>OUTBOUND MESSAGE</span><strong>recipient + approval binding</strong><p>Primary ambiguity: was the exact approved content sent to the exact authorized recipient?</p></div>
+      <div><span>CONFIG CHANGE</span><strong>environment + version binding</strong><p>Primary ambiguity: did the approved change land in the intended environment against the expected baseline?</p></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow final"><div class="eyebrow">Your workflow</div><h2 class="section-title">Start from the external effect, not the model name.</h2><p class="lede">The intake seeds the same decision-grade structure for a real workflow while keeping public-form secrets out and testing authorization separate.</p><div class="hero-actions final-actions"><a href="/audit-intake" class="button button-primary">Map one action chain <span aria-hidden="true">↗</span></a><a href="/diagnostic" class="button button-ghost">Run 7-gate diagnostic</a></div></div>
+  </section>
+</Layout>
+
+<style>
+  .proof-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.matrix-head,.invariant-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede,.matrix-head .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.boundary{padding:20px 24px;border-color:rgba(239,186,92,.25)}.boundary strong{color:var(--gold);font:500 .64rem var(--mono);letter-spacing:.08em}.boundary p{margin:7px 0 0;color:var(--muted);font-size:.8rem}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}.case{padding:25px;display:flex;flex-direction:column;min-height:470px}.case-top{display:flex;justify-content:space-between;gap:16px}.case-top span{color:var(--green);font:500 .62rem var(--mono)}.case-top strong{color:var(--muted);font:500 .58rem var(--mono);text-transform:uppercase}.case h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;margin:34px 0 22px}.case-row{padding:14px 0;border-top:1px solid var(--line)}.case-row span,.decision span,.compare span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.09em}.case-row p{margin:6px 0 0;color:var(--ink-soft);font-size:.78rem}.decision{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}.decision strong{display:block;margin-top:6px;color:var(--green);font-size:1.35rem}.case-actions{display:flex;align-items:center;gap:14px;margin-top:20px}.case-actions .text-link{font-size:.72rem}.invariant-grid{align-items:start}.invariants{border-top:1px solid var(--line)}.invariants article{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:19px 0;border-bottom:1px solid var(--line)}.invariants article>span{color:#586561;font:500 .62rem var(--mono)}.invariants strong{font-size:.88rem}.invariants p{margin:5px 0 0;color:var(--muted);font-size:.8rem}.compare{display:grid;grid-template-columns:repeat(3,1fr);padding:0}.compare>div{padding:28px;border-right:1px solid var(--line)}.compare>div:last-child{border-right:0}.compare strong{display:block;margin:16px 0 8px;font-size:1rem}.compare p{margin:0;color:var(--muted);font-size:.79rem}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
+  @media(max-width:900px){.hero-grid,.matrix-head,.invariant-grid{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.case{min-height:0}.compare{grid-template-columns:1fr}.compare>div{border-right:0;border-bottom:1px solid var(--line)}.compare>div:last-child{border-bottom:0}}
+</style>
