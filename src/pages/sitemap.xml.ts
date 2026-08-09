@@ -3,6 +3,7 @@ export const prerender = true;
 const base = 'https://bitevoagentsite.vercel.app';
 const routes = [
   '/',
+  '/doctrine',
   '/agent-authority-audit',
   '/audit-intake',
   '/pricing',
