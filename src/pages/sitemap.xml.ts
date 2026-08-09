@@ -7,6 +7,7 @@ const routes = [
   '/artifacts',
   '/proof',
   '/mapper',
+  '/workspace',
   '/sample-audit',
   '/sample-message',
   '/sample-deployment',
