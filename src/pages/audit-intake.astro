@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro';
   <section class="intake-hero section-tight"><div class="container hero-grid"><div><div class="eyebrow">Decision scope intake</div><h1 class="page-title">Define the action, evidence gate and authority owner before anyone tests it.</h1></div><div><p class="lede">Build the scope locally. Mapper drafts can be handed into this page through browser session storage; nothing here transmits data or authorizes testing.</p></div></div></section>
 
   <section class="section-tight section-rule">
-    <div id="mapperHandoff" class="container handoff panel" hidden><div><span>LOCAL MAPPER HANDOFF</span><strong>Technical scope seed loaded from Authority Mapper.</strong><p>Review every imported field. Company/contact, access approval, data boundary and testing authorization remain intentionally unset.</p></div><button id="clearHandoff" type="button" class="button button-ghost">Clear mapper draft</button></div>
+    <div id="mapperHandoff" class="container handoff panel" hidden><div><span>LOCAL MAPPER HANDOFF</span><strong>Technical scope seed loaded from Authority Mapper.</strong><p>Review every imported field. Owner decision, object-binding evidence, Rules-of-Engagement permissions, company/contact, access approval, data boundary and testing authorization remain intentionally unset.</p></div><button id="clearHandoff" type="button" class="button button-ghost">Clear mapper draft</button></div>
     <div class="container warning panel" role="alert"><div class="warning-mark">!</div><div><strong>Do not submit or paste secrets.</strong><p>API keys · passwords · tokens · private keys · wallet seeds · production credentials · customer secrets. Describe boundaries, evidence classes and access paths instead.</p></div></div>
 
     <div class="container intake-grid">
@@ -47,10 +47,8 @@ import Layout from '../layouts/Layout.astro';
         const map = JSON.parse(raw); const a=map.authority_ledger||{}; const e=map.evidence_contract||{};
         setValue('workflow', `${a.workflow || 'Mapped workflow'}\nAction class: ${map.action_class || 'custom'}`);
         setValue('criticalAction', a.critical_action); setValue('targetObject', a.target_binding); setValue('authorityOwner', a.authority_owner); setValue('forbiddenEffects', a.prohibited_authority); setValue('expensiveError', a.expensive_error); setValue('environment', a.environment);
-        setValue('preActionEvidence', e.pre_action_evidence); setValue('freshnessRule', e.freshness_rule); setValue('objectBinding', a.target_binding); setValue('externalConfirmation', e.external_confirmation); setValue('uncertaintyBehavior', e.recovery_behavior);
-        if (map.owner_decision) setValue('ownerDecision', `${map.owner_decision.posture}: ${map.owner_decision.reason}`);
-        if (Array.isArray(map.failure_scenarios) && map.failure_scenarios.length) setValue('allowedTests', ['Mapper-generated failure hypotheses — review before RoE approval:', ...map.failure_scenarios.map(s => `${s.id}: ${s.name} — ${s.trigger}`)].join('\n'));
-        handoffNotice.hidden=false; briefState.textContent='Mapper seed loaded';
+        setValue('preActionEvidence', e.pre_action_evidence); setValue('freshnessRule', e.freshness_rule); setValue('externalConfirmation', e.external_confirmation); setValue('uncertaintyBehavior', e.recovery_behavior);
+        handoffNotice.hidden=false; briefState.textContent='Mapper seed loaded — owner/RoE confirmation required';
       } catch { sessionStorage.removeItem('bitevo.mapper.handoff.v1'); }
     };
     loadMapperHandoff();
