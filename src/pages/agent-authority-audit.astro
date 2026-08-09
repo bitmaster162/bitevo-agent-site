@@ -12,6 +12,12 @@ const failureScenarios = [
   'Evidence unavailable at decision time'
 ];
 
+const doctrineChecks = [
+  ['Authority Budget', 'Measure the permission surface created by actions, objects, integrations, approvals and retry paths. Then ask whether the evidence chain is strong enough to justify that surface.'],
+  ['Evidence Before Effect', 'For critical actions, identify the evidence that must be present and fresh before execution. Post-hoc observability is useful, but it is not an authorization gate.'],
+  ['False Green', 'Test for states that appear healthy or successful while required evidence, freshness or external confirmation has diverged from the decision state.']
+];
+
 const findingAnatomy = [
   ['Trigger', 'The exact condition that makes the failure path reachable.'],
   ['Authority', 'What the workflow was allowed to do, to which object, under whose approval and with which prohibited transitions.'],
@@ -31,7 +37,7 @@ const findingAnatomy = [
         <p class="lede">The audit answers one operational question: does this action-capable workflow have enough evidence, confirmation and recovery control for the authority it already holds — or the authority you are about to give it?</p>
         <div class="actions">
           <a href="/audit-intake" class="button button-primary">Map the workflow <span aria-hidden="true">↗</span></a>
-          <a href="#method" class="button button-ghost">See the decision model</a>
+          <a href="/doctrine" class="button button-ghost">BitEvo Doctrine</a>
         </div>
       </div>
       <aside class="commercial-card panel">
@@ -39,7 +45,7 @@ const findingAnatomy = [
         <div class="price">$4,900</div>
         <div class="duration">5 working days</div>
         <div class="metric"><span>Object</span><strong>1 staging/test workflow</strong></div>
-        <div class="metric"><span>Authority surface</span><strong>Up to 3 integrations</strong></div>
+        <div class="metric"><span>Authority Budget</span><strong>Up to 3 integrations</strong></div>
         <div class="metric"><span>Failure plan</span><strong>10–20 agreed scenarios</strong></div>
         <div class="metric"><span>Outcome</span><strong>Expand / constrain / repair / retest</strong></div>
       </aside>
@@ -70,6 +76,18 @@ const findingAnatomy = [
         <article><span>03</span><div><h3>Effect plane</h3><p>How the intended external change is independently confirmed instead of inferring success from internal completion or a tool response.</p></div></article>
         <article><span>04</span><div><h3>Recovery plane</h3><p>How uncertainty is contained: fail closed, retry safely, compensate, roll back, resume from a known state or escalate to a human owner.</p></div></article>
       </div>
+    </div>
+  </section>
+
+  <section class="section section-rule doctrine-method">
+    <div class="container section-heading">
+      <div><div class="eyebrow">BitEvo Doctrine in practice</div><h2 class="section-title">The vocabulary maps directly to audit tests.</h2></div>
+      <p class="lede">These are not slogans layered on top of the method. Each term points to a concrete question the audit must answer.</p>
+    </div>
+    <div class="container doctrine-grid">
+      {doctrineChecks.map(([title, text], i) => (
+        <article class="panel"><span>{String(i + 1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
     </div>
   </section>
 
@@ -107,8 +125,8 @@ const findingAnatomy = [
         <p class="lede">The deliverables are organized around action, not theatre: what authority exists, what evidence supports it, what failed, what must change and what can be retested.</p>
       </div>
       <div class="deliverables panel">
-        <div><span>A</span><section><strong>Authority map</strong><p>Critical actions, objects, approvals, integrations and prohibited transitions in the agreed scope.</p></section></div>
-        <div><span>B</span><section><strong>Reproducible evidence pack</strong><p>Accepted findings with trigger, evidence-at-decision-time, observed effect and recovery behavior.</p></section></div>
+        <div><span>A</span><section><strong>Authority Budget map</strong><p>Critical actions, objects, approvals, integrations, retry paths and prohibited transitions in the agreed scope.</p></section></div>
+        <div><span>B</span><section><strong>Reproducible evidence pack</strong><p>Accepted findings with trigger, Evidence Before Effect state, observed external effect and recovery behavior.</p></section></div>
         <div><span>C</span><section><strong>Owner decision backlog</strong><p>Prioritized expand / constrain / repair actions tied directly to the evidence and consequence.</p></section></div>
         <div><span>D</span><section><strong>One retest</strong><p>Re-run against the same agreed finding criteria after relevant remediation is available.</p></section></div>
       </div>
@@ -123,10 +141,10 @@ const findingAnatomy = [
         <div class="tags"><span>internal lab</span><span>redacted</span><span>not customer proof</span></div>
       </div>
       <div class="lab-copy">
-        <h2>Capability exceeded fresh evidence.</h2>
+        <h2>False Green: capability exceeded fresh evidence.</h2>
         <p>A service surface appeared healthy while the underlying source freshness had stopped advancing. The operational issue is not a universal claim about the agent. It is narrower: <strong>the workflow could still appear ready to act after one piece of evidence required to justify that action had become stale.</strong></p>
-        <p>The owner decision is to constrain that authority until freshness and external confirmation are explicit gates rather than implicit assumptions.</p>
-        <p class="small">This public example contains no customer information, credentials, private infrastructure identifiers or secret-bearing logs. It is an internal lab example, not independent certification or customer validation.</p>
+        <p>The owner decision is to constrain the Authority Budget until freshness and external confirmation are explicit gates rather than implicit assumptions.</p>
+        <p class="small">“False Green” is BitEvo terminology for an operational evidence mismatch. This public example contains no customer information, credentials, private infrastructure identifiers or secret-bearing logs. It is an internal lab example, not independent certification or customer validation.</p>
       </div>
     </div>
   </section>
@@ -148,11 +166,12 @@ const findingAnatomy = [
   .audit-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.22fr .58fr;gap:clamp(42px,8vw,100px);align-items:center}.hero-grid .lede{margin:25px 0 0}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}.commercial-card{padding:28px}.card-kicker{color:var(--green);font:500 .64rem var(--mono);letter-spacing:.12em;text-transform:uppercase}.price{font-size:clamp(3.4rem,6vw,5.6rem);line-height:1;letter-spacing:-.065em;font-weight:700;margin-top:20px}.duration{color:var(--muted);font:500 .72rem var(--mono);margin:8px 0 24px}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span{color:var(--muted);font:500 .63rem var(--mono)}.metric strong{font-size:.76rem;text-align:right}
   .section-heading{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,8vw,110px);margin-bottom:38px}.section-heading .lede{margin:3px 0 0}.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.fit-card{padding:28px}.fit-card>span{display:inline-flex;margin-bottom:12px;color:var(--green);font:500 .67rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.fit-card.neutral>span{color:var(--gold)}.fit-card ul{margin:0;padding-left:19px;color:var(--muted)}.fit-card li{padding:5px 0}
   .method-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(48px,8vw,120px)}.method-copy .lede{margin-top:20px}.planes{border-top:1px solid var(--line)}.planes article{display:grid;grid-template-columns:46px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}.planes article>span{color:#596763;font:500 .65rem var(--mono)}.planes h3{margin:0 0 6px;font-size:1rem}.planes p{margin:0;color:var(--muted);font-size:.86rem}
+  .doctrine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.doctrine-grid article{min-height:260px;padding:26px;display:flex;flex-direction:column;background:radial-gradient(circle at 100% 0,rgba(127,208,177,.055),transparent 42%),rgba(8,16,18,.5)}.doctrine-grid article>span{color:var(--green);font:500 .62rem var(--mono)}.doctrine-grid h3{margin:auto 0 10px;font-size:1.25rem;letter-spacing:-.025em}.doctrine-grid p{margin:0;color:var(--muted);font-size:.82rem}
   .scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.scenario-grid div{min-height:150px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,16,18,.48)}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:0}.scenario-grid span{color:#596763;font:500 .62rem var(--mono)}.scenario-grid strong{font-size:.83rem;line-height:1.5}
   .anatomy-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.anatomy-grid article{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,16,18,.42)}.anatomy-grid article:nth-child(2n){border-right:0}.anatomy-grid article:nth-last-child(-n+2){border-bottom:0}.anatomy-grid article>span{color:var(--green);font:500 .62rem var(--mono)}.anatomy-grid h3{margin:0 0 6px;font-size:.96rem}.anatomy-grid p{margin:0;color:var(--muted);font-size:.82rem}.severity-note{display:grid;grid-template-columns:.75fr 1.25fr;gap:42px;margin-top:18px;padding:28px}.severity-note h3{margin:0;font-size:1.2rem}.severity-note p{margin:0;color:var(--muted)}
   .delivery-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(44px,8vw,110px);align-items:start}.delivery-copy .lede{margin-top:18px}.deliverables{padding:8px 24px}.deliverables>div{display:grid;grid-template-columns:34px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}.deliverables>div:last-child{border-bottom:0}.deliverables>div>span{color:var(--green);font:500 .64rem var(--mono)}.deliverables section{margin:0}.deliverables strong{font-size:.9rem}.deliverables p{margin:5px 0 0;color:var(--muted);font-size:.81rem}
   .lab-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(38px,7vw,90px);padding:clamp(28px,5vw,56px)}.lab-id{font-size:clamp(3.2rem,6vw,5.8rem);font-weight:700;letter-spacing:-.06em;line-height:1;margin:10px 0 18px}.tags{display:flex;gap:7px;flex-wrap:wrap}.tags span{border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font:500 .58rem var(--mono)}.lab-copy h2{margin:0 0 16px;font-size:clamp(1.8rem,3.5vw,3rem);letter-spacing:-.04em}.lab-copy p{color:var(--muted);font-size:.94rem}.lab-copy strong{color:var(--ink)}.lab-copy .small{font-size:.76rem;margin-top:24px}
   .roe-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,8vw,110px)}.roe-list{border-top:1px solid var(--line)}.roe-list p{margin:0;padding:19px 0;border-bottom:1px solid var(--line);color:var(--muted)}.roe-list strong{color:var(--ink)}.roe-list .button{margin-top:24px}
-  @media(max-width:900px){.hero-grid,.method-grid,.delivery-grid,.lab-grid,.roe-grid,.severity-note{grid-template-columns:1fr}.commercial-card{max-width:620px}.scenario-grid{grid-template-columns:1fr 1fr}.scenario-grid div:nth-child(2n){border-right:0}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}.scenario-grid div:nth-last-child(-n+2){border-bottom:0}}
+  @media(max-width:900px){.hero-grid,.method-grid,.delivery-grid,.lab-grid,.roe-grid,.severity-note{grid-template-columns:1fr}.commercial-card{max-width:620px}.doctrine-grid{grid-template-columns:1fr}.doctrine-grid article{min-height:auto}.scenario-grid{grid-template-columns:1fr 1fr}.scenario-grid div:nth-child(2n){border-right:0}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}.scenario-grid div:nth-last-child(-n+2){border-bottom:0}}
   @media(max-width:700px){.section-heading{grid-template-columns:1fr;gap:24px}.fit-grid,.anatomy-grid{grid-template-columns:1fr}.anatomy-grid article{border-right:0;border-bottom:1px solid var(--line)!important}.anatomy-grid article:last-child{border-bottom:0!important}.scenario-grid{grid-template-columns:1fr}.scenario-grid div{border-right:0!important;border-bottom:1px solid var(--line)!important;min-height:120px}.scenario-grid div:last-child{border-bottom:0!important}.price{font-size:3.5rem}}
 </style>
