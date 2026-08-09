@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const artifacts = [
+  {
+    code: 'A1',
+    name: 'Authority Ledger',
+    purpose: 'Define exactly what consequential actions exist and what must constrain them.',
+    fields: ['Critical action', 'Target object / object binding', 'Authority owner', 'Approval path', 'Allowed transitions', 'Prohibited transitions', 'Retry / replay rights', 'Recovery owner'],
+    decision: 'What authority exists now, and which part of it should expand, contract or remain conditional?'
+  },
+  {
+    code: 'A2',
+    name: 'Evidence Contract',
+    purpose: 'Turn “the agent should know enough” into explicit evidence requirements at decision time.',
+    fields: ['Required input', 'Provenance', 'Freshness requirement', 'Object binding', 'Approval evidence', 'Version / configuration context', 'External confirmation', 'Behavior when evidence is missing'],
+    decision: 'What must be true before the workflow is allowed to spend its Authority Budget?'
+  },
+  {
+    code: 'A3',
+    name: 'Finding Record',
+    purpose: 'Preserve a reproducible failure without inflating a hypothesis into a conclusion.',
+    fields: ['Trigger', 'Authority involved', 'Evidence observed', 'External effect', 'Recovery behavior', 'Reproduction steps', 'Consequence', 'Evidence quality / uncertainty'],
+    decision: 'Is the failure real and decision-relevant enough to constrain, repair or retest?'
+  },
+  {
+    code: 'A4',
+    name: 'Decision Memo',
+    purpose: 'Translate evidence into one bounded owner action instead of a generic risk score.',
+    fields: ['Owner question', 'Decision', 'Evidence supporting it', 'Residual uncertainty', 'Required control change', 'Authority after decision', 'Retest criterion', 'Named owner'],
+    decision: 'EXPAND / CONSTRAIN / REPAIR / RETEST.'
+  }
+];
+
+const sample = [
+  ['Intent', 'Update one CRM lead record after qualification.'],
+  ['Authority Budget', 'May update status + qualification fields on the matched lead only. May not create contacts, send messages or modify unrelated records.'],
+  ['Evidence Before Effect', 'Lead identity matched; qualification source is fresh; approval state is valid; expected CRM object/version context is present.'],
+  ['External confirmation', 'Read-back confirms the intended fields changed on the same lead object.'],
+  ['False Green trigger', 'Internal tool call reports success, but read-back is absent, stale or points to a different object.'],
+  ['Recovery', 'Do not retry blindly. Constrain the write path, preserve the trace and escalate/reconcile before another mutation.'],
+  ['Owner decision', 'Keep authority constrained until object binding and external confirmation are explicit gates.']
+];
+---
+
+<Layout title="Audit Artifacts — BitEvo Authority & Evidence Audit" description="Public anatomy of the BitEvo Authority Ledger, Evidence Contract, Finding Record and Decision Memo used to turn agent-workflow evidence into owner decisions.">
+  <section class="artifact-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Audit artifacts</div><h1 class="display">The method ends in inspectable artifacts, not a trust score.</h1></div>
+      <div><p class="lede">These public structures show what the primary audit is designed to produce. They are templates and redacted examples, not customer evidence, certification or a promise that every audit yields the same number of findings.</p><a href="/agent-authority-audit" class="button button-primary">See the audit method <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container artifact-stack">
+      {artifacts.map((artifact) => (
+        <article class="artifact panel">
+          <div class="artifact-code">{artifact.code}</div>
+          <div class="artifact-title"><div class="eyebrow">Decision-grade artifact</div><h2>{artifact.name}</h2><p>{artifact.purpose}</p></div>
+          <div class="artifact-body">
+            <div><span class="label">Minimum structure</span><ul>{artifact.fields.map(field => <li>{field}</li>)}</ul></div>
+            <div class="decision"><span>OWNER QUESTION</span><p>{artifact.decision}</p></div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container example-grid">
+      <div><div class="eyebrow">Public-safe example</div><h2 class="section-title">One CRM write, expressed as a decision chain.</h2><p class="lede">The example is intentionally generic. Its purpose is to show how BitEvo separates permission, evidence, effect and recovery without implying a real customer finding.</p></div>
+      <div class="sample panel">
+        {sample.map(([label, value]) => <div><span>{label}</span><p>{value}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container anti-theatre panel">
+      <div><div class="eyebrow">Evidence discipline</div><h2>A polished report is not the product.</h2></div>
+      <div><p>The useful unit is a chain another owner or engineer can challenge: <strong>what action was possible, what evidence justified it, what actually happened, how uncertainty was handled, and what decision follows.</strong></p><p>If the evidence cannot support the decision, the artifact should preserve that uncertainty instead of hiding it behind a severity label.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow final">
+      <div class="eyebrow">Scope one workflow</div>
+      <h2 class="section-title">Seed the artifacts before testing starts.</h2>
+      <p class="lede">The local intake now asks for the action, authority owner, evidence gate, external confirmation and recovery boundary needed to prepare an initial Authority Ledger and Evidence Contract.</p>
+      <div class="actions"><a href="/audit-intake" class="button button-primary">Prepare the scope brief <span aria-hidden="true">↗</span></a><a href="/doctrine" class="button button-ghost">Read BitEvo Doctrine</a></div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .artifact-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 26px}.artifact-stack{display:grid;gap:14px}.artifact{display:grid;grid-template-columns:58px .72fr 1.28fr;gap:28px;padding:30px;align-items:start}.artifact-code{color:var(--green);font:500 .66rem var(--mono)}.artifact-title h2{margin:5px 0 10px;font-size:clamp(1.55rem,3vw,2.45rem);letter-spacing:-.04em}.artifact-title p{margin:0;color:var(--muted);font-size:.86rem}.artifact-body{display:grid;grid-template-columns:1fr .92fr;gap:28px}.label,.decision span{color:var(--muted);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.artifact-body ul{display:grid;grid-template-columns:1fr 1fr;gap:7px 18px;margin:12px 0 0;padding:0;list-style:none}.artifact-body li{position:relative;padding-left:14px;color:var(--ink-soft);font-size:.78rem}.artifact-body li::before{content:'+';position:absolute;left:0;color:var(--green);font-family:var(--mono)}.decision{padding-left:22px;border-left:1px solid var(--line)}.decision p{margin:8px 0 0;color:var(--ink);font-weight:650;font-size:.84rem}.example-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px)}.sample{padding:8px 24px}.sample>div{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}.sample>div:last-child{border-bottom:0}.sample span{color:var(--green);font:500 .62rem var(--mono)}.sample p{margin:0;color:var(--muted);font-size:.82rem}.anti-theatre{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(40px,7vw,90px);padding:clamp(28px,5vw,54px)}.anti-theatre h2{margin:6px 0 0;font-size:clamp(1.7rem,3vw,2.8rem);letter-spacing:-.04em}.anti-theatre p{color:var(--muted)}.anti-theatre strong{color:var(--ink)}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  @media(max-width:900px){.hero-grid,.example-grid,.anti-theatre{grid-template-columns:1fr}.artifact{grid-template-columns:42px 1fr}.artifact-body{grid-column:2}.sample>div{grid-template-columns:120px 1fr}}
+  @media(max-width:650px){.artifact{grid-template-columns:1fr;padding:24px}.artifact-code{display:none}.artifact-body{grid-column:auto;grid-template-columns:1fr}.artifact-body ul{grid-template-columns:1fr}.decision{padding-left:0;padding-top:18px;border-left:0;border-top:1px solid var(--line)}.sample>div{grid-template-columns:1fr;gap:6px}}
+</style>
