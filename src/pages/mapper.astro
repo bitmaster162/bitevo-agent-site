@@ -22,7 +22,7 @@ const gates = [
   <section class="mapper-hero section">
     <div class="container hero-grid">
       <div><div class="eyebrow">Local mini-product · Authority Mapper v2</div><h1 class="display">Map the authority before the agent spends it.</h1></div>
-      <div><p class="lede">Describe one consequential action. The mapper turns it into a draft <strong>Authority Ledger + Evidence Contract + failure plan + owner decision prompt</strong>. Everything stays in your browser.</p><div class="hero-actions"><a href="/proof" class="button button-ghost">Worked proof packs →</a><a href="/diagnostic" class="button button-ghost">7-gate diagnostic</a></div></div>
+      <div><p class="lede">Describe one consequential action. The mapper turns it into a draft <strong>Authority Ledger + Evidence Contract + failure plan + owner decision prompt</strong>. Everything stays in your browser.</p><div class="hero-actions"><a href="/proof" class="button button-ghost">Worked proof packs →</a><a href="/workspace" class="button button-ghost">Decision Workspace</a><a href="/diagnostic" class="button button-ghost">7-gate diagnostic</a></div></div>
     </div>
   </section>
 
@@ -79,19 +79,19 @@ const gates = [
 
       <aside class="output-shell panel">
         <div class="output-head"><div><div class="eyebrow">Local artifact</div><h2>Authority map</h2></div><span id="outputState">Not generated</span></div>
-        <div id="empty" class="empty"><strong>One action in. Decision structure out.</strong><p>Generate the map, then export it, reopen it later, or hand it to the Audit Intake without putting workflow details in a URL.</p></div>
+        <div id="empty" class="empty"><strong>One action in. Decision structure out.</strong><p>Generate the map, then export it, compare checkpoints in Decision Workspace, or hand it to Audit Intake without putting workflow details in a URL.</p></div>
         <div id="result" hidden>
           <div class="posture"><small>DECISION POSTURE</small><h3 id="posture"></h3><p id="postureWhy"></p></div>
           <div class="artifact-tabs" role="tablist" aria-label="Generated artifact sections"><button type="button" class="active" data-view="ledger">Authority Ledger</button><button type="button" data-view="contract">Evidence Contract</button><button type="button" data-view="failures">Failure Plan</button><button type="button" data-view="brief">Full Brief</button></div>
           <pre id="artifactText" tabindex="0"></pre>
-          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button></div>
-          <div class="boundary"><span>LOCAL HANDOFF</span><p>Continue stores the generated draft in sessionStorage for the next BitEvo page. It is not transmitted to a server and it does not grant testing authorization.</p></div>
+          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="workspace" type="button" class="button button-ghost">Save / compare in Workspace ↗</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button></div>
+          <div class="boundary"><span>LOCAL HANDOFFS</span><p>Workspace and Intake handoffs use sessionStorage between BitEvo pages. No workflow content is placed in the URL, uploaded by this page or treated as testing authorization.</p></div>
         </div>
       </aside>
     </div>
   </section>
 
-  <section class="section section-rule"><div class="container explain-grid"><div><div class="eyebrow">Product path</div><h2 class="section-title">Proof → map → diagnose → scope.</h2></div><div class="explain-list"><article><span>01</span><div><strong>Proof gives you worked structures.</strong><p>Three synthetic packs show how authority changes across writes, messages and configuration effects.</p></div></article><article><span>02</span><div><strong>Mapper applies the structure to your workflow.</strong><p>Import, export and handoff preserve the artifact without converting it into a score.</p></div></article><article><span>03</span><div><strong>Diagnostic separates explicit claims from unresolved gates.</strong><p>UNKNOWN remains engineering uncertainty rather than a silent pass.</p></div></article><article><span>04</span><div><strong>Intake adds owner, access and Rules-of-Engagement context.</strong><p>The handoff saves retyping while keeping authorization separate.</p></div></article></div></div></section>
+  <section class="section section-rule"><div class="container explain-grid"><div><div class="eyebrow">Product path</div><h2 class="section-title">Proof → map → compare → diagnose → scope.</h2></div><div class="explain-list"><article><span>01</span><div><strong>Proof gives you worked structures.</strong><p>Three synthetic packs show how authority changes across writes, messages and configuration effects.</p></div></article><article><span>02</span><div><strong>Mapper applies the structure to your workflow.</strong><p>Import, export and handoff preserve the artifact without converting it into a score.</p></div></article><article><span>03</span><div><strong>Workspace compares before/after checkpoints.</strong><p>It shows exact authority, evidence and gate deltas and builds a local Decision Memo.</p></div></article><article><span>04</span><div><strong>Diagnostic keeps unresolved claims visible.</strong><p>UNKNOWN remains engineering uncertainty rather than a silent pass.</p></div></article><article><span>05</span><div><strong>Intake adds owner, access and Rules-of-Engagement context.</strong><p>Handoff saves retyping while keeping authorization separate.</p></div></article></div></div></section>
 </Layout>
 
 <script define:vars={{ gates }}>
@@ -104,6 +104,7 @@ const gates = [
   const postureWhy = document.getElementById('postureWhy');
   const artifactText = document.getElementById('artifactText');
   const importJson = document.getElementById('importJson');
+  const workspace = document.getElementById('workspace');
   const handoff = document.getElementById('handoff');
   const copy = document.getElementById('copy');
   const downloadTxt = document.getElementById('downloadTxt');
@@ -168,13 +169,14 @@ const gates = [
   };
 
   const renderView = () => { if (!generated) return; artifactText.textContent = generated.views[currentView]; tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === currentView)); };
-  form?.addEventListener('submit', event => { event.preventDefault(); if (!form.reportValidity()) return; generated = buildSections(); postureEl.textContent = generated.owner_decision.posture; postureWhy.textContent = generated.owner_decision.reason; currentView='ledger'; renderView(); empty.hidden=true; result.hidden=false; outputState.textContent='Ready'; importState.textContent='Generated locally · export or continue to intake'; });
+  form?.addEventListener('submit', event => { event.preventDefault(); if (!form.reportValidity()) return; generated = buildSections(); postureEl.textContent = generated.owner_decision.posture; postureWhy.textContent = generated.owner_decision.reason; currentView='ledger'; renderView(); empty.hidden=true; result.hidden=false; outputState.textContent='Ready'; importState.textContent='Generated locally · export, compare or continue to intake'; });
   form?.addEventListener('reset', () => requestAnimationFrame(() => { generated=null; result.hidden=true; empty.hidden=false; outputState.textContent='Not generated'; importState.textContent='Blank map · local only'; artifactText.textContent=''; }));
   tabButtons.forEach(btn => btn.addEventListener('click', () => { currentView=btn.dataset.view; renderView(); }));
   copy?.addEventListener('click', async () => { if (!generated) return; await navigator.clipboard.writeText(generated.views[currentView]); const old=copy.textContent; copy.textContent='Copied'; setTimeout(() => copy.textContent=old,1200); });
   const download = (filename, body, type) => { const blob=new Blob([body],{type}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; a.click(); URL.revokeObjectURL(url); };
   downloadTxt?.addEventListener('click', () => { if (generated) download('bitevo-authority-map.txt', generated.views.brief, 'text/plain;charset=utf-8'); });
   downloadJson?.addEventListener('click', () => { if (!generated) return; const payload={...generated}; delete payload.views; download('bitevo-authority-map.json', JSON.stringify(payload,null,2), 'application/json;charset=utf-8'); });
+  workspace?.addEventListener('click', () => { if (!generated) return; const payload={...generated}; delete payload.views; sessionStorage.setItem('bitevo.mapper.workspace.v1', JSON.stringify(payload)); location.href='/workspace?from=mapper'; });
   handoff?.addEventListener('click', () => { if (!generated) return; const payload={...generated}; delete payload.views; sessionStorage.setItem('bitevo.mapper.handoff.v1', JSON.stringify(payload)); location.href='/audit-intake?from=mapper'; });
 </script>
 
