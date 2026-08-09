@@ -1,3 +1,11 @@
 {
-  "cleanUrls": true
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/guides/:slug((?!ai-agent-reliability-audit|security-sandboxing|fleet-coordinator-drift-monitoring|d3-tool-io-bridge-contract).*)",
+      "destination": "/guides",
+      "permanent": false
+    }
+  ]
 }
