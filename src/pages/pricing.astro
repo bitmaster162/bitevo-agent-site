@@ -4,44 +4,43 @@ import Layout from '../layouts/Layout.astro';
 const tiers = [
   {
     eyebrow: 'Qualification', price: 'Free', cadence: '20 minutes', title: 'Scope / Authority Triage',
-    desc: 'Decide whether the workflow is a sensible audit target and identify the critical external action, authority boundary and usable staging/test environment.',
-    includes: ['20-minute scope call', 'Critical action identification', 'Staging/test fit check'],
-    excludes: ['No written security conclusion', 'No exploit work', 'No deep log analysis'],
-    cta: 'Start triage', href: '/audit-intake'
+    desc: 'Use when the first unknown is whether the workflow is even a useful audit target. We isolate the external action, the authority owner and the staging/test boundary.',
+    includes: ['1 critical action identified', 'Authority owner identified', 'Staging/test fit check'],
+    excludes: ['No tested finding', 'No written security conclusion', 'No deep evidence review'],
+    cta: 'Qualify the workflow', href: '/audit-intake'
   },
   {
-    eyebrow: 'Reduced scope', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
-    desc: 'One critical action chain and one primary failure hypothesis with bounded reproduction and a concise finding memo.',
-    includes: ['1 critical action chain', '1 primary failure hypothesis', 'Limited reproduction', 'Concise finding memo'],
-    excludes: ['No full authority map', 'No complete evidence pack', 'No included retest'],
-    cta: 'Scope entry audit', href: '/audit-intake'
+    eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
+    desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
+    includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
+    excludes: ['No full authority map', 'No multi-scenario failure plan', 'No included retest'],
+    cta: 'Test one uncertainty', href: '/audit-intake'
   },
   {
-    eyebrow: 'Primary engagement', price: '$4,900', cadence: '5 working days', title: 'Agent Authority & Evidence Audit',
-    desc: 'The complete bounded audit for one staging/test workflow with agreed failure scenarios, reproducible evidence and one retest.',
-    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Executive report + evidence pack', 'Prioritized repair backlog', 'One retest'],
-    excludes: ['No certification', 'No guaranteed security', 'No production penetration testing by default'],
-    cta: 'Open audit intake', href: '/audit-intake', featured: true
+    eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days', title: 'Agent Authority & Evidence Audit',
+    desc: 'Use when the owner must decide whether one action-capable workflow has earned its current or proposed authority across evidence, effect confirmation and recovery.',
+    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Authority map + reproducible evidence pack', 'Expand / constrain / repair backlog', 'One retest'],
+    excludes: ['No certification', 'No universal safety score', 'No production penetration testing by default'],
+    cta: 'Map the authority decision', href: '/audit-intake', featured: true
   }
 ];
 
 const comparison = [
-  ['Primary question', 'Is this worth auditing?', 'Can we reproduce this one failure?', 'Can we trust this workflow’s authority + evidence chain within scope?'],
-  ['Workflow breadth', 'Qualification only', '1 critical action chain', '1 staging/test workflow'],
-  ['Failure coverage', 'None tested', '1 primary hypothesis', '10–20 agreed scenarios'],
-  ['Evidence output', 'No written conclusion', 'Concise finding memo', 'Executive report + reproducible evidence pack'],
-  ['Authority map', 'No', 'No full map', 'Included'],
-  ['Repair backlog', 'No', 'Limited to the finding', 'Prioritized backlog'],
-  ['Retest', 'No', 'Not included', '1 included'],
-  ['Best owner decision', 'Audit / do not audit', 'Repair / reject hypothesis', 'Expand authority / repair / constrain / retest']
+  ['Owner question', 'Is this worth auditing?', 'Is this one failure real?', 'Has this workflow earned its authority?'],
+  ['Audit object', '1 proposed action', '1 critical action chain', '1 staging/test workflow'],
+  ['Failure depth', 'No failure tested', '1 primary hypothesis', '10–20 agreed scenarios'],
+  ['Authority analysis', 'Owner + boundary only', 'Only what the finding requires', 'Action/object/approval map included'],
+  ['Evidence depth', 'Qualification evidence only', 'Enough to accept/reject one finding', 'Evidence-at-decision-time + effect + recovery'],
+  ['Primary output', 'Audit / do not audit', 'Repair / reject hypothesis', 'Expand / constrain / repair / retest'],
+  ['Retest', 'No', 'Not included', '1 included']
 ];
 ---
 
-<Layout title="Pricing — Agent Authority & Evidence Audit | BitEvo" description="Transparent bounded pricing for BitEvo agent authority, evidence and failure-control engineering audits.">
+<Layout title="Pricing — Authority Decisions for AI Agent Workflows | BitEvo" description="BitEvo pricing is based on decision depth: qualify a workflow, test one uncertainty, or audit whether its authority is justified by evidence and recovery control.">
   <section class="pricing-hero section">
     <div class="container hero-grid">
-      <div><div class="eyebrow">Commercial scope</div><h1 class="display">Pay for a bounded answer, not an open-ended security promise.</h1></div>
-      <div><p class="lede">Three entry points, one clear primary audit. Scope and evidence ceilings are explicit before testing; implementation is quoted only after verified findings exist.</p><a class="button" href="/agent-authority-audit">See audit methodology →</a></div>
+      <div><div class="eyebrow">Decision depth</div><h1 class="display">Buy the smallest amount of evidence that can change the decision.</h1></div>
+      <div><p class="lede">The tiers are not “more safety for more money.” They answer different owner questions with different evidence ceilings. Choose the cheapest scope that can resolve the uncertainty you actually have.</p><a class="button" href="/agent-authority-audit">See the authority decision model →</a></div>
     </div>
   </section>
 
@@ -51,8 +50,8 @@ const comparison = [
         <article class:list={['tier', 'panel', t.featured && 'featured']}>
           {t.featured && <div class="recommended">Primary</div>}
           <div class="tier-top"><span>{t.eyebrow}</span><div class="price">{t.price}</div><small>{t.cadence}</small><h2>{t.title}</h2><p>{t.desc}</p></div>
-          <div class="feature-group"><strong>Included</strong><ul>{t.includes.map(item => <li>{item}</li>)}</ul></div>
-          <div class="feature-group muted"><strong>Boundary</strong><ul>{t.excludes.map(item => <li>{item}</li>)}</ul></div>
+          <div class="feature-group"><strong>Evidence ceiling</strong><ul>{t.includes.map(item => <li>{item}</li>)}</ul></div>
+          <div class="feature-group muted"><strong>Not purchased</strong><ul>{t.excludes.map(item => <li>{item}</li>)}</ul></div>
           <a href={t.href} class:list={['button', t.featured && 'button-primary']}>{t.cta} <span aria-hidden="true">↗</span></a>
         </article>
       ))}
@@ -61,21 +60,21 @@ const comparison = [
 
   <section class="section section-rule">
     <div class="container compare-grid">
-      <div><div class="eyebrow">Decision rule</div><h2 class="section-title">Choose scope by the question you need answered.</h2></div>
+      <div><div class="eyebrow">Selection rule</div><h2 class="section-title">Start from the owner decision, then buy the evidence.</h2></div>
       <div class="decision-list">
-        <article><span>Free</span><div><strong>“Is this even the right workflow to audit?”</strong><p>Use triage to define the action and staging boundary before committing budget.</p></div></article>
-        <article><span>$1.5k</span><div><strong>“Can we reproduce this one suspected failure?”</strong><p>Use reduced scope when one chain and one hypothesis dominate the decision.</p></div></article>
-        <article><span>$4.9k</span><div><strong>“Can we trust this workflow’s authority and evidence chain?”</strong><p>Use the primary audit when you need a broader authority map, multiple failure scenarios, evidence pack and retest.</p></div></article>
+        <article><span>Free</span><div><strong>“Should we spend time auditing this workflow at all?”</strong><p>Use triage when the action, owner or staging boundary is still unclear.</p></div></article>
+        <article><span>$1.5k</span><div><strong>“Is this specific failure real enough to act on?”</strong><p>Use the Entry Audit when one hypothesis dominates the engineering decision.</p></div></article>
+        <article><span>$4.9k</span><div><strong>“Should this workflow keep, gain or lose authority?”</strong><p>Use the primary audit when the answer requires multiple failure scenarios, an authority map, evidence-at-decision-time and a retestable owner backlog.</p></div></article>
       </div>
     </div>
   </section>
 
   <section class="section section-rule comparison-section">
     <div class="container section-head">
-      <div><div class="eyebrow">Scope matrix</div><h2 class="section-title">The difference is evidence depth, not a bigger promise.</h2></div>
-      <p class="lede">Use this matrix for an internal budget or procurement decision. Each tier has a deliberately different evidence ceiling.</p>
+      <div><div class="eyebrow">Decision matrix</div><h2 class="section-title">Scope grows because the question gets harder.</h2></div>
+      <p class="lede">This matrix is designed for budget or procurement review. The commercial difference is evidence depth and decision breadth — not a larger guarantee.</p>
     </div>
-    <div class="container table-shell panel" role="region" aria-label="Audit scope comparison" tabindex="0">
+    <div class="container table-shell panel" role="region" aria-label="Audit decision comparison" tabindex="0">
       <div class="comparison-table">
         <div class="table-row table-head"><strong>Dimension</strong><strong>Free triage</strong><strong>Entry audit</strong><strong>Primary audit</strong></div>
         {comparison.map(row => (
@@ -87,17 +86,17 @@ const comparison = [
 
   <section class="section section-rule">
     <div class="container boundary-grid">
-      <div class="panel boundary-card"><div class="eyebrow">Hardening</div><h2>Quoted after findings.</h2><p>Implementation and hardening are scoped separately only after the audit identifies the actual repair surface. There is no public fixed implementation price before evidence exists.</p></div>
-      <div class="panel boundary-card"><div class="eyebrow">Legal boundary</div><h2>Engineering evidence, not certification.</h2><p>Where EU AI Act record-keeping requirements are relevant, applicability depends on the system classification, use case and organizational role. BitEvo can provide engineering evidence for logging, traceability and control review; this is not legal advice or certification.</p></div>
+      <div class="panel boundary-card"><div class="eyebrow">Hardening</div><h2>Repair follows evidence.</h2><p>Implementation is quoted separately only after a finding identifies the real control gap. The repair scope is tied to the owner decision, rollback risk and retest criteria; there is no fixed “make it safe” package.</p></div>
+      <div class="panel boundary-card"><div class="eyebrow">Claim boundary</div><h2>Engineering evidence, not certification.</h2><p>The work can support decisions about logging, traceability, authority and control behavior inside the tested scope. It does not certify the system, guarantee security, guarantee defect absence or replace legal advice.</p></div>
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="narrow final-note">
       <div class="eyebrow">Before access</div>
-      <h2 class="section-title">Written Rules of Engagement are mandatory.</h2>
-      <p class="lede">The public intake prepares a scope brief only. Do not submit credentials, private keys, wallet seeds, production secrets or customer secrets.</p>
-      <a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a>
+      <h2 class="section-title">Start with one action and one owner.</h2>
+      <p class="lede">The public intake prepares a scope brief only. It does not authorize testing. Do not submit credentials, private keys, wallet seeds, production secrets or customer secrets.</p>
+      <a href="/audit-intake" class="button button-primary">Map the action chain <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>
