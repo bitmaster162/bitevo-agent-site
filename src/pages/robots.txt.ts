@@ -5,6 +5,11 @@ export function GET() {
     [
       'User-agent: *',
       'Allow: /',
+      'Disallow: /guides/',
+      'Allow: /guides/ai-agent-reliability-audit',
+      'Allow: /guides/security-sandboxing',
+      'Allow: /guides/fleet-coordinator-drift-monitoring',
+      'Allow: /guides/d3-tool-io-bridge-contract',
       '',
       'Sitemap: https://bitevoagentsite.vercel.app/sitemap.xml'
     ].join('\n'),
