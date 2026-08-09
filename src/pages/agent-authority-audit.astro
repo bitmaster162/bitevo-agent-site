@@ -13,70 +13,70 @@ const failureScenarios = [
 ];
 
 const findingAnatomy = [
-  ['Trigger', 'The exact precondition or event that makes the failure path reachable.'],
-  ['Authority', 'Which permission, approval or action boundary is involved — and what should have constrained it.'],
-  ['Evidence', 'The smallest reproducible set of inputs, timestamps, logs or external observations supporting the finding.'],
-  ['Effect', 'What actually changed outside the model or orchestration layer, including partial and duplicate effects.'],
-  ['Recovery', 'Whether the workflow returns to a known state, fails closed, retries safely or compounds ambiguity.'],
-  ['Decision', 'The engineering or product action justified by the observed consequence and evidence quality.']
+  ['Trigger', 'The exact condition that makes the failure path reachable.'],
+  ['Authority', 'What the workflow was allowed to do, to which object, under whose approval and with which prohibited transitions.'],
+  ['Evidence', 'What the workflow knew at decision time — including freshness, provenance, approvals and state required to justify action.'],
+  ['Effect', 'What actually changed outside the orchestration layer, including partial, missing and duplicate effects.'],
+  ['Recovery', 'What the system does when the action cannot be trusted: stop, retry, compensate, rollback or escalate.'],
+  ['Owner decision', 'The bounded next action supported by the evidence: expand authority, constrain it, repair the workflow or retest.']
 ];
 ---
 
-<Layout title="Agent Authority & Evidence Audit — BitEvo" description="A five-day bounded engineering audit for AI-agent authority, evidence chains, failure controls and operational traceability.">
+<Layout title="Agent Authority & Evidence Audit — BitEvo" description="A five-day engineering audit that tests whether an AI-agent workflow has enough evidence and recovery control for the authority it holds.">
   <section class="audit-hero section">
     <div class="container hero-grid">
       <div>
         <div class="eyebrow">Primary engineering engagement</div>
-        <h1 class="display">Know exactly where agent authority stops.</h1>
-        <p class="lede">A bounded five-day audit for one write-capable AI workflow. We map the action surface, replay agreed failure scenarios and produce evidence that can be inspected by engineering and product owners.</p>
+        <h1 class="display">Decide how much authority this workflow has earned.</h1>
+        <p class="lede">The audit answers one operational question: does this action-capable workflow have enough evidence, confirmation and recovery control for the authority it already holds — or the authority you are about to give it?</p>
         <div class="actions">
-          <a href="/audit-intake" class="button button-primary">Open Rules-of-Engagement intake <span aria-hidden="true">↗</span></a>
-          <a href="#method" class="button button-ghost">See methodology</a>
+          <a href="/audit-intake" class="button button-primary">Map the workflow <span aria-hidden="true">↗</span></a>
+          <a href="#method" class="button button-ghost">See the decision model</a>
         </div>
       </div>
       <aside class="commercial-card panel">
         <div class="card-kicker">Fixed primary audit</div>
         <div class="price">$4,900</div>
         <div class="duration">5 working days</div>
-        <div class="metric"><span>Workflow</span><strong>1 staging/test flow</strong></div>
-        <div class="metric"><span>Integrations</span><strong>Up to 3</strong></div>
-        <div class="metric"><span>Failure scenarios</span><strong>10–20 agreed</strong></div>
-        <div class="metric"><span>Retest</span><strong>1 included</strong></div>
+        <div class="metric"><span>Object</span><strong>1 staging/test workflow</strong></div>
+        <div class="metric"><span>Authority surface</span><strong>Up to 3 integrations</strong></div>
+        <div class="metric"><span>Failure plan</span><strong>10–20 agreed scenarios</strong></div>
+        <div class="metric"><span>Outcome</span><strong>Expand / constrain / repair / retest</strong></div>
       </aside>
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="container section-heading">
-      <div><div class="eyebrow">Fit</div><h2 class="section-title">Built for workflows that can change the outside world.</h2></div>
-      <p class="lede">The strongest audit target is not a chatbot answer. It is an agent action chain where a wrong write, send, update, approval or tool call has a concrete business consequence.</p>
+      <div><div class="eyebrow">Object of the audit</div><h2 class="section-title">We audit the action chain, not the model in isolation.</h2></div>
+      <p class="lede">The risk-bearing object is the workflow that connects a model to data, permissions, tools and an external effect. A model answer may be imperfect without causing an incident; a write-capable action chain can turn ambiguity into a real change.</p>
     </div>
     <div class="container fit-grid">
       <article class="panel fit-card good"><span>Good fit</span><ul><li>CRM create/update</li><li>Outbound messaging or notifications</li><li>Code, configuration or deployment changes</li><li>Ticket, record or document mutation</li><li>Agent-to-tool workflows with approvals</li><li>Multi-step workflows with retry/recovery logic</li></ul></article>
-      <article class="panel fit-card neutral"><span>Usually not this audit</span><ul><li>Pure text-generation quality review</li><li>General model benchmarking</li><li>Certification requests</li><li>Unbounded production exploitation</li><li>Legal compliance opinions</li><li>Requests that require public disclosure of private systems</li></ul></article>
+      <article class="panel fit-card neutral"><span>Different problem</span><ul><li>Pure text-generation quality review</li><li>General model benchmarking</li><li>Certification requests</li><li>Unbounded production exploitation</li><li>Legal compliance opinions</li><li>Requests that require public disclosure of private systems</li></ul></article>
     </div>
   </section>
 
   <section class="section section-rule" id="method">
     <div class="container method-grid">
       <div class="method-copy">
-        <div class="eyebrow">Method</div>
-        <h2 class="section-title">Four evidence planes.</h2>
-        <p class="lede">A finding is useful only if the failure can be tied to authority, evidence, observed effect and recovery behavior inside the agreed scope.</p>
+        <div class="eyebrow">Decision model</div>
+        <h2 class="section-title">Four planes. One authority decision.</h2>
+        <p class="lede">The workflow should gain authority only when all four planes tell a coherent story. The audit looks for places where capability has moved ahead of proof or recovery control.</p>
       </div>
       <div class="planes">
-        <article><span>01</span><div><h3>Authority plane</h3><p>What actions exist, who may authorize them, which objects they apply to and which transitions are explicitly prohibited.</p></div></article>
-        <article><span>02</span><div><h3>Evidence plane</h3><p>Inputs, approvals, source freshness, tool responses, timestamps and logs needed to reconstruct why the action occurred.</p></div></article>
-        <article><span>03</span><div><h3>Effect plane</h3><p>Whether the external system confirms the intended result instead of treating internal run completion as proof of success.</p></div></article>
-        <article><span>04</span><div><h3>Recovery plane</h3><p>How the workflow behaves under retries, interruption, stale state, version drift and partially completed effects.</p></div></article>
+        <article><span>01</span><div><h3>Authority plane</h3><p>What can act, on which object, with whose approval, under which scope, and which transitions must remain impossible.</p></div></article>
+        <article><span>02</span><div><h3>Evidence plane</h3><p>What evidence must be present and fresh at decision time: inputs, provenance, approvals, tool state, timestamps and version context.</p></div></article>
+        <article><span>03</span><div><h3>Effect plane</h3><p>How the intended external change is independently confirmed instead of inferring success from internal completion or a tool response.</p></div></article>
+        <article><span>04</span><div><h3>Recovery plane</h3><p>How uncertainty is contained: fail closed, retry safely, compensate, roll back, resume from a known state or escalate to a human owner.</p></div></article>
       </div>
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="container section-heading">
-      <div><div class="eyebrow">Failure plan</div><h2 class="section-title">Agreed scenarios, not random breakage.</h2></div>
-      <p class="lede">The specific 10–20 scenarios are set during scope. Typical classes include:</p>
+      <div><div class="eyebrow">Failure plan</div><h2 class="section-title">Test the assumptions that justify authority.</h2></div>
+      <p class="lede">The 10–20 scenarios are agreed during scope. The point is not random breakage; it is to remove one assumption at a time and observe whether the workflow still knows enough to act.</p>
     </div>
     <div class="container scenario-grid">
       {failureScenarios.map((scenario, i) => <div><span>{String(i + 1).padStart(2,'0')}</span><strong>{scenario}</strong></div>)}
@@ -85,35 +85,32 @@ const findingAnatomy = [
 
   <section class="section section-rule finding-section">
     <div class="container section-heading">
-      <div><div class="eyebrow">Finding anatomy</div><h2 class="section-title">A defect is not decision-grade until the evidence closes the loop.</h2></div>
-      <p class="lede">Every accepted finding is structured so another engineer can challenge the assumptions, reproduce the path and understand exactly what owner decision follows from it.</p>
+      <div><div class="eyebrow">Finding anatomy</div><h2 class="section-title">A finding is complete only when it changes the owner decision.</h2></div>
+      <p class="lede">Accepted findings are written so another engineer can challenge the assumptions, reproduce the path and see why the evidence supports a specific operational decision.</p>
     </div>
     <div class="container anatomy-grid">
       {findingAnatomy.map(([title, text], i) => (
-        <article>
-          <span>{String(i + 1).padStart(2,'0')}</span>
-          <div><h3>{title}</h3><p>{text}</p></div>
-        </article>
+        <article><span>{String(i + 1).padStart(2,'0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>
       ))}
     </div>
     <div class="container severity-note panel">
-      <div><div class="eyebrow">Severity discipline</div><h3>Consequence and reproducibility stay separate from confidence.</h3></div>
-      <p>We distinguish observed consequence, reachability/reproducibility, evidence quality and control leverage. A dramatic hypothesis with weak evidence does not outrank a narrower failure that can be reproduced and tied to a real external effect.</p>
+      <div><div class="eyebrow">Evidence discipline</div><h3>Severity is not confidence, and confidence is not authority.</h3></div>
+      <p>Observed consequence, reachability, reproducibility, evidence quality and control leverage are kept distinct. A dramatic theory with weak evidence does not outrank a narrower failure that is repeatable and tied to a real external effect.</p>
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="container delivery-grid">
       <div class="delivery-copy">
-        <div class="eyebrow">Delivery</div>
-        <h2 class="section-title">A finding must be reproducible.</h2>
-        <p class="lede">Severity language follows observed consequence and evidence quality. Unproven hypotheses stay hypotheses.</p>
+        <div class="eyebrow">Decision package</div>
+        <h2 class="section-title">The output tells an owner what the workflow may do next.</h2>
+        <p class="lede">The deliverables are organized around action, not theatre: what authority exists, what evidence supports it, what failed, what must change and what can be retested.</p>
       </div>
       <div class="deliverables panel">
-        <div><span>A</span><section><strong>Executive report</strong><p>What matters, why it matters, confidence boundary and recommended owner decision.</p></section></div>
-        <div><span>B</span><section><strong>Reproducible evidence pack</strong><p>Steps, observed states and supporting artifacts for accepted findings.</p></section></div>
-        <div><span>C</span><section><strong>Prioritized repair backlog</strong><p>Remediation ordered by consequence, exploitability in scope and control leverage.</p></section></div>
-        <div><span>D</span><section><strong>One retest</strong><p>Re-run against the agreed finding criteria after the relevant repair is available.</p></section></div>
+        <div><span>A</span><section><strong>Authority map</strong><p>Critical actions, objects, approvals, integrations and prohibited transitions in the agreed scope.</p></section></div>
+        <div><span>B</span><section><strong>Reproducible evidence pack</strong><p>Accepted findings with trigger, evidence-at-decision-time, observed effect and recovery behavior.</p></section></div>
+        <div><span>C</span><section><strong>Owner decision backlog</strong><p>Prioritized expand / constrain / repair actions tied directly to the evidence and consequence.</p></section></div>
+        <div><span>D</span><section><strong>One retest</strong><p>Re-run against the same agreed finding criteria after relevant remediation is available.</p></section></div>
       </div>
     </div>
   </section>
@@ -126,8 +123,9 @@ const findingAnatomy = [
         <div class="tags"><span>internal lab</span><span>redacted</span><span>not customer proof</span></div>
       </div>
       <div class="lab-copy">
-        <h2>Healthy service, stale truth.</h2>
-        <p>A service surface appeared healthy while the underlying source freshness had stopped advancing. The failure class is <strong>false-green observability</strong>: apparent health diverged from the state needed to trust the workflow.</p>
+        <h2>Capability exceeded fresh evidence.</h2>
+        <p>A service surface appeared healthy while the underlying source freshness had stopped advancing. The operational issue is not a universal claim about the agent. It is narrower: <strong>the workflow could still appear ready to act after one piece of evidence required to justify that action had become stale.</strong></p>
+        <p>The owner decision is to constrain that authority until freshness and external confirmation are explicit gates rather than implicit assumptions.</p>
         <p class="small">This public example contains no customer information, credentials, private infrastructure identifiers or secret-bearing logs. It is an internal lab example, not independent certification or customer validation.</p>
       </div>
     </div>
@@ -135,12 +133,12 @@ const findingAnatomy = [
 
   <section class="section section-rule">
     <div class="container roe-grid">
-      <div><div class="eyebrow">Rules of Engagement</div><h2 class="section-title">Authorization is part of the system.</h2></div>
+      <div><div class="eyebrow">Rules of Engagement</div><h2 class="section-title">Authorization is part of the evidence chain.</h2></div>
       <div class="roe-list">
         <p><strong>Before testing:</strong> written scope, allowed tests, prohibited actions, access approver, data classification, minimum necessary data and safe replay conditions.</p>
         <p><strong>Public intake:</strong> prepares a scope brief only. It does not authorize testing and must not contain API keys, passwords, tokens, private keys, wallet seeds, production credentials or customer secrets.</p>
         <p><strong>Default boundary:</strong> staging/test workflow. Production penetration testing is not included by default.</p>
-        <a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a>
+        <a href="/audit-intake" class="button button-primary">Map one workflow <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>
