@@ -18,42 +18,37 @@ const gates = [
 ];
 ---
 
-<Layout title="Authority Mapper — Build an Agent Authority Ledger | BitEvo" description="A local BitEvo mini-product for mapping one AI-agent external action into an Authority Ledger, Evidence Contract, failure scenarios and owner decision posture. No data transmission and no trust score.">
+<Layout title="Authority Mapper — Build an Agent Authority Ledger | BitEvo" description="A local BitEvo mini-product for mapping one AI-agent external action into an Authority Ledger, Evidence Contract, failure scenarios and owner decision posture. Import or export locally; no data transmission and no trust score.">
   <section class="mapper-hero section">
     <div class="container hero-grid">
-      <div>
-        <div class="eyebrow">Local mini-product · Authority Mapper</div>
-        <h1 class="display">Map the authority before the agent spends it.</h1>
-      </div>
-      <div>
-        <p class="lede">Describe one consequential action. The mapper turns it into a draft <strong>Authority Ledger + Evidence Contract + failure plan + owner decision prompt</strong>. Everything runs locally in your browser.</p>
-        <div class="hero-actions"><a href="/proof" class="button button-ghost">See worked proof packs →</a><a href="/diagnostic" class="button button-ghost">Run 7-gate diagnostic</a></div>
-      </div>
+      <div><div class="eyebrow">Local mini-product · Authority Mapper v2</div><h1 class="display">Map the authority before the agent spends it.</h1></div>
+      <div><p class="lede">Describe one consequential action. The mapper turns it into a draft <strong>Authority Ledger + Evidence Contract + failure plan + owner decision prompt</strong>. Everything stays in your browser.</p><div class="hero-actions"><a href="/proof" class="button button-ghost">Worked proof packs →</a><a href="/diagnostic" class="button button-ghost">7-gate diagnostic</a></div></div>
     </div>
   </section>
 
   <section class="section-tight section-rule">
-    <div class="container warning panel" role="alert">
-      <div class="warning-mark">!</div>
-      <div><strong>No secrets. No authorization. No score.</strong><p>Do not enter credentials, tokens, private keys, wallet seeds, production secrets or customer data. This mapper creates a local planning artifact only; it does not authorize testing or certify a workflow.</p></div>
+    <div class="container warning panel" role="alert"><div class="warning-mark">!</div><div><strong>No secrets. No authorization. No score.</strong><p>Do not enter credentials, tokens, private keys, wallet seeds, production secrets or customer data. Mapper artifacts are local planning material only.</p></div></div>
+
+    <div class="container bootstrap panel">
+      <div><div class="eyebrow">Start faster</div><h2>Load a synthetic pattern or reopen your own map.</h2><p>Presets are structure examples, not observed evidence. Import accepts BitEvo mapper JSON generated on this device.</p></div>
+      <div class="bootstrap-actions">
+        <button type="button" class="button preset" data-preset="crm">SAMPLE-001 · CRM</button>
+        <button type="button" class="button preset" data-preset="message">SAMPLE-002 · Message</button>
+        <button type="button" class="button preset" data-preset="deployment">SAMPLE-003 · Config</button>
+        <label class="button import-button">Import mapper JSON<input id="importJson" type="file" accept="application/json,.json" /></label>
+      </div>
+      <div id="importState" class="bootstrap-state">Blank map · local only</div>
     </div>
 
     <div class="container mapper-grid">
       <form id="mapper" class="form-shell panel">
         <section class="form-section">
           <div class="section-head"><span>01</span><div><h2>External effect</h2><p>Start with the thing the workflow can change outside itself.</p></div></div>
-          <label>Action class
-            <select id="actionClass" required>
-              {actionClasses.map(([value,label,help]) => <option value={value}>{label} — {help}</option>)}
-            </select>
-          </label>
+          <label>Action class<select id="actionClass" required>{actionClasses.map(([value,label,help]) => <option value={value}>{label} — {help}</option>)}</select></label>
           <label>Workflow name<input id="workflowName" required placeholder="Example: Lead Qualification Agent" /></label>
           <label>Exact critical action<textarea id="criticalAction" rows="3" required placeholder="Example: update qualification_status on one matched staging lead"></textarea></label>
           <label>Exact target binding<textarea id="targetBinding" rows="3" required placeholder="How is the exact record / recipient / environment identified before execution?"></textarea></label>
-          <div class="two">
-            <label>Authority owner<input id="authorityOwner" required placeholder="Role that owns permission" /></label>
-            <label>Environment<input id="environment" required placeholder="staging / test / isolated lab / other" /></label>
-          </div>
+          <div class="two"><label>Authority owner<input id="authorityOwner" required placeholder="Role that owns permission" /></label><label>Environment<input id="environment" required placeholder="staging / test / isolated lab / other" /></label></div>
           <label>Allowed authority<textarea id="allowed" rows="3" required placeholder="What exact mutations / sends / transitions are permitted?"></textarea></label>
           <label>Authority that must remain impossible<textarea id="prohibited" rows="3" required placeholder="What actions, targets or escalation paths must never be allowed?"></textarea></label>
         </section>
@@ -70,62 +65,33 @@ const gates = [
 
         <section class="form-section">
           <div class="section-head"><span>03</span><div><h2>Decision gates</h2><p>YES means explicit enough to test. NO or UNKNOWN remains unresolved.</p></div></div>
-          <div class="gate-list">
-            {gates.map(([id,label,q], i) => (
-              <fieldset data-gate={label} data-question={q}>
-                <legend><span>{String(i + 1).padStart(2,'0')}</span><div><small>{label}</small><strong>{q}</strong></div></legend>
-                <div class="choices">
-                  <label><input type="radio" name={id} value="YES" required /> YES</label>
-                  <label><input type="radio" name={id} value="NO" /> NO</label>
-                  <label><input type="radio" name={id} value="UNKNOWN" /> UNKNOWN</label>
-                </div>
-              </fieldset>
-            ))}
-          </div>
+          <div class="gate-list">{gates.map(([id,label,q], i) => <fieldset><legend><span>{String(i + 1).padStart(2,'0')}</span><div><small>{label}</small><strong>{q}</strong></div></legend><div class="choices"><label><input type="radio" name={id} value="YES" required /> YES</label><label><input type="radio" name={id} value="NO" /> NO</label><label><input type="radio" name={id} value="UNKNOWN" /> UNKNOWN</label></div></fieldset>)}</div>
         </section>
 
         <section class="form-section">
           <div class="section-head"><span>04</span><div><h2>Consequence boundary</h2><p>Make the failure worth discussing in business terms.</p></div></div>
-          <label>Most expensive plausible error<textarea id="expensiveError" rows="3" required placeholder="Wrong customer record, unauthorized recipient, wrong environment, duplicate mutation, irreversible external effect..."></textarea></label>
+          <label>Most expensive plausible error<textarea id="expensiveError" rows="3" required placeholder="Wrong customer record, unauthorized recipient, wrong environment, duplicate mutation..."></textarea></label>
           <label>Named recovery owner<input id="recoveryOwner" required placeholder="Role responsible for reconcile / rollback / retest" /></label>
         </section>
 
-        <div class="form-actions">
-          <button type="submit" class="button button-primary">Build authority map <span aria-hidden="true">→</span></button>
-          <button type="reset" class="button button-ghost">Reset</button>
-        </div>
+        <div class="form-actions"><button type="submit" class="button button-primary">Build authority map <span aria-hidden="true">→</span></button><button type="reset" class="button button-ghost">Reset</button></div>
       </form>
 
       <aside class="output-shell panel">
         <div class="output-head"><div><div class="eyebrow">Local artifact</div><h2>Authority map</h2></div><span id="outputState">Not generated</span></div>
-        <div id="empty" class="empty"><strong>One action in. Decision structure out.</strong><p>The mapper will produce an Authority Ledger, Evidence Contract, unresolved gates, action-specific failure scenarios and a bounded owner decision posture.</p></div>
+        <div id="empty" class="empty"><strong>One action in. Decision structure out.</strong><p>Generate the map, then export it, reopen it later, or hand it to the Audit Intake without putting workflow details in a URL.</p></div>
         <div id="result" hidden>
           <div class="posture"><small>DECISION POSTURE</small><h3 id="posture"></h3><p id="postureWhy"></p></div>
-          <div class="artifact-tabs" role="tablist" aria-label="Generated artifact sections">
-            <button type="button" class="active" data-view="ledger">Authority Ledger</button>
-            <button type="button" data-view="contract">Evidence Contract</button>
-            <button type="button" data-view="failures">Failure Plan</button>
-            <button type="button" data-view="brief">Full Brief</button>
-          </div>
+          <div class="artifact-tabs" role="tablist" aria-label="Generated artifact sections"><button type="button" class="active" data-view="ledger">Authority Ledger</button><button type="button" data-view="contract">Evidence Contract</button><button type="button" data-view="failures">Failure Plan</button><button type="button" data-view="brief">Full Brief</button></div>
           <pre id="artifactText" tabindex="0"></pre>
-          <div class="output-actions"><button id="copy" type="button" class="button">Copy current view</button><button id="downloadTxt" type="button" class="button button-ghost">Download .txt</button><button id="downloadJson" type="button" class="button button-ghost">Download .json</button></div>
-          <div class="boundary"><span>BOUNDARY</span><p>This output is a planning artifact. It does not prove implementation behavior, authorize testing or establish that the workflow is safe.</p></div>
+          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button></div>
+          <div class="boundary"><span>LOCAL HANDOFF</span><p>Continue stores the generated draft in sessionStorage for the next BitEvo page. It is not transmitted to a server and it does not grant testing authorization.</p></div>
         </div>
       </aside>
     </div>
   </section>
 
-  <section class="section section-rule">
-    <div class="container explain-grid">
-      <div><div class="eyebrow">What the mapper changes</div><h2 class="section-title">From vague capability to testable authority.</h2></div>
-      <div class="explain-list">
-        <article><span>01</span><div><strong>Tool access becomes an exact action boundary.</strong><p>“Can use CRM” becomes “may update these fields on this bound object under this approval state.”</p></div></article>
-        <article><span>02</span><div><strong>Evidence becomes a contract.</strong><p>Identity, approval, freshness, version context and external confirmation are named before testing begins.</p></div></article>
-        <article><span>03</span><div><strong>Failure scenarios become action-specific.</strong><p>CRM writes, messages and deployment changes fail through different binding and confirmation paths.</p></div></article>
-        <article><span>04</span><div><strong>The result ends in an owner decision prompt.</strong><p>Expand, constrain, repair or retest is based on explicit gates — not a universal trust score.</p></div></article>
-      </div>
-    </div>
-  </section>
+  <section class="section section-rule"><div class="container explain-grid"><div><div class="eyebrow">Product path</div><h2 class="section-title">Proof → map → diagnose → scope.</h2></div><div class="explain-list"><article><span>01</span><div><strong>Proof gives you worked structures.</strong><p>Three synthetic packs show how authority changes across writes, messages and configuration effects.</p></div></article><article><span>02</span><div><strong>Mapper applies the structure to your workflow.</strong><p>Import, export and handoff preserve the artifact without converting it into a score.</p></div></article><article><span>03</span><div><strong>Diagnostic separates explicit claims from unresolved gates.</strong><p>UNKNOWN remains engineering uncertainty rather than a silent pass.</p></div></article><article><span>04</span><div><strong>Intake adds owner, access and Rules-of-Engagement context.</strong><p>The handoff saves retyping while keeping authorization separate.</p></div></article></div></div></section>
 </Layout>
 
 <script define:vars={{ gates }}>
@@ -133,199 +99,87 @@ const gates = [
   const result = document.getElementById('result');
   const empty = document.getElementById('empty');
   const outputState = document.getElementById('outputState');
+  const importState = document.getElementById('importState');
   const postureEl = document.getElementById('posture');
   const postureWhy = document.getElementById('postureWhy');
   const artifactText = document.getElementById('artifactText');
+  const importJson = document.getElementById('importJson');
+  const handoff = document.getElementById('handoff');
   const copy = document.getElementById('copy');
   const downloadTxt = document.getElementById('downloadTxt');
   const downloadJson = document.getElementById('downloadJson');
   const tabButtons = [...document.querySelectorAll('[data-view]')];
-
-  const value = (id) => document.getElementById(id)?.value?.trim() || '-';
   let currentView = 'ledger';
   let generated = null;
 
+  const value = (id) => document.getElementById(id)?.value?.trim() || '-';
+  const setValue = (id, v='') => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+  const setGate = (id, answer='UNKNOWN') => { const el = form.querySelector(`input[name="${id}"][value="${answer}"]`); if (el) el.checked = true; };
+
   const scenarioTemplates = {
-    crm: [
-      ['F01','Object mismatch','Target identifier resolves to a different record before write.','Object-binding gate must stop the mutation.'],
-      ['F02','Stale source evidence','Qualification/source state is older than the declared validity rule.','Evidence gate must fail closed.'],
-      ['F03','Internal success without same-object read-back','Tool layer reports success but the expected record state is not independently confirmed.','Treat as potential False Green; reconcile before retry.'],
-      ['F04','Partial or duplicate mutation','Only part of the intended update lands, or an ambiguous write is replayed.','Constrain replay until external state is known.']
-    ],
-    message: [
-      ['F01','Recipient drift','Resolved recipient no longer matches the approved recipient identity at send time.','Recipient-binding gate must stop send.'],
-      ['F02','Approval revision drift','Message content differs from the currently approved revision.','Approval evidence must be invalidated.'],
-      ['F03','Ambiguous provider acknowledgement','Provider accepts the request but delivery state is not independently attributable to the same recipient/message.','Do not blindly resend; reconcile provider state.'],
-      ['F04','Expired send window','Approval or campaign window expires before external effect.','Freshness gate must stop send.']
-    ],
-    deployment: [
-      ['F01','Environment mismatch','Target environment differs from the environment bound to approval.','Environment-binding gate must stop change.'],
-      ['F02','Baseline/version drift','Current config or deployment baseline changed after approval.','Re-authorize or repair decision evidence before change.'],
-      ['F03','Partial configuration effect','Mutation reports success but intended runtime/config state is only partially applied.','External confirmation must expose mismatch and trigger recovery.'],
-      ['F04','Rollback path unavailable','Change lands but declared recovery mechanism is unavailable or stale.','Constrain further authority and repair recovery control.']
-    ],
-    custom: [
-      ['F01','Target binding failure','The action is about to affect a target different from the one supported by the evidence.','Stop before external effect.'],
-      ['F02','Evidence freshness failure','A required source, approval or policy state is stale or invalid.','Fail closed and request fresh evidence.'],
-      ['F03','Unconfirmed external effect','Internal success is present without independent same-target confirmation.','Treat result as ambiguous, not successful.'],
-      ['F04','Unsafe replay after ambiguity','The workflow retries before reconciling the first effect.','Constrain replay and route to recovery owner.']
-    ]
+    crm: [['F01','Object mismatch','Target identifier resolves to a different record before write.','Object-binding gate must stop the mutation.'],['F02','Stale source evidence','Source state is older than the declared validity rule.','Evidence gate must fail closed.'],['F03','Internal success without same-object read-back','Tool layer reports success but expected record state is not independently confirmed.','Treat as potential False Green; reconcile before retry.'],['F04','Partial or duplicate mutation','Only part of the intended update lands, or an ambiguous write is replayed.','Constrain replay until external state is known.']],
+    message: [['F01','Recipient drift','Resolved recipient no longer matches the approved recipient identity at send time.','Recipient-binding gate must stop send.'],['F02','Approval revision drift','Message content differs from the currently approved revision.','Approval evidence must be invalidated.'],['F03','Ambiguous provider acknowledgement','Provider accepts request but delivery is not attributable to the same recipient/message.','Do not blindly resend; reconcile provider state.'],['F04','Expired send window','Approval or send window expires before external effect.','Freshness gate must stop send.']],
+    deployment: [['F01','Environment mismatch','Target environment differs from the environment bound to approval.','Environment-binding gate must stop change.'],['F02','Baseline/version drift','Current config or deployment baseline changed after approval.','Re-authorize or repair decision evidence before change.'],['F03','Partial configuration effect','Mutation reports success but intended runtime/config state is only partially applied.','External confirmation must expose mismatch and trigger recovery.'],['F04','Rollback path unavailable','Change lands but declared recovery mechanism is unavailable or stale.','Constrain further authority and repair recovery control.']],
+    custom: [['F01','Target binding failure','Action is about to affect a target different from the one supported by evidence.','Stop before external effect.'],['F02','Evidence freshness failure','A required source, approval or policy state is stale or invalid.','Fail closed and request fresh evidence.'],['F03','Unconfirmed external effect','Internal success exists without independent same-target confirmation.','Treat result as ambiguous, not successful.'],['F04','Unsafe replay after ambiguity','Workflow retries before reconciling the first effect.','Constrain replay and route to recovery owner.']]
   };
+
+  const presets = {
+    crm: { action_class:'crm', workflow:'CRM Qualification Update Agent', critical_action:'Update qualification_status and qualification_reason on one matched staging CRM lead.', target_binding:'Inbound lead_id resolves to exactly one staging CRM lead and the same object is used for read-back.', authority_owner:'Product Operations owner', environment:'staging CRM', allowed_authority:'Update qualification_status and qualification_reason on the matched lead only.', prohibited_authority:'No contact creation/deletion, outbound messaging, unrelated-record mutation, production write or privilege change.', expensive_error:'Wrong-object or unconfirmed CRM mutation followed by blind retry.', recovery_owner:'Workflow operator', pre_action_evidence:'Matched lead identity, qualification basis, current approval and expected workflow/config version.', freshness_rule:'Qualification and approval evidence must still satisfy the declared validity window at execution.', approval_evidence:'Current configuration explicitly allows the two target fields and transition.', version_context:'Decision trace is bound to the expected workflow/config version.', external_confirmation:'Read-after-write confirms intended values on the same lead object.', recovery_behavior:'Do not retry blindly after ambiguous write; reconcile external state first.' },
+    message: { action_class:'message', workflow:'Approved Outreach Message Agent', critical_action:'Send one approved outbound message to one resolved recipient.', target_binding:'Recipient identity is resolved and bound to the exact approved recipient before send.', authority_owner:'Campaign / communications owner', environment:'staging or test messaging path', allowed_authority:'Send the approved revision to the single approved recipient within the valid send window.', prohibited_authority:'No recipient substitution, content revision, bulk send, resend after ambiguous state, or production campaign expansion.', expensive_error:'Message sent to the wrong recipient or with stale/unapproved content.', recovery_owner:'Messaging workflow operator', pre_action_evidence:'Recipient identity, approved content revision, valid send window and current workflow/policy version.', freshness_rule:'Approval and send window must still be valid at execution time.', approval_evidence:'Approval binds the exact recipient and content revision.', version_context:'Template/workflow revision matches the approved revision.', external_confirmation:'Provider receipt/state is attributable to the same recipient and message revision.', recovery_behavior:'Ambiguous provider state blocks resend until delivery state is reconciled.' },
+    deployment: { action_class:'deployment', workflow:'Staging Configuration Change Agent', critical_action:'Change one approved staging configuration key.', target_binding:'Environment, service and configuration key are bound to the approval before mutation.', authority_owner:'Platform / service owner', environment:'staging', allowed_authority:'Change the one approved configuration key in the bound staging environment.', prohibited_authority:'No production changes, unrelated keys, privilege changes or second mutation before reconciliation.', expensive_error:'Approved change lands in the wrong environment or against the wrong baseline.', recovery_owner:'Platform operator', pre_action_evidence:'Approved key/value intent, environment identity, current baseline, version context and rollback path.', freshness_rule:'Approval is invalid if environment baseline or target version changes before execution.', approval_evidence:'Approval names the environment, service, key and intended value/change.', version_context:'Current baseline/version exactly matches the approval context.', external_confirmation:'Independent read-back confirms expected configuration/runtime state in the intended environment.', recovery_behavior:'On mismatch or partial effect, stop further mutation and reconcile/rollback before retest.' }
+  };
+
+  const applyMap = (map, label='Imported map') => {
+    const a = map.authority_ledger || map.authority || {};
+    const e = map.evidence_contract || map.evidence || {};
+    setValue('actionClass', map.action_class || 'custom'); setValue('workflowName', a.workflow); setValue('criticalAction', a.critical_action); setValue('targetBinding', a.target_binding); setValue('authorityOwner', a.authority_owner); setValue('environment', a.environment); setValue('allowed', a.allowed_authority); setValue('prohibited', a.prohibited_authority); setValue('expensiveError', a.expensive_error); setValue('recoveryOwner', a.recovery_owner);
+    setValue('preEvidence', e.pre_action_evidence); setValue('freshnessRule', e.freshness_rule); setValue('approvalRule', e.approval_evidence); setValue('versionRule', e.version_context); setValue('confirmationRule', e.external_confirmation); setValue('recoveryRule', e.recovery_behavior);
+    gates.forEach(([id]) => { const found = (map.gates || []).find(g => g.id === id); setGate(id, found?.answer || 'UNKNOWN'); });
+    importState.textContent = `${label} loaded locally · review every field`;
+    generated = null; result.hidden = true; empty.hidden = false; outputState.textContent = 'Review then generate';
+    form.scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+
+  document.querySelectorAll('.preset').forEach(btn => btn.addEventListener('click', () => {
+    const key = btn.dataset.preset; const p = presets[key];
+    applyMap({ schema:'bitevo.authority-map.preset.v1', action_class:p.action_class, authority_ledger:{ workflow:p.workflow, critical_action:p.critical_action, target_binding:p.target_binding, authority_owner:p.authority_owner, environment:p.environment, allowed_authority:p.allowed_authority, prohibited_authority:p.prohibited_authority, expensive_error:p.expensive_error, recovery_owner:p.recovery_owner }, evidence_contract:{ pre_action_evidence:p.pre_action_evidence, freshness_rule:p.freshness_rule, approval_evidence:p.approval_evidence, version_context:p.version_context, external_confirmation:p.external_confirmation, recovery_behavior:p.recovery_behavior }, gates:gates.map(([id,label,question]) => ({id,label,question,answer:'UNKNOWN'})) }, `SAMPLE preset · ${key.toUpperCase()}`);
+  }));
+
+  importJson?.addEventListener('change', async () => {
+    const file = importJson.files?.[0]; if (!file) return;
+    try { const map = JSON.parse(await file.text()); if (!map || !map.authority_ledger || !map.evidence_contract) throw new Error('Unsupported mapper JSON'); applyMap(map, 'Mapper JSON'); }
+    catch { importState.textContent = 'Import rejected · expected BitEvo mapper JSON with authority_ledger + evidence_contract'; }
+    finally { importJson.value = ''; }
+  });
 
   const buildSections = () => {
     const actionClass = value('actionClass');
-    const gateResults = gates.map(([id,label,q]) => {
-      const picked = form.querySelector(`input[name="${id}"]:checked`);
-      return { id, label, question: q, answer: picked?.value || 'UNKNOWN' };
-    });
+    const gateResults = gates.map(([id,label,q]) => ({ id, label, question:q, answer:form.querySelector(`input[name="${id}"]:checked`)?.value || 'UNKNOWN' }));
     const unresolved = gateResults.filter(g => g.answer !== 'YES');
     const posture = unresolved.length ? 'CONSTRAIN' : 'TEST / RETEST';
-    const postureReason = unresolved.length
-      ? `${unresolved.length} decision gate${unresolved.length === 1 ? '' : 's'} remain NO or UNKNOWN. Do not expand authority until those evidence/control claims are resolved.`
-      : 'All mapper gates are explicit enough to test. This is not a pass: implementation behavior still needs evidence under agreed failure scenarios.';
-
-    const ledger = [
-      '=== AUTHORITY LEDGER — DRAFT ===',
-      `Workflow: ${value('workflowName')}`,
-      `Action class: ${actionClass}`,
-      `Critical external action: ${value('criticalAction')}`,
-      `Target binding: ${value('targetBinding')}`,
-      `Authority owner: ${value('authorityOwner')}`,
-      `Environment: ${value('environment')}`,
-      `Allowed authority: ${value('allowed')}`,
-      `Prohibited authority: ${value('prohibited')}`,
-      `Recovery owner: ${value('recoveryOwner')}`,
-      `Most expensive plausible error: ${value('expensiveError')}`
-    ].join('\n');
-
-    const contract = [
-      '=== EVIDENCE CONTRACT — DRAFT ===',
-      `Pre-action evidence: ${value('preEvidence')}`,
-      `Freshness / validity rule: ${value('freshnessRule')}`,
-      `Approval evidence: ${value('approvalRule')}`,
-      `Version / configuration context: ${value('versionRule')}`,
-      `External confirmation: ${value('confirmationRule')}`,
-      `Ambiguity / recovery behavior: ${value('recoveryRule')}`,
-      '',
-      '--- DECISION GATES ---',
-      ...gateResults.map(g => `${g.answer} — ${g.label}: ${g.question}`)
-    ].join('\n');
-
+    const postureReason = unresolved.length ? `${unresolved.length} decision gate${unresolved.length === 1 ? '' : 's'} remain NO or UNKNOWN. Do not expand authority until those claims are resolved.` : 'All mapper gates are explicit enough to test. This is not a pass: implementation behavior still needs evidence under agreed failure scenarios.';
+    const ledger = ['=== AUTHORITY LEDGER — DRAFT ===',`Workflow: ${value('workflowName')}`,`Action class: ${actionClass}`,`Critical external action: ${value('criticalAction')}`,`Target binding: ${value('targetBinding')}`,`Authority owner: ${value('authorityOwner')}`,`Environment: ${value('environment')}`,`Allowed authority: ${value('allowed')}`,`Prohibited authority: ${value('prohibited')}`,`Recovery owner: ${value('recoveryOwner')}`,`Most expensive plausible error: ${value('expensiveError')}`].join('\n');
+    const contract = ['=== EVIDENCE CONTRACT — DRAFT ===',`Pre-action evidence: ${value('preEvidence')}`,`Freshness / validity rule: ${value('freshnessRule')}`,`Approval evidence: ${value('approvalRule')}`,`Version / configuration context: ${value('versionRule')}`,`External confirmation: ${value('confirmationRule')}`,`Ambiguity / recovery behavior: ${value('recoveryRule')}`,'','--- DECISION GATES ---',...gateResults.map(g => `${g.answer} — ${g.label}: ${g.question}`)].join('\n');
     const scenarios = (scenarioTemplates[actionClass] || scenarioTemplates.custom).map(([id,name,trigger,expected]) => ({ id,name,trigger,expected }));
-    const failures = [
-      '=== FAILURE PLAN — DRAFT ===',
-      'These are generated test hypotheses, not observed findings.',
-      '',
-      ...scenarios.flatMap(s => [`${s.id} — ${s.name}`, `Trigger: ${s.trigger}`, `Expected control: ${s.expected}`, ''])
-    ].join('\n');
-
-    const unresolvedText = unresolved.length
-      ? unresolved.map(g => `- ${g.label} [${g.answer}]: ${g.question}`).join('\n')
-      : '- None at the description layer. Next step is evidence-based testing.';
-
-    const brief = [
-      '=== BITEVO AUTHORITY MAPPER — LOCAL DRAFT ===',
-      `Generated: ${new Date().toISOString()}`,
-      'No secrets. No testing authorization. No certification. No trust score.',
-      '', ledger, '', contract, '', failures,
-      '=== OWNER DECISION PROMPT ===',
-      `Decision posture: ${posture}`,
-      `Reason: ${postureReason}`,
-      'Unresolved gates:',
-      unresolvedText,
-      '',
-      'Owner question: What evidence or control change is required before this workflow may retain or expand the authority described above?',
-      'Available decisions: EXPAND / CONSTRAIN / REPAIR / RETEST.',
-      '',
-      'Testing authorization: NOT GRANTED by this mapper.'
-    ].join('\n');
-
-    return {
-      schema: 'bitevo.authority-map.v1',
-      generated_at: new Date().toISOString(),
-      boundary: { local_only: true, testing_authorization: false, certification: false, trust_score: false },
-      action_class: actionClass,
-      authority_ledger: {
-        workflow: value('workflowName'), critical_action: value('criticalAction'), target_binding: value('targetBinding'), authority_owner: value('authorityOwner'), environment: value('environment'), allowed_authority: value('allowed'), prohibited_authority: value('prohibited'), recovery_owner: value('recoveryOwner'), expensive_error: value('expensiveError')
-      },
-      evidence_contract: {
-        pre_action_evidence: value('preEvidence'), freshness_rule: value('freshnessRule'), approval_evidence: value('approvalRule'), version_context: value('versionRule'), external_confirmation: value('confirmationRule'), recovery_behavior: value('recoveryRule')
-      },
-      gates: gateResults,
-      unresolved_gates: unresolved,
-      failure_scenarios: scenarios,
-      owner_decision: { posture, reason: postureReason, allowed_decisions: ['EXPAND','CONSTRAIN','REPAIR','RETEST'] },
-      views: { ledger, contract, failures, brief }
-    };
+    const failures = ['=== FAILURE PLAN — DRAFT ===','Generated hypotheses, not observed findings.','',...scenarios.flatMap(s => [`${s.id} — ${s.name}`,`Trigger: ${s.trigger}`,`Expected control: ${s.expected}`,''])].join('\n');
+    const unresolvedText = unresolved.length ? unresolved.map(g => `- ${g.label} [${g.answer}]: ${g.question}`).join('\n') : '- None at the description layer. Next step is evidence-based testing.';
+    const brief = ['=== BITEVO AUTHORITY MAPPER v2 — LOCAL DRAFT ===',`Generated: ${new Date().toISOString()}`,'No secrets. No testing authorization. No certification. No trust score.','',ledger,'',contract,'',failures,'=== OWNER DECISION PROMPT ===',`Decision posture: ${posture}`,`Reason: ${postureReason}`,'Unresolved gates:',unresolvedText,'','Owner question: What evidence or control change is required before this workflow may retain or expand the authority described above?','Available decisions: EXPAND / CONSTRAIN / REPAIR / RETEST.','','Testing authorization: NOT GRANTED by this mapper.'].join('\n');
+    return { schema:'bitevo.authority-map.v2', generated_at:new Date().toISOString(), boundary:{ local_only:true, testing_authorization:false, certification:false, trust_score:false }, action_class:actionClass, authority_ledger:{ workflow:value('workflowName'), critical_action:value('criticalAction'), target_binding:value('targetBinding'), authority_owner:value('authorityOwner'), environment:value('environment'), allowed_authority:value('allowed'), prohibited_authority:value('prohibited'), recovery_owner:value('recoveryOwner'), expensive_error:value('expensiveError') }, evidence_contract:{ pre_action_evidence:value('preEvidence'), freshness_rule:value('freshnessRule'), approval_evidence:value('approvalRule'), version_context:value('versionRule'), external_confirmation:value('confirmationRule'), recovery_behavior:value('recoveryRule') }, gates:gateResults, unresolved_gates:unresolved, failure_scenarios:scenarios, owner_decision:{ posture, reason:postureReason, allowed_decisions:['EXPAND','CONSTRAIN','REPAIR','RETEST'] }, views:{ ledger,contract,failures,brief } };
   };
 
-  const renderView = () => {
-    if (!generated) return;
-    artifactText.textContent = generated.views[currentView];
-    tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === currentView));
-  };
-
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    generated = buildSections();
-    postureEl.textContent = generated.owner_decision.posture;
-    postureWhy.textContent = generated.owner_decision.reason;
-    currentView = 'ledger';
-    renderView();
-    empty.hidden = true;
-    result.hidden = false;
-    outputState.textContent = 'Ready';
-  });
-
-  form?.addEventListener('reset', () => {
-    requestAnimationFrame(() => {
-      generated = null;
-      result.hidden = true;
-      empty.hidden = false;
-      outputState.textContent = 'Not generated';
-      artifactText.textContent = '';
-    });
-  });
-
-  tabButtons.forEach(btn => btn.addEventListener('click', () => {
-    currentView = btn.dataset.view;
-    renderView();
-  }));
-
-  copy?.addEventListener('click', async () => {
-    if (!generated) return;
-    await navigator.clipboard.writeText(generated.views[currentView]);
-    const old = copy.textContent;
-    copy.textContent = 'Copied';
-    setTimeout(() => copy.textContent = old, 1200);
-  });
-
-  const download = (filename, body, type) => {
-    const blob = new Blob([body], { type });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  downloadTxt?.addEventListener('click', () => {
-    if (!generated) return;
-    download('bitevo-authority-map.txt', generated.views.brief, 'text/plain;charset=utf-8');
-  });
-
-  downloadJson?.addEventListener('click', () => {
-    if (!generated) return;
-    const payload = { ...generated };
-    delete payload.views;
-    download('bitevo-authority-map.json', JSON.stringify(payload, null, 2), 'application/json;charset=utf-8');
-  });
+  const renderView = () => { if (!generated) return; artifactText.textContent = generated.views[currentView]; tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === currentView)); };
+  form?.addEventListener('submit', event => { event.preventDefault(); if (!form.reportValidity()) return; generated = buildSections(); postureEl.textContent = generated.owner_decision.posture; postureWhy.textContent = generated.owner_decision.reason; currentView='ledger'; renderView(); empty.hidden=true; result.hidden=false; outputState.textContent='Ready'; importState.textContent='Generated locally · export or continue to intake'; });
+  form?.addEventListener('reset', () => requestAnimationFrame(() => { generated=null; result.hidden=true; empty.hidden=false; outputState.textContent='Not generated'; importState.textContent='Blank map · local only'; artifactText.textContent=''; }));
+  tabButtons.forEach(btn => btn.addEventListener('click', () => { currentView=btn.dataset.view; renderView(); }));
+  copy?.addEventListener('click', async () => { if (!generated) return; await navigator.clipboard.writeText(generated.views[currentView]); const old=copy.textContent; copy.textContent='Copied'; setTimeout(() => copy.textContent=old,1200); });
+  const download = (filename, body, type) => { const blob=new Blob([body],{type}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; a.click(); URL.revokeObjectURL(url); };
+  downloadTxt?.addEventListener('click', () => { if (generated) download('bitevo-authority-map.txt', generated.views.brief, 'text/plain;charset=utf-8'); });
+  downloadJson?.addEventListener('click', () => { if (!generated) return; const payload={...generated}; delete payload.views; download('bitevo-authority-map.json', JSON.stringify(payload,null,2), 'application/json;charset=utf-8'); });
+  handoff?.addEventListener('click', () => { if (!generated) return; const payload={...generated}; delete payload.views; sessionStorage.setItem('bitevo.mapper.handoff.v1', JSON.stringify(payload)); location.href='/audit-intake?from=mapper'; });
 </script>
 
 <style>
-  .mapper-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 22px}.hero-grid strong{color:var(--ink)}.hero-actions{display:flex;gap:9px;flex-wrap:wrap}.warning{max-width:1180px;padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:14px;border-color:rgba(239,186,92,.24);margin-bottom:20px}.warning-mark{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(239,186,92,.35);border-radius:50%;color:var(--gold);font:500 .72rem var(--mono)}.warning strong{color:var(--ink)}.warning p{margin:4px 0 0;color:var(--muted);font-size:.78rem}.mapper-grid{max-width:1180px;display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.form-shell{padding:0 28px}.form-section{padding:27px 0;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:34px 1fr;gap:12px;margin-bottom:21px}.section-head>span{color:var(--green);font:500 .64rem var(--mono)}.section-head h2{margin:0;font-size:1.06rem}.section-head p{margin:4px 0 0;color:var(--muted);font-size:.76rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;color:#96a29f;font:500 .63rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase}input,textarea,select{width:100%;border:1px solid var(--line-strong);border-radius:11px;background:rgba(255,255,255,.025);color:var(--ink);padding:11px 12px;font:500 .82rem/1.55 var(--sans);letter-spacing:0;text-transform:none;outline:none}input:focus,textarea:focus,select:focus{border-color:rgba(127,208,177,.55);box-shadow:0 0 0 3px rgba(127,208,177,.06)}textarea{resize:vertical}.gate-list{border-top:1px solid var(--line)}fieldset{border:0;margin:0;padding:20px 0;border-bottom:1px solid var(--line)}legend{width:100%;display:grid;grid-template-columns:34px 1fr;gap:12px}legend>span{color:var(--green);font:500 .6rem var(--mono)}legend div{display:flex;flex-direction:column;gap:4px}legend small{color:var(--muted);font:500 .56rem var(--mono);letter-spacing:.09em;text-transform:uppercase}legend strong{font-size:.84rem;line-height:1.45}.choices{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 0 46px}.choices label{cursor:pointer;display:flex;flex-direction:row;align-items:center;gap:6px;margin:0;padding:7px 10px;border:1px solid var(--line);border-radius:999px}.choices label:has(input:checked){border-color:rgba(127,208,177,.48);color:var(--ink);background:rgba(127,208,177,.06)}.choices input{width:auto;padding:0;accent-color:var(--green)}.form-actions{display:flex;gap:9px;flex-wrap:wrap;padding:25px 0}.output-shell{position:sticky;top:96px;padding:24px}.output-head{display:flex;justify-content:space-between;gap:15px}.output-head h2{margin:4px 0 0;font-size:1.25rem}.output-head>span{height:max-content;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .56rem var(--mono)}.empty{min-height:430px;display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--line);margin-top:20px}.empty strong{font-size:1.08rem}.empty p{color:var(--muted);font-size:.82rem}.posture{padding:22px 0;border-top:1px solid var(--line);margin-top:20px}.posture small,.boundary span{color:var(--gold);font:500 .57rem var(--mono);letter-spacing:.1em}.posture h3{margin:8px 0 8px;color:var(--green);font-size:1.65rem}.posture p,.boundary p{margin:0;color:var(--muted);font-size:.79rem}.artifact-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:15px 0;border-top:1px solid var(--line)}.artifact-tabs button{cursor:pointer;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);padding:7px 9px;font:500 .56rem var(--mono)}.artifact-tabs button.active{border-color:rgba(127,208,177,.45);background:rgba(127,208,177,.06);color:var(--ink)}pre{min-height:390px;max-height:560px;overflow:auto;margin:0;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.18);white-space:pre-wrap;color:var(--ink-soft);font:500 .65rem/1.68 var(--mono)}.output-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.boundary{padding-top:18px;margin-top:18px;border-top:1px solid var(--line)}.boundary p{margin-top:6px}.explain-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px)}.explain-list{border-top:1px solid var(--line)}.explain-list article{display:grid;grid-template-columns:40px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}.explain-list article>span{color:var(--green);font:500 .62rem var(--mono)}.explain-list strong{font-size:.88rem}.explain-list p{margin:5px 0 0;color:var(--muted);font-size:.8rem}
-  @media(max-width:940px){.hero-grid,.mapper-grid,.explain-grid{grid-template-columns:1fr}.output-shell{position:static}}
-  @media(max-width:620px){.form-shell{padding:0 18px}.two{grid-template-columns:1fr}.choices{margin-left:0}.output-actions .button,.form-actions .button{width:100%}}
+  .mapper-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 22px}.hero-grid strong{color:var(--ink)}.hero-actions,.bootstrap-actions,.output-actions,.form-actions{display:flex;gap:9px;flex-wrap:wrap}.warning,.bootstrap{max-width:1180px;margin-bottom:18px}.warning{padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:14px;border-color:rgba(239,186,92,.24)}.warning-mark{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(239,186,92,.35);border-radius:50%;color:var(--gold);font:500 .72rem var(--mono)}.warning p,.bootstrap p{margin:4px 0 0;color:var(--muted);font-size:.78rem}.bootstrap{padding:24px;display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center}.bootstrap h2{margin:4px 0 7px;font-size:1.2rem}.bootstrap-actions{justify-content:flex-end}.import-button{cursor:pointer;margin:0;text-transform:none;letter-spacing:0;font-family:var(--sans)}.import-button input{display:none}.bootstrap-state{grid-column:1/-1;padding-top:13px;border-top:1px solid var(--line);color:var(--green);font:500 .6rem var(--mono)}.mapper-grid{max-width:1180px;display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.form-shell{padding:0 28px}.form-section{padding:27px 0;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:34px 1fr;gap:12px;margin-bottom:21px}.section-head>span,legend>span{color:var(--green);font:500 .62rem var(--mono)}.section-head h2{margin:0;font-size:1.06rem}.section-head p{margin:4px 0 0;color:var(--muted);font-size:.76rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;color:#96a29f;font:500 .63rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase}input,textarea,select{width:100%;border:1px solid var(--line-strong);border-radius:11px;background:rgba(255,255,255,.025);color:var(--ink);padding:11px 12px;font:500 .82rem/1.55 var(--sans);letter-spacing:0;text-transform:none;outline:none}input:focus,textarea:focus,select:focus{border-color:rgba(127,208,177,.55);box-shadow:0 0 0 3px rgba(127,208,177,.06)}textarea{resize:vertical}.gate-list{border-top:1px solid var(--line)}fieldset{border:0;margin:0;padding:20px 0;border-bottom:1px solid var(--line)}legend{width:100%;display:grid;grid-template-columns:34px 1fr;gap:12px}legend div{display:flex;flex-direction:column;gap:4px}legend small{color:var(--muted);font:500 .56rem var(--mono);letter-spacing:.09em;text-transform:uppercase}legend strong{font-size:.84rem;line-height:1.45}.choices{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 0 46px}.choices label{cursor:pointer;display:flex;flex-direction:row;align-items:center;gap:6px;margin:0;padding:7px 10px;border:1px solid var(--line);border-radius:999px}.choices label:has(input:checked){border-color:rgba(127,208,177,.48);color:var(--ink);background:rgba(127,208,177,.06)}.choices input{width:auto;padding:0;accent-color:var(--green)}.form-actions{padding:25px 0}.output-shell{position:sticky;top:96px;padding:24px}.output-head{display:flex;justify-content:space-between;gap:15px}.output-head h2{margin:4px 0 0;font-size:1.25rem}.output-head>span{height:max-content;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .56rem var(--mono)}.empty{min-height:430px;display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--line);margin-top:20px}.empty p,.posture p,.boundary p{color:var(--muted);font-size:.79rem}.posture{padding:22px 0;border-top:1px solid var(--line);margin-top:20px}.posture small,.boundary span{color:var(--gold);font:500 .57rem var(--mono);letter-spacing:.1em}.posture h3{margin:8px 0;color:var(--green);font-size:1.65rem}.artifact-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:15px 0;border-top:1px solid var(--line)}.artifact-tabs button{cursor:pointer;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);padding:7px 9px;font:500 .56rem var(--mono)}.artifact-tabs button.active{border-color:rgba(127,208,177,.45);background:rgba(127,208,177,.06);color:var(--ink)}pre{min-height:390px;max-height:560px;overflow:auto;margin:0;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.18);white-space:pre-wrap;color:var(--ink-soft);font:500 .65rem/1.68 var(--mono)}.output-actions{margin-top:12px}.boundary{padding-top:18px;margin-top:18px;border-top:1px solid var(--line)}.explain-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px)}.explain-list{border-top:1px solid var(--line)}.explain-list article{display:grid;grid-template-columns:40px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}.explain-list article>span{color:var(--green);font:500 .62rem var(--mono)}.explain-list p{margin:5px 0 0;color:var(--muted);font-size:.8rem}
+  @media(max-width:940px){.hero-grid,.bootstrap,.mapper-grid,.explain-grid{grid-template-columns:1fr}.bootstrap-actions{justify-content:flex-start}.output-shell{position:static}}
+  @media(max-width:620px){.form-shell{padding:0 18px}.two{grid-template-columns:1fr}.choices{margin-left:0}.output-actions .button,.form-actions .button,.bootstrap-actions .button{width:100%}}
 </style>
