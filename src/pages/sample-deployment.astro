@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const ledger = [
+  ['Critical action', 'Change one approved configuration key in one staging environment.'],
+  ['Target object', 'Exactly one config key in the synthetic staging service/environment pair.'],
+  ['Authority owner', 'Synthetic Platform Engineering owner for SAMPLE-003.'],
+  ['Allowed transition', 'Expected baseline value → one approved target value in staging only.'],
+  ['Prohibited transitions', 'No production mutation, secret rotation, privilege change, unrelated config write, deployment promotion or destructive rollback.'],
+  ['Retry / replay right', 'No repeated mutation after ambiguous apply state; reconcile environment and version first.'],
+  ['Recovery owner', 'Synthetic platform owner decides rollback / repair / retest.']
+];
+
+const contract = [
+  ['Environment binding', 'Execution target must resolve to the exact approved staging project/service/environment.'],
+  ['Baseline evidence', 'Current config value and expected revision must match the decision trace before mutation.'],
+  ['Approval evidence', 'The exact key/value transition must be approved for the bound staging environment.'],
+  ['Freshness rule', 'Baseline/config state must be re-read immediately before mutation; drift invalidates the approval context.'],
+  ['Version context', 'Workflow, config schema and environment revision identifiers must match the approved change context.'],
+  ['External confirmation', 'Read-back from the bound environment must confirm the exact target value and revision after mutation.'],
+  ['Missing evidence behavior', 'REPAIR / CONSTRAIN: do not apply or reapply while target environment, baseline or resulting state is ambiguous.']
+];
+
+const failures = [
+  ['F01','Environment alias resolves to production','Environment-binding gate must fail before mutation.'],
+  ['F02','Baseline value changed after approval','Approval context is stale; route to review.'],
+  ['F03','Config schema/version drift','Version-context gate should fail.'],
+  ['F04','Tool reports apply success but read-back is unchanged','Potential False Green; do not infer completed change.'],
+  ['F05','Partial apply or propagation disagreement','Treat resulting state as ambiguous and constrain follow-up mutation.'],
+  ['F06','Ambiguous apply followed by automatic retry','Block retry pending reconciliation.'],
+  ['F07','Rollback target does not match captured baseline','Rollback authority must fail.'],
+  ['F08','Read-back comes from different environment/revision','External confirmation is invalid.']
+];
+
+const finding = [
+  ['Finding ID','SAMPLE-CTX-003'],
+  ['Class','Version-context / environment-binding gap'],
+  ['Status','SYNTHETIC WORKED EXAMPLE — NOT EXECUTED'],
+  ['Trigger','A config mutation remains executable after the approved environment or baseline/version context has drifted.'],
+  ['Authority involved','Change one approved staging config key from the captured baseline to one approved value.'],
+  ['Observed effect','Not observed. SAMPLE-003 does not claim a real deployment, config write or rollback.'],
+  ['Decision relevance','An approved value change is not sufficient authority if the environment or baseline it was approved against is no longer the same.'],
+  ['Recommended decision','REPAIR the environment/baseline binding and constrain mutation/retry until exact post-change state can be independently confirmed.']
+];
+
+const memo = [
+  ['Owner question','Can this workflow retain autonomous staging config-change authority when environment aliases or baseline revisions can drift?'],
+  ['Decision','REPAIR'],
+  ['Reason','The action can remain technically valid while the approval context no longer identifies the same environment/baseline.'],
+  ['Control change','Bind approval to immutable environment identity + baseline revision; require immediate pre-write validation and post-write same-environment read-back.'],
+  ['Authority after decision','Proposal generation may continue, but mutation and retry remain constrained until target/baseline binding is explicit.'],
+  ['Residual uncertainty','Actual platform propagation, rollback semantics and consistency windows are NOT TESTED in this synthetic example.'],
+  ['Retest criterion','Replay alias drift, baseline drift and ambiguous apply paths; require fail-before-write or exact bound-environment confirmation/recovery.']
+];
+---
+
+<Layout title="SAMPLE-003 — Synthetic Deployment & Config Authority Audit | BitEvo" description="Synthetic BitEvo audit pack for a staging configuration-change agent: environment binding, baseline evidence, version context, read-back and rollback authority. Not customer evidence or an executed audit.">
+  <section class="sample-hero section">
+    <div class="container hero-grid"><div><div class="eyebrow">Public sample pack · SAMPLE-003</div><h1 class="display">An approved change is not approved everywhere.</h1><p class="lede">SAMPLE-003 applies the BitEvo method to one staging configuration mutation. The key boundary is whether the approved value change is still bound to the same environment, baseline and version context at execution.</p><div class="actions"><a href="/sample-deployment.json" class="button button-primary">Open JSON pack <span aria-hidden="true">↗</span></a><a href="/proof" class="button button-ghost">Proof matrix</a></div></div><aside class="boundary panel"><strong>SYNTHETIC / NOT EXECUTED</strong><p>No real cloud account, repository, environment, deployment, secret, configuration or rollback is represented.</p><div class="tags"><span>SYNTHETIC</span><span>ASSUMPTION</span><span>EXPECTED GATE</span><span>NOT TESTED</span></div></aside></div>
+  </section>
+
+  <section class="section-tight section-rule"><div class="container scenario panel"><div><div class="eyebrow">Synthetic workflow</div><h2>Staging Configuration Change Agent</h2></div><div class="scenario-grid"><div><span>INPUT</span><strong>environment_ref + key + approved value</strong></div><div><span>EFFECT</span><strong>one staging config mutation</strong></div><div><span>PRIMARY RISK</span><strong>environment / baseline drift</strong></div><div><span>OWNER DECISION</span><strong>is mutation authority still justified?</strong></div></div></div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">A1 · Authority Ledger</div><h2 class="section-title">Bind change authority to environment and transition.</h2></div><p class="lede">“Can edit config” is too broad. The useful authority unit is one key, one environment, one baseline-to-target transition and one recovery owner.</p></div><div class="container record panel">{ledger.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">A2 · Evidence Contract</div><h2 class="section-title">The baseline is part of the authorization.</h2></div><p class="lede">Evidence Before Effect means an approval made against baseline A cannot silently authorize a mutation after the environment has become baseline B.</p></div><div class="container record panel">{contract.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">Failure plan</div><h2 class="section-title">Break environment, baseline and rollback assumptions separately.</h2></div><p class="lede">These are synthetic scenarios only. Real deployment/config work requires written environment and rollback boundaries before any execution.</p></div><div class="container failure-grid">{failures.map(([id,s,e]) => <article class="panel"><span>{id}</span><h3>{s}</h3><p>{e}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">A3 · Finding Record</div><h2 class="section-title">SAMPLE-CTX-003 — environment-context gap.</h2></div><p class="lede">The worked finding demonstrates why a syntactically valid change can still lack current authority when target or baseline identity drifts.</p></div><div class="container record panel">{finding.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></section>
+
+  <section class="section section-rule"><div class="container memo panel"><div class="memo-head"><div><div class="eyebrow">A4 · Decision Memo</div><h2>REPAIR</h2></div><span>SAMPLE-003 / OWNER DECISION</span></div><div class="memo-grid">{memo.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></div></section>
+
+  <section class="section section-rule"><div class="container retest-grid"><div><div class="eyebrow">Retest criterion</div><h2 class="section-title">No mutation against an unbound baseline.</h2><p class="lede">The repair only closes when environment drift and baseline drift are rejected before write, while ambiguous apply state routes to reconciliation instead of another mutation.</p></div><div class="retest panel"><span>PASS CONDITION</span><strong>Exact environment + baseline + resulting state are bound in one trace.</strong><p>If any part is unresolved, the workflow must stop or recover without spending additional Authority Budget.</p><span>THIS SAMPLE</span><strong>NOT TESTED</strong></div></div></section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Compare action classes</div><h2 class="section-title">Infrastructure authority has a different object, not a different doctrine.</h2><p class="lede">Compare CRM, outbound messaging and config mutation to see how the same decision chain adapts to external-effect semantics.</p><div class="actions final-actions"><a href="/proof" class="button button-primary">Open proof matrix <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button button-ghost">Map your workflow</a></div></div></section>
+</Layout>
+
+<style>
+  .sample-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.split-head,.retest-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(42px,8vw,100px);align-items:center}.sample-hero .lede{margin:24px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.boundary{padding:28px}.boundary strong{color:var(--gold);font:500 .66rem var(--mono)}.boundary p{color:var(--muted);font-size:.8rem}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.tags span{padding:5px 7px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .54rem var(--mono)}.scenario{padding:28px}.scenario h2{margin:5px 0 22px;font-size:clamp(1.5rem,3vw,2.4rem)}.scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.scenario-grid div{padding:18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.scenario-grid span,.record span,.memo-grid span,.retest span{display:block;color:var(--green);font:500 .57rem var(--mono);letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}.scenario-grid strong{font-size:.78rem}.split-head{align-items:end;margin-bottom:34px}.split-head .lede{margin:0}.record{padding:8px 26px}.record>div{display:grid;grid-template-columns:190px 1fr;gap:26px;padding:18px 0;border-bottom:1px solid var(--line)}.record>div:last-child{border-bottom:0}.record p{margin:0;color:var(--muted);font-size:.84rem}.failure-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.failure-grid article{min-height:190px;padding:22px;display:flex;flex-direction:column}.failure-grid article>span{color:var(--green);font:500 .62rem var(--mono)}.failure-grid h3{margin:auto 0 8px;font-size:.92rem}.failure-grid p{margin:0;color:var(--muted);font-size:.76rem}.memo{padding:clamp(28px,5vw,52px)}.memo-head{display:flex;justify-content:space-between;gap:22px;padding-bottom:26px;border-bottom:1px solid var(--line)}.memo-head h2{font-size:clamp(3.4rem,8vw,7rem);line-height:.8;letter-spacing:-.07em;margin:18px 0 0;color:var(--green)}.memo-head>span{color:var(--muted);font:500 .58rem var(--mono)}.memo-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.memo-grid>div{padding:18px 0;border-bottom:1px solid var(--line)}.memo-grid p{margin:0;color:var(--muted);font-size:.82rem}.retest-grid{align-items:start}.retest{padding:26px}.retest strong{display:block;margin-bottom:8px}.retest p{color:var(--muted);font-size:.8rem}.retest span:not(:first-child){margin-top:24px}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
+  @media(max-width:900px){.hero-grid,.split-head,.retest-grid{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr 1fr}.failure-grid{grid-template-columns:1fr 1fr}.memo-grid{grid-template-columns:1fr}}
+  @media(max-width:620px){.scenario-grid,.failure-grid{grid-template-columns:1fr}.record>div{grid-template-columns:1fr;gap:5px}.memo-head{flex-direction:column}.memo-head>span{order:-1}}
+</style>
