@@ -11,6 +11,15 @@ const failureScenarios = [
   'Authority applied to the wrong object',
   'Evidence unavailable at decision time'
 ];
+
+const findingAnatomy = [
+  ['Trigger', 'The exact precondition or event that makes the failure path reachable.'],
+  ['Authority', 'Which permission, approval or action boundary is involved — and what should have constrained it.'],
+  ['Evidence', 'The smallest reproducible set of inputs, timestamps, logs or external observations supporting the finding.'],
+  ['Effect', 'What actually changed outside the model or orchestration layer, including partial and duplicate effects.'],
+  ['Recovery', 'Whether the workflow returns to a known state, fails closed, retries safely or compounds ambiguity.'],
+  ['Decision', 'The engineering or product action justified by the observed consequence and evidence quality.']
+];
 ---
 
 <Layout title="Agent Authority & Evidence Audit — BitEvo" description="A five-day bounded engineering audit for AI-agent authority, evidence chains, failure controls and operational traceability.">
@@ -74,6 +83,25 @@ const failureScenarios = [
     </div>
   </section>
 
+  <section class="section section-rule finding-section">
+    <div class="container section-heading">
+      <div><div class="eyebrow">Finding anatomy</div><h2 class="section-title">A defect is not decision-grade until the evidence closes the loop.</h2></div>
+      <p class="lede">Every accepted finding is structured so another engineer can challenge the assumptions, reproduce the path and understand exactly what owner decision follows from it.</p>
+    </div>
+    <div class="container anatomy-grid">
+      {findingAnatomy.map(([title, text], i) => (
+        <article>
+          <span>{String(i + 1).padStart(2,'0')}</span>
+          <div><h3>{title}</h3><p>{text}</p></div>
+        </article>
+      ))}
+    </div>
+    <div class="container severity-note panel">
+      <div><div class="eyebrow">Severity discipline</div><h3>Consequence and reproducibility stay separate from confidence.</h3></div>
+      <p>We distinguish observed consequence, reachability/reproducibility, evidence quality and control leverage. A dramatic hypothesis with weak evidence does not outrank a narrower failure that can be reproduced and tied to a real external effect.</p>
+    </div>
+  </section>
+
   <section class="section section-rule">
     <div class="container delivery-grid">
       <div class="delivery-copy">
@@ -123,9 +151,10 @@ const failureScenarios = [
   .section-heading{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,8vw,110px);margin-bottom:38px}.section-heading .lede{margin:3px 0 0}.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.fit-card{padding:28px}.fit-card>span{display:inline-flex;margin-bottom:12px;color:var(--green);font:500 .67rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.fit-card.neutral>span{color:var(--gold)}.fit-card ul{margin:0;padding-left:19px;color:var(--muted)}.fit-card li{padding:5px 0}
   .method-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(48px,8vw,120px)}.method-copy .lede{margin-top:20px}.planes{border-top:1px solid var(--line)}.planes article{display:grid;grid-template-columns:46px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}.planes article>span{color:#596763;font:500 .65rem var(--mono)}.planes h3{margin:0 0 6px;font-size:1rem}.planes p{margin:0;color:var(--muted);font-size:.86rem}
   .scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.scenario-grid div{min-height:150px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,16,18,.48)}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:0}.scenario-grid span{color:#596763;font:500 .62rem var(--mono)}.scenario-grid strong{font-size:.83rem;line-height:1.5}
+  .anatomy-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.anatomy-grid article{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,16,18,.42)}.anatomy-grid article:nth-child(2n){border-right:0}.anatomy-grid article:nth-last-child(-n+2){border-bottom:0}.anatomy-grid article>span{color:var(--green);font:500 .62rem var(--mono)}.anatomy-grid h3{margin:0 0 6px;font-size:.96rem}.anatomy-grid p{margin:0;color:var(--muted);font-size:.82rem}.severity-note{display:grid;grid-template-columns:.75fr 1.25fr;gap:42px;margin-top:18px;padding:28px}.severity-note h3{margin:0;font-size:1.2rem}.severity-note p{margin:0;color:var(--muted)}
   .delivery-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(44px,8vw,110px);align-items:start}.delivery-copy .lede{margin-top:18px}.deliverables{padding:8px 24px}.deliverables>div{display:grid;grid-template-columns:34px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}.deliverables>div:last-child{border-bottom:0}.deliverables>div>span{color:var(--green);font:500 .64rem var(--mono)}.deliverables section{margin:0}.deliverables strong{font-size:.9rem}.deliverables p{margin:5px 0 0;color:var(--muted);font-size:.81rem}
   .lab-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(38px,7vw,90px);padding:clamp(28px,5vw,56px)}.lab-id{font-size:clamp(3.2rem,6vw,5.8rem);font-weight:700;letter-spacing:-.06em;line-height:1;margin:10px 0 18px}.tags{display:flex;gap:7px;flex-wrap:wrap}.tags span{border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:var(--muted);font:500 .58rem var(--mono)}.lab-copy h2{margin:0 0 16px;font-size:clamp(1.8rem,3.5vw,3rem);letter-spacing:-.04em}.lab-copy p{color:var(--muted);font-size:.94rem}.lab-copy strong{color:var(--ink)}.lab-copy .small{font-size:.76rem;margin-top:24px}
   .roe-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,8vw,110px)}.roe-list{border-top:1px solid var(--line)}.roe-list p{margin:0;padding:19px 0;border-bottom:1px solid var(--line);color:var(--muted)}.roe-list strong{color:var(--ink)}.roe-list .button{margin-top:24px}
-  @media(max-width:900px){.hero-grid,.method-grid,.delivery-grid,.lab-grid,.roe-grid{grid-template-columns:1fr}.commercial-card{max-width:620px}.scenario-grid{grid-template-columns:1fr 1fr}.scenario-grid div:nth-child(2n){border-right:0}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}.scenario-grid div:nth-last-child(-n+2){border-bottom:0}}
-  @media(max-width:700px){.section-heading{grid-template-columns:1fr;gap:24px}.fit-grid{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr}.scenario-grid div{border-right:0!important;border-bottom:1px solid var(--line)!important;min-height:120px}.scenario-grid div:last-child{border-bottom:0!important}.price{font-size:3.5rem}}
+  @media(max-width:900px){.hero-grid,.method-grid,.delivery-grid,.lab-grid,.roe-grid,.severity-note{grid-template-columns:1fr}.commercial-card{max-width:620px}.scenario-grid{grid-template-columns:1fr 1fr}.scenario-grid div:nth-child(2n){border-right:0}.scenario-grid div:nth-child(4n){border-right:0}.scenario-grid div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}.scenario-grid div:nth-last-child(-n+2){border-bottom:0}}
+  @media(max-width:700px){.section-heading{grid-template-columns:1fr;gap:24px}.fit-grid,.anatomy-grid{grid-template-columns:1fr}.anatomy-grid article{border-right:0;border-bottom:1px solid var(--line)!important}.anatomy-grid article:last-child{border-bottom:0!important}.scenario-grid{grid-template-columns:1fr}.scenario-grid div{border-right:0!important;border-bottom:1px solid var(--line)!important;min-height:120px}.scenario-grid div:last-child{border-bottom:0!important}.price{font-size:3.5rem}}
 </style>
