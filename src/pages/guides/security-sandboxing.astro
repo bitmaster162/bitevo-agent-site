@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Security Sandboxing for AI Agents — BitEvo" description="Public-safe overview of execution isolation and bounded tool controls, without internal control endpoints.">
+  <section class="guide"><div class="container card">
+    <div class="kicker">Security · public-safe reference</div>
+    <h1>Security Sandboxing: isolation and bounded tool execution</h1>
+    <p>Sandboxing reduces the blast radius of agent tool calls by combining allowlisted capabilities, argument validation, resource limits, isolated execution and explicit approval boundaries.</p>
+    <h2>Public design principles</h2>
+    <ul><li>Default-deny tool access and least privilege.</li><li>Schema validation before execution.</li><li>Resource and time budgets appropriate to the workflow.</li><li>Isolation boundaries that prevent one task from inheriting unrelated authority.</li><li>Audit evidence sufficient to reconstruct allowed and denied actions.</li></ul>
+    <p class="boundary">Internal control routes, hostnames, IP addresses, credentials and operator endpoints are intentionally omitted from this public guide. Concrete implementation details belong in a scoped engineering review, not on the public proof surface.</p>
+    <div class="actions"><a href="/agent-authority-audit">Agent Authority & Evidence Audit</a><a href="/audit-intake">Audit intake</a></div>
+  </div></section>
+</Layout>
+
+<style>.guide{padding:60px 0}.card{max-width:860px;background:var(--paper-soft);border:1px solid var(--line);border-radius:14px;padding:32px}.kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.card h1,.card h2{font-family:'Playfair Display',serif}.card p,.card li{color:var(--muted);line-height:1.7}.boundary{border:1px solid var(--line);border-radius:10px;padding:16px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.actions a{padding:10px 16px;border:1px solid var(--line-strong);border-radius:8px;font-weight:900}.actions a:first-child{background:var(--gold);color:#07090a}</style>
