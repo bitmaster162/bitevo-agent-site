@@ -37,6 +37,10 @@ function attr(tag, name) {
   return tag?.match(new RegExp(`\\b${name}=["']([^"']+)["']`, 'i'))?.[1] || null;
 }
 
+function stripTags(text) {
+  return text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+}
+
 const files = await walk(distPath);
 const htmlFiles = files.filter(file => extname(file).toLowerCase() === '.html');
 const routes = new Set(htmlFiles.map(routeFromHtml));
@@ -46,6 +50,7 @@ let metadataChecks = 0;
 let alternateChecks = 0;
 let externalBlankChecks = 0;
 let configChecks = 0;
+let accessibilityChecks = 0;
 
 for (const file of htmlFiles) {
   const route = routeFromHtml(file);
@@ -85,6 +90,26 @@ for (const file of htmlFiles) {
       const imageUrl = attr(tag, 'content');
       if (imageUrl && !imageUrl.startsWith(`${siteOrigin}/`)) failures.push(`${route}: ${label} outside canonical site origin (${imageUrl})`);
     }
+
+    const h1Count = [...html.matchAll(/<h1\b/gi)].length;
+    accessibilityChecks += 3;
+    if (h1Count !== 1) failures.push(`${route}: expected exactly one h1, found ${h1Count}`);
+    if (!/<main\b[^>]*\bid=["']main-content["']/i.test(html)) failures.push(`${route}: missing main#main-content landmark`);
+    if (!/<a\b[^>]*\bclass=["'][^"']*skip-link[^"']*["'][^>]*\bhref=["']#main-content["']/i.test(html)) failures.push(`${route}: missing skip link to #main-content`);
+  }
+
+  for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
+    accessibilityChecks += 1;
+    if (!/\balt=["'][^"']*["']/i.test(match[0])) failures.push(`${route}: img missing alt attribute`);
+  }
+
+  for (const match of html.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/gi)) {
+    accessibilityChecks += 1;
+    const attrs = match[1] || '';
+    const text = stripTags(match[2] || '');
+    const ariaLabel = attrs.match(/\baria-label=["']([^"']+)["']/i)?.[1]?.trim();
+    const title = attrs.match(/\btitle=["']([^"']+)["']/i)?.[1]?.trim();
+    if (!text && !ariaLabel && !title) failures.push(`${route}: button has no accessible name`);
   }
 
   for (const match of html.matchAll(/<link\b[^>]*\brel=["']alternate["'][^>]*>/gi)) {
@@ -159,4 +184,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
+console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
