@@ -42,15 +42,18 @@ function stripTags(text) {
 }
 
 const files = await walk(distPath);
+const fileSet = new Set(files.map(rel));
 const htmlFiles = files.filter(file => extname(file).toLowerCase() === '.html');
 const routes = new Set(htmlFiles.map(routeFromHtml));
+const publicFiles = new Set([...fileSet].map(path => `/${path}`));
 const failures = [];
 let indexableCount = 0;
 let metadataChecks = 0;
+let accessibilityChecks = 0;
 let alternateChecks = 0;
+let internalLinkChecks = 0;
 let externalBlankChecks = 0;
 let configChecks = 0;
-let accessibilityChecks = 0;
 
 for (const file of htmlFiles) {
   const route = routeFromHtml(file);
@@ -112,6 +115,19 @@ for (const file of htmlFiles) {
     if (!text && !ariaLabel && !title) failures.push(`${route}: button has no accessible name`);
   }
 
+  for (const match of html.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)) {
+    const href = match[1];
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) continue;
+    if (href.startsWith('/')) {
+      internalLinkChecks += 1;
+      const target = new URL(href, siteOrigin).pathname.replace(/\/$/, '') || '/';
+      const targetFile = target === '/' ? '/index.html' : target;
+      if (!routes.has(target) && !publicFiles.has(target) && !publicFiles.has(targetFile)) {
+        failures.push(`${route}: internal link points to missing built target ${href}`);
+      }
+    }
+  }
+
   for (const match of html.matchAll(/<link\b[^>]*\brel=["']alternate["'][^>]*>/gi)) {
     const tag = match[0];
     const hreflang = attr(tag, 'hreflang');
@@ -138,7 +154,6 @@ for (const file of htmlFiles) {
 
 const sitemapFile = join(distPath, 'sitemap.xml');
 const llmsFile = join(distPath, 'llms.txt');
-const fileSet = new Set(files.map(rel));
 
 if (!fileSet.has('build/index.html')) failures.push('/build: route missing from static output');
 if (!fileSet.has('sitemap.xml')) failures.push('sitemap.xml missing from static output');
@@ -184,4 +199,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
+console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
