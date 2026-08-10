@@ -41,23 +41,40 @@ function stripTags(text) {
   return text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 }
 
+function anchorHasFunnel(html, marker, href) {
+  return [...html.matchAll(/<a\b[^>]*>/gi)].some(match => {
+    const tag = match[0];
+    return attr(tag, 'data-funnel') === marker && attr(tag, 'href') === href;
+  });
+}
+
+function anchorHasText(html, href, expectedText) {
+  return [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].some(match => {
+    const tag = `<a${match[1]}>`;
+    return attr(tag, 'href') === href && stripTags(match[2]).includes(expectedText);
+  });
+}
+
 const files = await walk(distPath);
 const fileSet = new Set(files.map(rel));
 const htmlFiles = files.filter(file => extname(file).toLowerCase() === '.html');
 const routes = new Set(htmlFiles.map(routeFromHtml));
 const publicFiles = new Set([...fileSet].map(path => `/${path}`));
+const htmlByRoute = new Map();
 const failures = [];
 let indexableCount = 0;
 let metadataChecks = 0;
 let accessibilityChecks = 0;
 let alternateChecks = 0;
 let internalLinkChecks = 0;
+let funnelChecks = 0;
 let externalBlankChecks = 0;
 let configChecks = 0;
 
 for (const file of htmlFiles) {
   const route = routeFromHtml(file);
   const html = await readFile(file, 'utf8');
+  htmlByRoute.set(route, html);
   if (route === '/404.html') continue;
 
   const robotsTag = attrTag(html, 'name', 'robots');
@@ -152,6 +169,32 @@ for (const file of htmlFiles) {
   if (/href=["']javascript:/i.test(html)) failures.push(`${route}: javascript: href is prohibited`);
 }
 
+const funnelContracts = [
+  ['/', 'home-primary', '/mapper'],
+  ['/', 'home-proof', '/proof'],
+  ['/', 'map', '/mapper'],
+  ['/', 'proof', '/proof'],
+  ['/', 'scope', '/audit-intake']
+];
+for (const [route, marker, href] of funnelContracts) {
+  funnelChecks += 1;
+  const html = htmlByRoute.get(route) || '';
+  if (!anchorHasFunnel(html, marker, href)) failures.push(`${route}: funnel marker ${marker} must point to ${href}`);
+}
+
+const funnelTextContracts = [
+  ['/agent-authority-audit', '/mapper', 'Map the workflow'],
+  ['/pricing', '/audit-intake', 'Qualify the workflow'],
+  ['/pricing', '/audit-intake', 'Test one uncertainty'],
+  ['/pricing', '/mapper', 'Map the authority decision'],
+  ['/pricing', '/mapper', 'Map the action chain']
+];
+for (const [route, href, label] of funnelTextContracts) {
+  funnelChecks += 1;
+  const html = htmlByRoute.get(route) || '';
+  if (!anchorHasText(html, href, label)) failures.push(`${route}: expected funnel CTA "${label}" -> ${href}`);
+}
+
 const sitemapFile = join(distPath, 'sitemap.xml');
 const llmsFile = join(distPath, 'llms.txt');
 
@@ -199,4 +242,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
+console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} funnel_checks=${funnelChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
