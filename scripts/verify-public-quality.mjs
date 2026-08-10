@@ -3,6 +3,7 @@ import { extname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
+const vercelConfigPath = fileURLToPath(new URL('../vercel.json', import.meta.url));
 const siteOrigin = 'https://bitevoagentsite.vercel.app';
 
 async function walk(dir) {
@@ -44,6 +45,7 @@ let indexableCount = 0;
 let metadataChecks = 0;
 let alternateChecks = 0;
 let externalBlankChecks = 0;
+let configChecks = 0;
 
 for (const file of htmlFiles) {
   const route = routeFromHtml(file);
@@ -134,10 +136,27 @@ if (!routes.has('/ru')) {
   }
 }
 
+const vercelConfig = JSON.parse(await readFile(vercelConfigPath, 'utf8'));
+const headerRules = Array.isArray(vercelConfig.headers) ? vercelConfig.headers : [];
+const globalHeaders = headerRules.find(rule => rule.source === '/(.*)')?.headers || [];
+const globalHeaderMap = new Map(globalHeaders.map(item => [String(item.key).toLowerCase(), String(item.value)]));
+const requiredSecurityHeaders = ['x-content-type-options', 'x-frame-options', 'referrer-policy', 'permissions-policy', 'content-security-policy'];
+for (const key of requiredSecurityHeaders) {
+  configChecks += 1;
+  if (!globalHeaderMap.has(key)) failures.push(`vercel.json: missing global ${key} header`);
+}
+configChecks += 1;
+if (!globalHeaderMap.get('content-security-policy')?.includes("frame-ancestors 'none'")) failures.push("vercel.json: CSP must include frame-ancestors 'none'");
+
+const immutableRule = headerRules.find(rule => rule.source === '/_astro/(.*)');
+const immutableCache = immutableRule?.headers?.find(item => String(item.key).toLowerCase() === 'cache-control')?.value || '';
+configChecks += 1;
+if (!String(immutableCache).includes('immutable') || !String(immutableCache).includes('31536000')) failures.push('vercel.json: hashed Astro assets must use one-year immutable cache');
+
 if (failures.length) {
   console.error('PUBLIC_QUALITY_GATE=FAIL');
   for (const failure of failures) console.error(failure);
   process.exit(1);
 }
 
-console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} failures=0`);
+console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
