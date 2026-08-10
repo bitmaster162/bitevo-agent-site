@@ -66,10 +66,10 @@ const structuredData = {
         <h1 class="display">An agent should earn authority with evidence.</h1>
         <p class="lede">BitEvo audits the action layer of AI systems: what a workflow is allowed to change, what evidence must exist before it acts, how the external result is confirmed, and what the system does when certainty disappears.</p>
         <div class="hero-actions">
-          <a href="/agent-authority-audit" class="button button-primary">See the audit model <span aria-hidden="true">↗</span></a>
-          <a href="/doctrine" class="button button-ghost">Read BitEvo Doctrine</a>
+          <a href="/mapper" class="button button-primary" data-funnel="home-primary">Map one workflow <span aria-hidden="true">↗</span></a>
+          <a href="/proof" class="button button-ghost" data-funnel="home-proof">See worked proof</a>
         </div>
-        <div class="hero-boundary"><span class="dot"></span> Audit the workflow, not the hype · staging/test by default · written Rules of Engagement</div>
+        <div class="hero-boundary"><span class="dot"></span> Browser-local mapping first · staging/test by default · written Rules of Engagement before testing</div>
       </div>
 
       <div class="hero-console panel reveal delay-1" aria-label="Example authority and evidence chain">
@@ -80,6 +80,18 @@ const structuredData = {
         <div class="trace-line"><span class="index">04</span><div><small>DECISION</small><strong>do not expand authority</strong></div><span class="state warn">constrain</span></div>
         <div class="trace-result"><small>FINDING CLASS</small><strong>Capability exceeded the evidence available to justify the action.</strong><p>Public internal-lab example only. No customer environment or private infrastructure is represented.</p></div>
       </div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule" aria-labelledby="start-path-title">
+    <div class="container split-head">
+      <div><div class="eyebrow">Start with the smallest step</div><h2 class="section-title" id="start-path-title">Map. Challenge. Then scope.</h2></div>
+      <p class="lede">You do not need to buy an audit to understand the model. Draft one action chain locally, inspect worked evidence, and only turn the unresolved gates into scope when the decision is worth testing.</p>
+    </div>
+    <div class="container moment-grid">
+      <a class="moment-card panel" href="/mapper" data-funnel="map"><span>01 · LOCAL</span><h3>Map one workflow</h3><p>Draft the Authority Ledger and Evidence Contract in the browser. No testing authorization is created.</p></a>
+      <a class="moment-card panel" href="/proof" data-funnel="proof"><span>02 · PROOF</span><h3>Challenge the model</h3><p>Inspect three synthetic worked action classes and see how evidence changes an owner decision.</p></a>
+      <a class="moment-card panel" href="/audit-intake" data-funnel="scope"><span>03 · SCOPE</span><h3>Turn gaps into scope</h3><p>When the unresolved gates matter, prepare a bounded scope brief. The public intake still does not authorize testing.</p></a>
     </div>
   </section>
 
