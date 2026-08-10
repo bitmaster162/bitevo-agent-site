@@ -1,20 +1,28 @@
 ---
+import { SITE_ORIGIN, absoluteSiteUrl, localeMeta, type SiteLocale } from '../lib/i18n';
+
 interface Props {
   title: string;
   description?: string;
   robots?: string;
   ogType?: string;
+  lang?: SiteLocale;
+  alternates?: Partial<Record<SiteLocale, string>>;
 }
 
 const {
   title,
   description = "BitEvo — Authority Budget, Evidence Before Effect and bounded recovery for action-capable AI workflows",
   robots = "max-image-preview:large, index, follow",
-  ogType = "website"
+  ogType = "website",
+  lang = 'en',
+  alternates = {}
 } = Astro.props;
 
 const path = Astro.url.pathname;
-const canonicalUrl = new URL(path, "https://bitevoagentsite.vercel.app").toString();
+const canonicalUrl = new URL(path, SITE_ORIGIN).toString();
+const language = localeMeta[lang];
+const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
 const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
 const nav = [
   ["Doctrine", "/doctrine"],
@@ -28,13 +36,15 @@ const nav = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={language.htmlLang} dir={language.dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#071013" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
+    {alternateEntries.map(([alternateLang, alternatePath]) => <link rel="alternate" hreflang={alternateLang} href={absoluteSiteUrl(alternatePath)} />)}
+    {alternates.en && <link rel="alternate" hreflang="x-default" href={absoluteSiteUrl(alternates.en)} />}
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
@@ -43,6 +53,7 @@ const nav = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="BitEvo" />
+    <meta property="og:locale" content={language.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
