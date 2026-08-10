@@ -8,6 +8,7 @@ interface Props {
   ogType?: string;
   lang?: SiteLocale;
   alternates?: Partial<Record<SiteLocale, string>>;
+  socialImage?: string;
 }
 
 const {
@@ -16,11 +17,13 @@ const {
   robots = "max-image-preview:large, index, follow",
   ogType = "website",
   lang = 'en',
-  alternates = {}
+  alternates = {},
+  socialImage = '/og-card.png'
 } = Astro.props;
 
 const path = Astro.url.pathname;
 const canonicalUrl = new URL(path, SITE_ORIGIN).toString();
+const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
 const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
 const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
@@ -33,6 +36,27 @@ const nav = [
   ["Audit", "/agent-authority-audit"],
   ["Pricing", "/pricing"]
 ];
+
+const globalStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_ORIGIN}/#organization`,
+    name: 'BitEvo',
+    url: SITE_ORIGIN,
+    logo: absoluteSiteUrl('/favicon.svg'),
+    description: 'Authority and evidence engineering for action-capable AI-agent workflows.'
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_ORIGIN}/#website`,
+    url: SITE_ORIGIN,
+    name: 'BitEvo',
+    publisher: { '@id': `${SITE_ORIGIN}/#organization` },
+    inLanguage: language.htmlLang
+  }
+];
 ---
 
 <!doctype html>
@@ -41,6 +65,8 @@ const nav = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#071013" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="author" content="BitEvo" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
     {alternateEntries.map(([alternateLang, alternatePath]) => <link rel="alternate" hreflang={alternateLang} href={absoluteSiteUrl(alternatePath)} />)}
@@ -54,9 +80,18 @@ const nav = [
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="BitEvo" />
     <meta property="og:locale" content={language.ogLocale} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:secure_url" content={socialImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="BitEvo — Authority is earned by evidence" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content="BitEvo — Authority is earned by evidence" />
+    <script type="application/ld+json" set:html={JSON.stringify(globalStructuredData)} />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

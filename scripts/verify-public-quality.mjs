@@ -64,13 +64,25 @@ for (const file of htmlFiles) {
       ['og:title', Boolean(attr(attrTag(html, 'property', 'og:title'), 'content'))],
       ['og:description', Boolean(attr(attrTag(html, 'property', 'og:description'), 'content'))],
       ['og:url', Boolean(attr(attrTag(html, 'property', 'og:url'), 'content'))],
-      ['twitter:card', Boolean(attr(attrTag(html, 'name', 'twitter:card'), 'content'))]
+      ['og:image', Boolean(attr(attrTag(html, 'property', 'og:image'), 'content'))],
+      ['twitter:card', Boolean(attr(attrTag(html, 'name', 'twitter:card'), 'content'))],
+      ['twitter:image', Boolean(attr(attrTag(html, 'name', 'twitter:image'), 'content'))],
+      ['Organization JSON-LD', html.includes('"@type":"Organization"')],
+      ['WebSite JSON-LD', html.includes('"@type":"WebSite"')]
     ];
     metadataChecks += checks.length;
     for (const [label, ok] of checks) if (!ok) failures.push(`${route}: missing ${label}`);
 
     const canonical = attr(attrTag(html, 'rel', 'canonical'), 'href');
     if (canonical && !canonical.startsWith(siteOrigin)) failures.push(`${route}: canonical outside site origin (${canonical})`);
+
+    for (const [label, tag] of [
+      ['og:image', attrTag(html, 'property', 'og:image')],
+      ['twitter:image', attrTag(html, 'name', 'twitter:image')]
+    ]) {
+      const imageUrl = attr(tag, 'content');
+      if (imageUrl && !imageUrl.startsWith(`${siteOrigin}/`)) failures.push(`${route}: ${label} outside canonical site origin (${imageUrl})`);
+    }
   }
 
   for (const match of html.matchAll(/<link\b[^>]*\brel=["']alternate["'][^>]*>/gi)) {
@@ -97,7 +109,6 @@ for (const file of htmlFiles) {
   if (/href=["']javascript:/i.test(html)) failures.push(`${route}: javascript: href is prohibited`);
 }
 
-const buildFile = join(distPath, 'build', 'index.html');
 const sitemapFile = join(distPath, 'sitemap.xml');
 const llmsFile = join(distPath, 'llms.txt');
 const fileSet = new Set(files.map(rel));
@@ -105,6 +116,7 @@ const fileSet = new Set(files.map(rel));
 if (!fileSet.has('build/index.html')) failures.push('/build: route missing from static output');
 if (!fileSet.has('sitemap.xml')) failures.push('sitemap.xml missing from static output');
 if (!fileSet.has('llms.txt')) failures.push('llms.txt missing from static output');
+if (!fileSet.has('og-card.png')) failures.push('og-card.png missing from static output');
 
 if (fileSet.has('sitemap.xml')) {
   const sitemap = await readFile(sitemapFile, 'utf8');
