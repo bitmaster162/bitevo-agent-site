@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 
 const projects = [
+  { type: 'Build index', name: 'BitEvo Build', href: '/build', text: 'Public index of shipped decision tools, source projects and research surfaces with source, build and runtime evidence kept distinct.', internal: true },
   { type: 'Service', name: 'Agent Authority & Evidence Audit', href: '/agent-authority-audit', text: 'Bounded engineering audit of agent authority, evidence chains, failure controls and operational traceability.', internal: true },
   { type: 'Project', name: 'ContinuityOS', href: '/continuityos', text: 'Public-source work on durable local memory, provenance and governance-oriented agent workflows.', internal: true },
   { type: 'Research', name: 'AI & Agent Research Library', href: '/guides', text: 'Technical notes and research material across agent systems, security, infrastructure and adjacent domains.', internal: true },
@@ -11,11 +12,11 @@ const projects = [
 ];
 ---
 
-<Layout title="BitEvo Universe — Public Product & Research Navigator" description="A static public map of BitEvo services, source projects and research surfaces without internal telemetry or infrastructure identifiers.">
+<Layout title="BitEvo Universe — Public Product & Research Navigator" description="A static public map of BitEvo services, built products, source projects and research surfaces without internal telemetry or infrastructure identifiers.">
   <section class="universe-hero section">
     <div class="container hero-grid">
       <div><div class="eyebrow">Public navigator</div><h1 class="display">One map. No fake control room.</h1></div>
-      <div><p class="lede">BitEvo Universe is a static map of public services, source projects and research surfaces. It deliberately excludes private operational state, infrastructure identifiers and live-control semantics.</p></div>
+      <div><p class="lede">BitEvo Universe is a static map of public services, shipped products, source projects and research surfaces. It deliberately excludes private operational state, infrastructure identifiers and live-control semantics.</p><div class="hero-actions"><a class="button button-primary" href="/build">See what is built <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/doctrine">Read the doctrine</a></div></div>
     </div>
   </section>
 
@@ -25,7 +26,7 @@ const projects = [
         <span class="pulse"></span>
         <small>PUBLIC CORE</small>
         <strong>BitEvo</strong>
-        <p>Authority · evidence · continuity · research</p>
+        <p>authority · evidence · continuity · research</p>
       </div>
       <div class="orbit orbit-one" aria-hidden="true"></div>
       <div class="orbit orbit-two" aria-hidden="true"></div>
@@ -37,7 +38,7 @@ const projects = [
   <section class="section section-rule">
     <div class="container section-head">
       <div><div class="eyebrow">Public surfaces</div><h2 class="section-title">Navigate by what you need.</h2></div>
-      <p class="lede">Commercial audit work, public-source infrastructure and research are kept distinct so a visitor can tell an offer from a project and a project from a research note.</p>
+      <p class="lede">Commercial audit work, shipped decision products, public-source infrastructure and research are kept distinct so a visitor can tell an offer from a product, a product from a source project, and all of them from a research note.</p>
     </div>
 
     <div class="container project-grid">
@@ -60,7 +61,7 @@ const projects = [
 </Layout>
 
 <style>
-  .universe-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,8vw,110px);align-items:end}.hero-grid .lede{margin:0}.map-shell{height:min(520px,62vw);min-height:340px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at center,rgba(127,208,177,.08),transparent 23%),linear-gradient(180deg,rgba(13,25,27,.7),rgba(7,13,15,.7))}.map-shell::before,.map-shell::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.9%,rgba(255,255,255,.035) 50%,transparent 50.1%),linear-gradient(transparent 49.9%,rgba(255,255,255,.035) 50%,transparent 50.1%)}.map-shell::after{transform:rotate(45deg);opacity:.5}.core-node{position:relative;z-index:3;width:200px;height:200px;border:1px solid rgba(127,208,177,.3);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(7,15,16,.88);box-shadow:0 0 80px rgba(127,208,177,.08)}.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(127,208,177,.55);margin-bottom:12px}.core-node small{color:var(--muted);font:500 .57rem var(--mono);letter-spacing:.11em}.core-node strong{font-size:1.55rem;letter-spacing:-.03em;margin:4px 0}.core-node p{max-width:150px;margin:0;color:var(--muted);font-size:.68rem}.orbit{position:absolute;border:1px solid var(--line);border-radius:50%;z-index:1}.orbit-one{width:410px;height:410px}.orbit-two{width:690px;height:690px;border-style:dashed;opacity:.6}.map-note{position:absolute;z-index:4;color:#5c6865;font:500 .57rem var(--mono);letter-spacing:.12em}.map-note.top-left{top:20px;left:22px}.map-note.bottom-right{right:22px;bottom:20px}.section-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,8vw,110px);margin-bottom:38px}.section-head .lede{margin:3px 0 0}.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.project-card{min-height:290px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease}.project-card:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.32)}.project-top{display:flex;justify-content:space-between;color:#58645f;font:500 .61rem var(--mono)}.project-top small{color:var(--green);letter-spacing:.08em;text-transform:uppercase}.project-card h3{margin:0 0 10px;font-size:1.08rem}.project-card p{margin:0;color:var(--muted);font-size:.8rem}.project-link{margin-top:26px;color:var(--ink-soft);font-size:.75rem;font-weight:650}.boundary-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(40px,8vw,110px)}.boundary-copy{border-top:1px solid var(--line)}.boundary-copy p{margin:0;padding:18px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+  .universe-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.map-shell{height:min(520px,62vw);min-height:340px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at center,rgba(127,208,177,.08),transparent 23%),linear-gradient(180deg,rgba(13,25,27,.7),rgba(7,13,15,.7))}.map-shell::before,.map-shell::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.9%,rgba(255,255,255,.035) 50%,transparent 50.1%),linear-gradient(transparent 49.9%,rgba(255,255,255,.035) 50%,transparent 50.1%)}.map-shell::after{transform:rotate(45deg);opacity:.5}.core-node{position:relative;z-index:3;width:200px;height:200px;border:1px solid rgba(127,208,177,.3);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(7,15,16,.88);box-shadow:0 0 80px rgba(127,208,177,.08)}.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(127,208,177,.55);margin-bottom:12px}.core-node small{color:var(--muted);font:500 .57rem var(--mono);letter-spacing:.11em}.core-node strong{font-size:1.55rem;letter-spacing:-.03em;margin:4px 0}.core-node p{max-width:150px;margin:0;color:var(--muted);font-size:.68rem}.orbit{position:absolute;border:1px solid var(--line);border-radius:50%;z-index:1}.orbit-one{width:410px;height:410px}.orbit-two{width:690px;height:690px;border-style:dashed;opacity:.6}.map-note{position:absolute;z-index:4;color:#5c6865;font:500 .57rem var(--mono);letter-spacing:.12em}.map-note.top-left{top:20px;left:22px}.map-note.bottom-right{right:22px;bottom:20px}.section-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,8vw,110px);margin-bottom:38px}.section-head .lede{margin:3px 0 0}.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.project-card{min-height:290px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease}.project-card:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.32)}.project-top{display:flex;justify-content:space-between;color:#58645f;font:500 .61rem var(--mono)}.project-top small{color:var(--green);letter-spacing:.08em;text-transform:uppercase}.project-card h3{margin:0 0 10px;font-size:1.08rem}.project-card p{margin:0;color:var(--muted);font-size:.8rem}.project-link{margin-top:26px;color:var(--ink-soft);font-size:.75rem;font-weight:650}.boundary-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(40px,8vw,110px)}.boundary-copy{border-top:1px solid var(--line)}.boundary-copy p{margin:0;padding:18px 0;border-bottom:1px solid var(--line);color:var(--muted)}
   @media(max-width:900px){.hero-grid,.section-head,.boundary-grid{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:620px){.project-grid{grid-template-columns:1fr}.map-shell{min-height:320px}.orbit-one{width:300px;height:300px}.orbit-two{width:500px;height:500px}.core-node{width:170px;height:170px}}
 </style>

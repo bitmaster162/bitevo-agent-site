@@ -8,6 +8,7 @@ const routes = [
   '/proof',
   '/mapper',
   '/workspace',
+  '/build',
   '/sample-audit',
   '/sample-message',
   '/sample-deployment',
