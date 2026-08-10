@@ -1,66 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const problems = [
-	"Fragmented chats and scattered context",
-	"Repeated context loss between sessions",
-	"Duplicated effort across tools",
-	"Weak handoffs between tools and agents",
-	"No clear memory or operating logic",
-];
-const gains = [
-	"Structured AI architecture",
-	"Clearer memory and context rules",
-	"Workflow routing for different tasks",
-	"A usable day-to-day operating system",
-	"Less friction, less overload, more leverage",
-];
 ---
 
-<Layout title="Digital Entity Setup · BitEvo">
-	<section class="hero-section">
-		<div class="container hero-inner" style="text-align:center;padding-block:64px 24px">
-			<div class="kicker" style="color:var(--blue)">Done-for-you · Flagship offer</div>
-			<h1 class="display" style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;margin:0">
-				Build your personal AI operating system.
-			</h1>
-			<p class="copy" style="max-width:680px;margin:16px auto 0;color:var(--muted);font-size:1.05rem;line-height:1.6">
-				I help founders, traders, and serious operators build personal AI operating systems that reduce cognitive
-				overload, preserve context, and turn scattered tools into one coherent system.
-			</p>
-			<a href="/intake" class="cta-btn" style="display:inline-block;margin-top:26px;padding:13px 28px;background:var(--gold,#ffd166);color:#0a0a0a;font-weight:800;border-radius:10px;text-decoration:none">
-				Book an intake →
-			</a>
-		</div>
-	</section>
+<Layout title="Digital Entity Setup — BitEvo Advisory Concept" description="Digital Entity Setup is a BitEvo advisory concept, not a standardized current public package." robots="noindex, follow">
+  <section class="concept-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Advisory concept · not standardized</div><h1 class="display">Digital Entity Setup</h1></div>
+      <div><p class="lede">Architecture work for people operating across many AI tools: memory boundaries, workflow routing, handoffs and durable operating context. This route is retained as a concept page, not a current fixed-price public package.</p></div>
+    </div>
+  </section>
 
-	<section class="container" style="max-width:900px;padding-block:20px 60px">
-		<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px" class="de-grid">
-			<div style="background:#12080c;border:1px solid #ff6b6b33;border-radius:14px;padding:22px 24px">
-				<h2 style="font-size:1.05rem;color:#ff8f8f;margin:0 0 12px">Most people don't need more AI tools. They need architecture.</h2>
-				<p style="color:var(--muted);font-size:0.92rem;margin:0 0 10px">Without architecture, AI becomes noise:</p>
-				<ul style="margin:0;padding-left:18px;color:#cbd5e1;line-height:1.7;font-size:0.95rem">
-					{problems.map(p => (<li>{p}</li>))}
-				</ul>
-			</div>
-			<div style="background:#08121a;border:1px solid #00ffe133;border-radius:14px;padding:22px 24px">
-				<h2 style="font-size:1.05rem;color:#66ffe0;margin:0 0 12px">With BitEvo Digital Entity Setup, you get:</h2>
-				<ul style="margin:0;padding-left:18px;color:#cbd5e1;line-height:1.7;font-size:0.95rem">
-					{gains.map(g => (<li>{g}</li>))}
-				</ul>
-			</div>
-		</div>
+  <section class="section-tight section-rule">
+    <div class="container concept-grid">
+      <article class="panel"><span>Problem</span><h2>Scattered context</h2><p>Repeated context loss, duplicated work and weak handoffs across chats, tools and agent surfaces.</p></article>
+      <article class="panel"><span>Architecture</span><h2>Explicit memory rules</h2><p>Separate durable records, transient task context, preferences and authority-sensitive state instead of treating one chat history as an operating system.</p></article>
+      <article class="panel"><span>Boundary</span><h2>Context is not authority</h2><p>Persistent memory can support decisions, but it does not itself authorize tool execution, production changes, spending or other consequential effects.</p></article>
+    </div>
+  </section>
 
-		<div style="text-align:center;margin-top:40px;padding:28px;background:#0c1428;border:1px solid #2a3550;border-radius:14px">
-			<p style="color:#e2e8f0;font-size:1.05rem;max-width:640px;margin:0 auto 18px;line-height:1.6">
-				Book an intake. I'll review your current stack, identify the bottlenecks, and tell you whether a Digital
-				Entity Setup makes sense for you.
-			</p>
-			<a href="/intake" style="display:inline-block;padding:13px 28px;background:var(--gold,#ffd166);color:#0a0a0a;font-weight:800;border-radius:10px;text-decoration:none">Get started →</a>
-		</div>
-	</section>
-
-	<style>
-		@media (max-width: 720px) { .de-grid { grid-template-columns: 1fr !important; } }
-	</style>
+  <section class="section section-rule">
+    <div class="narrow current">
+      <div class="eyebrow">Current public path</div>
+      <h2 class="section-title">Use the services page for active engagements.</h2>
+      <p class="lede">BitEvo’s standardized current public offer is the Agent Authority & Evidence Audit. Broader architecture work is scoped only when there is a concrete bounded problem to solve.</p>
+      <div class="actions"><a class="button button-primary" href="/consulting">Current services <span aria-hidden="true">↗</span></a><a class="button" href="/continuityos">ContinuityOS</a></div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .concept-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,110px);align-items:end}.hero-grid .lede{margin:0}.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.concept-grid article{padding:28px;min-height:250px;display:flex;flex-direction:column}.concept-grid article>span{color:var(--green);font:500 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.concept-grid h2{margin:auto 0 10px;font-size:1.2rem}.concept-grid p{margin:0;color:var(--muted);font-size:.84rem}.current{text-align:center}.current .section-title{margin-inline:auto}.current .lede{margin:18px auto 28px}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}@media(max-width:820px){.hero-grid{grid-template-columns:1fr}.concept-grid{grid-template-columns:1fr}.concept-grid article{min-height:190px}}
+</style>

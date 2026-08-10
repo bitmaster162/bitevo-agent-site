@@ -2,35 +2,76 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="ContinuityOS — durable local memory for agent workflows" description="Public source project for durable local memory and governance-oriented agent workflows.">
-  <section class="hero-section">
-    <div class="container hero-inner">
-      <div class="kicker">Public source · local-first</div>
-      <h1>ContinuityOS</h1>
-      <p>ContinuityOS is presented here as a public source project for durable local memory and governance-oriented agent workflows.</p>
-      <p class="boundary"><strong>Evidence boundary:</strong> structured memory and provenance can reduce retrieval ambiguity; they do not eliminate model errors.</p>
-      <div class="actions">
-        <a href="https://github.com/bitmaster162/continuityos" target="_blank" rel="noopener" class="button">Install from public GitHub source</a>
-        <a href="/agent-authority-audit" class="button secondary">Audit methodology</a>
+<Layout title="ContinuityOS — Durable Local Memory for Agent Workflows" description="ContinuityOS is a public-source project for durable local memory, provenance and governance-oriented agent workflows.">
+  <section class="project-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Public source · local-first</div>
+        <h1 class="display">ContinuityOS</h1>
+        <p class="lede">A public-source project for keeping structured memory, provenance and governance context outside a single model session — while keeping memory separate from authority to act.</p>
+        <div class="actions">
+          <a href="https://github.com/bitmaster162/continuityos" target="_blank" rel="noopener" class="button button-primary">View public source <span aria-hidden="true">↗</span></a>
+          <a href="/agent-authority-audit" class="button button-ghost">Authority audit methodology</a>
+        </div>
+      </div>
+      <aside class="status-card panel">
+        <div class="status-top"><span>PUBLIC STATUS</span><strong>Source available</strong></div>
+        <div class="status-row"><span>Install path advertised here</span><strong>GitHub source</strong></div>
+        <div class="status-row"><span>Memory model</span><strong>Local / inspectable</strong></div>
+        <div class="status-row"><span>Authority assumption</span><strong>Memory ≠ permission</strong></div>
+        <div class="status-note">Package-manager installation is intentionally not advertised until a public package/release and clean installation are independently verified.</div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container section-head">
+      <div><div class="eyebrow">Core idea</div><h2 class="section-title">Continuity without pretending memory is truth.</h2></div>
+      <p class="lede">Persistent context is useful only when its provenance and authority boundaries remain visible. ContinuityOS is presented as a memory/governance substrate, not a claim that recalled content is automatically correct.</p>
+    </div>
+    <div class="container capability-grid">
+      <article class="panel"><span>01</span><h3>Durable records</h3><p>Keep structured facts, rules, notes and provenance in a local store that can be inspected independently of one chat or model session.</p></article>
+      <article class="panel"><span>02</span><h3>Provenance-aware retrieval</h3><p>Use namespaces and retrieval context so recalled material can be traced, challenged and separated from unsupported inference.</p></article>
+      <article class="panel"><span>03</span><h3>Authority separation</h3><p>Remembered content can inform a decision; it does not create permission to execute a tool call, mutate state, spend capital or change production.</p></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container flow-grid">
+      <div><div class="eyebrow">Mental model</div><h2 class="section-title">Context enters. Authority stays separate.</h2></div>
+      <div class="flow panel" aria-label="ContinuityOS conceptual flow">
+        <div class="node"><small>01</small><strong>Source</strong><span>fact · note · rule · artifact</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><small>02</small><strong>Record</strong><span>structured + provenance</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><small>03</small><strong>Retrieve</strong><span>query + context</span></div>
+        <div class="arrow">→</div>
+        <div class="node accent"><small>04</small><strong>Decision context</strong><span>not execution authority</span></div>
       </div>
     </div>
   </section>
 
-  <section class="container content">
-    <h2>What it is for</h2>
-    <div class="grid">
-      <article><h3>Durable local records</h3><p>Keep structured facts, rules, notes and provenance in a local store that can be inspected outside one model session.</p></article>
-      <article><h3>Retrieval with provenance</h3><p>Use structured namespaces and retrieval signals to make the source of recalled context easier to inspect and challenge.</p></article>
-      <article><h3>Governance-oriented workflows</h3><p>Separate remembered content from authority to act. Memory is context; it is not permission, proof of correctness, or a safety guarantee.</p></article>
-    </div>
-
-    <div class="status">
-      <h2>Public-install status</h2>
-      <p>For this public site, the independently verified installation path is the public GitHub source. A <code>pip install continuityos</code> claim is intentionally not advertised until the public package/release and a clean installation are independently verified.</p>
+  <section class="section section-rule">
+    <div class="container boundary-grid">
+      <div class="panel boundary-card"><div class="eyebrow">Evidence boundary</div><h2>What the public page claims.</h2><p>Structured memory and provenance can make stored context easier to inspect and reduce retrieval ambiguity.</p></div>
+      <div class="panel boundary-card muted"><div class="eyebrow">What it does not claim</div><h2>No automatic correctness.</h2><p>ContinuityOS does not eliminate model errors, turn memory into permission, certify downstream decisions or guarantee that retrieved context is complete.</p></div>
     </div>
   </section>
 
-  <style>
-    .hero-section{padding:64px 0 34px}.hero-inner{text-align:center;max-width:860px}.kicker{color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.hero-inner h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,3.6rem);margin:8px 0 14px}.hero-inner>p{color:var(--muted);font-family:'Lora',serif;font-size:1.05rem}.boundary{border:1px solid var(--line);border-radius:10px;padding:14px 16px}.boundary strong{color:var(--gold)}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}.button{padding:11px 18px;border-radius:8px;border:1px solid var(--line-strong);font-weight:800}.button.secondary{color:var(--muted)}.content{max-width:980px;padding-block:20px 50px}.content h2{font-family:'Playfair Display',serif}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid article,.status{background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:20px}.grid h3{margin:0 0 8px}.grid p,.status p{margin:0;color:var(--muted)}.status{margin-top:22px}.status code{color:var(--gold)}@media(max-width:820px){.grid{grid-template-columns:1fr}}
-  </style>
+  <section class="section section-rule">
+    <div class="narrow install">
+      <div class="eyebrow">Current public install path</div>
+      <h2 class="section-title">Inspect the source first.</h2>
+      <p class="lede">The independently bounded installation path advertised on this site is the public GitHub source.</p>
+      <a href="https://github.com/bitmaster162/continuityos" target="_blank" rel="noopener" class="button button-primary">Open ContinuityOS on GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .project-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.05fr .75fr;gap:clamp(42px,8vw,110px);align-items:center}.hero-grid .lede{margin:24px 0 0}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}.status-card{padding:24px}.status-top{display:flex;justify-content:space-between;gap:20px;padding-bottom:18px}.status-top span{color:var(--muted);font:500 .62rem var(--mono);letter-spacing:.1em}.status-top strong{color:var(--green);font-size:.78rem}.status-row{display:flex;justify-content:space-between;gap:22px;padding:14px 0;border-top:1px solid var(--line)}.status-row span{color:var(--muted);font-size:.76rem}.status-row strong{font-size:.76rem;text-align:right}.status-note{margin-top:8px;padding:14px;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:.72rem}
+  .section-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,8vw,110px);margin-bottom:38px}.section-head .lede{margin:3px 0 0}.capability-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.capability-grid article{padding:26px;min-height:250px;display:flex;flex-direction:column}.capability-grid article>span{color:#586560;font:500 .64rem var(--mono)}.capability-grid h3{margin:auto 0 10px;font-size:1.1rem}.capability-grid p{margin:0;color:var(--muted);font-size:.83rem}
+  .flow-grid{display:grid;grid-template-columns:.68fr 1.32fr;gap:clamp(40px,8vw,100px);align-items:center}.flow{display:flex;align-items:stretch;padding:18px}.node{flex:1;min-width:0;padding:18px 14px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:6px}.node.accent{border-color:rgba(127,208,177,.32);background:rgba(127,208,177,.035)}.node small{color:#5e6b67;font:500 .58rem var(--mono)}.node strong{font-size:.8rem}.node span{color:var(--muted);font-size:.68rem}.arrow{display:grid;place-items:center;padding:0 7px;color:#52605c}
+  .boundary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary-card{padding:30px}.boundary-card h2{margin:2px 0 11px;font-size:1.35rem}.boundary-card p{margin:0;color:var(--muted)}.boundary-card.muted{background:rgba(8,16,18,.5)}.install{text-align:center}.install .section-title{margin-inline:auto}.install .lede{margin:18px auto 28px}
+  @media(max-width:950px){.hero-grid,.section-head,.flow-grid{grid-template-columns:1fr}.capability-grid{grid-template-columns:1fr}.capability-grid article{min-height:190px}.flow{overflow-x:auto}.node{min-width:150px}.boundary-grid{grid-template-columns:1fr}}
+</style>

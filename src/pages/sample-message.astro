@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const ledger = [
+  ['Critical action', 'Send one approved outreach message to one resolved staging/test recipient.'],
+  ['Target object', 'Exactly one recipient identity bound to one approved contact record.'],
+  ['Authority owner', 'Synthetic Outreach Operations owner for SAMPLE-002.'],
+  ['Allowed transition', 'Draft approved message → one send attempt to the approved recipient within the allowed window.'],
+  ['Prohibited transitions', 'No bulk send, recipient substitution, attachment upload, production campaign launch, reply impersonation or contact creation.'],
+  ['Retry / replay right', 'No automatic resend after ambiguous delivery state; reconcile provider state before another send.'],
+  ['Recovery owner', 'Synthetic operator decides reconcile / cancel / repair / retest.']
+];
+
+const contract = [
+  ['Recipient binding', 'The send target must resolve to the same approved contact identity used during authorization.'],
+  ['Content approval', 'Exact message body/template revision must match the approval record.'],
+  ['Freshness rule', 'Recipient and approval state must be revalidated at send time; any changed identity or revoked approval blocks the effect.'],
+  ['Send window', 'The example permits the send only inside the synthetic approved window attached to the decision trace.'],
+  ['Version context', 'Template/config revision must match the approved revision.'],
+  ['External confirmation', 'Provider event or message record must bind the send attempt to the exact recipient and message revision.'],
+  ['Missing evidence behavior', 'CONSTRAIN: stop before send, or after ambiguous acknowledgement block resend until provider state is reconciled.']
+];
+
+const failures = [
+  ['F01','Recipient identity changed after approval','Recipient-binding gate should fail before send.'],
+  ['F02','Approved template revision differs from send revision','Content-approval gate should fail.'],
+  ['F03','Approval revoked before execution','Authority should collapse before effect.'],
+  ['F04','Provider acknowledgement without recipient-bound delivery record','Treat as potential False Green; do not infer completed send.'],
+  ['F05','Ambiguous provider response followed by automatic resend','Retry should remain constrained pending reconciliation.'],
+  ['F06','Send occurs outside approved window','Authority/time gate should fail.'],
+  ['F07','Recipient resolver returns multiple candidate identities','Route to review; do not choose silently.'],
+  ['F08','Message record references wrong recipient or revision','Treat external effect as untrusted.']
+];
+
+const finding = [
+  ['Finding ID','SAMPLE-AUTH-002'],
+  ['Class','Authority mismatch / recipient-binding gap'],
+  ['Status','SYNTHETIC WORKED EXAMPLE — NOT EXECUTED'],
+  ['Trigger','The send path retains a valid tool permission while the recipient identity or approved message revision no longer matches the decision evidence.'],
+  ['Authority involved','One outbound send to one approved recipient using one approved message revision.'],
+  ['Observed effect','Not observed. SAMPLE-002 does not claim a real send or provider response.'],
+  ['Decision relevance','A generic send permission cannot justify an effect when recipient/content binding has diverged.'],
+  ['Recommended decision','CONSTRAIN send authority whenever recipient, approval, message revision or provider confirmation is ambiguous.']
+];
+
+const memo = [
+  ['Owner question','Should this workflow keep autonomous send authority when recipient/content binding can drift between approval and execution?'],
+  ['Decision','CONSTRAIN'],
+  ['Reason','The Authority Budget is broader than the evidence contract if send permission survives identity or approval drift.'],
+  ['Control change','Bind authorization to recipient identity + exact message revision + send window; require recipient-bound provider confirmation before retry.'],
+  ['Authority after decision','The workflow may prepare a send, but execution stops when any binding evidence is missing or changed.'],
+  ['Residual uncertainty','Actual provider idempotency, delivery semantics and event latency are NOT TESTED in this synthetic example.'],
+  ['Retest criterion','Replay drift and ambiguous-ack paths; require stop/review or exact recipient-bound confirmation before any resend.']
+];
+---
+
+<Layout title="SAMPLE-002 — Synthetic Outbound Message Authority Audit | BitEvo" description="Synthetic BitEvo audit pack for an outbound-message agent: recipient binding, approval evidence, delivery confirmation and constrained retry. Not customer evidence or an executed audit.">
+  <section class="sample-hero section">
+    <div class="container hero-grid"><div><div class="eyebrow">Public sample pack · SAMPLE-002</div><h1 class="display">A send permission is not permission to message anyone.</h1><p class="lede">SAMPLE-002 applies the BitEvo method to one outbound message. The critical boundary is not merely tool access; it is the exact recipient, approved content, execution window and confirmation path.</p><div class="actions"><a href="/sample-message.json" class="button button-primary">Open JSON pack <span aria-hidden="true">↗</span></a><a href="/proof" class="button button-ghost">Proof matrix</a></div></div><aside class="boundary panel"><strong>SYNTHETIC / NOT EXECUTED</strong><p>No real recipient, campaign, provider account, message, customer system or delivery event is represented.</p><div class="tags"><span>SYNTHETIC</span><span>ASSUMPTION</span><span>EXPECTED GATE</span><span>NOT TESTED</span></div></aside></div>
+  </section>
+
+  <section class="section-tight section-rule"><div class="container scenario panel"><div><div class="eyebrow">Synthetic workflow</div><h2>Approved Outreach Message Agent</h2></div><div class="scenario-grid"><div><span>INPUT</span><strong>contact_ref + approved message revision</strong></div><div><span>EFFECT</span><strong>one outbound message</strong></div><div><span>PRIMARY RISK</span><strong>recipient / approval drift</strong></div><div><span>OWNER DECISION</span><strong>when may send authority persist?</strong></div></div></div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">A1 · Authority Ledger</div><h2 class="section-title">Bind send authority to the exact recipient and content.</h2></div><p class="lede">“Can send messages” is not decision-grade authority. The ledger narrows the effect to one recipient, one approved revision and one allowed execution path.</p></div><div class="container record panel">{ledger.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">A2 · Evidence Contract</div><h2 class="section-title">Approval must still match at send time.</h2></div><p class="lede">Evidence Before Effect requires the recipient identity and message revision to remain bound to the authorization at execution — not merely when the draft was created.</p></div><div class="container record panel">{contract.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">Failure plan</div><h2 class="section-title">Break identity, approval and confirmation separately.</h2></div><p class="lede">These scenarios are illustrative and unexecuted. A real engagement would define provider-specific replay and data boundaries in written Rules of Engagement.</p></div><div class="container failure-grid">{failures.map(([id,s,e]) => <article class="panel"><span>{id}</span><h3>{s}</h3><p>{e}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container split-head"><div><div class="eyebrow">A3 · Finding Record</div><h2 class="section-title">SAMPLE-AUTH-002 — recipient-binding gap.</h2></div><p class="lede">The finding is intentionally a worked format, not a reproduced event. It demonstrates why tool permission alone is too coarse for outbound authority.</p></div><div class="container record panel">{finding.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></section>
+
+  <section class="section section-rule"><div class="container memo panel"><div class="memo-head"><div><div class="eyebrow">A4 · Decision Memo</div><h2>CONSTRAIN</h2></div><span>SAMPLE-002 / OWNER DECISION</span></div><div class="memo-grid">{memo.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div></div></section>
+
+  <section class="section section-rule"><div class="container retest-grid"><div><div class="eyebrow">Retest criterion</div><h2 class="section-title">No send or resend without exact binding.</h2><p class="lede">A repair is decision-relevant only if drift and ambiguous delivery paths now end in a bounded state.</p></div><div class="retest panel"><span>PASS CONDITION</span><strong>Recipient + approved revision + provider state remain explicitly bound.</strong><p>If any binding is unresolved, the workflow must stop or route to review rather than send or resend.</p><span>THIS SAMPLE</span><strong>NOT TESTED</strong></div></div></section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Compare action classes</div><h2 class="section-title">Messaging changes the evidence contract, not the doctrine.</h2><p class="lede">Compare this pack with CRM writes and deployment/config changes to see which controls stay invariant and which become effect-specific.</p><div class="actions final-actions"><a href="/proof" class="button button-primary">Open proof matrix <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button button-ghost">Map your workflow</a></div></div></section>
+</Layout>
+
+<style>
+  .sample-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.split-head,.retest-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(42px,8vw,100px);align-items:center}.sample-hero .lede{margin:24px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.boundary{padding:28px}.boundary strong{color:var(--gold);font:500 .66rem var(--mono)}.boundary p{color:var(--muted);font-size:.8rem}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.tags span{padding:5px 7px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .54rem var(--mono)}.scenario{padding:28px}.scenario h2{margin:5px 0 22px;font-size:clamp(1.5rem,3vw,2.4rem)}.scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.scenario-grid div{padding:18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.scenario-grid span,.record span,.memo-grid span,.retest span{display:block;color:var(--green);font:500 .57rem var(--mono);letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}.scenario-grid strong{font-size:.78rem}.split-head{align-items:end;margin-bottom:34px}.split-head .lede{margin:0}.record{padding:8px 26px}.record>div{display:grid;grid-template-columns:190px 1fr;gap:26px;padding:18px 0;border-bottom:1px solid var(--line)}.record>div:last-child{border-bottom:0}.record p{margin:0;color:var(--muted);font-size:.84rem}.failure-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.failure-grid article{min-height:190px;padding:22px;display:flex;flex-direction:column}.failure-grid article>span{color:var(--green);font:500 .62rem var(--mono)}.failure-grid h3{margin:auto 0 8px;font-size:.92rem}.failure-grid p{margin:0;color:var(--muted);font-size:.76rem}.memo{padding:clamp(28px,5vw,52px)}.memo-head{display:flex;justify-content:space-between;gap:22px;padding-bottom:26px;border-bottom:1px solid var(--line)}.memo-head h2{font-size:clamp(3.4rem,8vw,7rem);line-height:.8;letter-spacing:-.07em;margin:18px 0 0;color:var(--green)}.memo-head>span{color:var(--muted);font:500 .58rem var(--mono)}.memo-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.memo-grid>div{padding:18px 0;border-bottom:1px solid var(--line)}.memo-grid p{margin:0;color:var(--muted);font-size:.82rem}.retest-grid{align-items:start}.retest{padding:26px}.retest strong{display:block;margin-bottom:8px}.retest p{color:var(--muted);font-size:.8rem}.retest span:not(:first-child){margin-top:24px}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
+  @media(max-width:900px){.hero-grid,.split-head,.retest-grid{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr 1fr}.failure-grid{grid-template-columns:1fr 1fr}.memo-grid{grid-template-columns:1fr}}
+  @media(max-width:620px){.scenario-grid,.failure-grid{grid-template-columns:1fr}.record>div{grid-template-columns:1fr;gap:5px}.memo-head{flex-direction:column}.memo-head>span{order:-1}}
+</style>

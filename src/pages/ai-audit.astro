@@ -2,18 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Agent Authority & Evidence Audit — BitEvo" description="Canonical BitEvo audit offer has moved to /agent-authority-audit.">
-  <section class="alias-section">
-    <div class="container alias-card">
-      <div class="kicker">Canonical audit route</div>
-      <h1>Agent Authority & Evidence Audit</h1>
-      <p>This legacy URL is retained only as a compatibility path. The current scope, pricing, boundaries and Rules of Engagement are maintained on the canonical audit page.</p>
-      <a href="/agent-authority-audit" class="button">Open current audit page</a>
-      <a href="/audit-intake" class="button secondary">Open audit intake</a>
+<Layout title="AI Audit — Canonical BitEvo Audit Route" description="The current BitEvo audit offer is maintained at /agent-authority-audit." robots="noindex, follow">
+  <section class="alias section">
+    <div class="narrow alias-card panel">
+      <div class="eyebrow">Legacy route</div>
+      <h1 class="page-title">The audit moved to one canonical page.</h1>
+      <p class="lede">Scope, pricing, evidence boundaries and Rules of Engagement are maintained on the Agent Authority & Evidence Audit route so old offer language cannot drift independently.</p>
+      <div class="actions"><a href="/agent-authority-audit" class="button button-primary">Open current audit <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button">Audit intake</a></div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .alias-section{padding:72px 0}.alias-card{max-width:760px;text-align:center;background:var(--paper-soft);border:1px solid var(--line);border-radius:14px;padding:34px}.kicker{color:var(--gold);font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.alias-card h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);margin:8px 0 14px}.alias-card p{color:var(--muted);font-family:'Lora',serif;margin:0 auto 24px}.button{display:inline-flex;margin:6px;padding:10px 16px;border-radius:8px;border:1px solid var(--line-strong);background:var(--gold);color:#07090a;font-weight:900}.button.secondary{background:transparent;color:var(--muted)}
+  .alias{min-height:62vh;display:grid;place-items:center}.alias-card{text-align:center;padding:clamp(34px,7vw,72px)}.alias-card .page-title{margin-inline:auto}.alias-card .lede{margin:22px auto 28px}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 </style>

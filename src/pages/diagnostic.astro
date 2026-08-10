@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const questions = [
+  { id: 'action', gate: 'Authority Budget', q: 'Can you name the exact external action this workflow is allowed to perform?', why: 'If the consequential action is vague, the authority boundary cannot be tested.' },
+  { id: 'object', gate: 'Object binding', q: 'Can the workflow prove which exact object the action applies to before execution?', why: 'Correct permission on the wrong record, account or document is still the wrong effect.' },
+  { id: 'owner', gate: 'Authority owner', q: 'Is there a named role that owns the permission to perform this action?', why: 'Authority without an owner becomes difficult to approve, constrain or revoke.' },
+  { id: 'evidence', gate: 'Evidence Before Effect', q: 'Is the minimum pre-action evidence explicitly defined?', why: 'A workflow cannot fail closed on missing evidence if the evidence requirement is implicit.' },
+  { id: 'freshness', gate: 'Freshness', q: 'Does the workflow know when required evidence has become stale or invalid?', why: 'A healthy-looking service can still be operating on truth that stopped advancing.' },
+  { id: 'confirm', gate: 'External confirmation', q: 'Is the intended external effect independently confirmed after the action?', why: 'Internal completion or a tool acknowledgement is not proof that the outside system reached the expected state.' },
+  { id: 'recovery', gate: 'Recovery', q: 'When evidence or confirmation becomes uncertain, does the workflow enter a defined constrained/recovery state?', why: 'Retrying or continuing through ambiguity can turn one uncertain action into repeated effects.' }
+];
+---
+
+<Layout title="Authority & Evidence Diagnostic — BitEvo" description="A local seven-gate BitEvo diagnostic for action-capable AI workflows. No trust score: identify which authority, evidence, effect and recovery questions remain unresolved.">
+  <section class="diag-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Local workflow diagnostic</div><h1 class="display">Seven gates. No fake trust score.</h1></div>
+      <div><p class="lede">Answer <strong>YES / NO / UNKNOWN</strong> for one real workflow. Nothing is transmitted. The result is a list of unresolved decision gates — not certification, a vulnerability verdict or a numerical safety rating.</p><a href="/doctrine" class="button button-ghost">Read the doctrine →</a></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container diag-grid">
+      <form id="diagnostic" class="questions panel">
+        {questions.map((item, i) => (
+          <fieldset data-id={item.id} data-gate={item.gate} data-why={item.why}>
+            <legend><span>{String(i + 1).padStart(2,'0')}</span><div><small>{item.gate}</small><strong>{item.q}</strong></div></legend>
+            <div class="choices">
+              <label><input type="radio" name={item.id} value="YES" /> YES</label>
+              <label><input type="radio" name={item.id} value="NO" /> NO</label>
+              <label><input type="radio" name={item.id} value="UNKNOWN" /> UNKNOWN</label>
+            </div>
+          </fieldset>
+        ))}
+        <div class="actions"><button type="submit" class="button button-primary">Build decision-gap brief <span aria-hidden="true">→</span></button><button type="reset" class="button button-ghost">Reset</button></div>
+      </form>
+
+      <aside class="result panel">
+        <div class="result-head"><div><div class="eyebrow">Local result</div><h2>Decision-gap brief</h2></div><span id="state">Incomplete</span></div>
+        <div id="empty" class="empty"><strong>No result yet.</strong><p>Complete all seven gates. The output will preserve YES gates and identify NO/UNKNOWN gates that need explicit engineering evidence.</p></div>
+        <div id="output" class="output" hidden>
+          <div class="summary"><small>INTERPRETATION</small><h3 id="headline"></h3><p id="summaryText"></p></div>
+          <div id="gaps" class="gaps"></div>
+          <div class="boundary"><span>BOUNDARY</span><p>This diagnostic does not establish that a workflow is safe or unsafe. It identifies whether key decision gates are explicitly answered.</p></div>
+          <div class="result-actions"><button id="copy" type="button" class="button">Copy brief</button><a href="/mapper" class="button button-primary">Map the authority ↗</a><a href="/workspace" class="button">Compare checkpoints</a><a href="/audit-intake" class="button button-ghost">Turn gaps into scope</a></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container explain-grid">
+      <div><div class="eyebrow">How to use it</div><h2 class="section-title">Unknown is a valid engineering answer.</h2></div>
+      <div class="explain-list">
+        <article><span>YES</span><p>The gate is explicit enough to describe. An audit may still test whether the implementation actually behaves that way.</p></article>
+        <article><span>NO</span><p>The workflow lacks the gate or currently behaves in a way that does not satisfy it.</p></article>
+        <article><span>UNKNOWN</span><p>The team cannot yet prove the gate. BitEvo treats that uncertainty as something to preserve and resolve, not silently convert into a pass.</p></article>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ questions }}>
+  const form = document.getElementById('diagnostic');
+  const output = document.getElementById('output');
+  const empty = document.getElementById('empty');
+  const gaps = document.getElementById('gaps');
+  const headline = document.getElementById('headline');
+  const summaryText = document.getElementById('summaryText');
+  const state = document.getElementById('state');
+  const copy = document.getElementById('copy');
+  let latestBrief = '';
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const results = questions.map((item) => {
+      const picked = form.querySelector(`input[name="${item.id}"]:checked`);
+      return { ...item, answer: picked?.value || null };
+    });
+    if (results.some((r) => !r.answer)) {
+      state.textContent = 'Complete all gates';
+      return;
+    }
+
+    const unresolved = results.filter((r) => r.answer !== 'YES');
+    const yes = results.filter((r) => r.answer === 'YES');
+    headline.textContent = unresolved.length === 0 ? 'All seven decision gates are explicitly answered.' : `${unresolved.length} decision gate${unresolved.length === 1 ? '' : 's'} remain unresolved.`;
+    summaryText.textContent = unresolved.length === 0
+      ? 'That is not a safety pass. It means the workflow is described clearly enough to test the claims rather than first discovering what the claims are.'
+      : 'NO and UNKNOWN are not converted into a numeric risk score. They become the concrete questions an owner should resolve before expanding authority.';
+
+    gaps.innerHTML = '';
+    unresolved.forEach((item) => {
+      const article = document.createElement('article');
+      article.innerHTML = `<span>${item.answer}</span><div><strong>${item.gate}</strong><p>${item.why}</p></div>`;
+      gaps.appendChild(article);
+    });
+    if (unresolved.length === 0) {
+      const article = document.createElement('article');
+      article.innerHTML = `<span>TEST</span><div><strong>Claims are explicit</strong><p>The next useful step is to test whether the stated gates hold under retries, stale evidence, object mismatch and external-confirmation failure.</p></div>`;
+      gaps.appendChild(article);
+    }
+
+    latestBrief = [
+      '=== BITEVO AUTHORITY & EVIDENCE DIAGNOSTIC ===',
+      `Generated: ${new Date().toISOString()}`,
+      'No trust score. No certification. Local decision-gap summary.',
+      '',
+      ...results.map((r) => `${r.answer} — ${r.gate}: ${r.q}`),
+      '',
+      `Explicit YES gates: ${yes.length}/7`,
+      `Unresolved NO/UNKNOWN gates: ${unresolved.length}/7`,
+      ...unresolved.map((r) => `- ${r.gate} [${r.answer}]: ${r.why}`)
+    ].join('\n');
+
+    empty.hidden = true;
+    output.hidden = false;
+    state.textContent = 'Ready';
+  });
+
+  form?.addEventListener('reset', () => {
+    requestAnimationFrame(() => {
+      output.hidden = true;
+      empty.hidden = false;
+      state.textContent = 'Incomplete';
+      latestBrief = '';
+    });
+  });
+
+  copy?.addEventListener('click', async () => {
+    if (!latestBrief) return;
+    await navigator.clipboard.writeText(latestBrief);
+    const old = copy.textContent;
+    copy.textContent = 'Copied';
+    setTimeout(() => copy.textContent = old, 1200);
+  });
+</script>
+
+<style>
+  .diag-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.hero-grid strong{color:var(--ink)}.diag-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:start}.questions{padding:0 28px}.questions fieldset{border:0;margin:0;padding:24px 0;border-bottom:1px solid var(--line)}.questions legend{width:100%;display:grid;grid-template-columns:36px 1fr;gap:12px}.questions legend>span{color:var(--green);font:500 .62rem var(--mono)}.questions legend div{display:flex;flex-direction:column;gap:5px}.questions legend small{color:var(--muted);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.questions legend strong{font-size:.9rem;line-height:1.45}.choices{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 0 48px}.choices label{cursor:pointer;display:flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .62rem var(--mono)}.choices label:has(input:checked){border-color:rgba(127,208,177,.48);color:var(--ink);background:rgba(127,208,177,.06)}.choices input{accent-color:var(--green)}.actions{display:flex;gap:9px;flex-wrap:wrap;padding:24px 0}.result{position:sticky;top:96px;padding:24px}.result-head{display:flex;justify-content:space-between;gap:16px}.result-head h2{margin:4px 0 0;font-size:1.25rem}.result-head>span{height:max-content;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 .56rem var(--mono)}.empty{min-height:330px;display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--line);margin-top:20px}.empty strong{font-size:1.1rem}.empty p{color:var(--muted);font-size:.82rem}.summary{padding:22px 0;border-top:1px solid var(--line);margin-top:20px}.summary small,.boundary span{color:var(--gold);font:500 .58rem var(--mono);letter-spacing:.1em}.summary h3{margin:7px 0 8px;font-size:1.25rem}.summary p,.boundary p{margin:0;color:var(--muted);font-size:.8rem}.gaps{border-top:1px solid var(--line)}.gaps article{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}.gaps article>span{color:var(--green);font:500 .6rem var(--mono)}.gaps strong{font-size:.84rem}.gaps p{margin:4px 0 0;color:var(--muted);font-size:.76rem}.boundary{padding-top:18px;margin-top:18px}.boundary p{margin-top:6px}.result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.explain-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(44px,8vw,110px)}.explain-list{border-top:1px solid var(--line)}.explain-list article{display:grid;grid-template-columns:82px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}.explain-list span{color:var(--green);font:500 .62rem var(--mono)}.explain-list p{margin:0;color:var(--muted);font-size:.82rem}
+  @media(max-width:900px){.hero-grid,.diag-grid,.explain-grid{grid-template-columns:1fr}.result{position:static}}
+  @media(max-width:620px){.questions{padding:0 18px}.choices{margin-left:0}.questions legend{grid-template-columns:28px 1fr}.result-actions .button{width:100%}}
+</style>

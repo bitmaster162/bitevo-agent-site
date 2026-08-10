@@ -1,622 +1,78 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-const guides = [
-	{"slug": "ai-agents-2026", "title": "Эволюция ИИ-агентов: глобальный ландшафт, токеномика и локальная безопасность в 2026 году", "date": "2026-07-07", "category": "AI", "kicker": "Ai Agents 2026", "desc": "С середины 2026 года глобальный ландшафт ИИ претерпел значительные изменения, перейдя от простых диалоговых систем к высокоавтономным агентам. Это стало возможным благодаря новым моделям, таким как Cl", "tags": ["ИИ-агенты", "токеномика", "безопасность ИИ", "Claude Fable", "Claude Mythos", "Open Weights", "Mem0", "MCP", "локальное развертывание", "2026"]},
-	{"slug": "ai-agents-ecosystem-2026", "title": "Экосистема ИИ-агентов 2026: что взять и применить", "date": "2026-07-07", "category": "AI", "kicker": "Ai Agents Ecosystem 2026", "desc": "Период 2025–2026 годов знаменует собой фундаментальный переход от традиционных диалоговых моделей к суверенным автономным агентам. Эта эволюция сделала агентскую инфраструктуру вопросом национальной б", "tags": ["AI agents", "ecosystem", "2026", "paradigms", "infrastructure", "security", "frameworks", "trading", "ContinuityOS", "autonomous agents", "Computer Use"]},
-	{"slug": "ai-companion-market-analysis", "title": "Анализ рынка AI-компаньонов: GTM-реалии и рыночная карта 2025–2026", "date": "2026-07-07", "category": "AI", "kicker": "Ai Companion Market Analysis", "desc": "Глобальный рынок AI-компаньонов находится на пороге экспоненциального роста, прогнозируясь с 28,19 млрд долларов в 2024 году до 140,75 млрд долларов к 2030 году при среднегодовом темпе роста 30,8%. Эт", "tags": ["AI", "Искусственный интеллект", "Маркетинг", "GTM", "Монетизация", "Приватность", "Telegram", "Рост рынка", "Голосовые интерфейсы", "AI-компаньоны"]},
-	{"slug": "anthropic-models-and-upgrade", "title": "Аналитический отчёт по моделям уровня Fable Mythos и по апгрейду Sovereign Arena до Hybrid LLM plus RL", "date": "2026-07-07", "category": "AI", "kicker": "Anthropic Models And Upgrade", "desc": "Anthropic Claude Fable 5 и Mythos 5 представляют собой две конфигурации одной передовой модели, однако их доступность нестабильна, что делает Claude Opus 4.8 наиболее надёжным и мощным публичным вариа", "tags": ["Anthropic", "Claude", "Fable 5", "Mythos 5", "Opus 4.8", "Hybrid LLM + RL", "Sovereign Arena", "Trading System", "Agent Frameworks", "Geo-optimized"]},
-	{"slug": "best-longterm-memory-systems-for-ai", "title": "Лучшие системы долговременной памяти для ИИ: Полное руководство по выбору и архитектуре", "date": "2026-07-07", "category": "AI", "kicker": "Best Longterm Memory Systems For Ai", "desc": "Выбор оптимальной системы долговременной памяти для ИИ зависит от конкретных потребностей приложения, а не от универсальных решений. Для корпоративных RAG-систем и поиска в production-средах часто под", "tags": ["долговременная память", "память ИИ", "RAG", "векторные базы данных", "MemGPT", "GraphRAG", "иерархическая память", "Pinecone", "Qdrant", "Weaviate", "Milvus", "Chroma", "FAISS", "LangChain", "LlamaIndex", "бенчмарки ИИ"]},
-	{"slug": "blockchain-forensics-methodology", "title": "Блокчейн-форензика: методология ончейн-расследований", "date": "2026-07-07", "category": "Security", "kicker": "Blockchain Forensics Methodology", "desc": "Блокчейн-форензика — это систематический подход к расследованию и анализу транзакций и активности в децентрализованных сетях. Она позволяет реконструировать Sybil-фермы, отслеживать происхождение сред", "tags": ["blockchain", "forensics", "on-chain analysis", "sybil detection", "gas trail", "smart contracts", "investigations", "automation", "risk management", "web3"]},
-	{"slug": "fable-mythos-agents-2026", "title": "Как поднять агентов до уровня Fable/Mythos: target-архитектура 2026", "date": "2026-07-07", "category": "AI", "kicker": "Fable Mythos Agents 2026", "desc": "Ключевое отличие Fable 5 и Mythos 5 от обычных агентов заключается не столько в базовых способностях модели, сколько в превосходной системной инженерии, обеспечивающей стабильный режим поведения при д", "tags": ["AI agents", "agent architecture", "LLM orchestration", "system engineering", "prompt engineering", "Fable", "Mythos", "memory management", "guardrails", "observability", "evaluation", "production AI"]},
-	{"slug": "frontier-models-cost-routing", "title": "Ландшафт frontier-моделей и cost-routing (середина 2026)", "date": "2026-07-07", "category": "AI", "kicker": "Frontier Models Cost Routing", "desc": "К середине 2026 года ландшафт frontier-моделей претерпел значительные изменения: рынок сместился от оценки «умных чат-ботов» к инструментам, способным доводить полезную работу до конца. Вендоры теперь", "tags": ["AI models", "frontier models", "cost routing", "LLM", "agentic production", "mid-2026", "model landscape", "pricing"]},
-	{"slug": "python-rt-architecture", "title": "Архитектура Python-контура для жесткого реального времени (hb <= 0.5 мс)", "date": "2026-07-07", "category": "Infrastructure", "kicker": "Python Rt Architecture", "desc": "Для достижения жесткого реального времени (hard real-time) в Python-контуре с задержкой цикла (hot path) менее 0.5 мс необходимо выделить критически важные операции в отдельный RT-процесс на изолирова", "tags": ["Python", "Real-time", "Linux", "Performance", "Low Latency", "IPC", "CPU Isolation", "GIL", "Shared Memory"]},
-	{"slug": "vector-graph-hybrid-search", "title": "Сравнительный анализ векторного, графового и гибридного поиска для систем памяти", "date": "2026-07-07", "category": "AI", "kicker": "Vector Graph Hybrid Search", "desc": "Графовые методы памяти (GraphRAG, Graphiti, HippoRAG) оптимальны для задач с явными связями и \"многопрыжковыми\" запросами, поскольку они эффективно моделируют отношения и временные контексты. Векторны", "tags": ["векторный поиск", "графовый поиск", "гибридный поиск", "RAG", "LLM", "память", "эмбеддинги", "ANN", "SQLite", "ранжирование", "бенчмарки"]},
-	{"slug": "capability-passports-sap", "title": "Capability Passports & SAP: Делегирование прав доступа ИИ-агентов и цифровые подписи", "date": "2026-06-25", "category": "Security", "kicker": "Capability Passports Sap", "desc": "Введение\nПредоставление автономным ИИ-агентам доступа к разрушительным инструментам (модификация кода, управление процессами, переводы средств) требует строгого разграничения прав доступа.", "tags": ["ai-safety", "state-authority-plane", "capability-passports", "cryptography", "security"]},
-	{"slug": "reviewer-sandbox-split", "title": "ReviewerGate and SandboxPreflight Decoupled AI Security Architecture", "date": "2026-06-25", "category": "Security", "kicker": "Reviewer Sandbox Split", "desc": "Введение\nВ автономных системах на базе ИИ-агентов выполнение генерируемого кода несет критические риски безопасности (удаление файлов, утечка API-ключей, ботнет-активность).", "tags": ["ai-safety", "security", "sandbox", "reviewer-gate", "json-schema", "runtime-telemetry"]},
-	{"slug": "security-sandboxing", "title": "Security Sandboxing: Изоляция выполнения и контроль лимитов инструментов ИИ", "date": "2026-06-25", "category": "Security", "kicker": "Security Sandboxing", "desc": "Введение\nПри интеграции ИИ-агентов с внешним окружением (базы данных, локальная ОС, внешние API) ключевым риском является неконтролируемое выполнение команд (untrusted tool execution).", "tags": ["ai-safety", "sandboxing", "tool-isolation", "security", "runtime-protection"]},
-	{"slug": "tee-agent-secrets", "title": "TEE & MPC: Безопасное управление ключами автономных ИИ-агентов", "date": "2026-06-25", "category": "Security", "kicker": "Tee Agent Secrets", "desc": "Введение\nПредоставление автономному ИИ-агенту прямого доступа к API-ключам биржи или приватным ключам блокчейна несет критическую уязвимость.", "tags": ["ai-safety", "security", "tee", "mpc", "key-management"]},
-	{
-		slug: "regime-playbook-what-to-trade",
-		title: "Regime Playbook: что торговать в каждом режиме BTC",
-		date: "2026-06-19",
-		category: "Trading",
-		kicker: "Regime Playbook",
-		desc: "Из живой матрицы эджа: эдж это связка сигнал × направление × режим. Зелёные связки +$4457, красные −$25452 за 7 дней.",
-		tags: ["trading","regime","playbook","what","to","trade"]
-	},
-	{
-		slug: "ai-agent-trust-layer-reliability",
-		title: "AI-Agent Trust Layer: надёжность агентов как продукт",
-		date: "2026-06-14",
-		category: "AI",
-		kicker: "Agent Reliability",
-		desc: "Trust Layer между LLM и средой: threat model агентов = чек-лист аудита надёжности.",
-		tags: ["ai","ai","agent","trust","layer","reliability"]
-	},
-	{
-		slug: "blockchain-forensics-onchain-investigations",
-		title: "Blockchain-форензика: методология ончейн-расследований",
-		date: "2026-06-14",
-		category: "Security",
-		kicker: "Forensics",
-		desc: "Ончейн-форензика: gas trail, Sybil-фермы, идентификация контрактов — продаваемый OSINT-сервис.",
-		tags: ["security","blockchain","forensics","onchain","investigations"]
-	},
-	{
-		slug: "compression-no-mans-land-trap",
-		title: "S15: Паттерн «Compression / No-Man’s-Land» (Сжатие и Капкан-удушение)",
-		date: "2026-06-14",
-		category: "Trading",
-		kicker: "Range Compression",
-		desc: "Сжатие волатильности внутри диапазона и капкан для спешащих. Как не отдавать ликвидность в середине свинга.",
-		tags: ["trading","compression","no","mans","land","trap"]
-	},
-	{
-		slug: "grid-trading-os-institutional-spec",
-		title: "Grid Trading OS — институциональная спецификация (2026)",
-		date: "2026-06-14",
-		category: "Trading",
-		kicker: "Grid OS",
-		desc: "ATR-калибровка шага, fee-firewall, ±3σ range, GER soft-stop, regime switching — институциональная грид-спека.",
-		tags: ["trading","grid","trading","os","institutional","spec"]
-	},
-	{
-		slug: "microstructure-delisting-data-integrity-2026",
-		title: "Микроструктура и риск делистинга 2026: data-integrity для квант-движка",
-		date: "2026-06-14",
-		category: "Trading",
-		kicker: "Microstructure",
-		desc: "Bybit unilateral-OI (11.06.2026) ломает бэктесты; Delist-Risk Score для авто-флага токсичных активов.",
-		tags: ["trading","microstructure","delisting","data","integrity","2026"]
-	},
-	{
-		slug: "monetization-matrix-4x3",
-		title: "Матрица монетизации: от быстрых денег к инфраструктуре",
-		date: "2026-06-14",
-		category: "Business",
-		kicker: "Monetization",
-		desc: "Матрица 4 уровня × 3 горизонта: быстрые деньги финансируют moonshots, anti-кассовый-разрыв.",
-		tags: ["business","monetization","matrix","4x3"]
-	},
-	{
-		slug: "multiagent-orchestration-autonomous-research",
-		title: "Мультиагентная оркестрация и автономное исследование",
-		date: "2026-06-14",
-		category: "AI",
-		kicker: "Orchestration",
-		desc: "Граф-оркестрация, test-time compute, Arbiter/Clarifier; арена как автономная исследовательская система.",
-		tags: ["ai","multiagent","orchestration","autonomous","research"]
-	},
-	{
-		slug: "sector-divergence-fake-crown",
-		title: "S14: Паттерн «Один говорит, а три молчат» (Фейковая корона)",
-		date: "2026-06-14",
-		category: "Trading",
-		kicker: "Sector Divergence",
-		desc: "Резонанс сектора против ложного лидерства. Почему памп одного актива при тишине остальных — это приманка, и как это фильтровать.",
-		tags: ["trading","sector","divergence","fake","crown"]
-	},
-	{
-		slug: "survival-math-ergodicity-kelly",
-		title: "Математика выживания: эргодичность, Келли и expectancy",
-		date: "2026-06-14",
-		category: "Risk",
-		kicker: "Survival Math",
-		desc: "Эргодичность, Келли, expectancy: почему +EV может банкротить и как судить ботов по геом. росту.",
-		tags: ["risk","survival","math","ergodicity","kelly"]
-	},
-	{
-		slug: "trading-discipline-journal-mae-mfe",
-		title: "Дисциплина трейдинга: дневник, MAE/MFE и психология убытков",
-		date: "2026-06-14",
-		category: "Trading",
-		kicker: "Discipline",
-		desc: "Дневник, MAE/MFE-калибровка стопов/тейков, эффект диспозиции и как не зашить его в код.",
-		tags: ["trading","trading","discipline","journal","mae","mfe"]
-	},
-	{
-		slug: "anti-self-attention-trading-psychology",
-		title: "S10: Системы Внимания и контр-индикаторы «Анти-Я»",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Trading Psychology",
-		desc: "Управление поведенческим дрейфом в трейдинге: от ментальных якорей до контр-интуитивной торговли по сигналам реактивного «Анти-Я» и аватара Членикус.",
-		tags: ["trading","anti","self","attention","trading","psychology"]
-	},
-	{
-		slug: "candle-confirmation-data-alignment",
-		title: "Data Alignment: Правила подтверждения свечей и синхронизация",
-		date: "2026-06-13",
-		category: "Infrastructure",
-		kicker: "Trading Infrastructure",
-		desc: "Руководство по правильной обработке свечей, фильтрации незакрытых баров и синхронизации шага опроса для предотвращения пропусков данных и ложных входов.",
-		tags: ["infrastructure","candle","confirmation","data","alignment"]
-	},
-	{
-		slug: "crowd-fade-long-short-ratio",
-		title: "Crowd-fade: как читать long/short ratio фьючерсов и торговать против толпы",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Positioning",
-		desc: "Когда ритейл-толпа экстремально длинная, а смарт-мани нет — сигнал на разворот. Как читать данные позиционирования.",
-		tags: ["trading","crowd","fade","long","short","ratio"]
-	},
-	{
-		slug: "diversification-illusion-bots",
-		title: "Иллюзия диверсификации: почему 150 ботов — это часто 1 стратегия в 150 копиях",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Risk",
-		desc: "Много ботов ≠ много независимых эджей. Когда движок не в фазе с рынком — минусуют все разом.",
-		tags: ["trading","diversification","illusion","bots"]
-	},
-	{
-		slug: "fleet-coordinator-drift-monitoring",
-		title: "D11: Fleet Coordinator и технический дрейф",
-		date: "2026-06-13",
-		category: "Governance",
-		kicker: "Fleet Coordination",
-		desc: "Спецификация и протокол координации над всем флотом серверов и агентов. Автоматическое выявление и устранение дрейфа состояния систем.",
-		tags: ["governance","fleet","coordinator","drift","monitoring"]
-	},
-	{
-		slug: "fractal-intelligence-scouts-scribes-attention",
-		title: "S12: Фрактальный интеллект: Роли внимания, Q-score и AutoDigest",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Attention Networks",
-		desc: "Концепция фрактального интеллекта в трейдинге: роли Scout, Scribe, Sentinel, расчет Q-score сетапа и автоматическое сжатие AutoDigest.",
-		tags: ["trading","fractal","intelligence","scouts","scribes","attention"]
-	},
-	{
-		slug: "grid-trading-breakout-recentering-management",
-		title: "S11: Сеточные боты и управление выходом из диапазона (Recentering)",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Grid Trading",
-		desc: "Механика работы сеточных ботов, расчет шага под волатильность, Unit Economics комиссий и стратегии рецентрирования (Stop & Rebuild) при выходе из диапазона.",
-		tags: ["trading","grid","trading","breakout","recentering","management"]
-	},
-	{
-		slug: "how-to-validate-edge-oos-bootstrap",
-		title: "Как проверить торговый эдж по-честному: OOS, bootstrap CI и почему in-sample врёт",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Validation",
-		desc: "Методология, которая отсеяла 99% наших гипотез. Out-of-sample split, bootstrap доверительный интервал, бенчмарки.",
-		tags: ["trading","how","to","validate","edge","oos","bootstrap"]
-	},
-	{
-		slug: "macro-liquidity-eth-btc-relativity-gap",
-		title: "S13: Макро-режимы ликвидности и ETH-BTC Relativity Gap",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Liquidity Regimes",
-		desc: "Анализ расхождения относительной стоимости ETH/BTC в зависимости от макро-ликвидности ФРС, динамики индекса доллара DXY и протокола накопления ETH-Core.",
-		tags: ["trading","macro","liquidity","eth","btc","relativity","gap"]
-	},
-	{
-		slug: "mas-managed-coevolution-sandbox-isolation",
-		title: "D13: Управляемая коэволюция и изоляция многоагентных систем (MAS)",
-		date: "2026-06-13",
-		category: "Security",
-		kicker: "Multi-Agent Safety",
-		desc: "Архитектура Policy Gate, логирование Blackboard и изоляция исполнения в песочницах (Firecracker/gVisor) для безопасного коэволюционного MARL/MAS.",
-		tags: ["security","mas","managed","coevolution","sandbox","isolation"]
-	},
-	{
-		slug: "mild-vs-strong-trend-reversal",
-		title: "Парадокс mild-тренда: почему развороты работают в слабом тренде и сливают в сильном",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Regime Strength",
-		desc: "На данных 1450 сделок: разворотные сигналы дают +$8,599 в mild-трендах и −$2,923 в strong. Контринтуитивно, но объяснимо.",
-		tags: ["trading","mild","vs","strong","trend","reversal"]
-	},
-	{
-		slug: "mirrorcore-compactdigest-memory-compression",
-		title: "D12: MirrorCore++ и сжатие памяти по самосогласованности",
-		date: "2026-06-13",
-		category: "Security",
-		kicker: "Memory Management",
-		desc: "Технология сжатия логов переписок на основе самосогласованности для формирования ядер идентичности ИИ и дельта-компрессии CompactDigest.",
-		tags: ["security","mirrorcore","compactdigest","memory","compression"]
-	},
-	{
-		slug: "multigpt-bridge-federated-ai-arbitration",
-		title: "D15: MultiGPT-Bridge и Федеративный ИИ-Арбитраж",
-		date: "2026-06-13",
-		category: "Infrastructure",
-		kicker: "Federated Arbitration",
-		desc: "Архитектура федеративного взаимодействия ИИ-агентов через MultiGPT-Bridge: перенос идентичности через AnchorSet, Mixture-of-Agents консенсус и роль Цифрового Арбитра.",
-		tags: ["infrastructure","multigpt","bridge","federated","ai","arbitration"]
-	},
-	{
-		slug: "postgres-backup-sync-daemon",
-		title: "PostgreSQL Backup Daemon: Автоматическая синхронизация бэкапов",
-		date: "2026-06-13",
-		category: "Infrastructure",
-		kicker: "Infrastructure Sovereignty",
-		desc: "Спецификация автоматического демона резервного копирования баз данных PostgreSQL, сжатия дампов и их локальной синхронизации для обеспечения отказоустойчивости инфраструктуры.",
-		tags: ["infrastructure","postgres","backup","sync","daemon"]
-	},
-	{
-		slug: "regime-timing-30-120-min",
-		title: "Тайминг регима: входить через 30-120 минут после смены тренда",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Regime Timing",
-		desc: "Возраст тренда на момент входа предсказывает результат: 30-120мин = +$14.88, а 2-6ч = −$2.93.",
-		tags: ["trading","regime","timing","30","120","min"]
-	},
-	{
-		slug: "sovereign-scalper-drawdown-analysis",
-		title: "Sovereign Scalper: Глубокий анализ просадки",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "Drawdown Deep-dive",
-		desc: "Анализ пяти критических уязвимостей в логике ведения позиций и фильтрации сигналов робота Sovereign Core, приведших к полной просадке виртуального капитала.",
-		tags: ["trading","sovereign","scalper","drawdown","analysis"]
-	},
-	{
-		slug: "trading-performance-monitoring-ssot-ai",
-		title: "D14: Системы мониторинга торговой эффективности: Архитектура SSOT и ИИ-коучинг",
-		date: "2026-06-13",
-		category: "Security",
-		kicker: "Infrastructure",
-		desc: "Проектирование систем мониторинга трейдеров: Единый источник истины (SSOT), сравнение TraderSync/Tradervue/TradeZella, выявление тильта и интеграция ИИ-наставника.",
-		tags: ["security","trading","performance","monitoring","ssot","ai"]
-	},
-	{
-		slug: "trend-following-r-multiple-math",
-		title: "Как 50% winrate приносит прибыль: математика R-кратности в трендследовании",
-		date: "2026-06-13",
-		category: "Trading",
-		kicker: "R-Multiples",
-		desc: "На trend-aligned сделках средний тейк +$77.52 против стопа −$8.01 — асимметрия 6.8×. Редкие победы, но огромные.",
-		tags: ["trading","trend","following","r","multiple","math"]
-	},
-	{
-		slug: "ai-agent-reliability-audit",
-		title: "AI-Agent Reliability Audit — за 72 часа делаю ваших агентов безопасными",
-		date: "2026-06-11",
-		category: "Service",
-		kicker: "Flagship Service",
-		desc: "Подключили AI-агента в прод? Покажу, как его сломать инъекцией, дам Decision Trace и Rollback-модуль. От бесплатной диагностики до enterprise-аудита.",
-		tags: ["service","ai","agent","reliability","audit"]
-	},
-	{
-		slug: "read-market-risk-fng-funding",
-		title: "Как читать риск рынка за 60 секунд: FNG + funding + режим",
-		date: "2026-06-11",
-		category: "Trading",
-		kicker: "Risk Intelligence",
-		desc: "Три бесплатных индикатора, которые ловят риск ликвидационного каскада и разворота раньше графика. Методология Crypto Risk Desk.",
-		tags: ["trading","read","market","risk","fng","funding"]
-	},
-	{
-		slug: "why-90-percent-strategies-lose",
-		title: "Почему 90% paper-trading стратегий теряют: 3 механических дефекта на 66k сделок",
-		date: "2026-06-10",
-		category: "Trading",
-		kicker: "Strategy Reality Check",
-		desc: "Разбор на реальных данных Sovereign Arena: мёртвые монеты, геометрия R:R и театр индикаторов — почему большинство стратегий обречены до запуска.",
-		tags: ["trading","why","90","percent","strategies","lose"]
-	},
-	{
-		slug: "archiveos-multigpt-bridge-integration",
-		title: "ArchiveOS & MultiGPT-Bridge: Потоки памяти и арбитраж ИИ",
-		date: "2026-06-08",
-		category: "Infrastructure",
-		kicker: "Memory & Bridge",
-		desc: "Как правильно Continuity OS и BitEvo должны взаимодействовать с ArchiveOS API/Data для управления контекстом, переноса идентичности через AnchorSet и построения федеративного ИИ-арбитража.",
-		tags: ["infrastructure","archiveos","multigpt","bridge","integration"]
-	},
-	{
-		slug: "d3-tool-io-bridge-contract",
-		title: "D3: Tool-IO Bridge Спецификация и Контракт",
-		date: "2026-06-08",
-		category: "Security",
-		kicker: "Security Sandbox",
-		desc: "Спецификация безопасного вызова внешних инструментов и выполнения скриптов в изолированной песочнице с валидацией схемы и контролем лимитов.",
-		tags: ["security","d3","tool","io","bridge","contract"]
-	},
-	{
-		slug: "eth-btc-relativity-gap",
-		title: "ETH-BTC Relativity Gap: Торговля относительной силой и макро-индикаторы",
-		date: "2026-06-08",
-		category: "Trading",
-		kicker: "Regime Indicators",
-		desc: "Анализ расхождения относительной цены ETH к BTC, макроэкономических индикаторов (ставка ФРС, DXY) и механики принудительного делевериджа фьючерсов.",
-		tags: ["trading","eth","btc","relativity","gap"]
-	},
-	{
-		slug: "evm-approval-safety-flashbots",
-		title: "EVM: Безопасность аппрувов и защита от фронтраннинга через Flashbots",
-		date: "2026-06-08",
-		category: "Security",
-		kicker: "EVM Safety",
-		desc: "Спецификация безопасного управления аппрувами токенов в EVM-сетях и защиты транзакций от фронтраннинга с помощью Flashbots.",
-		tags: ["security","evm","approval","safety","flashbots"]
-	},
-	{
-		slug: "mirrorcore-seeding-identity-persistence",
-		title: "MirrorCore & Seeding: Техника переноса и устойчивости контекста ИИ",
-		date: "2026-06-08",
-		category: "Security",
-		kicker: "AI Safety",
-		desc: "Как переносить и восстанавливать контекст и идентичность ИИ-агентов через сессии с использованием капсул сидов и IdentityLock.",
-		tags: ["security","mirrorcore","seeding","identity","persistence"]
-	},
-	{
-		slug: "multi-agent-system-safety",
-		title: "Управляемая коэволюция и безопасность многоагентных систем (MAS)",
-		date: "2026-06-08",
-		category: "Security",
-		kicker: "Multi-Agent Safety",
-		desc: "Принципы безопасной управляемой коэволюции нескольких ИИ-агентов с использованием Policy Gate и изоляцией исполнения в песочницах.",
-		tags: ["security","multi","agent","system","safety"]
-	},
-	{
-		slug: "omnicore-loop-self-preservation",
-		title: "Omni Core Loop & Self-Preservation: Детерминированные фоновые циклы автономии",
-		date: "2026-06-08",
-		category: "Automation",
-		kicker: "OODA Loop",
-		desc: "Архитектура фонового планировщика OODA с автоматическими проверками дрейфа (DriftGuard), лог-ротацией и авто-чекпоинтами.",
-		tags: ["automation","omnicore","loop","self","preservation"]
-	},
-	{
-		slug: "reflex-layer-ooda-monitoring",
-		title: "Reflex Layer: Автономный OODA-мониторинг",
-		date: "2026-06-08",
-		category: "Automation",
-		kicker: "OODA Loop",
-		desc: "Реализация автономного OODA-мониторинга (Observe-Orient-Decide-Act) для отслеживания здоровья систем, перезапуска процессов и лог-ротации.",
-		tags: ["automation","reflex","layer","ooda","monitoring"]
-	},
-	{
-		slug: "state-authority-plane-evolution",
-		title: "State Authority Plane: Управление привилегиями агентов",
-		date: "2026-06-08",
-		category: "Governance",
-		kicker: "Agent Governance",
-		desc: "Эволюция контуров управления правами и привилегиями агентов SAP (Loop A -> B -> C) с использованием паспортов способностей и проверкой подписей.",
-		tags: ["governance","state","authority","plane","evolution"]
-	},
-	{
-		slug: "trading-system-v2-range-farm",
-		title: "Trading System v2.final: Сетки, дивергенции и ловушки маркет-мейкеров",
-		date: "2026-06-08",
-		category: "Trading",
-		kicker: "Trading System",
-		desc: "Техническая спецификация торговой системы v2.final: от борьбы со своими слабостями через ИИ-контр-индикаторы до сеточных стратегий (Si-Zi), Range-Farm BTC и Alt-Scouting.",
-		tags: ["trading","trading","system","v2","range","farm"]
-	},
-	{
-		slug: "solana-mev-sandwich-protection",
-		title: "Solana MEV: Защита от сэндвич-атак",
-		date: "2026-06-07",
-		category: "Infrastructure",
-		kicker: "MEV Mitigation",
-		desc: "Как защитить транзакции в Solana от сэндвич-атак MEV-ботов, используя Jito Block Engine и оптимизацию проскальзывания Jupiter API.",
-		tags: ["infrastructure","solana","mev","sandwich","protection"]
-	},
-	{
-		slug: "okx-nft-parasite-hunter",
-		title: "OKX NFT: Охота на паразитарные кошельки",
-		date: "2026-06-03",
-		category: "Trading",
-		kicker: "NFT Botting",
-		desc: "Стратегия выявления и мгновенного перебивания ставок паразитарных снайперов на OKX NFT и OpenSea.",
-		tags: ["trading","okx","nft","parasite","hunter"]
-	}
-];
-
-const CATEGORY_ORDER = ["Trading","AI","Security","Infrastructure","Governance","Risk","Business","Automation","Service"];
-const byCat = {};
-guides.forEach(g => { (byCat[g.category] = byCat[g.category] || []).push(g); });
-const sections = [
-	...CATEGORY_ORDER.filter(c => byCat[c]).map(c => ({ cat: c, items: byCat[c] })),
-	...Object.keys(byCat).filter(c => !CATEGORY_ORDER.includes(c)).map(c => ({ cat: c, items: byCat[c] })),
+const published = [
+  {
+    type: 'Method',
+    title: 'Agent Authority & Evidence Audit — Reliability Method',
+    href: '/guides/ai-agent-reliability-audit',
+    text: 'Public-safe methodology note for bounded authority, evidence and failure-control review.'
+  },
+  {
+    type: 'Security',
+    title: 'Security Sandboxing',
+    href: '/guides/security-sandboxing',
+    text: 'Public-safe note on isolation boundaries and tool-execution controls without private infrastructure disclosure.'
+  },
+  {
+    type: 'Operations',
+    title: 'Fleet Coordinator Drift Monitoring',
+    href: '/guides/fleet-coordinator-drift-monitoring',
+    text: 'Public-safe architecture note focused on drift concepts rather than live internal telemetry.'
+  },
+  {
+    type: 'Contract',
+    title: 'Tool-I/O Bridge Contract',
+    href: '/guides/d3-tool-io-bridge-contract',
+    text: 'Public-safe interface contract that excludes private operator-control routes and internal endpoints.'
+  }
 ];
 ---
 
-<Layout title="AI & Agent Security Guides Portal">
-	<!-- Hero Section -->
-	<section class="hero-section">
-		<div class="container hero-inner">
-			<div class="kicker">Security & Governance</div>
-			<h1 class="display">AI Agent Playbooks</h1>
-			<p class="copy">
-				Технические спецификации, стандарты безопасности и протоколы управления для автономных многоагентных сред.
-			</p>
-		</div>
-	</section>
+<Layout title="BitEvo Research Library — Reviewed Public Notes" description="Reviewed public BitEvo research notes on AI-agent authority, sandboxing, drift monitoring and tool-I/O contracts.">
+  <section class="research-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Reviewed public research</div><h1 class="display">Publish less. Stand behind more.</h1></div>
+      <div><p class="lede">This library now exposes only notes that have been reviewed for the current public evidence boundary. Historical research remains in source history until its time-sensitive claims and disclosure surface are re-verified.</p></div>
+    </div>
+  </section>
 
-	<!-- Category anchor nav -->
-	<section class="cat-nav-section">
-		<div class="container">
-			<div class="cat-nav">
-				{sections.map(s => (
-					<a href={`#cat-${s.cat}`} class="cat-pill">{s.cat}<span class="cat-count">{s.items.length}</span></a>
-				))}
-			</div>
-		</div>
-	</section>
+  <section class="section-tight section-rule">
+    <div class="container research-boundary panel">
+      <div><span>PUBLICATION POLICY</span><strong>Reviewed before public indexing</strong></div>
+      <p>Research material is not customer proof, certification, legal advice or a current runtime claim. Time-sensitive facts should be re-verified against primary sources before operational use.</p>
+    </div>
+  </section>
 
-	<!-- Guides grouped by category -->
-	{sections.map(s => (
-		<section class="guides-section" id={`cat-${s.cat}`}>
-			<div class="container">
-				<h2 class="cat-heading">{s.cat}<span class="cat-heading-count">{s.items.length} playbooks</span></h2>
-				<div class="guides-grid">
-					{s.items.map(guide => (
-						<article class="guide-card">
-							<div class="card-meta">
-								<span class="category">{guide.category}</span>
-								<span class="dot">·</span>
-								<span class="date">{guide.date}</span>
-							</div>
-							<a href={`/guides/${guide.slug}`} class="title-link">
-								<h2 class="display-sm">{guide.title}</h2>
-							</a>
-							<p class="desc">{guide.desc}</p>
-							<div class="card-footer">
-								<div class="tags">
-									{guide.tags.map(tag => (
-										<span class="tag">#{tag}</span>
-									))}
-								</div>
-								<a href={`/guides/${guide.slug}`} class="read-more">Read Playbook →</a>
-							</div>
-						</article>
-					))}
-				</div>
-			</div>
-		</section>
-	))}
+  <section class="section section-rule">
+    <div class="container notes-grid">
+      {published.map((note, i) => (
+        <a class="note-card panel" href={note.href}>
+          <div class="note-top"><span>{String(i + 1).padStart(2, '0')}</span><small>{note.type}</small></div>
+          <div><h2>{note.title}</h2><p>{note.text}</p></div>
+          <div class="open">Read reviewed note <span aria-hidden="true">↗</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container archive-grid">
+      <div><div class="eyebrow">Legacy archive</div><h2 class="section-title">Historical notes are offline from the public build.</h2></div>
+      <div class="archive-copy"><p>Older pages mixed research, historical metrics and time-sensitive technology claims. Rather than present them as current evidence, BitEvo keeps them out of the public build until each note is reviewed against present sources and disclosure rules.</p><p>Removing a public route does not delete its Git history.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow closing">
+      <div class="eyebrow">Commercial boundary</div>
+      <h2 class="section-title">The audit uses scoped evidence, not public research as proof.</h2>
+      <p class="lede">Commercial findings are produced against an agreed workflow, Rules of Engagement and reproducible evidence criteria.</p>
+      <a class="button button-primary" href="/agent-authority-audit">See audit methodology <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 </Layout>
 
 <style>
-	.hero-section {
-		padding-block: 60px 30px;
-		text-align: center;
-	}
-	.kicker {
-		color: var(--blue);
-		font-size: 0.72rem;
-		font-weight: 900;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		margin-bottom: 6px;
-	}
-	.display {
-		font-family: 'Playfair Display', serif;
-		font-size: clamp(2.2rem, 5vw, 3.4rem);
-		font-weight: 900;
-		line-height: 1.15;
-		margin: 0;
-	}
-	.copy {
-		font-family: 'Lora', serif;
-		color: var(--muted);
-		max-width: 600px;
-		margin: 12px auto 0;
-		font-size: 1rem;
-		line-height: 1.6;
-	}
-
-	/* Grid */
-	.guides-section {
-		padding-block: 20px 60px;
-	}
-	.guides-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 24px;
-		max-width: 1000px;
-		margin-inline: auto;
-	}
-	@media (max-width: 768px) {
-		.guides-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.guide-card {
-		background: var(--paper-soft);
-		border: 1px solid var(--line);
-		border-radius: var(--radius);
-		padding: 30px;
-		display: flex;
-		flex-direction: column;
-		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	.guide-card:hover {
-		transform: translateY(-2px);
-		border-color: var(--blue);
-		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-	}
-
-	.card-meta {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 0.72rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--muted);
-		margin-bottom: 12px;
-	}
-	.category {
-		color: var(--green);
-	}
-
-	.display-sm {
-		font-family: 'Playfair Display', serif;
-		font-size: 1.35rem;
-		margin: 0 0 12px;
-		line-height: 1.25;
-		transition: color 0.2s ease;
-	}
-	.display-sm:hover {
-		color: var(--blue);
-	}
-
-	.desc {
-		font-family: 'Lora', serif;
-		color: var(--muted);
-		font-size: 0.92rem;
-		line-height: 1.6;
-		margin: 0 0 20px;
-	}
-
-	.card-footer {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: auto;
-		border-top: 1px solid var(--line);
-		padding-top: 14px;
-	}
-
-	.tags {
-		display: flex;
-		gap: 8px;
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: var(--muted);
-	}
-
-	.read-more {
-		font-size: 0.75rem;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--blue);
-		transition: transform 0.2s ease;
-	}
-	.read-more:hover {
-		transform: translateX(2px);
-	}
-	/* Category structure (ported from crypto GEO homepage) */
-	.cat-nav-section { padding-block: 10px 6px; }
-	.cat-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-	.cat-pill {
-		display: inline-flex; align-items: center; gap: 6px;
-		padding: 6px 14px; border: 1px solid var(--line, #2a2a2a); border-radius: 999px;
-		color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 700;
-		transition: border-color .15s, color .15s;
-	}
-	.cat-pill:hover { color: var(--gold, #ffd166); border-color: var(--gold, #ffd166); }
-	.cat-count { font-size: 0.7rem; opacity: 0.7; }
-	.cat-heading {
-		font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900;
-		margin: 8px 0 18px; display: flex; align-items: baseline; gap: 12px;
-		border-bottom: 1px solid var(--line, #2a2a2a); padding-bottom: 10px; scroll-margin-top: 20px;
-	}
-	.cat-heading-count { font-size: 0.8rem; font-weight: 700; color: var(--muted); opacity: 0.8; }
+  .research-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,8vw,110px);align-items:end}.hero-grid .lede{margin:0}.research-boundary{display:grid;grid-template-columns:.7fr 1.3fr;gap:30px;padding:22px 26px;align-items:center}.research-boundary div{display:flex;flex-direction:column;gap:5px}.research-boundary span{color:var(--green);font:500 .6rem var(--mono);letter-spacing:.1em}.research-boundary strong{font-size:.82rem}.research-boundary p{margin:0;color:var(--muted);font-size:.78rem}.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.note-card{min-height:290px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease}.note-card:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.32)}.note-top{display:flex;justify-content:space-between;color:#58645f;font:500 .61rem var(--mono)}.note-top small{color:var(--green);letter-spacing:.08em;text-transform:uppercase}.note-card h2{margin:0 0 10px;font-size:1.15rem}.note-card p{margin:0;color:var(--muted);font-size:.81rem}.open{color:var(--ink-soft);font-size:.76rem;font-weight:650}.archive-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(40px,8vw,110px)}.archive-copy{border-top:1px solid var(--line)}.archive-copy p{margin:0;padding:18px 0;border-bottom:1px solid var(--line);color:var(--muted)}.closing{text-align:center}.closing .section-title{margin-inline:auto}.closing .lede{margin:18px auto 28px}@media(max-width:820px){.hero-grid,.research-boundary,.archive-grid{grid-template-columns:1fr}.notes-grid{grid-template-columns:1fr}}
 </style>

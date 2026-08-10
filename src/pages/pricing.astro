@@ -3,66 +3,118 @@ import Layout from '../layouts/Layout.astro';
 
 const tiers = [
   {
-    price: "Free",
-    label: "20-minute scope / authority triage",
-    desc: "Коротко определяем критическое действие агента, границы полномочий и пригодность staging/test среды. Без письменного security conclusion, exploit work и deep log analysis.",
-    cta: "Start triage",
-    href: "/audit-intake"
+    eyebrow: 'Qualification', price: 'Free', cadence: '20 minutes', title: 'Scope / Authority Triage',
+    desc: 'Use when the first unknown is whether the workflow is even a useful audit target. We isolate the external action, the authority owner and the staging/test boundary.',
+    includes: ['1 critical action identified', 'Authority owner identified', 'Staging/test fit check'],
+    excludes: ['No tested finding', 'No written security conclusion', 'No deep evidence review'],
+    cta: 'Qualify the workflow', href: '/audit-intake'
   },
   {
-    price: "$1,500",
-    label: "Reduced-scope entry audit",
-    desc: "Одна критическая action chain, одна главная failure hypothesis, ограниченное воспроизведение и короткий finding memo. Без полной authority map и без включённого retest.",
-    cta: "Scope entry audit",
-    href: "/audit-intake"
+    eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
+    desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
+    includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
+    excludes: ['No full Authority Ledger / Evidence Contract', 'No multi-scenario failure plan', 'No included retest'],
+    cta: 'Test one uncertainty', href: '/audit-intake'
   },
   {
-    price: "$4,900",
-    label: "Primary Agent Authority & Evidence Audit",
-    desc: "5 рабочих дней; 1 staging/test workflow; до 3 tools / APIs / MCP servers; 10–20 согласованных failure scenarios; executive report; reproducible evidence pack; prioritized repair backlog; один retest.",
-    cta: "Open audit intake",
-    href: "/audit-intake",
-    featured: true
+    eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days', title: 'Agent Authority & Evidence Audit',
+    desc: 'Use when the owner must decide whether one action-capable workflow has earned its current or proposed Authority Budget across evidence, effect confirmation and recovery.',
+    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Authority Ledger + Evidence Contract + reproducible Finding Records', 'Decision Memo + owner backlog', 'One retest'],
+    excludes: ['No certification', 'No universal safety score', 'No production penetration testing by default'],
+    cta: 'Map the authority decision', href: '/mapper', featured: true
   }
+];
+
+const comparison = [
+  ['Owner question', 'Is this worth auditing?', 'Is this one failure real?', 'Has this workflow earned its Authority Budget?'],
+  ['Audit object', '1 proposed action', '1 critical action chain', '1 staging/test workflow'],
+  ['Failure depth', 'No failure tested', '1 primary hypothesis', '10–20 agreed scenarios'],
+  ['Authority analysis', 'Owner + boundary only', 'Only what the finding requires', 'Action/object/approval map included'],
+  ['Evidence depth', 'Qualification evidence only', 'Enough to accept/reject one finding', 'Evidence Before Effect + confirmation + recovery'],
+  ['False Green coverage', 'Not tested', 'Only if part of the hypothesis', 'Explicitly tested where applicable'],
+  ['Primary output', 'Audit / do not audit', 'Repair / reject hypothesis', 'Expand / constrain / repair / retest'],
+  ['Retest', 'No', 'Not included', '1 included']
 ];
 ---
 
-<Layout title="Pricing — Agent Authority & Evidence Audit | BitEvo" description="Evidence-bounded pricing for BitEvo Agent Authority & Evidence Audit.">
-  <section class="hero-section">
-    <div class="container hero-inner">
-      <div class="kicker">Agent Authority & Evidence Audit</div>
-      <h1>One bounded commercial ladder</h1>
-      <p>Engineering review of agent authority, evidence, logging, traceability and operational controls. No certification, guaranteed security, or profit promise.</p>
+<Layout title="Pricing — Authority Decisions for AI Agent Workflows | BitEvo" description="BitEvo pricing is based on decision depth: qualify a workflow, test one uncertainty, or audit whether its authority is justified by evidence and recovery control.">
+  <section class="pricing-hero section">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">Decision depth</div><h1 class="display">Buy the smallest amount of evidence that can change the decision.</h1></div>
+      <div><p class="lede">The tiers are not “more safety for more money.” They answer different owner questions with different evidence ceilings. Choose the cheapest scope that can resolve the uncertainty you actually have.</p><div class="hero-actions"><a class="button" href="/agent-authority-audit">See the authority decision model →</a><a class="button button-ghost" href="/doctrine">BitEvo Doctrine</a></div></div>
     </div>
   </section>
 
-  <section class="container legal">
-    <strong>EU AI Act / Article 12.</strong>
-    Article 12 sets record-keeping requirements for AI systems classified as high-risk. Applicability depends on the system, use case and the organization's legal role. Our work can provide engineering evidence for logging, traceability and control review, but it is not legal advice or certification.
+  <section class="section-tight section-rule">
+    <div class="container pricing-grid">
+      {tiers.map(t => (
+        <article class:list={['tier', 'panel', t.featured && 'featured']}>
+          {t.featured && <div class="recommended">Primary</div>}
+          <div class="tier-top"><span>{t.eyebrow}</span><div class="price">{t.price}</div><small>{t.cadence}</small><h2>{t.title}</h2><p>{t.desc}</p></div>
+          <div class="feature-group"><strong>Evidence ceiling</strong><ul>{t.includes.map(item => <li>{item}</li>)}</ul></div>
+          <div class="feature-group muted"><strong>Not purchased</strong><ul>{t.excludes.map(item => <li>{item}</li>)}</ul></div>
+          <a href={t.href} class:list={['button', t.featured && 'button-primary']}>{t.cta} <span aria-hidden="true">↗</span></a>
+        </article>
+      ))}
+    </div>
   </section>
 
-  <section class="container pricing-grid">
-    {tiers.map(t => (
-      <article class:list={["tier", t.featured && "featured"]}>
-        <div class="price">{t.price}</div>
-        <h2>{t.label}</h2>
-        <p>{t.desc}</p>
-        <a href={t.href}>{t.cta}</a>
-      </article>
-    ))}
+  <section class="section section-rule doctrine-pricing">
+    <div class="container doctrine-grid">
+      <article class="panel"><div class="eyebrow">Authority Budget</div><h2>What permission surface are you deciding about?</h2><p>Scope expands when the owner needs a defensible answer about more actions, objects, approvals or integrations — not because a higher price buys a stronger guarantee.</p></article>
+      <article class="panel"><div class="eyebrow">Evidence Before Effect</div><h2>How much proof must exist before the action?</h2><p>The commercial ladder buys different evidence depth. The primary audit tests whether decision-time evidence and external confirmation are strong enough for the authority being exercised.</p></article>
+      <article class="panel"><div class="eyebrow">False Green</div><h2>How broadly do we test apparent success?</h2><p>A narrow audit may test one suspected mismatch. The primary audit can include multiple agreed scenarios where internal success, freshness or external state may diverge.</p></article>
+    </div>
   </section>
 
-  <section class="container hardening">
-    <h2>Hardening</h2>
-    <p>Implementation/hardening is quoted separately only after verified findings exist. BitEvo does not publicly promise a fixed implementation price before the audit identifies the actual repair scope.</p>
+  <section class="section section-rule">
+    <div class="container compare-grid">
+      <div><div class="eyebrow">Selection rule</div><h2 class="section-title">Start from the owner decision, then buy the evidence.</h2></div>
+      <div class="decision-list">
+        <article><span>Free</span><div><strong>“Should we spend time auditing this workflow at all?”</strong><p>Use triage when the action, owner or staging boundary is still unclear.</p></div></article>
+        <article><span>$1.5k</span><div><strong>“Is this specific failure real enough to act on?”</strong><p>Use the Entry Audit when one hypothesis dominates the engineering decision.</p></div></article>
+        <article><span>$4.9k</span><div><strong>“Should this workflow keep, gain or lose authority?”</strong><p>Use the primary audit when the answer requires multiple failure scenarios, an Authority Ledger + Evidence Contract, evidence-at-decision-time and a retestable owner backlog.</p></div></article>
+      </div>
+    </div>
   </section>
 
-  <section class="container boundary">
-    <strong>Scope boundary.</strong>
-    Written scope and Rules of Engagement are required before testing. Production penetration testing is not included by default. Do not submit API keys, passwords, tokens, private keys, wallet seeds, production credentials or customer secrets through the public intake.
+  <section class="section section-rule comparison-section">
+    <div class="container section-head">
+      <div><div class="eyebrow">Decision matrix</div><h2 class="section-title">Scope grows because the question gets harder.</h2></div>
+      <p class="lede">This matrix is designed for budget or procurement review. The commercial difference is evidence depth and decision breadth — not a larger guarantee.</p>
+    </div>
+    <div class="container table-shell panel" role="region" aria-label="Audit decision comparison" tabindex="0">
+      <div class="comparison-table">
+        <div class="table-row table-head"><strong>Dimension</strong><strong>Free triage</strong><strong>Entry audit</strong><strong>Primary audit</strong></div>
+        {comparison.map(row => (
+          <div class="table-row"><strong>{row[0]}</strong><span>{row[1]}</span><span>{row[2]}</span><span>{row[3]}</span></div>
+        ))}
+      </div>
+    </div>
   </section>
 
-  <style>
-    .hero-section{padding:58px 0 24px}.hero-inner{text-align:center}.kicker{color:var(--gold);font-size:.75rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.hero-inner h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);margin:8px 0 12px}.hero-inner p{max-width:760px;margin:0 auto;color:var(--muted);font-family:'Lora',serif}.legal,.boundary,.hardening{max-width:980px;margin:18px auto;background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:20px;color:var(--muted)}.legal strong,.boundary strong{color:var(--gold)}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-block:22px}.tier{background:var(--paper-soft);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px}.tier.featured{border-color:var(--gold)}.price{font-size:2rem;font-weight:900}.tier h2{font-family:'Playfair Display',serif;font-size:1.25rem;margin:0}.tier p{color:var(--muted);margin:0;flex:1}.tier a{display:block;text-align:center;padding:11px 16px;border:1px solid var(--line-strong);border-radius:8px;font-weight:800}.featured a{background:var(--gold);color:#080a0b}.hardening h2{margin:0 0 8px;color:var(--ink)}.hardening p{margin:0}@media(max-width:850px){.pricing-grid{grid-template-columns:1fr}}
-  </style>
+  <section class="section section-rule">
+    <div class="container boundary-grid">
+      <div class="panel boundary-card"><div class="eyebrow">Hardening</div><h2>Repair follows evidence.</h2><p>Implementation is quoted separately only after a finding identifies the real control gap. The repair scope is tied to the owner decision, rollback risk and retest criteria; there is no fixed “make it safe” package.</p></div>
+      <div class="panel boundary-card"><div class="eyebrow">Claim boundary</div><h2>Engineering evidence, not certification.</h2><p>The work can support decisions about logging, traceability, authority and control behavior inside the tested scope. It does not certify the system, guarantee security, guarantee defect absence or replace legal advice.</p></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow final-note">
+      <div class="eyebrow">Before access</div>
+      <h2 class="section-title">Start with one action and one owner.</h2>
+      <p class="lede">The public intake prepares a scope brief only. It does not authorize testing. Do not submit credentials, private keys, wallet seeds, production secrets or customer secrets.</p>
+      <a href="/mapper" class="button button-primary">Map the action chain <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .pricing-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.tier{position:relative;padding:28px;display:flex;flex-direction:column;min-height:690px;transition:transform .2s ease,border-color .2s ease}.tier:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.24)}.tier.featured{border-color:rgba(127,208,177,.4);box-shadow:0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(127,208,177,.08)}.recommended{position:absolute;right:18px;top:18px;padding:5px 9px;border:1px solid rgba(127,208,177,.3);border-radius:999px;color:var(--green);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.tier-top>span{color:var(--muted);font:500 .63rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.price{margin-top:22px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;font-weight:700;letter-spacing:-.06em}.tier-top small{display:block;color:var(--green);font:500 .64rem var(--mono);margin:7px 0 24px}.tier h2{font-size:1.15rem;margin:0 0 10px}.tier p{margin:0;color:var(--muted);font-size:.84rem}.feature-group{padding-top:20px;margin-top:22px;border-top:1px solid var(--line)}.feature-group strong{color:var(--ink-soft);font:500 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.feature-group ul{list-style:none;margin:11px 0 0;padding:0}.feature-group li{position:relative;padding:5px 0 5px 17px;color:var(--ink-soft);font-size:.78rem}.feature-group li::before{content:'+';position:absolute;left:0;color:var(--green);font-family:var(--mono)}.feature-group.muted li{color:var(--muted)}.feature-group.muted li::before{content:'–';color:#697673}.tier>.button{margin-top:auto}
+  .doctrine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.doctrine-grid article{padding:28px;min-height:260px;display:flex;flex-direction:column}.doctrine-grid h2{margin:auto 0 10px;font-size:1.25rem;letter-spacing:-.025em}.doctrine-grid p{margin:0;color:var(--muted);font-size:.82rem}.compare-grid,.section-head{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(42px,8vw,110px)}.decision-list{border-top:1px solid var(--line)}.decision-list article{display:grid;grid-template-columns:72px 1fr;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}.decision-list article>span{color:var(--green);font:500 .66rem var(--mono)}.decision-list strong{font-size:.92rem}.decision-list p{margin:5px 0 0;color:var(--muted);font-size:.82rem}.section-head{margin-bottom:34px}.section-head .lede{margin:2px 0 0}
+  .table-shell{padding:0;overflow:auto}.comparison-table{min-width:900px}.table-row{display:grid;grid-template-columns:.78fr 1fr 1fr 1.2fr}.table-row>*{padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.78rem;line-height:1.5}.table-row>*:last-child{border-right:0}.table-row:last-child>*{border-bottom:0}.table-row>strong:first-child{color:var(--ink)}.table-row span{color:var(--muted)}.table-head{position:sticky;top:0;background:rgba(11,21,23,.98);z-index:1}.table-head strong{color:var(--green)!important;font:500 .62rem var(--mono);letter-spacing:.09em;text-transform:uppercase}
+  .boundary-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.boundary-card{padding:32px}.boundary-card h2{margin:2px 0 12px;font-size:1.3rem}.boundary-card p{margin:0;color:var(--muted)}.final-note{text-align:center}.final-note .section-title{margin-inline:auto}.final-note .lede{margin:20px auto 28px}
+  @media(max-width:980px){.pricing-grid,.doctrine-grid{grid-template-columns:1fr}.tier{min-height:auto}.tier>.button{margin-top:28px}.hero-grid,.compare-grid,.section-head{grid-template-columns:1fr}.boundary-grid{grid-template-columns:1fr}.doctrine-grid article{min-height:auto}}
+  @media(prefers-reduced-motion:reduce){.tier{transition:none}}
+</style>
