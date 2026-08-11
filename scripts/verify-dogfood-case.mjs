@@ -9,6 +9,7 @@ const auditPath = path.join(root, 'agent-authority-audit', 'index.html');
 const failures = [];
 let requiredChecks = 0;
 let linkChecks = 0;
+let contextChecks = 0;
 let privateMarkerChecks = 0;
 
 const read = (file) => {
@@ -40,7 +41,31 @@ for (const token of required) {
   if (!dogfood.toLowerCase().includes(token.toLowerCase())) failures.push(`dogfood:missing:${token}`);
 }
 
-for (const [name, html] of [['proof', proof], ['agent-authority-audit', audit]]) {
+const extractTaggedSection = (html, marker) => {
+  const markerIndex = html.indexOf(marker);
+  if (markerIndex < 0) return '';
+  const start = html.lastIndexOf('<section', markerIndex);
+  const end = html.indexOf('</section>', markerIndex);
+  if (start < 0 || end < 0) return '';
+  return html.slice(start, end + '</section>'.length);
+};
+
+const contexts = [
+  ['proof', proof, 'data-dogfood-context="proof"'],
+  ['agent-authority-audit', audit, 'data-dogfood-context="audit"']
+];
+
+for (const [name, html, marker] of contexts) {
+  contextChecks += 1;
+  const section = extractTaggedSection(html, marker);
+  if (!section) {
+    failures.push(`${name}:missing-dogfood-context`);
+    continue;
+  }
+
+  contextChecks += 1;
+  if (!section.includes('href="/dogfood-self-audit"')) failures.push(`${name}:context-missing-dogfood-link`);
+
   linkChecks += 1;
   if (!html.includes('href="/dogfood-self-audit"')) failures.push(`${name}:missing-dogfood-link`);
 }
@@ -73,9 +98,9 @@ for (const boundary of requiredBoundaries) {
 }
 
 if (failures.length) {
-  console.error(`DOGFOOD_CASE_GATE=FAIL required_checks=${requiredChecks} link_checks=${linkChecks} private_marker_checks=${privateMarkerChecks} failures=${failures.length}`);
+  console.error(`DOGFOOD_CASE_GATE=FAIL required_checks=${requiredChecks} link_checks=${linkChecks} context_checks=${contextChecks} private_marker_checks=${privateMarkerChecks} failures=${failures.length}`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log(`DOGFOOD_CASE_GATE=PASS required_checks=${requiredChecks} link_checks=${linkChecks} private_marker_checks=${privateMarkerChecks} failures=0`);
+console.log(`DOGFOOD_CASE_GATE=PASS required_checks=${requiredChecks} link_checks=${linkChecks} context_checks=${contextChecks} private_marker_checks=${privateMarkerChecks} failures=0`);
