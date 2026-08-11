@@ -29,6 +29,7 @@ const deliverables = [
 
 const proofSurfaces = [
   ['/proof', 'Proof Matrix', 'Synthetic worked packs plus an explicit evidence-strength ladder showing what method, build and observed evidence can — and cannot — establish.'],
+  ['/dogfood-self-audit', 'Internal dogfood', 'Bounded internal self-audit evidence from BitEvo’s own control stack — not customer proof, independent certification, or production-wide security evidence.', 'dogfood'],
   ['/build', 'Build + 10/10 Standard', 'The public engineering index and reusable quality contract, with machine gates kept separate from human visual review.'],
   ['/doctrine', 'BitEvo Doctrine', 'Authority Budget, Evidence Before Effect and False Green — the vocabulary behind the audit model.'],
   ['/agent-authority-audit', 'Audit methodology', 'The four-plane model, finding anatomy, failure plan and Rules of Engagement.'],
@@ -154,8 +155,8 @@ const structuredData = {
         <a href="/proof" class="text-link">Inspect evidence strength →</a>
       </article>
       <div class="proof-links">
-        {proofSurfaces.map(([href, title, text]) => (
-          <a href={href} class="proof-link"><span>{title}</span><p>{text}</p><i aria-hidden="true">↗</i></a>
+        {proofSurfaces.map(([href, title, text, marker]) => (
+          <a href={href} class="proof-link" data-home-proof={marker}><span>{title}</span><p>{text}</p><i aria-hidden="true">↗</i></a>
         ))}
       </div>
     </div>
