@@ -207,7 +207,8 @@ const trustBoundaryContracts = [
   ['/sample-audit', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
   ['/sample-message', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
   ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
-  ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']]
+  ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']],
+  ['/diagnostic', ['DOES NOT AUTHORIZE TESTING', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED', 'TEST EXECUTION REMAINS SEPARATELY AUTHORIZED']]
 ];
 for (const [route, requiredPhrases] of trustBoundaryContracts) {
   const html = (htmlByRoute.get(route) || '').toUpperCase();
