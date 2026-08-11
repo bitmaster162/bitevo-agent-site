@@ -3,6 +3,7 @@ import { extname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
+const vercelConfigPath = fileURLToPath(new URL('../vercel.json', import.meta.url));
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -22,6 +23,7 @@ let htmlScanned = 0;
 let externalFontChecks = 0;
 let externalStylesheetChecks = 0;
 let externalScriptChecks = 0;
+let deploymentPolicyChecks = 0;
 
 for (const file of htmlFiles) {
   htmlScanned += 1;
@@ -46,10 +48,16 @@ for (const file of htmlFiles) {
   }
 }
 
+const vercelConfig = await readFile(vercelConfigPath, 'utf8');
+for (const domain of ['fonts.googleapis.com', 'fonts.gstatic.com']) {
+  deploymentPolicyChecks += 1;
+  if (vercelConfig.includes(domain)) failures.push(`vercel.json: external font domain allowed by deployment policy ${domain}`);
+}
+
 if (failures.length) {
   console.error('PUBLIC_PERFORMANCE_GATE=FAIL');
   for (const failure of failures) console.error(failure);
   process.exit(1);
 }
 
-console.log(`PUBLIC_PERFORMANCE_GATE=PASS html_scanned=${htmlScanned} external_font_checks=${externalFontChecks} external_stylesheet_checks=${externalStylesheetChecks} external_script_checks=${externalScriptChecks} failures=0`);
+console.log(`PUBLIC_PERFORMANCE_GATE=PASS html_scanned=${htmlScanned} external_font_checks=${externalFontChecks} external_stylesheet_checks=${externalStylesheetChecks} external_script_checks=${externalScriptChecks} deployment_policy_checks=${deploymentPolicyChecks} failures=0`);
