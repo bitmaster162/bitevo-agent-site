@@ -188,12 +188,15 @@ for (const [route, marker, href] of funnelContracts) {
 
 const funnelTextContracts = [
   ['/agent-authority-audit', '/mapper', 'Map the workflow'],
+  ['/agent-authority-audit', '/audit-intake', 'Prepare Primary Audit scope'],
   ['/pricing', '/audit-intake', 'Prepare triage brief'],
   ['/pricing', '/audit-intake', 'Prepare Entry Audit scope'],
-  ['/pricing', '/mapper', 'Map the authority decision'],
+  ['/pricing', '/audit-intake', 'Prepare Primary Audit scope'],
   ['/pricing', '/mapper', 'Map the action chain'],
   ['/consulting', '/audit-intake', 'Prepare triage brief'],
   ['/consulting', '/audit-intake', 'Prepare Entry Audit scope'],
+  ['/consulting', '/agent-authority-audit', 'See the decision model'],
+  ['/consulting', '/audit-intake', 'Prepare Primary Audit scope'],
   ['/consulting', '/mapper', 'Map a workflow'],
   ['/consulting', '/mapper', 'Map the critical action'],
   ['/doctrine', '/mapper', 'Map one workflow']
@@ -211,9 +214,9 @@ const trustBoundaryContracts = [
   ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
   ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']],
   ['/diagnostic', ['DOES NOT AUTHORIZE TESTING', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED', 'TEST EXECUTION REMAINS SEPARATELY AUTHORIZED']],
-  ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE']],
-  ['/consulting', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE']],
-  ['/agent-authority-audit', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE']]
+  ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
+  ['/consulting', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
+  ['/agent-authority-audit', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'PUBLIC INTAKE', 'DOES NOT AUTHORIZE TESTING']]
 ];
 for (const [route, requiredPhrases] of trustBoundaryContracts) {
   const html = (htmlByRoute.get(route) || '').toUpperCase();
@@ -249,7 +252,8 @@ if (fileSet.has('llms.txt')) {
     'it does not authorize execution',
     'The diagnostic does not authorize testing',
     '5 working days after complete evidence/access + written scope',
-    'they do not book or submit an engagement'
+    'they do not book or submit an engagement',
+    'including the Primary Audit path'
   ];
   for (const phrase of machineBoundaryPhrases) {
     trustBoundaryChecks += 1;

@@ -109,7 +109,7 @@ export function GET() {
     '- Free / 20 minutes: decide whether the workflow is worth auditing and identify the critical action, authority owner and staging boundary.',
     '- USD 1,500 Entry Audit: determine whether one primary failure hypothesis on one critical action chain is reproducible and decision-relevant.',
     '- USD 4,900 Primary Audit: decide whether one workflow has enough evidence, effect confirmation and recovery control for its current or proposed authority.',
-    '- Public Pricing/Consulting Free and Entry CTAs prepare a local scope brief only; they do not book or submit an engagement and do not authorize testing.',
+    '- Public Pricing/Consulting and Agent Authority Audit scope-preparation CTAs, including the Primary Audit path, prepare a local scope brief only; they do not book or submit an engagement and do not authorize testing.',
     '- Hardening: quoted separately only after verified findings identify the real control gap.',
     '',
     '## Boundaries',
