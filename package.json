@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/verify-public-p0.mjs && node scripts/verify-public-quality.mjs",
+    "build": "astro build && node scripts/verify-public-p0.mjs && node scripts/verify-public-quality.mjs && node scripts/verify-public-performance.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
