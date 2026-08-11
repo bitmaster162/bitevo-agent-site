@@ -42,7 +42,7 @@ const questions = [
         <div id="output" class="output" hidden>
           <div class="summary"><small>INTERPRETATION</small><h3 id="headline"></h3><p id="summaryText"></p></div>
           <div id="gaps" class="gaps"></div>
-          <div class="boundary"><span>BOUNDARY</span><p>This diagnostic does not establish that a workflow is safe or unsafe. It identifies whether key decision gates are explicitly answered.</p></div>
+          <div class="boundary"><span>BOUNDARY</span><p>This diagnostic does not establish that a workflow is safe or unsafe and does not authorize testing. It identifies whether key decision gates are explicitly answered; written Rules of Engagement remain required before any test execution.</p></div>
           <div class="result-actions"><button id="copy" type="button" class="button">Copy brief</button><a href="/mapper" class="button button-primary">Map the authority ↗</a><a href="/workspace" class="button">Compare checkpoints</a><a href="/audit-intake" class="button button-ghost">Turn gaps into scope</a></div>
         </div>
       </aside>
@@ -53,7 +53,7 @@ const questions = [
     <div class="container explain-grid">
       <div><div class="eyebrow">How to use it</div><h2 class="section-title">Unknown is a valid engineering answer.</h2></div>
       <div class="explain-list">
-        <article><span>YES</span><p>The gate is explicit enough to describe. An audit may still test whether the implementation actually behaves that way.</p></article>
+        <article><span>YES</span><p>The gate is explicit enough to describe. It can support scope preparation; implementation testing still requires written Rules of Engagement and separate authorization.</p></article>
         <article><span>NO</span><p>The workflow lacks the gate or currently behaves in a way that does not satisfy it.</p></article>
         <article><span>UNKNOWN</span><p>The team cannot yet prove the gate. BitEvo treats that uncertainty as something to preserve and resolve, not silently convert into a pass.</p></article>
       </div>
@@ -87,7 +87,7 @@ const questions = [
     const yes = results.filter((r) => r.answer === 'YES');
     headline.textContent = unresolved.length === 0 ? 'All seven decision gates are explicitly answered.' : `${unresolved.length} decision gate${unresolved.length === 1 ? '' : 's'} remain unresolved.`;
     summaryText.textContent = unresolved.length === 0
-      ? 'That is not a safety pass. It means the workflow is described clearly enough to test the claims rather than first discovering what the claims are.'
+      ? 'That is not a safety pass or testing authorization. It means the description layer has no unresolved gates and can be used to prepare written scope and Rules of Engagement before evidence-based testing.'
       : 'NO and UNKNOWN are not converted into a numeric risk score. They become the concrete questions an owner should resolve before expanding authority.';
 
     gaps.innerHTML = '';
@@ -98,14 +98,14 @@ const questions = [
     });
     if (unresolved.length === 0) {
       const article = document.createElement('article');
-      article.innerHTML = `<span>TEST</span><div><strong>Claims are explicit</strong><p>The next useful step is to test whether the stated gates hold under retries, stale evidence, object mismatch and external-confirmation failure.</p></div>`;
+      article.innerHTML = `<span>SCOPE</span><div><strong>Claims are explicit</strong><p>The next useful step is to prepare written scope, Rules of Engagement and agreed failure scenarios. Test execution remains separately authorized.</p></div>`;
       gaps.appendChild(article);
     }
 
     latestBrief = [
       '=== BITEVO AUTHORITY & EVIDENCE DIAGNOSTIC ===',
       `Generated: ${new Date().toISOString()}`,
-      'No trust score. No certification. Local decision-gap summary.',
+      'No trust score. No certification. No testing authorization. Written Rules of Engagement required before test execution.',
       '',
       ...results.map((r) => `${r.answer} — ${r.gate}: ${r.q}`),
       '',
