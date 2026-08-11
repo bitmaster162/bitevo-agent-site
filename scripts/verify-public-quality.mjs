@@ -193,7 +193,8 @@ const funnelTextContracts = [
   ['/pricing', '/mapper', 'Map the authority decision'],
   ['/pricing', '/mapper', 'Map the action chain'],
   ['/consulting', '/mapper', 'Map a workflow'],
-  ['/consulting', '/mapper', 'Map the critical action']
+  ['/consulting', '/mapper', 'Map the critical action'],
+  ['/doctrine', '/mapper', 'Map one workflow']
 ];
 for (const [route, href, label] of funnelTextContracts) {
   funnelChecks += 1;
