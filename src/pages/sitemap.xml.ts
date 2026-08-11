@@ -6,6 +6,7 @@ const routes = [
   '/doctrine',
   '/artifacts',
   '/proof',
+  '/dogfood-self-audit',
   '/mapper',
   '/workspace',
   '/build',
