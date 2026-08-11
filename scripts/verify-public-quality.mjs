@@ -61,6 +61,7 @@ const htmlFiles = files.filter(file => extname(file).toLowerCase() === '.html');
 const routes = new Set(htmlFiles.map(routeFromHtml));
 const publicFiles = new Set([...fileSet].map(path => `/${path}`));
 const htmlByRoute = new Map();
+const indexabilityByRoute = new Map();
 const failures = [];
 let indexableCount = 0;
 let metadataChecks = 0;
@@ -69,6 +70,7 @@ let alternateChecks = 0;
 let internalLinkChecks = 0;
 let funnelChecks = 0;
 let trustBoundaryChecks = 0;
+let sitemapChecks = 0;
 let externalBlankChecks = 0;
 let configChecks = 0;
 
@@ -81,6 +83,7 @@ for (const file of htmlFiles) {
   const robotsTag = attrTag(html, 'name', 'robots');
   const robots = attr(robotsTag, 'content') || '';
   const indexable = !robots.toLowerCase().includes('noindex');
+  indexabilityByRoute.set(route, indexable);
 
   if (indexable) {
     indexableCount += 1;
@@ -223,6 +226,12 @@ if (!fileSet.has('og-card.png')) failures.push('og-card.png missing from static 
 if (fileSet.has('sitemap.xml')) {
   const sitemap = await readFile(sitemapFile, 'utf8');
   if (!sitemap.includes(`${siteOrigin}/build`)) failures.push('sitemap.xml: /build missing');
+  sitemapChecks += 1;
+  for (const [route, indexable] of indexabilityByRoute) {
+    if (route === '/' || route === '/404.html') continue;
+    const listed = sitemap.includes(`<loc>${siteOrigin}${route}</loc>`);
+    if (!indexable && listed) failures.push(`sitemap.xml: noindex route must not be listed (${route})`);
+  }
 }
 if (fileSet.has('llms.txt')) {
   const llms = await readFile(llmsFile, 'utf8');
@@ -259,4 +268,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} funnel_checks=${funnelChecks} trust_boundary_checks=${trustBoundaryChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
+console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} funnel_checks=${funnelChecks} trust_boundary_checks=${trustBoundaryChecks} sitemap_checks=${sitemapChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
