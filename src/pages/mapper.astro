@@ -18,7 +18,7 @@ const gates = [
 ];
 ---
 
-<Layout title="Authority Mapper — Build an Agent Authority Ledger | BitEvo" description="A local BitEvo mini-product for mapping one AI-agent external action into an Authority Ledger, Evidence Contract, failure scenarios and owner decision posture. Import or export locally; no data transmission and no trust score.">
+<Layout title="Authority Mapper — Build an Agent Authority Ledger | BitEvo" description="A local BitEvo mini-product for mapping one AI-agent external action into an Authority Ledger, Evidence Contract, failure scenarios and planning posture. Import or export locally; no data transmission and no trust score.">
   <section class="mapper-hero section">
     <div class="container hero-grid">
       <div><div class="eyebrow">Local mini-product · Authority Mapper v2</div><h1 class="display">Map the authority before the agent spends it.</h1></div>
@@ -64,7 +64,7 @@ const gates = [
         </section>
 
         <section class="form-section">
-          <div class="section-head"><span>03</span><div><h2>Decision gates</h2><p>YES means explicit enough to test. NO or UNKNOWN remains unresolved.</p></div></div>
+          <div class="section-head"><span>03</span><div><h2>Decision gates</h2><p>YES means the description is explicit enough to scope a test or retest. It does not authorize execution. Written Rules of Engagement remain required before any test execution. NO or UNKNOWN remains unresolved.</p></div></div>
           <div class="gate-list">{gates.map(([id,label,q], i) => <fieldset><legend><span>{String(i + 1).padStart(2,'0')}</span><div><small>{label}</small><strong>{q}</strong></div></legend><div class="choices"><label><input type="radio" name={id} value="YES" required /> YES</label><label><input type="radio" name={id} value="NO" /> NO</label><label><input type="radio" name={id} value="UNKNOWN" /> UNKNOWN</label></div></fieldset>)}</div>
         </section>
 
@@ -81,7 +81,7 @@ const gates = [
         <div class="output-head"><div><div class="eyebrow">Local artifact</div><h2>Authority map</h2></div><span id="outputState">Not generated</span></div>
         <div id="empty" class="empty"><strong>One action in. Decision structure out.</strong><p>Generate the map, then export it, compare checkpoints in Decision Workspace, or hand it to Audit Intake without putting workflow details in a URL.</p></div>
         <div id="result" hidden>
-          <div class="posture"><small>DECISION POSTURE</small><h3 id="posture"></h3><p id="postureWhy"></p></div>
+          <div class="posture"><small>PLANNING POSTURE</small><h3 id="posture"></h3><p id="postureWhy"></p></div>
           <div class="artifact-tabs" role="tablist" aria-label="Generated artifact sections"><button type="button" class="active" data-view="ledger">Authority Ledger</button><button type="button" data-view="contract">Evidence Contract</button><button type="button" data-view="failures">Failure Plan</button><button type="button" data-view="brief">Full Brief</button></div>
           <pre id="artifactText" tabindex="0"></pre>
           <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="workspace" type="button" class="button button-ghost">Save / compare in Workspace ↗</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button></div>
@@ -157,14 +157,14 @@ const gates = [
     const actionClass = value('actionClass');
     const gateResults = gates.map(([id,label,q]) => ({ id, label, question:q, answer:form.querySelector(`input[name="${id}"]:checked`)?.value || 'UNKNOWN' }));
     const unresolved = gateResults.filter(g => g.answer !== 'YES');
-    const posture = unresolved.length ? 'CONSTRAIN' : 'TEST / RETEST';
-    const postureReason = unresolved.length ? `${unresolved.length} decision gate${unresolved.length === 1 ? '' : 's'} remain NO or UNKNOWN. Do not expand authority until those claims are resolved.` : 'All mapper gates are explicit enough to test. This is not a pass: implementation behavior still needs evidence under agreed failure scenarios.';
+    const posture = unresolved.length ? 'CONSTRAIN' : 'READY TO SCOPE TEST / RETEST';
+    const postureReason = unresolved.length ? `${unresolved.length} decision gate${unresolved.length === 1 ? '' : 's'} remain NO or UNKNOWN. Do not expand authority until those claims are resolved.` : 'All mapper gates are explicit enough to prepare a scoped test or retest. This is not authorization and not a pass: written Rules of Engagement and implementation evidence are still required.';
     const ledger = ['=== AUTHORITY LEDGER — DRAFT ===',`Workflow: ${value('workflowName')}`,`Action class: ${actionClass}`,`Critical external action: ${value('criticalAction')}`,`Target binding: ${value('targetBinding')}`,`Authority owner: ${value('authorityOwner')}`,`Environment: ${value('environment')}`,`Allowed authority: ${value('allowed')}`,`Prohibited authority: ${value('prohibited')}`,`Recovery owner: ${value('recoveryOwner')}`,`Most expensive plausible error: ${value('expensiveError')}`].join('\n');
     const contract = ['=== EVIDENCE CONTRACT — DRAFT ===',`Pre-action evidence: ${value('preEvidence')}`,`Freshness / validity rule: ${value('freshnessRule')}`,`Approval evidence: ${value('approvalRule')}`,`Version / configuration context: ${value('versionRule')}`,`External confirmation: ${value('confirmationRule')}`,`Ambiguity / recovery behavior: ${value('recoveryRule')}`,'','--- DECISION GATES ---',...gateResults.map(g => `${g.answer} — ${g.label}: ${g.question}`)].join('\n');
     const scenarios = (scenarioTemplates[actionClass] || scenarioTemplates.custom).map(([id,name,trigger,expected]) => ({ id,name,trigger,expected }));
     const failures = ['=== FAILURE PLAN — DRAFT ===','Generated hypotheses, not observed findings.','',...scenarios.flatMap(s => [`${s.id} — ${s.name}`,`Trigger: ${s.trigger}`,`Expected control: ${s.expected}`,''])].join('\n');
-    const unresolvedText = unresolved.length ? unresolved.map(g => `- ${g.label} [${g.answer}]: ${g.question}`).join('\n') : '- None at the description layer. Next step is evidence-based testing.';
-    const brief = ['=== BITEVO AUTHORITY MAPPER v2 — LOCAL DRAFT ===',`Generated: ${new Date().toISOString()}`,'No secrets. No testing authorization. No certification. No trust score.','',ledger,'',contract,'',failures,'=== OWNER DECISION PROMPT ===',`Decision posture: ${posture}`,`Reason: ${postureReason}`,'Unresolved gates:',unresolvedText,'','Owner question: What evidence or control change is required before this workflow may retain or expand the authority described above?','Available decisions: EXPAND / CONSTRAIN / REPAIR / RETEST.','','Testing authorization: NOT GRANTED by this mapper.'].join('\n');
+    const unresolvedText = unresolved.length ? unresolved.map(g => `- ${g.label} [${g.answer}]: ${g.question}`).join('\n') : '- None at the description layer. Next step is written scope/RoE and evidence-based testing.';
+    const brief = ['=== BITEVO AUTHORITY MAPPER v2 — LOCAL DRAFT ===',`Generated: ${new Date().toISOString()}`,'No secrets. No testing authorization. No certification. No trust score.','',ledger,'',contract,'',failures,'=== OWNER DECISION PROMPT ===',`Planning posture: ${posture}`,`Reason: ${postureReason}`,'Unresolved gates:',unresolvedText,'','Owner question: What evidence or control change is required before this workflow may retain or expand the authority described above?','Downstream owner decisions after evidence: EXPAND / CONSTRAIN / REPAIR / RETEST.','','Testing authorization: NOT GRANTED by this mapper.'].join('\n');
     return { schema:'bitevo.authority-map.v2', generated_at:new Date().toISOString(), boundary:{ local_only:true, testing_authorization:false, certification:false, trust_score:false }, action_class:actionClass, authority_ledger:{ workflow:value('workflowName'), critical_action:value('criticalAction'), target_binding:value('targetBinding'), authority_owner:value('authorityOwner'), environment:value('environment'), allowed_authority:value('allowed'), prohibited_authority:value('prohibited'), recovery_owner:value('recoveryOwner'), expensive_error:value('expensiveError') }, evidence_contract:{ pre_action_evidence:value('preEvidence'), freshness_rule:value('freshnessRule'), approval_evidence:value('approvalRule'), version_context:value('versionRule'), external_confirmation:value('confirmationRule'), recovery_behavior:value('recoveryRule') }, gates:gateResults, unresolved_gates:unresolved, failure_scenarios:scenarios, owner_decision:{ posture, reason:postureReason, allowed_decisions:['EXPAND','CONSTRAIN','REPAIR','RETEST'] }, views:{ ledger,contract,failures,brief } };
   };
 

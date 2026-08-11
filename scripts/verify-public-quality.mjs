@@ -206,7 +206,8 @@ const trustBoundaryContracts = [
   ['/proof', ['SYNTHETIC PROOF SURFACE', 'DOES NOT ESTABLISH', 'PRODUCTION EXECUTION', 'NOT UNIVERSAL CERTIFICATION']],
   ['/sample-audit', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
   ['/sample-message', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
-  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']]
+  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
+  ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']]
 ];
 for (const [route, requiredPhrases] of trustBoundaryContracts) {
   const html = (htmlByRoute.get(route) || '').toUpperCase();
@@ -237,6 +238,10 @@ if (fileSet.has('sitemap.xml')) {
 if (fileSet.has('llms.txt')) {
   const llms = await readFile(llmsFile, 'utf8');
   if (!llms.includes('- /build')) failures.push('llms.txt: /build missing');
+  for (const phrase of ['READY TO SCOPE TEST / RETEST', 'it does not authorize execution']) {
+    trustBoundaryChecks += 1;
+    if (!llms.includes(phrase)) failures.push(`llms.txt: missing mapper authority-boundary phrase "${phrase}"`);
+  }
 }
 
 if (!routes.has('/ru')) {
