@@ -14,7 +14,7 @@ const builtSurfaces = [
     name: 'Decision Workspace',
     href: '/workspace',
     state: 'PUBLIC PRODUCT',
-    text: 'Stores local checkpoints, compares exact before/after authority and evidence changes, and drafts a bounded Decision Memo without inventing a trust score.'
+    text: 'Stores local checkpoints, classifies RETEST_CANDIDATE / SCOPE_DRIFT / CROSS_WORKFLOW comparisons, and drafts a bounded Decision Memo without inventing a trust score.'
   },
   {
     kind: 'Diagnostic',
@@ -67,12 +67,13 @@ const qualityDimensions = [
 ];
 
 const automatedGates = [
-  ['Claim boundary', 'Forbidden public-claim patterns'],
-  ['Metadata', 'Canonical / OG / Twitter / structured identity'],
-  ['Accessibility', 'H1 / main / skip / alt / control names'],
-  ['Link graph', 'Built internal route integrity'],
-  ['Funnel contract', 'Critical CTA destination invariants'],
-  ['Deployment policy', 'Security headers + immutable asset caching']
+  ['Public claim boundary', 'Forbidden public-claim patterns'],
+  ['Public quality', 'Metadata / accessibility / internal links / funnel / sitemap / deployment config'],
+  ['Public performance', 'Remote font / stylesheet / script policy + deployment policy'],
+  ['Homepage trust', 'Synthetic provenance + contextual internal-dogfood boundary'],
+  ['Static asset budgets', 'JS / CSS / image / total-dist regression ceilings'],
+  ['Dogfood proof contract', 'Claim ceilings / contextual links / private-marker exclusion'],
+  ['Workspace decision contract', 'Handoff durability / retest identity / decision-conflict invariants']
 ];
 
 const pipeline = ['Hypothesis', 'Artifact', 'Evidence', 'Decision', 'Retest', 'Publish'];
@@ -131,7 +132,7 @@ const pipeline = ['Hypothesis', 'Artifact', 'Evidence', 'Decision', 'Retest', 'P
       ))}
     </div>
     <div class="container gate-shell panel">
-      <div class="gate-intro"><div class="eyebrow">Build-breaking invariants</div><h3>Automate what can be checked exactly.</h3><p>These gates reject a build when objective public-surface contracts regress. They do not certify design quality, business value, security or runtime correctness.</p></div>
+      <div class="gate-intro"><div class="eyebrow">Build-breaking invariants</div><h3>Automate what can be checked exactly.</h3><p>The source pipeline keeps these objective public-surface contracts build-breaking. They do not certify design quality, business value, security or runtime correctness.</p></div>
       <div class="gate-grid">
         {automatedGates.map(([title, text], i) => <div><span>{String(i + 1).padStart(2,'0')}</span><strong>{title}</strong><small>{text}</small></div>)}
       </div>
