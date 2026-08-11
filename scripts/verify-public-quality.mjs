@@ -244,9 +244,16 @@ if (fileSet.has('sitemap.xml')) {
 if (fileSet.has('llms.txt')) {
   const llms = await readFile(llmsFile, 'utf8');
   if (!llms.includes('- /build')) failures.push('llms.txt: /build missing');
-  for (const phrase of ['READY TO SCOPE TEST / RETEST', 'it does not authorize execution']) {
+  const machineBoundaryPhrases = [
+    'READY TO SCOPE TEST / RETEST',
+    'it does not authorize execution',
+    'The diagnostic does not authorize testing',
+    '5 working days after complete evidence/access + written scope',
+    'they do not book or submit an engagement'
+  ];
+  for (const phrase of machineBoundaryPhrases) {
     trustBoundaryChecks += 1;
-    if (!llms.includes(phrase)) failures.push(`llms.txt: missing mapper authority-boundary phrase "${phrase}"`);
+    if (!llms.includes(phrase)) failures.push(`llms.txt: missing machine-boundary phrase "${phrase}"`);
   }
 }
 
