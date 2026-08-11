@@ -178,7 +178,9 @@ const funnelContracts = [
   ['/', 'home-proof', '/proof'],
   ['/', 'map', '/mapper'],
   ['/', 'proof', '/proof'],
-  ['/', 'scope', '/audit-intake']
+  ['/', 'scope', '/audit-intake'],
+  ['/', 'home-primary-scope', '/audit-intake'],
+  ['/', 'home-primary-scope-mobile', '/audit-intake']
 ];
 for (const [route, marker, href] of funnelContracts) {
   funnelChecks += 1;
@@ -216,7 +218,8 @@ const trustBoundaryContracts = [
   ['/diagnostic', ['DOES NOT AUTHORIZE TESTING', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED', 'TEST EXECUTION REMAINS SEPARATELY AUTHORIZED']],
   ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
   ['/consulting', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
-  ['/agent-authority-audit', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'PUBLIC INTAKE', 'DOES NOT AUTHORIZE TESTING']]
+  ['/agent-authority-audit', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'PUBLIC INTAKE', 'DOES NOT AUTHORIZE TESTING']],
+  ['/', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'PHASE A', 'PHASE B', 'PHASE C', 'PHASE D']]
 ];
 for (const [route, requiredPhrases] of trustBoundaryContracts) {
   const html = (htmlByRoute.get(route) || '').toUpperCase();
@@ -224,6 +227,12 @@ for (const [route, requiredPhrases] of trustBoundaryContracts) {
     trustBoundaryChecks += 1;
     if (!html.includes(phrase)) failures.push(`${route}: missing proof-boundary phrase "${phrase}"`);
   }
+}
+
+const homepageHtml = htmlByRoute.get('/') || '';
+for (const staleTiming of ['Day 0', 'Days 1–2', 'Days 3–4', 'Day 5']) {
+  trustBoundaryChecks += 1;
+  if (homepageHtml.includes(staleTiming)) failures.push(`/: stale unsupported day-by-day Primary timing "${staleTiming}"`);
 }
 
 const sitemapFile = join(distPath, 'sitemap.xml');
@@ -253,7 +262,9 @@ if (fileSet.has('llms.txt')) {
     'The diagnostic does not authorize testing',
     '5 working days after complete evidence/access + written scope',
     'they do not book or submit an engagement',
-    'including the Primary Audit path'
+    'including the Primary Audit path',
+    'Homepage Primary Audit timing uses the same qualified five-working-day window',
+    'Public Homepage, Pricing/Consulting and Agent Authority Audit scope-preparation CTAs'
   ];
   for (const phrase of machineBoundaryPhrases) {
     trustBoundaryChecks += 1;

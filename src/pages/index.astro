@@ -177,17 +177,17 @@ const structuredData = {
   <section class="section section-rule">
     <div class="container process-wrap panel">
       <div class="process-intro">
-        <div class="eyebrow">5 working days</div>
+        <div class="eyebrow">5 working days after complete evidence/access + written scope</div>
         <h2 class="section-title">Move from “it works” to “we know why it may act.”</h2>
-        <p>No testing begins from a public form alone. Scope, access approval, allowed tests, prohibited actions, data handling and replay conditions are agreed first.</p>
+        <p>No testing begins from a public form alone. Scope, access approval, allowed tests, prohibited actions, data handling and replay conditions are agreed first. The phases below describe the audit method, not a guaranteed day-by-day allocation.</p>
         <a class="button" href="/agent-authority-audit">See the full method →</a>
       </div>
       <ol class="process-list">
-        <li><span>Day 0</span><div><strong>Lock the decision boundary</strong><p>Define the workflow, external effects, owners, prohibited transitions, data ceiling and failure plan.</p></div></li>
-        <li><span>Days 1–2</span><div><strong>Map authority + evidence</strong><p>Trace what may happen, what evidence justifies it and where confirmation must come from.</p></div></li>
-        <li><span>Days 3–4</span><div><strong>Break the assumptions</strong><p>Replay agreed failure paths and separate reproducible findings from noisy symptoms and hypotheses.</p></div></li>
-        <li><span>Day 5</span><div><strong>Make the owner decision</strong><p>Deliver the evidence package and a prioritized expand / constrain / repair decision backlog.</p></div></li>
-        <li><span>After fix</span><div><strong>Retest the claim</strong><p>Re-run the agreed finding criteria after relevant remediation is available.</p></div></li>
+        <li><span>Phase A</span><div><strong>Map authority</strong><p>Identify actor and identity, tools and credentials, read/write surfaces, approval gates, target binding, scope/expiry and recovery path.</p></div></li>
+        <li><span>Phase B</span><div><strong>Agree failure scenarios</strong><p>Select the bounded safe scenarios that challenge approval, object binding, scope, replay, external effects and recovery without turning the engagement into an unbounded pentest.</p></div></li>
+        <li><span>Phase C</span><div><strong>Collect evidence</strong><p>Preserve the minimum necessary scope, configuration, identity, execution, state, approval, recovery, finding and retest receipts for material scenarios.</p></div></li>
+        <li><span>Phase D</span><div><strong>Make the owner decision</strong><p>Translate accepted findings into observable behavior, impact, evidence class, limitations, repair recommendations, retest criteria and residual risk.</p></div></li>
+        <li><span>After repair</span><div><strong>Retest the claim</strong><p>Re-run the agreed finding criteria after relevant remediation is available. One retest is included in the Primary Audit.</p></div></li>
       </ol>
     </div>
   </section>
@@ -198,8 +198,8 @@ const structuredData = {
         <div class="eyebrow">Primary engagement</div>
         <h2 class="section-title">Agent Authority & Evidence Audit</h2>
         <p class="lede">For teams that need to decide whether one write-capable workflow is ready for more authority — or needs to be constrained first.</p>
-        <div class="offer-price"><strong>$4,900</strong><span>fixed · 5 working days</span></div>
-        <div class="hero-actions"><a class="button button-primary" href="/mapper">Map the workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
+        <div class="offer-price"><strong>$4,900</strong><span>fixed · 5 working days after complete evidence/access + written scope</span></div>
+        <div class="hero-actions"><a class="button button-primary" href="/audit-intake" data-funnel="home-primary-scope">Prepare Primary Audit scope <span aria-hidden="true">↗</span></a><a class="button" href="/mapper">Map the workflow</a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
       </div>
       <div class="scope-card panel">
         <div class="scope-row"><span>Object</span><strong>1 staging/test workflow</strong></div>
@@ -221,7 +221,7 @@ const structuredData = {
     </div>
   </section>
 
-  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 days</strong></span><a href="/mapper">Map it ↗</a></div>
+  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 working days after evidence/access + written scope</strong></span><a href="/audit-intake" data-funnel="home-primary-scope-mobile">Prepare scope ↗</a></div>
 </Layout>
 
 <style>
