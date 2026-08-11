@@ -68,6 +68,7 @@ let accessibilityChecks = 0;
 let alternateChecks = 0;
 let internalLinkChecks = 0;
 let funnelChecks = 0;
+let trustBoundaryChecks = 0;
 let externalBlankChecks = 0;
 let configChecks = 0;
 
@@ -195,6 +196,20 @@ for (const [route, href, label] of funnelTextContracts) {
   if (!anchorHasText(html, href, label)) failures.push(`${route}: expected funnel CTA "${label}" -> ${href}`);
 }
 
+const trustBoundaryContracts = [
+  ['/proof', ['SYNTHETIC PROOF SURFACE', 'DOES NOT ESTABLISH', 'NOT EXECUTED', 'NOT UNIVERSAL CERTIFICATION']],
+  ['/sample-audit', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
+  ['/sample-message', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
+  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']]
+];
+for (const [route, requiredPhrases] of trustBoundaryContracts) {
+  const html = (htmlByRoute.get(route) || '').toUpperCase();
+  for (const phrase of requiredPhrases) {
+    trustBoundaryChecks += 1;
+    if (!html.includes(phrase)) failures.push(`${route}: missing proof-boundary phrase "${phrase}"`);
+  }
+}
+
 const sitemapFile = join(distPath, 'sitemap.xml');
 const llmsFile = join(distPath, 'llms.txt');
 
@@ -242,4 +257,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} funnel_checks=${funnelChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
+console.log(`PUBLIC_QUALITY_GATE=PASS html_scanned=${htmlFiles.length} indexable=${indexableCount} metadata_checks=${metadataChecks} accessibility_checks=${accessibilityChecks} internal_link_checks=${internalLinkChecks} funnel_checks=${funnelChecks} trust_boundary_checks=${trustBoundaryChecks} alternate_checks=${alternateChecks} target_blank_checks=${externalBlankChecks} config_checks=${configChecks} failures=0`);
