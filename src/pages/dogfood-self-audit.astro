@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const cases = [
+  {
+    n: '01',
+    label: 'AUTHORITY CROSSING',
+    title: 'Declared local-only authority reached synced storage.',
+    observed: 'A bounded executor was instructed to stay local, while evidence showed a write crossing into synced storage.',
+    implication: 'Declared authority was narrower than the effect the workflow could actually reach.',
+    repair: 'Move effect classification into a trusted preflight/broker so callers do not self-label an operation as local, synced, governance or another effect class.',
+    retest: 'Denied synced/governance cases stop before downstream dispatch; one legitimate bounded local-read control still reaches its handler.'
+  },
+  {
+    n: '02',
+    label: 'FALSE RECEIPT',
+    title: 'A no-effect receipt contradicted the observed action record.',
+    observed: 'A return claimed no external effect while separate evidence showed writes or mutations.',
+    implication: 'Narrative self-attestation could not be treated as the terminal evidence source.',
+    repair: 'Use machine-derived ledgers and independently recomputable manifests instead of trusting a narrated result.',
+    retest: 'DENY must produce zero downstream external-effect dispatch, machine counters and a terminal ledger row.'
+  },
+  {
+    n: '03',
+    label: 'REPAIR BYPASS',
+    title: 'The first repair still trusted caller-controlled effect semantics.',
+    observed: 'The caller could supply both an effect label and separate operation semantics, allowing a benign label to disagree with the actual requested effect.',
+    implication: 'A repaired authority check was still asking the caller to describe the very property the control needed to derive independently.',
+    repair: 'Typed operation → trusted operation registry → broker-derived effect class → exact approval binding → operation-specific handler → effect ledger.',
+    retest: 'Safe decision-only counterexamples challenge the semantic binding without executing the encoded external command.'
+  }
+];
+
+const qualification = [
+  'Historical real failures',
+  'Deterministic safe reproduction',
+  '12-scenario local reference harness',
+  'Shadow authority check',
+  'Executor-facing handler interception',
+  'Real local executor dispatch qualification',
+  'Separate adversarial replication lane',
+  'Typed-operation / effect-broker repair cycles',
+  'Exception / ledger boundary retests',
+  'High-volume adversarial and evidence testing'
+];
+
+const antigravity = [
+  ['CONTRACT', 'TYPED_EFFECT_BROKER_EXCEPTION_BOUNDARY_PASS'],
+  ['REQUESTS', '46 total'],
+  ['DENIED', '45'],
+  ['ALLOWED CONTROL', '1 bounded READ_LOCAL'],
+  ['DENIED HANDLER DISPATCH', '0'],
+  ['EXTERNAL HANDLER DISPATCH', '0'],
+  ['UNCAUGHT EXCEPTIONS', '0'],
+  ['TERMINAL LEDGER ROWS', '46']
+];
+
+const spark = [
+  ['5,400', 'adversarial authority requests'],
+  ['24 / 25', 'mutation kills · 96% in that batch'],
+  ['10,000', 'synthetic event ledgers'],
+  ['1,000', 'deliberately corrupted summaries'],
+  ['100%', 'corrupted-summary detection in that batch'],
+  ['12,000', 'authority state-space scenarios'],
+  ['105', 'attack patterns'],
+  ['45', 'source-binding feature rows validated']
+];
+
+const operatingChanges = [
+  ['Return status is a claim until adjudicated', 'A PASS or no-effect return is not terminal truth until the evidence chain agrees.'],
+  ['Proof classes stay separate', 'Artifact integrity, runtime proof, semantic proof, adversarial proof and production adoption are different gates.'],
+  ['Local/shadow is not fleet-wide enforcement', 'A bounded control can be proven without implying provider-wide or production-wide adoption.'],
+  ['Source outranks projection', 'Mirrors, projections and summaries do not become source authority by presentation alone.'],
+  ['Raw manifests outrank narrated totals', 'Machine-derived evidence is preferred when human summaries and strict manifests diverge.'],
+  ['External effects require explicit authority', 'Irreversible or external actions must be bound to explicit permission and effect semantics.']
+];
+
+const unclaimed = [
+  'BitEvo systems are production safe.',
+  'All BitEvo agents are fully hardened.',
+  'Universal no-bypass.',
+  'Certified secure.',
+  'Provider-wide enforcement.',
+  'No unknown vulnerabilities remain.'
+];
+---
+
+<Layout title="Internal Dogfood Self-Audit — Real Failure, Repair & Retest | BitEvo" description="A redacted internal BitEvo self-audit showing real bounded authority/evidence failures, rejected early repairs, scoped qualification and internal adversarial retesting. Not a customer case, certification or production-wide security claim.">
+  <section class="dog-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Internal self-audit</div>
+        <h1 class="display">We ran the method against our own authority stack first.</h1>
+        <p class="lede">Before offering the Agent Authority & Evidence Audit externally, BitEvo used the method on its own agent/control workflows. The self-audit found real bounded authority and evidence failures, rejected weak repairs, forced additional repair cycles and retested the resulting controls.</p>
+        <div class="hero-actions"><a href="/mapper" class="button button-primary">Map one workflow <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button button-ghost">Scope an audit</a></div>
+      </div>
+      <aside class="receipt panel" aria-label="Dogfood evidence classification">
+        <div class="receipt-top"><span>PROOF CLASS</span><strong>INTERNAL SELF-AUDIT</strong></div>
+        <div><span>customer_case</span><strong>false</strong></div>
+        <div><span>independent_certification</span><strong>false</strong></div>
+        <div><span>production_wide_security_claim</span><strong>false</strong></div>
+        <div><span>publication</span><strong>redacted / bounded</strong></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container boundary panel">
+      <strong>CLAIM CEILING</strong>
+      <p>This page describes an internal dogfood program: real failures reproduced in bounded environments, repair cycles, scoped qualification and an internal adversarial/evidence batch. It is not customer evidence, independent certification, universal no-bypass, provider-wide enforcement or proof of fleet-wide production adoption.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="summary-title">
+    <div class="container split">
+      <div><div class="eyebrow">Executive summary</div><h2 class="section-title" id="summary-title">The important result was not a PASS. It was catching our own assumptions lying to us.</h2></div>
+      <div class="summary-copy">
+        <p class="lede">The narrow question was whether an executor with limited declared authority could still create an effect outside that authority — and whether the evidence layer could distinguish what was declared from what actually happened.</p>
+        <p>The answer was yes. We observed authority crossing, contradictory effect receipts, evidence-quality failures and an early repair whose own authority logic could be bypassed. The method then had to survive its own retest rather than accepting a narrated success status.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="cases-title">
+    <div class="container section-head"><div><div class="eyebrow">Three redacted cases</div><h2 class="section-title" id="cases-title">Real failure → control change → same-boundary retest.</h2></div><p class="lede">Private paths, hostnames, credentials, repository internals and secret-bearing logs are intentionally omitted. The public unit is the authority/evidence failure pattern and the bounded control decision.</p></div>
+    <div class="container case-grid">
+      {cases.map(c => (
+        <article class="case panel">
+          <div class="case-top"><span>{c.n}</span><strong>{c.label}</strong></div>
+          <h3>{c.title}</h3>
+          <div class="case-row"><span>OBSERVED FAILURE</span><p>{c.observed}</p></div>
+          <div class="case-row"><span>WHY IT MATTERED</span><p>{c.implication}</p></div>
+          <div class="case-row"><span>CONTROL DIRECTION</span><p>{c.repair}</p></div>
+          <div class="case-row retest"><span>RETEST</span><p>{c.retest}</p></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="qualification-title">
+    <div class="container qualification-grid">
+      <div><div class="eyebrow">Qualification ladder</div><h2 class="section-title" id="qualification-title">A returned PASS was never enough by itself.</h2><p class="lede">Evidence strength increased only when the qualification class changed: from historical observation, to safe reproduction, to handler interception, to bounded dispatch, to adversarial and high-volume evidence testing.</p></div>
+      <ol class="ladder panel">
+        {qualification.map((item, i) => <li><span>{String(i + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="antigravity-title">
+    <div class="container section-head"><div><div class="eyebrow">Antigravity qualification</div><h2 class="section-title" id="antigravity-title">One scoped executor boundary reached an accepted contract.</h2></div><p class="lede">This is local-shadow/scoped engineering qualification. The receipt does not establish universal no-bypass, provider-wide enforcement, production-wide security, certification or absence of unknown defects.</p></div>
+    <div class="container contract panel">
+      {antigravity.map(([label, value], i) => <div class={i === 0 ? 'wide' : ''}><span>{label}</span><strong>{value}</strong></div>)}
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="spark-title">
+    <div class="container section-head"><div><div class="eyebrow">Spark internal adversarial batch</div><h2 class="section-title" id="spark-title">Scale was used to attack evidence quality, not manufacture a trust score.</h2></div><p class="lede">These figures describe one repaired internal batch. They are not an independent certification or a benchmark of every agent system.</p></div>
+    <div class="container metric-grid">
+      {spark.map(([value, label]) => <article class="metric panel"><strong>{value}</strong><span>{label}</span></article>)}
+    </div>
+    <div class="container source-binding panel">
+      <div><span>LANE F / SOURCE BINDING</span><strong>45 feature rows</strong></div>
+      <div><span>SOURCE-BACKED</span><strong>32</strong></div>
+      <div><span>OFFICIAL GUIDANCE</span><strong>3</strong></div>
+      <div><span>INFERENCE</span><strong>9</strong></div>
+      <div><span>UNVERIFIED</span><strong>1</strong></div>
+      <div><span>KNOWN SOURCE-TOPIC MISMATCHES</span><strong>0</strong></div>
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="changed-title">
+    <div class="container section-head"><div><div class="eyebrow">What changed in our operating model</div><h2 class="section-title" id="changed-title">The dogfood result changed the evidence rules, not just one patch.</h2></div><p class="lede">The strongest outcome was a stricter separation between declaration, execution, evidence, adjudication and deployment state.</p></div>
+    <div class="container changes">
+      {operatingChanges.map(([title, text], i) => <article><span>{String(i + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="unclaimed-title">
+    <div class="container unclaimed panel">
+      <div><div class="eyebrow">What remains deliberately unclaimed</div><h2 class="section-title" id="unclaimed-title">Control proven ≠ control adopted everywhere.</h2><p>Reference and shadow controls were proven, and a bounded executor path was qualified. Fleet-wide/live adoption remains a separate engineering program.</p></div>
+      <ul>{unclaimed.map(item => <li>NOT CLAIMED — {item}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow final">
+      <div class="eyebrow">Why this matters</div>
+      <h2 class="section-title">A useful authority audit should be willing to break its own repair.</h2>
+      <p class="lede">Our dogfood case found failures in our own stack, rejected weak repairs, forced additional repair, and kept tested controls separate from unproven production adoption. Apply the same discipline to one effectful workflow.</p>
+      <div class="hero-actions final-actions"><a href="/mapper" class="button button-primary">Map one workflow <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button button-ghost">Scope an audit</a><a href="/proof" class="text-link">Compare synthetic proof classes →</a></div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .dog-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.15fr .65fr;gap:clamp(42px,8vw,104px);align-items:center}.hero-grid .lede{margin:24px 0 0}.hero-actions{display:flex;gap:11px;flex-wrap:wrap;align-items:center;margin-top:28px}.receipt{padding:8px 24px}.receipt>div{display:flex;justify-content:space-between;gap:22px;padding:16px 0;border-bottom:1px solid var(--line)}.receipt>div:last-child{border-bottom:0}.receipt span{color:var(--muted);font:500 .59rem var(--mono);letter-spacing:.06em}.receipt strong{font:600 .68rem var(--mono);text-align:right}.receipt-top strong{color:var(--green)}.boundary{padding:22px 26px;border-color:rgba(215,197,143,.26)}.boundary strong{color:var(--gold);font:500 .62rem var(--mono);letter-spacing:.11em}.boundary p{margin:8px 0 0;color:var(--muted);max-width:1040px}.split,.section-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,8vw,110px);align-items:start}.section-head{margin-bottom:38px}.section-head .lede,.summary-copy .lede{margin-top:0}.summary-copy>p:not(.lede){color:var(--muted);font-size:.94rem;max-width:720px}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.case{padding:25px;display:flex;flex-direction:column;min-height:620px}.case-top{display:flex;justify-content:space-between;gap:16px}.case-top span{color:var(--green);font:500 .62rem var(--mono)}.case-top strong{color:var(--muted);font:500 .56rem var(--mono);letter-spacing:.08em}.case h3{font-size:1.35rem;line-height:1.2;letter-spacing:-.03em;margin:34px 0 22px}.case-row{padding:14px 0;border-top:1px solid var(--line)}.case-row span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.09em}.case-row p{margin:5px 0 0;color:var(--ink-soft);font-size:.79rem}.case-row.retest{margin-top:auto}.case-row.retest span{color:var(--green)}.qualification-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(42px,8vw,110px);align-items:start}.qualification-grid .lede{margin-top:18px}.ladder{list-style:none;margin:0;padding:8px 24px}.ladder li{display:grid;grid-template-columns:54px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}.ladder li:last-child{border-bottom:0}.ladder span{color:var(--green);font:500 .61rem var(--mono)}.ladder strong{font-size:.84rem}.contract{display:grid;grid-template-columns:repeat(4,1fr);padding:0;overflow:hidden}.contract>div{min-height:128px;padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}.contract>div:nth-child(4n){border-right:0}.contract>div:nth-last-child(-n+4){border-bottom:0}.contract .wide{grid-column:span 4;min-height:104px;border-right:0}.contract span,.source-binding span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.08em}.contract strong{font-size:.86rem}.contract .wide strong{color:var(--green);font:600 .8rem var(--mono)}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric{min-height:190px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}.metric strong{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.06em}.metric span{color:var(--muted);font-size:.78rem}.source-binding{display:grid;grid-template-columns:repeat(6,1fr);margin-top:14px;padding:0;overflow:hidden}.source-binding>div{padding:18px;border-right:1px solid var(--line)}.source-binding>div:last-child{border-right:0}.source-binding strong{display:block;margin-top:8px;font-size:.86rem}.changes{border-top:1px solid var(--line)}.changes article{display:grid;grid-template-columns:60px .75fr 1.25fr;gap:22px;padding:22px 4px;border-bottom:1px solid var(--line)}.changes article>span{color:#596763;font:500 .62rem var(--mono)}.changes h3{margin:0;font-size:.96rem}.changes p{margin:0;color:var(--muted);font-size:.83rem}.unclaimed{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,7vw,90px);padding:clamp(28px,5vw,54px);border-color:rgba(215,197,143,.22)}.unclaimed p{color:var(--muted);max-width:560px}.unclaimed ul{list-style:none;margin:0;padding:0}.unclaimed li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--gold);font:500 .66rem var(--mono)}.unclaimed li:last-child{border-bottom:0}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 0}.final-actions{justify-content:center}.text-link{font-size:.78rem;font-weight:700;color:var(--ink)}
+  @media(max-width:980px){.hero-grid,.qualification-grid{grid-template-columns:1fr}.receipt{max-width:720px}.case-grid{grid-template-columns:1fr}.case{min-height:auto}.metric-grid{grid-template-columns:repeat(2,1fr)}.source-binding{grid-template-columns:repeat(3,1fr)}.source-binding>div:nth-child(3){border-right:0}.source-binding>div:nth-child(-n+3){border-bottom:1px solid var(--line)}}
+  @media(max-width:720px){.split,.section-head,.unclaimed{grid-template-columns:1fr}.contract{grid-template-columns:1fr 1fr}.contract .wide{grid-column:span 2}.contract>div:nth-child(4n){border-right:1px solid var(--line)}.contract>div:nth-child(2n){border-right:0}.contract>div:nth-last-child(-n+4){border-bottom:1px solid var(--line)}.contract>div:nth-last-child(-n+2){border-bottom:0}.changes article{grid-template-columns:36px 1fr;gap:9px 14px}.changes p{grid-column:2}.source-binding{grid-template-columns:1fr 1fr}.source-binding>div:nth-child(3){border-right:1px solid var(--line)}.source-binding>div:nth-child(2n){border-right:0}.source-binding>div{border-bottom:1px solid var(--line)}.source-binding>div:nth-last-child(-n+2){border-bottom:0}}
+  @media(max-width:480px){.metric-grid,.contract,.source-binding{grid-template-columns:1fr}.contract .wide{grid-column:auto}.contract>div,.contract>div:nth-child(2n),.source-binding>div,.source-binding>div:nth-child(2n),.source-binding>div:nth-child(3){border-right:0}.contract>div:nth-last-child(-n+2),.source-binding>div:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.contract>div:last-child,.source-binding>div:last-child{border-bottom:0}.receipt>div{flex-direction:column;gap:6px}.receipt strong{text-align:left}}
+</style>
