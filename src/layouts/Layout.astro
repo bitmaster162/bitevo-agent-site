@@ -1,39 +1,77 @@
 ---
+import { SITE_ORIGIN, absoluteSiteUrl, localeMeta, type SiteLocale } from '../lib/i18n';
+
 interface Props {
   title: string;
   description?: string;
   robots?: string;
   ogType?: string;
+  lang?: SiteLocale;
+  alternates?: Partial<Record<SiteLocale, string>>;
+  socialImage?: string;
 }
 
 const {
   title,
   description = "BitEvo — Authority Budget, Evidence Before Effect and bounded recovery for action-capable AI workflows",
   robots = "max-image-preview:large, index, follow",
-  ogType = "website"
+  ogType = "website",
+  lang = 'en',
+  alternates = {},
+  socialImage = '/og-card.png'
 } = Astro.props;
 
 const path = Astro.url.pathname;
-const canonicalUrl = new URL(path, "https://bitevoagentsite.vercel.app").toString();
+const canonicalUrl = new URL(path, SITE_ORIGIN).toString();
+const socialImageUrl = absoluteSiteUrl(socialImage);
+const language = localeMeta[lang];
+const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
 const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
+const showDogfoodCase = path === '/proof' || path === '/agent-authority-audit';
 const nav = [
   ["Doctrine", "/doctrine"],
   ["Proof", "/proof"],
   ["Mapper", "/mapper"],
   ["Workspace", "/workspace"],
+  ["Build", "/build"],
   ["Audit", "/agent-authority-audit"],
   ["Pricing", "/pricing"]
+];
+
+const globalStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_ORIGIN}/#organization`,
+    name: 'BitEvo',
+    url: SITE_ORIGIN,
+    logo: absoluteSiteUrl('/favicon.svg'),
+    description: 'Authority and evidence engineering for action-capable AI-agent workflows.'
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_ORIGIN}/#website`,
+    url: SITE_ORIGIN,
+    name: 'BitEvo',
+    publisher: { '@id': `${SITE_ORIGIN}/#organization` },
+    inLanguage: language.htmlLang
+  }
 ];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={language.htmlLang} dir={language.dir}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#071013" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="author" content="BitEvo" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
+    {alternateEntries.map(([alternateLang, alternatePath]) => <link rel="alternate" hreflang={alternateLang} href={absoluteSiteUrl(alternatePath)} />)}
+    {alternates.en && <link rel="alternate" hreflang="x-default" href={absoluteSiteUrl(alternates.en)} />}
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
@@ -42,13 +80,20 @@ const nav = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="BitEvo" />
+    <meta property="og:locale" content={language.ogLocale} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:secure_url" content={socialImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="BitEvo — Authority is earned by evidence" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content="BitEvo — Authority is earned by evidence" />
+    <script type="application/ld+json" set:html={JSON.stringify(globalStructuredData)} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -61,15 +106,25 @@ const nav = [
           <span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span>
         </a>
         <nav class="desktop-nav" aria-label="Primary navigation">{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}</nav>
-        <a class="header-cta" href="/audit-intake">Scope an audit <span aria-hidden="true">↗</span></a>
+        <a class="header-cta" href="/mapper">Map workflow <span aria-hidden="true">↗</span></a>
         <details class="mobile-menu">
           <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav aria-label="Mobile navigation"><a href="/" aria-current={path === "/" ? "page" : undefined}>Overview</a>{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}<a href="/consulting">Services</a><a href="/guides">Research</a><a class="mobile-cta" href="/audit-intake">Scope an audit →</a></nav>
+          <nav aria-label="Mobile navigation"><a href="/" aria-current={path === "/" ? "page" : undefined}>Overview</a>{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}<a href="/consulting">Services</a><a href="/guides">Research</a><a class="mobile-cta" href="/mapper">Map workflow →</a></nav>
         </details>
       </div>
     </header>
 
-    <main id="main-content"><slot /></main>
+    <main id="main-content">
+      <slot />
+      {showDogfoodCase && (
+        <section class="dogfood-context section-rule" aria-labelledby="dogfood-context-title">
+          <div class="container dogfood-context-card panel">
+            <div><div class="eyebrow">Observed internal proof</div><h2 id="dogfood-context-title">Internal dogfood: real failure → repair → adversarial retest.</h2><p>BitEvo ran the method against its own agent/control workflows, found bounded authority/evidence failures, rejected weak repairs and separated tested controls from unproven production adoption.</p></div>
+            <div class="dogfood-context-side"><span>customer_case=false</span><span>independent_certification=false</span><a class="button" href="/dogfood-self-audit">Open redacted self-audit →</a></div>
+          </div>
+        </section>
+      )}
+    </main>
 
     <footer class="site-footer">
       <div class="container footer-shell">
@@ -83,9 +138,9 @@ const nav = [
             <a href="/" class="brand" aria-label="BitEvo home"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
             <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.</p>
           </div>
-          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/mapper">Authority Mapper</a><a href="/workspace">Decision Workspace</a><a href="/diagnostic">7-gate diagnostic</a></div>
+          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/dogfood-self-audit">Internal dogfood</a><a href="/mapper">Authority Mapper</a><a href="/workspace">Decision Workspace</a><a href="/diagnostic">7-gate diagnostic</a></div>
           <div class="footer-col"><strong>Work</strong><a href="/agent-authority-audit">Authority & Evidence Audit</a><a href="/pricing">Pricing</a><a href="/consulting">Services</a><a href="/audit-intake">Audit intake</a></div>
-          <div class="footer-col"><strong>Build</strong><a href="/continuityos">ContinuityOS</a><a href="/guides">Research library</a><a href="/universe">BitEvo Universe</a><a href="/llms.txt">LLMs.txt</a></div>
+          <div class="footer-col"><strong>Build</strong><a href="/build">Build index</a><a href="/continuityos">ContinuityOS</a><a href="/guides">Research library</a><a href="/universe">BitEvo Universe</a><a href="/llms.txt">LLMs.txt</a></div>
         </div>
 
         <div class="footer-bottom"><span>© 2026 BitEvo</span><span>Authority is earned by evidence.</span></div>
@@ -114,22 +169,25 @@ const nav = [
     --line: rgba(174, 211, 202, 0.11);
     --line-strong: rgba(174, 211, 202, 0.23);
     --shadow: 0 24px 80px rgba(0, 0, 0, .34);
+    --shadow-soft: 0 18px 60px rgba(0, 0, 0, .2);
+    --glow-green: 0 0 0 1px rgba(127,208,177,.08), 0 10px 34px rgba(44,97,82,.12);
     --radius-sm: 10px;
     --radius: 18px;
     --radius-lg: 28px;
-    --sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --mono: 'DM Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; background: var(--paper); color-scheme: dark; }
+  html { scroll-behavior: smooth; background: var(--paper); color-scheme: dark; scrollbar-color: var(--smoke) var(--paper); }
   body {
     margin: 0;
     min-height: 100vh;
     color: var(--ink);
     background:
-      radial-gradient(circle at 14% 8%, rgba(77, 145, 134, .12), transparent 28rem),
-      radial-gradient(circle at 88% 18%, rgba(82, 131, 154, .10), transparent 30rem),
+      radial-gradient(circle at 14% 8%, rgba(77, 145, 134, .14), transparent 28rem),
+      radial-gradient(circle at 88% 18%, rgba(82, 131, 154, .11), transparent 30rem),
+      radial-gradient(circle at 52% 64%, rgba(55, 98, 91, .055), transparent 38rem),
       linear-gradient(180deg, #071013 0%, #05090a 35%, #05090a 100%);
     font-family: var(--sans);
     font-size: 15px;
@@ -150,12 +208,13 @@ const nav = [
     inset: 0;
     pointer-events: none;
     z-index: -1;
-    opacity: .28;
+    opacity: .34;
     background-image:
       linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: linear-gradient(to bottom, black, transparent 68%);
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+      radial-gradient(circle at 50% 0, rgba(127,208,177,.08), transparent 36rem);
+    background-size: 48px 48px, 48px 48px, auto;
+    mask-image: linear-gradient(to bottom, black, transparent 72%);
   }
 
   .container { width: min(1180px, calc(100vw - 44px)); margin-inline: auto; }
@@ -171,19 +230,19 @@ const nav = [
   .section-title { margin: 0; font-size: clamp(1.9rem, 3.8vw, 3.25rem); line-height: 1.08; letter-spacing: -.04em; }
   .lede, .copy { max-width: 760px; color: var(--muted); font-size: clamp(1.02rem, 1.7vw, 1.22rem); line-height: 1.75; }
 
-  .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 0 18px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.025); font-size: .82rem; font-weight: 700; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
-  .button:hover { transform: translateY(-1px); border-color: rgba(127,208,177,.55); background: rgba(127,208,177,.055); }
-  .button-primary { background: var(--ink); color: #071012; border-color: var(--ink); }
-  .button-primary:hover { background: #fff; border-color: #fff; }
+  .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 0 18px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--ink); background: rgba(255,255,255,.025); box-shadow: 0 8px 24px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.025); font-size: .82rem; font-weight: 700; transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease; }
+  .button:hover { transform: translateY(-2px); border-color: rgba(127,208,177,.55); background: rgba(127,208,177,.055); box-shadow: var(--glow-green); }
+  .button-primary { background: linear-gradient(180deg, #f7faf8, #dfe7e3); color: #071012; border-color: rgba(255,255,255,.92); box-shadow: 0 10px 30px rgba(0,0,0,.2), 0 0 0 1px rgba(255,255,255,.08); }
+  .button-primary:hover { background: #fff; border-color: #fff; box-shadow: 0 12px 36px rgba(0,0,0,.26), 0 0 28px rgba(127,208,177,.08); }
   .button-ghost { color: var(--muted); }
-  .panel { background: linear-gradient(180deg, rgba(14,27,29,.82), rgba(8,16,18,.84)); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: inset 0 1px 0 rgba(255,255,255,.018); }
+  .panel { background: linear-gradient(180deg, rgba(14,27,29,.86), rgba(8,16,18,.88)); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: inset 0 1px 0 rgba(255,255,255,.022), var(--shadow-soft); }
 
   .skip-link { position: fixed; top: 8px; left: 8px; z-index: 1000; transform: translateY(-150%); padding: 9px 12px; background: var(--ink); color: var(--paper); border-radius: 8px; }
   .skip-link:focus { transform: translateY(0); }
 
-  .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid transparent; background: rgba(5, 9, 10, .72); backdrop-filter: blur(20px) saturate(130%); }
-  .site-header::after { content: ''; position: absolute; inset: auto 0 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line-strong), transparent); }
-  .header-inner { min-height: 76px; display: flex; align-items: center; gap: 28px; }
+  .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid transparent; background: linear-gradient(180deg, rgba(5,9,10,.86), rgba(5,9,10,.7)); backdrop-filter: blur(22px) saturate(135%); box-shadow: 0 10px 40px rgba(0,0,0,.08); }
+  .site-header::after { content: ''; position: absolute; inset: auto 0 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(127,208,177,.28), rgba(115,185,216,.2), transparent); }
+  .header-inner { min-height: 76px; display: flex; align-items: center; gap: 22px; }
   .brand { display: inline-flex; align-items: center; gap: 11px; flex: 0 0 auto; }
   .brand-mark { position: relative; width: 30px; height: 27px; display: inline-block; }
   .brand-mark i { position: absolute; width: 16px; height: 22px; top: 2px; background: linear-gradient(180deg, var(--green), #477e70); transform: skewX(-21deg); border-radius: 2px; box-shadow: 0 0 20px rgba(127,208,177,.12); }
@@ -193,23 +252,33 @@ const nav = [
   .brand-copy strong { font-size: .92rem; letter-spacing: .12em; }
   .brand-copy small { color: var(--muted); font: 500 .54rem/1.2 var(--mono); letter-spacing: .12em; }
 
-  .desktop-nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
-  .desktop-nav a { padding: 9px 11px; border-radius: 999px; color: var(--muted); font-size: .74rem; font-weight: 650; }
-  .desktop-nav a:hover, .desktop-nav a[aria-current="page"] { color: var(--ink); background: rgba(255,255,255,.04); }
-  .desktop-nav a[aria-current="page"]::before { content: '•'; color: var(--green); margin-right: 6px; }
-  .header-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: .76rem; font-weight: 700; background: rgba(255,255,255,.035); }
-  .header-cta:hover { border-color: rgba(127,208,177,.5); }
+  .desktop-nav { margin-left: auto; display: flex; align-items: center; gap: 2px; padding: 4px; border: 1px solid rgba(174,211,202,.08); border-radius: 999px; background: rgba(255,255,255,.018); box-shadow: inset 0 1px 0 rgba(255,255,255,.018); }
+  .desktop-nav a { padding: 8px 10px; border-radius: 999px; color: var(--muted); font-size: .73rem; font-weight: 650; transition: color .18s ease, background .18s ease, box-shadow .18s ease; }
+  .desktop-nav a:hover { color: var(--ink); background: rgba(255,255,255,.04); }
+  .desktop-nav a[aria-current="page"] { color: var(--ink); background: rgba(127,208,177,.07); box-shadow: inset 0 0 0 1px rgba(127,208,177,.1); }
+  .desktop-nav a[aria-current="page"]::before { content: '•'; color: var(--green); margin-right: 6px; text-shadow: 0 0 12px rgba(127,208,177,.55); }
+  .header-cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid rgba(127,208,177,.28); border-radius: 999px; color: var(--ink); font-size: .76rem; font-weight: 750; background: linear-gradient(180deg, rgba(127,208,177,.1), rgba(127,208,177,.035)); box-shadow: inset 0 1px 0 rgba(255,255,255,.03); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+  .header-cta:hover { transform: translateY(-1px); border-color: rgba(127,208,177,.58); background: rgba(127,208,177,.1); }
   .mobile-menu { display: none; margin-left: auto; position: relative; }
-  .mobile-menu summary { width: 42px; height: 42px; display: grid; place-content: center; gap: 5px; border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer; list-style: none; }
+  .mobile-menu summary { width: 42px; height: 42px; display: grid; place-content: center; gap: 5px; border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer; list-style: none; background: rgba(255,255,255,.02); }
   .mobile-menu summary::-webkit-details-marker { display: none; }
-  .mobile-menu summary span { width: 16px; height: 1px; background: var(--ink); display: block; }
-  .mobile-menu nav { position: absolute; right: 0; top: 50px; min-width: 240px; padding: 10px; display: grid; gap: 3px; background: rgba(8,16,18,.98); border: 1px solid var(--line-strong); border-radius: 16px; box-shadow: var(--shadow); }
+  .mobile-menu summary span { width: 16px; height: 1px; background: var(--ink); display: block; transition: transform .18s ease; }
+  .mobile-menu[open] summary span:first-child { transform: translateY(3px) rotate(45deg); }
+  .mobile-menu[open] summary span:last-child { transform: translateY(-3px) rotate(-45deg); }
+  .mobile-menu nav { position: absolute; right: 0; top: 50px; min-width: 250px; padding: 10px; display: grid; gap: 3px; background: rgba(8,16,18,.98); border: 1px solid var(--line-strong); border-radius: 16px; box-shadow: var(--shadow); }
   .mobile-menu nav a { padding: 11px 12px; border-radius: 10px; color: var(--muted); font-size: .84rem; }
   .mobile-menu nav a:hover, .mobile-menu nav a[aria-current="page"] { color: var(--ink); background: rgba(255,255,255,.04); }
-  .mobile-menu .mobile-cta { color: var(--ink); border: 1px solid var(--line); margin-top: 4px; }
+  .mobile-menu .mobile-cta { color: var(--ink); border: 1px solid rgba(127,208,177,.22); background: rgba(127,208,177,.055); margin-top: 4px; }
 
-  main { min-height: 58vh; }
-  .site-footer { margin-top: clamp(60px, 9vw, 120px); border-top: 1px solid var(--line); background: rgba(4,8,9,.78); }
+  main { min-height: 58vh; position: relative; }
+  .dogfood-context { padding: clamp(34px,5vw,58px) 0; }
+  .dogfood-context-card { display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(28px,6vw,72px); align-items:center; padding:clamp(24px,4vw,42px); border-color:rgba(127,208,177,.2); background:radial-gradient(circle at 0 0,rgba(127,208,177,.06),transparent 42%),linear-gradient(180deg,rgba(14,27,29,.88),rgba(8,16,18,.9)); }
+  .dogfood-context-card h2 { margin:0; max-width:720px; font-size:clamp(1.65rem,3.2vw,2.8rem); line-height:1.06; letter-spacing:-.04em; }
+  .dogfood-context-card p { margin:14px 0 0; color:var(--muted); max-width:760px; }
+  .dogfood-context-side { display:flex; flex-direction:column; gap:10px; align-items:flex-start; }
+  .dogfood-context-side span { color:var(--gold); font:500 .62rem/1.4 var(--mono); letter-spacing:.06em; }
+  .dogfood-context-side .button { margin-top:8px; }
+  .site-footer { margin-top: clamp(60px, 9vw, 120px); border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(4,8,9,.7), rgba(3,6,7,.94)); }
   .footer-shell { padding-block: clamp(46px, 7vw, 78px) 24px; }
   .footer-cta { display: flex; align-items: end; justify-content: space-between; gap: 32px; padding-bottom: clamp(42px, 6vw, 68px); }
   .footer-cta h2 { max-width: 760px; margin: 0; font-size: clamp(2rem, 4.2vw, 3.8rem); line-height: 1.04; letter-spacing: -.045em; }
@@ -218,13 +287,13 @@ const nav = [
   .footer-brand p strong { color: var(--ink-soft); }
   .footer-col { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
   .footer-col strong { margin-bottom: 4px; color: var(--ink-soft); font: 500 .68rem/1.2 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
-  .footer-col a { color: var(--muted); font-size: .8rem; }
-  .footer-col a:hover { color: var(--ink); }
+  .footer-col a { color: var(--muted); font-size: .8rem; transition: color .18s ease, transform .18s ease; }
+  .footer-col a:hover { color: var(--ink); transform: translateX(2px); }
   .footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 20px; border-top: 1px solid var(--line); color: #65716f; font: 500 .66rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
   :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
   @media (max-width: 980px) { .desktop-nav, .header-cta { display: none; } .mobile-menu { display: block; } .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; } .footer-grid .footer-col:last-child { grid-column: 2 / -1; } }
-  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .footer-cta { align-items: flex-start; flex-direction: column; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
+  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .dogfood-context-card { grid-template-columns:1fr; } .footer-cta { align-items: flex-start; flex-direction: column; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
   @media (max-width: 460px) { .footer-grid { grid-template-columns: 1fr; } .footer-brand, .footer-grid .footer-col:last-child { grid-column: auto; } .button { width: 100%; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>

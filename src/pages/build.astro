@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const builtSurfaces = [
+  {
+    kind: 'Decision system',
+    name: 'Authority Mapper',
+    href: '/mapper',
+    state: 'PUBLIC PRODUCT',
+    text: 'Turns one action-capable workflow into a draft Authority Ledger, Evidence Contract, failure plan and unresolved decision gates without transmitting workflow content.'
+  },
+  {
+    kind: 'Decision system',
+    name: 'Decision Workspace',
+    href: '/workspace',
+    state: 'PUBLIC PRODUCT',
+    text: 'Stores local checkpoints, classifies RETEST_CANDIDATE / SCOPE_DRIFT / CROSS_WORKFLOW comparisons, and drafts a bounded Decision Memo without inventing a trust score.'
+  },
+  {
+    kind: 'Diagnostic',
+    name: '7-gate Diagnostic',
+    href: '/diagnostic',
+    state: 'PUBLIC PRODUCT',
+    text: 'Exposes unresolved authority, evidence, freshness, confirmation and recovery gates before a workflow is treated as ready for deeper testing.'
+  },
+  {
+    kind: 'Source project',
+    name: 'ContinuityOS',
+    href: '/continuityos',
+    state: 'PUBLIC SOURCE PATH',
+    text: 'Public-facing work on durable local memory, provenance and governance-oriented agent workflows, with source claims kept separate from runtime claims.'
+  },
+  {
+    kind: 'Research',
+    name: 'Reviewed Research',
+    href: '/guides',
+    state: 'CURATED PUBLIC SET',
+    text: 'A deliberately small reviewed set of engineering notes. Historical dynamic guide generation is not treated as equivalent to reviewed research.'
+  },
+  {
+    kind: 'Navigator',
+    name: 'BitEvo Universe',
+    href: '/universe',
+    state: 'PUBLIC MAP',
+    text: 'Connects BitEvo services, source projects and external research surfaces without presenting changing private state as public telemetry.'
+  }
+];
+
+const buildPrinciples = [
+  ['Bound the object', 'Start from one concrete workflow, artifact or public surface. Scope must be specific enough that another engineer can challenge the claim.'],
+  ['Separate source from runtime', 'A repository state, a successful build and an observed external effect are different evidence classes. They are never collapsed into one “works” claim.'],
+  ['Expose the decision path', 'Public tools should make the authority question, missing evidence and next owner decision easier to see — not hide them behind a score.'],
+  ['Publish only what is defensible', 'Synthetic examples stay synthetic. Internal telemetry stays internal. Public claims stop at the strongest evidence that can actually be shown.']
+];
+
+const qualityDimensions = [
+  ['01', 'Product clarity', 'A visitor can tell what the product is, who owns the decision and what changes after using it.'],
+  ['02', 'Visual system', 'Typography, spacing, hierarchy, interaction states and page rhythm feel like one product rather than unrelated templates.'],
+  ['03', 'UX / navigation', 'Critical paths are explicit, internal routes resolve, mobile navigation remains usable and the next action is understandable.'],
+  ['04', 'Conversion', 'Calls to action match funnel stage: map first, inspect proof, scope only when the decision boundary is ready.'],
+  ['05', 'Proof / trust', 'Synthetic proof stays synthetic, source/build/runtime evidence stays separated and claims stop at what can be defended.'],
+  ['06', 'SEO / i18n', 'Canonical metadata, social cards, structured identity and locale architecture remain correct before language expansion.'],
+  ['07', 'Performance', 'Static delivery, bounded assets, caching and dependency choices should keep the public surface lightweight.'],
+  ['08', 'Accessibility', 'Semantic landmarks, keyboard focus, headings, image alternatives and accessible control names are regression constraints.'],
+  ['09', 'Technical hygiene', 'Build gates, security headers, route integrity and explicit configuration turn quality expectations into enforceable checks.'],
+  ['10', 'Universe integration', 'Every site has a clear role in the wider product system without copying private state or pretending all surfaces are the same product.']
+];
+
+const automatedGates = [
+  ['Public claim boundary', 'Forbidden public-claim patterns'],
+  ['Public quality', 'Metadata / accessibility / internal links / funnel / sitemap / deployment config'],
+  ['Public performance', 'Remote font / stylesheet / script policy + deployment policy'],
+  ['Homepage trust', 'Synthetic provenance + contextual internal-dogfood boundary'],
+  ['Static asset budgets', 'JS / CSS / image / total-dist regression ceilings'],
+  ['Dogfood proof contract', 'Claim ceilings / contextual links / private-marker exclusion'],
+  ['Workspace decision contract', 'Handoff durability / retest identity / decision-conflict invariants']
+];
+
+const pipeline = ['Hypothesis', 'Artifact', 'Evidence', 'Decision', 'Retest', 'Publish'];
+---
+
+<Layout title="Build — Public Works & Engineering Proof | BitEvo" description="BitEvo Build is the public index of shipped decision tools, source projects and research surfaces — with source, build and runtime evidence kept distinct.">
+  <section class="build-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Public works · shipped artifacts</div>
+        <h1 class="display">Build the proof surface, not the theatre.</h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">BitEvo Build is the public engineering layer behind the audit offer: decision tools, source projects, research surfaces and navigators that make authority and evidence inspectable.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#surfaces">Inspect the build <span aria-hidden="true">↘</span></a><a class="button button-ghost" href="/universe">Open Universe</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="signal-strip section-rule" aria-label="Build boundary">
+    <div class="container signal-grid">
+      <div><small>PUBLIC</small><strong>Artifact + method</strong></div>
+      <div><small>VERIFIABLE</small><strong>Source / build / route</strong></div>
+      <div><small>NOT IMPLIED</small><strong>Live private state</strong></div>
+      <div><small>RULE</small><strong>Evidence class stays explicit</strong></div>
+    </div>
+  </section>
+
+  <section class="section section-rule" id="surfaces">
+    <div class="container section-head">
+      <div><div class="eyebrow">Shipped surfaces</div><h2 class="section-title">The product is more than a landing page.</h2></div>
+      <p class="lede">Each surface has a different job. Decision products help structure owner choices. Source projects expose bounded implementation paths. Research surfaces explain the engineering model. None of them is presented as proof of private runtime health.</p>
+    </div>
+    <div class="container surface-grid">
+      {builtSurfaces.map((surface, i) => (
+        <a class="surface-card panel" href={surface.href}>
+          <div class="card-top"><span>{String(i + 1).padStart(2, '0')}</span><small>{surface.state}</small></div>
+          <div><div class="kind">{surface.kind}</div><h3>{surface.name}</h3><p>{surface.text}</p></div>
+          <div class="open">Open surface <span aria-hidden="true">↗</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule quality-section">
+    <div class="container section-head">
+      <div><div class="eyebrow">BitEvo 10/10 Standard</div><h2 class="section-title">Ten dimensions. No fake composite score.</h2></div>
+      <p class="lede">The standard is a migration contract for this site and the wider BitEvo Universe. Some dimensions are machine-gated; others still require human product and visual review. Passing one class never silently substitutes for another.</p>
+    </div>
+    <div class="container quality-grid">
+      {qualityDimensions.map(([n, title, text]) => (
+        <article class="quality-card">
+          <span>{n}</span>
+          <div><h3>{title}</h3><p>{text}</p></div>
+        </article>
+      ))}
+    </div>
+    <div class="container gate-shell panel">
+      <div class="gate-intro"><div class="eyebrow">Build-breaking invariants</div><h3>Automate what can be checked exactly.</h3><p>The source pipeline keeps these objective public-surface contracts build-breaking. They do not certify design quality, business value, security or runtime correctness.</p></div>
+      <div class="gate-grid">
+        {automatedGates.map(([title, text], i) => <div><span>{String(i + 1).padStart(2,'0')}</span><strong>{title}</strong><small>{text}</small></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container section-head">
+      <div><div class="eyebrow">Build contract</div><h2 class="section-title">Four constraints keep public engineering honest.</h2></div>
+      <p class="lede">A polished surface is useful only when the claim behind it remains inspectable. The same discipline used in the audit model applies to what BitEvo publishes about its own work.</p>
+    </div>
+    <div class="container principle-grid">
+      {buildPrinciples.map(([title, text], i) => (
+        <article class="principle panel"><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container pipeline-shell panel">
+      <div class="pipeline-copy">
+        <div class="eyebrow">Working loop</div>
+        <h2 class="section-title">Ship through an evidence chain.</h2>
+        <p>A build is not finished when code exists. The public loop ends only when the artifact, its evidence class and the decision it supports are explicit.</p>
+      </div>
+      <ol class="pipeline">
+        {pipeline.map((step, i) => <li><span>{String(i + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-card">
+      <article class="panel source-card">
+        <div class="eyebrow">Open path</div>
+        <h2>ContinuityOS has a public source boundary.</h2>
+        <p>Where a public repository is part of the evidence, the source link is exposed directly instead of substituting a marketing summary for inspectable implementation.</p>
+        <div class="actions"><a class="button" href="/continuityos">Project surface</a><a class="button button-ghost" href="https://github.com/bitmaster162/continuityos" target="_blank" rel="noopener">GitHub source ↗</a></div>
+      </article>
+      <article class="panel universe-card">
+        <div class="eyebrow">Next layer</div>
+        <h2>Universe maps where each build belongs.</h2>
+        <p>The Universe separates service, product, source and research surfaces. That taxonomy becomes the migration path for bringing the wider BitEvo ecosystem onto one coherent standard.</p>
+        <a class="button button-primary" href="/universe">Explore BitEvo Universe <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow boundary-note">
+      <div class="eyebrow">Boundary</div>
+      <h2 class="section-title">This is an index of public artifacts, not a live operations dashboard.</h2>
+      <p class="lede">Build status, source state and runtime evidence are intentionally separate. Private infrastructure identifiers, credentials, internal telemetry and operator controls are not published through this surface.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .build-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-side .lede{margin:0 0 26px}.hero-actions,.actions{display:flex;gap:10px;flex-wrap:wrap}.signal-strip{padding-block:18px}.signal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.signal-grid div{display:flex;flex-direction:column;gap:4px}.signal-grid small{color:#61706d;font:500 .58rem var(--mono);letter-spacing:.11em}.signal-grid strong{font-size:.78rem}.section-head{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(42px,8vw,110px);margin-bottom:38px}.section-head .lede{margin:2px 0 0}.surface-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.surface-card{min-height:330px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease}.surface-card:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.32)}.card-top{display:flex;justify-content:space-between;gap:12px;color:#5a6865;font:500 .58rem var(--mono)}.card-top small{color:var(--green);letter-spacing:.08em;text-align:right}.kind{margin-bottom:8px;color:var(--muted);font:500 .62rem var(--mono);letter-spacing:.09em;text-transform:uppercase}.surface-card h3{margin:0 0 10px;font-size:1.28rem;letter-spacing:-.025em}.surface-card p{margin:0;color:var(--muted);font-size:.82rem}.open{color:var(--ink-soft);font-size:.76rem;font-weight:700}
+  .quality-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.quality-card{min-height:170px;display:grid;grid-template-columns:52px 1fr;gap:18px;padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,16,18,.42)}.quality-card:nth-child(2n){border-right:0}.quality-card:nth-last-child(-n+2){border-bottom:0}.quality-card>span{color:var(--green);font:500 .6rem var(--mono);letter-spacing:.08em}.quality-card h3{margin:0 0 8px;font-size:1rem}.quality-card p{margin:0;color:var(--muted);font-size:.79rem}.gate-shell{margin-top:20px;padding:28px;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,72px);align-items:start;background:radial-gradient(circle at 0 0,rgba(127,208,177,.06),transparent 35%),linear-gradient(180deg,rgba(14,27,29,.84),rgba(8,16,18,.88))}.gate-intro h3{margin:0 0 10px;font-size:1.35rem}.gate-intro p{margin:0;color:var(--muted);font-size:.82rem}.gate-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}.gate-grid>div{display:grid;grid-template-columns:30px 1fr;gap:2px 12px;padding:14px 8px;border-bottom:1px solid var(--line)}.gate-grid span{grid-row:1/3;color:#5c6b67;font:500 .56rem var(--mono)}.gate-grid strong{font-size:.78rem}.gate-grid small{color:var(--muted);font-size:.68rem}
+  .principle-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.principle{min-height:300px;padding:24px;display:flex;flex-direction:column}.principle>span{color:var(--green);font:500 .6rem var(--mono)}.principle h3{margin:auto 0 10px;font-size:1.08rem}.principle p{margin:0;color:var(--muted);font-size:.8rem}.pipeline-shell{padding:32px;display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(38px,7vw,90px);align-items:center}.pipeline-copy p{color:var(--muted);max-width:520px}.pipeline{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.pipeline li{display:grid;grid-template-columns:42px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}.pipeline span{color:#5d6b68;font:500 .6rem var(--mono)}.pipeline strong{font-size:.88rem}.split-card{display:grid;grid-template-columns:1fr 1fr;gap:18px}.source-card,.universe-card{padding:32px;min-height:330px;display:flex;flex-direction:column;align-items:flex-start}.source-card h2,.universe-card h2{font-size:1.65rem;line-height:1.12;letter-spacing:-.035em;margin:0 0 14px}.source-card p,.universe-card p{color:var(--muted);margin:0 0 26px}.source-card .actions,.universe-card>.button{margin-top:auto}.boundary-note{text-align:center}.boundary-note .section-title{margin-inline:auto}.boundary-note .lede{margin:20px auto 0}@media(max-width:980px){.surface-grid{grid-template-columns:1fr 1fr}.principle-grid{grid-template-columns:1fr 1fr}.hero-grid,.section-head,.pipeline-shell,.gate-shell{grid-template-columns:1fr}}@media(max-width:680px){.signal-grid,.surface-grid,.principle-grid,.split-card,.quality-grid,.gate-grid{grid-template-columns:1fr}.signal-grid{gap:12px}.surface-card,.principle{min-height:auto}.pipeline-shell{padding:24px}.quality-card{border-right:0!important;border-bottom:1px solid var(--line)!important;min-height:auto}.quality-card:last-child{border-bottom:0!important}.gate-shell{padding:24px}}
+</style>

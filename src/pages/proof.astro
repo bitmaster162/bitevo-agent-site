@@ -20,18 +20,66 @@ const invariants = [
   ['Ambiguity reduces authority', 'Unknown recipient, object, environment, version or external state routes to constrain, reconcile or repair.'],
   ['Retest uses the same criterion', 'A code/config change is not closure; the original decision condition must be replayed.']
 ];
+
+const evidenceLadder = [
+  ['01', 'METHOD', 'Public doctrine', 'Explains the decision vocabulary and control model.', 'Does not establish that any real workflow passed a test.'],
+  ['02', 'WORKED', 'Synthetic pack', 'Shows how the method is applied to a concrete action class.', 'Does not represent customer evidence or an executed audit.'],
+  ['03', 'MACHINE', 'Machine-readable example', 'Makes assumptions, gates and expected outputs inspectable in JSON.', 'Does not turn example data into observed runtime evidence.'],
+  ['04', 'SOURCE / BUILD', 'Inspectible implementation evidence', 'Can establish what source, artifact or build was actually published when a receipt is linked.', 'Does not by itself prove the intended external runtime effect occurred.'],
+  ['05', 'OBSERVED', 'Scoped finding', 'Ties a reproducible observation to authority, evidence, external effect and recovery inside an agreed test scope.', 'Exists only when the observation was actually collected; public examples cannot substitute for it.'],
+  ['06', 'DECISION', 'Owner decision + retest', 'Records EXPAND / CONSTRAIN / REPAIR / RETEST and the criterion required to change that decision.', 'Is bounded to the tested workflow and evidence window; it is not universal certification.']
+];
+
+const trustContracts = [
+  ['Synthetic ≠ observed', 'A designed failure case can demonstrate reasoning structure. It cannot become customer or runtime evidence by presentation alone.'],
+  ['Build ≠ runtime', 'A successful source build establishes a build fact. It does not establish that an external system reached the intended state.'],
+  ['Tool acknowledgement ≠ effect', 'A successful API/tool response must still be reconciled with the intended object, recipient, environment or external state.'],
+  ['Pass ≠ certification', 'A bounded test can support one owner decision under one evidence window. It is not a permanent safety badge or universal trust score.']
+];
 ---
 
-<Layout title="Proof Matrix — Synthetic Agent Authority Audit Packs | BitEvo" description="Three synthetic BitEvo audit packs across CRM writes, outbound messages and staging configuration changes. Worked examples only; not customer evidence or executed audits.">
+<Layout title="Proof Matrix — Synthetic Packs + Internal Self-Audit | BitEvo" description="BitEvo proof matrix: synthetic worked audit packs, an evidence-strength ladder, and a bounded internal self-audit case with explicit claim limits.">
   <section class="proof-hero section">
     <div class="container hero-grid">
-      <div><div class="eyebrow">BitEvo proof matrix</div><h1 class="display">Same doctrine. Different external effects.</h1></div>
-      <div><p class="lede">These synthetic packs show how the Authority / Evidence / Effect / Recovery model changes with the action class. They demonstrate method structure, not customer results.</p><div class="hero-actions"><a href="/mapper" class="button button-primary">Map your workflow <span aria-hidden="true">↗</span></a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div></div>
+      <div><div class="eyebrow">BitEvo proof matrix</div><h1 class="display">Different evidence classes. No trust-score shortcut.</h1></div>
+      <div><p class="lede">Two evidence classes are separated on purpose: synthetic packs demonstrate method structure; bounded internal dogfood documents scoped observations from our own agent/control stack. Neither is customer proof or independent certification.</p><div class="hero-actions"><a href="/mapper" class="button button-primary">Map your workflow <span aria-hidden="true">↗</span></a><a href="/dogfood-self-audit" class="button button-ghost">Open internal self-audit</a></div></div>
     </div>
   </section>
 
   <section class="section-tight section-rule">
-    <div class="container boundary panel"><strong>SYNTHETIC PROOF SURFACE</strong><p>All three cases are designed worked examples. No customer environment, production execution, private data or external audit result is represented. Each pack keeps assumptions, expected gates and NOT TESTED states explicit.</p></div>
+    <div class="container boundary panel"><strong>SYNTHETIC PROOF SURFACE · WORKED PACKS</strong><p>The three SAMPLE cases below are designed worked examples. No customer environment, production execution, private data or external audit result is represented. Each pack keeps assumptions, expected gates and NOT TESTED states explicit.</p></div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="evidence-ladder-title">
+    <div class="container matrix-head evidence-head">
+      <div><div class="eyebrow">Evidence strength</div><h2 class="section-title" id="evidence-ladder-title">Proof gets stronger only when the evidence class changes.</h2></div>
+      <p class="lede">BitEvo does not collapse method, examples, source, builds, runtime observations and owner decisions into one trust score. Each class answers a different question and stops at a different boundary.</p>
+    </div>
+    <div class="container evidence-ladder">
+      {evidenceLadder.map(([n, kind, title, proves, stops]) => (
+        <article class="evidence-step panel">
+          <div class="evidence-id"><span>{n}</span><small>{kind}</small></div>
+          <div class="evidence-copy"><h3>{title}</h3><div class="evidence-row"><span>ESTABLISHES</span><p>{proves}</p></div><div class="evidence-row stops"><span>DOES NOT ESTABLISH</span><p>{stops}</p></div></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule" data-dogfood-context="proof">
+    <div class="container observed-proof panel">
+      <div>
+        <div class="eyebrow">Observed internal proof</div>
+        <h2 class="section-title">A different evidence class from the worked packs.</h2>
+        <p class="lede">The synthetic packs explain method structure. The internal dogfood case documents bounded observations from our own agent/control stack: real failure → repair → adversarial retest. It remains redacted and does not become customer evidence or production-wide proof.</p>
+      </div>
+      <div class="observed-meta">
+        <div><span>CLASS</span><strong>INTERNAL SELF-AUDIT</strong></div>
+        <div><span>CUSTOMER CASE</span><strong>FALSE</strong></div>
+        <div><span>INDEPENDENT CERTIFICATION</span><strong>FALSE</strong></div>
+        <div><span>PRODUCTION-WIDE CLAIM</span><strong>FALSE</strong></div>
+        <a href="/dogfood-self-audit" class="button button-primary">Open dogfood case <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
   </section>
 
   <section class="section section-rule">
@@ -48,6 +96,16 @@ const invariants = [
           <div class="case-actions"><a href={c.href} class="button">Open pack →</a><a href={c.json} class="text-link">JSON ↗</a></div>
         </article>
       ))}
+    </div>
+  </section>
+
+  <section class="section section-rule trust-section">
+    <div class="container matrix-head">
+      <div><div class="eyebrow">Trust contract</div><h2 class="section-title">Four substitutions this proof surface refuses to make.</h2></div>
+      <p class="lede">Most evidence inflation happens when two different facts are treated as interchangeable. These boundaries are part of the product, not disclaimer copy hidden after the claim.</p>
+    </div>
+    <div class="container trust-grid">
+      {trustContracts.map(([title, text], i) => <article class="trust-card panel"><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>)}
     </div>
   </section>
 
@@ -79,7 +137,9 @@ const invariants = [
 </Layout>
 
 <style>
-  .proof-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.matrix-head,.invariant-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede,.matrix-head .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.boundary{padding:20px 24px;border-color:rgba(239,186,92,.25)}.boundary strong{color:var(--gold);font:500 .64rem var(--mono);letter-spacing:.08em}.boundary p{margin:7px 0 0;color:var(--muted);font-size:.8rem}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}.case{padding:25px;display:flex;flex-direction:column;min-height:470px}.case-top{display:flex;justify-content:space-between;gap:16px}.case-top span{color:var(--green);font:500 .62rem var(--mono)}.case-top strong{color:var(--muted);font:500 .58rem var(--mono);text-transform:uppercase}.case h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;margin:34px 0 22px}.case-row{padding:14px 0;border-top:1px solid var(--line)}.case-row span,.decision span,.compare span,.mapper-meta span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.09em}.case-row p{margin:6px 0 0;color:var(--ink-soft);font-size:.78rem}.decision{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}.decision strong{display:block;margin-top:6px;color:var(--green);font-size:1.35rem}.case-actions{display:flex;align-items:center;gap:14px;margin-top:20px}.case-actions .text-link{font-size:.72rem}.mapper-callout{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,7vw,90px);padding:clamp(28px,5vw,54px);background:radial-gradient(circle at 0 0,rgba(127,208,177,.07),transparent 42%),rgba(8,16,18,.76)}.mapper-callout h2{margin:6px 0 12px;font-size:clamp(1.7rem,3vw,2.8rem);letter-spacing:-.04em}.mapper-callout p{margin:0;color:var(--muted)}.mapper-meta>div{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid var(--line)}.mapper-meta strong{font:500 .64rem var(--mono);text-align:right}.mapper-meta .button{margin-top:20px;width:100%}.invariant-grid{align-items:start}.invariants{border-top:1px solid var(--line)}.invariants article{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:19px 0;border-bottom:1px solid var(--line)}.invariants article>span{color:#586561;font:500 .62rem var(--mono)}.invariants strong{font-size:.88rem}.invariants p{margin:5px 0 0;color:var(--muted);font-size:.8rem}.compare{display:grid;grid-template-columns:repeat(3,1fr);padding:0}.compare>div{padding:28px;border-right:1px solid var(--line)}.compare>div:last-child{border-right:0}.compare strong{display:block;margin:16px 0 8px;font-size:1rem}.compare p{margin:0;color:var(--muted);font-size:.79rem}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
-  @media(max-width:900px){.hero-grid,.matrix-head,.invariant-grid,.mapper-callout{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.case{min-height:0}.compare{grid-template-columns:1fr}.compare>div{border-right:0;border-bottom:1px solid var(--line)}.compare>div:last-child{border-bottom:0}}
+  .proof-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.matrix-head,.invariant-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede,.matrix-head .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.boundary{padding:20px 24px;border-color:rgba(239,186,92,.25)}.boundary strong{color:var(--gold);font:500 .64rem var(--mono);letter-spacing:.08em}.boundary p{margin:7px 0 0;color:var(--muted);font-size:.8rem}.evidence-ladder{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.evidence-step{padding:0;display:grid;grid-template-columns:92px 1fr;min-height:220px;overflow:hidden}.evidence-id{padding:24px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,rgba(127,208,177,.045),transparent)}.evidence-id span{color:var(--green);font:500 .72rem var(--mono)}.evidence-id small{color:var(--muted);font:500 .56rem var(--mono);letter-spacing:.08em;writing-mode:vertical-rl;transform:rotate(180deg)}.evidence-copy{padding:24px}.evidence-copy h3{margin:0 0 18px;font-size:1.12rem}.evidence-row{padding:11px 0;border-top:1px solid var(--line)}.evidence-row span{color:var(--green);font:500 .54rem var(--mono);letter-spacing:.09em}.evidence-row.stops span{color:var(--gold)}.evidence-row p{margin:5px 0 0;color:var(--muted);font-size:.78rem}.observed-proof{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(38px,7vw,86px);padding:clamp(28px,5vw,52px);border-color:rgba(127,208,177,.24);background:radial-gradient(circle at 0 0,rgba(127,208,177,.075),transparent 42%),linear-gradient(180deg,rgba(14,27,29,.88),rgba(8,16,18,.9))}.observed-proof .lede{margin:18px 0 0}.observed-meta>div{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid var(--line)}.observed-meta span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.08em}.observed-meta strong{font:600 .66rem var(--mono);text-align:right}.observed-meta .button{margin-top:20px;width:100%}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}.case{padding:25px;display:flex;flex-direction:column;min-height:470px}.case-top{display:flex;justify-content:space-between;gap:16px}.case-top span{color:var(--green);font:500 .62rem var(--mono)}.case-top strong{color:var(--muted);font:500 .58rem var(--mono);text-transform:uppercase}.case h3{font-size:1.35rem;line-height:1.25;letter-spacing:-.03em;margin:34px 0 22px}.case-row{padding:14px 0;border-top:1px solid var(--line)}.case-row span,.decision span,.compare span,.mapper-meta span{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.09em}.case-row p{margin:6px 0 0;color:var(--ink-soft);font-size:.78rem}.decision{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}.decision strong{display:block;margin-top:6px;color:var(--green);font-size:1.35rem}.case-actions{display:flex;align-items:center;gap:14px;margin-top:20px}.case-actions .text-link{font-size:.72rem}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.trust-card{padding:24px;min-height:260px;display:flex;flex-direction:column}.trust-card>span{color:var(--gold);font:500 .6rem var(--mono)}.trust-card h3{margin:auto 0 12px;font-size:1.05rem;letter-spacing:-.02em}.trust-card p{margin:0;color:var(--muted);font-size:.79rem}.mapper-callout{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(40px,7vw,90px);padding:clamp(28px,5vw,54px);background:radial-gradient(circle at 0 0,rgba(127,208,177,.07),transparent 42%),rgba(8,16,18,.76)}.mapper-callout h2{margin:6px 0 12px;font-size:clamp(1.7rem,3vw,2.8rem);letter-spacing:-.04em}.mapper-callout p{margin:0;color:var(--muted)}.mapper-meta>div{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid var(--line)}.mapper-meta strong{font:500 .64rem var(--mono);text-align:right}.mapper-meta .button{margin-top:20px;width:100%}.invariant-grid{align-items:start}.invariants{border-top:1px solid var(--line)}.invariants article{display:grid;grid-template-columns:42px 1fr;gap:18px;padding:19px 0;border-bottom:1px solid var(--line)}.invariants article>span{color:#586561;font:500 .62rem var(--mono)}.invariants strong{font-size:.88rem}.invariants p{margin:5px 0 0;color:var(--muted);font-size:.8rem}.compare{display:grid;grid-template-columns:repeat(3,1fr);padding:0}.compare>div{padding:28px;border-right:1px solid var(--line)}.compare>div:last-child{border-right:0}.compare strong{display:block;margin:16px 0 8px;font-size:1rem}.compare p{margin:0;color:var(--muted);font-size:.79rem}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 28px}.final-actions{justify-content:center}
+  @media(max-width:980px){.trust-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:900px){.hero-grid,.matrix-head,.invariant-grid,.mapper-callout,.observed-proof{grid-template-columns:1fr}.case-grid{grid-template-columns:1fr}.case{min-height:0}.compare{grid-template-columns:1fr}.compare>div{border-right:0;border-bottom:1px solid var(--line)}.compare>div:last-child{border-bottom:0}}
+  @media(max-width:720px){.evidence-ladder,.trust-grid{grid-template-columns:1fr}.evidence-step{grid-template-columns:70px 1fr}.evidence-id{padding:20px 14px}.evidence-copy{padding:20px}.observed-proof{padding:24px}.observed-meta>div{flex-direction:column;gap:5px}.observed-meta strong{text-align:left}}
   @media(max-width:620px){.mapper-meta>div{flex-direction:column;gap:5px}.mapper-meta strong{text-align:left}}
 </style>

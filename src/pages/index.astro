@@ -28,10 +28,12 @@ const deliverables = [
 ];
 
 const proofSurfaces = [
+  ['/proof', 'Proof Matrix', 'Synthetic worked packs plus an explicit evidence-strength ladder showing what method, build and observed evidence can — and cannot — establish.'],
+  ['/dogfood-self-audit', 'Internal dogfood', 'Bounded internal self-audit evidence from BitEvo’s own control stack — not customer proof, independent certification, or production-wide security evidence.', 'dogfood'],
+  ['/build', 'Build + 10/10 Standard', 'The public engineering index and reusable quality contract, with machine gates kept separate from human visual review.'],
   ['/doctrine', 'BitEvo Doctrine', 'Authority Budget, Evidence Before Effect and False Green — the vocabulary behind the audit model.'],
   ['/agent-authority-audit', 'Audit methodology', 'The four-plane model, finding anatomy, failure plan and Rules of Engagement.'],
   ['/guides', 'Reviewed research', 'A curated public set of engineering notes on agent reliability, isolation, drift and tool boundaries.'],
-  ['/continuityos', 'ContinuityOS', 'A public source project exploring durable local memory and governance-oriented workflows.'],
   ['/universe', 'BitEvo Universe', 'A static map of current public projects and proof surfaces — not a live operations dashboard.']
 ];
 
@@ -66,20 +68,32 @@ const structuredData = {
         <h1 class="display">An agent should earn authority with evidence.</h1>
         <p class="lede">BitEvo audits the action layer of AI systems: what a workflow is allowed to change, what evidence must exist before it acts, how the external result is confirmed, and what the system does when certainty disappears.</p>
         <div class="hero-actions">
-          <a href="/agent-authority-audit" class="button button-primary">See the audit model <span aria-hidden="true">↗</span></a>
-          <a href="/doctrine" class="button button-ghost">Read BitEvo Doctrine</a>
+          <a href="/mapper" class="button button-primary" data-funnel="home-primary">Map one workflow <span aria-hidden="true">↗</span></a>
+          <a href="/proof" class="button button-ghost" data-funnel="home-proof">See worked proof</a>
         </div>
-        <div class="hero-boundary"><span class="dot"></span> Audit the workflow, not the hype · staging/test by default · written Rules of Engagement</div>
+        <div class="hero-boundary"><span class="dot"></span> Browser-local mapping first · staging/test by default · written Rules of Engagement before testing</div>
       </div>
 
-      <div class="hero-console panel reveal delay-1" aria-label="Example authority and evidence chain">
-        <div class="console-top"><span>DECISION TRACE / LAB-001</span><span class="status"><i></i> REDACTED LAB CASE</span></div>
+      <div class="hero-console panel reveal delay-1" aria-label="Synthetic example authority and evidence chain">
+        <div class="console-top"><span>DECISION TRACE / SYNTHETIC LAB-001</span><span class="status"><i></i> SYNTHETIC WORKED CASE</span></div>
         <div class="trace-line"><span class="index">01</span><div><small>INTENT</small><strong>external change proposed</strong></div><span class="state ok">captured</span></div>
         <div class="trace-line"><span class="index">02</span><div><small>AUTHORITY</small><strong>scope + approval matched</strong></div><span class="state ok">bounded</span></div>
         <div class="trace-line"><span class="index">03</span><div><small>EVIDENCE</small><strong>source freshness stopped advancing</strong></div><span class="state warn">insufficient</span></div>
         <div class="trace-line"><span class="index">04</span><div><small>DECISION</small><strong>do not expand authority</strong></div><span class="state warn">constrain</span></div>
-        <div class="trace-result"><small>FINDING CLASS</small><strong>Capability exceeded the evidence available to justify the action.</strong><p>Public internal-lab example only. No customer environment or private infrastructure is represented.</p></div>
+        <div class="trace-result"><small>WORKED FINDING CLASS</small><strong>Capability exceeded the evidence available to justify the action.</strong><p>Synthetic worked scenario only. No customer environment, production execution or observed private infrastructure is represented.</p></div>
       </div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule" aria-labelledby="start-path-title">
+    <div class="container split-head">
+      <div><div class="eyebrow">Start with the smallest step</div><h2 class="section-title" id="start-path-title">Map. Challenge. Then scope.</h2></div>
+      <p class="lede">You do not need to buy an audit to understand the model. Draft one action chain locally, inspect worked evidence, and only turn the unresolved gates into scope when the decision is worth testing.</p>
+    </div>
+    <div class="container moment-grid">
+      <a class="moment-card panel" href="/mapper" data-funnel="map"><span>01 · LOCAL</span><h3>Map one workflow</h3><p>Draft the Authority Ledger and Evidence Contract in the browser. No testing authorization is created.</p></a>
+      <a class="moment-card panel" href="/proof" data-funnel="proof"><span>02 · PROOF</span><h3>Challenge the model</h3><p>Inspect three synthetic worked action classes and see how evidence changes an owner decision.</p></a>
+      <a class="moment-card panel" href="/audit-intake" data-funnel="scope"><span>03 · SCOPE</span><h3>Turn gaps into scope</h3><p>When the unresolved gates matter, prepare a bounded scope brief. The public intake still does not authorize testing.</p></a>
     </div>
   </section>
 
@@ -135,14 +149,14 @@ const structuredData = {
     </div>
     <div class="container proof-grid">
       <article class="lab-proof panel">
-        <div class="lab-top"><span>LAB-001</span><span>INTERNAL · REDACTED</span></div>
+        <div class="lab-top"><span>LAB-001</span><span>SYNTHETIC · WORKED</span></div>
         <h3>False Green: healthy surface, stale truth.</h3>
-        <p>A service surface appeared healthy while source freshness had stopped advancing. The narrow finding is not “the agent is unsafe.” It is that the workflow could appear operable after the evidence required to justify action had become stale. The owner decision is therefore to constrain the Authority Budget until freshness and confirmation are made explicit.</p>
-        <a href="/agent-authority-audit#method" class="text-link">Inspect the finding model →</a>
+        <p>In this worked scenario, a service surface is treated as apparently healthy while source freshness stops advancing. The modeled finding is not “the agent is unsafe.” It is that the workflow could appear operable after the evidence required to justify action had become stale. The modeled owner decision is therefore to constrain the Authority Budget until freshness and confirmation are made explicit.</p>
+        <a href="/proof" class="text-link">Inspect evidence strength →</a>
       </article>
       <div class="proof-links">
-        {proofSurfaces.map(([href, title, text]) => (
-          <a href={href} class="proof-link"><span>{title}</span><p>{text}</p><i aria-hidden="true">↗</i></a>
+        {proofSurfaces.map(([href, title, text, marker]) => (
+          <a href={href} class="proof-link" data-home-proof={marker}><span>{title}</span><p>{text}</p><i aria-hidden="true">↗</i></a>
         ))}
       </div>
     </div>
@@ -224,7 +238,7 @@ const structuredData = {
   .faq-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(42px,8vw,120px)}.faq-list details{border-top:1px solid var(--line)}.faq-list details:last-child{border-bottom:1px solid var(--line)}.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;padding:20px 0;font-weight:650}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary span{color:var(--green);font-size:1.2rem;transition:transform .18s ease}.faq-list details[open] summary span{transform:rotate(45deg)}.faq-list p{max-width:700px;margin:0 0 22px;color:var(--muted);font-size:.88rem}
   .mobile-dock{display:none}.reveal{animation:rise .65s cubic-bezier(.2,.7,.2,1) both}.delay-1{animation-delay:.08s}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   @media(max-width:980px){.hero-grid,.offer-grid,.proof-grid{grid-template-columns:1fr}.hero-console{max-width:700px}.doctrine-grid{grid-template-columns:1fr 1fr}.doctrine-card:last-child{grid-column:1/-1}.axis-grid{grid-template-columns:1fr 1fr}.axis-card:nth-child(2){border-right:0}.axis-card:nth-child(-n+2){border-bottom:1px solid var(--line)}.process-wrap{grid-template-columns:1fr}.faq-grid{grid-template-columns:1fr;gap:30px}.moment-grid{grid-template-columns:1fr 1fr}.moment-card:last-child{grid-column:1/-1}}
-  @media(max-width:720px){.strip-grid{grid-template-columns:1fr 1fr}.strip-grid div{border-bottom:1px solid var(--line)}.split-head{grid-template-columns:1fr;gap:24px}.doctrine-grid,.moment-grid{grid-template-columns:1fr}.doctrine-card,.doctrine-card:last-child,.moment-card,.moment-card:last-child{grid-column:auto;min-height:210px}.axis-grid{grid-template-columns:1fr}.axis-card,.axis-card:nth-child(2){border-right:0;border-bottom:1px solid var(--line);min-height:210px}.axis-card:last-child{border-bottom:0}.deliverable-list article{grid-template-columns:38px 1fr;gap:10px 16px}.deliverable-list p{grid-column:2}.process-list li{grid-template-columns:68px 1fr}.scope-row{flex-direction:column;gap:5px}.scope-row strong{text-align:left}.mobile-dock{position:fixed;z-index:90;left:12px;right:12px;bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 11px 10px 14px;border:1px solid var(--line-strong);border-radius:18px;background:rgba(8,16,18,.94);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.42)}.mobile-dock span{display:flex;flex-direction:column}.mobile-dock small{color:var(--muted);font:500 .54rem var(--mono);letter-spacing:.11em}.mobile-dock strong{font-size:.75rem}.mobile-dock a{padding:9px 12px;border-radius:999px;background:var(--ink);color:#071012;font-size:.72rem;font-weight:800;white-space:nowrap}}
-  @media(max-width:430px){.mobile-dock span{display:none}.mobile-dock a{width:100%;text-align:center}}
+  @media(max-width:720px){:global(body){padding-bottom:88px}.hero{padding-top:62px}.hero-console{padding:10px}.console-top{gap:12px;line-height:1.35}.trace-line{grid-template-columns:24px minmax(0,1fr) auto;gap:9px;padding:13px 4px}.strip-grid{grid-template-columns:1fr 1fr}.strip-grid div{border-bottom:1px solid var(--line)}.split-head{grid-template-columns:1fr;gap:24px;margin-bottom:34px}.doctrine-grid,.moment-grid{grid-template-columns:1fr}.doctrine-card,.doctrine-card:last-child,.moment-card,.moment-card:last-child{grid-column:auto;min-height:190px}.axis-grid{grid-template-columns:1fr}.axis-card,.axis-card:nth-child(2){border-right:0;border-bottom:1px solid var(--line);min-height:190px}.axis-card:last-child{border-bottom:0}.deliverable-list article{grid-template-columns:38px 1fr;gap:10px 16px}.deliverable-list p{grid-column:2}.process-list li{grid-template-columns:68px 1fr}.scope-row{flex-direction:column;gap:5px}.scope-row strong{text-align:left}.mobile-dock{position:fixed;z-index:90;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 11px 10px 14px;border:1px solid var(--line-strong);border-radius:18px;background:rgba(8,16,18,.94);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.42)}.mobile-dock span{display:flex;flex-direction:column}.mobile-dock small{color:var(--muted);font:500 .54rem var(--mono);letter-spacing:.11em}.mobile-dock strong{font-size:.75rem}.mobile-dock a{padding:9px 12px;border-radius:999px;background:var(--ink);color:#071012;font-size:.72rem;font-weight:800;white-space:nowrap}}
+  @media(max-width:430px){.hero-copy .display{font-size:clamp(2.45rem,12vw,3.15rem)}.console-top{flex-direction:column;gap:6px}.trace-line{grid-template-columns:24px 1fr}.state{grid-column:2;justify-self:start;margin-top:2px}.trace-result{padding:15px}.mobile-dock{left:10px;right:10px}.mobile-dock span{display:none}.mobile-dock a{width:100%;text-align:center}}
   @media(prefers-reduced-motion:reduce){.reveal{animation:none}.moment-card,.proof-link{transition:none}}
 </style>
