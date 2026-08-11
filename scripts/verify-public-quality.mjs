@@ -192,6 +192,8 @@ const funnelTextContracts = [
   ['/pricing', '/audit-intake', 'Prepare Entry Audit scope'],
   ['/pricing', '/mapper', 'Map the authority decision'],
   ['/pricing', '/mapper', 'Map the action chain'],
+  ['/consulting', '/audit-intake', 'Prepare triage brief'],
+  ['/consulting', '/audit-intake', 'Prepare Entry Audit scope'],
   ['/consulting', '/mapper', 'Map a workflow'],
   ['/consulting', '/mapper', 'Map the critical action'],
   ['/doctrine', '/mapper', 'Map one workflow']
@@ -209,7 +211,8 @@ const trustBoundaryContracts = [
   ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
   ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']],
   ['/diagnostic', ['DOES NOT AUTHORIZE TESTING', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED', 'TEST EXECUTION REMAINS SEPARATELY AUTHORIZED']],
-  ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING']]
+  ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING']],
+  ['/consulting', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING']]
 ];
 for (const [route, requiredPhrases] of trustBoundaryContracts) {
   const html = (htmlByRoute.get(route) || '').toUpperCase();
