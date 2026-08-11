@@ -28,10 +28,11 @@ const deliverables = [
 ];
 
 const proofSurfaces = [
+  ['/proof', 'Proof Matrix', 'Synthetic worked packs plus an explicit evidence-strength ladder showing what method, build and observed evidence can — and cannot — establish.'],
+  ['/build', 'Build + 10/10 Standard', 'The public engineering index and reusable quality contract, with machine gates kept separate from human visual review.'],
   ['/doctrine', 'BitEvo Doctrine', 'Authority Budget, Evidence Before Effect and False Green — the vocabulary behind the audit model.'],
   ['/agent-authority-audit', 'Audit methodology', 'The four-plane model, finding anatomy, failure plan and Rules of Engagement.'],
   ['/guides', 'Reviewed research', 'A curated public set of engineering notes on agent reliability, isolation, drift and tool boundaries.'],
-  ['/continuityos', 'ContinuityOS', 'A public source project exploring durable local memory and governance-oriented workflows.'],
   ['/universe', 'BitEvo Universe', 'A static map of current public projects and proof surfaces — not a live operations dashboard.']
 ];
 
@@ -72,13 +73,13 @@ const structuredData = {
         <div class="hero-boundary"><span class="dot"></span> Browser-local mapping first · staging/test by default · written Rules of Engagement before testing</div>
       </div>
 
-      <div class="hero-console panel reveal delay-1" aria-label="Example authority and evidence chain">
-        <div class="console-top"><span>DECISION TRACE / LAB-001</span><span class="status"><i></i> REDACTED LAB CASE</span></div>
+      <div class="hero-console panel reveal delay-1" aria-label="Synthetic example authority and evidence chain">
+        <div class="console-top"><span>DECISION TRACE / SYNTHETIC LAB-001</span><span class="status"><i></i> SYNTHETIC WORKED CASE</span></div>
         <div class="trace-line"><span class="index">01</span><div><small>INTENT</small><strong>external change proposed</strong></div><span class="state ok">captured</span></div>
         <div class="trace-line"><span class="index">02</span><div><small>AUTHORITY</small><strong>scope + approval matched</strong></div><span class="state ok">bounded</span></div>
         <div class="trace-line"><span class="index">03</span><div><small>EVIDENCE</small><strong>source freshness stopped advancing</strong></div><span class="state warn">insufficient</span></div>
         <div class="trace-line"><span class="index">04</span><div><small>DECISION</small><strong>do not expand authority</strong></div><span class="state warn">constrain</span></div>
-        <div class="trace-result"><small>FINDING CLASS</small><strong>Capability exceeded the evidence available to justify the action.</strong><p>Public internal-lab example only. No customer environment or private infrastructure is represented.</p></div>
+        <div class="trace-result"><small>WORKED FINDING CLASS</small><strong>Capability exceeded the evidence available to justify the action.</strong><p>Synthetic worked scenario only. No customer environment, production execution or observed private infrastructure is represented.</p></div>
       </div>
     </div>
   </section>
@@ -147,10 +148,10 @@ const structuredData = {
     </div>
     <div class="container proof-grid">
       <article class="lab-proof panel">
-        <div class="lab-top"><span>LAB-001</span><span>INTERNAL · REDACTED</span></div>
+        <div class="lab-top"><span>LAB-001</span><span>SYNTHETIC · WORKED</span></div>
         <h3>False Green: healthy surface, stale truth.</h3>
-        <p>A service surface appeared healthy while source freshness had stopped advancing. The narrow finding is not “the agent is unsafe.” It is that the workflow could appear operable after the evidence required to justify action had become stale. The owner decision is therefore to constrain the Authority Budget until freshness and confirmation are made explicit.</p>
-        <a href="/agent-authority-audit#method" class="text-link">Inspect the finding model →</a>
+        <p>In this worked scenario, a service surface is treated as apparently healthy while source freshness stops advancing. The modeled finding is not “the agent is unsafe.” It is that the workflow could appear operable after the evidence required to justify action had become stale. The modeled owner decision is therefore to constrain the Authority Budget until freshness and confirmation are made explicit.</p>
+        <a href="/proof" class="text-link">Inspect evidence strength →</a>
       </article>
       <div class="proof-links">
         {proofSurfaces.map(([href, title, text]) => (
