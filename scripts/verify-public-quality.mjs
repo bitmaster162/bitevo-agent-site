@@ -241,6 +241,11 @@ if (!mobileDock.toUpperCase().includes('5 WORKING DAYS AFTER COMPLETE EVIDENCE/A
   failures.push('/: mobile Primary dock must preserve qualified timing and local scope-prep CTA');
 }
 
+trustBoundaryChecks += 1;
+if (/"areaServed"\s*:/.test(homepageHtml)) {
+  failures.push('/: Service JSON-LD must not publish areaServed without an explicit governing service-area policy');
+}
+
 const sitemapFile = join(distPath, 'sitemap.xml');
 const llmsFile = join(distPath, 'llms.txt');
 
