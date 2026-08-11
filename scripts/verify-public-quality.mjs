@@ -235,6 +235,12 @@ for (const staleTiming of ['Day 0', 'Days 1–2', 'Days 3–4', 'Day 5']) {
   if (homepageHtml.includes(staleTiming)) failures.push(`/: stale unsupported day-by-day Primary timing "${staleTiming}"`);
 }
 
+const mobileDock = homepageHtml.match(/<div\b[^>]*class=["'][^"']*mobile-dock[^"']*["'][^>]*>[\s\S]*?<\/div>/i)?.[0] || '';
+trustBoundaryChecks += 1;
+if (!mobileDock.toUpperCase().includes('5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE') || !anchorHasFunnel(mobileDock, 'home-primary-scope-mobile', '/audit-intake')) {
+  failures.push('/: mobile Primary dock must preserve qualified timing and local scope-prep CTA');
+}
+
 const sitemapFile = join(distPath, 'sitemap.xml');
 const llmsFile = join(distPath, 'llms.txt');
 
