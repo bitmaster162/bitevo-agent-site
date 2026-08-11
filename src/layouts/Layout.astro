@@ -93,9 +93,6 @@ const globalStructuredData = [
     <meta name="twitter:image:alt" content="BitEvo — Authority is earned by evidence" />
     <script type="application/ld+json" set:html={JSON.stringify(globalStructuredData)} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -166,8 +163,8 @@ const globalStructuredData = [
     --radius-sm: 10px;
     --radius: 18px;
     --radius-lg: 28px;
-    --sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --mono: 'DM Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
   }
 
   * { box-sizing: border-box; }
