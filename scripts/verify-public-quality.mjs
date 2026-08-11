@@ -197,7 +197,7 @@ for (const [route, href, label] of funnelTextContracts) {
 }
 
 const trustBoundaryContracts = [
-  ['/proof', ['SYNTHETIC PROOF SURFACE', 'DOES NOT ESTABLISH', 'NOT EXECUTED', 'NOT UNIVERSAL CERTIFICATION']],
+  ['/proof', ['SYNTHETIC PROOF SURFACE', 'DOES NOT ESTABLISH', 'PRODUCTION EXECUTION', 'NOT UNIVERSAL CERTIFICATION']],
   ['/sample-audit', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
   ['/sample-message', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
   ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']]
