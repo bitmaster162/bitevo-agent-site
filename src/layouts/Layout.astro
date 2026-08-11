@@ -27,6 +27,7 @@ const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
 const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
 const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
+const showDogfoodCase = path === '/proof' || path === '/agent-authority-audit';
 const nav = [
   ["Doctrine", "/doctrine"],
   ["Proof", "/proof"],
@@ -113,7 +114,17 @@ const globalStructuredData = [
       </div>
     </header>
 
-    <main id="main-content"><slot /></main>
+    <main id="main-content">
+      <slot />
+      {showDogfoodCase && (
+        <section class="dogfood-context section-rule" aria-labelledby="dogfood-context-title">
+          <div class="container dogfood-context-card panel">
+            <div><div class="eyebrow">Observed internal proof</div><h2 id="dogfood-context-title">Internal dogfood: real failure → repair → adversarial retest.</h2><p>BitEvo ran the method against its own agent/control workflows, found bounded authority/evidence failures, rejected weak repairs and separated tested controls from unproven production adoption.</p></div>
+            <div class="dogfood-context-side"><span>customer_case=false</span><span>independent_certification=false</span><a class="button" href="/dogfood-self-audit">Open redacted self-audit →</a></div>
+          </div>
+        </section>
+      )}
+    </main>
 
     <footer class="site-footer">
       <div class="container footer-shell">
@@ -127,7 +138,7 @@ const globalStructuredData = [
             <a href="/" class="brand" aria-label="BitEvo home"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
             <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.</p>
           </div>
-          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/mapper">Authority Mapper</a><a href="/workspace">Decision Workspace</a><a href="/diagnostic">7-gate diagnostic</a></div>
+          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/dogfood-self-audit">Internal dogfood</a><a href="/mapper">Authority Mapper</a><a href="/workspace">Decision Workspace</a><a href="/diagnostic">7-gate diagnostic</a></div>
           <div class="footer-col"><strong>Work</strong><a href="/agent-authority-audit">Authority & Evidence Audit</a><a href="/pricing">Pricing</a><a href="/consulting">Services</a><a href="/audit-intake">Audit intake</a></div>
           <div class="footer-col"><strong>Build</strong><a href="/build">Build index</a><a href="/continuityos">ContinuityOS</a><a href="/guides">Research library</a><a href="/universe">BitEvo Universe</a><a href="/llms.txt">LLMs.txt</a></div>
         </div>
@@ -260,6 +271,13 @@ const globalStructuredData = [
   .mobile-menu .mobile-cta { color: var(--ink); border: 1px solid rgba(127,208,177,.22); background: rgba(127,208,177,.055); margin-top: 4px; }
 
   main { min-height: 58vh; position: relative; }
+  .dogfood-context { padding: clamp(34px,5vw,58px) 0; }
+  .dogfood-context-card { display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(28px,6vw,72px); align-items:center; padding:clamp(24px,4vw,42px); border-color:rgba(127,208,177,.2); background:radial-gradient(circle at 0 0,rgba(127,208,177,.06),transparent 42%),linear-gradient(180deg,rgba(14,27,29,.88),rgba(8,16,18,.9)); }
+  .dogfood-context-card h2 { margin:0; max-width:720px; font-size:clamp(1.65rem,3.2vw,2.8rem); line-height:1.06; letter-spacing:-.04em; }
+  .dogfood-context-card p { margin:14px 0 0; color:var(--muted); max-width:760px; }
+  .dogfood-context-side { display:flex; flex-direction:column; gap:10px; align-items:flex-start; }
+  .dogfood-context-side span { color:var(--gold); font:500 .62rem/1.4 var(--mono); letter-spacing:.06em; }
+  .dogfood-context-side .button { margin-top:8px; }
   .site-footer { margin-top: clamp(60px, 9vw, 120px); border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(4,8,9,.7), rgba(3,6,7,.94)); }
   .footer-shell { padding-block: clamp(46px, 7vw, 78px) 24px; }
   .footer-cta { display: flex; align-items: end; justify-content: space-between; gap: 32px; padding-bottom: clamp(42px, 6vw, 68px); }
@@ -275,7 +293,7 @@ const globalStructuredData = [
   :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
   @media (max-width: 980px) { .desktop-nav, .header-cta { display: none; } .mobile-menu { display: block; } .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; } .footer-grid .footer-col:last-child { grid-column: 2 / -1; } }
-  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .footer-cta { align-items: flex-start; flex-direction: column; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
+  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .dogfood-context-card { grid-template-columns:1fr; } .footer-cta { align-items: flex-start; flex-direction: column; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
   @media (max-width: 460px) { .footer-grid { grid-template-columns: 1fr; } .footer-brand, .footer-grid .footer-col:last-child { grid-column: auto; } .button { width: 100%; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
