@@ -30,5 +30,8 @@ jobs:
           node-version: 22.12.0
       - name: Install exact dependencies
         run: npm ci
+      - name: Inventory dependency advisories (non-blocking)
+        continue-on-error: true
+        run: npm audit --json
       - name: Build and run provider-neutral repository gates
         run: npm run build:core
