@@ -8,6 +8,17 @@ const artifacts = [
   { code: 'A4', name: 'Decision Memo', purpose: 'Translate evidence into one bounded owner action instead of a generic risk score.', fields: ['Owner question','Decision','Evidence supporting it','Residual uncertainty','Required control change','Authority after decision','Retest criterion','Named owner'], decision: 'EXPAND / CONSTRAIN / REPAIR / RETEST.' }
 ];
 
+const primaryDeliverables = [
+  'Executive report',
+  'Authority / effect map',
+  'Test inventory and scenario results',
+  'Reproducible evidence pack',
+  'Finding cards with impact, evidence, limitations, and confidence',
+  'Prioritized repair backlog',
+  'One retest',
+  'Evidence manifest / hashes where applicable'
+];
+
 const proofCases = [
   ['SAMPLE-001','CRM write','/sample-audit','False Green / external-effect confirmation gap','CONSTRAIN'],
   ['SAMPLE-002','Outbound message','/sample-message','Recipient + approval binding gap','CONSTRAIN'],
@@ -31,6 +42,13 @@ const sample = [
   </section>
 
   <section class="section-tight section-rule"><div class="container artifact-stack">{artifacts.map(a => <article class="artifact panel"><div class="artifact-code">{a.code}</div><div class="artifact-title"><div class="eyebrow">Decision-grade artifact</div><h2>{a.name}</h2><p>{a.purpose}</p></div><div class="artifact-body"><div><span class="label">Minimum structure</span><ul>{a.fields.map(f => <li>{f}</li>)}</ul></div><div class="decision"><span>OWNER QUESTION</span><p>{a.decision}</p></div></div></article>)}</div></section>
+
+  <section class="section section-rule">
+    <div class="container anti-theatre panel">
+      <div><div class="eyebrow">Commercial delivery boundary</div><h2>A1–A4 are the canonical decision-artifact spine.</h2></div>
+      <div><p><strong>A1–A4 are the canonical decision-artifact spine. They are not the complete commercial delivery package.</strong></p><ol>{primaryDeliverables.map(item => <li>{item}</li>)}</ol></div>
+    </div>
+  </section>
 
   <section class="section section-rule">
     <div class="container toolchain panel">

@@ -27,6 +27,17 @@ const deliverables = [
   ['Decision Memo', 'A bounded owner decision with supporting evidence, residual uncertainty, required control change and retest criterion.']
 ];
 
+const primaryDeliverables = [
+  'Executive report',
+  'Authority / effect map',
+  'Test inventory and scenario results',
+  'Reproducible evidence pack',
+  'Finding cards with impact, evidence, limitations, and confidence',
+  'Prioritized repair backlog',
+  'One retest',
+  'Evidence manifest / hashes where applicable'
+];
+
 const proofSurfaces = [
   ['/proof', 'Proof Matrix', 'Synthetic worked packs plus an explicit evidence-strength ladder showing what method, build and observed evidence can — and cannot — establish.'],
   ['/dogfood-self-audit', 'Internal dogfood', 'Bounded internal self-audit evidence from BitEvo’s own control stack — not customer proof, independent certification, or production-wide security evidence.', 'dogfood'],
@@ -163,12 +174,21 @@ const structuredData = {
 
   <section class="section section-rule">
     <div class="container split-head">
-      <div><div class="eyebrow">What you receive</div><h2 class="section-title">Not a score. A decision package.</h2></div>
-      <p class="lede">The deliverable is designed for an owner who must decide what the workflow may do next. Evidence is preserved at the level needed to reproduce accepted findings and separate facts from assumptions.</p>
+      <div><div class="eyebrow">Decision-artifact spine</div><h2 class="section-title">A1–A4 structure the owner decision.</h2></div>
+      <p class="lede">Authority Ledger, Evidence Contract, Finding Record and Decision Memo are the canonical decision-artifact spine. They organize the method; they are not the complete commercial delivery package.</p>
     </div>
     <div class="container deliverable-list">
       {deliverables.map(([title, text], i) => (
         <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
+    </div>
+    <div class="container split-head">
+      <div><div class="eyebrow">Complete Primary Audit delivery package</div><h2 class="section-title">Eight deliverables. One bounded audit.</h2></div>
+      <p class="lede">The Primary Audit commercial package is exhaustive at eight deliverable classes; the A1–A4 artifact spine remains the internal decision structure used across them.</p>
+    </div>
+    <div class="container deliverable-list">
+      {primaryDeliverables.map((title, i) => (
+        <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3></article>
       ))}
     </div>
   </section>
