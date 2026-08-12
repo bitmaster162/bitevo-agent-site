@@ -33,5 +33,24 @@ jobs:
       - name: Inventory dependency advisories (non-blocking)
         continue-on-error: true
         run: npm audit --json
+      - name: Preview in-range audit fix with npm solver (non-blocking)
+        continue-on-error: true
+        run: |
+          npm audit fix --package-lock-only --ignore-scripts
+          echo '=== POST-FIX AUDIT ==='
+          npm audit --json || true
+          echo '=== SOLVER TARGET VERSIONS ==='
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+          for (const name of ['astro', 'esbuild', 'js-yaml', 'nanoid', 'postcss', 'sharp', 'svgo']) {
+            console.log(`${name}=${lock.packages?.[`node_modules/${name}`]?.version ?? 'absent'}`);
+          }
+          NODE
+          echo '=== SOLVER DIFF STAT ==='
+          git diff --stat -- package.json package-lock.json
+          echo '=== SOLVER WORKTREE ==='
+          git status --short -- package.json package-lock.json
+          git checkout -- package.json package-lock.json
       - name: Build and run provider-neutral repository gates
         run: npm run build:core
