@@ -36,7 +36,7 @@ jobs:
       - name: Preview in-range audit fix with npm solver (non-blocking)
         continue-on-error: true
         run: |
-          npm audit fix --package-lock-only --ignore-scripts
+          npm audit fix --package-lock-only --ignore-scripts || true
           echo '=== POST-FIX AUDIT ==='
           npm audit --json || true
           echo '=== SOLVER TARGET VERSIONS ==='
