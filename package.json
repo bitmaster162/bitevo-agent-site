@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/verify-public-p0.mjs && node scripts/verify-public-quality.mjs && node scripts/verify-public-performance.mjs && node scripts/verify-home-trust.mjs && node scripts/verify-public-budgets.mjs && node scripts/verify-dogfood-case.mjs && node scripts/verify-workspace-contract.mjs",
+    "build:cloudflare": "npm run build && node scripts/verify-cloudflare-policy.mjs",
+    "deploy:cloudflare": "npx wrangler deploy",
     "preview": "astro preview",
     "astro": "astro"
   },
