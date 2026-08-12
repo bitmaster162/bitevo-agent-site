@@ -38,7 +38,7 @@ jobs:
 
   main-history-audit:
     name: main-history-audit
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     permissions:
@@ -49,19 +49,20 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22.12.0
-      - name: Detect main pushes without a merged PR
+      - name: Verify merged-PR lineage for current main history
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
-          PUSH_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+          TARGET_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
         run: |
           node --input-type=module <<'NODE'
-          const { GITHUB_TOKEN, REPOSITORY, PUSH_SHA } = process.env;
-          if (!GITHUB_TOKEN || !REPOSITORY || !PUSH_SHA) {
+          const { GITHUB_TOKEN, REPOSITORY, EVENT_NAME, TARGET_SHA } = process.env;
+          if (!GITHUB_TOKEN || !REPOSITORY || !EVENT_NAME || !TARGET_SHA) {
             throw new Error('missing GitHub workflow context');
           }
 
-          const endpoint = `https://api.github.com/repos/${REPOSITORY}/commits/${PUSH_SHA}/pulls`;
+          const endpoint = `https://api.github.com/repos/${REPOSITORY}/commits/${TARGET_SHA}/pulls`;
           const headers = {
             Accept: 'application/vnd.github+json',
             Authorization: `Bearer ${GITHUB_TOKEN}`,
@@ -77,13 +78,13 @@ jobs:
             const pulls = await response.json();
             const mergedToMain = pulls.filter(pr => pr?.merged_at && pr?.base?.ref === 'main');
             if (mergedToMain.length > 0) {
-              console.log(`MAIN_HISTORY_AUDIT=PASS sha=${PUSH_SHA} merged_prs=${mergedToMain.map(pr => pr.number).join(',')}`);
+              console.log(`MAIN_HISTORY_AUDIT=PASS event=${EVENT_NAME} sha=${TARGET_SHA} merged_prs=${mergedToMain.map(pr => pr.number).join(',')}`);
               process.exit(0);
             }
             if (attempt < 3) await new Promise(resolve => setTimeout(resolve, 5000));
           }
 
-          console.error(`MAIN_HISTORY_AUDIT=FAIL sha=${PUSH_SHA} reason=no_associated_merged_pr`);
-          console.error('This is a detective control only: the push has already occurred because server-side branch protection is unavailable on the current private/free plan.');
+          console.error(`MAIN_HISTORY_AUDIT=FAIL event=${EVENT_NAME} sha=${TARGET_SHA} reason=no_associated_merged_pr`);
+          console.error('This is a detective control only: without server-side branch protection it cannot prevent a direct push before the push event exists.');
           process.exit(1);
           NODE
