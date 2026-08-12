@@ -40,6 +40,9 @@ for (const domain of ['fonts.googleapis.com', 'fonts.gstatic.com']) {
 routingChecks += 1;
 if (vercelConfig.cleanUrls !== true) failures.push('vercel.json: cleanUrls must remain true');
 
+routingChecks += 1;
+if (vercelConfig.trailingSlash !== false) failures.push('vercel.json: trailingSlash must be false to enforce no-trailing-slash canonical routing');
+
 if (failures.length) {
   console.error('VERCEL_POLICY_GATE=FAIL');
   for (const failure of failures) console.error(failure);

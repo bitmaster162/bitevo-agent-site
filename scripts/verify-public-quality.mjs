@@ -105,6 +105,11 @@ for (const file of htmlFiles) {
     for (const [label, ok] of checks) if (!ok) failures.push(`${route}: missing ${label}`);
 
     const canonical = attr(attrTag(html, 'rel', 'canonical'), 'href');
+    const ogUrl = attr(attrTag(html, 'property', 'og:url'), 'content');
+    const expectedCanonical = new URL(route === '/' ? '/' : route.replace(/\/+$/, ''), siteOrigin).toString();
+    metadataChecks += 2;
+    if (canonical && canonical !== expectedCanonical) failures.push(`${route}: canonical must match exact no-trailing-slash route URL (${canonical} != ${expectedCanonical})`);
+    if (canonical && ogUrl && ogUrl !== canonical) failures.push(`${route}: og:url must exactly match canonical (${ogUrl} != ${canonical})`);
     if (canonical && !canonical.startsWith(siteOrigin)) failures.push(`${route}: canonical outside site origin (${canonical})`);
 
     for (const [label, tag] of [
@@ -213,7 +218,7 @@ const trustBoundaryContracts = [
   ['/proof', ['SYNTHETIC PROOF SURFACE', 'DOES NOT ESTABLISH', 'PRODUCTION EXECUTION', 'NOT UNIVERSAL CERTIFICATION']],
   ['/sample-audit', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
   ['/sample-message', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
-  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
+  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
   ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']],
   ['/diagnostic', ['DOES NOT AUTHORIZE TESTING', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED', 'TEST EXECUTION REMAINS SEPARATELY AUTHORIZED']],
   ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
@@ -259,8 +264,11 @@ if (fileSet.has('sitemap.xml')) {
   if (!sitemap.includes(`${siteOrigin}/build`)) failures.push('sitemap.xml: /build missing');
   sitemapChecks += 1;
   for (const [route, indexable] of indexabilityByRoute) {
-    if (route === '/' || route === '/404.html') continue;
-    const listed = sitemap.includes(`<loc>${siteOrigin}${route}</loc>`);
+    if (route === '/404.html') continue;
+    const canonicalRoute = route === '/' ? '/' : route.replace(/\/+$/, '');
+    const canonicalLoc = new URL(canonicalRoute, siteOrigin).toString();
+    const listed = sitemap.includes(`<loc>${canonicalLoc}</loc>`);
+    if (indexable && !listed) failures.push(`sitemap.xml: indexable canonical route must be listed (${canonicalRoute})`);
     if (!indexable && listed) failures.push(`sitemap.xml: noindex route must not be listed (${route})`);
   }
 }

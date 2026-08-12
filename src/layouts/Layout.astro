@@ -22,7 +22,8 @@ const {
 } = Astro.props;
 
 const path = Astro.url.pathname;
-const canonicalUrl = new URL(path, SITE_ORIGIN).toString();
+const canonicalPath = path === '/' ? '/' : path.replace(/\/+$/, '');
+const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).toString();
 const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
 const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
