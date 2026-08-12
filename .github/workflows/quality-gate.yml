@@ -30,21 +30,86 @@ jobs:
           node-version: 22.12.0
       - name: Install exact dependencies
         run: npm ci
-      - name: Generate one-shot solver lock artifact
-        run: |
-          cp package-lock.json package-lock.original.json
-          npm audit fix --package-lock-only --ignore-scripts || true
-          cp package-lock.json package-lock.solver.json
-          mv package-lock.original.json package-lock.json
-      - name: Upload solver lock artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: dependency-lock-solver
-          path: package-lock.solver.json
-          if-no-files-found: error
-          retention-days: 1
       - name: Inventory dependency advisories (non-blocking)
         continue-on-error: true
         run: npm audit --json
       - name: Build and run provider-neutral repository gates
         run: npm run build:core
+
+  apply-in-range-lock-once:
+    name: apply-in-range-lock-once
+    needs: quality-gate
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/mapper-scope-readiness-v3-1'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.12.0
+      - name: Solve and verify bounded lock update
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          remote_sha="$(git ls-remote origin "refs/heads/${HEAD_REF}" | cut -f1)"
+          test "${remote_sha}" = "${EXPECTED_HEAD}"
+          npm ci
+          npm audit fix --package-lock-only --ignore-scripts || true
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+          const expected = {
+            astro: '6.4.8',
+            esbuild: '0.27.7',
+            'js-yaml': '4.3.1',
+            nanoid: '3.3.18',
+            postcss: '8.5.26',
+            sharp: '0.34.5',
+            svgo: '4.0.2',
+          };
+          for (const [name, version] of Object.entries(expected)) {
+            const actual = lock.packages?.[`node_modules/${name}`]?.version;
+            if (actual !== version) throw new Error(`${name}: expected ${version}, got ${actual}`);
+          }
+          NODE
+          printf '%s  %s\n' 'd3fc3f01ba4a61202220d93e5343cf6ea091d965e99133428f73356b3103b286' 'package-lock.json' | sha256sum -c -
+          npm audit --json > /tmp/audit.json || true
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          const audit = JSON.parse(readFileSync('/tmp/audit.json', 'utf8'));
+          const m = audit.metadata?.vulnerabilities ?? {};
+          const names = Object.keys(audit.vulnerabilities ?? {}).sort();
+          if (m.total !== 3 || m.low !== 1 || m.high !== 2 || m.critical !== 0) {
+            throw new Error(`unexpected residual counts: ${JSON.stringify(m)}`);
+          }
+          if (JSON.stringify(names) !== JSON.stringify(['astro', 'esbuild', 'sharp'])) {
+            throw new Error(`unexpected residual nodes: ${JSON.stringify(names)}`);
+          }
+          NODE
+          changed="$(git status --porcelain)"
+          if [ -z "${changed}" ]; then
+            echo 'LOCK_ALREADY_CURRENT=YES'
+            exit 0
+          fi
+          if [ "$(git status --porcelain | awk '{print $2}')" != 'package-lock.json' ]; then
+            echo "Unexpected changed files:" >&2
+            git status --short >&2
+            exit 1
+          fi
+          remote_sha="$(git ls-remote origin "refs/heads/${HEAD_REF}" | cut -f1)"
+          test "${remote_sha}" = "${EXPECTED_HEAD}"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package-lock.json
+          git commit -m 'deps: apply in-range security lock updates'
+          git push origin "HEAD:${HEAD_REF}"
