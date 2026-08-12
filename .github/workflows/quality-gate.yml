@@ -30,6 +30,19 @@ jobs:
           node-version: 22.12.0
       - name: Install exact dependencies
         run: npm ci
+      - name: Generate one-shot solver lock artifact
+        run: |
+          cp package-lock.json package-lock.original.json
+          npm audit fix --package-lock-only --ignore-scripts || true
+          cp package-lock.json package-lock.solver.json
+          mv package-lock.original.json package-lock.json
+      - name: Upload solver lock artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dependency-lock-solver
+          path: package-lock.solver.json
+          if-no-files-found: error
+          retention-days: 1
       - name: Inventory dependency advisories (non-blocking)
         continue-on-error: true
         run: npm audit --json
