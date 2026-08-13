@@ -1,0 +1,71 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  enPath: string;
+  ruPath: string;
+  robots?: string;
+}
+
+const { title, description, enPath, ruPath, robots } = Astro.props;
+---
+
+<Layout
+  title={title}
+  description={description}
+  robots={robots}
+  lang="ru"
+  alternates={{ en: enPath, ru: ruPath }}
+>
+  <div class="ru-locale-bar" data-locale-surface="ru">
+    <div class="container locale-inner">
+      <span><i></i> RU · PUBLIC PRODUCT LAYER</span>
+      <div><a href="/ru/universe">Universe</a><a class="locale-switch" href={enPath} lang="en">EN ↗</a></div>
+    </div>
+  </div>
+  <slot />
+</Layout>
+
+<script is:inline>
+  (() => {
+    if (location.pathname !== '/ru/audit-intake' && location.pathname !== '/ru/audit-intake/') return;
+    const raw = sessionStorage.getItem('bitevo.mapper.handoff.v1');
+    if (!raw) return;
+    try {
+      const map = JSON.parse(raw);
+      const a = map?.authority_ledger || {};
+      const e = map?.evidence_contract || {};
+      const set = (id, value) => { const el = document.getElementById(id); if (el && value) el.value = value; };
+      set('workflow', `${a.workflow || 'Mapped workflow'}\nAction class: ${map.action_class || 'custom'}`);
+      set('action', a.critical_action);
+      set('target', a.target_binding);
+      set('owner', a.authority_owner);
+      set('forbidden', a.prohibited_authority);
+      set('error', a.expensive_error);
+      set('environment', a.environment);
+      set('pre', e.pre_action_evidence);
+      set('fresh', e.freshness_rule);
+      set('binding', e.approval_evidence || a.target_binding);
+      set('confirm', e.external_confirmation);
+      set('uncertain', e.recovery_behavior);
+      const state = document.getElementById('state');
+      if (state) state.textContent = 'Mapper seed loaded · review owner/RoE fields';
+    } catch {
+      sessionStorage.removeItem('bitevo.mapper.handoff.v1');
+    }
+  })();
+</script>
+
+<style is:global>
+  .ru-locale-bar{position:relative;z-index:20;border-bottom:1px solid var(--line);background:rgba(5,9,10,.82);backdrop-filter:blur(14px)}
+  .ru-locale-bar .locale-inner{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font:600 .59rem var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .ru-locale-bar .locale-inner>span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .ru-locale-bar .locale-inner>span i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(127,208,177,.45)}
+  .ru-locale-bar .locale-inner>div{display:flex;align-items:center;gap:14px}
+  .ru-locale-bar a{white-space:nowrap;color:var(--muted)}
+  .ru-locale-bar a:hover{color:var(--ink)}
+  .ru-locale-bar .locale-switch{color:var(--green)}
+  @media(max-width:620px){.ru-locale-bar .locale-inner{width:min(100% - 24px,1180px)}.ru-locale-bar .locale-inner>span{font-size:.54rem}.ru-locale-bar .locale-inner>div{gap:10px}}
+</style>

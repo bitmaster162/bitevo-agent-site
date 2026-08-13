@@ -35,6 +35,10 @@ jobs:
         run: npm audit --json
       - name: Build and run provider-neutral repository gates
         run: npm run build:core
+      - name: Verify Vercel hosting contract
+        run: npm run verify:provider:vercel
+      - name: Verify Cloudflare hosting contract
+        run: npm run verify:provider:cloudflare
 
   main-history-audit:
     name: main-history-audit

@@ -1,0 +1,31 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const surfaces = [
+  ['SERVICE','Agent Authority & Evidence Audit','/ru/agent-authority-audit','Коммерческий bounded audit одного action-capable workflow.'],
+  ['SERVICE LADDER','BitEvo Services','/ru/consulting','Free triage → Entry Audit → Primary Audit → evidence-led hardening.'],
+  ['ARTIFACTS','Audit Artifacts','/ru/artifacts','Authority Ledger, Evidence Contract, Finding Record и Decision Memo плюс полный delivery package.'],
+  ['PROOF','Internal Dogfood','/ru/dogfood-self-audit','Redacted bounded self-audit: real internal failures, repair cycles и retest без customer/certification claim.'],
+  ['PRODUCT','Authority Mapper','/ru/mapper','Русский browser-local Authority Mapper v2 с schema-compatible import/export и local handoff.'],
+  ['PRODUCT','Decision Workspace','/ru/workspace','Русские local checkpoints, RETEST_CANDIDATE / SCOPE_DRIFT / CROSS_WORKFLOW и bounded Decision Memo.'],
+  ['BUILD','BitEvo Build','/ru/build','Публичный индекс shipped surfaces и стандарт качества 10/10.'],
+  ['SOURCE','ContinuityOS','/ru/continuityos','Публичный source path по durable memory, provenance и governance-oriented workflows.'],
+  ['RESEARCH','Reviewed Research','/ru/guides','Русский индекс четырёх reviewed public notes; сами инженерные notes пока EN.']
+];
+---
+
+<RuLayout title="BitEvo Universe — публичная карта экосистемы" description="Русская публичная карта BitEvo: сервисы, продукты, source и research разделены без имитации live control room или private telemetry." enPath="/universe" ruPath="/ru/universe">
+  <section class="section universe-hero"><div class="container split"><div><div class="eyebrow">Public navigator</div><h1 class="display">Одна карта. Никакого фальшивого control room.</h1></div><div><p class="lede">BitEvo Universe связывает публичные сервисы, shipped products, source projects и research surfaces. Он намеренно не публикует private operational state, infrastructure identifiers или выдуманную live telemetry.</p><div class="actions"><a class="button button-primary" href="/ru/build">Что реально построено ↗</a><a class="button" href="/ru">Вернуться к продукту</a></div></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container map panel"><div class="core"><small>PUBLIC CORE</small><strong>BitEvo</strong><span>authority · evidence · continuity · research</span></div><div class="labels"><span>SERVICE</span><span>PRODUCT</span><span>BUILD</span><span>SOURCE</span><span>RESEARCH</span></div><div class="stamp">STATIC PUBLIC MAP · NO RUNTIME TELEMETRY</div></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Public surfaces</div><h2 class="section-title">Навигация по роли, а не по маркетинговой громкости.</h2></div><p class="lede">Service ≠ product. Product ≠ source. Source ≠ research. Такое разделение не даёт публичному сайту выдать design или source existence за runtime proof.</p></div><div class="container cards">{surfaces.map(([type,name,href,text],i) => <a class="panel" href={href}><div class="top"><span>{String(i+1).padStart(2,'0')}</span><small>{type}</small></div><div><h3>{name}</h3><p>{text}</p></div><strong>Открыть ↗</strong></a>)}</div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Research boundary</div><h2 class="section-title">Публичный corpus ограничен тем, что действительно reviewed.</h2></div><div><p class="lede">Сейчас BitEvo Research Library публично представляет четыре reviewed notes: agent authority, sandboxing, drift monitoring и tool-I/O contracts.</p><p class="lede">Historical/dynamic notes не выдаются за текущий reviewed corpus, пока не пройдут повторную верификацию.</p></div></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Long-term Universe</div><h2 class="section-title">Статическая карта — не потолок, а честный старт.</h2></div><p class="lede">Дальше Universe может подключать реальные public adapters, evidence, system views и навигацию между нашими сайтами. Динамический статус появляется только там, где существует реальный источник и отдельный runtime receipt — не раньше.</p></div></section>
+</RuLayout>
+
+<style>
+  .universe-hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:start}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.map{min-height:430px;position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at center,rgba(127,208,177,.1),transparent 25%),linear-gradient(180deg,rgba(13,25,27,.78),rgba(7,13,15,.8))}.map:before,.map:after{content:'';position:absolute;border:1px solid var(--line);border-radius:50%}.map:before{width:290px;height:290px}.map:after{width:520px;height:520px;border-style:dashed}.core{position:relative;z-index:2;width:190px;height:190px;border:1px solid rgba(127,208,177,.34);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(7,15,16,.94)}.core small{color:var(--green);font:500 .55rem var(--mono);letter-spacing:.1em}.core strong{font-size:1.5rem;margin:5px 0}.core span{max-width:150px;color:var(--muted);font-size:.67rem}.labels{position:absolute;inset:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;color:#61706d;font:500 .56rem var(--mono);letter-spacing:.08em}.stamp{position:absolute;bottom:22px;right:22px;color:#61706d;font:500 .55rem var(--mono);letter-spacing:.09em}.cards{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cards>a{padding:24px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between}.top{display:flex;justify-content:space-between;color:var(--muted);font:500 .58rem var(--mono)}.top small{color:var(--green)}.cards h3{margin:0 0 10px}.cards p{margin:0;color:var(--muted);font-size:.8rem}.cards>a>strong{font-size:.76rem}@media(max-width:900px){.split{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}@media(max-width:620px){.cards{grid-template-columns:1fr}.map{min-height:380px}.map:after{width:390px;height:390px}.labels{flex-wrap:wrap}.stamp{left:20px;right:auto}}
+</style>

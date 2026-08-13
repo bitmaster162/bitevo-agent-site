@@ -1,0 +1,83 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const axes = [
+  ['01', 'Полномочия', 'Что агенту разрешено менять, к какому объекту относится разрешение и где требуется человеческое подтверждение.'],
+  ['02', 'Доказательства', 'Какие данные, approvals, версии и подтверждения должны существовать до действия.'],
+  ['03', 'Эффект', 'Произошёл ли реальный внешний результат, а не просто успешный внутренний статус или ACK инструмента.'],
+  ['04', 'Восстановление', 'Что происходит при stale state, retry, partial execution, дублях и потере уверенности.']
+];
+
+const deliverables = [
+  'Executive report',
+  'Карта полномочий / эффектов',
+  'Инвентарь тестов и результаты сценариев',
+  'Воспроизводимый evidence pack',
+  'Finding cards: impact, evidence, limitations, confidence',
+  'Приоритизированный backlog исправлений',
+  'Один retest',
+  'Evidence manifest / hashes, где применимо'
+];
+---
+
+<RuLayout
+  title="BitEvo — инженерия полномочий и доказательств для AI-агентов"
+  description="BitEvo проверяет полномочия, доказательства, внешние эффекты и восстановление в AI-agent workflow, способных выполнять реальные действия."
+  enPath="/"
+  ruPath="/ru"
+>
+  <section class="ru-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Полномочия · доказательства · эффект · восстановление</div>
+        <h1 class="display">Агент должен заслужить полномочия доказательствами.</h1>
+      </div>
+      <div>
+        <p class="lede">BitEvo проверяет action layer AI-систем: что workflow может изменить, какие доказательства должны существовать до действия, как подтверждается внешний результат и что система делает, когда уверенность исчезает.</p>
+        <div class="hero-actions"><a class="button button-primary" href="/ru/mapper">Собрать карту workflow <span aria-hidden="true">↗</span></a><a class="button" href="/ru/agent-authority-audit">Посмотреть аудит</a></div>
+        <p class="tool-note">Русский product path уже включает Mapper, Decision Workspace, Diagnostic и Decision Scope Intake. Все они browser-local и не создают testing authorization.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container signal-grid">
+      <div><small>ОБЪЕКТ</small><strong>Один action-capable workflow</strong></div>
+      <div><small>ВОПРОС</small><strong>Что ему можно делать — и почему?</strong></div>
+      <div><small>ТЕСТ</small><strong>10–20 согласованных failure scenarios</strong></div>
+      <div><small>РЕШЕНИЕ</small><strong>Expand · constrain · repair · retest</strong></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">Контрольный цикл</div><h2 class="section-title">Permission — только первый gate.</h2></div><p class="lede">Надёжный workflow должен отвечать на четыре связанных вопроса: действие разрешено, evidence достаточен, внешний эффект подтверждён, recovery ограничивает ущерб при неопределённости.</p></div>
+    <div class="container axis-grid">{axes.map(([n,title,text]) => <article class="axis-card"><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">Russian product path</div><h2 class="section-title">Map → Compare → Diagnose → Scope.</h2></div><p class="lede">Сначала локально сформируйте Authority Ledger и Evidence Contract, затем сравните checkpoints, найдите unresolved gates и только после этого готовьте written scope.</p></div>
+    <div class="container proof-grid">
+      <article class="panel"><div class="eyebrow">01 · MAP</div><h2>Authority Mapper</h2><p>Schema-compatible `bitevo.authority-map.v2`, JSON/TXT export и local handoff.</p><a class="text-link" href="/ru/mapper">Открыть Mapper →</a></article>
+      <article class="panel"><div class="eyebrow">02 · COMPARE</div><h2>Decision Workspace</h2><p>RETEST_CANDIDATE / SCOPE_DRIFT / CROSS_WORKFLOW и bounded Decision Memo.</p><a class="text-link" href="/ru/workspace">Открыть Workspace →</a></article>
+      <article class="panel"><div class="eyebrow">03 · DIAGNOSE</div><h2>7-gate Diagnostic</h2><p>YES / NO / UNKNOWN без trust score и без подмены uncertainty.</p><a class="text-link" href="/ru/diagnostic">Открыть Diagnostic →</a></article>
+      <article class="panel"><div class="eyebrow">04 · SCOPE</div><h2>Decision Scope Intake</h2><p>Authority Ledger seed + Evidence Contract seed + Rules of Engagement seed, локально.</p><a class="text-link" href="/ru/audit-intake">Подготовить scope →</a></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">Primary engagement</div><h2 class="section-title">Agent Authority & Evidence Audit</h2></div><div><p class="lede">Контролируемый paid pilot для команды, которой нужно решить: расширять полномочия одного write-capable workflow или сначала ограничить и исправить его.</p><div class="price"><strong>$4,900</strong><span>fixed · 5 рабочих дней после полного evidence/access set + письменного scope</span></div></div></div>
+    <div class="container deliverable-grid">{deliverables.map((item,i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></article>)}</div>
+    <div class="container actions"><a class="button button-primary" href="/ru/audit-intake">Подготовить scope ↗</a><a class="button" href="/ru/pricing">Сравнить форматы</a></div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container proof-grid">
+      <article class="panel"><div class="eyebrow">Proof boundary</div><h2>Dogfood — не клиентский кейс.</h2><p>Мы публикуем bounded internal self-audit evidence, но не называем его customer proof, independent certification или production-wide security proof.</p><a class="text-link" href="/ru/dogfood-self-audit">Открыть redacted self-audit →</a></article>
+      <article class="panel"><div class="eyebrow">Universe</div><h2>Все публичные поверхности — на одной карте.</h2><p>Сервис, продукт, source и research разделены, чтобы публичная карта не превращалась в фальшивый live control room.</p><a class="text-link" href="/ru/universe">Открыть BitEvo Universe →</a></article>
+    </div>
+  </section>
+</RuLayout>
+
+<style>
+  .ru-hero{padding-top:clamp(68px,9vw,118px)}.hero-grid,.split-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:end}.hero-actions,.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.tool-note{color:var(--muted);font-size:.78rem;max-width:680px}.signal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.signal-grid div{display:flex;flex-direction:column;gap:4px}.signal-grid small{color:var(--green);font:500 .58rem var(--mono);letter-spacing:.08em}.signal-grid strong{font-size:.78rem}.axis-grid{margin-top:36px;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.axis-card{padding:24px;min-height:220px;border-right:1px solid var(--line)}.axis-card:last-child{border-right:0}.axis-card>span{color:var(--green);font:500 .6rem var(--mono)}.axis-card h3{margin:54px 0 10px}.axis-card p{margin:0;color:var(--muted);font-size:.8rem}.price{display:flex;flex-direction:column;gap:4px}.price strong{font-size:2.2rem}.price span{color:var(--muted)}.deliverable-grid{margin-top:36px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.deliverable-grid article{padding:20px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}.deliverable-grid span{color:var(--green);font:500 .6rem var(--mono)}.deliverable-grid strong{font-size:.82rem}.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.proof-grid article{padding:28px}.proof-grid h2{margin:0 0 12px}.proof-grid p{color:var(--muted)}@media(max-width:900px){.hero-grid,.split-head{grid-template-columns:1fr}.signal-grid,.axis-grid,.deliverable-grid{grid-template-columns:1fr 1fr}.axis-card:nth-child(2){border-right:0}.axis-card{border-bottom:1px solid var(--line)}}@media(max-width:620px){.signal-grid,.axis-grid,.deliverable-grid,.proof-grid{grid-template-columns:1fr}.axis-card{border-right:0}.axis-card h3{margin-top:28px}}
+</style>

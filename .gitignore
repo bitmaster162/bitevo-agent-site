@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 
+# generated build metadata
+src/generated/build-meta.json
+
 # dependencies
 node_modules/
 
