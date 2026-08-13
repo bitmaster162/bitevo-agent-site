@@ -1,0 +1,37 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const ladder = [
+  ['01','METHOD','Публичная доктрина','Объясняет vocabulary и control model.','Не доказывает, что реальный workflow прошёл тест.'],
+  ['02','WORKED','Synthetic pack','Показывает применение метода к конкретному action class.','Не является customer evidence или выполненным audit.'],
+  ['03','MACHINE','Machine-readable example','Делает assumptions, gates и expected outputs проверяемыми.','Не превращает example data в observed runtime evidence.'],
+  ['04','SOURCE / BUILD','Source и build receipts','Может доказать, какой source/artifact/build был опубликован.','Сам по себе не доказывает внешний runtime effect.'],
+  ['05','OBSERVED','Scoped finding','Связывает воспроизводимое наблюдение с authority, evidence, effect и recovery внутри согласованного test scope.','Существует только если observation реально собран.'],
+  ['06','DECISION','Owner decision + retest','Фиксирует EXPAND / CONSTRAIN / REPAIR / RETEST и критерий смены решения.','Ограничено tested workflow и evidence window; не universal certification.']
+];
+
+const boundaries = [
+  ['Synthetic ≠ observed','Спроектированный failure case демонстрирует reasoning structure, но не становится customer/runtime evidence из-за красивой презентации.'],
+  ['Build ≠ runtime','Успешный build доказывает build fact, но не подтверждает внешний effect.'],
+  ['Tool ACK ≠ effect','Успешный ответ API/tool должен быть reconciled с нужным объектом, recipient, environment или external state.'],
+  ['Pass ≠ certification','Bounded test поддерживает одно owner decision в одном evidence window, а не вечный safety badge.']
+];
+---
+
+<RuLayout title="Proof Matrix — русский обзор доказательств | BitEvo" description="Русская Proof Matrix BitEvo: классы evidence от метода и synthetic packs до observed findings и owner decision без trust-score shortcut." enPath="/proof" ruPath="/ru/proof">
+  <section class="section proof-hero"><div class="container split"><div><div class="eyebrow">BitEvo proof matrix</div><h1 class="display">Разные классы evidence. Никакого shortcut через trust score.</h1></div><div><p class="lede">Synthetic worked packs показывают структуру метода. Internal dogfood фиксирует bounded observations из нашего собственного agent/control stack. Ни то ни другое не является customer proof или independent certification.</p><div class="actions"><a class="button button-primary" href="/dogfood-self-audit">Internal dogfood (EN) ↗</a><a class="button" href="/ru/doctrine">Доктрина</a></div></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container boundary panel"><strong>SYNTHETIC PROOF SURFACE · WORKED PACKS</strong><p>Публичные SAMPLE-кейсы — спроектированные examples. Они не представляют customer environment, production execution, private data или внешний audit result.</p></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Evidence strength</div><h2 class="section-title">Proof становится сильнее только когда меняется evidence class.</h2></div><p class="lede">Метод, пример, source, build, runtime observation и owner decision отвечают на разные вопросы. Мы не складываем их в одно магическое число.</p></div><div class="container ladder">{ladder.map(([n,kind,title,proves,stops]) => <article class="panel"><div class="id"><span>{n}</span><small>{kind}</small></div><div><h3>{title}</h3><div class="row"><span>ESTABLISHES</span><p>{proves}</p></div><div class="row stop"><span>DOES NOT ESTABLISH</span><p>{stops}</p></div></div></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container observed panel"><div><div class="eyebrow">Observed internal proof</div><h2 class="section-title">Dogfood — другой evidence class.</h2><p class="lede">Внутренний self-audit документирует реальные bounded failure → repair → adversarial retest случаи, но остаётся redacted и не превращается в доказательство безопасности чужих production систем.</p></div><div class="meta"><div><span>CLASS</span><strong>INTERNAL SELF-AUDIT</strong></div><div><span>CUSTOMER CASE</span><strong>FALSE</strong></div><div><span>INDEPENDENT CERTIFICATION</span><strong>FALSE</strong></div><div><span>PRODUCTION-WIDE CLAIM</span><strong>FALSE</strong></div></div></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Trust contract</div><h2 class="section-title">Четыре подмены, которые BitEvo запрещает.</h2></div><p class="lede">Evidence inflation начинается, когда разные факты объявляют взаимозаменяемыми. Эти границы являются частью продукта.</p></div><div class="container boundary-grid">{boundaries.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Следующий шаг</div><h2 class="section-title">Unknown — это вход в scope, а не повод нарисовать PASS.</h2><p class="lede">Если authority/evidence gates остаются неразрешёнными, локальный diagnostic превращает их в явный decision-gap brief.</p><div class="actions"><a class="button button-primary" href="/ru/diagnostic">Запустить RU diagnostic ↗</a><a class="button" href="/mapper">Authority Mapper (EN)</a></div></div></section>
+</RuLayout>
+
+<style>
+.proof-hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(38px,7vw,96px);align-items:start}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.boundary{padding:20px 24px;border-color:rgba(215,197,143,.25)}.boundary strong{color:var(--gold);font:500 .64rem var(--mono);letter-spacing:.08em}.boundary p{margin:7px 0 0;color:var(--muted)}.ladder{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.ladder article{display:grid;grid-template-columns:92px 1fr;min-height:220px;overflow:hidden}.ladder .id{padding:22px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}.id span{color:var(--green);font:500 .68rem var(--mono)}.id small{color:var(--muted);font:500 .55rem var(--mono);letter-spacing:.06em}.ladder article>div:last-child{padding:22px}.ladder h3{margin:0 0 16px}.row{padding:10px 0;border-top:1px solid var(--line)}.row span{color:var(--green);font:500 .54rem var(--mono);letter-spacing:.08em}.row.stop span{color:var(--gold)}.row p{margin:4px 0 0;color:var(--muted);font-size:.77rem}.observed{padding:clamp(28px,5vw,52px);display:grid;grid-template-columns:1fr .8fr;gap:50px}.meta>div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}.meta span{color:var(--muted);font:500 .55rem var(--mono)}.meta strong{font:600 .64rem var(--mono)}.boundary-grid{margin-top:38px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.boundary-grid article{padding:24px;min-height:260px}.boundary-grid article>span{color:var(--green);font:500 .6rem var(--mono)}.boundary-grid h3{margin:62px 0 10px}.boundary-grid p{margin:0;color:var(--muted);font-size:.79rem}@media(max-width:900px){.split,.observed{grid-template-columns:1fr}.boundary-grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.ladder,.boundary-grid{grid-template-columns:1fr}.ladder article{grid-template-columns:70px 1fr}.boundary-grid h3{margin-top:32px}}
+</style>
