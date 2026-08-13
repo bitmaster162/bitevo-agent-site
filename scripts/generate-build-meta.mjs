@@ -20,12 +20,18 @@ const [provider, rawSha] = candidates.find(([, value]) => typeof value === 'stri
 const sha = rawSha.trim();
 const shortSha = sha === 'unknown' ? 'unknown' : sha.slice(0, 9);
 const ref = process.env.VERCEL_GIT_COMMIT_REF || process.env.CF_PAGES_BRANCH || process.env.GITHUB_REF_NAME || '';
+const meta = {
+  schema: 'bitevo.public-build.v1',
+  sha,
+  shortSha,
+  provider,
+  ref
+};
+const serialized = `${JSON.stringify(meta, null, 2)}\n`;
 
 mkdirSync('src/generated', { recursive: true });
-writeFileSync(
-  'src/generated/build-meta.json',
-  `${JSON.stringify({ sha, shortSha, provider, ref }, null, 2)}\n`,
-  'utf8'
-);
+mkdirSync('public', { recursive: true });
+writeFileSync('src/generated/build-meta.json', serialized, 'utf8');
+writeFileSync('public/version.json', serialized, 'utf8');
 
 console.log(`BITEVO_BUILD_META sha=${sha} provider=${provider} ref=${ref || 'unknown'}`);
