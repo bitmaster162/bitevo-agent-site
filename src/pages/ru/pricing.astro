@@ -1,0 +1,39 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const tiers = [
+  {
+    name: 'Authority Triage', price: 'Free', timing: '20 минут',
+    text: 'Квалификация одного workflow: owner, effect surfaces, крупнейший правдоподобный сбой и возможность безопасного staging/replay.',
+    includes: ['Вербальный fit / no-fit', 'Рекомендованный следующий scope'],
+    excludes: ['Нет письменного security conclusion', 'Нет exploit work', 'Нет severity rating'],
+    cta: 'Подготовить triage brief', href: '/audit-intake'
+  },
+  {
+    name: 'Reduced-Scope Entry Audit', price: '$1,500', timing: 'ограниченный scope',
+    text: 'Одна критическая action chain и одна основная failure hypothesis с ограниченным воспроизведением.',
+    includes: ['Одна critical action chain', 'Ограниченная reproduction', 'Короткий finding memo'],
+    excludes: ['Нет полной authority map', 'Нет включённого retest'],
+    cta: 'Подготовить Entry scope', href: '/audit-intake'
+  },
+  {
+    name: 'Primary Audit', price: '$4,900', timing: '5 рабочих дней после complete evidence/access + written scope',
+    text: 'Контролируемый paid pilot для одного staging/test workflow, до трёх tools/APIs/MCP servers и 10–20 согласованных failure scenarios.',
+    includes: ['8 deliverable classes', 'Приоритизированный repair backlog', 'Один retest'],
+    excludes: ['Не certification', 'Не universal safety score', 'Не production pentest по умолчанию'],
+    cta: 'Подготовить Primary scope', href: '/audit-intake'
+  }
+];
+---
+
+<RuLayout title="Цены — Agent Authority & Evidence Audit | BitEvo" description="Русская продуктовая страница BitEvo: бесплатный triage, Entry Audit за $1,500 и Primary Agent Authority & Evidence Audit за $4,900." enPath="/pricing" ruPath="/ru/pricing">
+  <section class="section pricing-hero"><div class="container split"><div><div class="eyebrow">Commercial ladder</div><h1 class="display">Начать с минимального scope. Расширять только по evidence.</h1></div><p class="lede">Публичный сайт помогает подготовить локальный scope brief. Он не бронирует встречу, не отправляет audit request и не выдаёт testing authorization.</p></div></section>
+
+  <section class="section section-rule"><div class="container tier-grid">{tiers.map((tier,i) => <article class:list={['tier panel', i===2 && 'featured']}><div class="top"><span>{String(i+1).padStart(2,'0')}</span><small>{tier.timing}</small></div><div><h2>{tier.name}</h2><div class="price">{tier.price}</div><p>{tier.text}</p></div><div class="groups"><div><strong>Включено</strong><ul>{tier.includes.map(x => <li>{x}</li>)}</ul></div><div class="muted"><strong>Не включено</strong><ul>{tier.excludes.map(x => <li>{x}</li>)}</ul></div></div><a class:list={['button', i===2 && 'button-primary']} href={tier.href}>{tier.cta} <span aria-hidden="true">↗</span></a></article>)}</div></section>
+
+  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Primary delivery package</div><h2 class="section-title">$4,900 — это не четыре внутренних артефакта, а полный пакет из восьми deliverable classes.</h2><p class="lede">Executive report; authority/effect map; test inventory + scenario results; reproducible evidence pack; finding cards; repair backlog; one retest; evidence manifest/hashes where applicable.</p><div class="actions"><a class="button button-primary" href="/ru/agent-authority-audit">Метод Primary Audit →</a><a class="button" href="/mapper">Authority Mapper (EN)</a></div></div></section>
+</RuLayout>
+
+<style>
+  .pricing-hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:end}.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tier{padding:26px;min-height:590px;display:flex;flex-direction:column}.tier.featured{border-color:rgba(127,208,177,.34);box-shadow:var(--glow-green)}.top{display:flex;justify-content:space-between;color:var(--muted);font:500 .58rem var(--mono)}.top span{color:var(--green)}.tier h2{margin:58px 0 4px;font-size:1.25rem}.price{font-size:2.25rem;font-weight:760;letter-spacing:-.04em}.tier p{color:var(--muted)}.groups{margin:18px 0 24px;border-top:1px solid var(--line)}.groups>div{padding:15px 0;border-bottom:1px solid var(--line)}.groups strong{font-size:.75rem}.groups ul{margin:8px 0 0;padding-left:18px;color:var(--ink-soft);font-size:.76rem}.groups .muted{color:var(--muted)}.tier .button{margin-top:auto}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}@media(max-width:900px){.split,.tier-grid{grid-template-columns:1fr}.tier{min-height:auto}.tier h2{margin-top:32px}}
+</style>
