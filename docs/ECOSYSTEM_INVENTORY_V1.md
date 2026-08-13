@@ -1,6 +1,6 @@
 # BitEvo Ecosystem Inventory V1
 
-Snapshot: 2026-08-13 14:20 UTC / 21:20 Asia-Bangkok
+Snapshot: 2026-08-13 14:56 UTC / 21:56 Asia-Bangkok
 Branch baseline: `72218ed72dd4b8e8251139d01f3e4df49361a9b4`
 
 ## Evidence rule
@@ -15,7 +15,7 @@ A surface is not canonical merely because it returns HTTP 200. Production promot
 |---|---|---|---|---|---|---|
 | BitEvo Agent Site | `prj_U2iHyiwhJlO33r0u4uN65PpdzEiv` / `bitevo_agent_site` | `bitevoagentsite.vercel.app` | `dpl_4j7NifqXDRFoEtopBH7mCyzPe4ns` | GitHub `bitmaster162/bitevo-agent-site`, `main=72218ed72dd4b8e8251139d01f3e4df49361a9b4` | PRIMARY_CANONICAL | V3.3 UX/product audit; make RU/EN switch obvious in shared header; continue 10/10 gates |
 | Crypto Guides | `prj_COnJDL3H3VF6bQQolYXWMbR2UsiH` / `crypto_guides_site` | `cryptoguidessite.vercel.app` | `dpl_8xyMj7faMfo67pVXXXs3RVRhjhC4` | GitHub `bitmaster162/crypto-guides-site`, `main=2b19db447318a3ddf0c856889d91d0e566deafa7` | CANONICAL_CONTENT | freshness/taxonomy/YMYL/SEO/i18n/10x audit before redesign |
-| Sovereign Arena | `prj_yp0tLCr4MWGQUvTuJrW28bwu3EcF` / `sovereign-arena-site` | `sovereign-arena-site.vercel.app` | `dpl_9xeifLftSads4yq7F1osw1URjgX9` | GitHub `bitmaster162/sovereign-arena-site` exists, but `main=f070fe0587a4222b993b7e8fc9b8f2726ca414d9` is older than deployed site; Drive preserves a verified R51 candidate `5c7549bd6fc2bb7e33f714a3596e238864d573d5`, but current production is newer again | CANONICAL_RUNTIME_DRIFT | recover exact current deployed source before redesign; claim/evidence audit; seal source/build identity |
+| Sovereign Arena | `prj_yp0tLCr4MWGQUvTuJrW28bwu3EcF` / `sovereign-arena-site` | `sovereign-arena-site.vercel.app` | `dpl_9xeifLftSads4yq7F1osw1URjgX9` | GitHub `origin/main=f070fe0587a4222b993b7e8fc9b8f2726ca414d9` is explicitly stale; forensic evidence preserves local website repo HEAD `d0d637fc1f9220c7e9f1d8f099c1b861cefed1bc` with dirty worktree, and Drive preserves R51 candidate `5c7549bd6fc2bb7e33f714a3596e238864d573d5`; latest production is newer again and direct-uploaded | CANONICAL_RUNTIME_DRIFT | recover exact current deployed source before redesign; claim/evidence audit; seal source/build identity |
 | Arbitrage Radar | `prj_LdPJQJjbsYk0l97Qxwyq3eN5nwjv` / `arb-radar` | `arb-radar-zeta.vercel.app`; `sovereign-arb-radar.vercel.app` resolves to same deployment | `dpl_JCfHpPfL7hV8dokkNcfibopDJYwh` | Drive identifies runtime source as Arena `Trade/HANDOFF/grid_lab/ARB_RADAR.md` + `arb_sources.py` / `arb_engine.py` / `arb_service.py`, service `arena-arb.service`; not Git-bound | OPERATIONAL_RUNTIME_SOURCE_DISCOVERED_UNBOUND | bind authoritative source to Git/receipt; preserve 5-min generator semantics; trading/YMYL claim audit |
 | Grid Mirror | `prj_zHarabZ6OTItYVVYhT9JvnyXAhvR` / `grid-mirror` | `grid-mirror.vercel.app` | `dpl_ErGUyUCkH8fsWvEXRjFq2LeS8Gdx` | Drive identifies `grid_lab/push_to_vercel.py` as mirror publisher; source lives in Arena/handoff tree, not a dedicated Git repo | OPERATIONAL_MIRROR_SOURCE_DISCOVERED_UNBOUND | bind generator + source revision to each snapshot; distinguish paper metrics from live results |
 | Grid VIP | `prj_gPqtZvlIvyiKIuKlQ9eRg9P6ESCD` / `grid-vip` | `grid-vip.vercel.app`; `sovereign-grid-vip.vercel.app` resolves to same deployment | `dpl_6F1rTUVntjjHEQwD94GPfz32kDvr` | user-facing page is deployed as uploaded static/runtime files; related Grid runtime source is documented in Arena `grid_lab/`, but exact page generator is not yet Git-bound | PUBLIC_TRADING_SURFACE_SOURCE_PARTIAL | source custody first; YMYL/risk language review; explicit data freshness/build receipt |
@@ -31,17 +31,21 @@ A surface is not canonical merely because it returns HTTP 200. Production promot
 - `project_arb_radar_20260725.md` (`Drive file 1x-ZWi3luZOQ42Y8pGFFIlGk6e9tHJXqT`) identifies Arb Radar code, service and handoff path.
 - `project_grid_lab_20260722.md` (`Drive file 1DriQYhzU-Kl6Udswgt5d4g6EysVbmSII`) identifies Grid runtime code, mirror publisher, copytrade API and Vercel mirror lineage.
 - `project_price_sources_20260725.md` (`Drive file 1e_WAS8u17CVCVM4ew_sorYbyTPKKDZum`) identifies `grid_supervisor.py`, `price_sources.py`, `publish_src.py` and the `grid-src` publishing model.
-- `CODEX05_R52C_SOVEREIGN_ARENA_PREVIEW_RELEASE.md` (`Drive file 1AGj2CMbdPCXwUQX5MxUVnYbialJYNzKU`) preserves one verified Arena candidate (`5c7549bd...`, tree `0c88a23f...`, tests 9/9), but this receipt must not be projected onto the newer current production deployment.
+- `CODEX05_R52C_SOVEREIGN_ARENA_PREVIEW_RELEASE.md` (`Drive file 1AGj2CMbdPCXwUQX5MxUVnYbialJYNzKU`) preserves one verified Arena candidate (`5c7549bd...`, tree `0c88a23f...`, tests 9/9), but this receipt must not be projected onto newer production.
+- `CODEX04_R29_ARENA_REMOTE_FORENSIC_VERDICT.md` preserves website root `C:\PROJECTS\sovereign-arena-site`, local `main` HEAD `d0d637fc1f9220c7e9f1d8f099c1b861cefed1bc`, stale `origin/main=f070fe...`, and a dirty worktree with `src/pages/index.astro` modified plus untracked public output.
+- `CODEX04_M1_ARENA_TRUTH_SMOKE_HARNESS_20260801T165200Z.zip` independently re-observed the same local Arena HEAD and records source tree `8f6bf2d3d322b7dae4c248f22d2f9711b89ec028` plus an observed dirty-tree identity `51043155abf8d7208bb34c8df448b4cb386c1751`.
+- Vercel deployment history binds R51 preview `dpl_CkBcC5hGyL1mLj5xW8CsmQZTQVic` to `candidateHead=5c7549bd...`. Current production `dpl_9xeifLftSads4yq7F1osw1URjgX9` has no Git metadata and its build log shows a direct upload of 10 deployment files.
 
 ## Current P0/P1 findings
 
 ### P0 — source custody / truth
 
-1. Sovereign Arena has confirmed source/build drift: current Vercel production is materially newer than GitHub `main`, and also newer than the preserved R51 candidate. Do not redesign from either source until current deployed lineage is recovered.
-2. Arb/Grid source is no longer wholly unknown: Drive proves the Arena/handoff generators. The remaining problem is **source custody** — those generators are not bound to a canonical Git revision and deployment receipt.
-3. `grid-src.vercel.app` exposes a broad operational source bundle including `access_keys.py`, ACL tooling, bot/service code, deploy scripts and Telegram code. Current probing did not establish publication of a secret file; the public-code boundary itself still requires review.
-4. Legacy projects still return public pages. Do not delete them until canonical lineage + redirect/retirement plan is explicit.
-5. Arb Radar changed during this inventory pass: the current production deployment was generated at 13:51 UTC with only 3 uploaded deployment files and no Git metadata. Treat these operational surfaces as concurrently changing and re-read immediately before any write.
+1. Sovereign Arena has confirmed three-layer drift: public Git `f070fe...` is stale; preserved local source `d0d637...` is newer but dirty; the R51 claim-repair candidate `5c7549bd...` was previewed; current production is newer again and not Git-bound. Do not redesign from any older source until current deployed lineage is recovered.
+2. Arena current production also represents an evidence-boundary regression relative to R51 preview: R51 explicitly labeled the surface `STATIC_DEMO` / `LIVE_DEGRADED` and qualified historical counts, while current production again publishes stronger `live` and commercial claims without a current source/build receipt. This does not prove those claims false; it means the current evidence binding is insufficient.
+3. Arb/Grid source is no longer wholly unknown: Drive proves the Arena/handoff generators. The remaining problem is **source custody** — those generators are not bound to a canonical Git revision and deployment receipt.
+4. `grid-src.vercel.app` exposes a broad operational source bundle including `access_keys.py`, ACL tooling, bot/service code, deploy scripts and Telegram code. Current probing did not establish publication of a secret file; the public-code boundary itself still requires review.
+5. Legacy projects still return public pages. Do not delete them until canonical lineage + redirect/retirement plan is explicit.
+6. Arb Radar changed during this inventory pass: the current production deployment was generated at 13:51 UTC with only 3 uploaded deployment files and no Git metadata. Treat these operational surfaces as concurrently changing and re-read immediately before any write.
 
 ### P0.5 — BitEvo V3.3 UX
 
