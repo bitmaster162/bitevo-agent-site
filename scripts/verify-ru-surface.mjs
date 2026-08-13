@@ -88,7 +88,7 @@ const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'u
 const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
 const toolContracts = [
   ['/ru/mapper', ruMapper.includes('id="ruMapper"') && ruMapper.includes('bitevo.authority-map.v2') && ruMapper.includes('bitevo.mapper.workspace.v1') && ruMapper.includes('bitevo.mapper.handoff.v1') && ruMapper.includes('/ru/workspace?from=mapper') && ruMapper.includes('/ru/audit-intake?from=mapper')],
-  ['/ru/workspace', ruWorkspace.includes('bitevo.workspace.maps.v1') && ruWorkspace.includes('RETEST_CANDIDATE') && ruWorkspace.includes('SCOPE_DRIFT') && ruWorkspace.includes('CROSS_WORKFLOW') && ruWorkspace.includes('bitevo.decision-memo.local.v2') && ruWorkspace.includes('testing_authorization:false')],
+  ['/ru/workspace', ruWorkspace.includes('bitevo.workspace.maps.v1') && ruWorkspace.includes('RETEST_CANDIDATE') && ruWorkspace.includes('SCOPE_DRIFT') && ruWorkspace.includes('CROSS_WORKFLOW') && ruWorkspace.includes('bitevo.decision-memo.local.v2') && ruWorkspace.includes('NOT AUTHORIZATION')],
   ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
   ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')],
   ['/ru/pricing', (ruPricing.match(/href="\/ru\/audit-intake"/g) || []).length >= 3 && !ruPricing.includes('href="/audit-intake"')],
