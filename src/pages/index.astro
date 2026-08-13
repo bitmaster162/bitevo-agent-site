@@ -27,6 +27,17 @@ const deliverables = [
   ['Decision Memo', 'A bounded owner decision with supporting evidence, residual uncertainty, required control change and retest criterion.']
 ];
 
+const primaryDeliverables = [
+  'Executive report',
+  'Authority / effect map',
+  'Test inventory and scenario results',
+  'Reproducible evidence pack',
+  'Finding cards with impact, evidence, limitations, and confidence',
+  'Prioritized repair backlog',
+  'One retest',
+  'Evidence manifest / hashes where applicable'
+];
+
 const proofSurfaces = [
   ['/proof', 'Proof Matrix', 'Synthetic worked packs plus an explicit evidence-strength ladder showing what method, build and observed evidence can — and cannot — establish.'],
   ['/dogfood-self-audit', 'Internal dogfood', 'Bounded internal self-audit evidence from BitEvo’s own control stack — not customer proof, independent certification, or production-wide security evidence.', 'dogfood'],
@@ -52,7 +63,6 @@ const structuredData = {
   name: 'Agent Authority & Evidence Audit',
   provider: { '@type': 'Organization', name: 'BitEvo', url: 'https://bitevoagentsite.vercel.app' },
   serviceType: 'AI agent authority, evidence and failure-control engineering audit',
-  areaServed: 'Worldwide',
   url: 'https://bitevoagentsite.vercel.app/agent-authority-audit',
   offers: { '@type': 'Offer', price: '4900', priceCurrency: 'USD', url: 'https://bitevoagentsite.vercel.app/pricing' }
 };
@@ -164,12 +174,21 @@ const structuredData = {
 
   <section class="section section-rule">
     <div class="container split-head">
-      <div><div class="eyebrow">What you receive</div><h2 class="section-title">Not a score. A decision package.</h2></div>
-      <p class="lede">The deliverable is designed for an owner who must decide what the workflow may do next. Evidence is preserved at the level needed to reproduce accepted findings and separate facts from assumptions.</p>
+      <div><div class="eyebrow">Decision-artifact spine</div><h2 class="section-title">A1–A4 structure the owner decision.</h2></div>
+      <p class="lede">Authority Ledger, Evidence Contract, Finding Record and Decision Memo are the canonical decision-artifact spine. They organize the method; they are not the complete commercial delivery package.</p>
     </div>
     <div class="container deliverable-list">
       {deliverables.map(([title, text], i) => (
         <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
+    </div>
+    <div class="container split-head">
+      <div><div class="eyebrow">Complete Primary Audit delivery package</div><h2 class="section-title">Eight deliverables. One bounded audit.</h2></div>
+      <p class="lede">The Primary Audit commercial package is exhaustive at eight deliverable classes; the A1–A4 artifact spine remains the internal decision structure used across them.</p>
+    </div>
+    <div class="container deliverable-list">
+      {primaryDeliverables.map((title, i) => (
+        <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3></article>
       ))}
     </div>
   </section>
@@ -177,17 +196,17 @@ const structuredData = {
   <section class="section section-rule">
     <div class="container process-wrap panel">
       <div class="process-intro">
-        <div class="eyebrow">5 working days</div>
+        <div class="eyebrow">5 working days after complete evidence/access + written scope</div>
         <h2 class="section-title">Move from “it works” to “we know why it may act.”</h2>
-        <p>No testing begins from a public form alone. Scope, access approval, allowed tests, prohibited actions, data handling and replay conditions are agreed first.</p>
+        <p>No testing begins from a public form alone. Scope, access approval, allowed tests, prohibited actions, data handling and replay conditions are agreed first. The phases below describe the audit method, not a guaranteed day-by-day allocation.</p>
         <a class="button" href="/agent-authority-audit">See the full method →</a>
       </div>
       <ol class="process-list">
-        <li><span>Day 0</span><div><strong>Lock the decision boundary</strong><p>Define the workflow, external effects, owners, prohibited transitions, data ceiling and failure plan.</p></div></li>
-        <li><span>Days 1–2</span><div><strong>Map authority + evidence</strong><p>Trace what may happen, what evidence justifies it and where confirmation must come from.</p></div></li>
-        <li><span>Days 3–4</span><div><strong>Break the assumptions</strong><p>Replay agreed failure paths and separate reproducible findings from noisy symptoms and hypotheses.</p></div></li>
-        <li><span>Day 5</span><div><strong>Make the owner decision</strong><p>Deliver the evidence package and a prioritized expand / constrain / repair decision backlog.</p></div></li>
-        <li><span>After fix</span><div><strong>Retest the claim</strong><p>Re-run the agreed finding criteria after relevant remediation is available.</p></div></li>
+        <li><span>Phase A</span><div><strong>Map authority</strong><p>Identify actor and identity, tools and credentials, read/write surfaces, approval gates, target binding, scope/expiry and recovery path.</p></div></li>
+        <li><span>Phase B</span><div><strong>Agree failure scenarios</strong><p>Select the bounded safe scenarios that challenge approval, object binding, scope, replay, external effects and recovery without turning the engagement into an unbounded pentest.</p></div></li>
+        <li><span>Phase C</span><div><strong>Collect evidence</strong><p>Preserve the minimum necessary scope, configuration, identity, execution, state, approval, recovery, finding and retest receipts for material scenarios.</p></div></li>
+        <li><span>Phase D</span><div><strong>Make the owner decision</strong><p>Translate accepted findings into observable behavior, impact, evidence class, limitations, repair recommendations, retest criteria and residual risk.</p></div></li>
+        <li><span>After repair</span><div><strong>Retest the claim</strong><p>Re-run the agreed finding criteria after relevant remediation is available. One retest is included in the Primary Audit.</p></div></li>
       </ol>
     </div>
   </section>
@@ -198,8 +217,8 @@ const structuredData = {
         <div class="eyebrow">Primary engagement</div>
         <h2 class="section-title">Agent Authority & Evidence Audit</h2>
         <p class="lede">For teams that need to decide whether one write-capable workflow is ready for more authority — or needs to be constrained first.</p>
-        <div class="offer-price"><strong>$4,900</strong><span>fixed · 5 working days</span></div>
-        <div class="hero-actions"><a class="button button-primary" href="/mapper">Map the workflow <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
+        <div class="offer-price"><strong>$4,900</strong><span>fixed · 5 working days after complete evidence/access + written scope</span></div>
+        <div class="hero-actions"><a class="button button-primary" href="/audit-intake" data-funnel="home-primary-scope">Prepare Primary Audit scope <span aria-hidden="true">↗</span></a><a class="button" href="/mapper">Map the workflow</a><a class="button button-ghost" href="/pricing">Compare decision scopes</a></div>
       </div>
       <div class="scope-card panel">
         <div class="scope-row"><span>Object</span><strong>1 staging/test workflow</strong></div>
@@ -221,7 +240,7 @@ const structuredData = {
     </div>
   </section>
 
-  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 days</strong></span><a href="/mapper">Map it ↗</a></div>
+  <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 working days after complete evidence/access + written scope</strong></span><a href="/audit-intake" data-funnel="home-primary-scope-mobile">Prepare scope ↗</a></div>
 </Layout>
 
 <style>

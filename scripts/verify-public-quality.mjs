@@ -3,7 +3,7 @@ import { extname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
-const vercelConfigPath = fileURLToPath(new URL('../vercel.json', import.meta.url));
+const repoRootPath = fileURLToPath(new URL('../', import.meta.url));
 const siteOrigin = 'https://bitevoagentsite.vercel.app';
 
 async function walk(dir) {
@@ -105,6 +105,11 @@ for (const file of htmlFiles) {
     for (const [label, ok] of checks) if (!ok) failures.push(`${route}: missing ${label}`);
 
     const canonical = attr(attrTag(html, 'rel', 'canonical'), 'href');
+    const ogUrl = attr(attrTag(html, 'property', 'og:url'), 'content');
+    const expectedCanonical = new URL(route === '/' ? '/' : route.replace(/\/+$/, ''), siteOrigin).toString();
+    metadataChecks += 2;
+    if (canonical && canonical !== expectedCanonical) failures.push(`${route}: canonical must match exact no-trailing-slash route URL (${canonical} != ${expectedCanonical})`);
+    if (canonical && ogUrl && ogUrl !== canonical) failures.push(`${route}: og:url must exactly match canonical (${ogUrl} != ${canonical})`);
     if (canonical && !canonical.startsWith(siteOrigin)) failures.push(`${route}: canonical outside site origin (${canonical})`);
 
     for (const [label, tag] of [
@@ -178,7 +183,9 @@ const funnelContracts = [
   ['/', 'home-proof', '/proof'],
   ['/', 'map', '/mapper'],
   ['/', 'proof', '/proof'],
-  ['/', 'scope', '/audit-intake']
+  ['/', 'scope', '/audit-intake'],
+  ['/', 'home-primary-scope', '/audit-intake'],
+  ['/', 'home-primary-scope-mobile', '/audit-intake']
 ];
 for (const [route, marker, href] of funnelContracts) {
   funnelChecks += 1;
@@ -188,10 +195,15 @@ for (const [route, marker, href] of funnelContracts) {
 
 const funnelTextContracts = [
   ['/agent-authority-audit', '/mapper', 'Map the workflow'],
-  ['/pricing', '/audit-intake', 'Qualify the workflow'],
-  ['/pricing', '/audit-intake', 'Test one uncertainty'],
-  ['/pricing', '/mapper', 'Map the authority decision'],
+  ['/agent-authority-audit', '/audit-intake', 'Prepare Primary Audit scope'],
+  ['/pricing', '/audit-intake', 'Prepare triage brief'],
+  ['/pricing', '/audit-intake', 'Prepare Entry Audit scope'],
+  ['/pricing', '/audit-intake', 'Prepare Primary Audit scope'],
   ['/pricing', '/mapper', 'Map the action chain'],
+  ['/consulting', '/audit-intake', 'Prepare triage brief'],
+  ['/consulting', '/audit-intake', 'Prepare Entry Audit scope'],
+  ['/consulting', '/agent-authority-audit', 'See the decision model'],
+  ['/consulting', '/audit-intake', 'Prepare Primary Audit scope'],
   ['/consulting', '/mapper', 'Map a workflow'],
   ['/consulting', '/mapper', 'Map the critical action'],
   ['/doctrine', '/mapper', 'Map one workflow']
@@ -206,7 +218,13 @@ const trustBoundaryContracts = [
   ['/proof', ['SYNTHETIC PROOF SURFACE', 'DOES NOT ESTABLISH', 'PRODUCTION EXECUTION', 'NOT UNIVERSAL CERTIFICATION']],
   ['/sample-audit', ['SYNTHETIC / NOT EXECUTED', 'NOT OBSERVED', 'NOT TESTED']],
   ['/sample-message', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
-  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']]
+  ['/sample-deployment', ['SYNTHETIC / NOT EXECUTED', 'NOT TESTED']],
+  ['/mapper', ['NO SECRETS. NO AUTHORIZATION. NO SCORE.', 'IT DOES NOT AUTHORIZE EXECUTION', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED']],
+  ['/diagnostic', ['DOES NOT AUTHORIZE TESTING', 'WRITTEN RULES OF ENGAGEMENT REMAIN REQUIRED', 'TEST EXECUTION REMAINS SEPARATELY AUTHORIZED']],
+  ['/pricing', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
+  ['/consulting', ['DOES NOT BOOK A TRIAGE', 'SUBMIT AN AUDIT REQUEST', 'AUTHORIZE TESTING', '5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'FREE, ENTRY AND PRIMARY SCOPE-PREPARATION CTAS']],
+  ['/agent-authority-audit', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'PUBLIC INTAKE', 'DOES NOT AUTHORIZE TESTING']],
+  ['/', ['5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE', 'PHASE A', 'PHASE B', 'PHASE C', 'PHASE D']]
 ];
 for (const [route, requiredPhrases] of trustBoundaryContracts) {
   const html = (htmlByRoute.get(route) || '').toUpperCase();
@@ -214,6 +232,23 @@ for (const [route, requiredPhrases] of trustBoundaryContracts) {
     trustBoundaryChecks += 1;
     if (!html.includes(phrase)) failures.push(`${route}: missing proof-boundary phrase "${phrase}"`);
   }
+}
+
+const homepageHtml = htmlByRoute.get('/') || '';
+for (const staleTiming of ['Day 0', 'Days 1–2', 'Days 3–4', 'Day 5']) {
+  trustBoundaryChecks += 1;
+  if (homepageHtml.includes(staleTiming)) failures.push(`/: stale unsupported day-by-day Primary timing "${staleTiming}"`);
+}
+
+const mobileDock = homepageHtml.match(/<div\b[^>]*class=["'][^"']*mobile-dock[^"']*["'][^>]*>[\s\S]*?<\/div>/i)?.[0] || '';
+trustBoundaryChecks += 1;
+if (!mobileDock.toUpperCase().includes('5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE') || !anchorHasFunnel(mobileDock, 'home-primary-scope-mobile', '/audit-intake')) {
+  failures.push('/: mobile Primary dock must preserve qualified timing and local scope-prep CTA');
+}
+
+trustBoundaryChecks += 1;
+if (/"areaServed"\s*:/.test(homepageHtml)) {
+  failures.push('/: Service JSON-LD must not publish areaServed without an explicit governing service-area policy');
 }
 
 const sitemapFile = join(distPath, 'sitemap.xml');
@@ -229,14 +264,31 @@ if (fileSet.has('sitemap.xml')) {
   if (!sitemap.includes(`${siteOrigin}/build`)) failures.push('sitemap.xml: /build missing');
   sitemapChecks += 1;
   for (const [route, indexable] of indexabilityByRoute) {
-    if (route === '/' || route === '/404.html') continue;
-    const listed = sitemap.includes(`<loc>${siteOrigin}${route}</loc>`);
+    if (route === '/404.html') continue;
+    const canonicalRoute = route === '/' ? '/' : route.replace(/\/+$/, '');
+    const canonicalLoc = new URL(canonicalRoute, siteOrigin).toString();
+    const listed = sitemap.includes(`<loc>${canonicalLoc}</loc>`);
+    if (indexable && !listed) failures.push(`sitemap.xml: indexable canonical route must be listed (${canonicalRoute})`);
     if (!indexable && listed) failures.push(`sitemap.xml: noindex route must not be listed (${route})`);
   }
 }
 if (fileSet.has('llms.txt')) {
   const llms = await readFile(llmsFile, 'utf8');
   if (!llms.includes('- /build')) failures.push('llms.txt: /build missing');
+  const machineBoundaryPhrases = [
+    'READY TO SCOPE TEST / RETEST',
+    'it does not authorize execution',
+    'The diagnostic does not authorize testing',
+    '5 working days after complete evidence/access + written scope',
+    'they do not book or submit an engagement',
+    'including the Primary Audit path',
+    'Homepage Primary Audit timing uses the same qualified five-working-day window',
+    'Public Homepage, Pricing/Consulting and Agent Authority Audit scope-preparation CTAs'
+  ];
+  for (const phrase of machineBoundaryPhrases) {
+    trustBoundaryChecks += 1;
+    if (!llms.includes(phrase)) failures.push(`llms.txt: missing machine-boundary phrase "${phrase}"`);
+  }
 }
 
 if (!routes.has('/ru')) {
@@ -246,22 +298,19 @@ if (!routes.has('/ru')) {
   }
 }
 
-const vercelConfig = JSON.parse(await readFile(vercelConfigPath, 'utf8'));
-const headerRules = Array.isArray(vercelConfig.headers) ? vercelConfig.headers : [];
-const globalHeaders = headerRules.find(rule => rule.source === '/(.*)')?.headers || [];
-const globalHeaderMap = new Map(globalHeaders.map(item => [String(item.key).toLowerCase(), String(item.value)]));
-const requiredSecurityHeaders = ['x-content-type-options', 'x-frame-options', 'referrer-policy', 'permissions-policy', 'content-security-policy'];
-for (const key of requiredSecurityHeaders) {
-  configChecks += 1;
-  if (!globalHeaderMap.has(key)) failures.push(`vercel.json: missing global ${key} header`);
-}
-configChecks += 1;
-if (!globalHeaderMap.get('content-security-policy')?.includes("frame-ancestors 'none'")) failures.push("vercel.json: CSP must include frame-ancestors 'none'");
+const rootEntries = await readdir(repoRootPath, { withFileTypes: true });
+const rootScriptNames = rootEntries
+  .filter(entry => entry.isFile() && ['.bat', '.cmd', '.ps1', '.sh'].includes(extname(entry.name).toLowerCase()))
+  .map(entry => entry.name);
 
-const immutableRule = headerRules.find(rule => rule.source === '/_astro/(.*)');
-const immutableCache = immutableRule?.headers?.find(item => String(item.key).toLowerCase() === 'cache-control')?.value || '';
 configChecks += 1;
-if (!String(immutableCache).includes('immutable') || !String(immutableCache).includes('31536000')) failures.push('vercel.json: hashed Astro assets must use one-year immutable cache');
+for (const scriptName of rootScriptNames) {
+  const script = await readFile(join(repoRootPath, scriptName), 'utf8');
+  const directMainPush = script
+    .split(/\r?\n/)
+    .some(line => /\bgit\s+push\b/i.test(line) && /\bmain\b/i.test(line));
+  if (directMainPush) failures.push(`${scriptName}: root deployment helper must not push directly to main`);
+}
 
 if (failures.length) {
   console.error('PUBLIC_QUALITY_GATE=FAIL');

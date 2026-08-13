@@ -3,7 +3,6 @@ import { extname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
-const vercelConfigPath = fileURLToPath(new URL('../vercel.json', import.meta.url));
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -46,12 +45,6 @@ for (const file of htmlFiles) {
     const src = match[1] || '';
     if (/^https?:\/\//i.test(src)) failures.push(`${route}: external script dependency ${src}`);
   }
-}
-
-const vercelConfig = await readFile(vercelConfigPath, 'utf8');
-for (const domain of ['fonts.googleapis.com', 'fonts.gstatic.com']) {
-  deploymentPolicyChecks += 1;
-  if (vercelConfig.includes(domain)) failures.push(`vercel.json: external font domain allowed by deployment policy ${domain}`);
 }
 
 if (failures.length) {

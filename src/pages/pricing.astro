@@ -1,27 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+const primaryDeliverables = [
+  'Executive report',
+  'Authority / effect map',
+  'Test inventory and scenario results',
+  'Reproducible evidence pack',
+  'Finding cards with impact, evidence, limitations, and confidence',
+  'Prioritized repair backlog',
+  'One retest',
+  'Evidence manifest / hashes where applicable'
+];
+
 const tiers = [
   {
     eyebrow: 'Qualification', price: 'Free', cadence: '20 minutes', title: 'Scope / Authority Triage',
     desc: 'Use when the first unknown is whether the workflow is even a useful audit target. We isolate the external action, the authority owner and the staging/test boundary.',
     includes: ['1 critical action identified', 'Authority owner identified', 'Staging/test fit check'],
     excludes: ['No tested finding', 'No written security conclusion', 'No deep evidence review'],
-    cta: 'Qualify the workflow', href: '/audit-intake'
+    cta: 'Prepare triage brief', href: '/audit-intake'
   },
   {
     eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
     desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
     includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
     excludes: ['No full Authority Ledger / Evidence Contract', 'No multi-scenario failure plan', 'No included retest'],
-    cta: 'Test one uncertainty', href: '/audit-intake'
+    cta: 'Prepare Entry Audit scope', href: '/audit-intake'
   },
   {
-    eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days', title: 'Agent Authority & Evidence Audit',
+    eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days after complete evidence/access + written scope', title: 'Agent Authority & Evidence Audit',
     desc: 'Use when the owner must decide whether one action-capable workflow has earned its current or proposed Authority Budget across evidence, effect confirmation and recovery.',
-    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios', 'Authority Ledger + Evidence Contract + reproducible Finding Records', 'Decision Memo + owner backlog', 'One retest'],
+    includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios'],
+    deliverables: primaryDeliverables,
     excludes: ['No certification', 'No universal safety score', 'No production penetration testing by default'],
-    cta: 'Map the authority decision', href: '/mapper', featured: true
+    cta: 'Prepare Primary Audit scope', href: '/audit-intake', featured: true
   }
 ];
 
@@ -52,10 +64,16 @@ const comparison = [
           {t.featured && <div class="recommended">Primary</div>}
           <div class="tier-top"><span>{t.eyebrow}</span><div class="price">{t.price}</div><small>{t.cadence}</small><h2>{t.title}</h2><p>{t.desc}</p></div>
           <div class="feature-group"><strong>Evidence ceiling</strong><ul>{t.includes.map(item => <li>{item}</li>)}</ul></div>
+          {t.deliverables && <div class="feature-group"><strong>Primary deliverables</strong><ul>{t.deliverables.map(item => <li>{item}</li>)}</ul></div>}
           <div class="feature-group muted"><strong>Not purchased</strong><ul>{t.excludes.map(item => <li>{item}</li>)}</ul></div>
           <a href={t.href} class:list={['button', t.featured && 'button-primary']}>{t.cta} <span aria-hidden="true">↗</span></a>
         </article>
       ))}
+    </div>
+    <div class="container commercial-boundary panel">
+      <div class="eyebrow">Public-site handoff</div>
+      <strong>This page does not book a triage, submit an audit request or authorize testing.</strong>
+      <p>The Free, Entry and Primary scope-preparation CTAs prepare a local scope brief in your browser; nothing is transmitted by the public intake. Scheduling, payment and written Rules of Engagement continue only through an agreed business channel outside this page.</p>
     </div>
   </section>
 
@@ -111,7 +129,7 @@ const comparison = [
 </Layout>
 
 <style>
-  .pricing-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.tier{position:relative;padding:28px;display:flex;flex-direction:column;min-height:690px;transition:transform .2s ease,border-color .2s ease}.tier:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.24)}.tier.featured{border-color:rgba(127,208,177,.4);box-shadow:0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(127,208,177,.08)}.recommended{position:absolute;right:18px;top:18px;padding:5px 9px;border:1px solid rgba(127,208,177,.3);border-radius:999px;color:var(--green);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.tier-top>span{color:var(--muted);font:500 .63rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.price{margin-top:22px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;font-weight:700;letter-spacing:-.06em}.tier-top small{display:block;color:var(--green);font:500 .64rem var(--mono);margin:7px 0 24px}.tier h2{font-size:1.15rem;margin:0 0 10px}.tier p{margin:0;color:var(--muted);font-size:.84rem}.feature-group{padding-top:20px;margin-top:22px;border-top:1px solid var(--line)}.feature-group strong{color:var(--ink-soft);font:500 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.feature-group ul{list-style:none;margin:11px 0 0;padding:0}.feature-group li{position:relative;padding:5px 0 5px 17px;color:var(--ink-soft);font-size:.78rem}.feature-group li::before{content:'+';position:absolute;left:0;color:var(--green);font-family:var(--mono)}.feature-group.muted li{color:var(--muted)}.feature-group.muted li::before{content:'–';color:#697673}.tier>.button{margin-top:auto}
+  .pricing-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.tier{position:relative;padding:28px;display:flex;flex-direction:column;min-height:690px;transition:transform .2s ease,border-color .2s ease}.tier:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.24)}.tier.featured{border-color:rgba(127,208,177,.4);box-shadow:0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(127,208,177,.08)}.recommended{position:absolute;right:18px;top:18px;padding:5px 9px;border:1px solid rgba(127,208,177,.3);border-radius:999px;color:var(--green);font:500 .58rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.tier-top>span{color:var(--muted);font:500 .63rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.price{margin-top:22px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;font-weight:700;letter-spacing:-.06em}.tier-top small{display:block;color:var(--green);font:500 .64rem var(--mono);margin:7px 0 24px}.tier h2{font-size:1.15rem;margin:0 0 10px}.tier p{margin:0;color:var(--muted);font-size:.84rem}.feature-group{padding-top:20px;margin-top:22px;border-top:1px solid var(--line)}.feature-group strong{color:var(--ink-soft);font:500 .62rem var(--mono);letter-spacing:.1em;text-transform:uppercase}.feature-group ul{list-style:none;margin:11px 0 0;padding:0}.feature-group li{position:relative;padding:5px 0 5px 17px;color:var(--ink-soft);font-size:.78rem}.feature-group li::before{content:'+';position:absolute;left:0;color:var(--green);font-family:var(--mono)}.feature-group.muted li{color:var(--muted)}.feature-group.muted li::before{content:'–';color:#697673}.tier>.button{margin-top:auto}.commercial-boundary{margin-top:18px;padding:22px 24px;border-color:rgba(239,186,92,.22)}.commercial-boundary strong{display:block;margin:6px 0 7px}.commercial-boundary p{margin:0;color:var(--muted);font-size:.8rem}
   .doctrine-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.doctrine-grid article{padding:28px;min-height:260px;display:flex;flex-direction:column}.doctrine-grid h2{margin:auto 0 10px;font-size:1.25rem;letter-spacing:-.025em}.doctrine-grid p{margin:0;color:var(--muted);font-size:.82rem}.compare-grid,.section-head{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(42px,8vw,110px)}.decision-list{border-top:1px solid var(--line)}.decision-list article{display:grid;grid-template-columns:72px 1fr;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}.decision-list article>span{color:var(--green);font:500 .66rem var(--mono)}.decision-list strong{font-size:.92rem}.decision-list p{margin:5px 0 0;color:var(--muted);font-size:.82rem}.section-head{margin-bottom:34px}.section-head .lede{margin:2px 0 0}
   .table-shell{padding:0;overflow:auto}.comparison-table{min-width:900px}.table-row{display:grid;grid-template-columns:.78fr 1fr 1fr 1.2fr}.table-row>*{padding:16px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.78rem;line-height:1.5}.table-row>*:last-child{border-right:0}.table-row:last-child>*{border-bottom:0}.table-row>strong:first-child{color:var(--ink)}.table-row span{color:var(--muted)}.table-head{position:sticky;top:0;background:rgba(11,21,23,.98);z-index:1}.table-head strong{color:var(--green)!important;font:500 .62rem var(--mono);letter-spacing:.09em;text-transform:uppercase}
   .boundary-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.boundary-card{padding:32px}.boundary-card h2{margin:2px 0 12px;font-size:1.3rem}.boundary-card p{margin:0;color:var(--muted)}.final-note{text-align:center}.final-note .section-title{margin-inline:auto}.final-note .lede{margin:20px auto 28px}

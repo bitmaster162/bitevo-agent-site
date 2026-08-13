@@ -7,7 +7,14 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/verify-public-p0.mjs && node scripts/verify-public-quality.mjs && node scripts/verify-public-performance.mjs && node scripts/verify-home-trust.mjs && node scripts/verify-public-budgets.mjs && node scripts/verify-dogfood-case.mjs && node scripts/verify-workspace-contract.mjs",
+    "build:site": "astro build",
+    "verify:core": "node scripts/verify-public-p0.mjs && node scripts/verify-public-quality.mjs && node scripts/verify-primary-deliverables.mjs && node scripts/verify-public-performance.mjs && node scripts/verify-home-trust.mjs && node scripts/verify-public-budgets.mjs && node scripts/verify-dogfood-case.mjs && node scripts/verify-workspace-contract.mjs",
+    "verify:provider:vercel": "node scripts/verify-vercel-policy.mjs",
+    "verify:provider:cloudflare": "node scripts/verify-cloudflare-policy.mjs",
+    "build:core": "npm run build:site && npm run verify:core",
+    "build": "npm run build:core && npm run verify:provider:vercel",
+    "build:cloudflare": "npm run build:core && npm run verify:provider:cloudflare",
+    "deploy:cloudflare": "npx wrangler deploy",
     "preview": "astro preview",
     "astro": "astro"
   },
