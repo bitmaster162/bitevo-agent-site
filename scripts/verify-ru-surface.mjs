@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
+const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const siteOrigin = 'https://bitevoagentsite.vercel.app';
 const routes = [
@@ -80,15 +81,19 @@ for (const path of navRequired) {
   if (!ruHome.includes(`href="${path}"`)) failures.push(`/ru: missing Russian core navigation link ${path}`);
 }
 
-const ruMapper = await readFile(`${dist}/ru/mapper/index.html`, 'utf8');
-const ruWorkspace = await readFile(`${dist}/ru/workspace/index.html`, 'utf8');
+const ruMapperHtml = await readFile(`${dist}/ru/mapper/index.html`, 'utf8');
+const ruWorkspaceHtml = await readFile(`${dist}/ru/workspace/index.html`, 'utf8');
+const ruMapperSource = await readFile(`${root}/src/pages/ru/mapper.astro`, 'utf8');
+const ruWorkspaceSource = await readFile(`${root}/src/pages/ru/workspace.astro`, 'utf8');
+const ruLayoutSource = await readFile(`${root}/src/layouts/RuLayout.astro`, 'utf8');
 const ruDiagnostic = await readFile(`${dist}/ru/diagnostic/index.html`, 'utf8');
 const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
 const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'utf8'));
 const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
 const toolContracts = [
-  ['/ru/mapper', ruMapper.includes('id="ruMapper"') && ruMapper.includes('bitevo.authority-map.v2') && ruMapper.includes('bitevo.mapper.workspace.v1') && ruMapper.includes('bitevo.mapper.handoff.v1') && ruMapper.includes('/ru/workspace?from=mapper') && ruMapper.includes('/ru/audit-intake?from=mapper')],
-  ['/ru/workspace', ruWorkspace.includes('bitevo.workspace.maps.v1') && ruWorkspace.includes('RETEST_CANDIDATE') && ruWorkspace.includes('SCOPE_DRIFT') && ruWorkspace.includes('CROSS_WORKFLOW') && ruWorkspace.includes('bitevo.decision-memo.local.v2') && ruWorkspace.includes('NOT AUTHORIZATION')],
+  ['/ru/mapper', ruMapperHtml.includes('id="ruMapper"') && ruMapperSource.includes("schema:'bitevo.authority-map.v2'") && ruMapperSource.includes("sessionStorage.setItem('bitevo.mapper.workspace.v1'") && ruMapperSource.includes("sessionStorage.setItem('bitevo.mapper.handoff.v1'") && ruMapperSource.includes("location.href='/ru/workspace?from=mapper'") && ruMapperSource.includes("location.href='/ru/audit-intake?from=mapper'")],
+  ['/ru/workspace', ruWorkspaceHtml.includes('Decision Workspace') && ruWorkspaceSource.includes("STORAGE_KEY='bitevo.workspace.maps.v1'") && ruWorkspaceSource.includes("'RETEST_CANDIDATE'") && ruWorkspaceSource.includes("'SCOPE_DRIFT'") && ruWorkspaceSource.includes("'CROSS_WORKFLOW'") && ruWorkspaceSource.includes("schema:'bitevo.decision-memo.local.v2'") && ruWorkspaceSource.includes('testing_authorization:false')],
+  ['/ru/mapper→intake handoff', ruLayoutSource.includes("sessionStorage.getItem('bitevo.mapper.handoff.v1')") && ruLayoutSource.includes("location.pathname !== '/ru/audit-intake'")],
   ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
   ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')],
   ['/ru/pricing', (ruPricing.match(/href="\/ru\/audit-intake"/g) || []).length >= 3 && !ruPricing.includes('href="/audit-intake"')],
@@ -108,4 +113,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} functional_tools=4 commercial_routes=2 failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} functional_tools=4 mapper_workspace_schema=PASS commercial_routes=2 failures=0`);
