@@ -10,11 +10,16 @@ const origin = 'https://bitevoagentsite.vercel.app';
 const localizedPairs = [
   ['/', '/ru'],
   ['/doctrine', '/ru/doctrine'],
+  ['/artifacts', '/ru/artifacts'],
   ['/proof', '/ru/proof'],
+  ['/dogfood-self-audit', '/ru/dogfood-self-audit'],
   ['/diagnostic', '/ru/diagnostic'],
   ['/agent-authority-audit', '/ru/agent-authority-audit'],
   ['/audit-intake', '/ru/audit-intake'],
   ['/pricing', '/ru/pricing'],
+  ['/consulting', '/ru/consulting'],
+  ['/continuityos', '/ru/continuityos'],
+  ['/guides', '/ru/guides'],
   ['/build', '/ru/build'],
   ['/universe', '/ru/universe']
 ];
