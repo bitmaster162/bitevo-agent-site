@@ -34,8 +34,8 @@ const deliverables = [
       </div>
       <div>
         <p class="lede">BitEvo проверяет action layer AI-систем: что workflow может изменить, какие доказательства должны существовать до действия, как подтверждается внешний результат и что система делает, когда уверенность исчезает.</p>
-        <div class="hero-actions"><a class="button button-primary" href="/mapper">Собрать карту workflow <span aria-hidden="true">↗</span></a><a class="button" href="/ru/agent-authority-audit">Посмотреть аудит</a></div>
-        <p class="tool-note">Mapper и Decision Workspace пока остаются на английском. Diagnostic и Decision Scope Intake уже имеют отдельные русские локальные инструменты.</p>
+        <div class="hero-actions"><a class="button button-primary" href="/ru/mapper">Собрать карту workflow <span aria-hidden="true">↗</span></a><a class="button" href="/ru/agent-authority-audit">Посмотреть аудит</a></div>
+        <p class="tool-note">Русский product path уже включает Mapper, Decision Workspace, Diagnostic и Decision Scope Intake. Все они browser-local и не создают testing authorization.</p>
       </div>
     </div>
   </section>
@@ -55,6 +55,16 @@ const deliverables = [
   </section>
 
   <section class="section section-rule">
+    <div class="container split-head"><div><div class="eyebrow">Russian product path</div><h2 class="section-title">Map → Compare → Diagnose → Scope.</h2></div><p class="lede">Сначала локально сформируйте Authority Ledger и Evidence Contract, затем сравните checkpoints, найдите unresolved gates и только после этого готовьте written scope.</p></div>
+    <div class="container proof-grid">
+      <article class="panel"><div class="eyebrow">01 · MAP</div><h2>Authority Mapper</h2><p>Schema-compatible `bitevo.authority-map.v2`, JSON/TXT export и local handoff.</p><a class="text-link" href="/ru/mapper">Открыть Mapper →</a></article>
+      <article class="panel"><div class="eyebrow">02 · COMPARE</div><h2>Decision Workspace</h2><p>RETEST_CANDIDATE / SCOPE_DRIFT / CROSS_WORKFLOW и bounded Decision Memo.</p><a class="text-link" href="/ru/workspace">Открыть Workspace →</a></article>
+      <article class="panel"><div class="eyebrow">03 · DIAGNOSE</div><h2>7-gate Diagnostic</h2><p>YES / NO / UNKNOWN без trust score и без подмены uncertainty.</p><a class="text-link" href="/ru/diagnostic">Открыть Diagnostic →</a></article>
+      <article class="panel"><div class="eyebrow">04 · SCOPE</div><h2>Decision Scope Intake</h2><p>Authority Ledger seed + Evidence Contract seed + Rules of Engagement seed, локально.</p><a class="text-link" href="/ru/audit-intake">Подготовить scope →</a></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
     <div class="container split-head"><div><div class="eyebrow">Primary engagement</div><h2 class="section-title">Agent Authority & Evidence Audit</h2></div><div><p class="lede">Контролируемый paid pilot для команды, которой нужно решить: расширять полномочия одного write-capable workflow или сначала ограничить и исправить его.</p><div class="price"><strong>$4,900</strong><span>fixed · 5 рабочих дней после полного evidence/access set + письменного scope</span></div></div></div>
     <div class="container deliverable-grid">{deliverables.map((item,i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></article>)}</div>
     <div class="container actions"><a class="button button-primary" href="/ru/audit-intake">Подготовить scope ↗</a><a class="button" href="/ru/pricing">Сравнить форматы</a></div>
@@ -62,7 +72,7 @@ const deliverables = [
 
   <section class="section section-rule">
     <div class="container proof-grid">
-      <article class="panel"><div class="eyebrow">Proof boundary</div><h2>Dogfood — не клиентский кейс.</h2><p>Мы публикуем bounded internal self-audit evidence, но не называем его customer proof, independent certification или production-wide security proof.</p><a class="text-link" href="/dogfood-self-audit">Открыть redacted self-audit (EN) →</a></article>
+      <article class="panel"><div class="eyebrow">Proof boundary</div><h2>Dogfood — не клиентский кейс.</h2><p>Мы публикуем bounded internal self-audit evidence, но не называем его customer proof, independent certification или production-wide security proof.</p><a class="text-link" href="/ru/dogfood-self-audit">Открыть redacted self-audit →</a></article>
       <article class="panel"><div class="eyebrow">Universe</div><h2>Все публичные поверхности — на одной карте.</h2><p>Сервис, продукт, source и research разделены, чтобы публичная карта не превращалась в фальшивый live control room.</p><a class="text-link" href="/ru/universe">Открыть BitEvo Universe →</a></article>
     </div>
   </section>
