@@ -13,6 +13,8 @@ const localizedPairs = [
   ['/artifacts', '/ru/artifacts'],
   ['/proof', '/ru/proof'],
   ['/dogfood-self-audit', '/ru/dogfood-self-audit'],
+  ['/mapper', '/ru/mapper'],
+  ['/workspace', '/ru/workspace'],
   ['/diagnostic', '/ru/diagnostic'],
   ['/agent-authority-audit', '/ru/agent-authority-audit'],
   ['/audit-intake', '/ru/audit-intake'],
