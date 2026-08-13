@@ -41,6 +41,36 @@ const nav = [
   <slot />
 </Layout>
 
+<script is:inline>
+  (() => {
+    if (location.pathname !== '/ru/audit-intake' && location.pathname !== '/ru/audit-intake/') return;
+    const raw = sessionStorage.getItem('bitevo.mapper.handoff.v1');
+    if (!raw) return;
+    try {
+      const map = JSON.parse(raw);
+      const a = map?.authority_ledger || {};
+      const e = map?.evidence_contract || {};
+      const set = (id, value) => { const el = document.getElementById(id); if (el && value) el.value = value; };
+      set('workflow', `${a.workflow || 'Mapped workflow'}\nAction class: ${map.action_class || 'custom'}`);
+      set('action', a.critical_action);
+      set('target', a.target_binding);
+      set('owner', a.authority_owner);
+      set('forbidden', a.prohibited_authority);
+      set('error', a.expensive_error);
+      set('environment', a.environment);
+      set('pre', e.pre_action_evidence);
+      set('fresh', e.freshness_rule);
+      set('binding', e.approval_evidence || a.target_binding);
+      set('confirm', e.external_confirmation);
+      set('uncertain', e.recovery_behavior);
+      const state = document.getElementById('state');
+      if (state) state.textContent = 'Mapper seed loaded · review owner/RoE fields';
+    } catch {
+      sessionStorage.removeItem('bitevo.mapper.handoff.v1');
+    }
+  })();
+</script>
+
 <style is:global>
   .ru-locale-bar{position:relative;z-index:20;border-bottom:1px solid var(--line);background:rgba(5,9,10,.82);backdrop-filter:blur(14px)}
   .ru-locale-bar .locale-inner{min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:18px}
