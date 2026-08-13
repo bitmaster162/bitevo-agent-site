@@ -81,6 +81,20 @@ for (const path of navRequired) {
   if (!ruHome.includes(`href="${path}"`)) failures.push(`/ru: missing Russian core navigation link ${path}`);
 }
 
+const chromeContracts = [
+  ['RU brand home', /<a[^>]+href="\/ru"[^>]+class="brand"|<a[^>]+class="brand"[^>]+href="\/ru"/.test(ruHome)],
+  ['RU header CTA', ruHome.includes('href="/ru/mapper"') && ruHome.includes('Собрать workflow')],
+  ['RU primary navigation label', ruHome.includes('aria-label="Основная навигация"')],
+  ['RU mobile navigation label', ruHome.includes('aria-label="Мобильная навигация"')],
+  ['RU services footer path', ruHome.includes('href="/ru/consulting"')],
+  ['RU research footer path', ruHome.includes('href="/ru/guides"')],
+  ['RU Universe footer path', ruHome.includes('href="/ru/universe"')],
+  ['RU footer decision line', ruHome.includes('Полномочия должны быть обоснованы доказательствами.')],
+  ['No English header CTA on RU', !ruHome.includes('>Map workflow <') && !ruHome.includes('>Map workflow →<')]
+];
+checks += chromeContracts.length;
+for (const [label, ok] of chromeContracts) if (!ok) failures.push(`/ru chrome: ${label} failed`);
+
 const ruMapperHtml = await readFile(`${dist}/ru/mapper/index.html`, 'utf8');
 const ruWorkspaceHtml = await readFile(`${dist}/ru/workspace/index.html`, 'utf8');
 const ruMapperSource = await readFile(`${root}/src/pages/ru/mapper.astro`, 'utf8');
@@ -103,9 +117,10 @@ checks += toolContracts.length;
 for (const [route, ok] of toolContracts) if (!ok) failures.push(`${route}: localized functional/commercial boundary contract failed`);
 
 const enHome = await readFile(`${dist}/index.html`, 'utf8');
-checks += 2;
+checks += 3;
 if (!enHome.includes('href="/ru" lang="ru"')) failures.push('/: missing visible RU entry point');
 if (!enHome.includes('name="bitevo-build-sha"')) failures.push('/: missing build SHA meta receipt');
+if (!enHome.includes('>Map workflow <')) failures.push('/: English shared chrome regressed');
 
 if (failures.length) {
   console.error(`RU_SURFACE_GATE=FAIL checks=${checks} failures=${failures.length}`);
@@ -113,4 +128,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} functional_tools=4 mapper_workspace_schema=PASS commercial_routes=2 failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} shared_chrome=RU functional_tools=4 mapper_workspace_schema=PASS commercial_routes=2 failures=0`);
