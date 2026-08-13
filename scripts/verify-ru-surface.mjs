@@ -5,8 +5,12 @@ const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const siteOrigin = 'https://bitevoagentsite.vercel.app';
 const routes = [
   ['/ru', '/'],
-  ['/ru/pricing', '/pricing'],
+  ['/ru/doctrine', '/doctrine'],
+  ['/ru/proof', '/proof'],
+  ['/ru/diagnostic', '/diagnostic'],
   ['/ru/agent-authority-audit', '/agent-authority-audit'],
+  ['/ru/audit-intake', '/audit-intake'],
+  ['/ru/pricing', '/pricing'],
   ['/ru/build', '/build'],
   ['/ru/universe', '/universe']
 ];
@@ -39,7 +43,8 @@ for (const [route, enRoute] of routes) {
     ['English alternate', html.includes(`hreflang="en" href="${expectedEn}"`)],
     ['Russian alternate', html.includes(`hreflang="ru" href="${expectedRu}"`)],
     ['x-default alternate', html.includes(`hreflang="x-default" href="${expectedEn}"`)],
-    ['visible build receipt', html.includes('data-public-build-receipt=')]
+    ['visible build receipt', html.includes('data-public-build-receipt=')],
+    ['build SHA meta receipt', html.includes('name="bitevo-build-sha"')]
   ];
   checks += assertions.length;
   for (const [label, ok] of assertions) if (!ok) failures.push(`${route}: ${label} failed`);
@@ -55,10 +60,19 @@ for (const [route, enRoute] of routes) {
 }
 
 const ruHome = await readFile(`${dist}/ru/index.html`, 'utf8');
-for (const path of ['/ru/pricing', '/ru/agent-authority-audit', '/ru/build', '/ru/universe']) {
+for (const path of routes.map(([ru]) => ru).filter(route => route !== '/ru')) {
   checks += 1;
   if (!ruHome.includes(`href="${path}"`)) failures.push(`/ru: missing Russian core navigation link ${path}`);
 }
+
+const ruDiagnostic = await readFile(`${dist}/ru/diagnostic/index.html`, 'utf8');
+const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
+const toolContracts = [
+  ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
+  ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')]
+];
+checks += toolContracts.length;
+for (const [route, ok] of toolContracts) if (!ok) failures.push(`${route}: localized functional boundary contract failed`);
 
 const enHome = await readFile(`${dist}/index.html`, 'utf8');
 checks += 2;
@@ -71,4 +85,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} functional_tools=2 failures=0`);
