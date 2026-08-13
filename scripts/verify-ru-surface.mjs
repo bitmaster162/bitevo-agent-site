@@ -28,6 +28,13 @@ function fileFor(route) {
   return route === '/' ? `${dist}/index.html` : route === '/ru' ? `${dist}/ru/index.html` : `${dist}${route}/index.html`;
 }
 
+function mainContent(html) {
+  const start = html.indexOf('<main');
+  const end = html.indexOf('</main>');
+  if (start < 0 || end < 0 || end <= start) return html;
+  return html.slice(start, end + 7);
+}
+
 for (const [route, enRoute] of routes) {
   let html = '';
   try {
@@ -73,8 +80,8 @@ for (const path of navRequired) {
 
 const ruDiagnostic = await readFile(`${dist}/ru/diagnostic/index.html`, 'utf8');
 const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
-const ruPricing = await readFile(`${dist}/ru/pricing/index.html`, 'utf8');
-const ruAudit = await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8');
+const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'utf8'));
+const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
 const toolContracts = [
   ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
   ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')],
