@@ -1,0 +1,33 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const dimensions = [
+  ['01','Product clarity','Посетитель понимает продукт, owner decision и ожидаемое изменение после использования.'],
+  ['02','Visual system','Типографика, spacing, hierarchy и interaction states ощущаются одной системой.'],
+  ['03','UX / navigation','Критические пути явные, mobile usable, следующий шаг понятен.'],
+  ['04','Conversion','CTA соответствуют стадии: map → proof → scope.'],
+  ['05','Proof / trust','Synthetic остаётся synthetic; source/build/runtime evidence не смешиваются.'],
+  ['06','SEO / i18n','Canonical metadata, social cards, locale architecture и hreflang вводятся только для реальных локализаций.'],
+  ['07','Performance','Static delivery, bounded assets и отсутствие лишних runtime dependencies.'],
+  ['08','Accessibility','Landmarks, keyboard focus, headings, alt и accessible control names — regression constraints.'],
+  ['09','Technical hygiene','Build gates, headers, route integrity и explicit config делают ожидания исполняемыми.'],
+  ['10','Universe integration','Каждая публичная поверхность имеет понятную роль без копирования private state.']
+];
+const gates = ['Public claim boundary','Metadata / accessibility / internal links / funnel / sitemap','Performance dependency policy','Homepage trust','Static asset budgets','Dogfood proof contract','Workspace decision contract'];
+---
+
+<RuLayout title="BitEvo Build — стандарт качества 10/10" description="Русская версия BitEvo Build: десять независимых измерений качества и build-breaking machine gates без фальшивого общего score." enPath="/build" ruPath="/ru/build">
+  <section class="section build-hero"><div class="container split"><div><div class="eyebrow">Public works · quality contract</div><h1 class="display">Строить proof surface, а не театр.</h1></div><div><p class="lede">Build — публичный инженерный слой BitEvo: продукты, source projects, research surfaces и проверки, которые позволяют отделять красивый интерфейс от доказуемого состояния.</p><div class="actions"><a class="button button-primary" href="/version">Проверить exact build revision ↗</a><a class="button" href="/ru/universe">Открыть Universe</a></div></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container signal"><div><small>PUBLIC</small><strong>Artifact + method</strong></div><div><small>VERIFIABLE</small><strong>Source / build / route</strong></div><div><small>NOT IMPLIED</small><strong>Live private state</strong></div><div><small>RULE</small><strong>Evidence class остаётся явным</strong></div></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">BitEvo 10/10 Standard</div><h2 class="section-title">Десять измерений. Никакого self-awarded composite score.</h2></div><p class="lede">Часть требований проверяется машиной, часть требует человеческого product/design/security review. PASS одного класса не заменяет другой.</p></div><div class="container quality-grid">{dimensions.map(([n,title,text]) => <article><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container gate panel"><div><div class="eyebrow">Build-breaking invariants</div><h2>Автоматизируем только то, что можно проверить точно.</h2><p>Machine gates не сертифицируют дизайн, business value, security или runtime correctness.</p></div><ol>{gates.map((x,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{x}</strong></li>)}</ol></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Human acceptance</div><h2 class="section-title">Следующий уровень — проверка глазами клиента.</h2></div><div><p class="lede">После machine PASS мы отдельно оцениваем: понятность оффера за 15–30 секунд, визуальную иерархию, доверие к proof, mobile rhythm, цену $4,900 в контексте value и отсутствие лишней технической перегрузки.</p><p class="lede">Lighthouse / Core Web Vitals должны измеряться отдельно; build gate не подменяет эти receipts.</p></div></div></section>
+</RuLayout>
+
+<style>
+  .build-hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:start}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.signal{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.signal div{display:flex;flex-direction:column;gap:4px}.signal small{color:var(--green);font:500 .58rem var(--mono);letter-spacing:.08em}.signal strong{font-size:.78rem}.quality-grid{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.quality-grid article{min-height:165px;display:grid;grid-template-columns:48px 1fr;gap:16px;padding:22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.quality-grid article:nth-child(2n){border-right:0}.quality-grid article:nth-last-child(-n+2){border-bottom:0}.quality-grid span{color:var(--green);font:500 .6rem var(--mono)}.quality-grid h3{margin:0 0 8px}.quality-grid p{margin:0;color:var(--muted);font-size:.79rem}.gate{padding:30px;display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.gate h2{margin:0 0 10px}.gate p{color:var(--muted)}.gate ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.gate li{display:grid;grid-template-columns:42px 1fr;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.gate li span{color:var(--green);font:500 .58rem var(--mono)}@media(max-width:900px){.split,.gate{grid-template-columns:1fr}.signal{grid-template-columns:1fr 1fr}}@media(max-width:620px){.signal,.quality-grid{grid-template-columns:1fr}.quality-grid article{border-right:0}.quality-grid article:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.quality-grid article:last-child{border-bottom:0}}
+</style>
