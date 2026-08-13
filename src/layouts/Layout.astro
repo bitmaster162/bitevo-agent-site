@@ -27,17 +27,74 @@ const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).toString();
 const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
 const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
-const isActive = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
-const showDogfoodCase = path === '/proof' || path === '/agent-authority-audit';
-const nav = [
-  ["Doctrine", "/doctrine"],
-  ["Proof", "/proof"],
-  ["Mapper", "/mapper"],
-  ["Workspace", "/workspace"],
-  ["Build", "/build"],
-  ["Audit", "/agent-authority-audit"],
-  ["Pricing", "/pricing"]
+const isRu = lang === 'ru';
+const homeHref = isRu ? '/ru' : '/';
+const isActive = (href: string) => href === homeHref ? path === homeHref || path === `${homeHref}/` : path.startsWith(href);
+const showDogfoodCase = !isRu && (path === '/proof' || path === '/agent-authority-audit');
+const nav = isRu ? [
+  ['Доктрина', '/ru/doctrine'],
+  ['Proof', '/ru/proof'],
+  ['Mapper', '/ru/mapper'],
+  ['Workspace', '/ru/workspace'],
+  ['Build', '/ru/build'],
+  ['Аудит', '/ru/agent-authority-audit'],
+  ['Цены', '/ru/pricing']
+] : [
+  ['Doctrine', '/doctrine'],
+  ['Proof', '/proof'],
+  ['Mapper', '/mapper'],
+  ['Workspace', '/workspace'],
+  ['Build', '/build'],
+  ['Audit', '/agent-authority-audit'],
+  ['Pricing', '/pricing']
 ];
+const mobileExtra = isRu ? [
+  ['Услуги', '/ru/consulting'],
+  ['Исследования', '/ru/guides']
+] : [
+  ['Services', '/consulting'],
+  ['Research', '/guides']
+];
+const footerMethod = isRu ? [
+  ['Доктрина', '/ru/doctrine'],
+  ['Proof matrix', '/ru/proof'],
+  ['Internal dogfood', '/ru/dogfood-self-audit'],
+  ['Authority Mapper', '/ru/mapper'],
+  ['Decision Workspace', '/ru/workspace'],
+  ['7-gate diagnostic', '/ru/diagnostic']
+] : [
+  ['Doctrine', '/doctrine'],
+  ['Proof matrix', '/proof'],
+  ['Internal dogfood', '/dogfood-self-audit'],
+  ['Authority Mapper', '/mapper'],
+  ['Decision Workspace', '/workspace'],
+  ['7-gate diagnostic', '/diagnostic']
+];
+const footerWork = isRu ? [
+  ['Authority & Evidence Audit', '/ru/agent-authority-audit'],
+  ['Цены', '/ru/pricing'],
+  ['Услуги', '/ru/consulting'],
+  ['Scope intake', '/ru/audit-intake']
+] : [
+  ['Authority & Evidence Audit', '/agent-authority-audit'],
+  ['Pricing', '/pricing'],
+  ['Services', '/consulting'],
+  ['Audit intake', '/audit-intake']
+];
+const footerBuild = isRu ? [
+  ['Build index', '/ru/build'],
+  ['ContinuityOS', '/ru/continuityos'],
+  ['Research library', '/ru/guides'],
+  ['BitEvo Universe', '/ru/universe'],
+  ['LLMs.txt', '/llms.txt']
+] : [
+  ['Build index', '/build'],
+  ['ContinuityOS', '/continuityos'],
+  ['Research library', '/guides'],
+  ['BitEvo Universe', '/universe'],
+  ['LLMs.txt', '/llms.txt']
+];
+const mapperHref = isRu ? '/ru/mapper' : '/mapper';
 
 const globalStructuredData = [
   {
@@ -47,7 +104,9 @@ const globalStructuredData = [
     name: 'BitEvo',
     url: SITE_ORIGIN,
     logo: absoluteSiteUrl('/favicon.svg'),
-    description: 'Authority and evidence engineering for action-capable AI-agent workflows.'
+    description: isRu
+      ? 'Инженерия полномочий и доказательств для AI-agent workflow, способных выполнять внешние действия.'
+      : 'Authority and evidence engineering for action-capable AI-agent workflows.'
   },
   {
     '@context': 'https://schema.org',
@@ -87,30 +146,35 @@ const globalStructuredData = [
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="BitEvo — Authority is earned by evidence" />
+    <meta property="og:image:alt" content={isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
-    <meta name="twitter:image:alt" content="BitEvo — Authority is earned by evidence" />
+    <meta name="twitter:image:alt" content={isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence'} />
     <script type="application/ld+json" set:html={JSON.stringify(globalStructuredData)} />
     <title>{title}</title>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
+    <a class="skip-link" href="#main-content">{isRu ? 'К содержанию' : 'Skip to content'}</a>
     <div class="site-ambient" aria-hidden="true"></div>
 
     <header class="site-header">
       <div class="container header-inner">
-        <a href="/" class="brand" aria-label="BitEvo home">
+        <a href={homeHref} class="brand" aria-label={isRu ? 'BitEvo — главная' : 'BitEvo home'}>
           <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
           <span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span>
         </a>
-        <nav class="desktop-nav" aria-label="Primary navigation">{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}</nav>
-        <a class="header-cta" href="/mapper">Map workflow <span aria-hidden="true">↗</span></a>
+        <nav class="desktop-nav" aria-label={isRu ? 'Основная навигация' : 'Primary navigation'}>{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>)}</nav>
+        <a class="header-cta" href={mapperHref}>{isRu ? 'Собрать workflow' : 'Map workflow'} <span aria-hidden="true">↗</span></a>
         <details class="mobile-menu">
-          <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav aria-label="Mobile navigation"><a href="/" aria-current={path === "/" ? "page" : undefined}>Overview</a>{nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>)}<a href="/consulting">Services</a><a href="/guides">Research</a><a class="mobile-cta" href="/mapper">Map workflow →</a></nav>
+          <summary aria-label={isRu ? 'Открыть навигацию' : 'Open navigation'}><span></span><span></span></summary>
+          <nav aria-label={isRu ? 'Мобильная навигация' : 'Mobile navigation'}>
+            <a href={homeHref} aria-current={path === homeHref || path === `${homeHref}/` ? 'page' : undefined}>{isRu ? 'Обзор' : 'Overview'}</a>
+            {nav.map(([label, href]) => <a href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>)}
+            {mobileExtra.map(([label, href]) => <a href={href}>{label}</a>)}
+            <a class="mobile-cta" href={mapperHref}>{isRu ? 'Собрать workflow →' : 'Map workflow →'}</a>
+          </nav>
         </details>
       </div>
     </header>
@@ -130,21 +194,21 @@ const globalStructuredData = [
     <footer class="site-footer">
       <div class="container footer-shell">
         <section class="footer-cta" aria-labelledby="footer-cta-title">
-          <div><div class="eyebrow">Authority before effect</div><h2 id="footer-cta-title">Map the authority. Compare the repair. Then make the owner decision.</h2></div>
-          <a class="button button-primary" href="/mapper">Open Authority Mapper <span aria-hidden="true">↗</span></a>
+          <div><div class="eyebrow">{isRu ? 'Authority до effect' : 'Authority before effect'}</div><h2 id="footer-cta-title">{isRu ? 'Сначала карта authority. Потом сравнение repair. Затем owner decision.' : 'Map the authority. Compare the repair. Then make the owner decision.'}</h2></div>
+          <a class="button button-primary" href={mapperHref}>{isRu ? 'Открыть Authority Mapper' : 'Open Authority Mapper'} <span aria-hidden="true">↗</span></a>
         </section>
 
         <div class="footer-grid">
           <div class="footer-brand">
-            <a href="/" class="brand" aria-label="BitEvo home"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
-            <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.</p>
+            <a href={homeHref} class="brand" aria-label={isRu ? 'BitEvo — главная' : 'BitEvo home'}><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
+            <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />{isRu ? 'BitEvo превращает consequential agent capability в object-bound authority, явные evidence gates, external confirmation и bounded owner decisions.' : 'BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.'}</p>
           </div>
-          <div class="footer-col"><strong>Method</strong><a href="/doctrine">Doctrine</a><a href="/proof">Proof matrix</a><a href="/dogfood-self-audit">Internal dogfood</a><a href="/mapper">Authority Mapper</a><a href="/workspace">Decision Workspace</a><a href="/diagnostic">7-gate diagnostic</a></div>
-          <div class="footer-col"><strong>Work</strong><a href="/agent-authority-audit">Authority & Evidence Audit</a><a href="/pricing">Pricing</a><a href="/consulting">Services</a><a href="/audit-intake">Audit intake</a></div>
-          <div class="footer-col"><strong>Build</strong><a href="/build">Build index</a><a href="/continuityos">ContinuityOS</a><a href="/guides">Research library</a><a href="/universe">BitEvo Universe</a><a href="/llms.txt">LLMs.txt</a></div>
+          <div class="footer-col"><strong>{isRu ? 'Метод' : 'Method'}</strong>{footerMethod.map(([label, href]) => <a href={href}>{label}</a>)}</div>
+          <div class="footer-col"><strong>{isRu ? 'Работа' : 'Work'}</strong>{footerWork.map(([label, href]) => <a href={href}>{label}</a>)}</div>
+          <div class="footer-col"><strong>Build</strong>{footerBuild.map(([label, href]) => <a href={href}>{label}</a>)}</div>
         </div>
 
-        <div class="footer-bottom"><span>© 2026 BitEvo</span><span>Authority is earned by evidence.</span></div>
+        <div class="footer-bottom"><span>© 2026 BitEvo</span><span>{isRu ? 'Полномочия должны быть обоснованы доказательствами.' : 'Authority is earned by evidence.'}</span></div>
       </div>
     </footer>
   </body>
