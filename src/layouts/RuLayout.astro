@@ -1,0 +1,47 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  enPath: string;
+  ruPath: string;
+  robots?: string;
+}
+
+const { title, description, enPath, ruPath, robots } = Astro.props;
+const nav = [
+  ['Обзор', '/ru'],
+  ['Аудит', '/ru/agent-authority-audit'],
+  ['Цены', '/ru/pricing'],
+  ['Build', '/ru/build'],
+  ['Universe', '/ru/universe']
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  robots={robots}
+  lang="ru"
+  alternates={{ en: enPath, ru: ruPath }}
+>
+  <div class="ru-locale-bar" data-locale-surface="ru">
+    <div class="container locale-inner">
+      <nav aria-label="Русская версия">{nav.map(([label, href]) => <a href={href}>{label}</a>)}</nav>
+      <a class="locale-switch" href={enPath} lang="en">EN ↗</a>
+    </div>
+  </div>
+  <slot />
+</Layout>
+
+<style is:global>
+  .ru-locale-bar{position:relative;z-index:20;border-bottom:1px solid var(--line);background:rgba(5,9,10,.82);backdrop-filter:blur(14px)}
+  .ru-locale-bar .locale-inner{min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .ru-locale-bar nav{display:flex;gap:16px;align-items:center;overflow-x:auto;scrollbar-width:none}
+  .ru-locale-bar nav::-webkit-scrollbar{display:none}
+  .ru-locale-bar nav a,.ru-locale-bar .locale-switch{white-space:nowrap;color:var(--muted);font:600 .64rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  .ru-locale-bar nav a:hover,.ru-locale-bar .locale-switch:hover{color:var(--ink)}
+  .ru-locale-bar .locale-switch{color:var(--green)}
+  @media(max-width:620px){.ru-locale-bar .locale-inner{width:min(100% - 24px,1180px)}.ru-locale-bar nav{gap:12px}.ru-locale-bar nav a{font-size:.6rem}}
+</style>
