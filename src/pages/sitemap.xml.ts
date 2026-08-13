@@ -26,7 +26,11 @@ const routes = [
   '/guides/d3-tool-io-bridge-contract',
   '/universe',
   '/ru',
+  '/ru/doctrine',
+  '/ru/proof',
+  '/ru/diagnostic',
   '/ru/agent-authority-audit',
+  '/ru/audit-intake',
   '/ru/pricing',
   '/ru/build',
   '/ru/universe'
