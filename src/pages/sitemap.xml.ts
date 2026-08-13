@@ -24,7 +24,12 @@ const routes = [
   '/guides/security-sandboxing',
   '/guides/fleet-coordinator-drift-monitoring',
   '/guides/d3-tool-io-bridge-contract',
-  '/universe'
+  '/universe',
+  '/ru',
+  '/ru/agent-authority-audit',
+  '/ru/pricing',
+  '/ru/build',
+  '/ru/universe'
 ];
 
 export function GET() {
