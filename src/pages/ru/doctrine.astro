@@ -1,0 +1,14 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+const concepts = [
+  ['Authority Budget','Каждое write permission, интеграция, autonomous step и retry path расширяют поверхность полномочий. Capability само по себе не оправдывает permission.'],
+  ['Evidence Before Effect','Для критического эффекта нужные evidence должны существовать в момент решения. Лог после события помогает реконструировать его, но не оправдывает действие задним числом.'],
+  ['False Green','Система выглядит healthy/green, хотя required evidence устарел, отсутствует, относится не к тому объекту или внешний эффект не подтверждён.']
+];
+---
+<RuLayout title="Доктрина BitEvo — Authority Budget, Evidence Before Effect, False Green" description="Русский обзор трёх инженерных принципов BitEvo для action-capable AI workflow." enPath="/doctrine" ruPath="/ru/doctrine">
+  <section class="section hero"><div class="container split"><div><div class="eyebrow">BitEvo doctrine</div><h1 class="display">Полномочия — это поверхность риска, которую надо обосновывать.</h1></div><p class="lede">Доктрина не выдаётся за универсальную теорию безопасности. Это узкий инженерный словарь для повторяющихся control problems в системах, способных вызывать инструменты и создавать внешние эффекты.</p></div></section>
+  <section class="section section-rule"><div class="container concept-grid">{concepts.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h2>{title}</h2><p>{text}</p></article>)}</div></section>
+  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Decision loop</div><h2 class="section-title">Intent → Authority → Evidence → Effect → Recovery → Decision</h2><p class="lede">Owner decision остаётся явным: EXPAND / CONSTRAIN / REPAIR / RETEST. Machine PASS не превращается автоматически в permission, certification или runtime proof.</p><div class="actions"><a class="button button-primary" href="/mapper">Собрать workflow map (EN) ↗</a><a class="button" href="/ru/proof">Посмотреть proof discipline</a></div></div></section>
+</RuLayout>
+<style>.hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px)}.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.concept-grid article{padding:28px;min-height:340px;display:flex;flex-direction:column}.concept-grid span{color:var(--green);font:500 .6rem var(--mono)}.concept-grid h2{margin:auto 0 12px}.concept-grid p{margin:0;color:var(--muted)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}@media(max-width:900px){.split,.concept-grid{grid-template-columns:1fr}.concept-grid article{min-height:240px}.concept-grid h2{margin-top:60px}}</style>
