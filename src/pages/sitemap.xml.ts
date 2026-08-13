@@ -27,11 +27,16 @@ const routes = [
   '/universe',
   '/ru',
   '/ru/doctrine',
+  '/ru/artifacts',
   '/ru/proof',
+  '/ru/dogfood-self-audit',
   '/ru/diagnostic',
   '/ru/agent-authority-audit',
   '/ru/audit-intake',
   '/ru/pricing',
+  '/ru/consulting',
+  '/ru/continuityos',
+  '/ru/guides',
   '/ru/build',
   '/ru/universe'
 ];
