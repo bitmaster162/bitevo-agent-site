@@ -30,6 +30,8 @@ const routes = [
   '/ru/artifacts',
   '/ru/proof',
   '/ru/dogfood-self-audit',
+  '/ru/mapper',
+  '/ru/workspace',
   '/ru/diagnostic',
   '/ru/agent-authority-audit',
   '/ru/audit-intake',
