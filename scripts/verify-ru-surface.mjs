@@ -9,6 +9,8 @@ const routes = [
   ['/ru/artifacts', '/artifacts'],
   ['/ru/proof', '/proof'],
   ['/ru/dogfood-self-audit', '/dogfood-self-audit'],
+  ['/ru/mapper', '/mapper'],
+  ['/ru/workspace', '/workspace'],
   ['/ru/diagnostic', '/diagnostic'],
   ['/ru/agent-authority-audit', '/agent-authority-audit'],
   ['/ru/audit-intake', '/audit-intake'],
@@ -19,7 +21,7 @@ const routes = [
   ['/ru/build', '/build'],
   ['/ru/universe', '/universe']
 ];
-const navRequired = ['/ru/doctrine','/ru/proof','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
+const navRequired = ['/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
 const requiredCyrillic = /[А-Яа-яЁё]/;
 const failures = [];
 let checks = 0;
@@ -78,11 +80,15 @@ for (const path of navRequired) {
   if (!ruHome.includes(`href="${path}"`)) failures.push(`/ru: missing Russian core navigation link ${path}`);
 }
 
+const ruMapper = await readFile(`${dist}/ru/mapper/index.html`, 'utf8');
+const ruWorkspace = await readFile(`${dist}/ru/workspace/index.html`, 'utf8');
 const ruDiagnostic = await readFile(`${dist}/ru/diagnostic/index.html`, 'utf8');
 const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
 const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'utf8'));
 const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
 const toolContracts = [
+  ['/ru/mapper', ruMapper.includes('id="ruMapper"') && ruMapper.includes('bitevo.authority-map.v2') && ruMapper.includes('bitevo.mapper.workspace.v1') && ruMapper.includes('bitevo.mapper.handoff.v1') && ruMapper.includes('/ru/workspace?from=mapper') && ruMapper.includes('/ru/audit-intake?from=mapper')],
+  ['/ru/workspace', ruWorkspace.includes('bitevo.workspace.maps.v1') && ruWorkspace.includes('RETEST_CANDIDATE') && ruWorkspace.includes('SCOPE_DRIFT') && ruWorkspace.includes('CROSS_WORKFLOW') && ruWorkspace.includes('bitevo.decision-memo.local.v2') && ruWorkspace.includes('testing_authorization:false')],
   ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
   ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')],
   ['/ru/pricing', (ruPricing.match(/href="\/ru\/audit-intake"/g) || []).length >= 3 && !ruPricing.includes('href="/audit-intake"')],
@@ -102,4 +108,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} functional_tools=2 commercial_routes=2 failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} functional_tools=4 commercial_routes=2 failures=0`);
