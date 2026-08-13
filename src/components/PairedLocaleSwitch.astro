@@ -1,0 +1,17 @@
+---
+interface Props { current: 'en' | 'ru'; }
+const { current } = Astro.props;
+const pairs = ['/', '/doctrine', '/artifacts', '/proof', '/dogfood-self-audit', '/mapper', '/workspace', '/diagnostic', '/agent-authority-audit', '/audit-intake', '/pricing', '/consulting', '/continuityos', '/guides', '/build', '/universe'];
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const englishPath = current === 'ru' ? (path === '/ru' ? '/' : path.slice(3) || '/') : path;
+const paired = pairs.includes(englishPath);
+const target = current === 'ru' ? 'en' : 'ru';
+const href = paired ? (target === 'ru' ? (englishPath === '/' ? '/ru' : `/ru${englishPath}`) : englishPath) : (target === 'ru' ? '/ru' : '/');
+const label = target === 'ru' ? 'Русский' : 'English';
+---
+<a class="global-locale-switch" data-locale-switch={`${current}-to-${target}`} data-locale-pair={paired ? 'paired' : 'fallback-home'} href={href} lang={target} aria-label={label}>{target.toUpperCase()}</a>
+<style>
+.global-locale-switch{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:34px;padding:0 10px;border:1px solid rgba(174,211,202,.18);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.018);font:700 .66rem/1 var(--mono);letter-spacing:.08em;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease}
+.global-locale-switch:hover{color:var(--ink);border-color:rgba(127,208,177,.48);background:rgba(127,208,177,.055);transform:translateY(-1px)}
+@media(max-width:980px){.global-locale-switch{margin-left:auto}}
+</style>
