@@ -10,19 +10,6 @@ interface Props {
 }
 
 const { title, description, enPath, ruPath, robots } = Astro.props;
-const nav = [
-  ['Обзор', '/ru'],
-  ['Доктрина', '/ru/doctrine'],
-  ['Proof', '/ru/proof'],
-  ['Mapper', '/ru/mapper'],
-  ['Workspace', '/ru/workspace'],
-  ['Диагностика', '/ru/diagnostic'],
-  ['Аудит', '/ru/agent-authority-audit'],
-  ['Scope', '/ru/audit-intake'],
-  ['Цены', '/ru/pricing'],
-  ['Build', '/ru/build'],
-  ['Universe', '/ru/universe']
-];
 ---
 
 <Layout
@@ -34,8 +21,8 @@ const nav = [
 >
   <div class="ru-locale-bar" data-locale-surface="ru">
     <div class="container locale-inner">
-      <nav aria-label="Русская версия">{nav.map(([label, href]) => <a href={href}>{label}</a>)}</nav>
-      <a class="locale-switch" href={enPath} lang="en">EN ↗</a>
+      <span><i></i> RU · PUBLIC PRODUCT LAYER</span>
+      <div><a href="/ru/universe">Universe</a><a class="locale-switch" href={enPath} lang="en">EN ↗</a></div>
     </div>
   </div>
   <slot />
@@ -73,11 +60,12 @@ const nav = [
 
 <style is:global>
   .ru-locale-bar{position:relative;z-index:20;border-bottom:1px solid var(--line);background:rgba(5,9,10,.82);backdrop-filter:blur(14px)}
-  .ru-locale-bar .locale-inner{min-height:42px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-  .ru-locale-bar nav{display:flex;gap:16px;align-items:center;overflow-x:auto;scrollbar-width:none}
-  .ru-locale-bar nav::-webkit-scrollbar{display:none}
-  .ru-locale-bar nav a,.ru-locale-bar .locale-switch{white-space:nowrap;color:var(--muted);font:600 .64rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
-  .ru-locale-bar nav a:hover,.ru-locale-bar .locale-switch:hover{color:var(--ink)}
+  .ru-locale-bar .locale-inner{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font:600 .59rem var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .ru-locale-bar .locale-inner>span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .ru-locale-bar .locale-inner>span i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(127,208,177,.45)}
+  .ru-locale-bar .locale-inner>div{display:flex;align-items:center;gap:14px}
+  .ru-locale-bar a{white-space:nowrap;color:var(--muted)}
+  .ru-locale-bar a:hover{color:var(--ink)}
   .ru-locale-bar .locale-switch{color:var(--green)}
-  @media(max-width:620px){.ru-locale-bar .locale-inner{width:min(100% - 24px,1180px)}.ru-locale-bar nav{gap:12px}.ru-locale-bar nav a{font-size:.6rem}}
+  @media(max-width:620px){.ru-locale-bar .locale-inner{width:min(100% - 24px,1180px)}.ru-locale-bar .locale-inner>span{font-size:.54rem}.ru-locale-bar .locale-inner>div{gap:10px}}
 </style>
