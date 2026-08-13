@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import buildMeta from '../generated/build-meta.json';
+
+const rows = [
+  ['Source revision', buildMeta.sha],
+  ['Short revision', buildMeta.shortSha],
+  ['Build provider', buildMeta.provider],
+  ['Git ref', buildMeta.ref || 'unknown']
+];
+---
+
+<Layout title="Build Version — Exact Public Revision | BitEvo" description="Inspectable build receipt for the exact source revision used to render this BitEvo deployment." robots="noindex, follow">
+  <section class="version-hero section">
+    <div class="narrow">
+      <div class="eyebrow">Public build receipt</div>
+      <h1 class="display">Know exactly what revision you are looking at.</h1>
+      <p class="lede">This page is generated during the site build. The full Git revision below identifies the source used for this deployed artifact; it does not by itself prove runtime behavior beyond this public build.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow version-shell panel">
+      <div class="status-line"><span class="dot"></span><strong>BUILD REVISION</strong><code>{buildMeta.shortSha}</code></div>
+      <dl>
+        {rows.map(([label, value]) => <div><dt>{label}</dt><dd><code>{value}</code></dd></div>)}
+      </dl>
+      <div class="actions">
+        <a class="button button-primary" href="/version.json">Open machine receipt ↗</a>
+        <a class="button" href="/build">Open Build index</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow boundary">
+      <div class="eyebrow">Evidence boundary</div>
+      <h2 class="section-title">Source identity ≠ runtime proof.</h2>
+      <p class="lede">The revision receipt answers which source was built. Deployment state, HTTP readback, external effects and private runtime health remain separate evidence classes.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .version-hero{padding-top:clamp(78px,10vw,132px)}
+  .version-shell{padding:clamp(24px,5vw,44px)}
+  .status-line{display:flex;align-items:center;gap:12px;padding-bottom:22px;border-bottom:1px solid var(--line);font:600 .72rem var(--mono);letter-spacing:.08em}
+  .status-line code{margin-left:auto;color:var(--green);letter-spacing:0}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(127,208,177,.55)}
+  dl{margin:0}
+  dl>div{display:grid;grid-template-columns:minmax(150px,.45fr) 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--line)}
+  dt{color:var(--muted)}
+  dd{margin:0;min-width:0}
+  dd code{display:block;overflow-wrap:anywhere;color:var(--ink-soft)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .boundary{max-width:760px}
+  @media(max-width:620px){dl>div{grid-template-columns:1fr;gap:5px}.status-line{align-items:flex-start;flex-wrap:wrap}.status-line code{width:100%;margin-left:20px}}
+</style>
