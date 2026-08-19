@@ -53,7 +53,7 @@ for (const [enRoute, ruRoute] of localizedPairs) {
   }
 }
 
-const localeSwitchStyle = `<style data-global-locale-switch-style>.global-locale-switch{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:34px;padding:0 10px;border:1px solid rgba(174,211,202,.18);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.018);font:700 .66rem/1 var(--mono);letter-spacing:.08em;transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease}.global-locale-switch:hover{color:var(--ink);border-color:rgba(127,208,177,.48);background:rgba(127,208,177,.055);transform:translateY(-1px)}@media(max-width:980px){.global-locale-switch{margin-left:0}}</style>`;
+const localeSwitchStylesheet = '<link rel="stylesheet" href="/locale-switch.css" data-global-locale-switch-stylesheet>';
 
 const { readdir } = await import('node:fs/promises');
 async function walk(dir) {
@@ -91,8 +91,8 @@ for (const path of await walk(dist)) {
       retainedRuLocaleBars += 1;
       localeAffordances += 1;
     } else {
-      if (!html.includes('data-global-locale-switch-style')) {
-        html = html.replace('</head>', `${localeSwitchStyle}</head>`);
+      if (!html.includes('data-global-locale-switch-stylesheet')) {
+        html = html.replace('</head>', `${localeSwitchStylesheet}</head>`);
       }
       const switchMarkup = `<a class="global-locale-switch" data-global-locale-switch="${locale.current}-to-${locale.target}" data-locale-pair="paired" href="${locale.href}" lang="${locale.target}" aria-label="${locale.aria}">${locale.label}</a>`;
       const ctaMarker = '<a class="header-cta"';
@@ -117,14 +117,8 @@ for (const path of await walk(dist)) {
 }
 
 const expectedLocaleAffordances = localizedPairs.length * 2;
-if (localeAffordances !== expectedLocaleAffordances) {
-  throw new Error(`Expected ${expectedLocaleAffordances} paired locale affordances, found ${localeAffordances}`);
-}
-if (injectedGlobalLocaleSwitches !== localizedPairs.length) {
-  throw new Error(`Expected ${localizedPairs.length} EN global locale switches, injected ${injectedGlobalLocaleSwitches}`);
-}
-if (retainedRuLocaleBars !== localizedPairs.length) {
-  throw new Error(`Expected ${localizedPairs.length} RU page-level locale bars, found ${retainedRuLocaleBars}`);
-}
+if (localeAffordances !== expectedLocaleAffordances) throw new Error(`Expected ${expectedLocaleAffordances} paired locale affordances, found ${localeAffordances}`);
+if (injectedGlobalLocaleSwitches !== localizedPairs.length) throw new Error(`Expected ${localizedPairs.length} EN global locale switches, injected ${injectedGlobalLocaleSwitches}`);
+if (retainedRuLocaleBars !== localizedPairs.length) throw new Error(`Expected ${localizedPairs.length} RU page-level locale bars, found ${retainedRuLocaleBars}`);
 
 console.log(`BITEVO_POSTPROCESS=PASS sha=${meta.sha} localized_pairs=${localizedPairs.length} locale_affordances=${localeAffordances} global_locale_switches=${injectedGlobalLocaleSwitches} ru_locale_bars=${retainedRuLocaleBars}`);

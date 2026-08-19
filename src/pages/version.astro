@@ -6,7 +6,8 @@ const rows = [
   ['Source revision', buildMeta.sha],
   ['Short revision', buildMeta.shortSha],
   ['Build provider', buildMeta.provider],
-  ['Git ref', buildMeta.ref || 'unknown']
+  ['Provider ref', buildMeta.ref || 'unknown'],
+  ['Provenance class', buildMeta.provenanceClass]
 ];
 ---
 
@@ -15,7 +16,7 @@ const rows = [
     <div class="narrow">
       <div class="eyebrow">Public build receipt</div>
       <h1 class="display">Know exactly what revision you are looking at.</h1>
-      <p class="lede">This page is generated during the site build. The full Git revision below identifies the source used for this deployed artifact; it does not by itself prove runtime behavior beyond this public build.</p>
+      <p class="lede">This page is generated during the site build. The full Git revision below identifies the source used for this built artifact; it does not by itself prove deployment readback, private runtime behavior or external effects.</p>
     </div>
   </section>
 
@@ -36,7 +37,7 @@ const rows = [
     <div class="narrow boundary">
       <div class="eyebrow">Evidence boundary</div>
       <h2 class="section-title">Source identity ≠ runtime proof.</h2>
-      <p class="lede">The revision receipt answers which source was built. Deployment state, HTTP readback, external effects and private runtime health remain separate evidence classes.</p>
+      <p class="lede"><code>PROVIDER_BOUND</code> means the build has an exact provider Git SHA and non-empty ref. It still does not prove HTTP readback, production promotion, external effects or private runtime health.</p>
     </div>
   </section>
 </Layout>
