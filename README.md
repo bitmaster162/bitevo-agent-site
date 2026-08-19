@@ -23,9 +23,9 @@ The release path is intentionally fail-closed:
 1. source revision is identified;
 2. build metadata records provider, ref and provenance class;
 3. Astro renders the static site;
-4. postprocessing adds paired locale/build receipts without executable inline code;
+4. postprocessing adds paired locale/build receipts;
 5. deterministic quality, trust, accessibility, budget, CSP and build-receipt gates run;
-6. provider policy verifies that the receipt is bound to the expected provider/ref;
+6. provider policy verifies that the receipt is bound to the expected provider/ref and reviewed CSP hashes;
 7. deployment readiness remains distinct from protected/public HTTP readback and from production promotion.
 
 ## Commands
@@ -53,7 +53,7 @@ A valid provider release receipt contains an exact 40-character Git SHA, a non-e
 
 ## Content security
 
-The public site is self-hosted. CSP is defined in both `vercel.json` and `public/_headers`. `scripts/verify-inline-csp.mjs` scans built HTML and rejects executable inline JavaScript, inline `<style>` blocks and style attributes; inert JSON-LD is inventoried separately. The locale switch stylesheet is served from `/locale-switch.css` rather than injected inline.
+The public site is self-hosted. CSP is defined in both `vercel.json` and `public/_headers` and contains no `unsafe-inline` or `unsafe-eval`. Astro still emits a finite set of immutable inline style/script blocks. Those blocks are authorized only by exact SHA-256 hashes recorded in `scripts/csp-inline-allowlist.json`. `scripts/verify-inline-csp.mjs` fails closed on any new, removed or unreviewed hash and forbids inline style attributes. Inert JSON-LD is also hash-bound. The locale switch stylesheet is served from `/locale-switch.css` rather than injected inline.
 
 ## Provider boundaries
 

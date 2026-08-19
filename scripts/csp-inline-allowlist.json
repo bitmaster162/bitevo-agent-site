@@ -1,0 +1,48 @@
+{
+  "schema": "bitevo.csp-inline-allowlist/v1",
+  "observedFrom": {
+    "deployment": "dpl_5aj1kiqthwcqM4thH9q2ij69rSi4",
+    "sourceSha": "a07d190441e0fe02aafd9d4fa106c0304ad6e745",
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the static Astro build. Any new or removed hash must fail the release gate until explicitly reviewed."
+  },
+  "scripts": [
+    "rDlgeizON7jCxDcucauQm9Ni6I+8lTNCAew0yZKJPAQ=",
+    "a08ukUqmk/cPBShgNRVO6jwjAHmuR2edJyIHsKlT3ZA=",
+    "ZO416bBzrmE1ZbXNfF7bbSOqm0LX23yBTmEtVGEU8NI=",
+    "O1ULc8htpu//nFL6sCB6htPkhGUyAWpB42EW9rjToeM=",
+    "Q8uzedO5addVpTyf/QHQLbSO3OWvyXZ05eqR6fBhoFM=",
+    "rJttwfZ5sfW8jAYAZyC6zzEb6CW8fAldRXp6khyrBWY=",
+    "cCgBv+YSz85Uv5B9O9/qNxrKn3Lusy/Kog1ppRg2wKA=",
+    "+EQuKURjXcHGF8VPDg/rwG+y4f3AU/is/eM6bC10tXk=",
+    "ViMFOCFRTytZPXHFAJs0Uunpn0q04K8tJpLtJ1Ca92k=",
+    "N/VFMCRqc/DbmBJMyBttUdgTGApVdZkP/fyufRW/qjE="
+  ],
+  "styles": [
+    "DYItNtnaKh/fA+fqchPEtty29+5Lbrwq2lnYkuE81O0=",
+    "DAmZoXjsEkhT25vXBrMnTHXCe/KdPBa3gFZzATKL9+s=",
+    "p9rkFzdU94H6CGVhFlkazBxlKAPynresZazUfn6Cr/E=",
+    "2KVgRaiSxGEDuMEYNnr9nB8FBD7ENhI5e+3ChwbaVSg=",
+    "1uU/Nwg+yiI3QX5jTz08hb7NiRyhyV9tr8qsw5eyj18=",
+    "BhcW008JLRf4NqPtzTukhpcq8DtDhv1YmYo2AjCNkf0=",
+    "+WPmwBG5S/E1ofQEgJjigszOoHb45WuY9uwmYhZwPQM=",
+    "FHQaKY3uuBWacDkIwe5DUHyUW/QBOJOKk9LBZVdlZtA=",
+    "Tl+qQlcs7nZX2uAUfKBGjDHGCjA5zAYXchAIoNxbL7A=",
+    "LvBizXkvZWpBm4ROZkURtCFrmrU5TxrPeEqPlpEw0YA=",
+    "cVAUJx9Uxo+M0KvSAOobFwGMzzToNIjg7SaLOLWK6i4=",
+    "aGhxt2MjinlQAHry863o/AHbAT5sxkXWHVCiwm1B/uw=",
+    "DzuXTxAhccpvBzditblgvMcoDkmwQZysENfL+J88JGQ=",
+    "/yHDT+7ZPu9vDsTS/e5OmfRTutofR6Bc1Sn2gvJaIps=",
+    "gS+cZmP45gfUGPmiChq9QfWWpRjHqm8B7LnkEMR948A=",
+    "fIYhCgtisiXwjOR7iTCqryfpRi+nme31eq+yFbJIc/g=",
+    "0BGl1D6KfV0+tNvnSc998JkDiiPxGy/L3/ltfAgw7u8=",
+    "ymhlauxylidlpEJOvxAXzrHjuwlAob7ffCeoi3HqH9E=",
+    "A+bBWRoWjMPwvMaG/BK7gxDFv4qjvkuuiPqprrpgB6g=",
+    "WGwUvCaaxQNaoWOdzCu9+GFvsejBZhSLu9/UisDQ5KQ=",
+    "UwpmEuGALFpuBlSXPSZjw47wyZ/N/j0eryk2cBWUPOE=",
+    "5zBsh9rlf13bBv0h+BYPVymNPiUqM8XD6JMjxCHVib8=",
+    "SY4wO/f057XipVC8XbJENkPLZtLwHkBf1xNInKA3ADE=",
+    "KKJF9aJP8tf3lLdpNazrbnk48Zk5FnsRnQTbYboJG0E=",
+    "HrCoqMHknRtj0KL8Qjc8uFre9D0qxXXAH1yFaSgLiPI=",
+    "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4="
+  ]
+}

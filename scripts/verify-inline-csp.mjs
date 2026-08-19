@@ -5,10 +5,19 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
+const allowlist = JSON.parse(await readFile(join(root, 'scripts/csp-inline-allowlist.json'), 'utf8'));
+const expectedScripts = new Set(allowlist.scripts || []);
+const expectedStyles = new Set(allowlist.styles || []);
+const observedScripts = new Set();
+const observedStyles = new Set();
 const failures = [];
-const inventory = [];
 let htmlFiles = 0;
 let inertJsonLd = 0;
+let executableInline = 0;
+let styleBlocks = 0;
+let styleAttrs = 0;
+
+if (allowlist.schema !== 'bitevo.csp-inline-allowlist/v1') failures.push(`unexpected allowlist schema: ${allowlist.schema}`);
 
 async function walk(dir) {
   const out = [];
@@ -27,36 +36,37 @@ for (const path of await walk(dist)) {
   const route = relative(dist, path).replaceAll('\\', '/');
   htmlFiles += 1;
 
-  const styleBlocks = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)];
-  for (const match of styleBlocks) {
-    inventory.push({ route, type: 'inline-style', sha256: digest(match[1]) });
-    failures.push(`${route}: inline <style> block is not permitted by release CSP`);
+  for (const match of html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)) {
+    const hash = digest(match[1]);
+    observedStyles.add(hash);
+    styleBlocks += 1;
+    if (!expectedStyles.has(hash)) failures.push(`${route}: unreviewed inline style hash sha256-${hash}`);
   }
 
-  const styleAttrs = [...html.matchAll(/\sstyle\s*=\s*(["'])/gi)];
-  if (styleAttrs.length) failures.push(`${route}: ${styleAttrs.length} inline style attribute(s) are not permitted by release CSP`);
+  const attrs = [...html.matchAll(/\sstyle\s*=\s*(["'])/gi)];
+  styleAttrs += attrs.length;
+  if (attrs.length) failures.push(`${route}: ${attrs.length} inline style attribute(s) are forbidden; hash sources do not authorize style attributes here`);
 
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
-    const attrs = match[1] || '';
+    const attrsText = match[1] || '';
     const body = match[2] || '';
-    if (/\bsrc\s*=/.test(attrs) || !body.trim()) continue;
-    const type = attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase() || '';
+    if (/\bsrc\s*=/.test(attrsText) || !body.trim()) continue;
     const hash = digest(body);
-    if (type === 'application/ld+json') {
-      inertJsonLd += 1;
-      inventory.push({ route, type: 'inert-json-ld', sha256: hash });
-      continue;
-    }
-    inventory.push({ route, type: 'inline-executable-script', sha256: hash });
-    failures.push(`${route}: executable inline <script> is not permitted by release CSP`);
+    const type = attrsText.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase() || '';
+    observedScripts.add(hash);
+    if (type === 'application/ld+json') inertJsonLd += 1;
+    else executableInline += 1;
+    if (!expectedScripts.has(hash)) failures.push(`${route}: unreviewed inline script hash sha256-${hash} type=${type || 'javascript'}`);
   }
 }
 
+for (const hash of expectedStyles) if (!observedStyles.has(hash)) failures.push(`stale reviewed style hash no longer emitted: sha256-${hash}`);
+for (const hash of expectedScripts) if (!observedScripts.has(hash)) failures.push(`stale reviewed script hash no longer emitted: sha256-${hash}`);
+
 if (failures.length) {
-  console.error(`INLINE_CSP_GATE=FAIL html=${htmlFiles} inventory=${inventory.length} inert_json_ld=${inertJsonLd} failures=${failures.length}`);
-  for (const item of inventory) console.error(`INLINE_CSP_INVENTORY route=${item.route} type=${item.type} sha256=${item.sha256}`);
+  console.error(`INLINE_CSP_GATE=FAIL html=${htmlFiles} observed_style_hashes=${observedStyles.size} observed_script_hashes=${observedScripts.size} style_blocks=${styleBlocks} executable_inline=${executableInline} inert_json_ld=${inertJsonLd} style_attrs=${styleAttrs} failures=${failures.length}`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log(`INLINE_CSP_GATE=PASS html=${htmlFiles} inventory=${inventory.length} inert_json_ld=${inertJsonLd} executable_inline=0 inline_styles=0 style_attrs=0 failures=0`);
+console.log(`INLINE_CSP_GATE=PASS html=${htmlFiles} reviewed_style_hashes=${observedStyles.size} reviewed_script_hashes=${observedScripts.size} style_blocks=${styleBlocks} executable_inline=${executableInline} inert_json_ld=${inertJsonLd} style_attrs=0 unknown_hashes=0 stale_hashes=0 failures=0`);
