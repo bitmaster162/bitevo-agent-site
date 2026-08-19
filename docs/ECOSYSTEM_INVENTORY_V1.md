@@ -60,6 +60,26 @@ Thus the Pulse defect predates the final navigation/CTA cleanup and is consisten
 
 Additional public-product debt: `/robots.txt`, `/sitemap.xml`, `/favicon.ico` each currently return 404.
 
+## Arena transport authority quarantine — 2026-08-20 provenance delta
+
+Fresh cross-project identity checks found that Arena transport refs must not be treated as a single authority class.
+
+Hard-quarantined refs with confirmed foreign AI Skill Lab R68 identity:
+
+- `transport/r68-exact-vercel-mirror-20260816`: confirmed foreign AI Skill Lab R68 payload identity at commit `35018cbb63347e6a2ac0951c8254cf70e858614d`; foreign head `e5c4554516dbc61e139d15b2e08508b7c7360894`, tree `7ced4f5e1f4fa17b86d8f8faf1eedf2744ed52ca`, payload SHA-256 `569ce21a2db436332adb1133a856bb93ae773dd11c248d52af0943d8a22a7069`, archive SHA-256 `c6c62dd106ba63012dcc3be54a73c93f551148bbf56898039f094a4313efe9b3` and AI Skill Lab static paths such as `kids.html`, `parents.html`, `curriculum.html`, `phuket.html`, `pricing.html` and `lab-command.js`.
+- `transport/r68-exact-repair-20260816-v2`: mixed state. The root contains ordinary Arena Astro source while `r68_exact/` contains the same foreign AI Skill Lab R68 static payload signature set. Historical served-output behavior and repository-at-rest contamination are separate facts; the ref remains non-authoritative until independently reconstructed and rebound.
+
+Current refs not proven foreign in the inspected root, but still non-authoritative transport evidence:
+
+- `transport/r68-live-20260816`;
+- `transport/r68-exact-repair-20260816`.
+
+These refs may corroborate transport/readback evidence only. They must not be elevated to canonical Arena source authority without exact SHA/tree comparison against an accepted Arena source baseline.
+
+Fail-closed rule: any future Arena recovery/transport candidate must be rejected if it asserts the known AI Skill Lab R68 head/tree/payload/archive identities, a foreign release manifest, or the foreign static path signature set. A valid Arena candidate must explicitly bind repository identity, exact Arena source SHA/tree, Arena release/payload identity and served output derived from that exact source.
+
+This provenance delta does not change the public `/universe` classification: Sovereign Arena remains `PARTIAL` because current production is still not fully source-bound. It also does not clear the existing raw-IP/configuration or recovery-import blockers.
+
 ## Historical security status discovered during recovery
 
 The sanitized WO-019 acceptance records that an original Arena recovery archive was quarantined for credential contamination. A P0 checklist states that provider-backed revocation/rotation closure was required for multiple credential classes. During this inventory pass no all-provider closure receipt was found in the searched Drive corpus.
