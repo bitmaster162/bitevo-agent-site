@@ -1,60 +1,266 @@
 ---
 import RuLayout from '../../layouts/RuLayout.astro';
 
-const surfaces = [
-  ['SERVICE','Agent Authority & Evidence Audit','/ru/agent-authority-audit','Коммерческий bounded audit одного action-capable workflow.'],
-  ['SERVICE LADDER','BitEvo Services','/ru/consulting','Free triage → Entry Audit → Primary Audit → evidence-led hardening.'],
-  ['ARTIFACTS','Audit Artifacts','/ru/artifacts','Authority Ledger, Evidence Contract, Finding Record и Decision Memo плюс полный delivery package.'],
-  ['PROOF','Internal Dogfood','/ru/dogfood-self-audit','Redacted bounded self-audit: real internal failures, repair cycles и retest без customer/certification claim.'],
-  ['PRODUCT','Authority Mapper','/ru/mapper','Русский browser-local Authority Mapper v2 с schema-compatible import/export и local handoff.'],
-  ['PRODUCT','Decision Workspace','/ru/workspace','Русские local checkpoints, RETEST_CANDIDATE / SCOPE_DRIFT / CROSS_WORKFLOW и bounded Decision Memo.'],
-  ['BUILD','BitEvo Build','/ru/build','Публичный индекс shipped surfaces и стандарт качества 10/10.'],
-  ['SOURCE','ContinuityOS','/ru/continuityos','Публичный source path по durable memory, provenance и governance-oriented workflows.'],
-  ['RESEARCH','Reviewed Research','/ru/guides','Русский индекс четырёх reviewed public notes; сами инженерные notes пока EN.']
+const modules = [
+  {
+    lane: 'BUILD',
+    name: 'BitEvo',
+    status: 'LIVE',
+    href: '/ru/build',
+    internal: true,
+    text: 'Создание, аудит и hardening AI-workflows с явными authority, evidence и recovery boundaries.'
+  },
+  {
+    lane: 'LEARN',
+    name: 'AI Skill Lab',
+    status: 'RELEASE PREP',
+    href: null,
+    internal: false,
+    text: 'Практическое обучение AI для личного, семейного и бизнес-использования через видимую работу, а не black-box обещания.'
+  },
+  {
+    lane: 'VISION',
+    name: 'VisionAssist',
+    status: 'PRIVATE LAB',
+    href: null,
+    internal: false,
+    text: 'Visual-intelligence tooling и operator workflows. Публичный безопасный demo-layer планируется; private runtime остаётся private.'
+  },
+  {
+    lane: 'CRYPTO',
+    name: 'Crypto Guides',
+    status: 'LIVE · REVIEW',
+    href: 'https://cryptoguidessite.vercel.app/',
+    internal: false,
+    text: 'Публичный crypto knowledge portal. Сайт live, но taxonomy, currentness и evidence boundaries продолжают проходить review.'
+  },
+  {
+    lane: 'ARENA',
+    name: 'Sovereign Arena',
+    status: 'RECOVERY',
+    href: 'https://sovereign-arena-site.vercel.app/',
+    internal: false,
+    text: 'Публичная research/proof surface. Recovery и source-binding ещё идут; runtime health отсюда не выводится.'
+  },
+  {
+    lane: 'LABS',
+    name: 'BitEvo Labs',
+    status: 'PUBLIC RESEARCH',
+    href: '/ru/guides',
+    internal: true,
+    text: 'Bounded experiments, research notes и public evidence, которые полезны до превращения в полноценные продукты.'
+  }
 ];
 
-const ecosystem = [
-  { name: 'BitEvo Agent Site', role: 'PRIMARY CANONICAL', state: 'CANONICAL', href: '/ru', text: 'Коммерческая и продуктовая authority BitEvo. Ветка V3.3 пока draft; production promotion остаётся отдельным gated действием.' },
-  { name: 'Crypto Guides', role: 'CANONICAL CONTENT', state: 'CANONICAL', href: 'https://cryptoguidessite.vercel.app/', text: 'Канонический публичный портал гайдов. Freshness, taxonomy и YMYL-review отделены от статуса деплоя.' },
-  { name: 'Sovereign Arena', role: 'RESEARCH SURFACE', state: 'PARTIAL', href: 'https://sovereign-arena-site.vercel.app/', text: 'Публичная research surface с восстановленными source-evidence, но текущий production ещё не полностью source-bound. Runtime health здесь не выводится.' },
-  { name: 'Arbitrage Radar', role: 'OPERATIONAL SURFACE', state: 'UNBOUND', href: 'https://arb-radar-zeta.vercel.app/', text: 'Публичная surface существует; lineage генератора/source обнаружен, но ещё не привязан к канонической Git revision.' },
-  { name: 'Grid Mirror', role: 'OPERATIONAL MIRROR', state: 'UNBOUND', href: 'https://grid-mirror.vercel.app/', text: 'Публичное зеркало с найденным generator lineage. Paper/live semantics и точный source receipt ещё требуют binding.' },
-  { name: 'Grid VIP', role: 'TRADING SURFACE', state: 'PARTIAL', href: 'https://grid-vip.vercel.app/', text: 'Публичная trading-facing surface. Custody точного генератора, YMYL-review и freshness proof пока неполные.' },
-  { name: 'Grid Source', role: 'SOURCE BUNDLE', state: 'UNBOUND', href: 'https://grid-src.vercel.app/', text: 'Публичный source bundle существует, но ещё не привязан к отдельному каноническому repository и revision manifest.' },
-  { name: 'Legacy Arena', role: 'FORENSIC LEGACY', state: 'LEGACY', href: 'https://site-azure-xi-64.vercel.app/', text: 'Старая генерация Arena сохранена для forensic comparison. Сам факт существования не делает её текущей или канонической.' },
-  { name: 'Legacy BitEvo', role: 'FORENSIC LEGACY', state: 'LEGACY', href: 'https://bitevoagentsite-seven.vercel.app/', text: 'Legacy deployment сохраняется до закрытия lineage. Это не каноническая BitEvo product surface.' },
-  { name: 'Legacy Crypto Guides', role: 'FORENSIC LEGACY', state: 'LEGACY', href: 'https://cryptoguidessite-eight.vercel.app/', text: 'Legacy guide deployment сохранён для lineage и diff-анализа, а не как current content authority.' },
-  { name: 'Standalone BitEvo Universe', role: 'FUTURE SURFACE', state: 'PENDING', href: null, text: 'Fresh Design/Cowork source ещё ожидает ingest. Отдельного deployment и никаких live-state claims сейчас нет.' }
+const flow = [
+  { step: '01', name: 'Учиться', text: 'Развивать навык и judgment через AI Skill Lab.' },
+  { step: '02', name: 'Строить', text: 'Превращать этот навык в bounded workflows и продукты через BitEvo.' },
+  { step: '03', name: 'Специализироваться', text: 'Использовать Vision, Crypto, Arena и Labs как отдельные domain surfaces.' }
+];
+
+const evidence = [
+  ['SOURCE', 'Какой код или материал существует.'],
+  ['BUILD', 'Что реально было из него собрано.'],
+  ['DEPLOYMENT', 'Что принял provider.'],
+  ['READBACK', 'Что возвращает публичная или protected surface.'],
+  ['EFFECT', 'Что системе реально разрешено делать.']
 ];
 ---
 
-<RuLayout title="BitEvo Universe — публичная карта экосистемы" description="Русская evidence-bound карта BitEvo: сервисы, продукты, source, research и legacy surfaces разделены без имитации live control room или private telemetry." enPath="/universe" ruPath="/ru/universe">
-  <section class="section universe-hero"><div class="container split"><div><div class="eyebrow">Public navigator</div><h1 class="display">Одна карта. Никакого фальшивого control room.</h1></div><div><p class="lede">BitEvo Universe связывает публичные сервисы, shipped products, source projects и research surfaces. Он намеренно не публикует private operational state, infrastructure identifiers или выдуманную live telemetry.</p><div class="actions"><a class="button button-primary" href="/ru/build">Что реально построено ↗</a><a class="button" href="/ru">Вернуться к продукту</a></div></div></div></section>
+<RuLayout
+  title="BitEvo Universe — AI-продукты, обучение, research и evidence"
+  description="Публичная экосистема BitEvo: BUILD, AI Skill Lab, VisionAssist, Crypto Guides, Sovereign Arena и bounded research без публикации private operator state."
+  enPath="/universe"
+  ruPath="/ru/universe"
+>
+  <section class="section universe-hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">BitEvo Universe</div>
+        <h1 class="display">Одна экосистема для обучения, создания и проверки AI-систем.</h1>
+      </div>
+      <div>
+        <p class="lede">BitEvo Universe связывает практические AI-продукты, обучение, visual intelligence, crypto research и evidence-bound эксперименты. Public navigation остаётся простой, private operator state — private.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#universe-modules">Исследовать Universe <span aria-hidden="true">↘</span></a>
+          <a class="button" href="/ru/build">Что реально построено <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section class="section-tight section-rule"><div class="container map panel"><div class="core"><small>PUBLIC CORE</small><strong>BitEvo</strong><span>authority · evidence · continuity · research</span></div><div class="labels"><span>SERVICE</span><span>PRODUCT</span><span>BUILD</span><span>SOURCE</span><span>RESEARCH</span></div><div class="stamp">STATIC PUBLIC MAP · NO RUNTIME TELEMETRY</div></div></section>
+  <section class="section-tight section-rule">
+    <div class="container map-shell panel" aria-label="Карта продуктов BitEvo Universe">
+      <div class="map-core">
+        <small>PUBLIC ECOSYSTEM</small>
+        <strong>BitEvo Universe</strong>
+        <p>Learn · Build · Vision · Crypto · Arena · Labs</p>
+      </div>
+      <div class="map-routes">
+        {modules.map(module => (
+          <div class="map-route">
+            <span>{module.lane}</span>
+            <strong>{module.name}</strong>
+          </div>
+        ))}
+      </div>
+      <p class="map-help">Каждый node — отдельная product lane, а не live-control channel. Public product открывается там, где он реально опубликован; private и recovery surfaces остаются явно bounded.</p>
+    </div>
+  </section>
 
-  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Public surfaces</div><h2 class="section-title">Навигация по роли, а не по маркетинговой громкости.</h2></div><p class="lede">Service ≠ product. Product ≠ source. Source ≠ research. Такое разделение не даёт публичному сайту выдать design или source existence за runtime proof.</p></div><div class="container cards">{surfaces.map(([type,name,href,text],i) => <a class="panel" href={href}><div class="top"><span>{String(i+1).padStart(2,'0')}</span><small>{type}</small></div><div><h3>{name}</h3><p>{text}</p></div><strong>Открыть ↗</strong></a>)}</div></section>
+  <section class="section section-rule" id="universe-modules">
+    <div class="container section-head">
+      <div>
+        <div class="eyebrow">Шесть product lanes</div>
+        <h2 class="section-title">Начните с того, что хотите сделать.</h2>
+      </div>
+      <p class="lede">Первый слой — ценность продукта. Status и provenance остаются видимыми, но не конкурируют с причиной существования каждой surface.</p>
+    </div>
 
-  <section class="section section-rule authority-section">
-    <div class="container split authority-head"><div><div class="eyebrow">Ecosystem authority map</div><h2 class="section-title">Существование не равно authority.</h2></div><div><p class="lede">Каждая публичная surface помечена по сильнейшему подтверждённому уровню custody и роли. Эти labels описывают source authority, а не uptime, прибыльность, safety certification или runtime health.</p><div class="legend"><span data-state="CANONICAL">CANONICAL</span><span data-state="PARTIAL">PARTIAL</span><span data-state="UNBOUND">UNBOUND</span><span data-state="LEGACY">LEGACY</span><span data-state="PENDING">PENDING</span></div></div></div>
-    <div class="container authority-grid">
-      {ecosystem.map((surface,i) => {
-        const body = <><div class="authority-top"><span>{String(i+1).padStart(2,'0')}</span><span class="state" data-state={surface.state}>{surface.state}</span></div><div><small>{surface.role}</small><h3>{surface.name}</h3><p>{surface.text}</p></div><strong>{surface.href ? 'Открыть public surface ↗' : 'Source/deployment pending'}</strong></>;
-        return surface.href ? <a class="authority-card panel" href={surface.href} target={surface.href.startsWith('http') ? '_blank' : undefined} rel={surface.href.startsWith('http') ? 'noopener' : undefined}>{body}</a> : <article class="authority-card panel pending-card">{body}</article>;
+    <div class="container module-grid">
+      {modules.map((module, i) => {
+        const content = <>
+          <div class="module-top">
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            <span class="status">{module.status}</span>
+          </div>
+          <div>
+            <small>{module.lane}</small>
+            <h3>{module.name}</h3>
+            <p>{module.text}</p>
+          </div>
+          <div class="module-foot">{module.href ? 'Открыть surface ↗' : 'Public route пока не опубликован'}</div>
+        </>;
+        return module.href
+          ? <a class="module-card panel" href={module.href} target={module.internal ? undefined : '_blank'} rel={module.internal ? undefined : 'noopener'}>{content}</a>
+          : <article class="module-card panel module-card-muted">{content}</article>;
       })}
     </div>
   </section>
 
-  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Research boundary</div><h2 class="section-title">Публичный corpus ограничен тем, что действительно reviewed.</h2></div><div><p class="lede">Сейчас BitEvo Research Library публично представляет четыре reviewed notes: agent authority, sandboxing, drift monitoring и tool-I/O contracts.</p><p class="lede">Historical/dynamic notes не выдаются за текущий reviewed corpus, пока не пройдут повторную верификацию.</p></div></div></section>
+  <section class="section section-rule">
+    <div class="container section-head">
+      <div>
+        <div class="eyebrow">Как всё связано</div>
+        <h2 class="section-title">Учиться. Строить. Затем специализироваться.</h2>
+      </div>
+      <p class="lede">Universe — путь через продукты, а не набор случайных сайтов. Обучение ведёт в implementation, а specialist surfaces продолжают работу в отдельных доменах.</p>
+    </div>
 
-  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Evidence boundary</div><h2 class="section-title">Карта не доказывает здоровье runtime.</h2></div><div class="boundary"><p><strong>SOURCE ≠ BUILD ≠ DEPLOYMENT ≠ READBACK ≠ EXTERNAL EFFECT.</strong> HTTP 200 сам по себе не делает surface канонической или здоровой.</p><p>На этой странице нет private hosts, IP, credentials, operator-control semantics или secret-bearing logs.</p><p>Trading-facing surfaces показаны только для навигации и custody context. Эта карта не выдаёт trading permission, не валидирует performance и не создаёт capital authorization.</p></div></div></section>
+    <div class="container flow-grid">
+      {flow.map(item => (
+        <article class="flow-card">
+          <span>{item.step}</span>
+          <h3>{item.name}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
 
-  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Long-term Universe</div><h2 class="section-title">Статическая карта — не потолок, а честный старт.</h2></div><p class="lede">Дальше Universe может подключать реальные public adapters, evidence, system views и навигацию между нашими сайтами. Динамический статус появляется только там, где существует реальный источник и отдельный runtime receipt — не раньше.</p></div></section>
+    <div class="container twin-panel panel">
+      <div>
+        <div class="eyebrow">Private context layer</div>
+        <h3>Sovereign Twin</h3>
+      </div>
+      <div>
+        <p>Private/local context для memory, continuity и decision support по всей экосистеме. Raw personal memory не является функцией публичного сайта, а этот слой не подразумевает autonomous execution authority.</p>
+        <span class="private-badge">PRIVATE BY DEFAULT</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule evidence-section">
+    <div class="container section-head">
+      <div>
+        <div class="eyebrow">Evidence boundary</div>
+        <h2 class="section-title">Public status без cosplay под control room.</h2>
+      </div>
+      <p class="lede">URL, branch или успешный build не доказывают runtime health. Universe делает release chain понятным, но не публикует private infrastructure, credentials или operator controls.</p>
+    </div>
+
+    <div class="container evidence-grid">
+      {evidence.map(([name, text]) => (
+        <article>
+          <strong>{name}</strong>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="container boundary-note">
+      <strong>SOURCE ≠ BUILD ≠ DEPLOYMENT ≠ READBACK ≠ EXTERNAL EFFECT.</strong>
+      <p>Trading-facing и research surfaces на этой странице не получают trading permission, performance validation или capital authorization.</p>
+    </div>
+  </section>
 </RuLayout>
 
 <style>
-  .universe-hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:start}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.map{min-height:430px;position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at center,rgba(127,208,177,.1),transparent 25%),linear-gradient(180deg,rgba(13,25,27,.78),rgba(7,13,15,.8))}.map:before,.map:after{content:'';position:absolute;border:1px solid var(--line);border-radius:50%}.map:before{width:290px;height:290px}.map:after{width:520px;height:520px;border-style:dashed}.core{position:relative;z-index:2;width:190px;height:190px;border:1px solid rgba(127,208,177,.34);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(7,15,16,.94)}.core small{color:var(--green);font:500 .55rem var(--mono);letter-spacing:.1em}.core strong{font-size:1.5rem;margin:5px 0}.core span{max-width:150px;color:var(--muted);font-size:.67rem}.labels{position:absolute;inset:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;color:#61706d;font:500 .56rem var(--mono);letter-spacing:.08em}.stamp{position:absolute;bottom:22px;right:22px;color:#61706d;font:500 .55rem var(--mono);letter-spacing:.09em}.cards{margin-top:38px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cards>a{padding:24px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between}.top{display:flex;justify-content:space-between;color:var(--muted);font:500 .58rem var(--mono)}.top small{color:var(--green)}.cards h3{margin:0 0 10px}.cards p{margin:0;color:var(--muted);font-size:.8rem}.cards>a>strong{font-size:.76rem}
-  .authority-section{background:linear-gradient(180deg,transparent,rgba(127,208,177,.018),transparent)}.authority-head{margin-bottom:38px}.legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}.legend span,.state{padding:5px 8px;border:1px solid var(--line);border-radius:999px;font:600 .52rem var(--mono);letter-spacing:.07em}.legend [data-state="CANONICAL"],.state[data-state="CANONICAL"]{color:var(--green);border-color:rgba(127,208,177,.32)}.legend [data-state="PARTIAL"],.state[data-state="PARTIAL"]{color:#d6c58e}.legend [data-state="UNBOUND"],.state[data-state="UNBOUND"]{color:#b6bec8}.legend [data-state="LEGACY"],.state[data-state="LEGACY"]{color:#8f9a98}.legend [data-state="PENDING"],.state[data-state="PENDING"]{color:#8eb5c6}.authority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.authority-card{padding:22px;min-height:270px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease}.authority-card[href]:hover{transform:translateY(-3px);border-color:rgba(127,208,177,.28)}.authority-top{display:flex;justify-content:space-between;align-items:center;color:#596662;font:500 .58rem var(--mono)}.authority-card small{display:block;color:var(--green);font:500 .56rem var(--mono);letter-spacing:.08em;margin-bottom:8px}.authority-card h3{margin:0 0 10px;font-size:1rem}.authority-card p{margin:0;color:var(--muted);font-size:.78rem}.authority-card>strong{margin-top:22px;font-size:.72rem}.pending-card{opacity:.82}.boundary{border-top:1px solid var(--line)}.boundary p{margin:0;padding:18px 0;border-bottom:1px solid var(--line);color:var(--muted)}.boundary strong{color:var(--ink);font-family:var(--mono);font-size:.76rem}
-  @media(max-width:900px){.split{grid-template-columns:1fr}.cards,.authority-grid{grid-template-columns:1fr 1fr}}
-  @media(max-width:620px){.cards,.authority-grid{grid-template-columns:1fr}.map{min-height:380px}.map:after{width:390px;height:390px}.labels{flex-wrap:wrap}.stamp{left:20px;right:auto}}
-</style>
+  .universe-hero{padding-top:clamp(68px,9vw,118px)}
+  .hero-grid,.section-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:end}
+  .hero-grid .lede,.section-head .lede{margin:0}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+
+  .map-shell{padding:clamp(24px,4vw,42px);background:radial-gradient(circle at 18% 20%,rgba(127,208,177,.10),transparent 22rem),linear-gradient(180deg,rgba(13,25,27,.84),rgba(7,13,15,.88))}
+  .map-core{max-width:720px;margin:0 auto 26px;text-align:center;padding:20px}
+  .map-core small{display:block;color:var(--green);font:600 .57rem var(--mono);letter-spacing:.12em}
+  .map-core strong{display:block;margin:8px 0 5px;font-size:clamp(1.45rem,3vw,2.35rem);letter-spacing:-.04em}
+  .map-core p{margin:0;color:var(--muted)}
+  .map-routes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .map-route{min-height:92px;padding:16px;border:1px solid var(--line);border-radius:14px;background:rgba(8,17,18,.7);display:flex;flex-direction:column;justify-content:space-between}
+  .map-route span{color:var(--green);font:600 .54rem var(--mono);letter-spacing:.11em}
+  .map-route strong{font-size:.86rem}
+  .map-help{max-width:780px;margin:22px auto 0;text-align:center;color:var(--muted);font-size:.76rem}
+
+  .section-head{margin-bottom:36px}
+  .module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .module-card{min-height:310px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+  .module-card[href]:hover{transform:translateY(-4px);border-color:rgba(127,208,177,.34);background:linear-gradient(180deg,rgba(15,30,31,.94),rgba(8,16,18,.92))}
+  .module-card-muted{opacity:.88}
+  .module-top{display:flex;justify-content:space-between;align-items:center;color:#66726f;font:500 .58rem var(--mono)}
+  .status{padding:5px 8px;border:1px solid rgba(127,208,177,.16);border-radius:999px;color:#9cb7b0;font:600 .51rem var(--mono);letter-spacing:.06em}
+  .module-card small{display:block;color:var(--green);font:600 .56rem var(--mono);letter-spacing:.11em;margin-bottom:8px}
+  .module-card h3{margin:0 0 10px;font-size:1.16rem;letter-spacing:-.02em}
+  .module-card p{margin:0;color:var(--muted);font-size:.8rem}
+  .module-foot{margin-top:24px;color:var(--ink-soft);font-size:.74rem;font-weight:650}
+
+  .flow-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .flow-card{padding:28px 24px;min-height:210px;border-right:1px solid var(--line)}
+  .flow-card:last-child{border-right:0}
+  .flow-card>span{color:var(--green);font:600 .56rem var(--mono);letter-spacing:.1em}
+  .flow-card h3{margin:30px 0 10px;font-size:1.18rem}
+  .flow-card p{margin:0;color:var(--muted)}
+  .twin-panel{margin-top:18px;padding:26px;display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:start}
+  .twin-panel h3{margin:6px 0 0;font-size:1.28rem}
+  .twin-panel p{margin:0 0 16px;color:var(--muted)}
+  .private-badge{display:inline-block;padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:#94a7a2;font:600 .53rem var(--mono);letter-spacing:.08em}
+
+  .evidence-section{background:linear-gradient(180deg,transparent,rgba(127,208,177,.015),transparent)}
+  .evidence-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .evidence-grid article{padding:20px;min-height:150px;border-right:1px solid var(--line)}
+  .evidence-grid article:last-child{border-right:0}
+  .evidence-grid strong{font:700 .62rem var(--mono);letter-spacing:.08em;color:var(--green)}
+  .evidence-grid p{margin:16px 0 0;color:var(--muted);font-size:.74rem}
+  .boundary-note{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+  .boundary-note strong{font:650 .72rem var(--mono);letter-spacing:.04em}
+  .boundary-note p{margin:9px 0 0;color:var(--muted)}
+
+  @media(max-width:900px){
+    .hero-grid,.section-head,.twin-panel{grid-template-columns:1fr;align-items:start}
+    .map-routes,.module-grid{grid-template-columns:1fr 1fr}
+    .evidence-grid{grid-template-columns:1fr 1fr}
+    .evidence-grid article:nth-child(2n){border-right:0}
+    .evidence-grid article{border-bottom:1px solid var(--line)}
+    .evidence-grid article:last-child{border-bottom:0}
+  }
+  @media(max-width:620px){
+    .hero-actions{display:grid;grid-template-columns:1fr}
+    .hero-actions .button{width:100%;justify-content:center}
+    .map-shell{padding:20px}
+    .map-routes,.module-grid,.flow-grid,.evidence-grid{grid-template-columns:1fr}
+    .map-route{min-height:76px}
+    .module-card{min-height:250px}
+    .flow-grid{border-bottom:0}
+    .flow-card{min-height:0;border-right:0;border-bottom:1px solid var(--line);padding:24px 6px}
+    .flow-card h3{margin-top:18px}
+    .evidence-grid article{min-height:0;border-right:0}
+  }
