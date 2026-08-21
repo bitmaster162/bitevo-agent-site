@@ -54,6 +54,8 @@ for (const [route, enRoute] of routes) {
     ['html lang=ru', /<html\b[^>]*\blang=["']ru["']/i.test(html)],
     ['Cyrillic content', requiredCyrillic.test(html)],
     ['locale surface marker', html.includes('data-locale-surface="ru"')],
+    ['RU status bar retained', html.includes('class="ru-locale-bar"')],
+    ['canonical global RU→EN switch', html.includes('data-global-locale-switch="ru-to-en"') && html.includes(`href="${enRoute}" lang="en"`)],
     ['exact canonical', html.includes(`rel="canonical" href="${expectedCanonical}"`)],
     ['ru_RU OpenGraph locale', html.includes('property="og:locale" content="ru_RU"')],
     ['English alternate', html.includes(`hreflang="en" href="${expectedEn}"`)],
@@ -69,7 +71,8 @@ for (const [route, enRoute] of routes) {
   const reciprocal = [
     ['English page has en alternate', enHtml.includes(`hreflang="en" href="${expectedEn}"`)],
     ['English page has ru alternate', enHtml.includes(`hreflang="ru" href="${expectedRu}"`)],
-    ['English page has x-default', enHtml.includes(`hreflang="x-default" href="${expectedEn}"`)]
+    ['English page has x-default', enHtml.includes(`hreflang="x-default" href="${expectedEn}"`)],
+    ['English page has canonical global EN→RU switch', enHtml.includes('data-global-locale-switch="en-to-ru"') && enHtml.includes(`href="${route}" lang="ru"`)]
   ];
   checks += reciprocal.length;
   for (const [label, ok] of reciprocal) if (!ok) failures.push(`${enRoute}: ${label} failed for ${route}`);
@@ -84,6 +87,7 @@ for (const path of navRequired) {
 const chromeContracts = [
   ['RU brand home', /<a[^>]+href="\/ru"[^>]+class="brand"|<a[^>]+class="brand"[^>]+href="\/ru"/.test(ruHome)],
   ['RU header CTA', ruHome.includes('href="/ru/mapper"') && ruHome.includes('Собрать workflow')],
+  ['RU canonical header language switch', ruHome.includes('data-global-locale-switch="ru-to-en"') && ruHome.includes('href="/" lang="en"')],
   ['RU primary navigation label', ruHome.includes('aria-label="Основная навигация"')],
   ['RU mobile navigation label', ruHome.includes('aria-label="Мобильная навигация"')],
   ['RU services footer path', ruHome.includes('href="/ru/consulting"')],
@@ -104,6 +108,10 @@ const ruDiagnostic = await readFile(`${dist}/ru/diagnostic/index.html`, 'utf8');
 const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
 const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'utf8'));
 const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
+
+checks += 1;
+if (ruLayoutSource.includes('class="locale-switch"')) failures.push('/src/layouts/RuLayout.astro: legacy RU locale-switch anchor remains');
+
 const toolContracts = [
   ['/ru/mapper', ruMapperHtml.includes('id="ruMapper"') && ruMapperSource.includes("schema:'bitevo.authority-map.v2'") && ruMapperSource.includes("sessionStorage.setItem('bitevo.mapper.workspace.v1'") && ruMapperSource.includes("sessionStorage.setItem('bitevo.mapper.handoff.v1'") && ruMapperSource.includes("location.href='/ru/workspace?from=mapper'") && ruMapperSource.includes("location.href='/ru/audit-intake?from=mapper'")],
   ['/ru/workspace', ruWorkspaceHtml.includes('Decision Workspace') && ruWorkspaceSource.includes("STORAGE_KEY='bitevo.workspace.maps.v1'") && ruWorkspaceSource.includes("'RETEST_CANDIDATE'") && ruWorkspaceSource.includes("'SCOPE_DRIFT'") && ruWorkspaceSource.includes("'CROSS_WORKFLOW'") && ruWorkspaceSource.includes("schema:'bitevo.decision-memo.local.v2'") && ruWorkspaceSource.includes('testing_authorization:false')],
@@ -117,8 +125,9 @@ checks += toolContracts.length;
 for (const [route, ok] of toolContracts) if (!ok) failures.push(`${route}: localized functional/commercial boundary contract failed`);
 
 const enHome = await readFile(`${dist}/index.html`, 'utf8');
-checks += 3;
+checks += 4;
 if (!enHome.includes('href="/ru" lang="ru"')) failures.push('/: missing visible RU entry point');
+if (!enHome.includes('data-global-locale-switch="en-to-ru"')) failures.push('/: missing canonical global EN→RU switch');
 if (!enHome.includes('name="bitevo-build-sha"')) failures.push('/: missing build SHA meta receipt');
 if (!enHome.includes('>Map workflow <')) failures.push('/: English shared chrome regressed');
 
@@ -128,4 +137,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} shared_chrome=RU functional_tools=4 mapper_workspace_schema=PASS commercial_routes=2 failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} global_locale_switches=EN_RU_CANONICAL ru_status_bars=RETAINED shared_chrome=RU functional_tools=4 mapper_workspace_schema=PASS commercial_routes=2 failures=0`);

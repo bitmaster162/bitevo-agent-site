@@ -81,26 +81,19 @@ for (const path of await walk(dist)) {
     html = html.replace('<html ', `<html data-build-sha="${meta.sha}" `);
   }
 
-  if (locale && html.includes('<header class="site-header">') && !html.includes('data-global-locale-switch=')) {
-    const hasExistingRuLocaleBar = locale.current === 'ru'
-      && html.includes('class="ru-locale-bar"')
-      && html.includes('class="locale-switch"')
-      && html.includes(`href="${locale.href}"`);
+  const hasRuLocaleBar = locale?.current === 'ru' && html.includes('class="ru-locale-bar"');
+  if (hasRuLocaleBar) retainedRuLocaleBars += 1;
 
-    if (hasExistingRuLocaleBar) {
-      retainedRuLocaleBars += 1;
+  if (locale && html.includes('<header class="site-header">') && !html.includes('data-global-locale-switch=')) {
+    if (!html.includes('data-global-locale-switch-stylesheet')) {
+      html = html.replace('</head>', `${localeSwitchStylesheet}</head>`);
+    }
+    const switchMarkup = `<a class="global-locale-switch" data-global-locale-switch="${locale.current}-to-${locale.target}" data-locale-pair="paired" href="${locale.href}" lang="${locale.target}" aria-label="${locale.aria}">${locale.label}</a>`;
+    const ctaMarker = '<a class="header-cta"';
+    if (html.includes(ctaMarker)) {
+      html = html.replace(ctaMarker, `${switchMarkup}${ctaMarker}`);
+      injectedGlobalLocaleSwitches += 1;
       localeAffordances += 1;
-    } else {
-      if (!html.includes('data-global-locale-switch-stylesheet')) {
-        html = html.replace('</head>', `${localeSwitchStylesheet}</head>`);
-      }
-      const switchMarkup = `<a class="global-locale-switch" data-global-locale-switch="${locale.current}-to-${locale.target}" data-locale-pair="paired" href="${locale.href}" lang="${locale.target}" aria-label="${locale.aria}">${locale.label}</a>`;
-      const ctaMarker = '<a class="header-cta"';
-      if (html.includes(ctaMarker)) {
-        html = html.replace(ctaMarker, `${switchMarkup}${ctaMarker}`);
-        injectedGlobalLocaleSwitches += 1;
-        localeAffordances += 1;
-      }
     }
   }
 
@@ -118,7 +111,7 @@ for (const path of await walk(dist)) {
 
 const expectedLocaleAffordances = localizedPairs.length * 2;
 if (localeAffordances !== expectedLocaleAffordances) throw new Error(`Expected ${expectedLocaleAffordances} paired locale affordances, found ${localeAffordances}`);
-if (injectedGlobalLocaleSwitches !== localizedPairs.length) throw new Error(`Expected ${localizedPairs.length} EN global locale switches, injected ${injectedGlobalLocaleSwitches}`);
+if (injectedGlobalLocaleSwitches !== expectedLocaleAffordances) throw new Error(`Expected ${expectedLocaleAffordances} global locale switches, injected ${injectedGlobalLocaleSwitches}`);
 if (retainedRuLocaleBars !== localizedPairs.length) throw new Error(`Expected ${localizedPairs.length} RU page-level locale bars, found ${retainedRuLocaleBars}`);
 
 console.log(`BITEVO_POSTPROCESS=PASS sha=${meta.sha} localized_pairs=${localizedPairs.length} locale_affordances=${localeAffordances} global_locale_switches=${injectedGlobalLocaleSwitches} ru_locale_bars=${retainedRuLocaleBars}`);
