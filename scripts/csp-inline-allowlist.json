@@ -1,9 +1,9 @@
 {
   "schema": "bitevo.csp-inline-allowlist/v1",
   "observedFrom": {
-    "deployment": "dpl_5aj1kiqthwcqM4thH9q2ij69rSi4",
-    "sourceSha": "a07d190441e0fe02aafd9d4fa106c0304ad6e745",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the static Astro build. Any new or removed hash must fail the release gate until explicitly reviewed."
+    "deployment": "dpl_CMcxQt2fFyyJBvx4FP9nTSYW6KFd",
+    "sourceSha": "6331615412bea6b53699b1fde97431aa4846a5d1",
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed P0A.3 static Astro build. Any new or removed hash must fail the release gate until explicitly reviewed."
   },
   "scripts": [
     "rDlgeizON7jCxDcucauQm9Ni6I+8lTNCAew0yZKJPAQ=",
@@ -40,7 +40,7 @@
     "WGwUvCaaxQNaoWOdzCu9+GFvsejBZhSLu9/UisDQ5KQ=",
     "UwpmEuGALFpuBlSXPSZjw47wyZ/N/j0eryk2cBWUPOE=",
     "5zBsh9rlf13bBv0h+BYPVymNPiUqM8XD6JMjxCHVib8=",
-    "SY4wO/f057XipVC8XbJENkPLZtLwHkBf1xNInKA3ADE=",
+    "gfJ+E7u6Uit/y4urTjiO1RvsYrnSUfS3p83aXiyLm/A=",
     "KKJF9aJP8tf3lLdpNazrbnk48Zk5FnsRnQTbYboJG0E=",
     "HrCoqMHknRtj0KL8Qjc8uFre9D0qxXXAH1yFaSgLiPI=",
     "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4="
