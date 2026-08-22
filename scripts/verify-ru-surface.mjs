@@ -20,7 +20,8 @@ const routes = [
   ['/ru/continuityos', '/continuityos'],
   ['/ru/guides', '/guides'],
   ['/ru/build', '/build'],
-  ['/ru/universe', '/universe']
+  ['/ru/universe', '/universe'],
+  ['/ru/vision', '/vision']
 ];
 const navRequired = ['/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
 const requiredCyrillic = /[А-Яа-яЁё]/;
