@@ -35,10 +35,13 @@ jobs:
         run: npm audit --json
       - name: Build and run provider-neutral repository gates
         run: npm run build:core
-      - name: Verify Vercel hosting contract
-        run: npm run verify:provider:vercel
-      - name: Verify Cloudflare hosting contract
-        run: npm run verify:provider:cloudflare
+      # Provider-bound provenance checks intentionally do not run in GitHub CI.
+      # generate-build-meta.mjs correctly identifies this environment as
+      # provider=github / provenanceClass=CI_BOUND. The Vercel and Cloudflare
+      # verifiers require their real provider environments and therefore belong
+      # to `npm run build` (Vercel) and `npm run build:cloudflare` (Cloudflare).
+      # Faking VERCEL_* or CF_* variables here would turn provenance into a
+      # self-assertion and create a false green.
 
   main-history-audit:
     name: main-history-audit
