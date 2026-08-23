@@ -1,4 +1,5 @@
 name: BitEvo Quality Gate
+# Public-runner revalidation epoch: 2026-08-23
 
 on:
   pull_request:
