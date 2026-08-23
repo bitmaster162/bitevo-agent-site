@@ -1,0 +1,17 @@
+name: Runner Smoke
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  runner-smoke:
+    name: runner-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Prove runner execution
+        run: echo "RUNNER_SMOKE=PASS"
