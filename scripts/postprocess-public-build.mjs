@@ -23,7 +23,8 @@ const localizedPairs = [
   ['/continuityos', '/ru/continuityos'],
   ['/guides', '/ru/guides'],
   ['/build', '/ru/build'],
-  ['/universe', '/ru/universe']
+  ['/universe', '/ru/universe'],
+  ['/vision', '/ru/vision']
 ];
 
 function htmlPath(route) {

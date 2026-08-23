@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/vision.css';
+
+const observations = [
+  ['OBSERVATION', 'Price compressed into a narrow range after an impulsive move.'],
+  ['OBSERVATION', 'Two recent highs sit near the same visual level.'],
+  ['MISSING', 'The image alone does not prove order-flow intent or future direction.']
+];
+
+const hypotheses = [
+  {
+    id: 'H1',
+    title: 'Continuation setup',
+    confidence: '54%',
+    text: 'Compression may be a pause before continuation if price accepts above the recent range.',
+    counter: 'A failed breakout and fast return inside the range would weaken this interpretation.'
+  },
+  {
+    id: 'H2',
+    title: 'Liquidity sweep / reversal',
+    confidence: '38%',
+    text: 'Equal-looking highs may attract a sweep before rotation in the opposite direction.',
+    counter: 'Sustained acceptance above the highs would weaken the reversal hypothesis.'
+  },
+  {
+    id: 'H3',
+    title: 'Insufficient evidence',
+    confidence: '8%',
+    text: 'The image may not contain enough context to distinguish the two stories responsibly.',
+    counter: 'Additional timeframe, volume or source context could reduce this uncertainty.'
+  }
+];
+---
+
+<Layout
+  title="VisionAssist — Evidence-grounded visual reasoning"
+  description="VisionAssist turns visual input into explicit observations, competing hypotheses, counterevidence, uncertainty and invalidation while keeping human judgment and execution authority separate."
+>
+  <section class="vision-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">VISION · public demonstration</div>
+        <h1 class="display">See the evidence. Compare interpretations.</h1>
+        <p class="lede">VisionAssist turns an image into a reviewable reasoning surface: what is directly observed, what is inferred, what could disprove the interpretation, and where uncertainty remains.</p>
+        <div class="actions">
+          <a class="button button-primary" href="#case">Explore a case <span aria-hidden="true">↘</span></a>
+          <a class="button button-ghost" href="#method">See the method</a>
+        </div>
+      </div>
+
+      <aside class="status-card panel">
+        <div class="status-top">
+          <span>PUBLIC BOUNDARY</span>
+          <strong>Demonstration only</strong>
+        </div>
+        <div class="status-row"><span>Human role</span><strong>Final reviewer</strong></div>
+        <div class="status-row"><span>Autonomous action</span><strong>None</strong></div>
+        <div class="status-row"><span>Current proof</span><strong>Controlled corpus / shadow</strong></div>
+        <div class="status-row"><span>Trading authority</span><strong>Not granted</strong></div>
+        <p class="status-note">The current trading adapter stays DIAGNOSTIC_ONLY / NO_ACTION / HOLD / DENY / can_trade=false. R3/R4 are perception QA surfaces, not PnL evidence or order authority.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-rule" id="case">
+    <div class="container section-head">
+      <div>
+        <div class="eyebrow">One visual case</div>
+        <h2 class="section-title">Observation is not inference.</h2>
+      </div>
+      <p class="lede">The public demo deliberately separates what the image visibly contains from the stories a reviewer may build around it.</p>
+    </div>
+
+    <div class="container case-grid">
+      <div class="evidence-canvas panel" aria-label="Synthetic chart-like evidence frame">
+        <div class="frame-top">
+          <span>SYNTHETIC VISUAL CONTROL</span>
+          <strong>CASE 01</strong>
+        </div>
+        <div class="chart" aria-hidden="true">
+          <div class="range"></div>
+          <div class="high high-a"></div>
+          <div class="high high-b"></div>
+          <svg viewBox="0 0 760 330" role="presentation">
+            <polyline points="20,280 70,250 120,265 170,210 220,165 270,190 320,140 370,152 420,118 470,135 520,112 570,128 620,115 670,121 730,110" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="canvas-note">Synthetic illustration for product explanation. It is not a market signal, benchmark case or model output.</p>
+      </div>
+
+      <div class="observation-stack">
+        {observations.map(([type, text]) => (
+          <article class={`observation panel ${type === 'MISSING' ? 'missing' : ''}`}>
+            <span>{type}</span>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule" id="method">
+    <div class="container section-head">
+      <div>
+        <div class="eyebrow">Competing hypotheses</div>
+        <h2 class="section-title">Keep more than one story alive.</h2>
+      </div>
+      <p class="lede">VisionAssist is designed to make disagreement inspectable instead of collapsing immediately to one confident answer.</p>
+    </div>
+
+    <div class="container hypothesis-grid">
+      {hypotheses.map(item => (
+        <article class="hypothesis panel">
+          <div class="hypothesis-top"><span>{item.id}</span><strong>{item.confidence}</strong></div>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+          <div class="counter"><small>COUNTEREVIDENCE / INVALIDATION</small><p>{item.counter}</p></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container revision-grid">
+      <div>
+        <div class="eyebrow">Human + AI revision</div>
+        <h2 class="section-title">The value is inspectable disagreement.</h2>
+        <p class="lede">A human prior can be recorded first, an AI assessment can challenge it independently, and the final revision can state exactly what changed — without turning either side into automatic authority.</p>
+      </div>
+
+      <div class="revision-flow panel">
+        <article><span>01</span><strong>Human prior</strong><p>Initial interpretation + confidence + counterevidence.</p></article>
+        <div class="arrow">→</div>
+        <article><span>02</span><strong>AI counterview</strong><p>Independent observations + alternative hypotheses.</p></article>
+        <div class="arrow">→</div>
+        <article class="accent"><span>03</span><strong>Revised assessment</strong><p>What changed, what did not, and what remains uncertain.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container boundary-grid">
+      <article class="panel boundary-card">
+        <div class="eyebrow">What is real today</div>
+        <h2>Evidence-grounded perception, still fail-closed.</h2>
+        <p>The current repository adds a deterministic market-observation adapter, evidence-bound detector reports, a six-case controlled trading-vision corpus, R4 integrity/calibration scoring and a SHADOW export into TradingOS visual evidence.</p>
+      </article>
+
+      <article class="panel boundary-card muted">
+        <div class="eyebrow">What this page does not claim</div>
+        <h2>No autonomous trading authority.</h2>
+        <p>No PnL benchmark, order route, signal permission, wallet access or capital permission is claimed here. Missing market context stays UNKNOWN/REVISE instead of being invented.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow source-block">
+      <div class="eyebrow">Source + Universe</div>
+      <h2 class="section-title">VISION is one bounded lane in the wider ecosystem.</h2>
+      <p class="lede">AI Skill Lab can teach the method. BitEvo can integrate bounded review workflows. Sovereign Twin may later provide purpose-limited private context. VisionAssist remains the visual-semantic cognition layer.</p>
+      <div class="actions center">
+        <a class="button button-primary" href="/universe">Back to BitEvo Universe</a>
+        <a class="button button-ghost" href="https://github.com/bitmaster162/VisionAssist" target="_blank" rel="noopener">Inspect public source <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
