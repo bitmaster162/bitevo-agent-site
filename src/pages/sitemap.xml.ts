@@ -25,6 +25,7 @@ const routes = [
   '/guides/fleet-coordinator-drift-monitoring',
   '/guides/d3-tool-io-bridge-contract',
   '/universe',
+  '/vision',
   '/ru',
   '/ru/doctrine',
   '/ru/artifacts',
@@ -40,7 +41,8 @@ const routes = [
   '/ru/continuityos',
   '/ru/guides',
   '/ru/build',
-  '/ru/universe'
+  '/ru/universe',
+  '/ru/vision'
 ];
 
 export function GET() {
