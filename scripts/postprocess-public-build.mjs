@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 const meta = JSON.parse(await readFile(join(root, 'src/generated/build-meta.json'), 'utf8'));
-const origin = 'https://bitevoagentsite.vercel.app';
+const origin = 'https://bitevo.work';
+const legacyOrigin = 'https://bitevoagentsite.vercel.app';
 
 const localizedPairs = [
   ['/', '/ru'],
@@ -73,6 +74,7 @@ let injectedGlobalLocaleSwitches = 0;
 let retainedRuLocaleBars = 0;
 for (const path of await walk(dist)) {
   let html = await readFile(path, 'utf8');
+  html = html.replaceAll(legacyOrigin, origin);
   const locale = localeByFile.get(path);
 
   if (!html.includes('name="bitevo-build-sha"')) {
