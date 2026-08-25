@@ -30,4 +30,4 @@ Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
 
-Sitemap: https://bitevoagentsite.vercel.app/sitemap.xml
+Sitemap: https://bitevo.work/sitemap.xml
