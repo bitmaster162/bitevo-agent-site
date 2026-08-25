@@ -1,6 +1,7 @@
 export const prerender = true;
 
 const base = 'https://bitevo.work';
+// Keep focused commercial routes explicit so release verification can bind each public offer to a canonical URL.
 const routes = [
   '/',
   '/doctrine',
