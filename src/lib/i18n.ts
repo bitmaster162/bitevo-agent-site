@@ -1,4 +1,4 @@
-export const SITE_ORIGIN = 'https://bitevoagentsite.vercel.app';
+export const SITE_ORIGIN = 'https://bitevo.work';
 
 export const supportedLocales = ['en', 'ru'] as const;
 export type SiteLocale = (typeof supportedLocales)[number];
