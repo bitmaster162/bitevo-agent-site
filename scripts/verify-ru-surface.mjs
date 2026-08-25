@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
-const siteOrigin = 'https://bitevoagentsite.vercel.app';
+const siteOrigin = 'https://bitevo.work';
 const routes = [
   ['/ru', '/'],
   ['/ru/doctrine', '/doctrine'],
