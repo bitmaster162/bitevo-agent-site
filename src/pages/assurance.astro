@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const systemExamples = [
+  ['AI agents', 'Tool use, write authority, approval gates, retries, rollback and external-effect confirmation.'],
+  ['Finance & ERP', 'Maker-checker, approval routing, reconciliations, payment or record writeback, and final-state evidence.'],
+  ['Voice & customer systems', 'Authentication, tool calls, CRM/backend actions, escalation and transcript-to-effect traceability.'],
+  ['Legal workflows', 'Matter access, drafting or redline authority, approval checkpoints, external sends and evidence of review.'],
+  ['Enterprise AI products', 'Tenant/data boundaries, SSO/RBAC, model/data claims, audit logs and procurement evidence.'],
+  ['Other consequential software', 'Any bounded workflow where a wrong permission, decision, action or recovery path can create a material effect.']
+];
+
+const evidenceDeliverables = [
+  'Buyer-question map',
+  'Claims-to-evidence ledger',
+  'Reusable Evidence Pack',
+  'Controlled questionnaire answer bank',
+  'Evidence-gap list with owners and actions'
+];
+
+const validationDeliverables = [
+  'One bounded staging control scenario',
+  'Expected allow / deny / hold / escalate decision',
+  'Observed downstream system effect',
+  'Reproducible evidence and trace',
+  'Finding + owner decision / repair criterion'
+];
+
+const steps = [
+  ['01', 'Bind the object', 'Choose one workflow, one consequential operation and the exact system/object that may be changed.'],
+  ['02', 'State the expected control', 'Define the permission, evidence, approval or transition rule that should govern the operation.'],
+  ['03', 'Exercise the boundary', 'Run an agreed staging/test scenario, including the relevant edge, revocation, retry or handoff condition.'],
+  ['04', 'Verify the effect', 'Confirm the actual downstream state rather than treating a tool response or internal status as proof.'],
+  ['05', 'Package the evidence', 'Return a bounded record of what was observed, what remains uncertain and what owner action follows.']
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'BitEvo System Assurance',
+  provider: { '@type': 'Organization', name: 'BitEvo', url: 'https://bitevo.work' },
+  serviceType: 'AI evidence readiness and bounded software security-control validation',
+  url: 'https://bitevo.work/assurance',
+  areaServed: 'Worldwide',
+  offers: [
+    { '@type': 'Offer', name: 'AI Evidence Readiness Sprint', price: '1500', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Security Control Validation', price: '1500', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Agent Authority & Evidence Primary Audit', price: '4900', priceCurrency: 'USD' }
+  ]
+};
+---
+
+<Layout
+  title="BitEvo System Assurance — Evidence Readiness & Security Control Validation"
+  description="Independent evidence readiness and bounded security-control validation for consequential AI and software workflows — not only agents."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <section class="assurance-hero section">
+    <div class="container hero-grid assurance-grid">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">SYSTEM ASSURANCE · EVIDENCE BEFORE EFFECT</div>
+        <h1 class="display">Validate the system that can change something consequential.</h1>
+        <p class="lede">BitEvo works beyond AI agents. We help teams make enterprise claims defensible and independently test one bounded control boundary in any consequential software workflow — finance, voice, legal, enterprise AI or another system with real permissions, decisions and external effects.</p>
+        <div class="hero-actions">
+          <a href="/audit-intake" class="button button-primary">Scope one workflow <span aria-hidden="true">↗</span></a>
+          <a href="#offers" class="button button-ghost">Compare the two entry offers</a>
+        </div>
+        <div class="hero-boundary"><span class="dot"></span> Fixed entry scope · staging/test by default · no production attack · written scope before testing</div>
+      </div>
+
+      <div class="assurance-console panel reveal delay-1" aria-label="Synthetic example control validation trace">
+        <div class="console-top"><span>SYSTEM CONTROL TRACE / SYNTHETIC</span><span class="status"><i></i> WORKED EXAMPLE</span></div>
+        <div class="trace-line"><span class="index">01</span><div><small>OPERATION</small><strong>write proposed to external system</strong></div><span class="state ok">bound</span></div>
+        <div class="trace-line"><span class="index">02</span><div><small>POLICY</small><strong>human approval required above threshold</strong></div><span class="state ok">expected</span></div>
+        <div class="trace-line"><span class="index">03</span><div><small>EDGE</small><strong>approval missing / state changed</strong></div><span class="state warn">challenged</span></div>
+        <div class="trace-line"><span class="index">04</span><div><small>EFFECT</small><strong>external write remains blocked</strong></div><span class="state ok">verified</span></div>
+        <div class="trace-result"><small>OUTPUT</small><strong>Expected control → observed effect → reproducible evidence.</strong><p>Synthetic example only. A real engagement is limited to the written scope and agreed test environment.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="signal-strip section-rule" aria-label="System assurance principles">
+    <div class="container strip-grid">
+      <div><small>OBJECT</small><strong>One bounded workflow</strong></div>
+      <div><small>ENTRY</small><strong>$1,500 fixed scope</strong></div>
+      <div><small>DEFAULT</small><strong>Staging / test</strong></div>
+      <div><small>OUTPUT</small><strong>Evidence for a decision</strong></div>
+    </div>
+  </section>
+
+  <section class="section section-rule" id="offers">
+    <div class="container split-head">
+      <div><div class="eyebrow">Two entry offers</div><h2 class="section-title">Do you need better evidence — or a real control test?</h2></div>
+      <p class="lede">The offers solve different problems. Evidence Readiness organizes and hardens what you can already prove. Security Control Validation exercises one agreed behavioral boundary and verifies the resulting system effect.</p>
+    </div>
+
+    <div class="container offer-grid">
+      <article class="offer-card panel">
+        <div class="offer-kicker">01 · PROCUREMENT / BUYER REVIEW</div>
+        <h3>AI Evidence Readiness Sprint</h3>
+        <div class="price"><strong>$1,500</strong><span>fixed · one AI product/workflow</span></div>
+        <p>For teams already facing security questionnaires, procurement review, DPA/subprocessor requests, architecture questions or repeated claims-to-evidence work.</p>
+        <ul>{evidenceDeliverables.map(item => <li>{item}</li>)}</ul>
+        <div class="offer-boundary"><strong>5 business days</strong> after complete inputs. This is evidence readiness — not certification, legal advice or a penetration test.</div>
+        <a href="/audit-intake" class="button">Scope Evidence Readiness →</a>
+      </article>
+
+      <article class="offer-card panel offer-primary">
+        <div class="offer-kicker">02 · BEHAVIOR / CONTROL BOUNDARY</div>
+        <h3>Security Control Validation</h3>
+        <div class="price"><strong>$1,500</strong><span>fixed · one bounded staging scenario</span></div>
+        <p>For a system that can read sensitive data, make a consequential decision, call a tool, change a record, trigger a payment, send an external action or cross an approval boundary.</p>
+        <ul>{validationDeliverables.map(item => <li>{item}</li>)}</ul>
+        <div class="offer-boundary"><strong>Independent validation.</strong> Not a pentest, certification, statutory/accredited audit, legal opinion or compliance-pass guarantee.</div>
+        <a href="/audit-intake" class="button button-primary">Scope one control boundary →</a>
+      </article>
+    </div>
+
+    <div class="container primary-audit panel">
+      <div><div class="eyebrow">Deeper agent-specific work</div><h3>Agent Authority & Evidence Primary Audit — $4,900</h3><p>When one entry scenario is not enough, the existing Primary Audit remains the deeper specialized offer for action-capable AI-agent workflows: authority/effect mapping, 10–20 agreed scenarios, finding cards, evidence pack, repair backlog and one retest.</p></div>
+      <a href="/agent-authority-audit" class="button">Open Primary Audit →</a>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head">
+      <div><div class="eyebrow">Not agent-only</div><h2 class="section-title">The object is the consequential workflow.</h2></div>
+      <p class="lede">“Finance”, “voice” and “legal” are examples — not separate BitEvo service lines. The same validation model applies whenever a system has a bounded permission, decision, action, handoff or recovery path that matters.</p>
+    </div>
+    <div class="container system-grid">
+      {systemExamples.map(([title, text], i) => (
+        <article class="system-card panel"><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split-head">
+      <div><div class="eyebrow">Validation method</div><h2 class="section-title">One operation. One expected control. One observed effect.</h2></div>
+      <p class="lede">A useful engagement stays narrow enough to reproduce. The goal is not to declare a whole product “safe”; it is to produce evidence strong enough for one owner decision.</p>
+    </div>
+    <div class="container step-list">
+      {steps.map(([n, title, text]) => (
+        <article><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container evidence-example panel">
+      <div class="example-copy">
+        <div class="eyebrow">What the evidence looks like</div>
+        <h2 class="section-title">A short record that another reviewer can replay.</h2>
+        <p class="lede">The useful artifact is not a decorative score. It binds the intended operation, authority/policy state, evidence available at decision time, observed system effect, limitations and next owner action.</p>
+      </div>
+      <div class="evidence-table" role="table" aria-label="Synthetic validation evidence example">
+        <div role="row"><span role="cell">operation</span><strong role="cell">approve_and_write_invoice_exception</strong></div>
+        <div role="row"><span role="cell">expected</span><strong role="cell">HOLD until human approval</strong></div>
+        <div role="row"><span role="cell">edge</span><strong role="cell">approval absent + record version changed</strong></div>
+        <div role="row"><span role="cell">observed</span><strong role="cell">write blocked; no external state change</strong></div>
+        <div role="row"><span role="cell">evidence</span><strong role="cell">policy version · decision trace · system readback</strong></div>
+        <div role="row"><span role="cell">owner decision</span><strong role="cell">retain control / define retest trigger</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container boundary-grid">
+      <article class="panel"><div class="eyebrow">Included by default</div><h3>Bounded engineering evidence.</h3><p>Agreed staging/test scenario, observable behavior, downstream readback, evidence packaging and a clearly stated residual uncertainty.</p></article>
+      <article class="panel"><div class="eyebrow">Not included by default</div><h3>No generic security theater.</h3><p>No production exploitation, vulnerability disclosure exercise, certification, statutory audit, legal opinion, guaranteed procurement outcome or claim that one passing scenario proves the whole system safe.</p></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container final-cta panel">
+      <div><div class="eyebrow">Start narrow</div><h2 class="section-title">Bring one workflow that matters.</h2><p class="lede">If the problem is repeated buyer review, start with Evidence Readiness. If the problem is whether a control actually holds when the system acts, start with Security Control Validation.</p></div>
+      <div class="cta-actions"><a href="/audit-intake" class="button button-primary">Prepare a scope brief <span aria-hidden="true">↗</span></a><a href="/proof" class="button">See BitEvo proof discipline</a></div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .assurance-grid{align-items:center}.assurance-console{padding:0;overflow:hidden}.offer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.offer-card{padding:clamp(26px,4vw,44px);display:flex;flex-direction:column;align-items:flex-start}.offer-primary{border-color:rgba(127,208,177,.32);box-shadow:var(--glow-green)}.offer-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--green);margin-bottom:12px}.offer-card h3,.primary-audit h3,.system-card h3,.boundary-grid h3{font-size:clamp(22px,2.8vw,34px);line-height:1.12;margin:0 0 14px}.offer-card p{color:var(--ink-soft)}.price{display:flex;align-items:baseline;gap:12px;margin:8px 0 14px}.price strong{font-size:32px}.price span{font-family:var(--mono);font-size:11px;color:var(--muted)}.offer-card ul{list-style:none;padding:0;margin:12px 0 20px;width:100%}.offer-card li{padding:9px 0;border-top:1px solid var(--line);color:var(--ink-soft)}.offer-card li::before{content:'✓';color:var(--green);margin-right:10px}.offer-boundary{font-size:13px;color:var(--muted);padding:14px;border:1px solid var(--line);border-radius:var(--radius-sm);margin:auto 0 20px;width:100%}.primary-audit{margin-top:18px;padding:24px 28px;display:flex;justify-content:space-between;gap:28px;align-items:center}.primary-audit p{max-width:780px;color:var(--muted);margin:8px 0 0}.system-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.system-card{padding:24px}.system-card>span{font-family:var(--mono);font-size:11px;color:var(--green)}.system-card h3{font-size:20px;margin-top:24px}.system-card p{color:var(--muted);margin-bottom:0}.step-list{border-top:1px solid var(--line)}.step-list article{display:grid;grid-template-columns:70px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}.step-list span{font-family:var(--mono);color:var(--green)}.step-list h3{margin:0 0 4px;font-size:20px}.step-list p{margin:0;color:var(--muted)}.evidence-example{padding:clamp(26px,5vw,54px);display:grid;grid-template-columns:.8fr 1.2fr;gap:38px;align-items:center}.evidence-table{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:rgba(0,0,0,.16)}.evidence-table>div{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line)}.evidence-table>div:last-child{border-bottom:0}.evidence-table span{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase}.evidence-table strong{font-family:var(--mono);font-size:12px;font-weight:600;overflow-wrap:anywhere}.boundary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.boundary-grid article{padding:30px}.boundary-grid p{color:var(--muted);margin-bottom:0}.final-cta{padding:clamp(30px,6vw,64px);display:flex;justify-content:space-between;align-items:center;gap:34px}.final-cta .lede{max-width:700px}.cta-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:900px){.offer-grid,.system-grid,.evidence-example,.boundary-grid{grid-template-columns:1fr}.primary-audit,.final-cta{align-items:flex-start;flex-direction:column}.cta-actions{justify-content:flex-start}.evidence-table>div{grid-template-columns:120px 1fr}}
+  @media(max-width:560px){.evidence-table>div{grid-template-columns:1fr;gap:3px}.step-list article{grid-template-columns:46px 1fr}.price{flex-direction:column;gap:2px}}
+</style>
