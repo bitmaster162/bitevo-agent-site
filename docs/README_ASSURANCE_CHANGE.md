@@ -1,1 +1,0 @@
-System Assurance change set is isolated on branch `agent/system-assurance-offer` and is intended for review before merge to `main`. See `system-assurance-release-note.md` for validation state.
