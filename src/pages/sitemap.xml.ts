@@ -1,6 +1,6 @@
 export const prerender = true;
 
-const base = 'https://bitevoagentsite.vercel.app';
+const base = 'https://bitevo.work';
 const routes = [
   '/',
   '/doctrine',
