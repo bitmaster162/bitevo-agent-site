@@ -1,9 +1,9 @@
 {
   "schema": "bitevo.csp-inline-allowlist/v1",
   "observedFrom": {
-    "deployment": "dpl_FR7Z2vQvE7QwY7pT4promqnh73Cd",
-    "sourceSha": "05de6e17206c99020fd00c086d2e7cd5d09c256d",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The assurance JSON-LD block was separately reviewed and added on 2026-08-26; any new or removed hash must fail the release gate until explicitly reviewed."
+    "deployment": "dpl_26qRzpY2VZ3CGyd5ZbJTQuchZuys",
+    "sourceSha": "09e3e743593d0a6c2d774ffa52c56cdfc09a927e",
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. Focused commercial lane styles are reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed."
   },
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
@@ -44,6 +44,7 @@
     "gfJ+E7u6Uit/y4urTjiO1RvsYrnSUfS3p83aXiyLm/A=",
     "KKJF9aJP8tf3lLdpNazrbnk48Zk5FnsRnQTbYboJG0E=",
     "HrCoqMHknRtj0KL8Qjc8uFre9D0qxXXAH1yFaSgLiPI=",
-    "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4="
+    "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4=",
+    "D1yI/XU7fOucbisZLoef8dLOYoXCX+4EOKso9sKCSVU="
   ]
 }

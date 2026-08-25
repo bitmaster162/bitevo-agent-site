@@ -15,6 +15,8 @@ const routes = [
   '/sample-deployment',
   '/diagnostic',
   '/assurance',
+  '/control-validation',
+  '/phuket-ai-workflow',
   '/agent-authority-audit',
   '/audit-intake',
   '/pricing',
