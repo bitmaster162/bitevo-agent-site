@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
 const repoRootPath = fileURLToPath(new URL('../', import.meta.url));
-const siteOrigin = 'https://bitevoagentsite.vercel.app';
+const siteOrigin = 'https://bitevo.work';
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
