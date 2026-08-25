@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const flow = [
+  ['01', 'Inbound enquiry arrives', 'Use an existing guest or owner enquiry channel. No scraping and no unsolicited cold automation.'],
+  ['02', 'Approved questions qualify it', 'Ask only the FAQ and qualification questions the property team has approved.'],
+  ['03', 'Lead becomes structured', 'Capture dates, party, property interest, budget/requirements when supplied, and the exact unresolved questions.'],
+  ['04', 'Human handoff happens early', 'Route the qualified brief to the reservations, owner-relations or manager workflow instead of pretending the AI closes the deal.'],
+  ['05', 'Bounded follow-up', 'Follow up only after the guest or owner initiated contact and only within the agreed workflow.']
+];
+
+const fits = [
+  ['Villa & property managers', 'Turn fragmented WhatsApp, email or web enquiries into one qualified brief before a human takes over.'],
+  ['Boutique hotels & resorts', 'Reduce repeated FAQ work and give reservations a structured handoff with the context already collected.'],
+  ['Rental & owner-service teams', 'Separate guest, owner and operational requests early and notify the right person without losing the original context.']
+];
+---
+
+<Layout
+  title="Phuket AI Workflow Setup — BitEvo"
+  description="A THB 15,000 first-client pilot for one existing Phuket hospitality or property enquiry workflow: qualification, structured capture and human handoff."
+>
+  <section class="ph-hero section">
+    <div class="container ph-grid">
+      <div>
+        <div class="eyebrow">PHUKET AI WORKFLOW SETUP · FIRST 3 CLIENTS</div>
+        <h1 class="display">Turn one inbound enquiry flow into a qualified human handoff.</h1>
+        <p class="lede">BitEvo sets up one existing guest or owner enquiry workflow for Phuket property and hospitality teams: approved FAQ, qualification, structured lead capture, manager notification and bounded follow-up after the customer initiates contact.</p>
+        <div class="price-line"><strong>THB 15,000</strong><span>fixed pilot · first 3 clients</span></div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="mailto:robert@bitevo.work?subject=Phuket%20AI%20Workflow%20Setup">Request a pilot slot <span aria-hidden="true">↗</span></a>
+          <a class="button button-ghost" href="/consulting">See BitEvo services</a>
+        </div>
+      </div>
+      <div class="panel flow-card">
+        <div class="flow-top"><span>INBOUND → QUALIFIED BRIEF → HUMAN</span><span>ONE WORKFLOW</span></div>
+        <div class="mini-flow"><span>Guest / owner enquiry</span><i>→</i><span>Approved AI qualification</span><i>→</i><span>Structured brief</span><i>→</i><span>Human handoff</span></div>
+        <div class="boundary"><strong>Boundary:</strong> the pilot does not scrape private groups, send autonomous unsolicited messages, or replace the reservations/property team.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split">
+      <div><div class="eyebrow">What gets built</div><h2 class="section-title">One practical workflow, not a generic chatbot.</h2></div>
+      <p class="lede">The goal is to remove repeated intake work and preserve context before a human takes over. The pilot starts from a channel and enquiry type the business already receives.</p>
+    </div>
+    <div class="container steps">
+      {flow.map(([n,title,text]) => <article><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split">
+      <div><div class="eyebrow">Best fit</div><h2 class="section-title">Teams where response quality matters more than another inbox.</h2></div>
+      <p class="lede">This is a service-first setup for a real existing workflow. It is not an autonomous “client hunter” product and it does not require changing the whole property stack.</p>
+    </div>
+    <div class="container fit-grid">
+      {fits.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container scope-grid">
+      <article class="panel"><div class="eyebrow">Pilot includes</div><h2>Qualification + handoff.</h2><ul><li>One existing inbound enquiry workflow</li><li>Approved FAQ / qualification logic</li><li>Structured lead or request brief</li><li>Human handoff + owner/manager notification</li><li>Bounded follow-up after inbound initiation</li></ul></article>
+      <article class="panel"><div class="eyebrow">Pilot does not include</div><h2>No unsolicited automation.</h2><ul><li>No scraping private groups or private contact lists</li><li>No autonomous cold messaging</li><li>No fake human identity or invented guest details</li><li>No replacing final sales, booking or owner decisions</li><li>No broad multi-department transformation inside the fixed pilot</li></ul></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container final panel">
+      <div><div class="eyebrow">First 3 clients · THB 15,000</div><h2 class="section-title">Bring one enquiry flow that already costs your team time.</h2><p class="lede">The qualification call is used to choose one bounded workflow, confirm the approved questions and handoff owner, and decide whether the fixed pilot is a fit.</p></div>
+      <a class="button button-primary" href="mailto:robert@bitevo.work?subject=Phuket%20AI%20Workflow%20Setup">Ask for a pilot slot →</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .ph-hero{overflow:hidden}.ph-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr);gap:clamp(38px,6vw,82px);align-items:center}.price-line{display:flex;align-items:baseline;gap:14px;margin-top:24px}.price-line strong{font-size:clamp(1.8rem,3.3vw,3rem);letter-spacing:-.04em}.price-line span{color:var(--muted);font:600 .68rem/1.3 var(--mono)}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.flow-card{overflow:hidden}.flow-top{display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);color:var(--muted);font:600 .6rem/1.2 var(--mono);letter-spacing:.08em}.mini-flow{display:grid;gap:10px;padding:24px}.mini-flow span{display:block;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02);font-weight:700}.mini-flow i{font-style:normal;color:var(--green);padding-left:15px}.boundary{padding:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem;line-height:1.6}.boundary strong{color:var(--ink-soft)}.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);gap:clamp(28px,6vw,76px);align-items:end;margin-bottom:34px}.split .lede{margin:0}.steps{border-top:1px solid var(--line)}.steps article{display:grid;grid-template-columns:58px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}.steps span,.fit-grid article>span{color:var(--green);font:600 .65rem/1.2 var(--mono)}.steps h3{margin:0 0 5px;font-size:1.18rem}.steps p{margin:0;color:var(--muted)}.fit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.fit-grid article{padding:28px}.fit-grid h3{margin:22px 0 10px;font-size:1.28rem}.fit-grid p{margin:0;color:var(--muted)}.scope-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.scope-grid article{padding:32px}.scope-grid h2{margin:0 0 18px;font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.035em}.scope-grid ul{list-style:none;padding:0;margin:0}.scope-grid li{padding:10px 0;border-top:1px solid var(--line);color:var(--ink-soft)}.scope-grid li::before{content:'→';color:var(--green);margin-right:10px}.final{display:flex;align-items:center;justify-content:space-between;gap:34px;padding:clamp(30px,5vw,56px)}.final .lede{margin-bottom:0;max-width:760px}.final .button{flex:0 0 auto}@media(max-width:980px){.ph-grid,.split{grid-template-columns:1fr}.flow-card{max-width:760px}.fit-grid{grid-template-columns:1fr}.final{align-items:flex-start;flex-direction:column}}@media(max-width:640px){.scope-grid{grid-template-columns:1fr}.price-line{align-items:flex-start;flex-direction:column;gap:4px}.steps article{grid-template-columns:42px 1fr}.final .button{width:100%}}
+</style>
