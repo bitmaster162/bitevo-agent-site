@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const deliverables = [
+  'Buyer-question map for one AI product or workflow',
+  'Claims-to-evidence ledger tied to current supporting material',
+  'Reusable Evidence Pack for buyer and procurement review',
+  'Controlled questionnaire answer bank',
+  'Evidence-gap list with owners and concrete next actions'
+];
+
+const fit = [
+  ['Security questionnaires', 'Your team repeatedly answers the same buyer-security questions by hand.'],
+  ['DPA / subprocessor review', 'Enterprise buyers ask for contractual and data-handling evidence before signature.'],
+  ['Architecture & AI claims', 'Sales, product and security need one defensible source for what the system actually does.'],
+  ['Formal assurance still in progress', 'Current controls may be real even when SOC 2, ISO or other attestations are incomplete or not yet available.']
+];
+---
+
+<Layout
+  title="AI Evidence Readiness Sprint — BitEvo"
+  description="A fixed $1,500 five-business-day sprint that turns one AI product or workflow's existing claims and controls into reusable buyer-review evidence."
+>
+  <section class="section">
+    <div class="container">
+      <div class="eyebrow">AI EVIDENCE READINESS · FIXED $1,500</div>
+      <h1 class="display">Turn repeated enterprise-review answers into one defensible evidence pack.</h1>
+      <p class="lede">For one AI product or workflow, BitEvo maps buyer questions to the evidence you already have, packages reusable review material, and identifies what is still missing. Delivery is within 5 business days after complete inputs.</p>
+      <p><a class="button button-primary" href="/audit-intake">Scope Evidence Readiness <span aria-hidden="true">↗</span></a> <a class="button button-ghost" href="/assurance">Compare System Assurance offers</a></p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">What you get</div>
+      <h2 class="section-title">A reusable evidence layer for buyer review.</h2>
+      <div class="panel">
+        <ul>
+          {deliverables.map(item => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Best fit</div>
+      <h2 class="section-title">When enterprise review is real but the evidence is still assembled manually.</h2>
+      {fit.map(([title, text]) => (
+        <article class="panel">
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Boundary</div>
+      <h2 class="section-title">Evidence readiness is not certification.</h2>
+      <div class="panel">
+        <p>BitEvo does not issue SOC 2 or ISO certification, provide an accredited/statutory audit, give legal advice, perform a penetration test under this fixed scope, or guarantee that procurement will approve the product.</p>
+        <p>The output is a bounded, current record of what you can support today, what remains uncertain, and what evidence work should happen next.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container panel">
+      <div class="eyebrow">Fixed entry scope</div>
+      <h2 class="section-title">One product or workflow. $1,500. Five business days.</h2>
+      <p class="lede">The qualification call is used to confirm the product boundary, current buyer-review burden, available inputs and whether the fixed sprint is a fit.</p>
+      <a class="button button-primary" href="/audit-intake">Prepare the scope brief →</a>
+    </div>
+  </section>
+</Layout>
