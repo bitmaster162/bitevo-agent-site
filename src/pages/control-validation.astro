@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const examples = [
+  ['Finance / accounting', 'A journal entry, reconciliation, payment or ERP write must stay held until the correct approval and current record state are present.'],
+  ['CRM / revenue systems', 'A proposed customer-record change must remain blocked or constrained until identity, scope and approval conditions are satisfied.'],
+  ['Voice / customer operations', 'A voice or support workflow may call a backend tool only after the required authentication or escalation boundary is met.'],
+  ['Legal workflows', 'A draft, matter update or external send must not cross the review boundary without the designated approval and current document state.'],
+  ['Property / hospitality', 'A vendor, guest, owner or operational action must remain inside its approval cap and be confirmed in the downstream system.'],
+  ['Industrial / manufacturing', 'A production, procurement or workbench change must stay review-gated and leave a replayable action/approval trace.']
+];
+
+const deliverables = [
+  'One bounded staging/test control scenario',
+  'Expected ALLOW / DENY / HOLD / ESCALATE outcome',
+  'Observed downstream system effect or readback',
+  'Reproducible evidence and decision trace',
+  'Finding, owner decision and repair/retest criterion'
+];
+---
+
+<Layout
+  title="Security Control Validation — BitEvo"
+  description="Independent validation of one consequential software control boundary: expected decision, observed downstream effect and reproducible evidence."
+>
+  <section class="cv-hero section">
+    <div class="container cv-hero-grid">
+      <div>
+        <div class="eyebrow">SECURITY CONTROL VALIDATION · FIXED $1,500</div>
+        <h1 class="display">Test one control where the software can actually change something.</h1>
+        <p class="lede">Choose one consequential staging/test operation. We state what should be allowed, denied, held or escalated, exercise the agreed edge condition, verify the real downstream state, and package the evidence for an owner decision.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/audit-intake">Scope one control boundary <span aria-hidden="true">↗</span></a>
+          <a class="button button-ghost" href="/assurance">Back to System Assurance</a>
+        </div>
+      </div>
+      <div class="panel control-card">
+        <div class="card-top"><span>BOUNDED CONTROL TRACE</span><span>$1,500</span></div>
+        <ol>
+          <li><span>01</span><div><small>OPERATION</small><strong>Bind one consequential action.</strong></div></li>
+          <li><span>02</span><div><small>EXPECTED CONTROL</small><strong>Define ALLOW / DENY / HOLD / ESCALATE.</strong></div></li>
+          <li><span>03</span><div><small>EDGE</small><strong>Exercise the agreed approval, identity, state or revocation condition.</strong></div></li>
+          <li><span>04</span><div><small>EFFECT</small><strong>Read the downstream system, not just the tool response.</strong></div></li>
+          <li><span>05</span><div><small>DECISION</small><strong>Return evidence, residual uncertainty and retest criterion.</strong></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split">
+      <div><div class="eyebrow">The entry scope</div><h2 class="section-title">Narrow enough to reproduce. Real enough to matter.</h2></div>
+      <p class="lede">This is for software with a meaningful permission, decision, tool call, record change, external send, payment, approval or handoff boundary. It is not limited to AI agents.</p>
+    </div>
+    <div class="container deliverables panel">
+      {deliverables.map((item, i) => <div><span>{String(i + 1).padStart(2, '0')}</span><strong>{item}</strong></div>)}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split">
+      <div><div class="eyebrow">Examples, not verticals</div><h2 class="section-title">The same method applies across consequential workflows.</h2></div>
+      <p class="lede">Finance, CRM, voice, legal, property and manufacturing are examples of system types. They are not separate BitEvo service lines.</p>
+    </div>
+    <div class="container example-grid">
+      {examples.map(([title, text], i) => <article class="panel"><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container boundaries">
+      <article class="panel"><div class="eyebrow">Included</div><h2>Independent engineering evidence.</h2><p>Agreed staging/test scenario, expected control outcome, observed behavior, downstream readback, reproducible evidence, residual uncertainty and an owner decision.</p></article>
+      <article class="panel"><div class="eyebrow">Not included</div><h2>No security theater.</h2><p>No production exploitation, generic penetration test, certification, statutory/accredited audit, legal opinion, compliance-pass guarantee or claim that one passing scenario proves the whole system safe.</p></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container final panel">
+      <div><div class="eyebrow">Start with one operation</div><h2 class="section-title">If the control matters, make the outcome observable.</h2><p class="lede">Bring one workflow and the action you need confidence in. BitEvo will determine whether it fits the fixed entry scope before testing begins.</p></div>
+      <a class="button button-primary" href="/audit-intake">Prepare the scope brief →</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .cv-hero{overflow:hidden}.cv-hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr);gap:clamp(38px,6vw,82px);align-items:center}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.control-card{overflow:hidden}.card-top{display:flex;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line);color:var(--muted);font:600 .62rem/1.2 var(--mono);letter-spacing:.08em}.control-card ol{list-style:none;margin:0;padding:0}.control-card li{display:grid;grid-template-columns:36px 1fr;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line)}.control-card li:last-child{border-bottom:0}.control-card li>span{color:var(--green);font:600 .66rem/1.2 var(--mono)}.control-card li div{display:flex;flex-direction:column;gap:4px}.control-card small{color:var(--muted);font:600 .57rem/1.2 var(--mono);letter-spacing:.1em}.control-card strong{font-size:.88rem;line-height:1.4}.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);gap:clamp(28px,6vw,76px);align-items:end;margin-bottom:34px}.split .lede{margin:0}.deliverables{padding:0 28px}.deliverables>div{display:grid;grid-template-columns:54px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}.deliverables>div:last-child{border-bottom:0}.deliverables span,.example-grid article>span{color:var(--green);font:600 .65rem/1.2 var(--mono)}.example-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.example-grid article{padding:26px}.example-grid h3{margin:22px 0 9px;font-size:1.25rem}.example-grid p,.boundaries p{margin:0;color:var(--muted)}.boundaries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.boundaries article{padding:32px}.boundaries h2{margin:0 0 14px;font-size:clamp(1.55rem,3vw,2.4rem);letter-spacing:-.035em}.final{display:flex;align-items:center;justify-content:space-between;gap:34px;padding:clamp(30px,5vw,56px)}.final .lede{margin-bottom:0;max-width:760px}.final .button{flex:0 0 auto}@media(max-width:980px){.cv-hero-grid,.split{grid-template-columns:1fr}.control-card{max-width:760px}.example-grid{grid-template-columns:1fr 1fr}.final{align-items:flex-start;flex-direction:column}}@media(max-width:640px){.example-grid,.boundaries{grid-template-columns:1fr}.deliverables{padding:0 18px}.deliverables>div{grid-template-columns:38px 1fr}.final .button{width:100%}}
+</style>
