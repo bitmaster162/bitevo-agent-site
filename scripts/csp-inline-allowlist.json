@@ -1,9 +1,9 @@
 {
   "schema": "bitevo.csp-inline-allowlist/v1",
   "observedFrom": {
-    "deployment": "dpl_CMgTzoC9dJHNj5Zobx6mmPRVgLnn",
-    "sourceSha": "f8e6d03a38ddc799f82b5b4533d9269cf5fbe0f8",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed custom-domain migration candidate. Any new or removed hash must fail the release gate until explicitly reviewed."
+    "deployment": "dpl_FR7Z2vQvE7QwY7pT4promqnh73Cd",
+    "sourceSha": "05de6e17206c99020fd00c086d2e7cd5d09c256d",
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The assurance JSON-LD block was separately reviewed and added on 2026-08-26; any new or removed hash must fail the release gate until explicitly reviewed."
   },
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
@@ -15,7 +15,8 @@
     "cCgBv+YSz85Uv5B9O9/qNxrKn3Lusy/Kog1ppRg2wKA=",
     "+EQuKURjXcHGF8VPDg/rwG+y4f3AU/is/eM6bC10tXk=",
     "ViMFOCFRTytZPXHFAJs0Uunpn0q04K8tJpLtJ1Ca92k=",
-    "N/VFMCRqc/DbmBJMyBttUdgTGApVdZkP/fyufRW/qjE="
+    "N/VFMCRqc/DbmBJMyBttUdgTGApVdZkP/fyufRW/qjE=",
+    "/mc54KxmNBh5K+s5oI/o0oIIsOPAGz9ZnggWK33OBlc="
   ],
   "styles": [
     "DYItNtnaKh/fA+fqchPEtty29+5Lbrwq2lnYkuE81O0=",
