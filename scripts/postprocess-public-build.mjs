@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 const meta = JSON.parse(await readFile(join(root, 'src/generated/build-meta.json'), 'utf8'));
-const origin = 'https://bitevoagentsite.vercel.app';
+const origin = 'https://bitevo.work';
 
 const localizedPairs = [
   ['/', '/ru'],
