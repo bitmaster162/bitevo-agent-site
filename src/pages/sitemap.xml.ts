@@ -14,6 +14,7 @@ const routes = [
   '/sample-message',
   '/sample-deployment',
   '/diagnostic',
+  '/assurance',
   '/agent-authority-audit',
   '/audit-intake',
   '/pricing',
