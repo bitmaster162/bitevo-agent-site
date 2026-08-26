@@ -19,6 +19,7 @@ const routes = [
   '/evidence-readiness',
   '/control-validation',
   '/phuket-ai-workflow',
+  '/operator',
   '/agent-authority-audit',
   '/audit-intake',
   '/pricing',
