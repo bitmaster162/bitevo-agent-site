@@ -1,9 +1,9 @@
 {
   "schema": "bitevo.csp-inline-allowlist/v1",
   "observedFrom": {
-    "deployment": "dpl_26qRzpY2VZ3CGyd5ZbJTQuchZuys",
-    "sourceSha": "09e3e743593d0a6c2d774ffa52c56cdfc09a927e",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. Focused commercial lane styles are reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed."
+    "deployment": "dpl_BN4Rp3mJe85vWdi5HdFTqCfJGprC",
+    "sourceSha": "28b496e12aab5176cae19de6392c5ee01e8223e6",
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed."
   },
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
@@ -16,7 +16,8 @@
     "+EQuKURjXcHGF8VPDg/rwG+y4f3AU/is/eM6bC10tXk=",
     "ViMFOCFRTytZPXHFAJs0Uunpn0q04K8tJpLtJ1Ca92k=",
     "N/VFMCRqc/DbmBJMyBttUdgTGApVdZkP/fyufRW/qjE=",
-    "/mc54KxmNBh5K+s5oI/o0oIIsOPAGz9ZnggWK33OBlc="
+    "/mc54KxmNBh5K+s5oI/o0oIIsOPAGz9ZnggWK33OBlc=",
+    "cn1YZT1QfdoFyEeK6YQb2fneJj4pkL6uMj+MGrng7FI="
   ],
   "styles": [
     "DYItNtnaKh/fA+fqchPEtty29+5Lbrwq2lnYkuE81O0=",
@@ -45,6 +46,7 @@
     "KKJF9aJP8tf3lLdpNazrbnk48Zk5FnsRnQTbYboJG0E=",
     "HrCoqMHknRtj0KL8Qjc8uFre9D0qxXXAH1yFaSgLiPI=",
     "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4=",
-    "D1yI/XU7fOucbisZLoef8dLOYoXCX+4EOKso9sKCSVU="
+    "D1yI/XU7fOucbisZLoef8dLOYoXCX+4EOKso9sKCSVU=",
+    "KubYyPRUxewNFub0v6KyF9FnIYMW/bzMaYTSaJ1D9bo="
   ]
 }
