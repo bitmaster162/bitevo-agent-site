@@ -11,6 +11,7 @@ const routes = [
   '/mapper',
   '/workspace',
   '/build',
+  '/build/exception-workflow-diagnostic',
   '/sample-audit',
   '/sample-message',
   '/sample-deployment',
