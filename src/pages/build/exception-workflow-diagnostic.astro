@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const deliverables = [
+  ['01', 'Workflow boundary', 'One named exception workflow with start event, stop event, owner, reviewer and explicit out-of-scope actions.'],
+  ['02', 'Field dictionary', 'Required, optional, conflicting and sensitive fields mapped from synthetic, redacted or schema-only inputs.'],
+  ['03', 'Exception rubric', 'Missing, conflicting, identity, policy, payroll-impact, duplicate and ambiguous cases mapped to review, hold or reject states.'],
+  ['04', 'Human-review packet', 'Every proposed internal effect has an explicit approval field, receipt/readback field and no-live-write boundary.'],
+  ['05', 'Evidence handoff', 'Workflow map, rubric, limitations, unresolved questions, acceptance result and next-decision queue.']
+];
+const proof = [
+  ['12 / 12', 'Fixed synthetic cases executed locally/offline'],
+  ['8 / 8', 'Acceptance criteria passed'],
+  ['5 / 5', 'Injected interruption / replay cases passed'],
+  ['12', 'Red-team action classes blocked with zero real effects']
+];
+const noFit = [
+  'Candidate or employee communications',
+  'ATS, HRIS, payroll, calendar or employment-record changes',
+  'Hiring, rejection, offer or eligibility decisions',
+  'Identity / access provisioning, payments, signatures or account creation',
+  'Production deployment, external API mutation, live migration or bulk correction',
+  'Compliance certification, ROI, savings, headcount, accuracy, SLA or customer-outcome guarantees'
+];
+---
+
+<Layout title="Thailand/SEA HR Workflow Diagnostic | BitEvo BUILD" description="Map one recurring Thailand/SEA recruiting, HR or workforce exception workflow in five business days. Receive a human-review packet, bounded internal readback and evidence handoff without candidate contact or production-system changes.">
+  <section class="bd-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">BITEVO BUILD · FIVE-DAY DIAGNOSTIC · USD 3,000</div>
+        <h1 class="display">Make one recurring HR exception reviewable in five business days.</h1>
+        <p class="lede">BitEvo maps one Thailand/SEA recruiting, HR or workforce exception workflow and produces a human-approved review packet, bounded internal task readback and evidence handoff—without contacting candidates or changing ATS, HRIS, payroll, calendar or employment records.</p>
+        <div class="hero-actions"><a class="button button-primary" href="mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification">Request a 20-minute qualification call <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="#scope">See the five-day scope</a></div>
+      </div>
+      <aside class="panel scope-card">
+        <div class="scope-top"><span>FIRST COMMERCIAL SCOPE</span><strong>$3,000</strong></div>
+        <div class="scope-row"><small>TIMEBOX</small><b>5 business days</b></div>
+        <div class="scope-row"><small>INPUTS</small><b>Synthetic, redacted or schema-only</b></div>
+        <div class="scope-row"><small>CONTROL</small><b>Human review before any bounded internal effect</b></div>
+        <div class="scope-row"><small>PRODUCTION</small><b>No live-system write</b></div>
+        <div class="scope-row"><small>OUTPUT</small><b>Review packet + readback specification + evidence handoff</b></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-rule" id="scope">
+    <div class="container section-head"><div><div class="eyebrow">Five-day scope</div><h2 class="section-title">One workflow. Explicit fields. Human gate. Evidence.</h2></div><p class="lede">The first phase starts before integration. We isolate the exception, make its review states explicit, and define what evidence would be required before any deeper system work is considered.</p></div>
+    <div class="container deliverable-grid">{deliverables.map(([n,title,text]) => <article class="panel deliverable"><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split">
+      <div><div class="eyebrow">Where it fits</div><h2 class="section-title">For recurring workforce exceptions with a named owner.</h2><p class="lede">Typical fits include multi-site hospitality, retail, healthcare, manufacturing, logistics, aviation, staffing, recruiting, RPO/BPO, technology, education and shared-services teams where one recurring packet, approval, site-readiness or handoff exception can be isolated safely.</p></div>
+      <div class="panel qualification"><div><small>GO</small><strong>One recurring exception, one owner, one reviewer, safe inputs, no first-phase production write.</strong></div><div><small>HOLD</small><strong>Ownership, data boundary or required system access is unclear.</strong></div><div><small>NO-FIT</small><strong>The first phase requires candidate contact, employment decisions or production mutation.</strong></div></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container section-head"><div><div class="eyebrow">Local synthetic proof</div><h2 class="section-title">Measured locally. Not generalized to production.</h2></div><p class="lede">The current proof is deliberately narrow: a fixed offline synthetic corpus and safety harness. It supports the diagnostic method, not claims about arbitrary customer data, production integrations, language quality, compliance, ROI or SLA.</p></div>
+    <div class="container proof-grid">{proof.map(([value,label]) => <div class="panel proof-card"><strong>{value}</strong><span>{label}</span></div>)}</div>
+    <div class="container proof-note panel"><strong>Evidence boundary</strong><p>The local proof also verified bounded readback, one-effect preservation across replay cases, corrupted-state rejection and sealed evidence bundles. It did not test ATS/HRIS/payroll connectors, customer systems, Thai/SEA language quality, legal/compliance treatment, production volume, latency, availability, vendor resilience or commercial outcomes.</p></div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container boundaries">
+      <article class="panel"><div class="eyebrow">What you receive</div><h2>Decision-ready workflow evidence.</h2><p>Workflow boundary statement, source-of-truth map, field dictionary, exception taxonomy, human-review packet template, acceptance rubric, safe proof plan, bounded internal-task readback specification, exclusion register, unresolved-question list and evidence handoff.</p></article>
+      <article class="panel nofit"><div class="eyebrow">Explicitly excluded</div><h2>No hidden production promise.</h2><ul>{noFit.map((item) => <li>{item}</li>)}</ul></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container final panel"><div><div class="eyebrow">Qualification first</div><h2 class="section-title">Bring one exception workflow, not your whole HR stack.</h2><p class="lede">A 20-minute qualification call is enough to confirm the workflow boundary, process owner, reviewer, safe inputs and no-live-write constraint. If the first phase fits, the five-day diagnostic is USD 3,000.</p></div><a class="button button-primary" href="mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification">Contact Robert at BitEvo →</a></div>
+  </section>
+</Layout>
+
+<style>
+.bd-hero{overflow:hidden}.hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(370px,.92fr);gap:clamp(38px,6vw,82px);align-items:center}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.scope-card{overflow:hidden}.scope-top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-bottom:1px solid var(--line);font:600 .62rem/1.2 var(--mono);letter-spacing:.08em}.scope-top span{color:var(--muted)}.scope-top strong{color:var(--green);font-size:1rem}.scope-row{display:grid;grid-template-columns:92px 1fr;gap:18px;padding:17px 20px;border-bottom:1px solid var(--line)}.scope-row:last-child{border-bottom:0}.scope-row small{color:var(--muted);font:600 .57rem/1.3 var(--mono);letter-spacing:.09em}.scope-row b{font-size:.84rem;line-height:1.4}.section-head{display:grid;grid-template-columns:minmax(0,.92fr) minmax(300px,1.08fr);gap:clamp(30px,6vw,76px);align-items:end;margin-bottom:34px}.section-head .lede{margin:0}.deliverable-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.deliverable{min-height:245px;padding:22px;display:flex;flex-direction:column}.deliverable>span{color:var(--green);font:600 .62rem var(--mono)}.deliverable h3{margin:auto 0 10px;font-size:1.05rem}.deliverable p{margin:0;color:var(--muted);font-size:.78rem}.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.85fr);gap:clamp(30px,6vw,76px);align-items:start}.qualification{padding:0 24px}.qualification>div{display:grid;grid-template-columns:58px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}.qualification>div:last-child{border-bottom:0}.qualification small{color:var(--green);font:700 .6rem var(--mono)}.qualification strong{font-size:.82rem;line-height:1.45}.proof-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.proof-card{padding:24px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}.proof-card strong{color:var(--green);font-size:clamp(1.8rem,4vw,3.2rem);letter-spacing:-.04em}.proof-card span{color:var(--muted);font-size:.78rem}.proof-note{margin-top:14px;padding:24px;display:grid;grid-template-columns:180px 1fr;gap:24px}.proof-note p{margin:0;color:var(--muted)}.boundaries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.boundaries article{padding:30px}.boundaries h2{margin:0 0 14px;font-size:clamp(1.45rem,3vw,2.2rem);letter-spacing:-.035em}.boundaries p{margin:0;color:var(--muted)}.nofit ul{margin:0;padding-left:18px;color:var(--muted)}.nofit li+li{margin-top:8px}.final{display:flex;align-items:center;justify-content:space-between;gap:34px;padding:clamp(30px,5vw,56px)}.final .lede{margin-bottom:0;max-width:760px}.final .button{flex:0 0 auto}@media(max-width:1040px){.deliverable-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:900px){.hero-grid,.section-head,.split{grid-template-columns:1fr}.scope-card{max-width:760px}.proof-grid{grid-template-columns:1fr 1fr}.final{align-items:flex-start;flex-direction:column}}@media(max-width:640px){.deliverable-grid,.proof-grid,.boundaries{grid-template-columns:1fr}.scope-row{grid-template-columns:1fr}.proof-note{grid-template-columns:1fr}.final .button{width:100%}}
+</style>
