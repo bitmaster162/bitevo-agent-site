@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="RUAP — Portable AI Continuity & Governance"
+  description="RUAP packages verified project context, provenance and authority boundaries into deterministic cold-start artifacts for AI workflows."
+>
+  <section class="project-hero section">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Private product · portable context</div>
+        <h1 class="display">RUAP</h1>
+        <p class="lede">Portable AI Continuity &amp; Governance for long-running agent work. RUAP turns selected, provenance-aware project context into deterministic cold-start packs that can move between models, agents and sessions without turning remembered context into permission to act.</p>
+        <div class="actions">
+          <a href="/audit-intake" class="button button-primary">Discuss a design-partner setup <span aria-hidden="true">↗</span></a>
+          <a href="/continuityos" class="button button-ghost">See ContinuityOS</a>
+        </div>
+      </div>
+      <aside class="status-card panel">
+        <div class="status-top"><span>PRODUCT STATUS</span><strong>Private / design-partner</strong></div>
+        <div class="status-row"><span>Core</span><strong>Local + deterministic</strong></div>
+        <div class="status-row"><span>Context profiles</span><strong>Trusted / External-safe</strong></div>
+        <div class="status-row"><span>Authority assumption</span><strong>Context ≠ permission</strong></div>
+        <div class="status-note">RUAP is a proprietary toolkit and integration capability. This page does not claim a hosted SaaS, autonomous provider sync, or execution authority.</div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container section-head">
+      <div><div class="eyebrow">The problem</div><h2 class="section-title">AI work should survive a model, chat or tool change.</h2></div>
+      <p class="lede">Long-running projects accumulate decisions, source references, constraints and stale assumptions across many surfaces. RUAP creates a portable snapshot with explicit provenance and freshness boundaries so the next agent can cold-start from evidence instead of reconstructing the project from memory.</p>
+    </div>
+    <div class="container capability-grid">
+      <article class="panel"><span>01</span><h3>Portable current context</h3><p>Package selected project observations, source locators and currentness metadata into one deterministic Snapshot IR.</p></article>
+      <article class="panel"><span>02</span><h3>Safe context profiles</h3><p>Create trusted internal packs and external-safe packs with a fail-closed boundary for sensitive material.</p></article>
+      <article class="panel"><span>03</span><h3>Cold-start verification</h3><p>Verify and validate the pack before transfer, then require the receiving agent to keep provenance, freshness and authority boundaries explicit.</p></article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container flow-grid">
+      <div><div class="eyebrow">Mental model</div><h2 class="section-title">Evidence travels. Authority does not.</h2></div>
+      <div class="flow panel" aria-label="RUAP conceptual flow">
+        <div class="node"><small>01</small><strong>Fresh evidence</strong><span>sources · receipts · observations</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><small>02</small><strong>Snapshot</strong><span>provenance + freshness</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><small>03</small><strong>Portable pack</strong><span>trusted / external-safe</span></div>
+        <div class="arrow">→</div>
+        <div class="node accent"><small>04</small><strong>New agent</strong><span>context, not permission</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container boundary-grid">
+      <div class="panel boundary-card">
+        <div class="eyebrow">Useful for</div>
+        <h2>Complex workflows that cannot fit in one chat.</h2>
+        <p>Cross-model handoffs, multi-project operators, long-running technical work, safe contractor context, and ContinuityOS / Control Center integrations.</p>
+      </div>
+      <div class="panel boundary-card muted">
+        <div class="eyebrow">Boundary</div>
+        <h2>No automatic authority.</h2>
+        <p>A newer RUAP pack does not prove a deployment, runtime effect or permission to execute. Consequential actions still require fresh provider truth and the applicable owner authority.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container integration-grid">
+      <div>
+        <div class="eyebrow">Standalone + module</div>
+        <h2 class="section-title">Use RUAP alone or as a portability layer.</h2>
+      </div>
+      <div class="panel integration-card">
+        <p><strong>Standalone:</strong> local snapshot, cold-start, safe/trusted bundle and verification workflow.</p>
+        <p><strong>With ContinuityOS:</strong> import/export portable context while checkpoints, proof and replay remain in the continuity layer.</p>
+        <p><strong>With Control Center:</strong> provide portable observations to a decision/orchestration system without granting it new effect authority.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow install">
+      <div class="eyebrow">Design-partner delivery</div>
+      <h2 class="section-title">Start with one real fragmented workflow.</h2>
+      <p class="lede">A useful first deployment is not a generic memory demo. It is a bounded workflow where project state is spread across several tools or AI sessions and must be reconstructed, verified, packaged and resumed safely.</p>
+      <a href="/audit-intake" class="button button-primary">Scope a RUAP setup <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .project-hero{padding-top:clamp(78px,10vw,132px)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .75fr;gap:clamp(42px,8vw,110px);align-items:center}
+  .hero-grid .lede{margin:24px 0 0}
+  .actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px}
+  .status-card{padding:24px}
+  .status-top{display:flex;justify-content:space-between;gap:20px;padding-bottom:18px}
+  .status-top span{color:var(--muted);font:500 .62rem var(--mono);letter-spacing:.1em}
+  .status-top strong{color:var(--green);font-size:.78rem}
+  .status-row{display:flex;justify-content:space-between;gap:22px;padding:14px 0;border-top:1px solid var(--line)}
+  .status-row span{color:var(--muted);font-size:.76rem}
+  .status-row strong{font-size:.76rem;text-align:right}
+  .status-note{margin-top:8px;padding:14px;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:.72rem}
+  .section-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,8vw,110px);margin-bottom:38px}
+  .section-head .lede{margin:3px 0 0}
+  .capability-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .capability-grid article{padding:26px;min-height:250px;display:flex;flex-direction:column}
+  .capability-grid article>span{color:#586560;font:500 .64rem var(--mono)}
+  .capability-grid h3{margin:auto 0 10px;font-size:1.1rem}
+  .capability-grid p{margin:0;color:var(--muted);font-size:.83rem}
+  .flow-grid{display:grid;grid-template-columns:.68fr 1.32fr;gap:clamp(40px,8vw,100px);align-items:center}
+  .flow{display:flex;align-items:stretch;padding:18px}
+  .node{flex:1;min-width:0;padding:18px 14px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:6px}
+  .node.accent{border-color:rgba(127,208,177,.32);background:rgba(127,208,177,.035)}
+  .node small{color:#5e6b67;font:500 .58rem var(--mono)}
+  .node strong{font-size:.8rem}
+  .node span{color:var(--muted);font-size:.68rem}
+  .arrow{display:grid;place-items:center;padding:0 7px;color:#52605c}
+  .boundary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .boundary-card{padding:30px}
+  .boundary-card h2{margin:2px 0 11px;font-size:1.35rem}
+  .boundary-card p{margin:0;color:var(--muted)}
+  .boundary-card.muted{background:rgba(8,16,18,.5)}
+  .integration-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(40px,8vw,100px);align-items:start}
+  .integration-card{padding:30px}
+  .integration-card p{margin:0 0 16px;color:var(--muted)}
+  .integration-card p:last-child{margin-bottom:0}
+  .integration-card strong{color:var(--ink)}
+  .install{text-align:center}
+  .install .section-title{margin-inline:auto}
+  .install .lede{margin:18px auto 28px}
+  @media(max-width:950px){
+    .hero-grid,.section-head,.flow-grid,.integration-grid{grid-template-columns:1fr}
+    .capability-grid{grid-template-columns:1fr}
+    .capability-grid article{min-height:190px}
+    .flow{overflow-x:auto}
+    .node{min-width:150px}
+    .boundary-grid{grid-template-columns:1fr}
+  }
+</style>
