@@ -93,8 +93,16 @@ export function evaluateL2Readiness(config, policy, schema) {
   }
   receipt.release_level = lane.release_level;
 
+  const handoffKinds = new Set(['human_handoff', 'public_contact', 'whatsapp', 'telegram', 'phone', 'email']);
+  for (const lanePolicy of Object.values(policy?.lanes ?? {})) {
+    const type = lanePolicy?.human_handoff?.type;
+    if (type) handoffKinds.add(String(type).toLowerCase());
+  }
+  const destinationKind = String(config.destination.kind ?? '').toLowerCase();
+  const destinationIsStorage = !handoffKinds.has(destinationKind);
+
   const checks = [
-    ['destination', config.destination.approved === true && present(config.destination.kind) && present(config.destination.destination_ref)],
+    ['destination', config.destination.approved === true && present(config.destination.kind) && present(config.destination.destination_ref) && destinationIsStorage],
     ['controller', config.controller.approved === true && present(config.controller.controller_ref)],
     ['retention', config.retention.approved === true && present(config.retention.retention_rule)],
     ['access', config.access.approved === true && config.access.roles.length > 0 && config.access.roles.every(present)],
@@ -107,6 +115,9 @@ export function evaluateL2Readiness(config, policy, schema) {
   receipt.missing_controls = checks.filter(([, ok]) => !ok).map(([name]) => name);
   if (receipt.missing_controls.length) {
     receipt.decision = 'NEEDS_L2_CONTROLS';
+    if (!destinationIsStorage && present(config.destination.kind)) {
+      receipt.notes.push('Human handoff/contact routes are not valid L2 storage destinations.');
+    }
     receipt.notes.push('L2 remains disabled until every control is explicitly approved and evidenced.');
     return receipt;
   }

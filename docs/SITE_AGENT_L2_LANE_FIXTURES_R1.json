@@ -1,0 +1,220 @@
+{
+  "schema_version": "SITE_AGENT_L2_LANE_FIXTURES_R1",
+  "policy_version": "SITE_AGENT_POLICY_PACK_R1",
+  "authority": {
+    "runtime_authority_tail": "R5 LIVE AUTHORITY TAIL",
+    "bitevo_parent_head": "b7b949297c8b9d58bbefa209bdf42918e9f6ab58"
+  },
+  "priority_order": [
+    "dar",
+    "pharaohs",
+    "yakov",
+    "ivan"
+  ],
+  "lanes": [
+    {
+      "lane": "dar",
+      "pr_head": "83b8673addbff415e535c7742915fba779602db8",
+      "owner_intake_state": "delivered_waiting_response",
+      "verified_handoff": {
+        "available": false,
+        "type": null,
+        "ref": "none_approved"
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "dar",
+        "destination": {
+          "approved": false,
+          "kind": null,
+          "destination_ref": null
+        },
+        "controller": {
+          "approved": false,
+          "controller_ref": null
+        },
+        "retention": {
+          "approved": false,
+          "retention_rule": null
+        },
+        "access": {
+          "approved": false,
+          "roles": []
+        },
+        "privacy": {
+          "approved": false,
+          "privacy_ref": null
+        },
+        "deletion_correction": {
+          "approved": false,
+          "method_ref": null
+        },
+        "idempotency": {
+          "approved": false,
+          "strategy": null
+        },
+        "policy_binding": {
+          "approved": false,
+          "policy_version": "SITE_AGENT_POLICY_PACK_R1"
+        },
+        "synthetic_test": {
+          "passed": false,
+          "receipt_sha256": null
+        }
+      }
+    },
+    {
+      "lane": "pharaohs",
+      "pr_head": "9b2ff45e797ad20ae80b219c7e78f3fddc9d4b97",
+      "owner_intake_state": "v2_delivery_not_confirmed",
+      "verified_handoff": {
+        "available": true,
+        "type": "phone",
+        "ref": "verified_public_phone"
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "pharaohs",
+        "destination": {
+          "approved": false,
+          "kind": null,
+          "destination_ref": null
+        },
+        "controller": {
+          "approved": false,
+          "controller_ref": null
+        },
+        "retention": {
+          "approved": false,
+          "retention_rule": null
+        },
+        "access": {
+          "approved": false,
+          "roles": []
+        },
+        "privacy": {
+          "approved": false,
+          "privacy_ref": null
+        },
+        "deletion_correction": {
+          "approved": false,
+          "method_ref": null
+        },
+        "idempotency": {
+          "approved": false,
+          "strategy": null
+        },
+        "policy_binding": {
+          "approved": false,
+          "policy_version": "SITE_AGENT_POLICY_PACK_R1"
+        },
+        "synthetic_test": {
+          "passed": false,
+          "receipt_sha256": null
+        }
+      }
+    },
+    {
+      "lane": "yakov",
+      "pr_head": "828f02764117bf6b2e686f6ee8a464725bab7b3e",
+      "owner_intake_state": "delivered_waiting_response",
+      "verified_handoff": {
+        "available": true,
+        "type": "whatsapp",
+        "ref": "verified_whatsapp"
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "yakov",
+        "destination": {
+          "approved": false,
+          "kind": null,
+          "destination_ref": null
+        },
+        "controller": {
+          "approved": false,
+          "controller_ref": null
+        },
+        "retention": {
+          "approved": false,
+          "retention_rule": null
+        },
+        "access": {
+          "approved": false,
+          "roles": []
+        },
+        "privacy": {
+          "approved": false,
+          "privacy_ref": null
+        },
+        "deletion_correction": {
+          "approved": false,
+          "method_ref": null
+        },
+        "idempotency": {
+          "approved": false,
+          "strategy": null
+        },
+        "policy_binding": {
+          "approved": false,
+          "policy_version": "SITE_AGENT_POLICY_PACK_R1"
+        },
+        "synthetic_test": {
+          "passed": false,
+          "receipt_sha256": null
+        }
+      }
+    },
+    {
+      "lane": "ivan",
+      "pr_head": "2199d1cb78110fc9461a015f1a8d7e85d5987061",
+      "owner_intake_state": "no_l2_storage_approval_in_current_authority",
+      "verified_handoff": {
+        "available": true,
+        "type": "telegram",
+        "ref": "verified_telegram"
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "ivan",
+        "destination": {
+          "approved": false,
+          "kind": null,
+          "destination_ref": null
+        },
+        "controller": {
+          "approved": false,
+          "controller_ref": null
+        },
+        "retention": {
+          "approved": false,
+          "retention_rule": null
+        },
+        "access": {
+          "approved": false,
+          "roles": []
+        },
+        "privacy": {
+          "approved": false,
+          "privacy_ref": null
+        },
+        "deletion_correction": {
+          "approved": false,
+          "method_ref": null
+        },
+        "idempotency": {
+          "approved": false,
+          "strategy": null
+        },
+        "policy_binding": {
+          "approved": false,
+          "policy_version": "SITE_AGENT_POLICY_PACK_R1"
+        },
+        "synthetic_test": {
+          "passed": false,
+          "receipt_sha256": null
+        }
+      }
+    }
+  ]
+}

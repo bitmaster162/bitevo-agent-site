@@ -42,6 +42,14 @@ Every readiness receipt has:
 
 Current L0/L1/L1-review lanes remain below L2 until their own control bundle is approved. A verified WhatsApp, Telegram or phone handoff is not a storage destination approval. Owner response, public contact data, a generated brief, a copied JSON packet, a click or a preview does not satisfy the L2 gate by itself.
 
+`destination.kind` is additionally checked against human-handoff/contact types. A WhatsApp, Telegram, phone, email, generic public contact or `human_handoff` route is rejected as an L2 storage destination even if a caller marks it `approved=true`.
+
+Current source-state fixtures for the first four fleet lanes are recorded in `docs/SITE_AGENT_L2_LANE_FIXTURES_R1.json`. They preserve current PR heads, owner-intake state and verified handoff evidence separately from the readiness config. The fixture file intentionally keeps every storage control unapproved until an explicit approval/evidence source exists.
+
 ## Verification
 
-`scripts/site-agent-l2-readiness-harness.mjs` covers incomplete controls, policy mismatch, access/deletion gaps, malformed schema, unknown lane, invalid synthetic receipt shape, current L0/L1 policy gating, and a synthetic L2-policy dry-run case. The evaluator never produces write or execute authority.
+`scripts/site-agent-l2-readiness-harness.mjs` covers incomplete controls, policy mismatch, access/deletion gaps, malformed schema, unknown lane, invalid synthetic receipt shape, current L0/L1 policy gating, and a synthetic L2-policy dry-run case.
+
+`scripts/site-agent-l2-lane-fixtures-harness.mjs` verifies the Dar → Pharaohs → Yakov → Ivan priority fixtures, exact source heads, current blocked readiness state, and the regression that a verified phone/WhatsApp/Telegram handoff cannot be promoted into an L2 storage destination.
+
+The evaluator never produces write or execute authority.
