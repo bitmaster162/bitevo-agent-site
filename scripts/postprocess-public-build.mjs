@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 const meta = JSON.parse(await readFile(join(root, 'src/generated/build-meta.json'), 'utf8'));
+const allowlist = JSON.parse(await readFile(join(root, 'scripts/csp-inline-allowlist.json'), 'utf8'));
 const origin = 'https://bitevo.work';
 const legacyOrigin = 'https://bitevoagentsite.vercel.app';
 
@@ -27,6 +28,21 @@ const localizedPairs = [
   ['/universe', '/ru/universe'],
   ['/vision', '/ru/vision']
 ];
+
+const cspHashes = values => values.map(hash => `'sha256-${hash}'`).join(' ');
+const cloudflareMetaCsp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "form-action 'self'",
+  `script-src 'self' ${cspHashes(allowlist.scripts || [])}`.trim(),
+  `style-src 'self' ${cspHashes(allowlist.styles || [])}`.trim(),
+  "font-src 'self'",
+  "img-src 'self' data:",
+  "connect-src 'self'",
+  'upgrade-insecure-requests'
+].join('; ');
+const cloudflareMetaTag = `<meta http-equiv="Content-Security-Policy" content="${cloudflareMetaCsp}" data-cloudflare-csp="hash-bound">`;
 
 function htmlPath(route) {
   return route === '/' ? join(dist, 'index.html') : join(dist, route.replace(/^\//, ''), 'index.html');
@@ -72,10 +88,22 @@ async function walk(dir) {
 let localeAffordances = 0;
 let injectedGlobalLocaleSwitches = 0;
 let retainedRuLocaleBars = 0;
+let cloudflareHtml = 0;
+let cloudflareCspTags = 0;
 for (const path of await walk(dist)) {
   let html = await readFile(path, 'utf8');
   html = html.replaceAll(legacyOrigin, origin);
   const locale = localeByFile.get(path);
+
+  if (meta.provider === 'cloudflare') {
+    cloudflareHtml += 1;
+    if (!html.includes('data-cloudflare-csp="hash-bound"')) {
+      const withCsp = html.replace(/<head(\s[^>]*)?>/i, match => `${match}${cloudflareMetaTag}`);
+      if (withCsp === html) throw new Error(`${path}: missing <head> for Cloudflare CSP`);
+      html = withCsp;
+    }
+    if (html.includes('data-cloudflare-csp="hash-bound"')) cloudflareCspTags += 1;
+  }
 
   if (!html.includes('name="bitevo-build-sha"')) {
     html = html.replace('</head>', `<meta name="bitevo-build-sha" content="${meta.sha}"></head>`);
@@ -116,5 +144,8 @@ const expectedLocaleAffordances = localizedPairs.length * 2;
 if (localeAffordances !== expectedLocaleAffordances) throw new Error(`Expected ${expectedLocaleAffordances} paired locale affordances, found ${localeAffordances}`);
 if (injectedGlobalLocaleSwitches !== expectedLocaleAffordances) throw new Error(`Expected ${expectedLocaleAffordances} global locale switches, injected ${injectedGlobalLocaleSwitches}`);
 if (retainedRuLocaleBars !== localizedPairs.length) throw new Error(`Expected ${localizedPairs.length} RU page-level locale bars, found ${retainedRuLocaleBars}`);
+if (meta.provider === 'cloudflare' && cloudflareCspTags !== cloudflareHtml) {
+  throw new Error(`Expected Cloudflare CSP meta on ${cloudflareHtml} HTML files, found ${cloudflareCspTags}`);
+}
 
-console.log(`BITEVO_POSTPROCESS=PASS sha=${meta.sha} localized_pairs=${localizedPairs.length} locale_affordances=${localeAffordances} global_locale_switches=${injectedGlobalLocaleSwitches} ru_locale_bars=${retainedRuLocaleBars}`);
+console.log(`BITEVO_POSTPROCESS=PASS sha=${meta.sha} localized_pairs=${localizedPairs.length} locale_affordances=${localeAffordances} global_locale_switches=${injectedGlobalLocaleSwitches} ru_locale_bars=${retainedRuLocaleBars} cloudflare_csp=${meta.provider === 'cloudflare' ? `${cloudflareCspTags}/${cloudflareHtml}` : 'N/A'}`);
