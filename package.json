@@ -10,7 +10,7 @@
     "generate:build-meta": "node scripts/generate-build-meta.mjs",
     "postprocess:public": "node scripts/postprocess-public-build.mjs",
     "build:site": "npm run generate:build-meta && astro build && npm run postprocess:public",
-    "verify:site-agent": "node scripts/site-agent-policy-harness.mjs && node scripts/site-agent-intake-adapter-harness.mjs && node scripts/site-agent-fleet-harness.mjs && node scripts/site-agent-l2-readiness-harness.mjs && node scripts/site-agent-l2-lane-fixtures-harness.mjs && node scripts/site-agent-l2-lane-fixtures-wave2-harness.mjs",
+    "verify:site-agent": "node scripts/site-agent-policy-harness.mjs && node scripts/site-agent-intake-adapter-harness.mjs && node scripts/site-agent-fleet-harness.mjs && node scripts/site-agent-l2-readiness-harness.mjs && node scripts/site-agent-l2-lane-fixtures-harness.mjs && node scripts/site-agent-l2-lane-fixtures-wave2-harness.mjs && node scripts/site-agent-l2-fleet-manifest-harness.mjs",
     "verify:core": "node scripts/verify-public-p0.mjs && node scripts/verify-public-quality.mjs && node scripts/verify-primary-deliverables.mjs && node scripts/verify-public-performance.mjs && node scripts/verify-home-trust.mjs && node scripts/verify-public-budgets.mjs && node scripts/verify-dogfood-case.mjs && node scripts/verify-workspace-contract.mjs && node scripts/verify-ru-surface.mjs && node scripts/verify-inline-csp.mjs && npm run verify:site-agent && node scripts/verify-build-receipt.mjs",
     "verify:provider:vercel": "node scripts/verify-vercel-policy.mjs",
     "verify:provider:cloudflare": "node scripts/verify-cloudflare-policy.mjs",

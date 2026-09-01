@@ -48,6 +48,8 @@ Current source-state fixtures for the first four fleet lanes are recorded in `do
 
 The second fixture wave is recorded separately in `docs/SITE_AGENT_L2_LANE_FIXTURES_WAVE2_R1.json` for HAVEN → Creator → Stas → BitEvo. It preserves the R6 source authority without mutating the first-wave evidence set. HAVEN, Creator and BitEvo have no approved human handoff in this L2 fixture context. Stas keeps the verified Telegram handoff to Robert as handoff evidence only; it is not a storage destination. BitEvo is bound to the exact source parent head used to create the wave rather than attempting a self-referential future commit SHA.
 
+`docs/SITE_AGENT_L2_FLEET_MANIFEST_R1.json` is the fleet integrity index over both fixture waves. It binds the two fixture files, the policy pack and the readiness schema to exact Git blob SHA values from the R7 source parent. The manifest itself is source-prepared and non-authoritative for production effects; its job is to make omissions, duplicates, overlaps or silent fixture-file changes fail deterministically.
+
 ## Verification
 
 `scripts/site-agent-l2-readiness-harness.mjs` covers incomplete controls, policy mismatch, access/deletion gaps, malformed schema, unknown lane, invalid synthetic receipt shape, current L0/L1 policy gating, and a synthetic L2-policy dry-run case.
@@ -55,5 +57,7 @@ The second fixture wave is recorded separately in `docs/SITE_AGENT_L2_LANE_FIXTU
 `scripts/site-agent-l2-lane-fixtures-harness.mjs` verifies the Dar → Pharaohs → Yakov → Ivan priority fixtures, exact source heads, current blocked readiness state, and the regression that a verified phone/WhatsApp/Telegram handoff cannot be promoted into an L2 storage destination.
 
 `scripts/site-agent-l2-lane-fixtures-wave2-harness.mjs` verifies HAVEN → Creator → Stas → BitEvo source bindings, blocked readiness state, absence of invented handoffs, Stas role label `Robert`, and the regression that the Stas Telegram handoff cannot be promoted into L2 storage.
+
+`scripts/site-agent-l2-fleet-manifest-harness.mjs` recomputes Git blob SHA-1 values from the checked-out bytes for both fixture waves, the policy pack and the readiness schema; verifies exact 8-lane coverage with no overlap/duplicates; and confirms all fixture readiness remains non-authoritative and storage-disabled.
 
 The evaluator never produces write or execute authority.
