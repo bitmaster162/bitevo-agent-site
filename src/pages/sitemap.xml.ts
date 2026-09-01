@@ -26,6 +26,7 @@ const routes = [
   '/pricing',
   '/consulting',
   '/continuityos',
+  '/ruap',
   '/guides',
   '/guides/ai-agent-reliability-audit',
   '/guides/security-sandboxing',
