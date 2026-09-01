@@ -2,8 +2,19 @@ import crypto from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
 const DEFAULT_POLICY_URL = new URL('../docs/SITE_AGENT_POLICY_PACK_R1.json', import.meta.url);
+const DEFAULT_ENVELOPE_SCHEMA_URL = new URL('../docs/SITE_AGENT_ENVELOPE_SCHEMA_V1.json', import.meta.url);
+let defaultEnvelopeSchema = null;
+try {
+  defaultEnvelopeSchema = JSON.parse(await readFile(DEFAULT_ENVELOPE_SCHEMA_URL, 'utf8'));
+} catch {
+  defaultEnvelopeSchema = null;
+}
 
 export async function loadPolicy(url = DEFAULT_POLICY_URL) {
+  return JSON.parse(await readFile(url, 'utf8'));
+}
+
+export async function loadEnvelopeSchema(url = DEFAULT_ENVELOPE_SCHEMA_URL) {
   return JSON.parse(await readFile(url, 'utf8'));
 }
 
@@ -32,13 +43,67 @@ function allText(fields = {}) {
     .toLowerCase();
 }
 
-export function evaluateEnvelope(envelope, policy) {
+function matchesType(value, type) {
+  if (type === 'null') return value === null;
+  if (type === 'array') return Array.isArray(value);
+  if (type === 'object') return value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (type === 'number') return typeof value === 'number' && Number.isFinite(value);
+  return typeof value === type;
+}
+
+function isDateTime(value) {
+  if (typeof value !== 'string') return false;
+  const iso = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/;
+  return iso.test(value) && !Number.isNaN(Date.parse(value));
+}
+
+export function validateEnvelopeSchema(value, schema = defaultEnvelopeSchema, path = '$') {
+  if (!schema) return [`${path}:schema_unavailable`];
+  const errors = [];
+  const expectedTypes = schema.type === undefined ? [] : Array.isArray(schema.type) ? schema.type : [schema.type];
+  if (expectedTypes.length && !expectedTypes.some((type) => matchesType(value, type))) {
+    return [`${path}:type`];
+  }
+  if (Object.hasOwn(schema, 'const') && value !== schema.const) errors.push(`${path}:const`);
+  if (schema.enum && !schema.enum.includes(value)) errors.push(`${path}:enum`);
+
+  if (typeof value === 'string') {
+    if (schema.minLength !== undefined && value.length < schema.minLength) errors.push(`${path}:minLength`);
+    if (schema.maxLength !== undefined && value.length > schema.maxLength) errors.push(`${path}:maxLength`);
+    if (schema.format === 'date-time' && !isDateTime(value)) errors.push(`${path}:format:date-time`);
+  }
+
+  if (Array.isArray(value)) {
+    if (schema.maxItems !== undefined && value.length > schema.maxItems) errors.push(`${path}:maxItems`);
+    if (schema.items) value.forEach((item, index) => errors.push(...validateEnvelopeSchema(item, schema.items, `${path}[${index}]`)));
+  }
+
+  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+    const properties = schema.properties ?? {};
+    for (const required of schema.required ?? []) {
+      if (!Object.hasOwn(value, required)) errors.push(`${path}.${required}:required`);
+    }
+    for (const [key, child] of Object.entries(value)) {
+      if (Object.hasOwn(properties, key)) {
+        errors.push(...validateEnvelopeSchema(child, properties[key], `${path}.${key}`));
+      } else if (schema.additionalProperties === false) {
+        errors.push(`${path}.${key}:additionalProperty`);
+      } else if (schema.additionalProperties && typeof schema.additionalProperties === 'object') {
+        errors.push(...validateEnvelopeSchema(child, schema.additionalProperties, `${path}.${key}`));
+      }
+    }
+  }
+  return errors;
+}
+
+export function evaluateEnvelope(envelope, policy, envelopeSchema = defaultEnvelopeSchema) {
   const receipt = {
     schema_version: 'SITE_AGENT_ADAPTER_RECEIPT_V1',
     lane: envelope?.lane ?? null,
     intent: envelope?.intent ?? null,
     decision: 'BLOCKED_POLICY',
     release_level: null,
+    schema_errors: [],
     missing_fields: [],
     sensitive_matches: [],
     blocked_claims: [],
@@ -48,8 +113,9 @@ export function evaluateEnvelope(envelope, policy) {
     notes: []
   };
 
-  if (!envelope || envelope.schema_version !== 'SITE_AGENT_ENVELOPE_V1') {
-    receipt.notes.push('Unsupported or missing envelope schema.');
+  receipt.schema_errors = validateEnvelopeSchema(envelope, envelopeSchema);
+  if (receipt.schema_errors.length) {
+    receipt.notes.push('Envelope failed SITE_AGENT_ENVELOPE_V1 schema validation.');
     return receipt;
   }
 
@@ -93,10 +159,6 @@ export function evaluateEnvelope(envelope, policy) {
     }
   }
 
-  if (envelope.state === 'CONVERTED' && policy.global?.conversion_requires_evidence && !(envelope.evidence_refs?.length)) {
-    receipt.blocked_effects.push('conversion_without_evidence');
-  }
-
   if (receipt.sensitive_matches.length) {
     receipt.decision = 'BLOCKED_SENSITIVE_INPUT';
     receipt.notes.push('Sensitive input must be removed before continuing.');
@@ -129,17 +191,18 @@ export function buildOwnerCopilotOutput(envelope, receipt) {
     classification: receipt.decision,
     missing_information: needs,
     risk_flags: [
+      ...(receipt.schema_errors ?? []).map((x) => `schema:${x}`),
       ...receipt.sensitive_matches.map((x) => `sensitive:${x}`),
       ...receipt.blocked_claims.map((x) => `claim:${x}`),
       ...receipt.blocked_effects.map((x) => `effect:${x}`)
     ],
     staff_summary: blocked
-      ? 'Request is blocked by the current policy and must not be actioned until the flagged input/claim/effect is corrected.'
+      ? 'Request is blocked by the current schema/policy and must not be actioned until the flagged schema/input/claim/effect issue is corrected.'
       : needs.length
         ? `Request needs ${needs.length} required field(s) before human review.`
         : `Qualified ${receipt.lane}/${receipt.intent} request is ready for human review under the current lane policy.`,
     reply_draft: blocked
-      ? 'Please remove the blocked/sensitive information and resend only the practical details needed for this request.'
+      ? 'Please correct the blocked schema/policy issue or remove sensitive information, then resend only the practical details needed for this request.'
       : needs.length
         ? `Thanks. Before we can review this properly, please add: ${needs.join(', ')}.`
         : 'Thanks. We have the initial details. A person will review the request and confirm the current options and terms.',
