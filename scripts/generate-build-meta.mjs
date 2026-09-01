@@ -19,6 +19,7 @@ function gitRef() {
 
 const candidates = [
   { provider: 'vercel', sha: process.env.VERCEL_GIT_COMMIT_SHA, ref: process.env.VERCEL_GIT_COMMIT_REF },
+  { provider: 'cloudflare', sha: process.env.WORKERS_CI_COMMIT_SHA, ref: process.env.WORKERS_CI_BRANCH },
   { provider: 'cloudflare', sha: process.env.CF_PAGES_COMMIT_SHA, ref: process.env.CF_PAGES_BRANCH },
   { provider: 'github', sha: process.env.GITHUB_SHA, ref: process.env.GITHUB_REF_NAME },
   { provider: 'git', sha: gitHead(), ref: gitRef() }
