@@ -46,10 +46,14 @@ Current L0/L1/L1-review lanes remain below L2 until their own control bundle is 
 
 Current source-state fixtures for the first four fleet lanes are recorded in `docs/SITE_AGENT_L2_LANE_FIXTURES_R1.json`. They preserve current PR heads, owner-intake state and verified handoff evidence separately from the readiness config. The fixture file intentionally keeps every storage control unapproved until an explicit approval/evidence source exists.
 
+The second fixture wave is recorded separately in `docs/SITE_AGENT_L2_LANE_FIXTURES_WAVE2_R1.json` for HAVEN → Creator → Stas → BitEvo. It preserves the R6 source authority without mutating the first-wave evidence set. HAVEN, Creator and BitEvo have no approved human handoff in this L2 fixture context. Stas keeps the verified Telegram handoff to Robert as handoff evidence only; it is not a storage destination. BitEvo is bound to the exact source parent head used to create the wave rather than attempting a self-referential future commit SHA.
+
 ## Verification
 
 `scripts/site-agent-l2-readiness-harness.mjs` covers incomplete controls, policy mismatch, access/deletion gaps, malformed schema, unknown lane, invalid synthetic receipt shape, current L0/L1 policy gating, and a synthetic L2-policy dry-run case.
 
 `scripts/site-agent-l2-lane-fixtures-harness.mjs` verifies the Dar → Pharaohs → Yakov → Ivan priority fixtures, exact source heads, current blocked readiness state, and the regression that a verified phone/WhatsApp/Telegram handoff cannot be promoted into an L2 storage destination.
+
+`scripts/site-agent-l2-lane-fixtures-wave2-harness.mjs` verifies HAVEN → Creator → Stas → BitEvo source bindings, blocked readiness state, absence of invented handoffs, Stas role label `Robert`, and the regression that the Stas Telegram handoff cannot be promoted into L2 storage.
 
 The evaluator never produces write or execute authority.
