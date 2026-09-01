@@ -5,6 +5,18 @@
     "sourceSha": "28b496e12aab5176cae19de6392c5ee01e8223e6",
     "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed."
   },
+  "reviews": [
+    {
+      "deployment": "dpl_DLATx7eN3fD5wtsY7LaZxv4unhwc",
+      "sourceSha": "86cefb9fdd5cf1ae437aef3626daa7c5af66786d",
+      "note": "Reviewed Site Agent lab style blocks emitted by the exact R6 candidate. The separate prohibited inline style attribute is removed in the follow-up source fix; only these immutable block hashes are approved.",
+      "styles": [
+        "FQnX7xwQHiJE9NHqOGknPgIGqrg321Ez7ah+sn/kOrI=",
+        "vrQVBN6dE5EkRIk7McjCwfqjqYfRrWO4kYUk2rE0ko0=",
+        "L9R/4fv2iRMAtAMOH8Qc4CthWz1BVMD1r1/d92qP+Bk="
+      ]
+    }
+  ],
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
     "+rVF0gm454fmrPRReUtPZqCWRh3reD8JRBpaCUxlNrU=",
@@ -47,6 +59,9 @@
     "HrCoqMHknRtj0KL8Qjc8uFre9D0qxXXAH1yFaSgLiPI=",
     "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4=",
     "D1yI/XU7fOucbisZLoef8dLOYoXCX+4EOKso9sKCSVU=",
-    "KubYyPRUxewNFub0v6KyF9FnIYMW/bzMaYTSaJ1D9bo="
+    "KubYyPRUxewNFub0v6KyF9FnIYMW/bzMaYTSaJ1D9bo=",
+    "FQnX7xwQHiJE9NHqOGknPgIGqrg321Ez7ah+sn/kOrI=",
+    "vrQVBN6dE5EkRIk7McjCwfqjqYfRrWO4kYUk2rE0ko0=",
+    "L9R/4fv2iRMAtAMOH8Qc4CthWz1BVMD1r1/d92qP+Bk="
   ]
 }

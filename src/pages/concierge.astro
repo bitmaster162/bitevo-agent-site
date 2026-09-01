@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="theme-color" content="#071013" />
-    <meta name="description" content="Build a local qualification brief for an AI workflow, automation, build or authority-control problem. No data is submitted automatically." />
+    <meta name="description" content="Build a local, human-review qualification brief for an AI workflow, automation, build or authority-control problem." />
     <link rel="canonical" href="https://bitevo.work/concierge" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/concierge.css" />
-    <title>Qualification Concierge | BitEvo</title>
+    <title>Qualification Concierge R2 | BitEvo</title>
   </head>
   <body>
     <main class="w">
-      <div class="top"><a class="back" href="/">← BitEvo</a><span class="state">LOCAL_ONLY · NOINDEX · HUMAN_REVIEW</span></div>
-      <h1>Turn a vague AI request into a useful brief.</h1>
-      <p class="lead">Choose the closest problem, describe the workflow and consequence boundary, and generate a local qualification brief. Nothing is submitted, scheduled, deployed or written to CRM.</p>
+      <div class="top"><a class="back" href="/">← BitEvo</a><span class="state">R2 · LOCAL_ONLY · NOINDEX · HUMAN_REVIEW</span></div>
+      <h1>Turn a vague AI request into a decision-ready brief.</h1>
+      <p class="lead">Choose the closest problem, describe the workflow and consequence boundary, and generate a local brief with a deterministic recommended next artifact. Nothing is submitted, scheduled, deployed or written to CRM.</p>
 
       <section class="panel warning" aria-label="Data boundary">
-        <strong>Do not paste credentials, API keys, tokens, private keys, wallet seeds, production secrets or private customer data.</strong>
+        <strong>Do not paste credentials, API keys, tokens, private keys, wallet seeds, card/identity data, production secrets or private customer data.</strong>
       </section>
 
       <section class="panel">
         <h2>1. What is closest?</h2>
         <div class="routes">
-          <button class="route" type="button" data-intent="audit"><b>Audit / evidence readiness</b><span>Need to inspect a consequential workflow, authority boundary or buyer evidence.</span></button>
-          <button class="route" type="button" data-intent="build"><b>Build / integration</b><span>Need a bounded implementation, integration or repair.</span></button>
-          <button class="route" type="button" data-intent="governance"><b>Agent governance / authority</b><span>Need allow/warn/hold logic, effect gates, evidence or recovery controls.</span></button>
-          <button class="route" type="button" data-intent="automation"><b>Automation opportunity</b><span>Need to decide what should be automated and what should remain human-controlled.</span></button>
+          <button class="route" type="button" data-intent="audit"><b>Audit / evidence readiness</b><span>Inspect a consequential workflow, authority boundary or buyer evidence.</span></button>
+          <button class="route" type="button" data-intent="build"><b>Build / integration</b><span>Prepare a bounded implementation, integration or repair.</span></button>
+          <button class="route" type="button" data-intent="governance"><b>Agent governance / authority</b><span>Map allow/warn/hold logic, effect gates, evidence and recovery controls.</span></button>
+          <button class="route" type="button" data-intent="automation"><b>Automation opportunity</b><span>Separate what should be automated, assisted or human-only.</span></button>
           <button class="route" type="button" data-intent="unsure"><b>Not sure</b><span>Describe the workflow and failure mode first.</span></button>
         </div>
 
@@ -41,21 +41,21 @@
           <div class="field"><label for="timeline">Timeline</label><input id="timeline" placeholder="Optional" /></div>
           <div class="field"><label for="never">What must never be automated?</label><textarea id="never" required placeholder="Examples: sending, deletion, payments, production deploy, pricing changes, account access"></textarea></div>
           <div class="field"><label for="budget">Budget context</label><input id="budget" placeholder="Optional — leave blank if not useful yet" /></div>
-          <div class="actions"><button class="btn primary" type="submit">Build qualification brief</button></div>
+          <div class="actions"><button class="btn primary" type="submit">Check & build R2 brief</button></div>
         </form>
 
         <pre class="out" id="out"></pre>
         <div class="actions" id="actions" hidden><button class="btn primary" id="copy" type="button">Copy brief</button><button class="btn" id="download" type="button">Download .txt</button></div>
-        <p class="guard"><b>Effect boundary:</b> this page grants no testing, deployment, messaging, payment, account access or production authority.</p>
+        <p class="guard"><b>Effect boundary:</b> this page grants no testing, deployment, messaging, payment, account access or production authority. A generated brief is not a project acceptance or conversion.</p>
       </section>
 
       <section class="panel">
-        <h2>What happens next</h2>
-        <p>The R1 output is for human review only. A future connected version may route the brief to an approved intake destination and prepare a reply draft, but external effects remain separately gated.</p>
+        <h2>R2 routing</h2>
+        <p>Audit → evidence/readiness review. Build → bounded implementation plan. Governance → authority/effect-gate map. Automation → automate/assist/human-only matrix. Unsure → focused diagnostic. The recommendation is deterministic; a human still decides the actual scope.</p>
         <div class="actions"><a class="btn" href="/assurance">System Assurance</a><a class="btn" href="/agent-authority-audit">Authority &amp; Evidence Audit</a><a class="btn" href="/audit-intake">Detailed audit intake</a></div>
       </section>
 
-      <footer>BitEvo Qualification Concierge R1 · local-only · noindex · no automatic submission</footer>
+      <footer>BitEvo Qualification Concierge R2 · local-only · noindex · no automatic submission</footer>
     </main>
     <script src="/concierge.js" defer></script>
   </body>

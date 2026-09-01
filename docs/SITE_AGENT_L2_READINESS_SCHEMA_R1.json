@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bitevo.work/schemas/site-agent-l2-readiness-r1.json",
+  "title": "Site Agent L2 Readiness R1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lane", "destination", "controller", "retention", "access", "privacy", "deletion_correction", "idempotency", "policy_binding", "synthetic_test"],
+  "properties": {
+    "schema_version": {"const": "SITE_AGENT_L2_READINESS_R1"},
+    "lane": {"enum": ["yakov", "ivan", "stas", "haven", "dar", "pharaohs", "creator", "bitevo"]},
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "kind", "destination_ref"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "kind": {"type": ["string", "null"]},
+        "destination_ref": {"type": ["string", "null"]}
+      }
+    },
+    "controller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "controller_ref"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "controller_ref": {"type": ["string", "null"]}
+      }
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "retention_rule"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "retention_rule": {"type": ["string", "null"]}
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "roles"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "roles": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "privacy_ref"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "privacy_ref": {"type": ["string", "null"]}
+      }
+    },
+    "deletion_correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "method_ref"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "method_ref": {"type": ["string", "null"]}
+      }
+    },
+    "idempotency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "strategy"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "strategy": {"type": ["string", "null"]}
+      }
+    },
+    "policy_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "policy_version"],
+      "properties": {
+        "approved": {"type": "boolean"},
+        "policy_version": {"type": ["string", "null"]}
+      }
+    },
+    "synthetic_test": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "receipt_sha256"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "receipt_sha256": {"type": ["string", "null"], "minLength": 64, "maxLength": 64}
+      }
+    }
+  }
+}
