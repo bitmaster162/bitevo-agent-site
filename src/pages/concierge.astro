@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#071013" />
+    <meta name="description" content="Build a local qualification brief for an AI workflow, automation, build or authority-control problem. No data is submitted automatically." />
+    <link rel="canonical" href="https://bitevo.work/concierge" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/concierge.css" />
+    <title>Qualification Concierge | BitEvo</title>
+  </head>
+  <body>
+    <main class="w">
+      <div class="top"><a class="back" href="/">← BitEvo</a><span class="state">LOCAL_ONLY · NOINDEX · HUMAN_REVIEW</span></div>
+      <h1>Turn a vague AI request into a useful brief.</h1>
+      <p class="lead">Choose the closest problem, describe the workflow and consequence boundary, and generate a local qualification brief. Nothing is submitted, scheduled, deployed or written to CRM.</p>
+
+      <section class="panel warning" aria-label="Data boundary">
+        <strong>Do not paste credentials, API keys, tokens, private keys, wallet seeds, production secrets or private customer data.</strong>
+      </section>
+
+      <section class="panel">
+        <h2>1. What is closest?</h2>
+        <div class="routes">
+          <button class="route" type="button" data-intent="audit"><b>Audit / evidence readiness</b><span>Need to inspect a consequential workflow, authority boundary or buyer evidence.</span></button>
+          <button class="route" type="button" data-intent="build"><b>Build / integration</b><span>Need a bounded implementation, integration or repair.</span></button>
+          <button class="route" type="button" data-intent="governance"><b>Agent governance / authority</b><span>Need allow/warn/hold logic, effect gates, evidence or recovery controls.</span></button>
+          <button class="route" type="button" data-intent="automation"><b>Automation opportunity</b><span>Need to decide what should be automated and what should remain human-controlled.</span></button>
+          <button class="route" type="button" data-intent="unsure"><b>Not sure</b><span>Describe the workflow and failure mode first.</span></button>
+        </div>
+
+        <form class="form" id="form" hidden>
+          <div class="field"><label for="company">Company / team</label><input id="company" required placeholder="Company, project or team" /></div>
+          <div class="field"><label for="workflow">Workflow / system</label><textarea id="workflow" required placeholder="What does the current workflow do?"></textarea></div>
+          <div class="field"><label for="pain">Current pain / failure mode</label><textarea id="pain" required placeholder="What is slow, risky, manual, unreliable or blocked?"></textarea></div>
+          <div class="field"><label for="outcome">Desired outcome</label><textarea id="outcome" required placeholder="What decision or operational result should improve?"></textarea></div>
+          <div class="field"><label for="systems">Systems involved</label><textarea id="systems" required placeholder="Tools, apps, APIs, data stores or agent frameworks — names only, no credentials"></textarea></div>
+          <div class="field"><label for="consequence">What happens if automation is wrong?</label><textarea id="consequence" required placeholder="Describe the meaningful business, security or operational consequence"></textarea></div>
+          <div class="field"><label for="timeline">Timeline</label><input id="timeline" placeholder="Optional" /></div>
+          <div class="field"><label for="never">What must never be automated?</label><textarea id="never" required placeholder="Examples: sending, deletion, payments, production deploy, pricing changes, account access"></textarea></div>
+          <div class="field"><label for="budget">Budget context</label><input id="budget" placeholder="Optional — leave blank if not useful yet" /></div>
+          <div class="actions"><button class="btn primary" type="submit">Build qualification brief</button></div>
+        </form>
+
+        <pre class="out" id="out"></pre>
+        <div class="actions" id="actions" hidden><button class="btn primary" id="copy" type="button">Copy brief</button><button class="btn" id="download" type="button">Download .txt</button></div>
+        <p class="guard"><b>Effect boundary:</b> this page grants no testing, deployment, messaging, payment, account access or production authority.</p>
+      </section>
+
+      <section class="panel">
+        <h2>What happens next</h2>
+        <p>The R1 output is for human review only. A future connected version may route the brief to an approved intake destination and prepare a reply draft, but external effects remain separately gated.</p>
+        <div class="actions"><a class="btn" href="/assurance">System Assurance</a><a class="btn" href="/agent-authority-audit">Authority &amp; Evidence Audit</a><a class="btn" href="/audit-intake">Detailed audit intake</a></div>
+      </section>
+
+      <footer>BitEvo Qualification Concierge R1 · local-only · noindex · no automatic submission</footer>
+    </main>
+    <script src="/concierge.js" defer></script>
+  </body>
+</html>
