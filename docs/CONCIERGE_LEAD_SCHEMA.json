@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "state": "LOCAL_ONLY_NO_CRM_WRITE",
+  "fields": {
+    "intent": "audit|build|governance|automation|unsure",
+    "company_or_team": "text",
+    "workflow_or_system": "text",
+    "pain_or_failure_mode": "text",
+    "desired_outcome": "text",
+    "systems_involved": "text",
+    "consequence_if_wrong": "text",
+    "timeline": "text_optional",
+    "never_automate": "text",
+    "budget": "text_optional"
+  },
+  "forbidden": [
+    "credentials",
+    "api_keys",
+    "tokens",
+    "private_keys",
+    "wallet_seeds",
+    "payment_card_data",
+    "private_customer_data",
+    "production_secrets"
+  ]
+}
