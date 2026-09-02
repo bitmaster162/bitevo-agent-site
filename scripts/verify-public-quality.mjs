@@ -179,7 +179,7 @@ for (const file of htmlFiles) {
 }
 
 const funnelContracts = [
-  ['/', 'home-primary', '/mapper'],
+  ['/', 'home-primary', '/start'],
   ['/', 'home-proof', '/proof'],
   ['/', 'map', '/mapper'],
   ['/', 'proof', '/proof'],
