@@ -24,16 +24,12 @@ const counters = {
   scopeHandoff: 0
 };
 
-const headerOld = '<a class="header-cta" href="/mapper">Map workflow <span aria-hidden="true">↗</span></a>';
-const headerNew = '<a class="header-cta" href="/start">Start here <span aria-hidden="true">↗</span></a>';
-const mobileOld = '<a class="mobile-cta" href="/mapper">Map workflow →</a>';
-const mobileNew = '<a class="mobile-cta" href="/start">Start here →</a>';
-const homeOld = '<a href="/mapper" class="button button-primary" data-funnel="home-primary">Map one workflow <span aria-hidden="true">↗</span></a>';
-const homeNew = '<a href="/start" class="button button-primary" data-funnel="home-primary">Choose the right scope <span aria-hidden="true">↗</span></a>';
-const downloadMarker = '<button id="download" type="button" class="button button-ghost" disabled>Download .txt</button>';
+const headerPattern = /<a class="header-cta" href="\/mapper"([^>]*)>Map workflow <span([^>]*)>↗<\/span><\/a>/g;
+const mobilePattern = /<a class="mobile-cta" href="\/mapper"([^>]*)>Map workflow →<\/a>/g;
+const homePattern = /<a href="\/mapper" class="button button-primary" data-funnel="home-primary"([^>]*)>Map one workflow <span([^>]*)>↗<\/span><\/a>/;
+const downloadPattern = /<button id="download" type="button" class="button button-ghost" disabled([^>]*)>Download \.txt<\/button>/;
+const gatePattern = /<\/div><div class="gate"([^>]*)><span([^>]*)>AUTHORIZATION GATE<\/span>/;
 const contactButton = '<a class="button button-ghost" data-scope-handoff href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">Contact Robert</a>';
-const gateMarker = '</div><div class="gate"><span>AUTHORIZATION GATE</span>';
-const handoffNote = '</div><p class="brief-explain" data-scope-handoff-note>Email opens your mail app; nothing is sent automatically. Copy or download the reviewed brief first, then share only the scope details you intend to send.</p><div class="gate"><span>AUTHORIZATION GATE</span>';
 
 for (const file of htmlFiles) {
   let html = fs.readFileSync(file, 'utf8');
@@ -42,27 +38,34 @@ for (const file of htmlFiles) {
   const isEnglish = /<html\b[^>]*\blang="en"/.test(html);
 
   if (isEnglish) {
-    if (html.includes(headerOld)) {
-      html = html.replaceAll(headerOld, headerNew);
-      counters.englishHeader += 1;
+    const headerMatches = [...html.matchAll(headerPattern)];
+    if (headerMatches.length) {
+      html = html.replace(headerPattern, (_full, anchorAttrs, spanAttrs) => `<a class="header-cta" href="/start"${anchorAttrs}>Start here <span${spanAttrs}>↗</span></a>`);
+      counters.englishHeader += headerMatches.length;
     }
-    if (html.includes(mobileOld)) {
-      html = html.replaceAll(mobileOld, mobileNew);
-      counters.englishMobile += 1;
+
+    const mobileMatches = [...html.matchAll(mobilePattern)];
+    if (mobileMatches.length) {
+      html = html.replace(mobilePattern, (_full, anchorAttrs) => `<a class="mobile-cta" href="/start"${anchorAttrs}>Start here →</a>`);
+      counters.englishMobile += mobileMatches.length;
     }
   }
 
-  if (rel === 'index.html' && html.includes(homeOld)) {
-    html = html.replace(homeOld, homeNew);
+  if (rel === 'index.html' && homePattern.test(html)) {
+    homePattern.lastIndex = 0;
+    html = html.replace(homePattern, (_full, anchorAttrs, spanAttrs) => `<a href="/start" class="button button-primary" data-funnel="home-primary"${anchorAttrs}>Choose the right scope <span${spanAttrs}>↗</span></a>`);
     counters.homePrimary += 1;
   }
 
   if (rel === 'audit-intake/index.html' && !html.includes('data-scope-handoff')) {
-    if (!html.includes(downloadMarker) || !html.includes(gateMarker)) {
+    const downloadMatch = html.match(downloadPattern);
+    const gateMatch = html.match(gatePattern);
+    if (!downloadMatch || !gateMatch) {
       throw new Error('Audit intake handoff markers changed; refusing silent postprocess drift.');
     }
-    html = html.replace(downloadMarker, `${downloadMarker}${contactButton}`);
-    html = html.replace(gateMarker, handoffNote);
+
+    html = html.replace(downloadPattern, match => `${match}${contactButton}`);
+    html = html.replace(gatePattern, (_full, gateAttrs, spanAttrs) => `</div><p class="brief-explain" data-scope-handoff-note>Email opens your mail app; nothing is sent automatically. Copy or download the reviewed brief first, then share only the scope details you intend to send.</p><div class="gate"${gateAttrs}><span${spanAttrs}>AUTHORIZATION GATE</span>`);
     counters.scopeHandoff += 1;
   }
 
