@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const technical = [
+  'Customer / patient / account / policyholder object binding',
+  'Action and tool permission boundaries',
+  'Approval tied to exact action parameters',
+  'Timeout, retry, replay and duplicate-effect behavior',
+  'External-state readback and evidence',
+  'Human handoff and recovery'
+];
+
+const excluded = [
+  'Legal or regulatory compliance certification',
+  'Lending / fair-lending conclusions',
+  'Insurance coverage or claim-entitlement judgment',
+  'Medical diagnosis or treatment correctness',
+  'Tax or accounting advice',
+  'Universal system-safety guarantee'
+];
+---
+
+<Layout title="Regulated Service AI Action Validation — BitEvo" description="Bounded technical validation for consequential AI actions in healthcare, lending, insurance, payments and other high-stakes service workflows.">
+  <section class="section"><div class="narrow">
+    <div class="eyebrow">High-stakes technical boundary</div>
+    <h1 class="display">High stakes require a tighter claim ceiling.</h1>
+    <p class="lede">BitEvo can independently validate execution, control and evidence boundaries in regulated or sensitive workflows without pretending to replace the customer's legal, compliance or regulated professional owners.</p>
+    <a class="button button-primary" href="/entry-audit">Scope one technical action <span aria-hidden="true">↗</span></a>
+  </div></section>
+
+  <section class="section section-rule"><div class="container">
+    <div class="eyebrow">Technical scope</div><h2 class="section-title">What a bounded BitEvo test can validate.</h2>
+    <ul>{technical.map(item => <li>{item}</li>)}</ul>
+  </div></section>
+
+  <section class="section section-rule"><div class="container">
+    <div class="eyebrow">Explicit exclusions</div><h2 class="section-title">What stays with qualified client teams or partners.</h2>
+    <ul>{excluded.map(item => <li>{item}</li>)}</ul>
+  </div></section>
+
+  <section class="section section-rule"><div class="narrow">
+    <div class="eyebrow">Operating posture</div><h2 class="section-title">Use synthetic or redacted data and keep the first question technical.</h2>
+    <p class="lede">A good first engagement tests identity/object binding, a payment/booking/claim/service action, retry ambiguity, or handoff evidence - not the legal correctness of the underlying regulated decision.</p>
+    <a class="button" href="/security">Review data-handling boundaries →</a>
+  </div></section>
+</Layout>

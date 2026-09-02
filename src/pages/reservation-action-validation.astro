@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const actions = [
+  'Create a reservation or booking',
+  'Amend date, time, party size or inventory',
+  'Cancel or reschedule an existing booking',
+  'Apply a guarantee or deposit-related branch',
+  'Transfer a partially completed booking to a human'
+];
+
+const tests = [
+  'Guest / reservation identity binding',
+  'Current availability or inventory state',
+  'Amend vs cancel state transitions',
+  'Duplicate booking or repeated request',
+  'External booking-system timeout',
+  'Human handoff while the action is unresolved',
+  'Final reservation-state readback'
+];
+---
+
+<Layout title="Reservation AI Action Validation — BitEvo" description="A bounded BitEvo Entry Audit for AI-driven booking creation, amendment, cancellation and recovery across reservation systems.">
+  <section class="section"><div class="narrow">
+    <div class="eyebrow">Reservation action boundary</div>
+    <h1 class="display">A booking is a state transition, not just a conversation.</h1>
+    <p class="lede">Voice and chat agents can create, amend, cancel and reschedule real reservations. BitEvo tests one booking action across guest binding, availability, confirmation, external-system execution, retry and final-state readback.</p>
+    <a class="button button-primary" href="/entry-audit">See the $1,500 Entry Audit <span aria-hidden="true">↗</span></a>
+  </div></section>
+
+  <section class="section section-rule"><div class="container">
+    <div class="eyebrow">Good first actions</div><h2 class="section-title">Test one reservation transition.</h2>
+    <ul>{actions.map(item => <li>{item}</li>)}</ul>
+  </div></section>
+
+  <section class="section section-rule"><div class="container">
+    <div class="eyebrow">Failure & recovery</div><h2 class="section-title">The hardest case is often “the booking may already exist.”</h2>
+    <ol>{tests.map(item => <li>{item}</li>)}</ol>
+  </div></section>
+
+  <section class="section section-rule"><div class="narrow">
+    <div class="eyebrow">Claim boundary</div><h2 class="section-title">We validate one booking boundary, not the whole hospitality stack.</h2>
+    <p class="lede">No universal reliability guarantee, payment-card certification or broad booking-platform audit is implied by a passing test.</p>
+    <a class="button" href="/failure-recovery">See the failure/recovery method →</a>
+  </div></section>
+</Layout>
