@@ -3,7 +3,7 @@
   "observedFrom": {
     "deployment": "dpl_BN4Rp3mJe85vWdi5HdFTqCfJGprC",
     "sourceSha": "28b496e12aab5176cae19de6392c5ee01e8223e6",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed. Commercial R3 adds three individually reviewed page-style hashes for MCP governance, MCP checklist, and security/data-handling surfaces. Commercial R4 adds two reviewed style hashes for coding-agent governance and failure/recovery surfaces."
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed. Commercial R3 adds three individually reviewed page-style hashes for MCP governance, MCP checklist, and security/data-handling surfaces. Commercial R4 adds two reviewed style hashes for coding-agent governance and failure/recovery surfaces. Commercial R5 adds three reviewed style hashes for agent identity, trust evidence, and AI Skill Lab proof surfaces."
   },
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
@@ -52,6 +52,9 @@
     "eFV4edIsMttMSZbsOmW5mRJGPlR1M19ZhWHzBwwpsQo=",
     "r2Jp4dmQAIg65Ua5ZT6lw+G4HBp0sABk9ss6lJ2UuiU=",
     "of4BHcwcOVzfZVZLezzQBhSK1+3Ss2B8GAxKc6eduog=",
-    "L1Si0O1D0k328K4TMCIDnToQH+kmXsphwBFzk3iE+hE="
+    "L1Si0O1D0k328K4TMCIDnToQH+kmXsphwBFzk3iE+hE=",
+    "kl9YGKpryMvPY+L8C88uhRPmFS4YCfk3V2nyg8/zYPc=",
+    "Y3grXEIG2vCTlnWVXfIkK+/GLYtW1oqmBUh7naan+rc=",
+    "+juZpFNQJyVn3ypMMLYPIpBUxkh1q+8CDXqN3XFi97s="
   ]
 }
