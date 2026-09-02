@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const scenarios = [
+  ['Crash before write', 'Can the workflow resume from a known checkpoint without skipping required context?'],
+  ['Crash after write', 'Can it determine whether the downstream mutation already happened before retrying?'],
+  ['Ambiguous timeout', 'Does it read resulting state or blindly replay a consequential mutation?'],
+  ['Duplicate event', 'Does one logical event still create one external effect?'],
+  ['Stale resume', 'Does the workflow revalidate material state before continuing an old plan?'],
+  ['Tool / schema drift', 'Does unexpected structure fail visibly instead of silently mapping the wrong data?'],
+  ['Approval expiry', 'Can an old approval survive longer than the authority it was meant to grant?'],
+  ['Partial completion', 'Is unresolved partial state visible, attributable and recoverable by an operator?']
+];
+---
+
+<Layout title="Agent Failure & Recovery Drill — BitEvo" description="A bounded engineering drill for one AI-agent workflow: crash, timeout, retry, replay, stale state, partial completion and duplicate-effect behavior.">
+  <section class="section hero"><div class="container hero-grid"><div><div class="eyebrow">Failure · retry · resume · effect</div><h1 class="display">After a crash or retry, can the workflow continue without repeating or losing a real effect?</h1><p class="lede">BitEvo injects bounded failures into one representative agent workflow and shows what is lost, repeated, skipped, stale or unrecoverable — with staging/synthetic execution by default.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Scope one recovery drill <span aria-hidden="true">↗</span></a><a href="/proof" class="button button-ghost">See worked proof</a></div></div><aside class="panel commercial"><div class="eyebrow">Validation surface</div><strong>Scoped</strong><p>This is not an uptime guarantee or an unbounded production chaos exercise. The commercial scope is frozen around one workflow and agreed failure cases.</p><div class="metric"><span>OBJECT</span><b>1 workflow</b></div><div class="metric"><span>DEFAULT</span><b>staging / synthetic</b></div><div class="metric"><span>DECISION</span><b>repair / retest / constrain</b></div></aside></div></section>
+
+  <section class="section section-rule"><div class="container head"><div><div class="eyebrow">Failure matrix</div><h2 class="section-title">Remove one assumption at a time.</h2></div><p class="lede">The purpose is not random breakage. Each case challenges a specific assumption about state, authority, downstream effects or recovery.</p></div><div class="container grid">{scenarios.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container panel evidence"><div><div class="eyebrow">What we measure</div><h2 class="section-title">Effect correctness before a green run status.</h2></div><div class="measure"><div><span>DUPLICATES</span><strong>Repeated external effects</strong></div><div><span>OMISSIONS</span><strong>Skipped or lost steps</strong></div><div><span>STATE</span><strong>Checkpoint and stale-state behavior</strong></div><div><span>RECOVERY</span><strong>Operator path for ambiguity</strong></div><div><span>EVIDENCE</span><strong>Can the action be reconstructed?</strong></div></div></div></section>
+
+  <section class="section section-rule"><div class="container boundary"><article class="panel"><div class="eyebrow">Delivery</div><h2>Failure evidence and a recovery decision.</h2><p>Workflow state map, failure plan, test evidence, continuity/recovery matrix, duplicate-effect analysis and prioritized remediation.</p></article><article class="panel"><div class="eyebrow">Claim boundary</div><h2>No reliability guarantee.</h2><p>No production chaos without separate written authorization, no promise of uptime, and no claim that the tested cases cover every possible failure mode.</p></article></div></section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Start with one effect</div><h2 class="section-title">Choose the action that would be expensive to repeat or lose.</h2><p class="lede">Then define the crash, timeout, replay or partial-completion path worth testing.</p><a href="/audit-intake" class="button button-primary">Prepare the drill scope <span aria-hidden="true">↗</span></a></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.head{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(38px,7vw,90px);align-items:center}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.commercial{padding:28px}.commercial>strong{display:block;font-size:clamp(2.5rem,5vw,4.4rem);letter-spacing:-.055em;margin:15px 0}.commercial p,.grid p,.boundary p{color:var(--muted)}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span,.grid article>span,.measure span{color:var(--green);font:600 .62rem var(--mono)}.metric b{text-align:right;font-size:.76rem}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}.grid article{padding:25px;min-height:225px}.grid h3{margin:34px 0 9px}.evidence{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(32px,6vw,72px);padding:clamp(28px,5vw,54px)}.measure{border-top:1px solid var(--line)}.measure div{display:flex;justify-content:space-between;gap:22px;padding:16px 0;border-bottom:1px solid var(--line)}.measure strong{text-align:right;font-size:.82rem}.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary article{padding:32px}.boundary h2{margin:7px 0 12px}.final{text-align:center}.final .lede{margin:18px auto 28px}@media(max-width:980px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:900px){.hero-grid,.head,.evidence,.boundary{grid-template-columns:1fr}}@media(max-width:620px){.grid{grid-template-columns:1fr}.measure div{flex-direction:column;gap:6px}.measure strong{text-align:left}}
+</style>
