@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const paths = [
+  {
+    eyebrow: 'ONE ACTION / FIXED',
+    title: '$1,500 Entry Audit',
+    text: 'Use when one consequential action or one suspected control failure is the decision. Test one action chain and one primary hypothesis, then decide whether repair or broader work is justified.',
+    href: '/entry-audit',
+    cta: 'Open Entry Audit'
+  },
+  {
+    eyebrow: 'AGENT → TOOL',
+    title: 'MCP / Tool Governance',
+    text: 'Use when the core question is which tool calls are actually governed by identity, policy and approval, and whether another path bypasses the assumed control boundary.',
+    href: '/mcp-governance',
+    cta: 'Open MCP Governance'
+  },
+  {
+    eyebrow: 'EXCEPTIONS / RECOVERY',
+    title: 'Workflow failure or BUILD diagnostic',
+    text: 'Use when the problem is timeout, retry, resume, stale state, duplicate effects, handoffs, manual rescue or an operational exception path rather than one isolated authorization check.',
+    href: '/failure-recovery',
+    cta: 'Open Failure & Recovery'
+  },
+  {
+    eyebrow: 'AUTHORITY DECISION',
+    title: '$4,900 Primary Audit',
+    text: 'Use when the owner must decide whether one action-capable workflow should keep, gain or lose authority across evidence, external-effect confirmation and recovery behavior.',
+    href: '/agent-authority-audit',
+    cta: 'Open Primary Audit'
+  }
+];
+
+const actionContexts = [
+  ['/commerce-action-validation', 'Commerce actions', 'Order edits, cancellations, subscriptions, fulfillment and refund-support actions.'],
+  ['/reservation-action-validation', 'Reservation actions', 'Create, amend, cancel or recover bookings across reservation systems.'],
+  ['/regulated-service-action-validation', 'High-stakes service actions', 'Bounded technical validation where regulated, legal or professional conclusions remain explicitly outside BitEvo’s claim ceiling.']
+];
+
+const proofLinks = [
+  ['/proof', 'Proof matrix', 'See the evidence-strength ladder and synthetic worked cases.'],
+  ['/artifacts', 'Public artifacts', 'Inspect the current engineering and evidence artifacts before discussing scope.'],
+  ['/security', 'Security & data handling', 'Review the current public operating boundaries and limitations.'],
+  ['/pricing', 'Pricing', 'Compare Free triage, the fixed Entry Audit and the Primary Audit by decision depth.']
+];
+---
+
+<Layout title="Start with the Right BitEvo Scope" description="Choose the smallest BitEvo scope that can resolve one consequential AI-agent or workflow decision without turning the site into a service catalogue.">
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">Commercial start</div>
+      <h1 class="display">Start from the decision, not the service catalogue.</h1>
+      <p class="lede">BitEvo sells bounded technical decisions around consequential AI and workflow actions. Choose the smallest scope that can answer the owner question, then expand only if the evidence justifies it.</p>
+      <a class="button button-primary" href="/entry-audit">Start with the $1,500 Entry Audit <span aria-hidden="true">↗</span></a>
+      <a class="button button-ghost" href="/pricing">Compare scope depth</a>
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="scope-paths-title">
+    <div class="container">
+      <div class="eyebrow">Choose the question</div>
+      <h2 class="section-title" id="scope-paths-title">Four paths cover most first conversations.</h2>
+      <p class="lede">These are routing choices into existing BitEvo work. This page does not create new flagship service SKUs.</p>
+
+      {paths.map(path => (
+        <article class="panel">
+          <div class="eyebrow">{path.eyebrow}</div>
+          <h3>{path.title}</h3>
+          <p>{path.text}</p>
+          <a class="button" href={path.href}>{path.cta} <span aria-hidden="true">↗</span></a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="context-title">
+    <div class="container">
+      <div class="eyebrow">Action context</div>
+      <h2 class="section-title" id="context-title">If the action class is already obvious, enter through the relevant example.</h2>
+      {actionContexts.map(([href, title, text]) => (
+        <article class="panel">
+          <h3>{title}</h3>
+          <p>{text}</p>
+          <a class="button" href={href}>Open action context <span aria-hidden="true">↗</span></a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="proof-title">
+    <div class="container">
+      <div class="eyebrow">Before access</div>
+      <h2 class="section-title" id="proof-title">Check the proof and boundaries first.</h2>
+      {proofLinks.map(([href, title, text]) => (
+        <article>
+          <h3>{title}</h3>
+          <p>{text}</p>
+          <a class="text-link" href={href}>Open →</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Scope only</div>
+      <h2 class="section-title">The public site does not authorize testing.</h2>
+      <p class="lede">Do not submit credentials, private keys, wallet seeds, production secrets or customer secrets. Public intake prepares a bounded scope brief; access, allowed tests, prohibited actions, data handling and Rules of Engagement are agreed separately.</p>
+      <a class="button button-primary" href="/audit-intake">Prepare a scope brief <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>
