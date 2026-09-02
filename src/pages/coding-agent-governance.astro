@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const surfaces = [
+  ['Identity', 'Who sponsors and operates the agent, which workload identity acts, and how access is revoked.'],
+  ['Filesystem & secrets', 'Repository write scope, configuration paths, environment variables, cloud/SSH material and other sensitive locations.'],
+  ['Commands', 'Separate inspection, tests/builds, dependency installs, source mutation, Git mutation, deployment and destructive actions.'],
+  ['MCP & tools', 'Inventory approved and local/private tools, classify consequential actions and check credential/resource binding.'],
+  ['Git / PR', 'Separate prepare, push, PR, merge and repository-administration authority. Preserve checks and provenance.'],
+  ['External effects', 'Identify SaaS writes, tickets, messages, cloud changes, DNS, deployments, billing and other real-world effects.']
+];
+
+const regression = [
+  'Inspect repository and run approved tests',
+  'Edit one bounded source/test file',
+  'Install an approved dependency',
+  'Attempt an unapproved dependency',
+  'Attempt access to a forbidden secret path',
+  'Invoke an approved read-only MCP/tool surface',
+  'Attempt an unregistered or prohibited tool',
+  'Attempt push to a protected/default branch',
+  'Prepare a PR without gaining merge authority',
+  'Request a deployment or other confirmation-bound action'
+];
+---
+
+<Layout title="Coding-Agent Governance & Secure Rollout — BitEvo" description="A bounded review of one coding-agent environment across identity, shell, filesystem, secrets, Git, MCP/tool access, external effects and recovery behavior.">
+  <section class="section hero"><div class="container hero-grid"><div><div class="eyebrow">Coding agents · authority · rollout</div><h1 class="display">Give coding agents useful authority — without giving them every authority.</h1><p class="lede">BitEvo reviews one coding-agent environment and turns shell, filesystem, Git, MCP/tool and deployment access into an explicit permission map plus a bounded rollout regression suite.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Scope one coding-agent environment <span aria-hidden="true">↗</span></a><a href="/security" class="button button-ghost">Security boundary</a></div></div><aside class="panel commercial"><div class="eyebrow">Specialist bounded review</div><strong>Scoped</strong><p>Pricing is frozen after the environment and decision are known. This is not a generic endpoint-security or pentest package.</p><div class="metric"><span>OBJECT</span><b>1 environment</b></div><div class="metric"><span>OUTPUT</span><b>permission map + regression</b></div><div class="metric"><span>DEFAULT</span><b>non-production / bounded</b></div></aside></div></section>
+
+  <section class="section section-rule"><div class="container head"><div><div class="eyebrow">Review surface</div><h2 class="section-title">The question is not whether the agent can code.</h2></div><p class="lede">The decision is which actions it may take autonomously, which require confirmation, and which must remain impossible in the agreed environment.</p></div><div class="container grid">{surfaces.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container panel tests"><div><div class="eyebrow">Reference regression suite</div><h2 class="section-title">Test permission classes before widening rollout.</h2><p class="lede">The final suite is adapted to the actual agent and Rules of Engagement.</p></div><ol>{regression.map((item,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></li>)}</ol></div></section>
+
+  <section class="section section-rule"><div class="container boundary"><article class="panel"><div class="eyebrow">Delivery</div><h2>Owner-ready rollout evidence.</h2><p>Environment inventory, permission matrix, action/control map, regression results, secure-rollout backlog and team operating rules.</p></article><article class="panel"><div class="eyebrow">Not included</div><h2>No universal “secure coding agent” claim.</h2><p>Not endpoint security, not SAST/DAST replacement, not a full penetration test and not a guarantee that unknown defects or bypasses do not exist.</p></article></div></section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Start with one environment</div><h2 class="section-title">Map what the agent may inspect, change, push, merge and deploy.</h2><p class="lede">The public intake prepares scope only and must not contain credentials or private repository secrets.</p><a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.head{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(38px,7vw,90px);align-items:center}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.commercial{padding:28px}.commercial>strong{display:block;font-size:clamp(2.5rem,5vw,4.4rem);letter-spacing:-.055em;margin:15px 0}.commercial p,.grid p,.boundary p{color:var(--muted)}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span,.grid article>span{color:var(--green);font:600 .62rem var(--mono)}.metric b{text-align:right;font-size:.76rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}.grid article{padding:26px;min-height:235px}.grid h3{margin:34px 0 9px}.tests{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(32px,6vw,72px);padding:clamp(28px,5vw,54px)}.tests ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.tests li{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.tests li span{color:var(--green);font:600 .62rem var(--mono)}.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary article{padding:32px}.boundary h2{margin:7px 0 12px}.final{text-align:center}.final .lede{margin:18px auto 28px}@media(max-width:900px){.hero-grid,.head,.tests,.boundary{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
