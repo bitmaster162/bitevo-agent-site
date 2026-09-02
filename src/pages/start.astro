@@ -32,6 +32,13 @@ const paths = [
   }
 ];
 
+const nextSteps = [
+  ['01 · SCOPE', 'Prepare a bounded scope brief', 'Describe one action chain, the owner decision and the evidence or failure question. The public site does not transmit secrets or authorize testing.'],
+  ['02 · AUTHORITY', 'Agree access and Rules of Engagement', 'Before any test, define staging/test conditions, allowed actions, prohibited actions, data handling, replay conditions and who can authorize the work.'],
+  ['03 · TEST', 'Run only the agreed bounded validation', 'Collect evidence against the selected decision: authority and object binding, decision-time evidence, external-effect confirmation, retry/replay and recovery where relevant.'],
+  ['04 · DECIDE', 'Return an owner decision', 'The output is a bounded engineering decision such as repair, constrain, retest or justify broader scope — not certification or a universal safety score.']
+];
+
 const actionContexts = [
   ['/commerce-action-validation', 'Commerce actions', 'Order edits, cancellations, subscriptions, fulfillment and refund-support actions.'],
   ['/reservation-action-validation', 'Reservation actions', 'Create, amend, cancel or recover bookings across reservation systems.'],
@@ -71,6 +78,23 @@ const proofLinks = [
           <a class="button" href={path.href}>{path.cta} <span aria-hidden="true">↗</span></a>
         </article>
       ))}
+    </div>
+  </section>
+
+  <section class="section section-rule" aria-labelledby="next-steps-title">
+    <div class="container">
+      <div class="eyebrow">What happens next</div>
+      <h2 class="section-title" id="next-steps-title">Choosing a path does not start testing.</h2>
+      <p class="lede">Every paid path still moves through scope, written authority, bounded validation and an owner decision. The sequence stays explicit so a commercial CTA cannot be mistaken for execution permission.</p>
+      {nextSteps.map(([eyebrow, title, text]) => (
+        <article class="panel">
+          <div class="eyebrow">{eyebrow}</div>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+      <a class="button" href="/audit-intake">Prepare the scope brief <span aria-hidden="true">↗</span></a>
+      <a class="button button-ghost" href="/security">Review security & data boundaries</a>
     </div>
   </section>
 
