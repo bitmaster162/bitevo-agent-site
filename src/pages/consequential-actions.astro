@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const actions = [
+  ['Refunds & payments', 'Money or balance state changes where identity, amount, eligibility, retry and resulting-state evidence must remain coherent.'],
+  ['Orders & subscriptions', 'Cancellation, replacement, address changes, subscription updates and other writes across commerce systems.'],
+  ['Reservations & bookings', 'Create, modify or cancel reservations while availability, guest identity and booking parameters can change.'],
+  ['Accounts & CRM', 'Customer/account records, qualification state and operational writes where object binding matters.'],
+  ['External communications', 'Email, SMS, voice or other messages that create a real customer-facing effect.'],
+  ['Code, configuration & deployment', 'Repository, infrastructure and deployment actions where a coding agent gains consequential authority.']
+];
+
+const questions = [
+  'Which identity actually performs the action?',
+  'Which customer, order, booking, account or resource is the action bound to?',
+  'What evidence must exist before the action may proceed?',
+  'Which actions require human confirmation?',
+  'What happens if parameters change after approval?',
+  'What happens if the downstream system succeeds but the response times out?',
+  'Can retry or replay duplicate the effect?',
+  'Can the final state be independently reconstructed later?'
+];
+---
+
+<Layout title="Consequential AI Actions — BitEvo" description="BitEvo tests the boundaries where AI systems stop being advisory and begin changing money, orders, bookings, accounts, communications, code or other external state.">
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">Where the method applies</div>
+      <h1 class="display">The risk changes when the agent starts changing the world.</h1>
+      <p class="lede">BitEvo focuses on consequential action chains: the points where an AI-enabled workflow writes to a system of record, moves money or account state, changes a booking or order, communicates externally, or modifies code and infrastructure.</p>
+      <div><a class="button button-primary" href="/entry-audit">Test one action <span aria-hidden="true">↗</span></a> <a class="button button-ghost" href="/mapper">Map the workflow</a></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Action classes</div>
+      <h2 class="section-title">Different business effects. Same evidence discipline.</h2>
+      {actions.map(([title, text]) => (
+        <article class="panel">
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Eight owner questions</div>
+      <h2 class="section-title">Before expanding autonomy, make the boundary explicit.</h2>
+      <ol>{questions.map(q => <li>{q}</li>)}</ol>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Start small</div>
+      <h2 class="section-title">You do not need a system-wide audit to test one consequential decision.</h2>
+      <p class="lede">The fixed $1,500 Entry Audit deliberately narrows the engagement to one action chain and one primary hypothesis. Broader MCP, coding-agent, reliability or workflow work follows only when the first evidence creates a reason to expand.</p>
+      <a class="button button-primary" href="/entry-audit">Open Entry Audit <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>

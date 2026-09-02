@@ -27,6 +27,8 @@ const routes = [
   '/trust-evidence-template',
   '/ai-skill-lab-sample',
   '/security',
+  '/entry-audit',
+  '/consequential-actions',
   '/phuket-ai-workflow',
   '/operator',
   '/agent-authority-audit',
