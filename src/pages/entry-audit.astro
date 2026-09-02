@@ -44,7 +44,7 @@ const outputs = [
       <h2 class="section-title">The control question stays narrow.</h2>
       <div>
         {tests.map(([title, text]) => (
-          <article class="panel" style="margin-top:12px;padding:24px">
+          <article class="panel">
             <h3>{title}</h3>
             <p>{text}</p>
           </article>
@@ -57,7 +57,7 @@ const outputs = [
     <div class="container">
       <div class="eyebrow">Delivery</div>
       <h2 class="section-title">You are buying a decision instrument, not a generic audit report.</h2>
-      <div class="panel" style="margin-top:24px;padding:28px">
+      <div class="panel">
         <ul>{outputs.map(item => <li>{item}</li>)}</ul>
       </div>
       <p class="lede">A useful result may be PASS, FAIL, PARTIAL, REJECTED HYPOTHESIS or BLOCKED. Success is not defined as finding a vulnerability.</p>
