@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const sections = [
+  ['System overview', 'Product/workflow, environment, business owner, technical owner, model providers and consequential actions.'],
+  ['Architecture & data flow', 'Entry point, agent/model layer, tools/MCP/APIs, systems of record, external effects and human oversight.'],
+  ['Authority & identity', 'Acting identity, allowed/prohibited actions, approval requirements, caps, revocation and escalation.'],
+  ['Tool / MCP governance', 'Inventory, action classes, credential binding, policy coverage, unknown-tool behavior and retry controls.'],
+  ['Evidence & logging', 'Can the organization reconstruct actor → decision → approval → tool → effect → resulting state?'],
+  ['Failure & recovery', 'Timeout, retry, idempotency, partial completion, stale state, resume/replay and operator recovery.'],
+  ['Independent validation', 'List only real completed scoped tests. Synthetic examples never become customer evidence.'],
+  ['Open gaps', 'Every unsupported claim should have an owner, impact and smallest closure step.']
+];
+---
+
+<Layout title="AI Trust Evidence Pack Template — BitEvo" description="A public template for organizing AI-agent authority, identity, tool governance, failure/recovery and validation evidence for enterprise buyer review.">
+  <section class="section hero"><div class="narrow"><div class="eyebrow">Public template · buyer review · evidence</div><h1 class="display">Turn AI-control claims into evidence a buyer can actually inspect.</h1><p class="lede">This public template shows how BitEvo structures technical evidence for one AI product or workflow. It is not SOC/ISO certification, a legal compliance opinion or proof that the system is universally safe.</p><div class="actions"><a href="/evidence-readiness" class="button button-primary">See Evidence Readiness <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button button-ghost">Scope one product/workflow</a></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container stack">{sections.map(([title,text],i)=><article class="panel"><span>{String(i+1).padStart(2,'0')}</span><div><h2>{title}</h2><p>{text}</p></div></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container panel chain"><div><div class="eyebrow">Claims-to-evidence discipline</div><h2 class="section-title">Every material claim needs a current source, owner and scope.</h2></div><div class="formula"><strong>Claim</strong><span>→</span><strong>Evidence</strong><span>→</span><strong>Owner</strong><span>→</span><strong>Freshness</strong><span>→</span><strong>Limitation</strong></div></div></section>
+
+  <section class="section section-rule"><div class="container boundary"><article class="panel"><div class="eyebrow">Good output</div><h2>Visible support and visible gaps.</h2><p>A buyer should be able to see what is supported now, how current the evidence is, who owns it and which questions remain unresolved.</p></article><article class="panel"><div class="eyebrow">Hard boundary</div><h2>No certification by presentation.</h2><p>A polished evidence pack does not convert an unsupported claim into a fact and does not replace accredited/statutory assurance.</p></article></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.stack{display:grid;gap:12px}.stack article{display:grid;grid-template-columns:54px 1fr;gap:22px;padding:26px}.stack article>span{color:var(--green);font:600 .62rem var(--mono)}.stack h2{margin:0 0 8px;font-size:1.22rem}.stack p,.boundary p{margin:0;color:var(--muted)}.chain{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(34px,7vw,90px);padding:clamp(28px,5vw,54px)}.formula{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.formula span{color:var(--green)}.formula strong{font:600 .78rem var(--mono)}.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary article{padding:30px}.boundary h2{margin:7px 0 12px}@media(max-width:820px){.chain,.boundary{grid-template-columns:1fr}.formula{justify-content:flex-start}}
+</style>
