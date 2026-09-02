@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const reviewAreas = [
+  ['Inventory', 'Reachable MCP servers, tools, versions, transports, owners and third-party dependencies in the agreed workflow.'],
+  ['Action class', 'Separate read-only tools from durable writes, deletes, external communication, deployment, credential and other high-consequence actions.'],
+  ['Identity & auth', 'Map the acting identity, credential audience/resource binding, scope, lifecycle and any token-passthrough assumptions.'],
+  ['Gateway boundary', 'Identify which calls cross the expected policy/gateway surface, which paths bypass it, and the default for unknown tools.'],
+  ['Approval', 'Check whether consequential approval is bound to the exact action, target and material parameters, expires, and is single-use where required.'],
+  ['Failure & evidence', 'Exercise bounded timeout/retry/replay cases and determine whether actor → decision → tool → effect can be reconstructed.']
+];
+
+const tests = [
+  'Expected allowed read succeeds and is evidenced',
+  'Expected denied or held consequential action does not execute',
+  'Approval-required action cannot run before valid approval',
+  'Changed parameters invalidate stale approval where required',
+  'Unknown or unregistered tooling follows the intended default policy',
+  'Revoked or expired credential cannot continue acting',
+  'Timeout/retry does not blindly duplicate a material effect',
+  'Evidence can reconstruct actor → decision → tool → resulting state'
+];
+---
+
+<Layout title="MCP / Tool Governance Audit — BitEvo" description="A bounded engineering review of one agent-to-tool environment: reachable MCP tools, identity and authorization, policy coverage, approvals, retry behavior and evidence.">
+  <section class="section hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">MCP · identity · policy · effect</div>
+        <h1 class="display">Know which tools your agents can call — and which calls sit outside the boundary you think you have.</h1>
+        <p class="lede">BitEvo reviews one representative agent-to-tool workflow and returns an inspectable map of reachable tools, consequential actions, acting identity, policy coverage, approval gates, failure behavior and evidence gaps.</p>
+        <div class="actions"><a class="button button-primary" href="/audit-intake">Scope one MCP/tool boundary <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/mcp-governance-checklist">Open public checklist</a></div>
+      </div>
+      <aside class="panel commercial">
+        <div class="eyebrow">Launch bounded review</div>
+        <div class="price">~$3,000</div>
+        <p>Launch pricing hypothesis for one bounded environment or representative workflow. Final scope and price are frozen before access.</p>
+        <div class="metric"><span>OBJECT</span><strong>1 environment / workflow</strong></div>
+        <div class="metric"><span>TESTS</span><strong>8–20 bounded cases</strong></div>
+        <div class="metric"><span>DEFAULT</span><strong>staging / test</strong></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container split"><div><div class="eyebrow">2026 protocol surface</div><h2 class="section-title">The transport became easier to route. Governance still has to be designed.</h2></div><div><p class="lede">MCP 2026-07-28 moved to a stateless protocol core and made <code>Mcp-Method</code> and <code>Mcp-Name</code> required for Streamable HTTP requests, making method/tool routing visible to gateways. The authorization model also requires resource/audience-bound tokens and forbids forwarding the inbound MCP token unchanged to downstream APIs.</p><p class="source"><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">MCP 2026-07-28 release ↗</a> · <a href="https://modelcontextprotocol.io/specification/draft/basic/authorization">MCP authorization ↗</a></p></div></div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container section-head"><div><div class="eyebrow">Review areas</div><h2 class="section-title">Map the actual execution boundary.</h2></div><p class="lede">The audit does not assume that installing a gateway, SDK or MCP server automatically governs every path. We test the agreed path and keep bypasses and untested surfaces visible.</p></div>
+    <div class="container grid">{reviewAreas.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container test-wrap panel"><div><div class="eyebrow">Bounded test set</div><h2 class="section-title">Test decisions, not slogans.</h2><p class="lede">The exact cases depend on the client's workflow and Rules of Engagement.</p></div><ol>{tests.map((t,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{t}</strong></li>)}</ol></div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container boundaries">
+      <article class="panel"><div class="eyebrow">Delivery</div><h2>Engineering evidence.</h2><p>MCP/tool inventory, action matrix, identity/credential map, gateway/bypass map, bounded test results, evidence gaps and prioritized remediation.</p></article>
+      <article class="panel"><div class="eyebrow">Claim boundary</div><h2>Not a universal security score.</h2><p>No full penetration test, certification, legal compliance opinion or guarantee that every MCP server or tool path is secure.</p></article>
+    </div>
+  </section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Start narrow</div><h2 class="section-title">Bring one agent-to-tool path that matters.</h2><p class="lede">The public intake prepares scope only. It does not authorize testing and must not contain credentials or customer secrets.</p><a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.split,.section-head{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(38px,7vw,90px);align-items:center}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.commercial{padding:28px}.price{font-size:clamp(3rem,6vw,5rem);font-weight:700;letter-spacing:-.06em;margin:16px 0 10px}.commercial p,.grid p,.boundaries p,.source{color:var(--muted)}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span,.grid article>span{color:var(--green);font:600 .62rem var(--mono)}.metric strong{text-align:right;font-size:.78rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid article{padding:26px;min-height:245px}.grid h3{margin:32px 0 9px}.test-wrap{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(30px,6vw,70px);padding:clamp(28px,5vw,54px)}.test-wrap ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.test-wrap li{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}.test-wrap li span{color:var(--green);font:600 .62rem var(--mono)}.boundaries{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundaries article{padding:30px}.boundaries h2{margin:5px 0 12px}.final{text-align:center}.final .lede{margin:18px auto 28px}.source a{font-size:.78rem}@media(max-width:900px){.hero-grid,.split,.section-head,.test-wrap,.boundaries{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
