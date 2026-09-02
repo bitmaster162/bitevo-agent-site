@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const tests = [
+  ['Object binding', 'Does the action still target the exact customer, order, booking, account or resource it was authorized for?'],
+  ['Approval binding', 'Does confirmation remain tied to the exact material action parameters rather than a generic approval state?'],
+  ['External effect', 'Did the intended downstream change actually happen, and can the resulting state be read back?'],
+  ['Retry / replay', 'Can timeout, retry or replay duplicate a consequential effect or continue under stale state?'],
+  ['Identity / scope', 'Is the acting identity and credential narrower than the total capability exposed by the tool?']
+];
+
+const outputs = [
+  'One bounded action / control map',
+  'Expected-vs-observed test matrix',
+  'Reproducible evidence within the agreed scope',
+  'Finding, rejection or explicitly blocked test',
+  'Limitations and residual uncertainty',
+  'Repair / retest criterion where relevant',
+  'One concise owner decision memo'
+];
+---
+
+<Layout title="BitEvo Entry Audit — One consequential action, one evidence-backed decision" description="A fixed $1,500 bounded BitEvo Entry Audit for one consequential AI/workflow action chain and one primary control or failure hypothesis.">
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">Fixed bounded entry</div>
+      <h1 class="display">One consequential action. One question worth $1,500.</h1>
+      <p class="lede">The Entry Audit is the smallest paid BitEvo engagement. We test one action chain and one primary control or failure hypothesis in staging/test by default, preserve the evidence, and return a bounded owner decision.</p>
+      <div><a class="button button-primary" href="/audit-intake">Prepare Entry Audit scope <span aria-hidden="true">↗</span></a> <a class="button button-ghost" href="/artifacts">See worked proof</a></div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Good audit objects</div>
+      <h2 class="section-title">Start where AI changes real state.</h2>
+      <p class="lede">Examples include refunds, order changes, reservations, CRM writes, account updates, external messages, deployment changes and other actions whose result matters outside the agent itself.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">What we challenge</div>
+      <h2 class="section-title">The control question stays narrow.</h2>
+      <div>
+        {tests.map(([title, text]) => (
+          <article class="panel" style="margin-top:12px;padding:24px">
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Delivery</div>
+      <h2 class="section-title">You are buying a decision instrument, not a generic audit report.</h2>
+      <div class="panel" style="margin-top:24px;padding:28px">
+        <ul>{outputs.map(item => <li>{item}</li>)}</ul>
+      </div>
+      <p class="lede">A useful result may be PASS, FAIL, PARTIAL, REJECTED HYPOTHESIS or BLOCKED. Success is not defined as finding a vulnerability.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Commercial boundary</div>
+      <h2 class="section-title">$1,500 fixed. One action chain. One primary hypothesis.</h2>
+      <p class="lede">Not included: full penetration testing, certification, legal/compliance opinion, unrestricted production exploitation, system-wide safety claims or open-ended implementation. Broader remediation is separately scoped only when the evidence justifies it.</p>
+      <a class="button button-primary" href="/audit-intake">Prepare the bounded scope <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>
