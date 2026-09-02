@@ -4,6 +4,7 @@ const base = 'https://bitevo.work';
 // Keep focused commercial routes explicit so every reviewed public surface is bound to a canonical URL.
 const routes = [
   '/',
+  '/start',
   '/doctrine',
   '/artifacts',
   '/proof',
