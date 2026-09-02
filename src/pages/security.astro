@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const principles = [
+  ['Staging/test by default', 'Public scope preparation does not authorize testing. Production effects require separately agreed written scope and Rules of Engagement.'],
+  ['Minimum necessary access', 'BitEvo asks only for the access and evidence needed for the bounded workflow or control being tested.'],
+  ['No secrets in public intake', 'Do not submit passwords, API keys, private keys, wallet seeds, production credentials or unnecessary customer secrets through public forms/tools.'],
+  ['Stop on ambiguity', 'Unexpected production effects, unclear scope or unsafe provider behavior are stop conditions rather than reasons to continue testing.'],
+  ['Evidence with limitations', 'Results preserve what was observed, what was inferred, what was not tested and what owner decision the evidence supports.'],
+  ['Bounded claims', 'A passing scenario is not certification, universal safety, defect absence or proof that every tool path is controlled.']
+];
+---
+
+<Layout title="Security & Data Handling — BitEvo" description="BitEvo's public security and data-handling boundaries for bounded AI-agent and workflow assurance engagements.">
+  <section class="section hero"><div class="narrow"><div class="eyebrow">Security & data handling</div><h1 class="display">Bound the work before access begins.</h1><p class="lede">BitEvo performs bounded engineering assurance and implementation work for consequential AI-agent and software workflows. This page explains the operating boundary visible on the public site; engagement-specific data handling is frozen separately in the SOW and Rules of Engagement.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a><a href="/proof" class="button button-ghost">Review public proof</a></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container grid">{principles.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h2>{title}</h2><p>{text}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Evidence handled in scope</div><h2 class="section-title">Collect what the decision needs — not everything available.</h2></div><div><p class="lede">Depending on the engagement, evidence may include logs, request/response traces, configuration snapshots, screenshots, test identifiers, downstream readback and integrity hashes/manifests where applicable. The exact set, retention expectations and access path belong in the written engagement scope.</p></div></div></section>
+
+  <section class="section section-rule"><div class="container boundary-grid"><article class="panel"><div class="eyebrow">Public intake boundary</div><h2>Do not paste credentials or sensitive secrets.</h2><p>The public intake prepares a scope brief only. It is not an authorization channel for testing and is not the place to transmit production credentials or unnecessary customer data.</p></article><article class="panel"><div class="eyebrow">Professional boundary</div><h2>Engineering evidence, not certification.</h2><p>BitEvo does not present a bounded engineering review as a statutory/accredited audit, legal opinion, full penetration test, or guarantee of security, compliance, uptime or absence of unknown defects.</p></article></div></section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Before testing</div><h2 class="section-title">Scope · authorization · access · stop conditions.</h2><p class="lede">Those four elements are part of the evidence chain. Testing begins only after the engagement boundary is explicit.</p><a href="/audit-intake" class="button button-primary">Prepare the boundary <span aria-hidden="true">↗</span></a></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid article{padding:27px;min-height:250px}.grid article>span{color:var(--green);font:600 .62rem var(--mono)}.grid h2{margin:34px 0 10px;font-size:1.22rem}.grid p,.boundary-grid p{color:var(--muted);margin:0}.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(38px,7vw,90px);align-items:start}.boundary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary-grid article{padding:32px}.boundary-grid h2{margin:7px 0 12px}.final{text-align:center}.final .lede{margin:18px auto 28px}@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.split,.boundary-grid{grid-template-columns:1fr}}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
