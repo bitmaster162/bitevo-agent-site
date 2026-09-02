@@ -126,11 +126,12 @@ checks += toolContracts.length;
 for (const [route, ok] of toolContracts) if (!ok) failures.push(`${route}: localized functional/commercial boundary contract failed`);
 
 const enHome = await readFile(`${dist}/index.html`, 'utf8');
-checks += 4;
+checks += 5;
 if (!enHome.includes('href="/ru" lang="ru"')) failures.push('/: missing visible RU entry point');
 if (!enHome.includes('data-global-locale-switch="en-to-ru"')) failures.push('/: missing canonical global EN→RU switch');
 if (!enHome.includes('name="bitevo-build-sha"')) failures.push('/: missing build SHA meta receipt');
-if (!enHome.includes('>Map workflow <')) failures.push('/: English shared chrome regressed');
+if (!/<a class="header-cta" href="\/start"[^>]*>Start here/.test(enHome)) failures.push('/: English shared chrome must use /start as commercial front door');
+if (!enHome.includes('href="/mapper"')) failures.push('/: English shared chrome/content must preserve a visible Mapper path');
 
 if (failures.length) {
   console.error(`RU_SURFACE_GATE=FAIL checks=${checks} failures=${failures.length}`);
