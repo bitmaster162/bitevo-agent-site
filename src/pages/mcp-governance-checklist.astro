@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const sections = [
+  ['Inventory & ownership', ['List every MCP server reachable by the representative workflow.','List relevant tools/resources, versions and transport.','Name the owner for each server and business owner for consequential actions.','Flag third-party, unknown and unowned servers.']],
+  ['Action classification', ['Classify each tool as read, internal write, customer-facing write, delete/destructive, financial, credential/security, deployment/code execution or external communication.','Require an explicit business reason for every high-impact capability.']],
+  ['Identity & authorization', ['Identify the identity that actually acts.','Check token/resource audience binding.','Check for token passthrough assumptions.','Review credential scope, lifecycle and revocation.','Flag shared or unnecessarily broad credentials.']],
+  ['Gateway / policy', ['Identify the intended control point and bypass paths.','Check how unknown tools are treated.','Separate read/write/delete policy where applicable.','Document fail-open vs fail-closed behavior.']],
+  ['Human approval', ['Bind approval to exact action, target and material parameters where required.','Record approver identity and expiry.','Check that stale approval cannot be reused after parameter changes.']],
+  ['Evidence & failure', ['Reconstruct actor → decision → tool → result → resulting state.','Test ambiguous timeout/retry where safe.','Check idempotency/deduplication for material effects.','Preserve retry/replay lineage and unresolved partial work.']]
+];
+---
+
+<Layout title="MCP / Tool Governance Checklist — BitEvo" description="A public 2026 checklist for reviewing MCP tool inventory, action classes, identity, authorization, policy coverage, approvals, retries and evidence.">
+  <section class="section hero"><div class="narrow"><div class="eyebrow">Public engineering checklist · 2026</div><h1 class="display">MCP / Tool Governance Checklist</h1><p class="lede">Use this before giving an agent broader tool authority. It is a planning and review artifact — not a penetration test, certification or proof that every tool path is secure.</p><div class="actions"><a href="/mcp-governance" class="button button-primary">See the bounded audit <span aria-hidden="true">↗</span></a><a href="/audit-intake" class="button button-ghost">Scope one boundary</a></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container stack">{sections.map(([title,items],i) => <article class="panel item"><div><span>{String(i+1).padStart(2,'0')}</span><h2>{title}</h2></div><ul>{items.map(item => <li>{item}</li>)}</ul></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container panel spec"><div><div class="eyebrow">Current protocol note</div><h2>Review against the deployed MCP revision.</h2></div><div><p>MCP 2026-07-28 introduced a stateless protocol core and required <code>Mcp-Method</code> and <code>Mcp-Name</code> headers for Streamable HTTP requests. Its authorization guidance requires tokens to be issued for the MCP server as intended audience/resource and forbids passing the inbound client token unchanged to downstream APIs.</p><p><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">Official 2026-07-28 release ↗</a><br/><a href="https://modelcontextprotocol.io/specification/draft/basic/authorization">Official authorization specification ↗</a></p></div></div></section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Evidence discipline</div><h2 class="section-title">Use PASS / PARTIAL / FAIL / NOT TESTED / N/A.</h2><p class="lede">Do not collapse a multi-domain MCP environment into a fake universal security score. Preserve what was tested, what was not, and which owner decision follows.</p></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.stack{display:grid;gap:14px}.item{display:grid;grid-template-columns:.65fr 1.35fr;gap:36px;padding:30px}.item span{color:var(--green);font:600 .62rem var(--mono)}.item h2{margin:12px 0 0;font-size:1.45rem}.item ul{margin:0;padding-left:20px;color:var(--muted)}.item li{padding:5px 0}.spec{display:grid;grid-template-columns:.7fr 1.3fr;gap:40px;padding:clamp(28px,5vw,54px)}.spec h2{margin:6px 0 0}.spec p{color:var(--muted)}.final{text-align:center}.final .lede{margin:18px auto 0}@media(max-width:760px){.item,.spec{grid-template-columns:1fr}.item{gap:18px}}
+</style>

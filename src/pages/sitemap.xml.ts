@@ -1,9 +1,10 @@
 export const prerender = true;
 
 const base = 'https://bitevo.work';
-// Keep focused commercial routes explicit so release verification can bind each public offer to a canonical URL.
+// Keep focused commercial routes explicit so every reviewed public surface is bound to a canonical URL.
 const routes = [
   '/',
+  '/start',
   '/doctrine',
   '/artifacts',
   '/proof',
@@ -19,6 +20,19 @@ const routes = [
   '/assurance',
   '/evidence-readiness',
   '/control-validation',
+  '/mcp-governance',
+  '/mcp-governance-checklist',
+  '/coding-agent-governance',
+  '/failure-recovery',
+  '/agent-identity-worksheet',
+  '/trust-evidence-template',
+  '/ai-skill-lab-sample',
+  '/security',
+  '/entry-audit',
+  '/consequential-actions',
+  '/commerce-action-validation',
+  '/reservation-action-validation',
+  '/regulated-service-action-validation',
   '/phuket-ai-workflow',
   '/operator',
   '/agent-authority-audit',

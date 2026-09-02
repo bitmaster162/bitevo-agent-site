@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const modules = [
+  ['Workflow decomposition', 'Map input → judgment → tool → output → human decision for one real team workflow.'],
+  ['Tool selection', 'Choose the minimum AI/tool surface required instead of adding AI everywhere.'],
+  ['Operating boundary', 'Define what AI may do, what stays human-owned, sensitive-data limits, evidence requirements and approvals.'],
+  ['Build the artifact', 'Create one reusable research, review, meeting-prep, exception-triage or workflow artifact during the session.'],
+  ['Handoff & measurement', 'Assign an owner, usage rule and seven-day measurement plan so the session ends in operating practice.']
+];
+---
+
+<Layout title="AI Skill Lab B2B — Sample Pilot | BitEvo" description="A public sample of the BitEvo AI Skill Lab B2B pilot: one real team workflow, operating rules, a reusable artifact and a short adoption measurement plan.">
+  <section class="section hero"><div class="narrow"><div class="eyebrow">Sample pilot · workflow → artifact → operating practice</div><h1 class="display">AI training should end with a workflow your team can actually use.</h1><p class="lede">This sample shows the BitEvo AI Skill Lab format. It is not generic “how to use ChatGPT” training: one team workflow is decomposed, bounded, implemented into a reusable artifact and measured after the session.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Discuss a team pilot <span aria-hidden="true">↗</span></a><a href="/build" class="button button-ghost">See BUILD</a></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container intro"><div><div class="eyebrow">Sample 90-minute pilot</div><h2 class="section-title">One workflow, not a tour of every AI feature.</h2></div><p class="lede">Suitable examples include recurring research, meeting preparation, exception triage, customer analysis, internal knowledge retrieval or structured document review. The actual pilot is scoped to the team's real process and non-sensitive sample inputs.</p></div></section>
+
+  <section class="section section-rule"><div class="container stack">{modules.map(([title,text],i)=><article class="panel"><span>{String(i+1).padStart(2,'0')}</span><div><h2>{title}</h2><p>{text}</p></div></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container grid"><article class="panel"><div class="eyebrow">Pilot deliverables</div><h2>Leave with an operating artifact.</h2><ul><li>workflow map</li><li>team operating rules</li><li>reusable artifact/template</li><li>before/after process</li><li>seven-day adoption measurement plan</li></ul></article><article class="panel"><div class="eyebrow">Useful measurements</div><h2>Measure the workflow, not training attendance.</h2><ul><li>time per workflow</li><li>rework rate</li><li>completion rate</li><li>usage/adoption</li><li>manual handoffs</li><li>output acceptance</li></ul></article></div></section>
+
+  <section class="section section-rule"><div class="narrow boundary panel"><div class="eyebrow">Boundary</div><h2 class="section-title">Not every workflow should use AI.</h2><p class="lede">The sample does not promise company-wide transformation or ROI. Quantification uses the team's actual baseline where available, and sensitive-data/tool boundaries are defined before implementation.</p></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(34px,7vw,90px);align-items:end}.intro .lede{margin:0}.stack{display:grid;gap:12px}.stack article{display:grid;grid-template-columns:54px 1fr;gap:22px;padding:26px}.stack article>span{color:var(--green);font:600 .62rem var(--mono)}.stack h2{margin:0 0 8px;font-size:1.2rem}.stack p{margin:0;color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid article{padding:30px}.grid h2{margin:7px 0 14px}.grid ul{margin:0;padding-left:18px;color:var(--muted)}.grid li{padding:5px 0}.boundary{padding:clamp(28px,5vw,54px);text-align:center}.boundary .lede{margin:18px auto 0}@media(max-width:820px){.intro,.grid{grid-template-columns:1fr}}
+</style>

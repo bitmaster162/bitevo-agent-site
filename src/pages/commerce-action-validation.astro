@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const actions = [
+  'Shipping-address edits',
+  'Order cancellation or replacement',
+  'Subscription pause / cancel / resume',
+  'Refund-support actions',
+  'Inventory or fulfillment-state updates'
+];
+
+const tests = [
+  'Correct shopper / order object binding',
+  'Current fulfillment or subscription state',
+  'Customer confirmation tied to exact parameters',
+  'Duplicate action and retry behavior',
+  'Partial multi-system completion',
+  'Downstream state readback'
+];
+---
+
+<Layout title="Commerce AI Action Validation — BitEvo" description="A bounded BitEvo Entry Audit for AI-driven order, subscription, fulfillment and refund-support actions.">
+  <section class="section"><div class="narrow">
+    <div class="eyebrow">Commerce action boundary</div>
+    <h1 class="display">When AI edits the order, the object boundary matters.</h1>
+    <p class="lede">Commerce agents are moving from answering questions to changing real order and subscription state. BitEvo independently tests one consequential action chain: shopper/order binding, confirmation, current fulfillment state, external effect and retry behavior.</p>
+    <a class="button button-primary" href="/entry-audit">See the $1,500 Entry Audit <span aria-hidden="true">↗</span></a>
+  </div></section>
+
+  <section class="section section-rule"><div class="container">
+    <div class="eyebrow">Good first actions</div><h2 class="section-title">Choose one write that matters.</h2>
+    <ul>{actions.map(item => <li>{item}</li>)}</ul>
+  </div></section>
+
+  <section class="section section-rule"><div class="container">
+    <div class="eyebrow">Bounded test questions</div><h2 class="section-title">Prove the action stayed attached to the intended order.</h2>
+    <ol>{tests.map(item => <li>{item}</li>)}</ol>
+  </div></section>
+
+  <section class="section section-rule"><div class="narrow">
+    <div class="eyebrow">Claim boundary</div><h2 class="section-title">One action, not a blanket ecommerce security score.</h2>
+    <p class="lede">The engagement does not certify the commerce platform, fraud controls or every customer-service workflow. It returns evidence and an owner decision for the tested action only.</p>
+    <a class="button" href="/consequential-actions">Compare other action classes →</a>
+  </div></section>
+</Layout>

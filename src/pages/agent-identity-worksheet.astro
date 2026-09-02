@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const lifecycle = [
+  'Who creates the agent/workload identity?',
+  'Who sponsors it while active?',
+  'Who can revoke it?',
+  'What happens when the human sponsor leaves?',
+  'What happens when the agent/project is retired?',
+  'Are dormant identities detected?',
+  'Can the credential be reused outside the intended workflow?'
+];
+
+const evidence = [
+  'Identity / workload identifier',
+  'Human sponsor and technical owner',
+  'Credential issuer and resource/audience',
+  'Scopes / roles and issue / expiry timestamps',
+  'Policy decision and approval reference',
+  'Tool/action and target resource',
+  'Resulting-state or revocation evidence'
+];
+---
+
+<Layout title="Agent Identity & Access Worksheet — BitEvo" description="A public worksheet for mapping AI-agent identity, sponsor, credential scope, lifecycle, revocation and consequential-action evidence.">
+  <section class="section hero"><div class="narrow"><div class="eyebrow">Public worksheet · identity · lifecycle · authority</div><h1 class="display">Every acting agent needs an identity, an owner and an end-of-life path.</h1><p class="lede">Use this worksheet to map the identity and access boundary before an AI agent gains consequential tools. It is a planning artifact — not certification and not proof that an IAM platform is correctly configured.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Scope an identity review <span aria-hidden="true">↗</span></a><a href="/mcp-governance" class="button button-ghost">MCP governance</a></div></div></section>
+
+  <section class="section-tight section-rule"><div class="container grid"><article class="panel"><div class="eyebrow">Identity record</div><h2>Who actually acts?</h2><ul><li>Agent / workload name</li><li>Environment</li><li>Human sponsor / business owner</li><li>Technical owner</li><li>Identity provider</li><li>Workload/service identity</li><li>Credential type and lifetime</li><li>Revocation path</li></ul></article><article class="panel"><div class="eyebrow">Authority inventory</div><h2>What can that identity reach?</h2><ul><li>Resource / tool</li><li>Read / write / delete / high consequence</li><li>Credential and scope</li><li>Owner</li><li>Approval requirement</li><li>Target/resource binding</li></ul></article></div></section>
+
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Lifecycle questions</div><h2 class="section-title">Authority should not outlive its owner or purpose.</h2></div><ol>{lifecycle.map((item,i)=><li><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></li>)}</ol></div></section>
+
+  <section class="section section-rule"><div class="container panel evidence"><div><div class="eyebrow">Evidence fields</div><h2 class="section-title">Make one consequential action attributable.</h2><p class="lede">The exact evidence depends on the platform and engagement scope.</p></div><div class="items">{evidence.map((item,i)=><div><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></div>)}</div></div></section>
+
+  <section class="section section-rule"><div class="container boundary"><article class="panel"><div class="eyebrow">Review outcomes</div><h2>PASS · PARTIAL · FAIL · NOT TESTED · N/A</h2><p>Keep domain-level results visible instead of inventing one universal identity-security score.</p></article><article class="panel"><div class="eyebrow">Claim boundary</div><h2>Identity review is bounded engineering evidence.</h2><p>No certification and no guarantee that unauthorized access or unknown bypasses cannot exist outside the tested scope.</p></article></div></section>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.grid,.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid article,.boundary article{padding:30px}.grid h2,.boundary h2{margin:7px 0 14px}.grid ul{margin:0;padding-left:18px;color:var(--muted)}.grid li{padding:5px 0}.boundary p{color:var(--muted)}.split{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(34px,7vw,90px)}.split ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.split li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}.split li span,.items span{color:var(--green);font:600 .62rem var(--mono)}.evidence{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(34px,7vw,90px);padding:clamp(28px,5vw,54px)}.items{border-top:1px solid var(--line)}.items div{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}@media(max-width:820px){.grid,.boundary,.split,.evidence{grid-template-columns:1fr}}
+</style>
