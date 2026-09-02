@@ -21,6 +21,8 @@ const routes = [
   '/control-validation',
   '/mcp-governance',
   '/mcp-governance-checklist',
+  '/coding-agent-governance',
+  '/failure-recovery',
   '/security',
   '/phuket-ai-workflow',
   '/operator',
