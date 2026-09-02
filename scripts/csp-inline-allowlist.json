@@ -3,7 +3,7 @@
   "observedFrom": {
     "deployment": "dpl_BN4Rp3mJe85vWdi5HdFTqCfJGprC",
     "sourceSha": "28b496e12aab5176cae19de6392c5ee01e8223e6",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed."
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed. Commercial R3 adds three individually reviewed page-style hashes for MCP governance, MCP checklist, and security/data-handling surfaces."
   },
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
@@ -47,6 +47,9 @@
     "HrCoqMHknRtj0KL8Qjc8uFre9D0qxXXAH1yFaSgLiPI=",
     "ZTO+ZYLWSj3hcmKhpoM45bLXkGTEbFKC9UD5nab3Ax4=",
     "D1yI/XU7fOucbisZLoef8dLOYoXCX+4EOKso9sKCSVU=",
-    "KubYyPRUxewNFub0v6KyF9FnIYMW/bzMaYTSaJ1D9bo="
+    "KubYyPRUxewNFub0v6KyF9FnIYMW/bzMaYTSaJ1D9bo=",
+    "+UP/fcjSIDeuKkWenwc1XGymMzWA8z7jkS3Nu5Ztfn0=",
+    "eFV4edIsMttMSZbsOmW5mRJGPlR1M19ZhWHzBwwpsQo=",
+    "r2Jp4dmQAIg65Ua5ZT6lw+G4HBp0sABk9ss6lJ2UuiU="
   ]
 }
