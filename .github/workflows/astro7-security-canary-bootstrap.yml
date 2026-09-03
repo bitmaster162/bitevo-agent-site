@@ -22,9 +22,55 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
-          node-version: 22.12.0
+          node-version: 22.19.0
+      - name: Rewrite one legacy Astro template for Rust compiler
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const file='src/pages/ru/universe.astro';
+          const source=await readFile(file,'utf8');
+          const before=`      {modules.map((module, i) => {
+        const content = <>
+          <div class="module-top">
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            <span class="status">{module.status}</span>
+          </div>
+          <div>
+            <small>{module.lane}</small>
+            <h3>{module.name}</h3>
+            <p>{module.text}</p>
+          </div>
+          <div class="module-foot">{module.href ? 'Открыть surface ↗' : 'Public route пока не опубликован'}</div>
+        </>;
+        return module.href
+          ? <a class="module-card panel" href={module.href} target={module.internal ? undefined : '_blank'} rel={module.internal ? undefined : 'noopener'}>{content}</a>
+          : <article class="module-card panel module-card-muted">{content}</article>;
+      })}`;
+          const card=`
+          <div class="module-top">
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            <span class="status">{module.status}</span>
+          </div>
+          <div>
+            <small>{module.lane}</small>
+            <h3>{module.name}</h3>
+            <p>{module.text}</p>
+          </div>
+          <div class="module-foot">{module.href ? 'Открыть surface ↗' : 'Public route пока не опубликован'}</div>`;
+          const after=`      {modules.map((module, i) => module.href ? (
+        <a class="module-card panel" href={module.href} target={module.internal ? undefined : '_blank'} rel={module.internal ? undefined : 'noopener'}>${card}
+        </a>
+      ) : (
+        <article class="module-card panel module-card-muted">${card}
+        </article>
+      ))}`;
+          if (!source.includes(before)) throw new Error('expected legacy RU Universe fragment pattern not found');
+          await writeFile(file, source.replace(before,after));
+          NODE
       - name: Upgrade exact Astro and regenerate lock
-        run: npm install astro@7.2.10 --save-exact
+        run: |
+          npm pkg set engines.node=">=22.19.0"
+          npm install astro@7.2.10 --save-exact
       - name: Capture post-upgrade audit without hiding findings
         run: |
           npm audit --json > /tmp/astro7-audit.json || true
@@ -42,7 +88,7 @@ jobs:
       - name: Remove one-shot workflow and commit exact dependency canary
         run: |
           git rm .github/workflows/astro7-security-canary-bootstrap.yml
-          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md
+          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md src/pages/ru/universe.astro
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Security: canary Astro 7.2.10 with green core build"
