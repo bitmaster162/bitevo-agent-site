@@ -22,51 +22,50 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
-          node-version: 22.19.0
+          node-version: '22.19.0'
       - name: Rewrite one legacy Astro template for Rust compiler
         run: |
-          node --input-type=module <<'NODE'
-          import { readFile, writeFile } from 'node:fs/promises';
-          const file='src/pages/ru/universe.astro';
-          const source=await readFile(file,'utf8');
-          const before=`      {modules.map((module, i) => {
-        const content = <>
-          <div class="module-top">
-            <span>{String(i + 1).padStart(2, '0')}</span>
-            <span class="status">{module.status}</span>
-          </div>
-          <div>
-            <small>{module.lane}</small>
-            <h3>{module.name}</h3>
-            <p>{module.text}</p>
-          </div>
-          <div class="module-foot">{module.href ? 'Открыть surface ↗' : 'Public route пока не опубликован'}</div>
-        </>;
-        return module.href
-          ? <a class="module-card panel" href={module.href} target={module.internal ? undefined : '_blank'} rel={module.internal ? undefined : 'noopener'}>{content}</a>
-          : <article class="module-card panel module-card-muted">{content}</article>;
-      })}`;
-          const card=`
-          <div class="module-top">
-            <span>{String(i + 1).padStart(2, '0')}</span>
-            <span class="status">{module.status}</span>
-          </div>
-          <div>
-            <small>{module.lane}</small>
-            <h3>{module.name}</h3>
-            <p>{module.text}</p>
-          </div>
-          <div class="module-foot">{module.href ? 'Открыть surface ↗' : 'Public route пока не опубликован'}</div>`;
-          const after=`      {modules.map((module, i) => module.href ? (
-        <a class="module-card panel" href={module.href} target={module.internal ? undefined : '_blank'} rel={module.internal ? undefined : 'noopener'}>${card}
-        </a>
-      ) : (
-        <article class="module-card panel module-card-muted">${card}
-        </article>
-      ))}`;
-          if (!source.includes(before)) throw new Error('expected legacy RU Universe fragment pattern not found');
-          await writeFile(file, source.replace(before,after));
-          NODE
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('src/pages/ru/universe.astro')
+          lines = path.read_text().splitlines()
+          start = next((i for i, line in enumerate(lines) if '{modules.map((module, i) => {' in line), None)
+          if start is None:
+              raise SystemExit('expected legacy RU Universe fragment start not found')
+          end = next((i for i in range(start, len(lines)) if lines[i].strip() == '})}'), None)
+          if end is None:
+              raise SystemExit('expected legacy RU Universe fragment end not found')
+          replacement = [
+              '      {modules.map((module, i) => module.href ? (',
+              '        <a class="module-card panel" href={module.href} target={module.internal ? undefined : \'_blank\'} rel={module.internal ? undefined : \'noopener\'}>',
+              '          <div class="module-top">',
+              "            <span>{String(i + 1).padStart(2, '0')}</span>",
+              '            <span class="status">{module.status}</span>',
+              '          </div>',
+              '          <div>',
+              '            <small>{module.lane}</small>',
+              '            <h3>{module.name}</h3>',
+              '            <p>{module.text}</p>',
+              '          </div>',
+              "          <div class=\"module-foot\">{'Открыть surface ↗'}</div>",
+              '        </a>',
+              '      ) : (',
+              '        <article class="module-card panel module-card-muted">',
+              '          <div class="module-top">',
+              "            <span>{String(i + 1).padStart(2, '0')}</span>",
+              '            <span class="status">{module.status}</span>',
+              '          </div>',
+              '          <div>',
+              '            <small>{module.lane}</small>',
+              '            <h3>{module.name}</h3>',
+              '            <p>{module.text}</p>',
+              '          </div>',
+              "          <div class=\"module-foot\">{'Public route пока не опубликован'}</div>",
+              '        </article>',
+              '      ))}',
+          ]
+          path.write_text('\n'.join(lines[:start] + replacement + lines[end + 1:]) + '\n')
+          PY
       - name: Upgrade exact Astro and regenerate lock
         run: |
           npm pkg set engines.node=">=22.19.0"
