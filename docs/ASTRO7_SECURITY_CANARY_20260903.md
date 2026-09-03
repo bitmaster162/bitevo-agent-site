@@ -83,3 +83,17 @@ PR49 (`agent/p1-scope-handoff-r1-implementation`) independently changes `package
 `ASTRO7_SECURITY_CANARY = SOURCE_TESTED / DRAFT_UNMERGED`
 
 `PRODUCTION = UNCHANGED`
+
+## Final canary evidence
+
+- Candidate: Astro 7.2.10, Node >=22.19.0, exact dev esbuild 0.28.1.
+- npm audit: 0 known vulnerabilities.
+- Parser migration is limited to closing the previously unclosed scoped <style> block in EN and RU Universe.
+- Vite 8 compatibility bridge explicitly selects esbuild for JS/CSS minification. This is a temporary compatibility control because Vite 8 deprecates esbuild minification; future removal requires a separate CSP migration.
+- CSP structure remains 97 HTML / 67 inline style blocks / 37 unique styles / 246 inline scripts / 13 unique scripts / 50 executable scripts / 196 JSON-LD.
+- CSS proof covers every one of the 67 paired style blocks. Generated Astro scope IDs and equivalent media-range syntax are normalized; declaration order is normalized only when property identities are unique. Old/new unique style hashes map one-to-one. Exactly 1 of 37 reviewed unique style hashes remains byte-identical and 36 change.
+- Script shape proof requires 11 of 13 reviewed unique script hashes to stay byte-identical. Exactly two changed hashes are permitted, one on EN audit-intake and one on RU audit-intake.
+- Those two compiled page scripts pass differential jsdom 30.0.1 execution on Node 22.22.2 across initial state, Entry generation, Primary depth, EN mapper handoff, copy, download, reset and intake-segmentation marker behavior with a deterministic clock.
+- CSP re-baseline therefore changes exactly 36 style hashes, preserves exactly 1 style hash, and changes exactly 2 script hashes only after semantic/behavioral proof.
+- The canary branch quality-gate workflow was prepatched directly to Node 22.19.0 in exactly two locations; the finalizer verifies this state but does not rewrite workflow files.
+- No production merge/deploy is authorized by this canary.
