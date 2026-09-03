@@ -23,53 +23,90 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
           node-version: '22.19.0'
-      - name: Rewrite legacy Universe templates for Rust compiler
+      - name: Rewrite legacy Universe card expressions for Rust compiler
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          def rewrite(file, open_text, closed_text):
+          en_cards = [
+              '      <a class="module-card panel" href="/build">',
+              '        <div class="module-top"><span>01</span><span class="status">LIVE</span></div>',
+              '        <div><small>BUILD</small><h3>BitEvo</h3><p>Build, audit and harden AI workflows with authority, evidence and recovery kept explicit.</p></div>',
+              '        <div class="module-foot">Open surface ↗</div>',
+              '      </a>',
+              '      <article class="module-card panel module-card-muted">',
+              '        <div class="module-top"><span>02</span><span class="status">RELEASE PREP</span></div>',
+              '        <div><small>LEARN</small><h3>AI Skill Lab</h3><p>Practical AI learning for personal, family and business use, built around visible work rather than black-box promises.</p></div>',
+              '        <div class="module-foot">Public route not published yet</div>',
+              '      </article>',
+              '      <a class="module-card panel" href="/vision">',
+              '        <div class="module-top"><span>03</span><span class="status">PUBLIC DEMO</span></div>',
+              '        <div><small>VISION</small><h3>VisionAssist</h3><p>Evidence-grounded visual reasoning with explicit observations, competing hypotheses, counterevidence and uncertainty. Public demo only; private runtime stays private.</p></div>',
+              '        <div class="module-foot">Open surface ↗</div>',
+              '      </a>',
+              '      <a class="module-card panel" href="https://cryptoguidessite.vercel.app/" target="_blank" rel="noopener">',
+              '        <div class="module-top"><span>04</span><span class="status">LIVE · REVIEW</span></div>',
+              '        <div><small>CRYPTO</small><h3>Crypto Guides</h3><p>A public crypto knowledge portal. The site is live while taxonomy, currentness and evidence boundaries continue to be reviewed.</p></div>',
+              '        <div class="module-foot">Open surface ↗</div>',
+              '      </a>',
+              '      <a class="module-card panel" href="https://sovereign-arena-site.vercel.app/" target="_blank" rel="noopener">',
+              '        <div class="module-top"><span>05</span><span class="status">RECOVERY</span></div>',
+              '        <div><small>ARENA</small><h3>Sovereign Arena</h3><p>A public research and proof surface. Recovery and source-binding work remain in progress; runtime health is not inferred here.</p></div>',
+              '        <div class="module-foot">Open surface ↗</div>',
+              '      </a>',
+              '      <a class="module-card panel" href="/guides">',
+              '        <div class="module-top"><span>06</span><span class="status">PUBLIC RESEARCH</span></div>',
+              '        <div><small>LABS</small><h3>BitEvo Labs</h3><p>Bounded experiments, research notes and public evidence that are useful before they become products.</p></div>',
+              '        <div class="module-foot">Open surface ↗</div>',
+              '      </a>',
+          ]
+
+          ru_cards = [
+              '      <a class="module-card panel" href="/ru/build">',
+              '        <div class="module-top"><span>01</span><span class="status">LIVE</span></div>',
+              '        <div><small>BUILD</small><h3>BitEvo</h3><p>Создание, аудит и hardening AI-workflows с явными authority, evidence и recovery boundaries.</p></div>',
+              '        <div class="module-foot">Открыть surface ↗</div>',
+              '      </a>',
+              '      <article class="module-card panel module-card-muted">',
+              '        <div class="module-top"><span>02</span><span class="status">RELEASE PREP</span></div>',
+              '        <div><small>LEARN</small><h3>AI Skill Lab</h3><p>Практическое обучение AI для личного, семейного и бизнес-использования через видимую работу, а не black-box обещания.</p></div>',
+              '        <div class="module-foot">Public route пока не опубликован</div>',
+              '      </article>',
+              '      <a class="module-card panel" href="/ru/vision">',
+              '        <div class="module-top"><span>03</span><span class="status">PUBLIC DEMO</span></div>',
+              '        <div><small>VISION</small><h3>VisionAssist</h3><p>Evidence-grounded visual reasoning с явными observations, competing hypotheses, counterevidence и uncertainty. Только public demo; private runtime остаётся private.</p></div>',
+              '        <div class="module-foot">Открыть surface ↗</div>',
+              '      </a>',
+              '      <a class="module-card panel" href="https://cryptoguidessite.vercel.app/" target="_blank" rel="noopener">',
+              '        <div class="module-top"><span>04</span><span class="status">LIVE · REVIEW</span></div>',
+              '        <div><small>CRYPTO</small><h3>Crypto Guides</h3><p>Публичный crypto knowledge portal. Сайт live, но taxonomy, currentness и evidence boundaries продолжают проходить review.</p></div>',
+              '        <div class="module-foot">Открыть surface ↗</div>',
+              '      </a>',
+              '      <a class="module-card panel" href="https://sovereign-arena-site.vercel.app/" target="_blank" rel="noopener">',
+              '        <div class="module-top"><span>05</span><span class="status">RECOVERY</span></div>',
+              '        <div><small>ARENA</small><h3>Sovereign Arena</h3><p>Публичная research/proof surface. Recovery и source-binding ещё идут; runtime health отсюда не выводится.</p></div>',
+              '        <div class="module-foot">Открыть surface ↗</div>',
+              '      </a>',
+              '      <a class="module-card panel" href="/ru/guides">',
+              '        <div class="module-top"><span>06</span><span class="status">PUBLIC RESEARCH</span></div>',
+              '        <div><small>LABS</small><h3>BitEvo Labs</h3><p>Bounded experiments, research notes и public evidence, которые полезны до превращения в полноценные продукты.</p></div>',
+              '        <div class="module-foot">Открыть surface ↗</div>',
+              '      </a>',
+          ]
+
+          def rewrite(file, cards):
               path = Path(file)
               lines = path.read_text().splitlines()
               start = next((i for i, line in enumerate(lines) if '{modules.map((module, i) => {' in line), None)
               if start is None:
-                  raise SystemExit(f'{file}: expected legacy fragment start not found')
+                  raise SystemExit(f'{file}: expected legacy card expression start not found')
               end = next((i for i in range(start, len(lines)) if lines[i].strip() == '})}'), None)
               if end is None:
-                  raise SystemExit(f'{file}: expected legacy fragment end not found')
-              replacement = [
-                  '      {modules.map((module, i) => module.href ? (',
-                  '        <a class="module-card panel" href={module.href} target={module.internal ? undefined : \'_blank\'} rel={module.internal ? undefined : \'noopener\'}>',
-                  '          <div class="module-top">',
-                  "            <span>{String(i + 1).padStart(2, '0')}</span>",
-                  '            <span class="status">{module.status}</span>',
-                  '          </div>',
-                  '          <div>',
-                  '            <small>{module.lane}</small>',
-                  '            <h3>{module.name}</h3>',
-                  '            <p>{module.text}</p>',
-                  '          </div>',
-                  f"          <div class=\"module-foot\">{{'{open_text}'}}</div>",
-                  '        </a>',
-                  '      ) : (',
-                  '        <article class="module-card panel module-card-muted">',
-                  '          <div class="module-top">',
-                  "            <span>{String(i + 1).padStart(2, '0')}</span>",
-                  '            <span class="status">{module.status}</span>',
-                  '          </div>',
-                  '          <div>',
-                  '            <small>{module.lane}</small>',
-                  '            <h3>{module.name}</h3>',
-                  '            <p>{module.text}</p>',
-                  '          </div>',
-                  f"          <div class=\"module-foot\">{{'{closed_text}'}}</div>",
-                  '        </article>',
-                  '      ))}',
-              ]
-              path.write_text('\n'.join(lines[:start] + replacement + lines[end + 1:]) + '\n')
+                  raise SystemExit(f'{file}: expected legacy card expression end not found')
+              path.write_text('\n'.join(lines[:start] + cards + lines[end + 1:]) + '\n')
 
-          rewrite('src/pages/universe.astro', 'Open surface ↗', 'Public route not published yet')
-          rewrite('src/pages/ru/universe.astro', 'Открыть surface ↗', 'Public route пока не опубликован')
+          rewrite('src/pages/universe.astro', en_cards)
+          rewrite('src/pages/ru/universe.astro', ru_cards)
           PY
       - name: Upgrade exact Astro and regenerate lock
         run: |
