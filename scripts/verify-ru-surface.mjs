@@ -4,26 +4,11 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const siteOrigin = 'https://bitevo.work';
-const routes = [
-  ['/ru', '/'],
-  ['/ru/doctrine', '/doctrine'],
-  ['/ru/artifacts', '/artifacts'],
-  ['/ru/proof', '/proof'],
-  ['/ru/dogfood-self-audit', '/dogfood-self-audit'],
-  ['/ru/mapper', '/mapper'],
-  ['/ru/workspace', '/workspace'],
-  ['/ru/diagnostic', '/diagnostic'],
-  ['/ru/agent-authority-audit', '/agent-authority-audit'],
-  ['/ru/audit-intake', '/audit-intake'],
-  ['/ru/pricing', '/pricing'],
-  ['/ru/consulting', '/consulting'],
-  ['/ru/continuityos', '/continuityos'],
-  ['/ru/guides', '/guides'],
-  ['/ru/build', '/build'],
-  ['/ru/universe', '/universe'],
-  ['/ru/vision', '/vision']
-];
-const navRequired = ['/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
+const registry = JSON.parse(await readFile(`${root}/src/data/public-route-registry.json`, 'utf8'));
+const routes = registry.routes
+  .filter(route => route.indexable && route.locale === 'en')
+  .map(route => [route.path === '/' ? '/ru' : `/ru${route.path}`, route.path]);
+const navRequired = ['/ru/start','/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
 const requiredCyrillic = /[А-Яа-яЁё]/;
 const failures = [];
 let checks = 0;
@@ -82,12 +67,13 @@ for (const [route, enRoute] of routes) {
 const ruHome = await readFile(`${dist}/ru/index.html`, 'utf8');
 for (const path of navRequired) {
   checks += 1;
-  if (!ruHome.includes(`href="${path}"`)) failures.push(`/ru: missing Russian core navigation link ${path}`);
+  if (!ruHome.includes(`href="${path}"`)) failures.push(`/ru: missing Russian core navigation/decision link ${path}`);
 }
 
 const chromeContracts = [
   ['RU brand home', /<a[^>]+href="\/ru"[^>]+class="brand"|<a[^>]+class="brand"[^>]+href="\/ru"/.test(ruHome)],
-  ['RU header CTA', ruHome.includes('href="/ru/mapper"') && ruHome.includes('Собрать workflow')],
+  ['RU header CTA', ruHome.includes('href="/ru/start"') && ruHome.includes('Начать')],
+  ['RU home primary decision CTA', ruHome.includes('href="/ru/start"') && ruHome.includes('Выбрать формат')],
   ['RU canonical header language switch', ruHome.includes('data-global-locale-switch="ru-to-en"') && ruHome.includes('href="/" lang="en"')],
   ['RU primary navigation label', ruHome.includes('aria-label="Основная навигация"')],
   ['RU mobile navigation label', ruHome.includes('aria-label="Мобильная навигация"')],
@@ -134,9 +120,9 @@ if (!/<a class="header-cta" href="\/start"[^>]*>Start here/.test(enHome)) failur
 if (!enHome.includes('href="/mapper"')) failures.push('/: English shared chrome/content must preserve a visible Mapper path');
 
 if (failures.length) {
-  console.error(`RU_SURFACE_GATE=FAIL checks=${checks} failures=${failures.length}`);
+  console.error(`RU_SURFACE_GATE=FAIL routes=${routes.length} checks=${checks} failures=${failures.length}`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} global_locale_switches=EN_RU_CANONICAL ru_status_bars=RETAINED shared_chrome=RU functional_tools=4 mapper_workspace_schema=PASS commercial_routes=2 failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} global_locale_switches=EN_RU_CANONICAL ru_status_bars=RETAINED shared_chrome=RU_START functional_tools=4 mapper_workspace_schema=PASS commercial_routes=3 failures=0`);
