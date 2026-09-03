@@ -26,7 +26,7 @@ function isMissingBlob(error) {
 export function createVercelBlobScopeHandoffStore() {
   const read = async pathname => {
     try {
-      const result = await get(pathname, { access:'private' });
+      const result = await get(pathname, { access:'private', useCache:false });
       if (!result) return null;
       const text = await new Response(result.stream).text();
       return JSON.parse(text);
@@ -41,7 +41,7 @@ export function createVercelBlobScopeHandoffStore() {
       try {
         await put(pathname, JSON.stringify(record), {
           access:'private', addRandomSuffix:false, allowOverwrite:false,
-          contentType:'application/json; charset=utf-8', cacheControlMaxAge:0
+          contentType:'application/json; charset=utf-8'
         });
         return { created:true };
       } catch (error) {
