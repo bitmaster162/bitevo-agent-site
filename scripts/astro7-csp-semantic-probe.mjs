@@ -66,8 +66,9 @@ async function snapshot(output) {
     const html = await readFile(path, 'utf8');
     const styles = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map((m, index) => {
       const body = m[1] || '';
+      const canonicalText = canonicalCss(body);
       const hash = digest(body); styleHashes.add(hash); styleBlocks++;
-      return { index, hash, canonical:digest(canonicalCss(body)) };
+      return { index, hash, canonical:digest(canonicalText), raw:body, canonicalText };
     });
     const scripts = [];
     let scriptIndex = 0;
@@ -82,12 +83,17 @@ async function snapshot(output) {
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v5-shape', routes,
+    schema:'bitevo.astro7-csp-snapshot/v6-css-debug', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
-  await writeFile(output, JSON.stringify(data, null, 2));
+  await writeFile(output, JSON.stringify(data));
   console.log(`CSP_SNAPSHOT output=${output} routes=${data.totals.routes} style_blocks=${styleBlocks} unique_styles=${styleHashes.size} script_blocks=${scriptBlocks} unique_scripts=${scriptHashes.size} executable=${executable} jsonld=${jsonld}`);
+}
+
+function firstDiff(left,right) {
+  let i=0; const n=Math.min(left.length,right.length); while(i<n && left[i]===right[i]) i++;
+  const start=Math.max(0,i-220); return {index:i,old:left.slice(start,i+1600),next:right.slice(start,i+1600)};
 }
 
 async function compare(oldPath, newPath, styleOutput, scriptOutput) {
@@ -112,7 +118,12 @@ async function compare(oldPath, newPath, styleOutput, scriptOutput) {
     if (oldRoute.scripts.length !== nextRoute.scripts.length) throw new Error(`${route}: script count drift`);
     for (let i=0;i<oldRoute.styles.length;i++) {
       const before=oldRoute.styles[i], after=nextRoute.styles[i]; stylePairs++;
-      if (before.canonical !== after.canonical) throw new Error(`${route}: CSS semantic drift at style index ${i}`);
+      if (before.canonical !== after.canonical) {
+        console.log(`CSS_MISMATCH route=${route} index=${i} old_hash=${before.hash} new_hash=${after.hash}`);
+        console.log(`CSS_RAW_DIFF ${JSON.stringify(firstDiff(before.raw,after.raw))}`);
+        console.log(`CSS_CANONICAL_DIFF ${JSON.stringify(firstDiff(before.canonicalText,after.canonicalText))}`);
+        throw new Error(`${route}: CSS semantic drift at style index ${i}`);
+      }
       mapAdd(styleForward,before.hash,after.hash); mapAdd(styleReverse,after.hash,before.hash);
     }
     for (let i=0;i<oldRoute.scripts.length;i++) {
@@ -136,7 +147,6 @@ async function compare(oldPath, newPath, styleOutput, scriptOutput) {
   if (new Set(changedScriptBlocks.map(x=>x.route)).size !== 2) throw new Error('both EN and RU audit-intake script changes are required exactly once');
   const oldChanged = new Set(changedScriptBlocks.map(x=>x.oldHash)), newChanged = new Set(changedScriptBlocks.map(x=>x.newHash));
   if (oldChanged.size !== 2 || newChanged.size !== 2) throw new Error('changed script hashes must be two distinct one-to-one pairs');
-
   const unchangedOld = oldData.scriptHashes.filter(h=>!oldChanged.has(h)).sort();
   const unchangedNew = newData.scriptHashes.filter(h=>!newChanged.has(h)).sort();
   if (JSON.stringify(unchangedOld) !== JSON.stringify(unchangedNew) || unchangedOld.length !== 11) throw new Error('the 11 non-intake reviewed script hashes must remain byte-identical');
