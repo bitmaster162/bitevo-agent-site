@@ -85,7 +85,7 @@ jobs:
           else
             echo "ASTRO7_OLD_CSP_EXPECTED_STALE=PASS"
           fi
-      - name: Re-baseline exactly the proven 37 style hashes and 2 changed intake script hashes
+      - name: Re-baseline proven CSP sets with one preserved style hash
         run: |
           node --input-type=module <<'NODE'
           import { readFile, writeFile, appendFile } from 'node:fs/promises';
@@ -97,9 +97,11 @@ jobs:
           const oldStyles=[...allow.styles].sort(), oldScripts=[...allow.scripts].sort();
           const newStyles=[...styles].sort(), newScripts=[...scripts].sort();
           const oldStyleOnly=oldStyles.filter(x=>!newStyles.includes(x)), newStyleOnly=newStyles.filter(x=>!oldStyles.includes(x));
+          const sharedStyles=oldStyles.filter(x=>newStyles.includes(x));
           const oldScriptOnly=oldScripts.filter(x=>!newScripts.includes(x)), newScriptOnly=newScripts.filter(x=>!oldScripts.includes(x));
-          if (candidate.totals.styleBlocks!==67 || candidate.totals.uniqueStyles!==37 || oldStyleOnly.length!==37 || newStyleOnly.length!==37) throw new Error(`style rebaseline boundary failed oldOnly=${oldStyleOnly.length} newOnly=${newStyleOnly.length}`);
+          if (candidate.totals.styleBlocks!==67 || candidate.totals.uniqueStyles!==37 || oldStyleOnly.length!==36 || newStyleOnly.length!==36 || sharedStyles.length!==1) throw new Error(`style rebaseline boundary failed oldOnly=${oldStyleOnly.length} newOnly=${newStyleOnly.length} shared=${sharedStyles.length}`);
           if (candidate.totals.scriptBlocks!==246 || candidate.totals.uniqueScripts!==13 || oldScriptOnly.length!==2 || newScriptOnly.length!==2) throw new Error(`script rebaseline boundary failed oldOnly=${oldScriptOnly.length} newOnly=${newScriptOnly.length}`);
+          console.log(`ASTRO7_CSP_REBASELINE_BOUNDARY=PASS changed_styles=36 preserved_styles=1 changed_scripts=2 preserved_scripts=11 preserved_style_hash=${sharedStyles[0]}`);
           allow.styles=newStyles; allow.scripts=newScripts;
           await writeFile(allowPath,JSON.stringify(allow,null,2)+'\n');
 
@@ -119,7 +121,7 @@ jobs:
           ci=ci.replaceAll(oldFloor,'node-version: 22.19.0');
           await writeFile(ciPath,ci);
 
-          await appendFile('docs/ASTRO7_SECURITY_CANARY_20260903.md',`\n## Final canary evidence\n\n- Candidate: Astro 7.2.10, Node >=22.19.0, exact dev esbuild 0.28.1.\n- npm audit: 0 known vulnerabilities.\n- Parser migration is limited to closing the previously unclosed scoped <style> block in EN and RU Universe.\n- Vite 8 compatibility bridge explicitly selects esbuild for JS/CSS minification. This is a temporary compatibility control because Vite 8 deprecates esbuild minification; future removal requires a separate CSP migration.\n- CSP structure remains 97 HTML / 67 inline style blocks / 37 unique styles / 246 inline scripts / 13 unique scripts / 50 executable scripts / 196 JSON-LD.\n- CSS proof covers every one of the 67 paired style blocks. Generated Astro scope IDs and equivalent media-range syntax are normalized; declaration order is normalized only when property identities are unique. Old/new unique style hashes map one-to-one.\n- Script shape proof requires 11 of 13 reviewed unique script hashes to stay byte-identical. Exactly two changed hashes are permitted, one on EN audit-intake and one on RU audit-intake.\n- Those two compiled page scripts pass differential jsdom 30.0.1 execution on Node 22.22.2 across initial state, Entry generation, Primary depth, EN mapper handoff, copy, download, reset and intake-segmentation marker behavior with a deterministic clock.\n- CSP re-baseline therefore changes all 37 style hashes and exactly 2 script hashes only after semantic/behavioral proof.\n- No production merge/deploy is authorized by this canary.\n`);
+          await appendFile('docs/ASTRO7_SECURITY_CANARY_20260903.md',`\n## Final canary evidence\n\n- Candidate: Astro 7.2.10, Node >=22.19.0, exact dev esbuild 0.28.1.\n- npm audit: 0 known vulnerabilities.\n- Parser migration is limited to closing the previously unclosed scoped <style> block in EN and RU Universe.\n- Vite 8 compatibility bridge explicitly selects esbuild for JS/CSS minification. This is a temporary compatibility control because Vite 8 deprecates esbuild minification; future removal requires a separate CSP migration.\n- CSP structure remains 97 HTML / 67 inline style blocks / 37 unique styles / 246 inline scripts / 13 unique scripts / 50 executable scripts / 196 JSON-LD.\n- CSS proof covers every one of the 67 paired style blocks. Generated Astro scope IDs and equivalent media-range syntax are normalized; declaration order is normalized only when property identities are unique. Old/new unique style hashes map one-to-one. Exactly 1 of 37 reviewed unique style hashes remains byte-identical and 36 change.\n- Script shape proof requires 11 of 13 reviewed unique script hashes to stay byte-identical. Exactly two changed hashes are permitted, one on EN audit-intake and one on RU audit-intake.\n- Those two compiled page scripts pass differential jsdom 30.0.1 execution on Node 22.22.2 across initial state, Entry generation, Primary depth, EN mapper handoff, copy, download, reset and intake-segmentation marker behavior with a deterministic clock.\n- CSP re-baseline therefore changes exactly 36 style hashes, preserves exactly 1 style hash, and changes exactly 2 script hashes only after semantic/behavioral proof.\n- No production merge/deploy is authorized by this canary.\n`);
           NODE
       - name: Run complete provider-neutral contract with the new reviewed CSP baseline
         run: |
