@@ -40,8 +40,11 @@ const readHtml = route => readFile(htmlPath(route), 'utf8');
 const writeHtml = (route, html) => writeFile(htmlPath(route), html, 'utf8');
 
 let assurance = await readHtml('/assurance');
-if (!/name="robots"/i.test(assurance)) {
-  assurance = assurance.replace('</head>', '<meta name="robots" content="noindex, follow" data-route-taxonomy="LEGACY"></head>');
+const legacyRobots = '<meta name="robots" content="noindex, follow" data-route-taxonomy="LEGACY">';
+if (/<meta\s+name="robots"[^>]*>/i.test(assurance)) {
+  assurance = assurance.replace(/<meta\s+name="robots"[^>]*>/i, legacyRobots);
+} else {
+  assurance = assurance.replace('</head>', `${legacyRobots}</head>`);
 }
 if (!assurance.includes('data-legacy-route-note')) {
   assurance = assurance.replace(
