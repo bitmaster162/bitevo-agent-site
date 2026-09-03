@@ -25,9 +25,9 @@ check(spec.includes('SPEC_ONLY / NO_ENDPOINT / NO_PRODUCTION_EFFECT'), 'spec pha
 check(spec.includes('submission_intent = scope_review_only'), 'scope-review-only intent missing');
 check(spec.includes('testing_authorization = false'), 'testing authorization false boundary missing');
 check(spec.includes('UNKNOWN / RECONCILE'), 'false-green unknown/reconcile state missing');
-check(spec.includes('same `submission_id`'), 'idempotent receipt semantics missing');
+check(spec.includes('same server `submission_id`'), 'idempotent receipt semantics missing');
 check(spec.includes('local brief generation'), 'local fallback preservation missing');
-check(spec.includes('no CRM fan-out'), 'no-CRM-fanout R1 boundary missing');
+check(spec.includes('no hidden CRM fan-out'), 'no-CRM-fanout R1 boundary missing');
 check(spec.includes('P1_SCOPE_HANDOFF_R1 = SPEC_ONLY / ENDPOINT_NOT_IMPLEMENTED / PRODUCTION_UNCHANGED / ZERO_EXTERNAL_EFFECT'), 'spec terminal missing');
 
 for (const marker of [
