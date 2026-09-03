@@ -23,10 +23,19 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
           node-version: '22.19.0'
-      - name: Rewrite legacy Universe card expressions for Rust compiler
+      - name: Rewrite Universe compile-time lists for Rust compiler
         run: |
           python3 - <<'PY'
           from pathlib import Path
+
+          route_cards = [
+              '        <div class="map-route"><span>BUILD</span><strong>BitEvo</strong></div>',
+              '        <div class="map-route"><span>LEARN</span><strong>AI Skill Lab</strong></div>',
+              '        <div class="map-route"><span>VISION</span><strong>VisionAssist</strong></div>',
+              '        <div class="map-route"><span>CRYPTO</span><strong>Crypto Guides</strong></div>',
+              '        <div class="map-route"><span>ARENA</span><strong>Sovereign Arena</strong></div>',
+              '        <div class="map-route"><span>LABS</span><strong>BitEvo Labs</strong></div>',
+          ]
 
           en_cards = [
               '      <a class="module-card panel" href="/build">',
@@ -94,19 +103,51 @@ jobs:
               '      </a>',
           ]
 
-          def rewrite(file, cards):
+          en_flow = [
+              '      <article class="flow-card"><span>01</span><h3>Learn</h3><p>Build skill and judgment with AI Skill Lab.</p></article>',
+              '      <article class="flow-card"><span>02</span><h3>Build</h3><p>Turn that capability into bounded workflows and products with BitEvo.</p></article>',
+              '      <article class="flow-card"><span>03</span><h3>Specialize</h3><p>Use Vision, Crypto, Arena and Labs as domain-specific surfaces.</p></article>',
+          ]
+          ru_flow = [
+              '      <article class="flow-card"><span>01</span><h3>Учиться</h3><p>Развивать навык и judgment через AI Skill Lab.</p></article>',
+              '      <article class="flow-card"><span>02</span><h3>Строить</h3><p>Превращать этот навык в bounded workflows и продукты через BitEvo.</p></article>',
+              '      <article class="flow-card"><span>03</span><h3>Специализироваться</h3><p>Использовать Vision, Crypto, Arena и Labs как отдельные domain surfaces.</p></article>',
+          ]
+          en_evidence = [
+              '      <article><strong>SOURCE</strong><p>What code or material exists.</p></article>',
+              '      <article><strong>BUILD</strong><p>What was actually built from it.</p></article>',
+              '      <article><strong>DEPLOYMENT</strong><p>What a provider accepted.</p></article>',
+              '      <article><strong>READBACK</strong><p>What a public or protected surface returns.</p></article>',
+              '      <article><strong>EFFECT</strong><p>What the system is actually authorized to do.</p></article>',
+          ]
+          ru_evidence = [
+              '      <article><strong>SOURCE</strong><p>Какой код или материал существует.</p></article>',
+              '      <article><strong>BUILD</strong><p>Что реально было из него собрано.</p></article>',
+              '      <article><strong>DEPLOYMENT</strong><p>Что принял provider.</p></article>',
+              '      <article><strong>READBACK</strong><p>Что возвращает публичная или protected surface.</p></article>',
+              '      <article><strong>EFFECT</strong><p>Что системе реально разрешено делать.</p></article>',
+          ]
+
+          def replace_expression(lines, marker, replacement):
+              start = next((i for i, line in enumerate(lines) if marker in line), None)
+              if start is None:
+                  raise SystemExit(f'expected expression marker not found: {marker}')
+              end = next((i for i in range(start, len(lines)) if lines[i].strip() in ('))}', '})}')), None)
+              if end is None:
+                  raise SystemExit(f'expected expression end not found: {marker}')
+              return lines[:start] + replacement + lines[end + 1:]
+
+          def rewrite(file, cards, flow, evidence):
               path = Path(file)
               lines = path.read_text().splitlines()
-              start = next((i for i, line in enumerate(lines) if '{modules.map((module, i) => {' in line), None)
-              if start is None:
-                  raise SystemExit(f'{file}: expected legacy card expression start not found')
-              end = next((i for i in range(start, len(lines)) if lines[i].strip() == '})}'), None)
-              if end is None:
-                  raise SystemExit(f'{file}: expected legacy card expression end not found')
-              path.write_text('\n'.join(lines[:start] + cards + lines[end + 1:]) + '\n')
+              lines = replace_expression(lines, '{modules.map(module => (', route_cards)
+              lines = replace_expression(lines, '{modules.map((module, i) => {', cards)
+              lines = replace_expression(lines, '{flow.map(item => (', flow)
+              lines = replace_expression(lines, '{evidence.map(([name, text]) => (', evidence)
+              path.write_text('\n'.join(lines) + '\n')
 
-          rewrite('src/pages/universe.astro', en_cards)
-          rewrite('src/pages/ru/universe.astro', ru_cards)
+          rewrite('src/pages/universe.astro', en_cards, en_flow, en_evidence)
+          rewrite('src/pages/ru/universe.astro', ru_cards, ru_flow, ru_evidence)
           PY
       - name: Upgrade exact Astro and regenerate lock
         run: |
