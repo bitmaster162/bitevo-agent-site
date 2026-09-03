@@ -1,9 +1,9 @@
 {
   "schema": "bitevo.csp-inline-allowlist/v1",
   "observedFrom": {
-    "deployment": "dpl_BN4Rp3mJe85vWdi5HdFTqCfJGprC",
-    "sourceSha": "28b496e12aab5176cae19de6392c5ee01e8223e6",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by the reviewed public-site candidate. The operator page style and Person JSON-LD blocks were reviewed individually; any new or removed hash must fail the release gate until explicitly reviewed. Commercial R3 adds three individually reviewed page-style hashes for MCP governance, MCP checklist, and security/data-handling surfaces. Commercial R4 adds two reviewed style hashes for coding-agent governance and failure/recovery surfaces. Commercial R5 adds three reviewed style hashes for agent identity, trust evidence, and AI Skill Lab proof surfaces. Site Recovery R3 adds one reviewed inert Organization JSON-LD identity-boundary hash used on public HTML surfaces."
+    "deployment": "dpl_4jxhm6SHU4bF3NPmDEqyiDvjjMXX",
+    "sourceSha": "8b3ee591af545f982b8cae47a676573a3527f067",
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by reviewed public-site candidates. Existing hashes retain their prior review provenance. Site Recovery R5 adds one reviewed shared style hash emitted identically by the 27 generated RU semantic-parity pages; the source block is the static scoped style in src/pages/ru/[...slug].astro. No new executable inline script hash is authorized by this R5 change."
   },
   "scripts": [
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
@@ -56,6 +56,7 @@
     "L1Si0O1D0k328K4TMCIDnToQH+kmXsphwBFzk3iE+hE=",
     "kl9YGKpryMvPY+L8C88uhRPmFS4YCfk3V2nyg8/zYPc=",
     "Y3grXEIG2vCTlnWVXfIkK+/GLYtW1oqmBUh7naan+rc=",
-    "+juZpFNQJyVn3ypMMLYPIpBUxkh1q+8CDXqN3XFi97s="
+    "+juZpFNQJyVn3ypMMLYPIpBUxkh1q+8CDXqN3XFi97s=",
+    "srAzVQxM1hCduwGREHNvUH7Rfjvw4BhisUmWq1WrbFY="
   ]
 }
