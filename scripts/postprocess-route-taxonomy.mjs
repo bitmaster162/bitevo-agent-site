@@ -48,29 +48,34 @@ if (/<meta\s+name="robots"[^>]*>/i.test(assurance)) {
 }
 if (!assurance.includes('data-legacy-route-note')) {
   assurance = assurance.replace(
-    '<section class="assurance-hero section">',
-    '<section class="assurance-hero section"><div class="container panel" data-legacy-route-note><div class="eyebrow">LEGACY COMMERCIAL UMBRELLA · TRANSITION ONLY</div><p>This route is retained for historical continuity. The current BitEvo buyer path is <a href="/start">Start</a> → <a href="/pricing">Pricing</a>, with specialist scopes subordinate to that ladder.</p></div>'
+    /<section\b([^>]*)class="assurance-hero section"([^>]*)>/i,
+    match => `${match}<div class="container panel" data-legacy-route-note><div class="eyebrow">LEGACY COMMERCIAL UMBRELLA · TRANSITION ONLY</div><p>This route is retained for historical continuity. The current BitEvo buyer path is <a href="/start">Start</a> → <a href="/pricing">Pricing</a>, with specialist scopes subordinate to that ladder.</p></div>`
   );
 }
 assurance = assurance
-  .replace('<a href="/audit-intake" class="button button-primary">Scope one workflow <span aria-hidden="true">↗</span></a>', '<a href="/start" class="button button-primary">Choose current scope <span aria-hidden="true">↗</span></a>')
-  .replace('<a href="#offers" class="button button-ghost">Compare the two entry offers</a>', '<a href="/pricing" class="button button-ghost">Current pricing</a>');
+  .replace('href="/audit-intake"', 'href="/start"')
+  .replace('Scope one workflow', 'Choose current scope')
+  .replace('href="#offers"', 'href="/pricing"')
+  .replace('Compare the two entry offers', 'Current pricing');
 await writeHtml('/assurance', assurance);
 
 let control = await readHtml('/control-validation');
 control = control
-  .replace('href="/assurance">Back to System Assurance</a>', 'href="/start">Choose the right scope</a>');
+  .replaceAll('href="/assurance"', 'href="/start"')
+  .replace('Back to System Assurance', 'Choose the right scope');
 await writeHtml('/control-validation', control);
 
 let evidence = await readHtml('/evidence-readiness');
 evidence = evidence
-  .replace('href="/assurance">Compare System Assurance offers</a>', 'href="/start">Choose the right scope</a>');
+  .replaceAll('href="/assurance"', 'href="/start"')
+  .replace('Compare System Assurance offers', 'Choose the right scope');
 await writeHtml('/evidence-readiness', evidence);
 
 let aiAudit = await readHtml('/ai-audit');
 aiAudit = aiAudit
-  .replace('The umbrella offer is maintained at <strong>/assurance</strong>', 'The current buyer path is maintained at <strong>/start</strong>')
-  .replace('href="/assurance" class="button button-primary">Open System Assurance', 'href="/start" class="button button-primary">Choose current scope');
+  .replaceAll('/assurance', '/start')
+  .replace('The umbrella offer is maintained at', 'The current buyer path is maintained at')
+  .replace('Open System Assurance', 'Choose current scope');
 await writeHtml('/ai-audit', aiAudit);
 
 console.log(`ROUTE_TAXONOMY_POSTPROCESS=PASS indexable=${registry.routes.filter(route => route.indexable).length} english_indexable=${englishIndexable.length} llms_groups=${groupSpec.length} assurance_noindex=1 specialist_relinks=2 legacy_alias_relinks=1`);
