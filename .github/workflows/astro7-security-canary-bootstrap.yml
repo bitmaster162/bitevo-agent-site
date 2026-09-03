@@ -1,0 +1,49 @@
+name: Astro 7 Security Canary Bootstrap
+
+on:
+  push:
+    branches:
+      - agent/astro7-security-canary-20260903
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout canary branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+          ref: agent/astro7-security-canary-20260903
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
+        with:
+          node-version: 22.12.0
+      - name: Upgrade exact Astro and regenerate lock
+        run: npm install astro@7.2.10 --save-exact
+      - name: Capture post-upgrade audit without hiding findings
+        run: |
+          npm audit --json > /tmp/astro7-audit.json || true
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const a=JSON.parse(fs.readFileSync('/tmp/astro7-audit.json','utf8'));
+          const v=a.metadata?.vulnerabilities || {};
+          console.log(`ASTRO7_POST_UPGRADE_AUDIT total=${v.total ?? 'unknown'} critical=${v.critical ?? 'unknown'} high=${v.high ?? 'unknown'} moderate=${v.moderate ?? 'unknown'} low=${v.low ?? 'unknown'}`);
+          for (const [name,info] of Object.entries(a.vulnerabilities || {})) {
+            console.log(`ASTRO7_AUDIT_ITEM package=${name} severity=${info.severity} range=${info.range}`);
+          }
+          NODE
+      - name: Prove existing provider-neutral contract
+        run: npm run build:core
+      - name: Remove one-shot workflow and commit exact dependency canary
+        run: |
+          git rm .github/workflows/astro7-security-canary-bootstrap.yml
+          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Security: canary Astro 7.2.10 with green core build"
+          git push origin HEAD:agent/astro7-security-canary-20260903
