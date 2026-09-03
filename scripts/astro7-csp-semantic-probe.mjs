@@ -22,6 +22,17 @@ const normSelector = value => normSpace(value)
   .replace(/data-astro-cid-[a-z0-9_-]+/gi, 'data-astro-cid-SCOPE')
   .replace(/\s*([>+~,])\s*/g, '$1');
 
+function normAtRuleParams(name, value) {
+  let result = normSpace(value).replace(/data-astro-cid-[a-z0-9_-]+/gi, 'data-astro-cid-SCOPE');
+  if (String(name).toLowerCase() === 'media') {
+    result = result
+      .replace(/\(\s*max-(width|height)\s*:\s*([^)]+?)\s*\)/gi, (_m, axis, limit) => `(${axis.toLowerCase()}<=${normSpace(limit)})`)
+      .replace(/\(\s*min-(width|height)\s*:\s*([^)]+?)\s*\)/gi, (_m, axis, limit) => `(${axis.toLowerCase()}>=${normSpace(limit)})`)
+      .replace(/\s*(<=|>=|<|>)\s*/g, '$1');
+  }
+  return result;
+}
+
 function canonicalChildren(container) {
   const nodes = container?.nodes || [];
   const shapes = nodes.map(canonicalNode).filter(Boolean);
@@ -38,7 +49,7 @@ function canonicalNode(node) {
   if (!node) return null;
   if (node.type === 'decl') return { t:'decl', p:String(node.prop).toLowerCase(), v:normSpace(node.value), i:Boolean(node.important) };
   if (node.type === 'rule') return { t:'rule', s:normSelector(node.selector), n:canonicalChildren(node) };
-  if (node.type === 'atrule') return { t:'atrule', n:String(node.name).toLowerCase(), p:normSpace(node.params).replace(/data-astro-cid-[a-z0-9_-]+/gi, 'data-astro-cid-SCOPE'), c:canonicalChildren(node) };
+  if (node.type === 'atrule') return { t:'atrule', n:String(node.name).toLowerCase(), p:normAtRuleParams(node.name, node.params), c:canonicalChildren(node) };
   if (node.type === 'comment') return null;
   throw new Error(`unsupported CSS AST node type: ${node.type}`);
 }
@@ -129,7 +140,7 @@ async function compare(oldPath, newPath, styleOutput) {
   if (forward.size !== 37 || reverse.size !== 37) throw new Error(`style unique mapping drift old=${forward.size} new=${reverse.size}`);
   if (JSON.stringify(oldData.scriptHashes) !== JSON.stringify(newData.scriptHashes)) throw new Error('script hash set drift');
   await writeFile(styleOutput, JSON.stringify(newData.styleHashes, null, 2));
-  console.log(`ASTRO7_CSP_EQUIVALENCE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 bijective=1 script_pairs=${scriptPairs} scripts_byte_exact=1 css_semantic_ast=PASS`);
+  console.log(`ASTRO7_CSP_EQUIVALENCE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 bijective=1 script_pairs=${scriptPairs} scripts_byte_exact=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED`);
 }
 
 if (mode === 'snapshot') await snapshot(a);
