@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bitevo.work/schemas/scope-handoff-r1.json",
+  "title": "BitEvo Scope Handoff R1 Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "client_submission_id",
+    "submission_intent",
+    "testing_authorization",
+    "locale",
+    "intake_depth",
+    "secret_confirmation",
+    "consent_scope_review",
+    "company",
+    "business_contact",
+    "role",
+    "owner_decision",
+    "workflow",
+    "critical_action",
+    "target_object",
+    "authority_owner",
+    "expensive_error",
+    "environment"
+  ],
+  "properties": {
+    "schema_version": { "const": "bitevo.scope-handoff.r1" },
+    "client_submission_id": { "type": "string", "minLength": 16, "maxLength": 80, "pattern": "^[A-Za-z0-9_-]+$" },
+    "submission_intent": { "const": "scope_review_only" },
+    "testing_authorization": { "const": false },
+    "locale": { "type": "string", "enum": ["en", "ru"] },
+    "intake_depth": { "type": "string", "enum": ["entry", "primary"] },
+    "secret_confirmation": { "const": true },
+    "consent_scope_review": { "const": true },
+
+    "company": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "business_contact": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "role": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "owner_decision": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "workflow": { "type": "string", "minLength": 1, "maxLength": 3000 },
+    "critical_action": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "target_object": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "authority_owner": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "expensive_error": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "environment": { "type": "string", "minLength": 1, "maxLength": 500 },
+
+    "access_approver": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "external_systems": { "type": "string", "minLength": 1, "maxLength": 3000 },
+    "forbidden_effects": { "type": "string", "minLength": 1, "maxLength": 3000 },
+    "pre_action_evidence": { "type": "string", "minLength": 1, "maxLength": 4000 },
+    "freshness_rule": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "object_binding_evidence": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "external_confirmation": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "uncertainty_behavior": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "staging_available": { "type": "string", "enum": ["yes", "no", "partial", "unknown"] },
+    "safe_replay_available": { "type": "string", "enum": ["yes", "no", "unknown"] },
+    "allowed_tests": { "type": "string", "minLength": 1, "maxLength": 4000 },
+    "prohibited_audit_actions": { "type": "string", "minLength": 1, "maxLength": 4000 },
+    "data_classification": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "minimum_necessary_data": { "type": "string", "minLength": 1, "maxLength": 3000 },
+    "secret_handling_boundary": { "type": "string", "minLength": 1, "maxLength": 3000 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "intake_depth": { "const": "primary" } }, "required": ["intake_depth"] },
+      "then": {
+        "required": [
+          "access_approver",
+          "external_systems",
+          "forbidden_effects",
+          "pre_action_evidence",
+          "freshness_rule",
+          "object_binding_evidence",
+          "external_confirmation",
+          "uncertainty_behavior",
+          "staging_available",
+          "safe_replay_available",
+          "allowed_tests",
+          "prohibited_audit_actions",
+          "data_classification",
+          "minimum_necessary_data",
+          "secret_handling_boundary"
+        ]
+      }
+    }
+  ]
+}
