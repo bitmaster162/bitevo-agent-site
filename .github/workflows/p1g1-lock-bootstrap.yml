@@ -1,0 +1,39 @@
+name: P1G1 Lock Bootstrap
+
+on:
+  push:
+    branches:
+      - agent/p1-scope-handoff-r1-implementation
+
+permissions:
+  contents: write
+
+jobs:
+  lock-bootstrap:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout implementation branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+          ref: agent/p1-scope-handoff-r1-implementation
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.12.0
+      - name: Generate exact compatible lock
+        run: npm install --package-lock-only --save-exact @astrojs/vercel@10.0.8
+      - name: Commit generated manifest and lock only
+        shell: bash
+        run: |
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "P1G1_LOCK_BOOTSTRAP=NO_CHANGE"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "P1G1: lock Astro Vercel adapter"
+          git push origin HEAD:agent/p1-scope-handoff-r1-implementation
