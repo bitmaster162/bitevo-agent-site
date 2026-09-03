@@ -57,8 +57,9 @@ async function snapshot(output) {
     const html = await readFile(path, 'utf8');
     const styles = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map((m, index) => {
       const body = m[1] || '';
+      const canonicalText = canonicalCss(body);
       const hash = digest(body); styleHashes.add(hash); styleBlocks++;
-      return { index, hash, canonical:digest(canonicalCss(body)) };
+      return { index, hash, canonical:digest(canonicalText), raw:body, canonicalText };
     });
     const scripts = [];
     let scriptIndex = 0;
@@ -73,12 +74,19 @@ async function snapshot(output) {
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v1', routes,
+    schema:'bitevo.astro7-csp-snapshot/v2-debug', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
-  await writeFile(output, JSON.stringify(data, null, 2));
+  await writeFile(output, JSON.stringify(data));
   console.log(`CSP_SNAPSHOT output=${output} routes=${data.totals.routes} style_blocks=${styleBlocks} unique_styles=${styleHashes.size} script_blocks=${scriptBlocks} unique_scripts=${scriptHashes.size} executable=${executable} jsonld=${jsonld}`);
+}
+
+function firstTextDifference(left, right) {
+  const n = Math.min(left.length, right.length);
+  let i=0; while (i<n && left[i]===right[i]) i++;
+  const start=Math.max(0,i-180), endL=Math.min(left.length,i+700), endR=Math.min(right.length,i+700);
+  return { index:i, old:left.slice(start,endL), next:right.slice(start,endR) };
 }
 
 async function compare(oldPath, newPath, styleOutput) {
@@ -100,7 +108,16 @@ async function compare(oldPath, newPath, styleOutput) {
     if (oldRoute.scripts.length !== newRoute.scripts.length) throw new Error(`${route}: script count drift`);
     for (let i=0;i<oldRoute.styles.length;i++) {
       const before=oldRoute.styles[i], after=newRoute.styles[i]; stylePairs++;
-      if (before.canonical !== after.canonical) throw new Error(`${route}: CSS semantic drift at style index ${i}`);
+      if (before.canonical !== after.canonical) {
+        const rawDiff=firstTextDifference(before.raw, after.raw);
+        const canonDiff=firstTextDifference(before.canonicalText, after.canonicalText);
+        console.log(`CSS_MISMATCH route=${route} index=${i} old_hash=${before.hash} new_hash=${after.hash}`);
+        console.log(`CSS_MISMATCH_RAW ${JSON.stringify(rawDiff)}`);
+        console.log(`CSS_MISMATCH_CANONICAL ${JSON.stringify(canonDiff)}`);
+        console.log(`CSS_OLD_RAW ${JSON.stringify(before.raw.slice(0,8000))}`);
+        console.log(`CSS_NEW_RAW ${JSON.stringify(after.raw.slice(0,8000))}`);
+        throw new Error(`${route}: CSS semantic drift at style index ${i}`);
+      }
       mapAdd(forward,before.hash,after.hash); mapAdd(reverse,after.hash,before.hash);
     }
     for (let i=0;i<oldRoute.scripts.length;i++) {
