@@ -1,4 +1,4 @@
-name: Astro 6 Node CSP Emission Probe
+name: Astro 7 Security Canary Finalize
 
 on:
   push:
@@ -6,65 +6,111 @@ on:
       - agent/astro7-security-canary-20260903
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  baseline:
-    strategy:
-      fail-fast: false
-      matrix:
-        node: ['22.12.0', '22.19.0']
-    name: astro6-node-${{ matrix.node }}
+  finalize:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - name: Checkout canary branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persist-credentials: false
+          persist-credentials: true
           ref: agent/astro7-security-canary-20260903
-      - name: Setup Node
+      - name: Setup target Node floor
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
-          node-version: ${{ matrix.node }}
-      - name: Install exact baseline dependencies
-        run: npm ci
-      - name: Print exact toolchain
+          node-version: '22.19.0'
+      - name: Build immutable Astro 6.4.8 baseline snapshot
         run: |
-          node --version
-          npm --version
-          npx astro --version
-          node -e "console.log('astro_lock=' + require('./node_modules/astro/package.json').version); console.log('vite_lock=' + require('./node_modules/vite/package.json').version)"
-      - name: Build exact baseline site
-        run: npm run build:site
-      - name: Count emitted inline blocks and CSS assets
+          npm ci
+          test "$(node -p "require('./node_modules/astro/package.json').version")" = "6.4.8"
+          npm run build:site
+          node scripts/verify-inline-csp.mjs
+          node scripts/astro7-csp-semantic-probe.mjs snapshot /tmp/csp-baseline.json
+      - name: Apply minimal source/compiler migration and exact Astro 7.2.10
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for name in ('src/pages/universe.astro', 'src/pages/ru/universe.astro'):
+              path = Path(name)
+              source = path.read_text()
+              if '<style>' not in source or '</style>' in source:
+                  raise SystemExit(f'{name}: unexpected style-closure baseline')
+              path.write_text(source.rstrip() + '\n</style>\n')
+          PY
+          npm pkg set engines.node=">=22.19.0"
+          npm install astro@7.2.10 --save-exact
+          test "$(node -p "require('./node_modules/astro/package.json').version")" = "7.2.10"
+      - name: Prove security improvement without hiding residual debt
+        run: |
+          npm audit --json > /tmp/astro7-audit.json || true
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const audit=JSON.parse(fs.readFileSync('/tmp/astro7-audit.json','utf8'));
+          const v=audit.metadata?.vulnerabilities || {};
+          console.log(`ASTRO7_POST_UPGRADE_AUDIT total=${v.total ?? 'unknown'} critical=${v.critical ?? 'unknown'} high=${v.high ?? 'unknown'} moderate=${v.moderate ?? 'unknown'} low=${v.low ?? 'unknown'}`);
+          for (const [name,info] of Object.entries(audit.vulnerabilities || {})) console.log(`ASTRO7_AUDIT_ITEM package=${name} severity=${info.severity} range=${info.range}`);
+          if ((v.critical || 0) !== 0 || (v.high || 0) !== 0 || (v.moderate || 0) !== 0) throw new Error('Astro 7 canary still has moderate/high/critical audit findings');
+          NODE
+      - name: Build candidate and prove CSP semantics before re-baseline
+        run: |
+          npm run build:site
+          node scripts/astro7-csp-semantic-probe.mjs snapshot /tmp/csp-candidate.json
+          node scripts/astro7-csp-semantic-probe.mjs compare /tmp/csp-baseline.json /tmp/csp-candidate.json /tmp/candidate-styles.json
+          if node scripts/verify-inline-csp.mjs; then
+            echo "ERROR: candidate unexpectedly matched old reviewed style hashes; migration evidence is inconsistent" >&2
+            exit 1
+          else
+            echo "ASTRO7_OLD_CSP_EXPECTED_STALE=PASS"
+          fi
+      - name: Re-baseline only the semantically-proven style hashes
         run: |
           node --input-type=module <<'NODE'
-          import { readFile, readdir } from 'node:fs/promises';
-          import { join } from 'node:path';
-          async function walk(dir){ const out=[]; for(const e of await readdir(dir,{withFileTypes:true})){ const p=join(dir,e.name); if(e.isDirectory()) out.push(...await walk(p)); else out.push(p); } return out; }
-          const files=await walk('dist');
-          const html=files.filter(f=>f.endsWith('.html'));
-          const css=files.filter(f=>f.endsWith('.css'));
-          let styles=0,scripts=0,jsonld=0;
-          const routes=[];
-          for(const file of html){
-            const source=await readFile(file,'utf8');
-            const sc=[...source.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)];
-            if(sc.length) routes.push([file,sc.length]);
-            styles+=sc.length;
-            for(const m of source.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
-              const attrs=m[1]||'', body=m[2]||'';
-              if(/\bsrc\s*=/.test(attrs)||!body.trim()) continue;
-              scripts++;
-              if((attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]||'').toLowerCase()==='application/ld+json') jsonld++;
-            }
-          }
-          const bytes=[];
-          for(const file of css) bytes.push((await readFile(file)).length);
-          console.log(`NODE_CSP_EMISSION node=${process.version} html=${html.length} inline_style_blocks=${styles} inline_script_blocks=${scripts} jsonld=${jsonld} css_files=${css.length} css_bytes=${bytes.reduce((a,b)=>a+b,0)}`);
-          console.log(`STYLE_ROUTES ${JSON.stringify(routes.slice(0,100))}`);
+          import { readFile, writeFile, appendFile } from 'node:fs/promises';
+          const candidate=JSON.parse(await readFile('/tmp/csp-candidate.json','utf8'));
+          const styles=JSON.parse(await readFile('/tmp/candidate-styles.json','utf8'));
+          const allowPath='scripts/csp-inline-allowlist.json';
+          const allow=JSON.parse(await readFile(allowPath,'utf8'));
+          if (JSON.stringify([...allow.scripts].sort()) !== JSON.stringify([...candidate.scriptHashes].sort())) throw new Error('candidate script hash set differs from reviewed baseline');
+          if (styles.length !== 37 || candidate.totals.styleBlocks !== 67) throw new Error('candidate style count invariant failed');
+          allow.styles=[...styles].sort();
+          await writeFile(allowPath, JSON.stringify(allow,null,2)+'\n');
+
+          const vercelPath='vercel.json';
+          let vercel=await readFile(vercelPath,'utf8');
+          const styleSegment=`style-src 'self' ${allow.styles.map(h=>`'sha256-${h}'`).join(' ')};`;
+          const matches=vercel.match(/style-src 'self' [^;]+;/g) || [];
+          if (matches.length !== 1) throw new Error(`expected exactly one Vercel style-src segment, got ${matches.length}`);
+          vercel=vercel.replace(/style-src 'self' [^;]+;/, styleSegment);
+          await writeFile(vercelPath,vercel);
+
+          const ciPath='.github/workflows/quality-gate.yml';
+          let ci=await readFile(ciPath,'utf8');
+          const old='node-version: 22.12.0';
+          const count=ci.split(old).length-1;
+          if (count !== 2) throw new Error(`expected 2 quality-gate Node floors, got ${count}`);
+          ci=ci.replaceAll(old,'node-version: 22.19.0');
+          await writeFile(ciPath,ci);
+
+          const doc='docs/ASTRO7_SECURITY_CANARY_20260903.md';
+          await appendFile(doc,`\n## Canary evidence — 2026-09-03\n\n- Exact target: Astro 7.2.10; Node floor >=22.19.0.\n- Baseline Astro 6.4.8 verified on both Node 22.12.0 and 22.19.0 with the same reviewed CSP contract: 97 HTML, 67 inline style blocks, 37 unique style hashes, 13 unique script hashes.\n- Parser blocker root cause: EN and RU Universe pages each had an unclosed scoped <style> block tolerated by Astro 6; migration closes those two tags only.\n- Post-upgrade npm audit: 0 critical, 0 high, 0 moderate; residual low-only dependency finding remains explicitly tracked.\n- CSP semantic migration proof: route set fixed at 97; 67 style blocks preserved; 37 unique old style hashes map bijectively to 37 new hashes; every paired CSS block is equivalent after Astro scope-token normalization and declaration-order normalization where declaration names are unique; all 246 inline scripts are byte-identical; executable=50 and JSON-LD=196 remain unchanged.\n- Reviewed CSP re-baseline is therefore limited to style hashes. Script hashes are unchanged.\n- Production remains unchanged; merge is not authorized by this canary.\n`);
           NODE
-      - name: Run canonical inline-CSP verifier
-        continue-on-error: true
-        run: node scripts/verify-inline-csp.mjs
+      - name: Run the full provider-neutral repository contract after re-baseline
+        run: npm run build:core
+      - name: Verify exact intended source delta
+        run: |
+          git status --short
+          git diff --check
+          git diff --stat
+          test "$(git diff --name-only | grep -E '^src/pages/' | sort | tr '\n' ' ')" = "src/pages/ru/universe.astro src/pages/universe.astro "
+      - name: Remove one-shot migration machinery and commit green canary
+        run: |
+          git rm .github/workflows/astro7-security-canary-bootstrap.yml scripts/astro7-csp-semantic-probe.mjs
+          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md src/pages/universe.astro src/pages/ru/universe.astro scripts/csp-inline-allowlist.json vercel.json .github/workflows/quality-gate.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Security: canary Astro 7.2.10 with proven CSP equivalence"
+          git push origin HEAD:agent/astro7-security-canary-20260903
