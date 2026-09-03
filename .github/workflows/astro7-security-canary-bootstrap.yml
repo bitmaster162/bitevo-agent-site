@@ -23,48 +23,53 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
           node-version: '22.19.0'
-      - name: Rewrite one legacy Astro template for Rust compiler
+      - name: Rewrite legacy Universe templates for Rust compiler
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          path = Path('src/pages/ru/universe.astro')
-          lines = path.read_text().splitlines()
-          start = next((i for i, line in enumerate(lines) if '{modules.map((module, i) => {' in line), None)
-          if start is None:
-              raise SystemExit('expected legacy RU Universe fragment start not found')
-          end = next((i for i in range(start, len(lines)) if lines[i].strip() == '})}'), None)
-          if end is None:
-              raise SystemExit('expected legacy RU Universe fragment end not found')
-          replacement = [
-              '      {modules.map((module, i) => module.href ? (',
-              '        <a class="module-card panel" href={module.href} target={module.internal ? undefined : \'_blank\'} rel={module.internal ? undefined : \'noopener\'}>',
-              '          <div class="module-top">',
-              "            <span>{String(i + 1).padStart(2, '0')}</span>",
-              '            <span class="status">{module.status}</span>',
-              '          </div>',
-              '          <div>',
-              '            <small>{module.lane}</small>',
-              '            <h3>{module.name}</h3>',
-              '            <p>{module.text}</p>',
-              '          </div>',
-              "          <div class=\"module-foot\">{'Открыть surface ↗'}</div>",
-              '        </a>',
-              '      ) : (',
-              '        <article class="module-card panel module-card-muted">',
-              '          <div class="module-top">',
-              "            <span>{String(i + 1).padStart(2, '0')}</span>",
-              '            <span class="status">{module.status}</span>',
-              '          </div>',
-              '          <div>',
-              '            <small>{module.lane}</small>',
-              '            <h3>{module.name}</h3>',
-              '            <p>{module.text}</p>',
-              '          </div>',
-              "          <div class=\"module-foot\">{'Public route пока не опубликован'}</div>",
-              '        </article>',
-              '      ))}',
-          ]
-          path.write_text('\n'.join(lines[:start] + replacement + lines[end + 1:]) + '\n')
+
+          def rewrite(file, open_text, closed_text):
+              path = Path(file)
+              lines = path.read_text().splitlines()
+              start = next((i for i, line in enumerate(lines) if '{modules.map((module, i) => {' in line), None)
+              if start is None:
+                  raise SystemExit(f'{file}: expected legacy fragment start not found')
+              end = next((i for i in range(start, len(lines)) if lines[i].strip() == '})}'), None)
+              if end is None:
+                  raise SystemExit(f'{file}: expected legacy fragment end not found')
+              replacement = [
+                  '      {modules.map((module, i) => module.href ? (',
+                  '        <a class="module-card panel" href={module.href} target={module.internal ? undefined : \'_blank\'} rel={module.internal ? undefined : \'noopener\'}>',
+                  '          <div class="module-top">',
+                  "            <span>{String(i + 1).padStart(2, '0')}</span>",
+                  '            <span class="status">{module.status}</span>',
+                  '          </div>',
+                  '          <div>',
+                  '            <small>{module.lane}</small>',
+                  '            <h3>{module.name}</h3>',
+                  '            <p>{module.text}</p>',
+                  '          </div>',
+                  f"          <div class=\"module-foot\">{{'{open_text}'}}</div>",
+                  '        </a>',
+                  '      ) : (',
+                  '        <article class="module-card panel module-card-muted">',
+                  '          <div class="module-top">',
+                  "            <span>{String(i + 1).padStart(2, '0')}</span>",
+                  '            <span class="status">{module.status}</span>',
+                  '          </div>',
+                  '          <div>',
+                  '            <small>{module.lane}</small>',
+                  '            <h3>{module.name}</h3>',
+                  '            <p>{module.text}</p>',
+                  '          </div>',
+                  f"          <div class=\"module-foot\">{{'{closed_text}'}}</div>",
+                  '        </article>',
+                  '      ))}',
+              ]
+              path.write_text('\n'.join(lines[:start] + replacement + lines[end + 1:]) + '\n')
+
+          rewrite('src/pages/universe.astro', 'Open surface ↗', 'Public route not published yet')
+          rewrite('src/pages/ru/universe.astro', 'Открыть surface ↗', 'Public route пока не опубликован')
           PY
       - name: Upgrade exact Astro and regenerate lock
         run: |
@@ -87,7 +92,7 @@ jobs:
       - name: Remove one-shot workflow and commit exact dependency canary
         run: |
           git rm .github/workflows/astro7-security-canary-bootstrap.yml
-          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md src/pages/ru/universe.astro
+          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md src/pages/universe.astro src/pages/ru/universe.astro
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Security: canary Astro 7.2.10 with green core build"
