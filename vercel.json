@@ -4,6 +4,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/intake",
+      "destination": "/audit-intake",
+      "permanent": true
+    },
+    {
       "source": "/guides/:slug((?!ai-agent-reliability-audit|security-sandboxing|fleet-coordinator-drift-monitoring|d3-tool-io-bridge-contract).*)",
       "destination": "/guides",
       "permanent": false
