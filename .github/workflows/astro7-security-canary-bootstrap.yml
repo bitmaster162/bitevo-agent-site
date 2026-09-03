@@ -114,14 +114,15 @@ jobs:
           await writeFile(vercelPath,vercel);
 
           const ciPath='.github/workflows/quality-gate.yml';
-          let ci=await readFile(ciPath,'utf8');
-          const oldFloor='node-version: 22.12.0';
-          const count=ci.split(oldFloor).length-1;
-          if(count!==2) throw new Error(`expected exactly two quality-gate Node floors, got ${count}`);
-          ci=ci.replaceAll(oldFloor,'node-version: 22.19.0');
-          await writeFile(ciPath,ci);
+          const ci=await readFile(ciPath,'utf8');
+          const targetFloor='node-version: 22.19.0';
+          const staleFloor='node-version: 22.12.0';
+          const targetCount=ci.split(targetFloor).length-1;
+          const staleCount=ci.split(staleFloor).length-1;
+          if(targetCount!==2 || staleCount!==0) throw new Error(`prepatched quality-gate Node floor drift target=${targetCount} stale=${staleCount}`);
+          console.log('ASTRO7_QUALITY_GATE_NODE_FLOOR=PASS target=22.19.0 occurrences=2 stale=0');
 
-          await appendFile('docs/ASTRO7_SECURITY_CANARY_20260903.md',`\n## Final canary evidence\n\n- Candidate: Astro 7.2.10, Node >=22.19.0, exact dev esbuild 0.28.1.\n- npm audit: 0 known vulnerabilities.\n- Parser migration is limited to closing the previously unclosed scoped <style> block in EN and RU Universe.\n- Vite 8 compatibility bridge explicitly selects esbuild for JS/CSS minification. This is a temporary compatibility control because Vite 8 deprecates esbuild minification; future removal requires a separate CSP migration.\n- CSP structure remains 97 HTML / 67 inline style blocks / 37 unique styles / 246 inline scripts / 13 unique scripts / 50 executable scripts / 196 JSON-LD.\n- CSS proof covers every one of the 67 paired style blocks. Generated Astro scope IDs and equivalent media-range syntax are normalized; declaration order is normalized only when property identities are unique. Old/new unique style hashes map one-to-one. Exactly 1 of 37 reviewed unique style hashes remains byte-identical and 36 change.\n- Script shape proof requires 11 of 13 reviewed unique script hashes to stay byte-identical. Exactly two changed hashes are permitted, one on EN audit-intake and one on RU audit-intake.\n- Those two compiled page scripts pass differential jsdom 30.0.1 execution on Node 22.22.2 across initial state, Entry generation, Primary depth, EN mapper handoff, copy, download, reset and intake-segmentation marker behavior with a deterministic clock.\n- CSP re-baseline therefore changes exactly 36 style hashes, preserves exactly 1 style hash, and changes exactly 2 script hashes only after semantic/behavioral proof.\n- No production merge/deploy is authorized by this canary.\n`);
+          await appendFile('docs/ASTRO7_SECURITY_CANARY_20260903.md',`\n## Final canary evidence\n\n- Candidate: Astro 7.2.10, Node >=22.19.0, exact dev esbuild 0.28.1.\n- npm audit: 0 known vulnerabilities.\n- Parser migration is limited to closing the previously unclosed scoped <style> block in EN and RU Universe.\n- Vite 8 compatibility bridge explicitly selects esbuild for JS/CSS minification. This is a temporary compatibility control because Vite 8 deprecates esbuild minification; future removal requires a separate CSP migration.\n- CSP structure remains 97 HTML / 67 inline style blocks / 37 unique styles / 246 inline scripts / 13 unique scripts / 50 executable scripts / 196 JSON-LD.\n- CSS proof covers every one of the 67 paired style blocks. Generated Astro scope IDs and equivalent media-range syntax are normalized; declaration order is normalized only when property identities are unique. Old/new unique style hashes map one-to-one. Exactly 1 of 37 reviewed unique style hashes remains byte-identical and 36 change.\n- Script shape proof requires 11 of 13 reviewed unique script hashes to stay byte-identical. Exactly two changed hashes are permitted, one on EN audit-intake and one on RU audit-intake.\n- Those two compiled page scripts pass differential jsdom 30.0.1 execution on Node 22.22.2 across initial state, Entry generation, Primary depth, EN mapper handoff, copy, download, reset and intake-segmentation marker behavior with a deterministic clock.\n- CSP re-baseline therefore changes exactly 36 style hashes, preserves exactly 1 style hash, and changes exactly 2 script hashes only after semantic/behavioral proof.\n- The canary branch quality-gate workflow was prepatched directly to Node 22.19.0 in exactly two locations; the finalizer verifies this state but does not rewrite workflow files.\n- No production merge/deploy is authorized by this canary.\n`);
           NODE
       - name: Run complete provider-neutral contract with the new reviewed CSP baseline
         run: |
@@ -136,7 +137,7 @@ jobs:
           git diff --check
           git status --short
           git add astro.config.mjs package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md \
-            src/pages/universe.astro src/pages/ru/universe.astro scripts/csp-inline-allowlist.json vercel.json .github/workflows/quality-gate.yml
+            src/pages/universe.astro src/pages/ru/universe.astro scripts/csp-inline-allowlist.json vercel.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Security: canary Astro 7.2.10 with behavioral CSP proof"
