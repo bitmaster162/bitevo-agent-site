@@ -1,0 +1,94 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+import parity from '../../data/ru-semantic-parity.json';
+
+export function getStaticPaths() {
+  return parity.pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page }
+  }));
+}
+
+const { page } = Astro.props;
+const ruPath = `/ru/${page.slug}`;
+---
+
+<RuLayout
+  title={`${page.title} | BitEvo`}
+  description={page.description}
+  enPath={page.enPath}
+  ruPath={ruPath}
+>
+  <section class="parity-hero section">
+    <div class="container parity-grid">
+      <div>
+        <div class="eyebrow">{page.eyebrow}</div>
+        <h1 class="display">{page.title}</h1>
+      </div>
+      <div>
+        <p class="lede">{page.description}</p>
+        <div class="parity-meta panel" aria-label="RU semantic parity status">
+          <span>{page.category}</span>
+          <strong>RU semantic parity</strong>
+          <small>Назначение и claim ceiling связаны с paired EN route.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container parity-points">
+      {page.points.map((point, index) => (
+        <article class="panel">
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <p>{point}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container parity-boundary panel">
+      <div>
+        <div class="eyebrow">Semantic boundary</div>
+        <h2 class="section-title">Русская версия сохраняет смысл. Не расширяет полномочия или обещания.</h2>
+      </div>
+      <div>
+        <p>Эта RU-поверхность локализует назначение, decision boundary и claim ceiling paired English route. Она не создаёт новый SKU, цену, certification claim, production permission или testing authorization.</p>
+        <p>Если operational решение зависит от свежего состояния продукта, провайдера или внешней системы, требуется отдельная current verification.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow parity-actions">
+      <div class="eyebrow">Next decision</div>
+      <h2 class="section-title">Продолжайте по текущему BitEvo decision path.</h2>
+      <div class="actions">
+        <a class="button button-primary" href={page.primaryHref}>{page.primaryLabel} <span aria-hidden="true">↗</span></a>
+        <a class="button button-ghost" href={page.enPath} lang="en">Paired EN route</a>
+      </div>
+    </div>
+  </section>
+</RuLayout>
+
+<style>
+  .parity-hero{padding-top:clamp(70px,9vw,120px)}
+  .parity-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.78fr);gap:clamp(38px,7vw,96px);align-items:end}
+  .parity-grid .lede{margin:0 0 24px}
+  .parity-meta{padding:18px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:center}
+  .parity-meta span{color:var(--green);font:600 .6rem/1.2 var(--mono);letter-spacing:.08em}
+  .parity-meta strong{font-size:.82rem}
+  .parity-meta small{grid-column:1/-1;color:var(--muted)}
+  .parity-points{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .parity-points article{padding:26px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+  .parity-points span{color:var(--green);font:600 .62rem var(--mono)}
+  .parity-points p{margin:40px 0 0;color:var(--ink-soft)}
+  .parity-boundary{padding:clamp(28px,5vw,50px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(320px,1.1fr);gap:clamp(30px,6vw,78px)}
+  .parity-boundary p{margin:0 0 16px;color:var(--muted)}
+  .parity-boundary p:last-child{margin-bottom:0}
+  .parity-actions{text-align:center}
+  .parity-actions .section-title{margin-inline:auto}
+  .actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:28px}
+  @media(max-width:880px){.parity-grid,.parity-boundary{grid-template-columns:1fr}.parity-points{grid-template-columns:1fr}}
+</style>
