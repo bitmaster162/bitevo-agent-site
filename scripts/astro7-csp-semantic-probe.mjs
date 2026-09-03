@@ -41,9 +41,33 @@ function normTransition(value) {
   }).join(',');
 }
 
+const byte = value => Math.max(0, Math.min(255, Number(value)));
+const byteToken = (r,g,b,a=255) => `rgba8(${r},${g},${b},${a})`;
+function normExactByteColors(value) {
+  let out = String(value);
+  out = out.replace(/#([0-9a-f]{8})(?![0-9a-f])/gi, (_m, hex) => byteToken(
+    parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16), parseInt(hex.slice(6,8),16)
+  ));
+  out = out.replace(/#([0-9a-f]{6})(?![0-9a-f])/gi, (_m, hex) => byteToken(
+    parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16), 255
+  ));
+  out = out.replace(/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*((?:\d*\.)?\d+))?\s*\)/gi, (match, rs, gs, bs, as) => {
+    const r=byte(rs), g=byte(gs), b=byte(bs);
+    if (![r,g,b].every(Number.isInteger) || r>255 || g>255 || b>255) return match;
+    if (as === undefined) return byteToken(r,g,b,255);
+    const alpha=Number(as);
+    if (!Number.isFinite(alpha) || alpha<0 || alpha>1) return match;
+    const scaled=alpha*255;
+    const rounded=Math.round(scaled);
+    if (Math.abs(scaled-rounded) > 1e-9) return match;
+    return byteToken(r,g,b,rounded);
+  });
+  return out;
+}
+
 function normDeclarationValue(prop, value) {
   const property = String(prop).toLowerCase();
-  const normalized = normSpace(value);
+  let normalized = normExactByteColors(normSpace(value));
   if (property === 'flex' && (normalized === 'none' || normalized === '0 0 auto')) return '0 0 auto';
   if (property === 'transition') return normTransition(normalized);
   if (property === 'grid-column') return normalized.replace(/\s*\/\s*/g, '/');
@@ -100,7 +124,7 @@ async function snapshot(output) {
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v9-grid-column', routes,
+    schema:'bitevo.astro7-csp-snapshot/v10-exact-byte-color', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
@@ -170,7 +194,7 @@ async function compare(oldPath, newPath, styleOutput, scriptOutput) {
 
   await writeFile(styleOutput, JSON.stringify(newData.styleHashes, null, 2));
   await writeFile(scriptOutput, JSON.stringify(newData.scriptHashes, null, 2));
-  console.log(`ASTRO7_CSP_SHAPE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED flex_none_equivalence=NORMALIZED transition_default_ease=NORMALIZED grid_column_slash=NORMALIZED script_pairs=${scriptPairs} script_blocks_byte_exact=${exactScriptBlocks} unchanged_unique_script_hashes=11 changed_script_blocks=2 changed_routes=audit-intake,ru/audit-intake`);
+  console.log(`ASTRO7_CSP_SHAPE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED flex_none_equivalence=NORMALIZED transition_default_ease=NORMALIZED grid_column_slash=NORMALIZED exact_byte_colors=NORMALIZED script_pairs=${scriptPairs} script_blocks_byte_exact=${exactScriptBlocks} unchanged_unique_script_hashes=11 changed_script_blocks=2 changed_routes=audit-intake,ru/audit-intake`);
   for (const change of changedScriptBlocks) console.log(`ASTRO7_CHANGED_SCRIPT ${JSON.stringify(change)}`);
 }
 
