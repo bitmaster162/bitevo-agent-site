@@ -6,28 +6,23 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 const meta = JSON.parse(await readFile(join(root, 'src/generated/build-meta.json'), 'utf8'));
 const allowlist = JSON.parse(await readFile(join(root, 'scripts/csp-inline-allowlist.json'), 'utf8'));
+const registry = JSON.parse(await readFile(join(root, 'src/data/public-route-registry.json'), 'utf8'));
 const origin = 'https://bitevo.work';
 const legacyOrigin = 'https://bitevoagentsite.vercel.app';
 
-const localizedPairs = [
-  ['/', '/ru'],
-  ['/doctrine', '/ru/doctrine'],
-  ['/artifacts', '/ru/artifacts'],
-  ['/proof', '/ru/proof'],
-  ['/dogfood-self-audit', '/ru/dogfood-self-audit'],
-  ['/mapper', '/ru/mapper'],
-  ['/workspace', '/ru/workspace'],
-  ['/diagnostic', '/ru/diagnostic'],
-  ['/agent-authority-audit', '/ru/agent-authority-audit'],
-  ['/audit-intake', '/ru/audit-intake'],
-  ['/pricing', '/ru/pricing'],
-  ['/consulting', '/ru/consulting'],
-  ['/continuityos', '/ru/continuityos'],
-  ['/guides', '/ru/guides'],
-  ['/build', '/ru/build'],
-  ['/universe', '/ru/universe'],
-  ['/vision', '/ru/vision']
-];
+const enIndexable = registry.routes.filter(route => route.indexable && route.locale === 'en');
+const ruIndexable = new Map(
+  registry.routes
+    .filter(route => route.indexable && route.locale === 'ru')
+    .map(route => [route.path, route])
+);
+const localizedPairs = enIndexable.map(route => {
+  const ruRoute = route.path === '/' ? '/ru' : `/ru${route.path}`;
+  const partner = ruIndexable.get(ruRoute);
+  if (!partner) throw new Error(`Missing RU parity route for ${route.path}: expected ${ruRoute}`);
+  if (partner.category !== route.category) throw new Error(`Locale category drift for ${route.path} ↔ ${ruRoute}: ${route.category} != ${partner.category}`);
+  return [route.path, ruRoute];
+});
 
 const cspHashes = values => values.map(hash => `'sha256-${hash}'`).join(' ');
 const cloudflareMetaCsp = [

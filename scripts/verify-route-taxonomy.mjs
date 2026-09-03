@@ -70,7 +70,7 @@ for (const marker of ['Free', '$1,500', '$4,900']) {
 }
 
 const ruIndexable = registry.routes.filter(route => route.indexable && route.locale === 'ru').length;
-if (ruIndexable !== 17) failures.push(`RU registry scope drift: expected 17 indexable routes, found ${ruIndexable}`);
+if (ruIndexable !== englishIndexable.length) failures.push(`RU registry parity drift: expected ${englishIndexable.length} indexable routes, found ${ruIndexable}`);
 
 if (failures.length) {
   console.error(`ROUTE_TAXONOMY_GATE=FAIL registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} failures=${failures.length}`);

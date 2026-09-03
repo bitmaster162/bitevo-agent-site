@@ -1,0 +1,410 @@
+{
+  "schema": "bitevo.ru-semantic-parity/v1",
+  "pages": [
+    {
+      "slug": "start",
+      "enPath": "/start",
+      "category": "FLAGSHIP",
+      "eyebrow": "КОММЕРЧЕСКИЙ ВХОД",
+      "title": "Выберите самый маленький объём доказательств, который способен изменить решение.",
+      "description": "Русский коммерческий вход BitEvo: Free triage, $1,500 Entry Audit и $4,900 Primary Audit без автоматической отправки или testing authorization.",
+      "points": [
+        "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
+        "$1,500 Entry Audit: проверить одну критическую action chain и одну основную failure hypothesis.",
+        "$4,900 Primary Audit: решить, должен ли один action-capable workflow сохранить, получить или потерять полномочия."
+      ],
+      "primaryHref": "/ru/pricing",
+      "primaryLabel": "Сравнить уровни"
+    },
+    {
+      "slug": "entry-audit",
+      "enPath": "/entry-audit",
+      "category": "ENTRY",
+      "eyebrow": "ENTRY AUDIT · $1,500",
+      "title": "Одна action chain. Одна основная гипотеза. Одно решение.",
+      "description": "Фиксированный $1,500 Entry Audit для воспроизводимой проверки одной decision-relevant failure hypothesis в одном критическом action chain.",
+      "points": [
+        "Объект — один критический action chain, а не весь продукт или вся система.",
+        "Цель — принять или отвергнуть одну основную failure hypothesis на воспроизводимом evidence.",
+        "Полный Authority Ledger, multi-scenario план и включённый retest относятся к более глубокому Primary Audit, а не к Entry scope."
+      ],
+      "primaryHref": "/ru/audit-intake",
+      "primaryLabel": "Подготовить scope"
+    },
+    {
+      "slug": "control-validation",
+      "enPath": "/control-validation",
+      "category": "SPECIALIST",
+      "eyebrow": "SECURITY CONTROL VALIDATION · $1,500",
+      "title": "Проверьте один control там, где software реально может что-то изменить.",
+      "description": "Фиксированная $1,500 проверка одной consequential control boundary в staging/test с expected decision, downstream readback и воспроизводимым evidence.",
+      "points": [
+        "До теста фиксируется ожидаемое ALLOW / DENY / HOLD / ESCALATE поведение.",
+        "Проверяется реальный downstream state, а не только внутренний tool response или ACK.",
+        "Это bounded engineering validation: не pentest, не certification, не statutory audit и не доказательство безопасности всей системы."
+      ],
+      "primaryHref": "/ru/audit-intake",
+      "primaryLabel": "Описать control boundary"
+    },
+    {
+      "slug": "evidence-readiness",
+      "enPath": "/evidence-readiness",
+      "category": "SPECIALIST",
+      "eyebrow": "AI EVIDENCE READINESS · $1,500",
+      "title": "Соберите повторяющиеся buyer-review ответы в один защищаемый evidence pack.",
+      "description": "Пятидневный $1,500 sprint для одного AI product/workflow: buyer-question map, claims-to-evidence ledger, reusable evidence pack и gap list.",
+      "points": [
+        "Подходит, когда security/procurement review уже происходит, а доказательства собираются вручную.",
+        "Выход — reusable evidence layer и явный список того, что подтверждено, чего не хватает и кто владелец следующего действия.",
+        "Evidence readiness не является SOC 2/ISO certification, legal advice, penetration test или гарантией procurement approval."
+      ],
+      "primaryHref": "/ru/audit-intake",
+      "primaryLabel": "Подготовить scope"
+    },
+    {
+      "slug": "build/exception-workflow-diagnostic",
+      "enPath": "/build/exception-workflow-diagnostic",
+      "category": "SPECIALIST",
+      "eyebrow": "BITEVO BUILD · 5 ДНЕЙ · $3,000",
+      "title": "Сделайте один повторяющийся HR/workforce exception reviewable за пять рабочих дней.",
+      "description": "Thailand/SEA diagnostic одного recruiting/HR/workforce exception workflow с human-review packet, bounded readback и zero-live-write boundary.",
+      "points": [
+        "Фаза ограничена одним named exception workflow с owner, reviewer и явными out-of-scope действиями.",
+        "Inputs — synthetic, redacted или schema-only; candidate/employee communication и production ATS/HRIS/payroll writes исключены.",
+        "Локальный synthetic proof подтверждает только diagnostic method и не обобщается на customer production, compliance, ROI или SLA."
+      ],
+      "primaryHref": "/ru/build",
+      "primaryLabel": "Открыть Build"
+    },
+    {
+      "slug": "mcp-governance",
+      "enPath": "/mcp-governance",
+      "category": "SPECIALIST",
+      "eyebrow": "MCP / TOOL GOVERNANCE",
+      "title": "Привяжите tool authority к точному действию, объекту и evidence gate.",
+      "description": "Специализированная BitEvo поверхность для MCP/tool governance: capability boundary, object binding, approval и external-effect evidence без создания нового публичного ценового tier.",
+      "points": [
+        "MCP/tool availability не равна разрешению выполнять consequential action.",
+        "Authority должна быть привязана к конкретному action, target object/environment и owner approval.",
+        "Эта specialist route помогает выбрать scope; она не заявляет first-party integration и не выдаёт runtime permission."
+      ],
+      "primaryHref": "/ru/start",
+      "primaryLabel": "Выбрать scope"
+    },
+    {
+      "slug": "coding-agent-governance",
+      "enPath": "/coding-agent-governance",
+      "category": "SPECIALIST",
+      "eyebrow": "CODING-AGENT GOVERNANCE",
+      "title": "Отделите способность агента менять код от права выпускать изменение дальше.",
+      "description": "Специализированная поверхность для authority/evidence границ coding agents: diff generation, tests, PR/open/merge boundaries и owner decision без ложного заявления интеграции.",
+      "points": [
+        "Проверяется, какие code-changing действия агент может предложить и какие эффекты должны оставаться gated.",
+        "Decision-time evidence, version/object binding и regression evidence рассматриваются отдельно от способности сгенерировать diff.",
+        "Страница маршрутизирует specialist scope и не означает, что BitEvo встроен в конкретный coding-agent vendor."
+      ],
+      "primaryHref": "/ru/start",
+      "primaryLabel": "Выбрать scope"
+    },
+    {
+      "slug": "failure-recovery",
+      "enPath": "/failure-recovery",
+      "category": "SPECIALIST",
+      "eyebrow": "FAILURE / RETRY / RECOVERY",
+      "title": "Не разрешайте retry превращать неопределённость в повторный внешний эффект.",
+      "description": "Специализированная BitEvo поверхность про stale state, partial effects, replay, retry, compensation и recovery ownership для consequential workflows.",
+      "points": [
+        "Retry допустим только когда система знает, какой внешний эффект уже произошёл и к какому объекту он относится.",
+        "Ambiguous state должен уменьшать authority: reconcile, hold, compensate или escalate вместо blind replay.",
+        "Recovery evidence и retest criterion должны быть связаны с исходным owner decision, а не с внутренним статусом задачи."
+      ],
+      "primaryHref": "/ru/start",
+      "primaryLabel": "Выбрать scope"
+    },
+    {
+      "slug": "phuket-ai-workflow",
+      "enPath": "/phuket-ai-workflow",
+      "category": "SPECIALIST",
+      "eyebrow": "PHUKET · LOCAL IMPLEMENTATION",
+      "title": "Локальный AI workflow pilot — отдельный implementation path, не новый audit tier.",
+      "description": "Русская parity-поверхность Phuket AI Workflow как отдельного local specialist implementation path, подчинённого общей BitEvo commercial hierarchy.",
+      "points": [
+        "Это локальный implementation pilot, а не замена global Free → Entry → Primary audit ladder.",
+        "Scope и claims должны оставаться ограниченными конкретным локальным workflow и согласованным эффектом.",
+        "Наличие локальной implementation route не создаёт автоматическую testing или production authority."
+      ],
+      "primaryHref": "/ru/consulting",
+      "primaryLabel": "Открыть услуги"
+    },
+    {
+      "slug": "mcp-governance-checklist",
+      "enPath": "/mcp-governance-checklist",
+      "category": "TOOL",
+      "eyebrow": "MCP GOVERNANCE CHECKLIST",
+      "title": "Проверьте, что tool access не подменяет action authority.",
+      "description": "Русская checklist-поверхность для подготовки MCP/tool governance scope: action, target, approval, evidence, effect confirmation и recovery.",
+      "points": [
+        "Checklist помогает структурировать scope и unresolved gates до глубокой проверки.",
+        "Результат checklist не является trust score, security certification или runtime enforcement.",
+        "Consequential execution всё равно требует отдельной authority и свежего provider truth."
+      ],
+      "primaryHref": "/ru/mcp-governance",
+      "primaryLabel": "MCP governance"
+    },
+    {
+      "slug": "agent-identity-worksheet",
+      "enPath": "/agent-identity-worksheet",
+      "category": "TOOL",
+      "eyebrow": "AGENT IDENTITY WORKSHEET",
+      "title": "Свяжите действующего агента с точной identity, role и target boundary.",
+      "description": "Русская worksheet-поверхность для identity/object binding перед consequential tool use или external effect.",
+      "points": [
+        "Identity должна быть достаточной, чтобы отличить конкретного actor/workflow от соседних сервисов и сессий.",
+        "Role или tool credential сами по себе не доказывают permission на конкретный target object.",
+        "Worksheet — planning artifact; он не выдаёт полномочия и не подтверждает runtime identity enforcement."
+      ],
+      "primaryHref": "/ru/start",
+      "primaryLabel": "Выбрать scope"
+    },
+    {
+      "slug": "trust-evidence-template",
+      "enPath": "/trust-evidence-template",
+      "category": "TOOL",
+      "eyebrow": "TRUST / EVIDENCE TEMPLATE",
+      "title": "Фиксируйте claim, источник, freshness и ограничение до того, как назвать это evidence.",
+      "description": "Русская template-поверхность для evidence provenance, freshness, object binding, limitations и decision use.",
+      "points": [
+        "Claim отделяется от verified fact, inference, assumption и unknown.",
+        "Evidence должно сохранять source, freshness и scope, а не только удобный summary.",
+        "Заполненный template не является независимой сертификацией и не повышает authority автоматически."
+      ],
+      "primaryHref": "/ru/start",
+      "primaryLabel": "Выбрать scope"
+    },
+    {
+      "slug": "sample-audit",
+      "enPath": "/sample-audit",
+      "category": "PROOF",
+      "eyebrow": "SYNTHETIC SAMPLE · CRM WRITE",
+      "title": "Синтетический CRM-write пример показывает метод, а не клиентский результат.",
+      "description": "RU parity для SAMPLE-001: synthetic CRM-write finding про False Green и external-effect confirmation gap.",
+      "points": [
+        "Объект примера — CRM write и подтверждение фактического external state.",
+        "Worked owner decision — CONSTRAIN в рамках synthetic example.",
+        "customer_evidence=false, executed_audit=false, certification=false — sample нельзя выдавать за customer proof."
+      ],
+      "primaryHref": "/ru/proof",
+      "primaryLabel": "Proof matrix"
+    },
+    {
+      "slug": "sample-message",
+      "enPath": "/sample-message",
+      "category": "PROOF",
+      "eyebrow": "SYNTHETIC SAMPLE · OUTBOUND MESSAGE",
+      "title": "Синтетический outbound пример отделяет recipient binding от внутреннего send-status.",
+      "description": "RU parity для SAMPLE-002: synthetic outbound-message finding про recipient + approval binding gap.",
+      "points": [
+        "Объект примера — внешний message effect и его точный recipient binding.",
+        "Worked owner decision — CONSTRAIN в рамках synthetic example.",
+        "Sample не доказывает реальную доставку, customer outcome или production-wide messaging control."
+      ],
+      "primaryHref": "/ru/proof",
+      "primaryLabel": "Proof matrix"
+    },
+    {
+      "slug": "sample-deployment",
+      "enPath": "/sample-deployment",
+      "category": "PROOF",
+      "eyebrow": "SYNTHETIC SAMPLE · STAGING DEPLOYMENT",
+      "title": "Синтетический deployment пример связывает environment, baseline и external readback.",
+      "description": "RU parity для SAMPLE-003: synthetic staging deployment/config finding про environment + baseline/version binding gap.",
+      "points": [
+        "Объект примера — staging deployment/config effect, а не production release.",
+        "Worked owner decision — REPAIR в рамках synthetic example.",
+        "customer_evidence=false, executed_audit=false, certification=false; sample не является runtime proof."
+      ],
+      "primaryHref": "/ru/proof",
+      "primaryLabel": "Proof matrix"
+    },
+    {
+      "slug": "security",
+      "enPath": "/security",
+      "category": "PROOF",
+      "eyebrow": "SECURITY / TRUST BOUNDARY",
+      "title": "Публикуйте границы контроля так же явно, как сами security claims.",
+      "description": "Русская trust/security поверхность BitEvo: bounded engineering evidence, public claim ceiling и separation от certification/production-wide guarantees.",
+      "points": [
+        "Публичный security материал описывает проверяемые boundaries и evidence classes, а не универсальный safety score.",
+        "Internal dogfood и synthetic proof не превращаются в customer certification.",
+        "Private runtime health, secrets и control endpoints не должны выводиться как публичное доказательство."
+      ],
+      "primaryHref": "/ru/operator",
+      "primaryLabel": "Operator boundary"
+    },
+    {
+      "slug": "operator",
+      "enPath": "/operator",
+      "category": "PROOF",
+      "eyebrow": "OPERATOR / ENTITY BOUNDARY",
+      "title": "BitEvo на bitevo.work — конкретная независимая B2B engineering practice.",
+      "description": "Русская operator/trust поверхность с canonical entity boundary и разграничением от несвязанных crypto/Web3 проектов с похожим названием.",
+      "points": [
+        "Canonical public identity привязана к BitEvo на bitevo.work.",
+        "Практика не аффилирована с несвязанными cryptocurrency, wallet, token или Web3 проектами с именем BitEvo.",
+        "Entity identity не должна выводиться по одному совпадению имени без direct first-party binding."
+      ],
+      "primaryHref": "/ru/security",
+      "primaryLabel": "Security boundary"
+    },
+    {
+      "slug": "ai-skill-lab-sample",
+      "enPath": "/ai-skill-lab-sample",
+      "category": "PROOF",
+      "eyebrow": "PUBLIC SAMPLE",
+      "title": "Публичный AI Skill Lab sample — пример структуры, а не customer proof.",
+      "description": "Русская parity-поверхность публичного AI Skill Lab sample с явным claim ceiling и без превращения примера в certification или production evidence.",
+      "points": [
+        "Sample показывает способ описывать workflow/evidence структуру на публичном уровне.",
+        "Он не доказывает customer deployment, production adoption или универсальную корректность контроля.",
+        "Любое operational решение требует отдельного current evidence и scope-specific verification."
+      ],
+      "primaryHref": "/ru/proof",
+      "primaryLabel": "Открыть Proof"
+    },
+    {
+      "slug": "guides/ai-agent-reliability-audit",
+      "enPath": "/guides/ai-agent-reliability-audit",
+      "category": "RESEARCH",
+      "eyebrow": "REVIEWED METHOD NOTE",
+      "title": "Метод reliability audit начинается с action, authority, evidence, effect и recovery.",
+      "description": "Русская semantic parity для reviewed public methodology note по bounded AI-agent reliability/authority audit.",
+      "points": [
+        "Метод рассматривает конкретный action-capable workflow, а не абстрактный model score.",
+        "Decision-time evidence и external effect confirmation отделяются от post-hoc logs.",
+        "Research note не является customer finding, certification или текущим runtime claim."
+      ],
+      "primaryHref": "/ru/guides",
+      "primaryLabel": "Research library"
+    },
+    {
+      "slug": "guides/security-sandboxing",
+      "enPath": "/guides/security-sandboxing",
+      "category": "RESEARCH",
+      "eyebrow": "REVIEWED SECURITY NOTE",
+      "title": "Sandboxing ограничивает execution surface, но не заменяет authority и evidence gates.",
+      "description": "Русская semantic parity для reviewed security-sandboxing note без private infrastructure disclosure и без certification claims.",
+      "points": [
+        "Isolation boundary должна быть связана с конкретным execution/tool surface.",
+        "Sandbox не доказывает, что конкретное consequential действие разрешено owner'ом.",
+        "Reviewed note — research context, не live control-room telemetry и не independent certification."
+      ],
+      "primaryHref": "/ru/guides",
+      "primaryLabel": "Research library"
+    },
+    {
+      "slug": "guides/fleet-coordinator-drift-monitoring",
+      "enPath": "/guides/fleet-coordinator-drift-monitoring",
+      "category": "RESEARCH",
+      "eyebrow": "REVIEWED OPERATIONS NOTE",
+      "title": "Drift monitoring полезен только когда baseline, freshness и объект сравнения определены явно.",
+      "description": "Русская semantic parity для reviewed architecture note по fleet coordinator drift monitoring; это не live telemetry.",
+      "points": [
+        "Drift требует явного baseline и идентичности сравниваемого объекта.",
+        "Freshness и provenance должны быть частью наблюдения, иначе green status может быть ложным.",
+        "Публичная note описывает architecture concept и не раскрывает private runtime/control endpoints."
+      ],
+      "primaryHref": "/ru/guides",
+      "primaryLabel": "Research library"
+    },
+    {
+      "slug": "guides/d3-tool-io-bridge-contract",
+      "enPath": "/guides/d3-tool-io-bridge-contract",
+      "category": "RESEARCH",
+      "eyebrow": "REVIEWED INTERFACE CONTRACT",
+      "title": "Tool-I/O contract должен сохранять object binding и effect semantics через границу инструмента.",
+      "description": "Русская semantic parity для reviewed D3 Tool-I/O Bridge Contract без private endpoints и без runtime-health claims.",
+      "points": [
+        "Input/output schema не должен терять identity, target и decision context consequential action.",
+        "Tool success не заменяет external confirmation того же объекта и эффекта.",
+        "Публичный contract — reviewed interface note, а не доказательство конкретного production deployment."
+      ],
+      "primaryHref": "/ru/guides",
+      "primaryLabel": "Research library"
+    },
+    {
+      "slug": "ruap",
+      "enPath": "/ruap",
+      "category": "CONTEXT",
+      "eyebrow": "PRIVATE PRODUCT · PORTABLE CONTEXT",
+      "title": "RUAP переносит проверенный контекст. Полномочия не переносит.",
+      "description": "Portable AI Continuity & Governance для provenance-aware cold-start packs между моделями, агентами и сессиями без превращения remembered context в permission to act.",
+      "points": [
+        "Selected evidence, source locators и currentness metadata упаковываются в deterministic portable context.",
+        "Trusted/internal и external-safe profiles должны сохранять fail-closed boundary для sensitive material.",
+        "Новый RUAP pack не доказывает deployment, runtime effect или authority: consequential action требует fresh provider truth и owner permission."
+      ],
+      "primaryHref": "/ru/continuityos",
+      "primaryLabel": "ContinuityOS"
+    },
+    {
+      "slug": "consequential-actions",
+      "enPath": "/consequential-actions",
+      "category": "CONTEXT",
+      "eyebrow": "CONSEQUENTIAL ACTIONS",
+      "title": "Класс системы важен меньше, чем внешний эффект, который она может создать.",
+      "description": "Русская context-поверхность BitEvo для consequential actions: commerce, reservation, regulated service и другие bounded external effects.",
+      "points": [
+        "Action считается consequential, когда ошибка может изменить внешний record, recipient, reservation, payment, approval или другой материальный state.",
+        "Один и тот же authority/evidence/effect/recovery метод переносится между разными system types.",
+        "Примеры вертикалей не создают отдельные service lines и не расширяют claims за пределы tested scope."
+      ],
+      "primaryHref": "/ru/start",
+      "primaryLabel": "Выбрать scope"
+    },
+    {
+      "slug": "commerce-action-validation",
+      "enPath": "/commerce-action-validation",
+      "category": "CONTEXT",
+      "eyebrow": "COMMERCE ACTION VALIDATION",
+      "title": "Commerce workflow должен доказать право изменить заказ, возврат или customer record до эффекта.",
+      "description": "Русская context-поверхность для commerce consequential actions и их authority/evidence/effect/recovery boundaries.",
+      "points": [
+        "Target object и customer/order identity должны быть связаны с конкретным action.",
+        "Approval, policy и freshness evidence проверяются до write/refund/return effect.",
+        "Пример commerce не означает отдельный fixed BitEvo SKU и не гарантирует business outcome."
+      ],
+      "primaryHref": "/ru/consequential-actions",
+      "primaryLabel": "Consequential actions"
+    },
+    {
+      "slug": "reservation-action-validation",
+      "enPath": "/reservation-action-validation",
+      "category": "CONTEXT",
+      "eyebrow": "RESERVATION ACTION VALIDATION",
+      "title": "Reservation workflow должен различать предложение действия и подтверждённое изменение бронирования.",
+      "description": "Русская context-поверхность для reservation/booking consequential actions с exact object binding, approval и downstream confirmation.",
+      "points": [
+        "Date/time/location/party/customer binding должны относиться к одной и той же reservation object.",
+        "Internal success не доказывает создание, изменение или отмену бронирования без downstream readback.",
+        "Hospitality examples — это action class context, а не отдельная service line или performance guarantee."
+      ],
+      "primaryHref": "/ru/consequential-actions",
+      "primaryLabel": "Consequential actions"
+    },
+    {
+      "slug": "regulated-service-action-validation",
+      "enPath": "/regulated-service-action-validation",
+      "category": "CONTEXT",
+      "eyebrow": "REGULATED-SERVICE ACTION VALIDATION",
+      "title": "В regulated workflow uncertainty должна уменьшать authority, а не расширять её.",
+      "description": "Русская context-поверхность для consequential actions в regulated-service workflows с явными approval, evidence и escalation boundaries.",
+      "points": [
+        "Identity, role, policy state и required approvals должны быть current и object-bound до consequential effect.",
+        "Missing или conflicting evidence приводит к hold/escalate, а не к silent assumption.",
+        "BitEvo engineering evidence не заменяет legal opinion, accredited audit или regulatory certification."
+      ],
+      "primaryHref": "/ru/consequential-actions",
+      "primaryLabel": "Consequential actions"
+    }
+  ]
+}
