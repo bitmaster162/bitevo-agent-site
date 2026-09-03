@@ -1,83 +1,686 @@
 {
   "schema": "bitevo.public-route-registry/v1",
   "routes": [
-    { "path": "/", "category": "FLAGSHIP", "indexable": true, "locale": "en", "parent": null },
-    { "path": "/start", "category": "FLAGSHIP", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/pricing", "category": "FLAGSHIP", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/consulting", "category": "FLAGSHIP", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/agent-authority-audit", "category": "FLAGSHIP", "indexable": true, "locale": "en", "parent": "/pricing" },
-    { "path": "/entry-audit", "category": "ENTRY", "indexable": true, "locale": "en", "parent": "/pricing" },
-
-    { "path": "/control-validation", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/evidence-readiness", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/build/exception-workflow-diagnostic", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/build" },
-    { "path": "/mcp-governance", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/coding-agent-governance", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/failure-recovery", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/phuket-ai-workflow", "category": "SPECIALIST", "indexable": true, "locale": "en", "parent": "/consulting", "scope": "local" },
-
-    { "path": "/mapper", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/workspace", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/mapper" },
-    { "path": "/diagnostic", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/audit-intake", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/mcp-governance-checklist", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/mcp-governance" },
-    { "path": "/agent-identity-worksheet", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/trust-evidence-template", "category": "TOOL", "indexable": true, "locale": "en", "parent": "/start" },
-
-    { "path": "/artifacts", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/proof", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/dogfood-self-audit", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/proof" },
-    { "path": "/build", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/sample-audit", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/proof" },
-    { "path": "/sample-message", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/proof" },
-    { "path": "/sample-deployment", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/proof" },
-    { "path": "/security", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/operator" },
-    { "path": "/operator", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/ai-skill-lab-sample", "category": "PROOF", "indexable": true, "locale": "en", "parent": "/proof" },
-
-    { "path": "/guides", "category": "RESEARCH", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/guides/ai-agent-reliability-audit", "category": "RESEARCH", "indexable": true, "locale": "en", "parent": "/guides" },
-    { "path": "/guides/security-sandboxing", "category": "RESEARCH", "indexable": true, "locale": "en", "parent": "/guides" },
-    { "path": "/guides/fleet-coordinator-drift-monitoring", "category": "RESEARCH", "indexable": true, "locale": "en", "parent": "/guides" },
-    { "path": "/guides/d3-tool-io-bridge-contract", "category": "RESEARCH", "indexable": true, "locale": "en", "parent": "/guides" },
-
-    { "path": "/doctrine", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/" },
-    { "path": "/continuityos", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/build" },
-    { "path": "/ruap", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/build" },
-    { "path": "/universe", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/build" },
-    { "path": "/vision", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/build" },
-    { "path": "/consequential-actions", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/start" },
-    { "path": "/commerce-action-validation", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/consequential-actions" },
-    { "path": "/reservation-action-validation", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/consequential-actions" },
-    { "path": "/regulated-service-action-validation", "category": "CONTEXT", "indexable": true, "locale": "en", "parent": "/consequential-actions" },
-
-    { "path": "/ru", "category": "FLAGSHIP", "indexable": true, "locale": "ru", "parent": "/" },
-    { "path": "/ru/pricing", "category": "FLAGSHIP", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/consulting", "category": "FLAGSHIP", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/agent-authority-audit", "category": "FLAGSHIP", "indexable": true, "locale": "ru", "parent": "/ru/pricing" },
-    { "path": "/ru/mapper", "category": "TOOL", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/workspace", "category": "TOOL", "indexable": true, "locale": "ru", "parent": "/ru/mapper" },
-    { "path": "/ru/diagnostic", "category": "TOOL", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/audit-intake", "category": "TOOL", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/artifacts", "category": "PROOF", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/proof", "category": "PROOF", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/dogfood-self-audit", "category": "PROOF", "indexable": true, "locale": "ru", "parent": "/ru/proof" },
-    { "path": "/ru/build", "category": "PROOF", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/guides", "category": "RESEARCH", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/doctrine", "category": "CONTEXT", "indexable": true, "locale": "ru", "parent": "/ru" },
-    { "path": "/ru/continuityos", "category": "CONTEXT", "indexable": true, "locale": "ru", "parent": "/ru/build" },
-    { "path": "/ru/universe", "category": "CONTEXT", "indexable": true, "locale": "ru", "parent": "/ru/build" },
-    { "path": "/ru/vision", "category": "CONTEXT", "indexable": true, "locale": "ru", "parent": "/ru/build" },
-
-    { "path": "/assurance", "category": "LEGACY", "indexable": false, "locale": "en", "parent": "/start", "state": "transition" },
-    { "path": "/ai-audit", "category": "LEGACY", "indexable": false, "locale": "en", "parent": "/start", "state": "alias" },
-    { "path": "/intake", "category": "LEGACY", "indexable": false, "locale": "en", "parent": "/audit-intake", "state": "redirect" },
-    { "path": "/inner-circle", "category": "LEGACY", "indexable": false, "locale": "en", "parent": "/agent-authority-audit", "state": "archive" },
-    { "path": "/crypto-risk-desk", "category": "LEGACY", "indexable": false, "locale": "en", "parent": "/guides", "state": "archive" },
-    { "path": "/digital-entity-setup", "category": "INTERNAL_NO_INDEX", "indexable": false, "locale": "en", "parent": "/continuityos", "state": "concept" },
-    { "path": "/concierge", "category": "INTERNAL_NO_INDEX", "indexable": false, "locale": "en", "parent": "/start", "state": "experimental" }
+    {
+      "path": "/",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "en",
+      "parent": null
+    },
+    {
+      "path": "/start",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/pricing",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/consulting",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/agent-authority-audit",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/pricing"
+    },
+    {
+      "path": "/entry-audit",
+      "category": "ENTRY",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/pricing"
+    },
+    {
+      "path": "/control-validation",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/evidence-readiness",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/build/exception-workflow-diagnostic",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build"
+    },
+    {
+      "path": "/mcp-governance",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/coding-agent-governance",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/failure-recovery",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/phuket-ai-workflow",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/consulting",
+      "scope": "local"
+    },
+    {
+      "path": "/mapper",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/workspace",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/mapper"
+    },
+    {
+      "path": "/diagnostic",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/audit-intake",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/mcp-governance-checklist",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/mcp-governance"
+    },
+    {
+      "path": "/agent-identity-worksheet",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/trust-evidence-template",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/artifacts",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/proof",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/dogfood-self-audit",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/proof"
+    },
+    {
+      "path": "/build",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/sample-audit",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/proof"
+    },
+    {
+      "path": "/sample-message",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/proof"
+    },
+    {
+      "path": "/sample-deployment",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/proof"
+    },
+    {
+      "path": "/security",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/operator"
+    },
+    {
+      "path": "/operator",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/ai-skill-lab-sample",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/proof"
+    },
+    {
+      "path": "/guides",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/guides/ai-agent-reliability-audit",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides"
+    },
+    {
+      "path": "/guides/security-sandboxing",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides"
+    },
+    {
+      "path": "/guides/fleet-coordinator-drift-monitoring",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides"
+    },
+    {
+      "path": "/guides/d3-tool-io-bridge-contract",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides"
+    },
+    {
+      "path": "/doctrine",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/"
+    },
+    {
+      "path": "/continuityos",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build"
+    },
+    {
+      "path": "/ruap",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build"
+    },
+    {
+      "path": "/universe",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build"
+    },
+    {
+      "path": "/vision",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build"
+    },
+    {
+      "path": "/consequential-actions",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/commerce-action-validation",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/consequential-actions"
+    },
+    {
+      "path": "/reservation-action-validation",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/consequential-actions"
+    },
+    {
+      "path": "/regulated-service-action-validation",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/consequential-actions"
+    },
+    {
+      "path": "/ru",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/"
+    },
+    {
+      "path": "/ru/pricing",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/consulting",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/agent-authority-audit",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/pricing"
+    },
+    {
+      "path": "/ru/mapper",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/workspace",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/mapper"
+    },
+    {
+      "path": "/ru/diagnostic",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/audit-intake",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/artifacts",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/proof",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/dogfood-self-audit",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/proof"
+    },
+    {
+      "path": "/ru/build",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/guides",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/doctrine",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/continuityos",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build"
+    },
+    {
+      "path": "/ru/universe",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build"
+    },
+    {
+      "path": "/ru/vision",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build"
+    },
+    {
+      "path": "/ru/start",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/entry-audit",
+      "category": "ENTRY",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/pricing"
+    },
+    {
+      "path": "/ru/control-validation",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/evidence-readiness",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/build/exception-workflow-diagnostic",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build"
+    },
+    {
+      "path": "/ru/mcp-governance",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/coding-agent-governance",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/failure-recovery",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/phuket-ai-workflow",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/consulting",
+      "scope": "local"
+    },
+    {
+      "path": "/ru/mcp-governance-checklist",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/mcp-governance"
+    },
+    {
+      "path": "/ru/agent-identity-worksheet",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/trust-evidence-template",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/sample-audit",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/proof"
+    },
+    {
+      "path": "/ru/sample-message",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/proof"
+    },
+    {
+      "path": "/ru/sample-deployment",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/proof"
+    },
+    {
+      "path": "/ru/security",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/operator"
+    },
+    {
+      "path": "/ru/operator",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru"
+    },
+    {
+      "path": "/ru/ai-skill-lab-sample",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/proof"
+    },
+    {
+      "path": "/ru/guides/ai-agent-reliability-audit",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides"
+    },
+    {
+      "path": "/ru/guides/security-sandboxing",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides"
+    },
+    {
+      "path": "/ru/guides/fleet-coordinator-drift-monitoring",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides"
+    },
+    {
+      "path": "/ru/guides/d3-tool-io-bridge-contract",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides"
+    },
+    {
+      "path": "/ru/ruap",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build"
+    },
+    {
+      "path": "/ru/consequential-actions",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/commerce-action-validation",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/consequential-actions"
+    },
+    {
+      "path": "/ru/reservation-action-validation",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/consequential-actions"
+    },
+    {
+      "path": "/ru/regulated-service-action-validation",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/consequential-actions"
+    },
+    {
+      "path": "/assurance",
+      "category": "LEGACY",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/start",
+      "state": "transition"
+    },
+    {
+      "path": "/ai-audit",
+      "category": "LEGACY",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/start",
+      "state": "alias"
+    },
+    {
+      "path": "/intake",
+      "category": "LEGACY",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/audit-intake",
+      "state": "redirect"
+    },
+    {
+      "path": "/inner-circle",
+      "category": "LEGACY",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/agent-authority-audit",
+      "state": "archive"
+    },
+    {
+      "path": "/crypto-risk-desk",
+      "category": "LEGACY",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/guides",
+      "state": "archive"
+    },
+    {
+      "path": "/digital-entity-setup",
+      "category": "INTERNAL_NO_INDEX",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/continuityos",
+      "state": "concept"
+    },
+    {
+      "path": "/concierge",
+      "category": "INTERNAL_NO_INDEX",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/start",
+      "state": "experimental"
+    }
   ],
   "redirects": [
-    { "source": "/intake", "destination": "/audit-intake", "permanent": true }
+    {
+      "source": "/intake",
+      "destination": "/audit-intake",
+      "permanent": true
+    }
   ]
 }
