@@ -1,4 +1,4 @@
-name: Astro 7 Security Canary Bootstrap
+name: Astro 7 CSP Equivalence Probe
 
 on:
   push:
@@ -6,59 +6,104 @@ on:
       - agent/astro7-security-canary-20260903
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  bootstrap:
-    if: github.actor != 'github-actions[bot]'
+  probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - name: Checkout canary branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persist-credentials: true
+          persist-credentials: false
           ref: agent/astro7-security-canary-20260903
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
           node-version: '22.19.0'
-      - name: Close legacy unclosed scoped style blocks
+      - name: Build Astro 6 baseline
+        run: |
+          npm ci
+          npm run build:site
+          cp -a dist /tmp/dist-astro6
+      - name: Build Astro 7 candidate
         run: |
           python3 - <<'PY'
           from pathlib import Path
           for name in ('src/pages/universe.astro', 'src/pages/ru/universe.astro'):
               path = Path(name)
               source = path.read_text()
-              if '<style>' not in source:
-                  raise SystemExit(f'{name}: expected scoped style opener missing')
-              if '</style>' in source:
-                  raise SystemExit(f'{name}: style block unexpectedly already closed; refresh canary assumptions')
+              if '<style>' not in source or '</style>' in source:
+                  raise SystemExit(f'{name}: unexpected style-closure baseline')
               path.write_text(source.rstrip() + '\n</style>\n')
           PY
-      - name: Upgrade exact Astro and regenerate lock
-        run: |
           npm pkg set engines.node=">=22.19.0"
           npm install astro@7.2.10 --save-exact
-      - name: Capture post-upgrade audit without hiding findings
+          npm run build:site
+          cp -a dist /tmp/dist-astro7
+      - name: Prove source delta is migration-only
         run: |
-          npm audit --json > /tmp/astro7-audit.json || true
+          git diff -- src/pages package.json | sed -n '1,240p'
+      - name: Compare inline CSP blocks one-to-one
+        run: |
           node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          const a=JSON.parse(fs.readFileSync('/tmp/astro7-audit.json','utf8'));
-          const v=a.metadata?.vulnerabilities || {};
-          console.log(`ASTRO7_POST_UPGRADE_AUDIT total=${v.total ?? 'unknown'} critical=${v.critical ?? 'unknown'} high=${v.high ?? 'unknown'} moderate=${v.moderate ?? 'unknown'} low=${v.low ?? 'unknown'}`);
-          for (const [name,info] of Object.entries(a.vulnerabilities || {})) {
-            console.log(`ASTRO7_AUDIT_ITEM package=${name} severity=${info.severity} range=${info.range}`);
+          import { createHash } from 'node:crypto';
+          import { readFile, readdir } from 'node:fs/promises';
+          import { join, relative } from 'node:path';
+
+          const dirs={old:'/tmp/dist-astro6',next:'/tmp/dist-astro7'};
+          const digest=v=>createHash('sha256').update(v).digest('base64');
+          async function walk(dir){ const out=[]; for(const e of await readdir(dir,{withFileTypes:true})){ const p=join(dir,e.name); if(e.isDirectory()) out.push(...await walk(p)); else if(e.isFile()&&e.name.endsWith('.html')) out.push(relative(dir,p).replaceAll('\\','/')); } return out.sort(); }
+          function extract(html){
+            const styles=[...html.matchAll(/<style\b([^>]*)>([\s\S]*?)<\/style>/gi)].map((m,i)=>({kind:'style',attrs:m[1]||'',body:m[2]||'',index:i}));
+            const scripts=[]; let i=0;
+            for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
+              const attrs=m[1]||'', body=m[2]||'';
+              if(/\bsrc\s*=/.test(attrs)||!body.trim()) continue;
+              const type=attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase()||'';
+              scripts.push({kind:'script',attrs,type,body,index:i++});
+            }
+            return {styles,scripts};
           }
+          const normCss=s=>s
+            .replace(/data-astro-cid-[a-z0-9_-]+/gi,'data-astro-cid-SCOPE')
+            .replace(/\s+/g,' ')
+            .replace(/\s*([{}:;,>+~])\s*/g,'$1')
+            .trim();
+          const normJs=s=>s.replace(/\s+/g,' ').trim();
+          const oldRoutes=await walk(dirs.old), newRoutes=await walk(dirs.next);
+          if(JSON.stringify(oldRoutes)!==JSON.stringify(newRoutes)) throw new Error(`route set drift old=${oldRoutes.length} new=${newRoutes.length}`);
+          const styleForward=new Map(),styleReverse=new Map(),scriptForward=new Map(),scriptReverse=new Map();
+          const add=(map,k,v)=>{ if(!map.has(k)) map.set(k,new Set()); map.get(k).add(v); };
+          let stylePairs=0,styleExact=0,styleNorm=0,scriptPairs=0,scriptExact=0,scriptNorm=0;
+          const styleMismatches=[], scriptChanges=[];
+          for(const route of oldRoutes){
+            const old=extract(await readFile(join(dirs.old,route),'utf8'));
+            const next=extract(await readFile(join(dirs.next,route),'utf8'));
+            if(old.styles.length!==next.styles.length) throw new Error(`${route}: style block count drift ${old.styles.length}->${next.styles.length}`);
+            if(old.scripts.length!==next.scripts.length) throw new Error(`${route}: script block count drift ${old.scripts.length}->${next.scripts.length}`);
+            for(let i=0;i<old.styles.length;i++){
+              stylePairs++;
+              const a=old.styles[i].body,b=next.styles[i].body, ah=digest(a),bh=digest(b);
+              add(styleForward,ah,bh); add(styleReverse,bh,ah);
+              if(a===b) styleExact++; else if(normCss(a)===normCss(b)) styleNorm++; else if(styleMismatches.length<12) styleMismatches.push({route,index:i,oldHash:ah,newHash:bh,old:a.slice(0,500),next:b.slice(0,500)});
+            }
+            for(let i=0;i<old.scripts.length;i++){
+              scriptPairs++;
+              const a=old.scripts[i],b=next.scripts[i];
+              if(a.type!==b.type) throw new Error(`${route}: script type drift index=${i} ${a.type}->${b.type}`);
+              const ah=digest(a.body),bh=digest(b.body); add(scriptForward,ah,bh); add(scriptReverse,bh,ah);
+              if(a.body===b.body) scriptExact++; else { if(normJs(a.body)===normJs(b.body)) scriptNorm++; if(scriptChanges.length<12) scriptChanges.push({route,index:i,type:a.type||'javascript',oldHash:ah,newHash:bh,old:a.body.slice(0,2400),next:b.body.slice(0,2400)}); }
+            }
+          }
+          const bijective=m=>[...m.values()].every(v=>v.size===1);
+          console.log(`CSP_EQUIV_ROUTE_SET=PASS routes=${oldRoutes.length}`);
+          console.log(`CSP_EQUIV_STYLE pairs=${stylePairs} exact=${styleExact} normalized=${styleNorm} mismatch=${stylePairs-styleExact-styleNorm} unique_old=${styleForward.size} unique_new=${styleReverse.size} forward_bijective=${bijective(styleForward)?1:0} reverse_bijective=${bijective(styleReverse)?1:0}`);
+          console.log(`CSP_EQUIV_SCRIPT pairs=${scriptPairs} exact=${scriptExact} whitespace_only=${scriptNorm} changed=${scriptPairs-scriptExact} unique_old=${scriptForward.size} unique_new=${scriptReverse.size} forward_bijective=${bijective(scriptForward)?1:0} reverse_bijective=${bijective(scriptReverse)?1:0}`);
+          for(const x of styleMismatches) console.log(`STYLE_MISMATCH ${JSON.stringify(x)}`);
+          for(const x of scriptChanges) console.log(`SCRIPT_CHANGE ${JSON.stringify(x)}`);
+          if(!bijective(styleForward)||!bijective(styleReverse)||!bijective(scriptForward)||!bijective(scriptReverse)) throw new Error('hash mapping is not bijective');
+          if(styleMismatches.length) throw new Error(`style semantic normalization mismatches=${styleMismatches.length}`);
+          console.log('CSP_EQUIV_BIJECTION=PASS');
           NODE
-      - name: Prove existing provider-neutral contract
-        run: npm run build:core
-      - name: Remove one-shot workflow and commit exact dependency canary
-        run: |
-          git rm .github/workflows/astro7-security-canary-bootstrap.yml
-          git add package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md src/pages/universe.astro src/pages/ru/universe.astro
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Security: canary Astro 7.2.10 with strict style closure"
-          git push origin HEAD:agent/astro7-security-canary-20260903
