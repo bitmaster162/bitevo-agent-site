@@ -57,34 +57,6 @@ function canonicalCss(body) {
   return JSON.stringify(canonicalChildren(postcss.parse(scoped)));
 }
 
-function canonicalJson(value) {
-  if (Array.isArray(value)) return value.map(canonicalJson);
-  if (value && typeof value === 'object') {
-    const out = {};
-    for (const key of Object.keys(value).sort()) out[key] = canonicalJson(value[key]);
-    return out;
-  }
-  return value;
-}
-
-async function canonicalExecutableJs(code, type) {
-  const { minify } = await import('terser');
-  const result = await minify(code, {
-    module: type === 'module',
-    ecma: 2022,
-    compress: { defaults: true, passes: 3, unsafe: false, unsafe_arrows: false, unsafe_methods: false, unsafe_proto: false },
-    mangle: { toplevel: true },
-    format: { ecma: 2022, comments: false, semicolons: true, quote_style: 1, ascii_only: false }
-  });
-  if (!result.code) throw new Error('Terser canonicalization returned empty code');
-  return result.code;
-}
-
-async function canonicalScript(script) {
-  if (script.type === 'application/ld+json') return `json:${JSON.stringify(canonicalJson(JSON.parse(script.raw)))}`;
-  return `js:${await canonicalExecutableJs(script.raw, script.type)}`;
-}
-
 async function snapshot(output) {
   const routes = {};
   let styleBlocks = 0, scriptBlocks = 0, executable = 0, jsonld = 0;
@@ -94,9 +66,8 @@ async function snapshot(output) {
     const html = await readFile(path, 'utf8');
     const styles = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map((m, index) => {
       const body = m[1] || '';
-      const canonicalText = canonicalCss(body);
       const hash = digest(body); styleHashes.add(hash); styleBlocks++;
-      return { index, hash, canonical:digest(canonicalText), raw:body, canonicalText };
+      return { index, hash, canonical:digest(canonicalCss(body)) };
     });
     const scripts = [];
     let scriptIndex = 0;
@@ -106,24 +77,17 @@ async function snapshot(output) {
       const type = attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase() || '';
       const hash = digest(body); scriptHashes.add(hash); scriptBlocks++;
       if (type === 'application/ld+json') jsonld++; else executable++;
-      scripts.push({ index:scriptIndex++, type, hash, raw:body });
+      scripts.push({ index:scriptIndex++, type, hash });
     }
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v4-semantic-js', routes,
+    schema:'bitevo.astro7-csp-snapshot/v5-shape', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
-  await writeFile(output, JSON.stringify(data));
+  await writeFile(output, JSON.stringify(data, null, 2));
   console.log(`CSP_SNAPSHOT output=${output} routes=${data.totals.routes} style_blocks=${styleBlocks} unique_styles=${styleHashes.size} script_blocks=${scriptBlocks} unique_scripts=${scriptHashes.size} executable=${executable} jsonld=${jsonld}`);
-}
-
-function firstTextDifference(left, right) {
-  const n = Math.min(left.length, right.length);
-  let i=0; while (i<n && left[i]===right[i]) i++;
-  const start=Math.max(0,i-180), endL=Math.min(left.length,i+1100), endR=Math.min(right.length,i+1100);
-  return { index:i, old:left.slice(start,endL), next:right.slice(start,endR) };
 }
 
 async function compare(oldPath, newPath, styleOutput, scriptOutput) {
@@ -136,46 +100,51 @@ async function compare(oldPath, newPath, styleOutput, scriptOutput) {
   }
   const oldRoutes = Object.keys(oldData.routes).sort(), newRoutes = Object.keys(newData.routes).sort();
   if (JSON.stringify(oldRoutes) !== JSON.stringify(newRoutes)) throw new Error('route set drift');
-  const styleForward = new Map(), styleReverse = new Map(), scriptForward = new Map(), scriptReverse = new Map();
+
+  const styleForward = new Map(), styleReverse = new Map();
   const mapAdd = (map, key, value) => { if (!map.has(key)) map.set(key, new Set()); map.get(key).add(value); };
-  let stylePairs=0, scriptPairs=0, scriptByteExact=0, scriptCanonical=0, jsonCanonical=0;
+  let stylePairs=0, scriptPairs=0, exactScriptBlocks=0;
+  const changedScriptBlocks=[];
+
   for (const route of oldRoutes) {
-    const oldRoute=oldData.routes[route], newRoute=newData.routes[route];
-    if (oldRoute.styles.length !== newRoute.styles.length) throw new Error(`${route}: style count drift`);
-    if (oldRoute.scripts.length !== newRoute.scripts.length) throw new Error(`${route}: script count drift`);
+    const oldRoute=oldData.routes[route], nextRoute=newData.routes[route];
+    if (oldRoute.styles.length !== nextRoute.styles.length) throw new Error(`${route}: style count drift`);
+    if (oldRoute.scripts.length !== nextRoute.scripts.length) throw new Error(`${route}: script count drift`);
     for (let i=0;i<oldRoute.styles.length;i++) {
-      const before=oldRoute.styles[i], after=newRoute.styles[i]; stylePairs++;
-      if (before.canonical !== after.canonical) {
-        console.log(`CSS_MISMATCH route=${route} index=${i} old_hash=${before.hash} new_hash=${after.hash}`);
-        console.log(`CSS_MISMATCH_RAW ${JSON.stringify(firstTextDifference(before.raw, after.raw))}`);
-        console.log(`CSS_MISMATCH_CANONICAL ${JSON.stringify(firstTextDifference(before.canonicalText, after.canonicalText))}`);
-        throw new Error(`${route}: CSS semantic drift at style index ${i}`);
-      }
+      const before=oldRoute.styles[i], after=nextRoute.styles[i]; stylePairs++;
+      if (before.canonical !== after.canonical) throw new Error(`${route}: CSS semantic drift at style index ${i}`);
       mapAdd(styleForward,before.hash,after.hash); mapAdd(styleReverse,after.hash,before.hash);
     }
     for (let i=0;i<oldRoute.scripts.length;i++) {
-      const before=oldRoute.scripts[i], after=newRoute.scripts[i]; scriptPairs++;
-      if (before.type !== after.type) throw new Error(`${route}: inline script type drift at index ${i}`);
-      mapAdd(scriptForward,before.hash,after.hash); mapAdd(scriptReverse,after.hash,before.hash);
-      if (before.hash === after.hash) { scriptByteExact++; continue; }
-      const [oldCanonical,newCanonical] = await Promise.all([canonicalScript(before),canonicalScript(after)]);
-      if (oldCanonical !== newCanonical) {
-        console.log(`SCRIPT_SEMANTIC_MISMATCH route=${route} index=${i} type=${before.type||'javascript'} old_hash=${before.hash} new_hash=${after.hash}`);
-        console.log(`SCRIPT_RAW_DIFF ${JSON.stringify(firstTextDifference(before.raw, after.raw))}`);
-        console.log(`SCRIPT_CANONICAL_DIFF ${JSON.stringify(firstTextDifference(oldCanonical, newCanonical))}`);
-        throw new Error(`${route}: inline script canonical semantic drift at index ${i}`);
-      }
-      if (before.type === 'application/ld+json') jsonCanonical++; else scriptCanonical++;
+      const before=oldRoute.scripts[i], after=nextRoute.scripts[i]; scriptPairs++;
+      if (before.type !== after.type) throw new Error(`${route}: script type drift at index ${i}`);
+      if (before.hash === after.hash) exactScriptBlocks++;
+      else changedScriptBlocks.push({route,index:i,type:before.type,oldHash:before.hash,newHash:after.hash});
     }
   }
+
   const bijective = map => [...map.values()].every(set => set.size === 1);
   if (!bijective(styleForward) || !bijective(styleReverse)) throw new Error('style hash mapping is not bijective');
-  if (!bijective(scriptForward) || !bijective(scriptReverse)) throw new Error('script hash mapping is not bijective');
   if (styleForward.size !== 37 || styleReverse.size !== 37) throw new Error(`style unique mapping drift old=${styleForward.size} new=${styleReverse.size}`);
-  if (scriptForward.size !== 13 || scriptReverse.size !== 13) throw new Error(`script unique mapping drift old=${scriptForward.size} new=${scriptReverse.size}`);
+
+  const allowedChangedRoutes = new Set(['audit-intake/index.html','ru/audit-intake/index.html']);
+  if (changedScriptBlocks.length !== 2) throw new Error(`expected exactly two changed inline script blocks, got ${changedScriptBlocks.length}`);
+  for (const change of changedScriptBlocks) {
+    if (!allowedChangedRoutes.has(change.route)) throw new Error(`unexpected changed script route: ${change.route}`);
+    if (change.type !== 'module') throw new Error(`${change.route}: changed intake script must remain type=module`);
+  }
+  if (new Set(changedScriptBlocks.map(x=>x.route)).size !== 2) throw new Error('both EN and RU audit-intake script changes are required exactly once');
+  const oldChanged = new Set(changedScriptBlocks.map(x=>x.oldHash)), newChanged = new Set(changedScriptBlocks.map(x=>x.newHash));
+  if (oldChanged.size !== 2 || newChanged.size !== 2) throw new Error('changed script hashes must be two distinct one-to-one pairs');
+
+  const unchangedOld = oldData.scriptHashes.filter(h=>!oldChanged.has(h)).sort();
+  const unchangedNew = newData.scriptHashes.filter(h=>!newChanged.has(h)).sort();
+  if (JSON.stringify(unchangedOld) !== JSON.stringify(unchangedNew) || unchangedOld.length !== 11) throw new Error('the 11 non-intake reviewed script hashes must remain byte-identical');
+
   await writeFile(styleOutput, JSON.stringify(newData.styleHashes, null, 2));
   await writeFile(scriptOutput, JSON.stringify(newData.scriptHashes, null, 2));
-  console.log(`ASTRO7_CSP_EQUIVALENCE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED script_pairs=${scriptPairs} unique_script_map=13 script_bijective=1 script_byte_exact=${scriptByteExact} executable_terser_canonical=${scriptCanonical} json_canonical=${jsonCanonical}`);
+  console.log(`ASTRO7_CSP_SHAPE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED script_pairs=${scriptPairs} script_blocks_byte_exact=${exactScriptBlocks} unchanged_unique_script_hashes=11 changed_script_blocks=2 changed_routes=audit-intake,ru/audit-intake`);
+  for (const change of changedScriptBlocks) console.log(`ASTRO7_CHANGED_SCRIPT ${JSON.stringify(change)}`);
 }
 
 if (mode === 'snapshot') await snapshot(a);
