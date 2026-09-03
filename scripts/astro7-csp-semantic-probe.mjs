@@ -3,7 +3,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import postcss from 'postcss';
 
-const [mode, a, b, c] = process.argv.slice(2);
+const [mode, a, b, c, d] = process.argv.slice(2);
 const dist = 'dist';
 const digest = value => createHash('sha256').update(value).digest('base64');
 
@@ -57,6 +57,34 @@ function canonicalCss(body) {
   return JSON.stringify(canonicalChildren(postcss.parse(scoped)));
 }
 
+function canonicalJson(value) {
+  if (Array.isArray(value)) return value.map(canonicalJson);
+  if (value && typeof value === 'object') {
+    const out = {};
+    for (const key of Object.keys(value).sort()) out[key] = canonicalJson(value[key]);
+    return out;
+  }
+  return value;
+}
+
+async function canonicalExecutableJs(code, type) {
+  const { minify } = await import('terser');
+  const result = await minify(code, {
+    module: type === 'module',
+    ecma: 2022,
+    compress: { defaults: true, passes: 3, unsafe: false, unsafe_arrows: false, unsafe_methods: false, unsafe_proto: false },
+    mangle: { toplevel: true },
+    format: { ecma: 2022, comments: false, semicolons: true, quote_style: 1, ascii_only: false }
+  });
+  if (!result.code) throw new Error('Terser canonicalization returned empty code');
+  return result.code;
+}
+
+async function canonicalScript(script) {
+  if (script.type === 'application/ld+json') return `json:${JSON.stringify(canonicalJson(JSON.parse(script.raw)))}`;
+  return `js:${await canonicalExecutableJs(script.raw, script.type)}`;
+}
+
 async function snapshot(output) {
   const routes = {};
   let styleBlocks = 0, scriptBlocks = 0, executable = 0, jsonld = 0;
@@ -83,7 +111,7 @@ async function snapshot(output) {
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v3-debug-js', routes,
+    schema:'bitevo.astro7-csp-snapshot/v4-semantic-js', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
@@ -98,7 +126,7 @@ function firstTextDifference(left, right) {
   return { index:i, old:left.slice(start,endL), next:right.slice(start,endR) };
 }
 
-async function compare(oldPath, newPath, styleOutput) {
+async function compare(oldPath, newPath, styleOutput, scriptOutput) {
   const oldData = JSON.parse(await readFile(oldPath, 'utf8'));
   const newData = JSON.parse(await readFile(newPath, 'utf8'));
   const expected = { routes:97, styleBlocks:67, uniqueStyles:37, scriptBlocks:246, uniqueScripts:13, executable:50, jsonld:196 };
@@ -108,9 +136,9 @@ async function compare(oldPath, newPath, styleOutput) {
   }
   const oldRoutes = Object.keys(oldData.routes).sort(), newRoutes = Object.keys(newData.routes).sort();
   if (JSON.stringify(oldRoutes) !== JSON.stringify(newRoutes)) throw new Error('route set drift');
-  const forward = new Map(), reverse = new Map();
+  const styleForward = new Map(), styleReverse = new Map(), scriptForward = new Map(), scriptReverse = new Map();
   const mapAdd = (map, key, value) => { if (!map.has(key)) map.set(key, new Set()); map.get(key).add(value); };
-  let stylePairs=0, scriptPairs=0;
+  let stylePairs=0, scriptPairs=0, scriptByteExact=0, scriptCanonical=0, jsonCanonical=0;
   for (const route of oldRoutes) {
     const oldRoute=oldData.routes[route], newRoute=newData.routes[route];
     if (oldRoute.styles.length !== newRoute.styles.length) throw new Error(`${route}: style count drift`);
@@ -123,26 +151,33 @@ async function compare(oldPath, newPath, styleOutput) {
         console.log(`CSS_MISMATCH_CANONICAL ${JSON.stringify(firstTextDifference(before.canonicalText, after.canonicalText))}`);
         throw new Error(`${route}: CSS semantic drift at style index ${i}`);
       }
-      mapAdd(forward,before.hash,after.hash); mapAdd(reverse,after.hash,before.hash);
+      mapAdd(styleForward,before.hash,after.hash); mapAdd(styleReverse,after.hash,before.hash);
     }
     for (let i=0;i<oldRoute.scripts.length;i++) {
       const before=oldRoute.scripts[i], after=newRoute.scripts[i]; scriptPairs++;
-      if (before.type !== after.type || before.hash !== after.hash) {
-        console.log(`SCRIPT_MISMATCH route=${route} index=${i} type_old=${before.type||'javascript'} type_new=${after.type||'javascript'} old_hash=${before.hash} new_hash=${after.hash}`);
-        console.log(`SCRIPT_MISMATCH_RAW ${JSON.stringify(firstTextDifference(before.raw, after.raw))}`);
-        console.log(`SCRIPT_OLD_RAW ${JSON.stringify(before.raw.slice(0,12000))}`);
-        console.log(`SCRIPT_NEW_RAW ${JSON.stringify(after.raw.slice(0,12000))}`);
-        throw new Error(`${route}: inline script byte drift at index ${i}`);
+      if (before.type !== after.type) throw new Error(`${route}: inline script type drift at index ${i}`);
+      mapAdd(scriptForward,before.hash,after.hash); mapAdd(scriptReverse,after.hash,before.hash);
+      if (before.hash === after.hash) { scriptByteExact++; continue; }
+      const [oldCanonical,newCanonical] = await Promise.all([canonicalScript(before),canonicalScript(after)]);
+      if (oldCanonical !== newCanonical) {
+        console.log(`SCRIPT_SEMANTIC_MISMATCH route=${route} index=${i} type=${before.type||'javascript'} old_hash=${before.hash} new_hash=${after.hash}`);
+        console.log(`SCRIPT_RAW_DIFF ${JSON.stringify(firstTextDifference(before.raw, after.raw))}`);
+        console.log(`SCRIPT_CANONICAL_DIFF ${JSON.stringify(firstTextDifference(oldCanonical, newCanonical))}`);
+        throw new Error(`${route}: inline script canonical semantic drift at index ${i}`);
       }
+      if (before.type === 'application/ld+json') jsonCanonical++; else scriptCanonical++;
     }
   }
-  if ([...forward.values()].some(set => set.size !== 1) || [...reverse.values()].some(set => set.size !== 1)) throw new Error('style hash mapping is not bijective');
-  if (forward.size !== 37 || reverse.size !== 37) throw new Error(`style unique mapping drift old=${forward.size} new=${reverse.size}`);
-  if (JSON.stringify(oldData.scriptHashes) !== JSON.stringify(newData.scriptHashes)) throw new Error('script hash set drift');
+  const bijective = map => [...map.values()].every(set => set.size === 1);
+  if (!bijective(styleForward) || !bijective(styleReverse)) throw new Error('style hash mapping is not bijective');
+  if (!bijective(scriptForward) || !bijective(scriptReverse)) throw new Error('script hash mapping is not bijective');
+  if (styleForward.size !== 37 || styleReverse.size !== 37) throw new Error(`style unique mapping drift old=${styleForward.size} new=${styleReverse.size}`);
+  if (scriptForward.size !== 13 || scriptReverse.size !== 13) throw new Error(`script unique mapping drift old=${scriptForward.size} new=${scriptReverse.size}`);
   await writeFile(styleOutput, JSON.stringify(newData.styleHashes, null, 2));
-  console.log(`ASTRO7_CSP_EQUIVALENCE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 bijective=1 script_pairs=${scriptPairs} scripts_byte_exact=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED`);
+  await writeFile(scriptOutput, JSON.stringify(newData.scriptHashes, null, 2));
+  console.log(`ASTRO7_CSP_EQUIVALENCE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED script_pairs=${scriptPairs} unique_script_map=13 script_bijective=1 script_byte_exact=${scriptByteExact} executable_terser_canonical=${scriptCanonical} json_canonical=${jsonCanonical}`);
 }
 
 if (mode === 'snapshot') await snapshot(a);
-else if (mode === 'compare') await compare(a,b,c);
-else throw new Error('usage: snapshot <output> | compare <old> <new> <candidate-styles-output>');
+else if (mode === 'compare') await compare(a,b,c,d);
+else throw new Error('usage: snapshot <output> | compare <old> <new> <candidate-styles-output> <candidate-scripts-output>');
