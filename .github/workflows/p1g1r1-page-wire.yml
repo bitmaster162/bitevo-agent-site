@@ -24,13 +24,12 @@ jobs:
           node --input-type=module <<'NODE'
           import { readFile, writeFile } from 'node:fs/promises';
           const files=['src/pages/audit-intake.astro','src/pages/ru/audit-intake.astro'];
-          const marker='  <script is:inline src="/intake-segmentation.js"></script>';
-          const insertion=`${marker}\n  <script is:inline src="/scope-handoff-r1.js"></script>`;
+          const pattern=/(^[ \t]*)<script is:inline src="\/intake-segmentation\.js"><\/script>/m;
           for (const file of files) {
             const source=await readFile(file,'utf8');
             if (source.includes('/scope-handoff-r1.js')) continue;
-            if (!source.includes(marker)) throw new Error(`${file}: canonical segmentation marker missing`);
-            await writeFile(file, source.replace(marker,insertion));
+            if (!pattern.test(source)) throw new Error(`${file}: canonical segmentation marker missing`);
+            await writeFile(file, source.replace(pattern, (_match,indent)=>`${indent}<script is:inline src="/intake-segmentation.js"></script>\n${indent}<script is:inline src="/scope-handoff-r1.js"></script>`));
           }
           NODE
       - name: Remove one-shot workflow and commit bounded changes
