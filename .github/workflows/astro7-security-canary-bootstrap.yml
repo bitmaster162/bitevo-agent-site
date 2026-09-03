@@ -1,4 +1,4 @@
-name: Astro 7 CSP Equivalence Probe
+name: Astro 6 Node CSP Emission Probe
 
 on:
   push:
@@ -9,9 +9,14 @@ permissions:
   contents: read
 
 jobs:
-  probe:
+  baseline:
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.12.0', '22.19.0']
+    name: astro6-node-${{ matrix.node }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
       - name: Checkout canary branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -21,89 +26,45 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
-          node-version: '22.19.0'
-      - name: Build Astro 6 baseline
+          node-version: ${{ matrix.node }}
+      - name: Install exact baseline dependencies
+        run: npm ci
+      - name: Print exact toolchain
         run: |
-          npm ci
-          npm run build:site
-          cp -a dist /tmp/dist-astro6
-      - name: Build Astro 7 candidate
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          for name in ('src/pages/universe.astro', 'src/pages/ru/universe.astro'):
-              path = Path(name)
-              source = path.read_text()
-              if '<style>' not in source or '</style>' in source:
-                  raise SystemExit(f'{name}: unexpected style-closure baseline')
-              path.write_text(source.rstrip() + '\n</style>\n')
-          PY
-          npm pkg set engines.node=">=22.19.0"
-          npm install astro@7.2.10 --save-exact
-          npm run build:site
-          cp -a dist /tmp/dist-astro7
-      - name: Prove source delta is migration-only
-        run: |
-          git diff -- src/pages package.json | sed -n '1,240p'
-      - name: Compare inline CSP blocks one-to-one
+          node --version
+          npm --version
+          npx astro --version
+          node -e "console.log('astro_lock=' + require('./node_modules/astro/package.json').version); console.log('vite_lock=' + require('./node_modules/vite/package.json').version)"
+      - name: Build exact baseline site
+        run: npm run build:site
+      - name: Count emitted inline blocks and CSS assets
         run: |
           node --input-type=module <<'NODE'
-          import { createHash } from 'node:crypto';
           import { readFile, readdir } from 'node:fs/promises';
-          import { join, relative } from 'node:path';
-
-          const dirs={old:'/tmp/dist-astro6',next:'/tmp/dist-astro7'};
-          const digest=v=>createHash('sha256').update(v).digest('base64');
-          async function walk(dir){ const out=[]; for(const e of await readdir(dir,{withFileTypes:true})){ const p=join(dir,e.name); if(e.isDirectory()) out.push(...await walk(p)); else if(e.isFile()&&e.name.endsWith('.html')) out.push(relative(dir,p).replaceAll('\\','/')); } return out.sort(); }
-          function extract(html){
-            const styles=[...html.matchAll(/<style\b([^>]*)>([\s\S]*?)<\/style>/gi)].map((m,i)=>({kind:'style',attrs:m[1]||'',body:m[2]||'',index:i}));
-            const scripts=[]; let i=0;
-            for(const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
+          import { join } from 'node:path';
+          async function walk(dir){ const out=[]; for(const e of await readdir(dir,{withFileTypes:true})){ const p=join(dir,e.name); if(e.isDirectory()) out.push(...await walk(p)); else out.push(p); } return out; }
+          const files=await walk('dist');
+          const html=files.filter(f=>f.endsWith('.html'));
+          const css=files.filter(f=>f.endsWith('.css'));
+          let styles=0,scripts=0,jsonld=0;
+          const routes=[];
+          for(const file of html){
+            const source=await readFile(file,'utf8');
+            const sc=[...source.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)];
+            if(sc.length) routes.push([file,sc.length]);
+            styles+=sc.length;
+            for(const m of source.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){
               const attrs=m[1]||'', body=m[2]||'';
               if(/\bsrc\s*=/.test(attrs)||!body.trim()) continue;
-              const type=attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase()||'';
-              scripts.push({kind:'script',attrs,type,body,index:i++});
-            }
-            return {styles,scripts};
-          }
-          const normCss=s=>s
-            .replace(/data-astro-cid-[a-z0-9_-]+/gi,'data-astro-cid-SCOPE')
-            .replace(/\s+/g,' ')
-            .replace(/\s*([{}:;,>+~])\s*/g,'$1')
-            .trim();
-          const normJs=s=>s.replace(/\s+/g,' ').trim();
-          const oldRoutes=await walk(dirs.old), newRoutes=await walk(dirs.next);
-          if(JSON.stringify(oldRoutes)!==JSON.stringify(newRoutes)) throw new Error(`route set drift old=${oldRoutes.length} new=${newRoutes.length}`);
-          const styleForward=new Map(),styleReverse=new Map(),scriptForward=new Map(),scriptReverse=new Map();
-          const add=(map,k,v)=>{ if(!map.has(k)) map.set(k,new Set()); map.get(k).add(v); };
-          let stylePairs=0,styleExact=0,styleNorm=0,scriptPairs=0,scriptExact=0,scriptNorm=0;
-          const styleMismatches=[], scriptChanges=[];
-          for(const route of oldRoutes){
-            const old=extract(await readFile(join(dirs.old,route),'utf8'));
-            const next=extract(await readFile(join(dirs.next,route),'utf8'));
-            if(old.styles.length!==next.styles.length) throw new Error(`${route}: style block count drift ${old.styles.length}->${next.styles.length}`);
-            if(old.scripts.length!==next.scripts.length) throw new Error(`${route}: script block count drift ${old.scripts.length}->${next.scripts.length}`);
-            for(let i=0;i<old.styles.length;i++){
-              stylePairs++;
-              const a=old.styles[i].body,b=next.styles[i].body, ah=digest(a),bh=digest(b);
-              add(styleForward,ah,bh); add(styleReverse,bh,ah);
-              if(a===b) styleExact++; else if(normCss(a)===normCss(b)) styleNorm++; else if(styleMismatches.length<12) styleMismatches.push({route,index:i,oldHash:ah,newHash:bh,old:a.slice(0,500),next:b.slice(0,500)});
-            }
-            for(let i=0;i<old.scripts.length;i++){
-              scriptPairs++;
-              const a=old.scripts[i],b=next.scripts[i];
-              if(a.type!==b.type) throw new Error(`${route}: script type drift index=${i} ${a.type}->${b.type}`);
-              const ah=digest(a.body),bh=digest(b.body); add(scriptForward,ah,bh); add(scriptReverse,bh,ah);
-              if(a.body===b.body) scriptExact++; else { if(normJs(a.body)===normJs(b.body)) scriptNorm++; if(scriptChanges.length<12) scriptChanges.push({route,index:i,type:a.type||'javascript',oldHash:ah,newHash:bh,old:a.body.slice(0,2400),next:b.body.slice(0,2400)}); }
+              scripts++;
+              if((attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]||'').toLowerCase()==='application/ld+json') jsonld++;
             }
           }
-          const bijective=m=>[...m.values()].every(v=>v.size===1);
-          console.log(`CSP_EQUIV_ROUTE_SET=PASS routes=${oldRoutes.length}`);
-          console.log(`CSP_EQUIV_STYLE pairs=${stylePairs} exact=${styleExact} normalized=${styleNorm} mismatch=${stylePairs-styleExact-styleNorm} unique_old=${styleForward.size} unique_new=${styleReverse.size} forward_bijective=${bijective(styleForward)?1:0} reverse_bijective=${bijective(styleReverse)?1:0}`);
-          console.log(`CSP_EQUIV_SCRIPT pairs=${scriptPairs} exact=${scriptExact} whitespace_only=${scriptNorm} changed=${scriptPairs-scriptExact} unique_old=${scriptForward.size} unique_new=${scriptReverse.size} forward_bijective=${bijective(scriptForward)?1:0} reverse_bijective=${bijective(scriptReverse)?1:0}`);
-          for(const x of styleMismatches) console.log(`STYLE_MISMATCH ${JSON.stringify(x)}`);
-          for(const x of scriptChanges) console.log(`SCRIPT_CHANGE ${JSON.stringify(x)}`);
-          if(!bijective(styleForward)||!bijective(styleReverse)||!bijective(scriptForward)||!bijective(scriptReverse)) throw new Error('hash mapping is not bijective');
-          if(styleMismatches.length) throw new Error(`style semantic normalization mismatches=${styleMismatches.length}`);
-          console.log('CSP_EQUIV_BIJECTION=PASS');
+          const bytes=[];
+          for(const file of css) bytes.push((await readFile(file)).length);
+          console.log(`NODE_CSP_EMISSION node=${process.version} html=${html.length} inline_style_blocks=${styles} inline_script_blocks=${scripts} jsonld=${jsonld} css_files=${css.length} css_bytes=${bytes.reduce((a,b)=>a+b,0)}`);
+          console.log(`STYLE_ROUTES ${JSON.stringify(routes.slice(0,100))}`);
           NODE
+      - name: Run canonical inline-CSP verifier
+        continue-on-error: true
+        run: node scripts/verify-inline-csp.mjs
