@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { handleScopeHandoffRequest, MAX_BODY_BYTES, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS } from '../src/lib/scope-handoff-r1/core.js';
+import { InMemoryScopeHandoffStore, createVercelBlobScopeHandoffStore } from '../src/lib/scope-handoff-r1/stores.js';
 
 class FakeStore {
   constructor() { this.records=new Map(); this.readCount=0; this.writeCount=0; this.failRead=false; this.failWrite=false; }
@@ -38,6 +39,7 @@ let checks=0; const check=(value,msg)=>{ assert.ok(value,msg); checks++; };
 }
 {
   const store=new FakeStore(); const bad={...entry(),unexpected:'x'}; const out=await json(await handleScopeHandoffRequest(req(bad),{enabled:true,store})); check(out.status===422 && out.body.error==='SCHEMA_REJECTED','additional property rejected');
+  const deferred={...entry(),access_approver:'Should not travel in Entry'}; const deferredOut=await json(await handleScopeHandoffRequest(req(deferred),{enabled:true,store})); check(deferredOut.status===422 && deferredOut.body.reasons?.some(x=>x.startsWith('ENTRY_PRIMARY_FIELD_FORBIDDEN')),'Entry rejects deferred Primary fields');
 }
 {
   const store=new FakeStore(); const out=await json(await handleScopeHandoffRequest(req({...entry(),consent_scope_review:false}),{enabled:true,store})); check(out.status===422,'consent required');
@@ -66,6 +68,12 @@ let checks=0; const check=(value,msg)=>{ assert.ok(value,msg); checks++; };
 {
   const store=new FakeStore(); store.failRead=true; const out=await json(await handleScopeHandoffRequest(req(entry('client_submit_unknown_01')),{enabled:true,store})); check(out.status===503 && out.body.status==='UNKNOWN_RECONCILE','unknown read fail closed');
 }
+{
+  const store = new InMemoryScopeHandoffStore();
+  check(typeof store.read === 'function' && typeof store.createIfAbsent === 'function','in-memory provider import smoke');
+  const blobStore = createVercelBlobScopeHandoffStore();
+  check(typeof blobStore.read === 'function' && typeof blobStore.createIfAbsent === 'function','Blob adapter import smoke without I/O');
+}
 
 const astroConfig=await readFile(new URL('../astro.config.mjs', import.meta.url),'utf8');
 const pkg=JSON.parse(await readFile(new URL('../package.json', import.meta.url),'utf8'));
@@ -81,6 +89,8 @@ check(wrangler.includes('worker/index.mjs') && !wrangler.includes('scope-handoff
 check(!worker.includes('scope-handoff'),'Cloudflare worker unchanged for scope handoff');
 check(api.includes("SCOPE_HANDOFF_R1_ENABLED === 'true'") && api.includes('enabled:false'),'API kill switch source');
 check(client.includes('const UI_ENABLED = false') && client.includes("fetch('/api/scope-handoff'") && client.includes('testing_authorization:false'),'disabled client source');
+check(client.includes('const baseIds') && client.includes('const primaryIds') && client.includes("if (depth === 'primary')"),'Entry/Primary client payload separation');
+check(client.includes("#ruIntake") && client.includes("#secretCheck") && client.includes("v === 'да'") && client.includes("v === 'нет'"),'RU DOM and enum parity');
 check(enIntake.includes('/scope-handoff-r1.js') && ruIntake.includes('/scope-handoff-r1.js'),'EN/RU client controller wired');
 
 console.log(`SCOPE_HANDOFF_R1_RUNTIME_GATE=PASS checks=${checks} fake_provider_io_only=1 real_provider_writes=0 astro_static=1 cloudflare_unchanged=1 runtime_default=DISABLED ui_default=DISABLED`);
