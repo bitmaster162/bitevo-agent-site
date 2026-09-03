@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 22.12.0
       - name: Generate exact compatible lock
-        run: npm install --package-lock-only --save-exact @astrojs/vercel@10.0.8
+        run: npm install --package-lock-only --save-exact @astrojs/vercel@10.0.8 @vercel/blob@2.8.0
       - name: Commit generated manifest and lock only
         shell: bash
         run: |
@@ -35,5 +35,5 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "P1G1: lock Astro Vercel adapter"
+          git commit -m "P1G1: lock runtime dependencies"
           git push origin HEAD:agent/p1-scope-handoff-r1-implementation
