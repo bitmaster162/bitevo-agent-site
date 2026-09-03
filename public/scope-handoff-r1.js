@@ -17,20 +17,25 @@
   shell.dataset.scopeHandoffR1 = 'enabled';
   shell.className = 'panel scope-handoff-r1-shell';
   shell.innerHTML = `<div class="eyebrow">SCOPE HANDOFF · R1</div><h2>${text.title}</h2><p data-scope-boundary></p><label class="confirm"><input type="checkbox" data-scope-consent><span>${text.consent}</span></label><div class="brief-actions"><button type="button" class="button button-primary" data-scope-submit disabled>${text.submit}</button></div><p data-scope-status aria-live="polite"></p>`;
-  const briefPanel = brief.closest('.brief-panel, .brief');
-  briefPanel?.append(shell);
+  brief.closest('.brief-panel, .brief')?.append(shell);
 
   const consent = shell.querySelector('[data-scope-consent]');
   const submit = shell.querySelector('[data-scope-submit]');
   const status = shell.querySelector('[data-scope-status]');
   const boundary = shell.querySelector('[data-scope-boundary]');
-  const ids = locale === 'ru' ? {
-    company:'company', business_contact:'contact', role:'role', owner_decision:'decision', workflow:'workflow', critical_action:'action', target_object:'target', authority_owner:'owner', expensive_error:'error', environment:'environment', access_approver:'approver', external_systems:'systems', forbidden_effects:'forbidden', pre_action_evidence:'pre', freshness_rule:'fresh', object_binding_evidence:'binding', external_confirmation:'confirm', uncertainty_behavior:'uncertain', allowed_tests:'allowed', prohibited_audit_actions:'prohibited', data_classification:'classification', minimum_necessary_data:'minimum', secret_handling_boundary:'secretBoundary'
+  const baseIds = locale === 'ru' ? {
+    company:'company', business_contact:'contact', role:'role', owner_decision:'decision', workflow:'workflow', critical_action:'action', target_object:'target', authority_owner:'owner', expensive_error:'error', environment:'environment'
   } : {
-    company:'company', business_contact:'contact', role:'role', owner_decision:'ownerDecision', workflow:'workflow', critical_action:'criticalAction', target_object:'targetObject', authority_owner:'authorityOwner', expensive_error:'expensiveError', environment:'environment', access_approver:'approver', external_systems:'externalSystems', forbidden_effects:'forbiddenEffects', pre_action_evidence:'preActionEvidence', freshness_rule:'freshnessRule', object_binding_evidence:'objectBinding', external_confirmation:'externalConfirmation', uncertainty_behavior:'uncertaintyBehavior', allowed_tests:'allowedTests', prohibited_audit_actions:'prohibited', data_classification:'classification', minimum_necessary_data:'minimumData', secret_handling_boundary:'secretBoundary'
+    company:'company', business_contact:'contact', role:'role', owner_decision:'ownerDecision', workflow:'workflow', critical_action:'criticalAction', target_object:'targetObject', authority_owner:'authorityOwner', expensive_error:'expensiveError', environment:'environment'
+  };
+  const primaryIds = locale === 'ru' ? {
+    access_approver:'approver', external_systems:'systems', forbidden_effects:'forbidden', pre_action_evidence:'pre', freshness_rule:'fresh', object_binding_evidence:'binding', external_confirmation:'confirm', uncertainty_behavior:'uncertain', allowed_tests:'allowed', prohibited_audit_actions:'prohibited', data_classification:'classification', minimum_necessary_data:'minimum', secret_handling_boundary:'secretBoundary'
+  } : {
+    access_approver:'approver', external_systems:'externalSystems', forbidden_effects:'forbiddenEffects', pre_action_evidence:'preActionEvidence', freshness_rule:'freshnessRule', object_binding_evidence:'objectBinding', external_confirmation:'externalConfirmation', uncertainty_behavior:'uncertaintyBehavior', allowed_tests:'allowedTests', prohibited_audit_actions:'prohibited', data_classification:'classification', minimum_necessary_data:'minimumData', secret_handling_boundary:'secretBoundary'
   };
   boundary.textContent = locale === 'ru' ? 'Передаются только bounded поля этой формы; generated brief, cookies, analytics IDs и browser storage не передаются.' : 'Only bounded fields from this form are sent; the generated brief, cookies, analytics IDs and browser storage are not sent.';
   const val = id => String(root.querySelector(`#${id}`)?.value || '').trim();
+  const addMapped = (payload, mapping) => { for (const [key,id] of Object.entries(mapping)) { const value=val(id); if (value) payload[key]=value; } };
   const enumValue = (id, partial=false) => {
     const v=val(id).toLowerCase();
     if (partial && (v.startsWith('partial') || v.startsWith('частич'))) return 'partial';
@@ -45,8 +50,12 @@
     if (!clientId) clientId = crypto.randomUUID().replaceAll('-','_');
     const secretBox = root.querySelector(locale === 'ru' ? '#secretCheck' : '#secretConfirm');
     const payload = { schema_version:'bitevo.scope-handoff.r1', client_submission_id:clientId, submission_intent:'scope_review_only', testing_authorization:false, locale, intake_depth:depth, secret_confirmation:secretBox?.checked === true, consent_scope_review:consent?.checked === true };
-    for (const [key,id] of Object.entries(ids)) { const value=val(id); if (value) payload[key]=value; }
-    if (depth === 'primary') { payload.staging_available=enumValue('staging', true); payload.safe_replay_available=enumValue('replay'); }
+    addMapped(payload, baseIds);
+    if (depth === 'primary') {
+      addMapped(payload, primaryIds);
+      payload.staging_available=enumValue('staging', true);
+      payload.safe_replay_available=enumValue('replay');
+    }
     return payload;
   };
   const refresh = () => { submit.disabled = !brief.value || !consent.checked || inFlight; };
