@@ -9,6 +9,7 @@ if (![oldEnPath, oldRuPath, newEnPath, newRuPath, segmentationPath].every(Boolea
 }
 const digest = value => createHash('sha256').update(value).digest('base64');
 const segmentationSource = await readFile(segmentationPath, 'utf8');
+const FIXED_NOW_ISO = '2026-09-03T00:00:00.000Z';
 
 function inlineScripts(html) {
   const out=[];
@@ -84,6 +85,13 @@ function makeDom(html, code, locale, mapperSeed=null) {
   const dom=new JSDOM(html,{url:cfg.url,runScripts:'outside-only',pretendToBeVisual:true});
   const {window}=dom;
   const logs={clipboard:[],downloads:[],blobCreates:0,blobRevokes:0};
+  const RealDate=window.Date;
+  const fixedEpoch=RealDate.parse(FIXED_NOW_ISO);
+  class FixedDate extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [fixedEpoch])); }
+    static now() { return fixedEpoch; }
+  }
+  window.Date=FixedDate;
   window.requestAnimationFrame=callback=>{ callback(0); return 1; };
   window.cancelAnimationFrame=()=>{};
   window.setTimeout=()=>1;
