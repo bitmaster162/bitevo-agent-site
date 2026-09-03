@@ -20,13 +20,19 @@ walk(distDir);
 const counters = {
   englishHeader: 0,
   englishMobile: 0,
+  russianHeader: 0,
+  russianMobile: 0,
   homePrimary: 0,
+  russianHomePrimary: 0,
   scopeHandoff: 0
 };
 
 const headerPattern = /<a class="header-cta" href="\/mapper"([^>]*)>Map workflow <span([^>]*)>↗<\/span><\/a>/g;
 const mobilePattern = /<a class="mobile-cta" href="\/mapper"([^>]*)>Map workflow →<\/a>/g;
+const ruHeaderPattern = /<a class="header-cta" href="\/ru\/mapper"([^>]*)>Собрать workflow <span([^>]*)>↗<\/span><\/a>/g;
+const ruMobilePattern = /<a class="mobile-cta" href="\/ru\/mapper"([^>]*)>Собрать workflow →<\/a>/g;
 const homePattern = /<a href="\/mapper" class="button button-primary" data-funnel="home-primary"([^>]*)>Map one workflow <span([^>]*)>↗<\/span><\/a>/;
+const ruHomePattern = /<a class="button button-primary" href="\/ru\/mapper"([^>]*)>Собрать карту workflow <span([^>]*)>↗<\/span><\/a>/;
 const downloadPattern = /<button id="download" type="button" class="button button-ghost" disabled([^>]*)>Download \.txt<\/button>/;
 const gatePattern = /<\/div><div class="gate"([^>]*)><span([^>]*)>AUTHORIZATION GATE<\/span>/;
 const contactButton = '<a class="button button-ghost" data-scope-handoff href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">Contact Robert</a>';
@@ -36,6 +42,7 @@ for (const file of htmlFiles) {
   const original = html;
   const rel = path.relative(distDir, file).replaceAll(path.sep, '/');
   const isEnglish = /<html\b[^>]*\blang="en"/.test(html);
+  const isRussian = /<html\b[^>]*\blang="ru"/.test(html);
 
   if (isEnglish) {
     const headerMatches = [...html.matchAll(headerPattern)];
@@ -51,10 +58,30 @@ for (const file of htmlFiles) {
     }
   }
 
+  if (isRussian) {
+    const headerMatches = [...html.matchAll(ruHeaderPattern)];
+    if (headerMatches.length) {
+      html = html.replace(ruHeaderPattern, (_full, anchorAttrs, spanAttrs) => `<a class="header-cta" href="/ru/start"${anchorAttrs}>Начать <span${spanAttrs}>↗</span></a>`);
+      counters.russianHeader += headerMatches.length;
+    }
+
+    const mobileMatches = [...html.matchAll(ruMobilePattern)];
+    if (mobileMatches.length) {
+      html = html.replace(ruMobilePattern, (_full, anchorAttrs) => `<a class="mobile-cta" href="/ru/start"${anchorAttrs}>Начать →</a>`);
+      counters.russianMobile += mobileMatches.length;
+    }
+  }
+
   if (rel === 'index.html' && homePattern.test(html)) {
     homePattern.lastIndex = 0;
     html = html.replace(homePattern, (_full, anchorAttrs, spanAttrs) => `<a href="/start" class="button button-primary" data-funnel="home-primary"${anchorAttrs}>Choose the right scope <span${spanAttrs}>↗</span></a>`);
     counters.homePrimary += 1;
+  }
+
+  if (rel === 'ru/index.html' && ruHomePattern.test(html)) {
+    ruHomePattern.lastIndex = 0;
+    html = html.replace(ruHomePattern, (_full, anchorAttrs, spanAttrs) => `<a class="button button-primary" href="/ru/start"${anchorAttrs}>Выбрать формат <span${spanAttrs}>↗</span></a>`);
+    counters.russianHomePrimary += 1;
   }
 
   if (rel === 'audit-intake/index.html' && !html.includes('data-scope-handoff')) {
@@ -72,8 +99,16 @@ for (const file of htmlFiles) {
   if (html !== original) fs.writeFileSync(file, html);
 }
 
-if (counters.englishHeader === 0 || counters.englishMobile === 0 || counters.homePrimary !== 1 || counters.scopeHandoff !== 1) {
+if (
+  counters.englishHeader === 0 ||
+  counters.englishMobile === 0 ||
+  counters.russianHeader === 0 ||
+  counters.russianMobile === 0 ||
+  counters.homePrimary !== 1 ||
+  counters.russianHomePrimary !== 1 ||
+  counters.scopeHandoff !== 1
+) {
   throw new Error(`Commercial front-door postprocess incomplete: ${JSON.stringify(counters)}`);
 }
 
-console.log(`COMMERCIAL_FRONT_DOOR_POSTPROCESS=PASS english_header=${counters.englishHeader} english_mobile=${counters.englishMobile} home_primary=${counters.homePrimary} scope_handoff=${counters.scopeHandoff}`);
+console.log(`COMMERCIAL_FRONT_DOOR_POSTPROCESS=PASS english_header=${counters.englishHeader} english_mobile=${counters.englishMobile} russian_header=${counters.russianHeader} russian_mobile=${counters.russianMobile} home_primary=${counters.homePrimary} ru_home_primary=${counters.russianHomePrimary} scope_handoff=${counters.scopeHandoff}`);
