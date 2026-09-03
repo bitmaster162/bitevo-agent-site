@@ -33,6 +33,13 @@ function normAtRuleParams(name, value) {
   return result;
 }
 
+function normDeclarationValue(prop, value) {
+  const property = String(prop).toLowerCase();
+  const normalized = normSpace(value);
+  if (property === 'flex' && (normalized === 'none' || normalized === '0 0 auto')) return '0 0 auto';
+  return normalized;
+}
+
 function canonicalChildren(container) {
   const nodes = container?.nodes || [];
   const shapes = nodes.map(canonicalNode).filter(Boolean);
@@ -45,7 +52,7 @@ function canonicalChildren(container) {
 
 function canonicalNode(node) {
   if (!node) return null;
-  if (node.type === 'decl') return { t:'decl', p:String(node.prop).toLowerCase(), v:normSpace(node.value), i:Boolean(node.important) };
+  if (node.type === 'decl') return { t:'decl', p:String(node.prop).toLowerCase(), v:normDeclarationValue(node.prop, node.value), i:Boolean(node.important) };
   if (node.type === 'rule') return { t:'rule', s:normSelector(node.selector), n:canonicalChildren(node) };
   if (node.type === 'atrule') return { t:'atrule', n:String(node.name).toLowerCase(), p:normAtRuleParams(node.name, node.params), c:canonicalChildren(node) };
   if (node.type === 'comment') return null;
@@ -83,7 +90,7 @@ async function snapshot(output) {
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v6-css-debug', routes,
+    schema:'bitevo.astro7-csp-snapshot/v7-flex-none', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
@@ -153,7 +160,7 @@ async function compare(oldPath, newPath, styleOutput, scriptOutput) {
 
   await writeFile(styleOutput, JSON.stringify(newData.styleHashes, null, 2));
   await writeFile(scriptOutput, JSON.stringify(newData.scriptHashes, null, 2));
-  console.log(`ASTRO7_CSP_SHAPE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED script_pairs=${scriptPairs} script_blocks_byte_exact=${exactScriptBlocks} unchanged_unique_script_hashes=11 changed_script_blocks=2 changed_routes=audit-intake,ru/audit-intake`);
+  console.log(`ASTRO7_CSP_SHAPE=PASS routes=97 style_pairs=${stylePairs} unique_style_map=37 style_bijective=1 css_semantic_ast=PASS media_range_equivalence=NORMALIZED flex_none_equivalence=NORMALIZED script_pairs=${scriptPairs} script_blocks_byte_exact=${exactScriptBlocks} unchanged_unique_script_hashes=11 changed_script_blocks=2 changed_routes=audit-intake,ru/audit-intake`);
   for (const change of changedScriptBlocks) console.log(`ASTRO7_CHANGED_SCRIPT ${JSON.stringify(change)}`);
 }
 
