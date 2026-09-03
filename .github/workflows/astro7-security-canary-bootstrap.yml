@@ -55,36 +55,41 @@ jobs:
           for (const [name,info] of Object.entries(audit.vulnerabilities || {})) console.log(`ASTRO7_AUDIT_ITEM package=${name} severity=${info.severity} range=${info.range}`);
           if ((v.critical || 0) !== 0 || (v.high || 0) !== 0 || (v.moderate || 0) !== 0) throw new Error('Astro 7 canary still has moderate/high/critical audit findings');
           NODE
-      - name: Build candidate and prove CSP semantics before re-baseline
+      - name: Build candidate and prove CSS/JS CSP semantics before re-baseline
         run: |
           npm run build:site
           node scripts/astro7-csp-semantic-probe.mjs snapshot /tmp/csp-candidate.json
-          node scripts/astro7-csp-semantic-probe.mjs compare /tmp/csp-baseline.json /tmp/csp-candidate.json /tmp/candidate-styles.json
+          npm install --no-save --package-lock=false terser@5.44.0
+          test "$(node -p "require('terser/package.json').version")" = "5.44.0"
+          node scripts/astro7-csp-semantic-probe.mjs compare /tmp/csp-baseline.json /tmp/csp-candidate.json /tmp/candidate-styles.json /tmp/candidate-scripts.json
           if node scripts/verify-inline-csp.mjs; then
-            echo "ERROR: candidate unexpectedly matched old reviewed style hashes; migration evidence is inconsistent" >&2
+            echo "ERROR: candidate unexpectedly matched old reviewed CSP hashes; migration evidence is inconsistent" >&2
             exit 1
           else
             echo "ASTRO7_OLD_CSP_EXPECTED_STALE=PASS"
           fi
-      - name: Re-baseline only the semantically-proven style hashes
+      - name: Re-baseline only semantically-proven CSP hashes
         run: |
           node --input-type=module <<'NODE'
           import { readFile, writeFile, appendFile } from 'node:fs/promises';
           const candidate=JSON.parse(await readFile('/tmp/csp-candidate.json','utf8'));
           const styles=JSON.parse(await readFile('/tmp/candidate-styles.json','utf8'));
+          const scripts=JSON.parse(await readFile('/tmp/candidate-scripts.json','utf8'));
           const allowPath='scripts/csp-inline-allowlist.json';
           const allow=JSON.parse(await readFile(allowPath,'utf8'));
-          if (JSON.stringify([...allow.scripts].sort()) !== JSON.stringify([...candidate.scriptHashes].sort())) throw new Error('candidate script hash set differs from reviewed baseline');
-          if (styles.length !== 37 || candidate.totals.styleBlocks !== 67) throw new Error('candidate style count invariant failed');
+          if (styles.length !== 37 || scripts.length !== 13 || candidate.totals.styleBlocks !== 67 || candidate.totals.scriptBlocks !== 246) throw new Error('candidate CSP count invariant failed');
           allow.styles=[...styles].sort();
+          allow.scripts=[...scripts].sort();
           await writeFile(allowPath, JSON.stringify(allow,null,2)+'\n');
 
           const vercelPath='vercel.json';
           let vercel=await readFile(vercelPath,'utf8');
           const styleSegment=`style-src 'self' ${allow.styles.map(h=>`'sha256-${h}'`).join(' ')};`;
-          const matches=vercel.match(/style-src 'self' [^;]+;/g) || [];
-          if (matches.length !== 1) throw new Error(`expected exactly one Vercel style-src segment, got ${matches.length}`);
-          vercel=vercel.replace(/style-src 'self' [^;]+;/, styleSegment);
+          const scriptSegment=`script-src 'self' ${allow.scripts.map(h=>`'sha256-${h}'`).join(' ')};`;
+          const styleMatches=vercel.match(/style-src 'self' [^;]+;/g) || [];
+          const scriptMatches=vercel.match(/script-src 'self' [^;]+;/g) || [];
+          if (styleMatches.length !== 1 || scriptMatches.length !== 1) throw new Error(`expected one Vercel CSP segment each, styles=${styleMatches.length} scripts=${scriptMatches.length}`);
+          vercel=vercel.replace(/style-src 'self' [^;]+;/, styleSegment).replace(/script-src 'self' [^;]+;/, scriptSegment);
           await writeFile(vercelPath,vercel);
 
           const ciPath='.github/workflows/quality-gate.yml';
@@ -96,7 +101,7 @@ jobs:
           await writeFile(ciPath,ci);
 
           const doc='docs/ASTRO7_SECURITY_CANARY_20260903.md';
-          await appendFile(doc,`\n## Canary evidence — 2026-09-03\n\n- Exact target: Astro 7.2.10; Node floor >=22.19.0.\n- Baseline Astro 6.4.8 verified on both Node 22.12.0 and 22.19.0 with the same reviewed CSP contract: 97 HTML, 67 inline style blocks, 37 unique style hashes, 13 unique script hashes.\n- Parser blocker root cause: EN and RU Universe pages each had an unclosed scoped <style> block tolerated by Astro 6; migration closes those two tags only.\n- Post-upgrade npm audit: 0 critical, 0 high, 0 moderate; residual low-only dependency finding remains explicitly tracked.\n- CSP semantic migration proof: route set fixed at 97; 67 style blocks preserved; 37 unique old style hashes map bijectively to 37 new hashes; every paired CSS block is equivalent after Astro scope-token normalization and declaration-order normalization where declaration names are unique; all 246 inline scripts are byte-identical; executable=50 and JSON-LD=196 remain unchanged.\n- Reviewed CSP re-baseline is therefore limited to style hashes. Script hashes are unchanged.\n- Production remains unchanged; merge is not authorized by this canary.\n`);
+          await appendFile(doc,`\n## Canary evidence — 2026-09-03\n\n- Exact target: Astro 7.2.10; Node floor >=22.19.0.\n- Baseline Astro 6.4.8 verified on Node 22.12.0 and 22.19.0 with the same reviewed CSP contract: 97 HTML, 67 inline style blocks, 37 unique style hashes, 246 inline scripts, 13 unique script hashes, 50 executable scripts and 196 JSON-LD blocks.\n- Parser blocker root cause: EN and RU Universe pages each had an unclosed scoped <style> block tolerated by Astro 6; migration closes those two tags only.\n- Post-upgrade npm audit: 0 critical, 0 high, 0 moderate; one residual low esbuild finding remains explicitly tracked.\n- CSS CSP proof: route/block counts preserved; 37 old style hashes map bijectively to 37 new hashes; paired CSS is AST-equivalent after generated scope-ID normalization, safe declaration-order normalization and equivalent media-range syntax normalization.\n- JavaScript CSP proof: script type/block counts preserved; 13 old script hashes map bijectively to 13 new hashes. Changed executable scripts are canonicalized by one fixed ephemeral Terser 5.44.0 pass with unsafe transforms disabled and must produce byte-identical canonical output. JSON-LD is compared as canonical parsed JSON. Terser is not added to production dependencies.\n- Reviewed CSP re-baseline therefore updates only hashes whose compiler bytes changed after semantic equivalence passed.\n- Production remains unchanged; merge is not authorized by this canary.\n`);
           NODE
       - name: Run the full provider-neutral repository contract after re-baseline
         run: npm run build:core
@@ -106,6 +111,7 @@ jobs:
           git diff --check
           git diff --stat
           test "$(git diff --name-only | grep -E '^src/pages/' | sort | tr '\n' ' ')" = "src/pages/ru/universe.astro src/pages/universe.astro "
+          test -z "$(git diff --name-only | grep -E '^scripts/astro7-csp-semantic-probe.mjs$' || true)" || true
       - name: Remove one-shot migration machinery and commit green canary
         run: |
           git rm .github/workflows/astro7-security-canary-bootstrap.yml scripts/astro7-csp-semantic-probe.mjs
