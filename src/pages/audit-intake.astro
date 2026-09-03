@@ -6,19 +6,20 @@ import Layout from '../layouts/Layout.astro';
   <section class="intake-hero section-tight"><div class="container hero-grid"><div><div class="eyebrow">Decision scope intake</div><h1 class="page-title">Define the action, evidence gate and authority owner before anyone tests it.</h1></div><div><p class="lede">Build the scope locally. Mapper drafts can be handed into this page through browser session storage; nothing here transmits data or authorizes testing.</p></div></div></section>
 
   <div data-intake-segmentation data-intake-locale="en">
+  <link rel="stylesheet" href="/intake-segmentation.css">
   <section class="section-tight section-rule">
     <div id="mapperHandoff" class="container handoff panel" hidden><div><span>LOCAL MAPPER HANDOFF</span><strong>Technical scope seed loaded from Authority Mapper.</strong><p>Review every imported field. Owner decision, object-binding evidence, Rules-of-Engagement permissions, company/contact, access approval, data boundary and testing authorization remain intentionally unset.</p></div><button id="clearHandoff" type="button" class="button button-ghost">Clear mapper draft</button></div>
     <div class="container warning panel" role="alert"><div class="warning-mark">!</div><div><strong>Do not submit or paste secrets.</strong><p>API keys · passwords · tokens · private keys · wallet seeds · production credentials · customer secrets. Describe boundaries, evidence classes and access paths instead.</p></div></div>
 
-    <div class="container panel" style="max-width:1120px;margin-bottom:18px;padding:20px">
+    <div class="container panel intake-depth-panel">
       <div class="eyebrow">Choose intake depth</div>
-      <h2 style="margin:6px 0 8px;font-size:1.15rem">Start with Entry. Expand only when the owner decision needs Primary depth.</h2>
-      <p data-intake-mode-state style="margin:0 0 14px;color:var(--muted);font-size:.78rem">ENTRY · reduced first-step fields · Primary evidence/RoE fields deferred until deeper scope review</p>
+      <h2>Start with Entry. Expand only when the owner decision needs Primary depth.</h2>
+      <p data-intake-mode-state class="intake-depth-state">ENTRY · reduced first-step fields · Primary evidence/RoE fields deferred until deeper scope review</p>
       <div class="brief-actions">
         <button type="button" class="button button-primary" data-intake-mode="entry" aria-pressed="true">Entry depth · reduced first step</button>
         <button type="button" class="button button-ghost" data-intake-mode="primary" aria-pressed="false">Primary depth · full intake</button>
       </div>
-      <p style="margin:12px 0 0;color:var(--muted);font-size:.72rem">Both modes are browser-local. Choosing a depth does not transmit data, book work or authorize testing.</p>
+      <p class="intake-depth-note">Both modes are browser-local. Choosing a depth does not transmit data, book work or authorize testing.</p>
     </div>
 
     <div class="container intake-grid">
