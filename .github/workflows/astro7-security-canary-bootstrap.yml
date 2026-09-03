@@ -1,4 +1,4 @@
-name: Astro 7 Esbuild CSP Compatibility Probe
+name: Astro 7 Security Canary Finalize
 
 on:
   push:
@@ -6,27 +6,33 @@ on:
       - agent/astro7-security-canary-20260903
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  probe:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout canary branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persist-credentials: false
+          persist-credentials: true
           ref: agent/astro7-security-canary-20260903
       - name: Setup target Node floor
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6.1.0
         with:
           node-version: '22.19.0'
-      - name: Install exact production baseline
+      - name: Build immutable reviewed Astro 6.4.8 baseline
         run: |
           npm ci
           test "$(node -p "require('./node_modules/astro/package.json').version")" = "6.4.8"
-      - name: Apply minimal Astro 7 migration plus explicit esbuild compatibility minifiers
+          npm run build:site
+          node scripts/verify-inline-csp.mjs
+          node scripts/astro7-csp-semantic-probe.mjs snapshot /tmp/csp-baseline.json
+          cp dist/audit-intake/index.html /tmp/astro6-audit-intake-en.html
+          cp dist/ru/audit-intake/index.html /tmp/astro6-audit-intake-ru.html
+      - name: Apply minimal Astro 7 migration plus explicit esbuild compatibility bridge
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -36,33 +42,100 @@ jobs:
               if '<style>' not in source or '</style>' in source:
                   raise SystemExit(f'{name}: unexpected style-closure baseline')
               path.write_text(source.rstrip() + '\n</style>\n')
-          Path('astro.config.mjs').write_text("// @ts-check\nimport { defineConfig } from 'astro/config';\n\n// Preserve reviewed CSP byte contract while migrating Vite 8 away from its new Oxc/Lightning CSS minifier defaults.\nexport default defineConfig({\n  vite: {\n    build: {\n      minify: 'esbuild',\n      cssMinify: 'esbuild'\n    }\n  }\n});\n")
+          Path('astro.config.mjs').write_text("// @ts-check\nimport { defineConfig } from 'astro/config';\n\n// Temporary Vite 8 compatibility bridge: preserve the reviewed BitEvo CSP/minification model while Astro 7 is adopted.\n// Vite 8 supports these esbuild options but marks esbuild minification as deprecated; track removal as follow-up debt.\nexport default defineConfig({\n  vite: {\n    build: {\n      minify: 'esbuild',\n      cssMinify: 'esbuild'\n    }\n  }\n});\n")
           PY
           npm pkg set engines.node=">=22.19.0"
           npm install astro@7.2.10 --save-exact
           npm install --save-dev --save-exact esbuild@0.28.1
           test "$(node -p "require('./node_modules/astro/package.json').version")" = "7.2.10"
           test "$(node -p "require('./node_modules/esbuild/package.json').version")" = "0.28.1"
-      - name: Capture audit
+      - name: Require zero known dependency vulnerabilities in candidate graph
         run: |
           npm audit --json > /tmp/audit.json || true
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           const audit=JSON.parse(fs.readFileSync('/tmp/audit.json','utf8'));
           const v=audit.metadata?.vulnerabilities || {};
-          console.log(`ASTRO7_ESBUILD_COMPAT_AUDIT total=${v.total ?? 'unknown'} critical=${v.critical ?? 'unknown'} high=${v.high ?? 'unknown'} moderate=${v.moderate ?? 'unknown'} low=${v.low ?? 'unknown'}`);
+          console.log(`ASTRO7_SECURITY_AUDIT total=${v.total ?? 'unknown'} critical=${v.critical ?? 'unknown'} high=${v.high ?? 'unknown'} moderate=${v.moderate ?? 'unknown'} low=${v.low ?? 'unknown'}`);
           for (const [name,info] of Object.entries(audit.vulnerabilities || {})) console.log(`ASTRO7_AUDIT_ITEM package=${name} severity=${info.severity} range=${info.range}`);
-          if ((v.critical || 0) !== 0 || (v.high || 0) !== 0 || (v.moderate || 0) !== 0) throw new Error('moderate/high/critical findings remain');
+          if ((v.total || 0) !== 0) throw new Error('candidate dependency graph must have zero known npm audit findings');
           NODE
-      - name: Build Astro 7 with explicit legacy minifier contract
-        run: npm run build:site
-      - name: Require old reviewed CSP hashes to remain exact
-        run: node scripts/verify-inline-csp.mjs
-      - name: Run full provider-neutral contract
-        run: npm run build:core
-      - name: Show exact canary delta only
+      - name: Build Astro 7 candidate and freeze CSP/DOM evidence
+        run: |
+          npm run build:site
+          node scripts/astro7-csp-semantic-probe.mjs snapshot /tmp/csp-candidate.json
+          cp dist/audit-intake/index.html /tmp/astro7-audit-intake-en.html
+          cp dist/ru/audit-intake/index.html /tmp/astro7-audit-intake-ru.html
+      - name: Prove all CSS semantics and narrow script drift to EN/RU intake only
+        run: |
+          node scripts/astro7-csp-semantic-probe.mjs compare /tmp/csp-baseline.json /tmp/csp-candidate.json /tmp/candidate-styles.json /tmp/candidate-scripts.json
+      - name: Differentially execute the two changed intake scripts
+        run: |
+          npm install --no-save --package-lock=false jsdom@30.0.1
+          test "$(node -p "require('jsdom/package.json').version")" = "30.0.1"
+          node scripts/astro7-audit-intake-behavior-diff.mjs \
+            /tmp/astro6-audit-intake-en.html /tmp/astro6-audit-intake-ru.html \
+            /tmp/astro7-audit-intake-en.html /tmp/astro7-audit-intake-ru.html \
+            public/intake-segmentation.js
+      - name: Require old CSP to fail only because reviewed compiler bytes changed
+        run: |
+          if node scripts/verify-inline-csp.mjs; then
+            echo "ERROR: candidate unexpectedly matches old reviewed CSP hashes" >&2
+            exit 1
+          else
+            echo "ASTRO7_OLD_CSP_EXPECTED_STALE=PASS"
+          fi
+      - name: Re-baseline exactly the proven 37 style hashes and 2 changed intake script hashes
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, appendFile } from 'node:fs/promises';
+          const candidate=JSON.parse(await readFile('/tmp/csp-candidate.json','utf8'));
+          const styles=JSON.parse(await readFile('/tmp/candidate-styles.json','utf8'));
+          const scripts=JSON.parse(await readFile('/tmp/candidate-scripts.json','utf8'));
+          const allowPath='scripts/csp-inline-allowlist.json';
+          const allow=JSON.parse(await readFile(allowPath,'utf8'));
+          const oldStyles=[...allow.styles].sort(), oldScripts=[...allow.scripts].sort();
+          const newStyles=[...styles].sort(), newScripts=[...scripts].sort();
+          const oldStyleOnly=oldStyles.filter(x=>!newStyles.includes(x)), newStyleOnly=newStyles.filter(x=>!oldStyles.includes(x));
+          const oldScriptOnly=oldScripts.filter(x=>!newScripts.includes(x)), newScriptOnly=newScripts.filter(x=>!oldScripts.includes(x));
+          if (candidate.totals.styleBlocks!==67 || candidate.totals.uniqueStyles!==37 || oldStyleOnly.length!==37 || newStyleOnly.length!==37) throw new Error(`style rebaseline boundary failed oldOnly=${oldStyleOnly.length} newOnly=${newStyleOnly.length}`);
+          if (candidate.totals.scriptBlocks!==246 || candidate.totals.uniqueScripts!==13 || oldScriptOnly.length!==2 || newScriptOnly.length!==2) throw new Error(`script rebaseline boundary failed oldOnly=${oldScriptOnly.length} newOnly=${newScriptOnly.length}`);
+          allow.styles=newStyles; allow.scripts=newScripts;
+          await writeFile(allowPath,JSON.stringify(allow,null,2)+'\n');
+
+          const vercelPath='vercel.json';
+          let vercel=await readFile(vercelPath,'utf8');
+          const styleSegment=`style-src 'self' ${newStyles.map(h=>`'sha256-${h}'`).join(' ')};`;
+          const scriptSegment=`script-src 'self' ${newScripts.map(h=>`'sha256-${h}'`).join(' ')};`;
+          if ((vercel.match(/style-src 'self' [^;]+;/g)||[]).length!==1 || (vercel.match(/script-src 'self' [^;]+;/g)||[]).length!==1) throw new Error('Vercel CSP segment count drift');
+          vercel=vercel.replace(/style-src 'self' [^;]+;/,styleSegment).replace(/script-src 'self' [^;]+;/,scriptSegment);
+          await writeFile(vercelPath,vercel);
+
+          const ciPath='.github/workflows/quality-gate.yml';
+          let ci=await readFile(ciPath,'utf8');
+          const oldFloor='node-version: 22.12.0';
+          const count=ci.split(oldFloor).length-1;
+          if(count!==2) throw new Error(`expected exactly two quality-gate Node floors, got ${count}`);
+          ci=ci.replaceAll(oldFloor,'node-version: 22.19.0');
+          await writeFile(ciPath,ci);
+
+          await appendFile('docs/ASTRO7_SECURITY_CANARY_20260903.md',`\n## Final canary evidence\n\n- Candidate: Astro 7.2.10, Node >=22.19.0, exact dev esbuild 0.28.1.\n- npm audit: 0 known vulnerabilities.\n- Parser migration is limited to closing the previously unclosed scoped <style> block in EN and RU Universe.\n- Vite 8 compatibility bridge explicitly selects esbuild for JS/CSS minification. This is a temporary compatibility control because Vite 8 deprecates esbuild minification; future removal requires a separate CSP migration.\n- CSP structure remains 97 HTML / 67 inline style blocks / 37 unique styles / 246 inline scripts / 13 unique scripts / 50 executable scripts / 196 JSON-LD.\n- CSS proof covers every one of the 67 paired style blocks. Generated Astro scope IDs and equivalent media-range syntax are normalized; declaration order is normalized only when property identities are unique. Old/new unique style hashes map one-to-one.\n- Script shape proof requires 11 of 13 reviewed unique script hashes to stay byte-identical. Exactly two changed hashes are permitted, one on EN audit-intake and one on RU audit-intake.\n- Those two compiled page scripts pass differential jsdom 30.0.1 execution across initial state, Entry generation, Primary depth, EN mapper handoff, copy, download, reset and intake-segmentation marker behavior.\n- CSP re-baseline therefore changes all 37 style hashes and exactly 2 script hashes only after semantic/behavioral proof.\n- No production merge/deploy is authorized by this canary.\n`);
+          NODE
+      - name: Run complete provider-neutral contract with the new reviewed CSP baseline
+        run: |
+          npm run build:core
+          npm audit --json > /tmp/final-audit.json || true
+          node -e "const a=require('/tmp/final-audit.json'); if((a.metadata?.vulnerabilities?.total||0)!==0) process.exit(1); console.log('ASTRO7_FINAL_AUDIT=PASS total=0')"
+      - name: Remove all temporary canary machinery
+        run: |
+          git rm .github/workflows/astro7-security-canary-bootstrap.yml scripts/astro7-csp-semantic-probe.mjs scripts/astro7-audit-intake-behavior-diff.mjs
+      - name: Commit the bounded green canary tree
         run: |
           git diff --check
           git status --short
-          git diff --stat
-          git diff -- astro.config.mjs package.json src/pages/universe.astro src/pages/ru/universe.astro | sed -n '1,280p'
+          git add astro.config.mjs package.json package-lock.json docs/ASTRO7_SECURITY_CANARY_20260903.md \
+            src/pages/universe.astro src/pages/ru/universe.astro scripts/csp-inline-allowlist.json vercel.json .github/workflows/quality-gate.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Security: canary Astro 7.2.10 with behavioral CSP proof"
+          git push origin HEAD:agent/astro7-security-canary-20260903
