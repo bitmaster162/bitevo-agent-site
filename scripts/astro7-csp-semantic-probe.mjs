@@ -38,9 +38,7 @@ function canonicalChildren(container) {
   const shapes = nodes.map(canonicalNode).filter(Boolean);
   if (nodes.length && nodes.every(node => node.type === 'decl')) {
     const identities = nodes.map(node => `${String(node.prop).toLowerCase()}|${node.important ? 1 : 0}`);
-    if (new Set(identities).size === identities.length) {
-      shapes.sort((x, y) => JSON.stringify(x).localeCompare(JSON.stringify(y)));
-    }
+    if (new Set(identities).size === identities.length) shapes.sort((x, y) => JSON.stringify(x).localeCompare(JSON.stringify(y)));
   }
   return shapes;
 }
@@ -80,12 +78,12 @@ async function snapshot(output) {
       const type = attrs.match(/\btype\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase() || '';
       const hash = digest(body); scriptHashes.add(hash); scriptBlocks++;
       if (type === 'application/ld+json') jsonld++; else executable++;
-      scripts.push({ index:scriptIndex++, type, hash });
+      scripts.push({ index:scriptIndex++, type, hash, raw:body });
     }
     routes[route] = { styles, scripts };
   }
   const data = {
-    schema:'bitevo.astro7-csp-snapshot/v2-debug', routes,
+    schema:'bitevo.astro7-csp-snapshot/v3-debug-js', routes,
     totals:{ routes:Object.keys(routes).length, styleBlocks, uniqueStyles:styleHashes.size, scriptBlocks, uniqueScripts:scriptHashes.size, executable, jsonld },
     styleHashes:[...styleHashes].sort(), scriptHashes:[...scriptHashes].sort()
   };
@@ -96,7 +94,7 @@ async function snapshot(output) {
 function firstTextDifference(left, right) {
   const n = Math.min(left.length, right.length);
   let i=0; while (i<n && left[i]===right[i]) i++;
-  const start=Math.max(0,i-180), endL=Math.min(left.length,i+700), endR=Math.min(right.length,i+700);
+  const start=Math.max(0,i-180), endL=Math.min(left.length,i+1100), endR=Math.min(right.length,i+1100);
   return { index:i, old:left.slice(start,endL), next:right.slice(start,endR) };
 }
 
@@ -120,20 +118,22 @@ async function compare(oldPath, newPath, styleOutput) {
     for (let i=0;i<oldRoute.styles.length;i++) {
       const before=oldRoute.styles[i], after=newRoute.styles[i]; stylePairs++;
       if (before.canonical !== after.canonical) {
-        const rawDiff=firstTextDifference(before.raw, after.raw);
-        const canonDiff=firstTextDifference(before.canonicalText, after.canonicalText);
         console.log(`CSS_MISMATCH route=${route} index=${i} old_hash=${before.hash} new_hash=${after.hash}`);
-        console.log(`CSS_MISMATCH_RAW ${JSON.stringify(rawDiff)}`);
-        console.log(`CSS_MISMATCH_CANONICAL ${JSON.stringify(canonDiff)}`);
-        console.log(`CSS_OLD_RAW ${JSON.stringify(before.raw.slice(0,8000))}`);
-        console.log(`CSS_NEW_RAW ${JSON.stringify(after.raw.slice(0,8000))}`);
+        console.log(`CSS_MISMATCH_RAW ${JSON.stringify(firstTextDifference(before.raw, after.raw))}`);
+        console.log(`CSS_MISMATCH_CANONICAL ${JSON.stringify(firstTextDifference(before.canonicalText, after.canonicalText))}`);
         throw new Error(`${route}: CSS semantic drift at style index ${i}`);
       }
       mapAdd(forward,before.hash,after.hash); mapAdd(reverse,after.hash,before.hash);
     }
     for (let i=0;i<oldRoute.scripts.length;i++) {
       const before=oldRoute.scripts[i], after=newRoute.scripts[i]; scriptPairs++;
-      if (before.type !== after.type || before.hash !== after.hash) throw new Error(`${route}: inline script byte drift at index ${i}`);
+      if (before.type !== after.type || before.hash !== after.hash) {
+        console.log(`SCRIPT_MISMATCH route=${route} index=${i} type_old=${before.type||'javascript'} type_new=${after.type||'javascript'} old_hash=${before.hash} new_hash=${after.hash}`);
+        console.log(`SCRIPT_MISMATCH_RAW ${JSON.stringify(firstTextDifference(before.raw, after.raw))}`);
+        console.log(`SCRIPT_OLD_RAW ${JSON.stringify(before.raw.slice(0,12000))}`);
+        console.log(`SCRIPT_NEW_RAW ${JSON.stringify(after.raw.slice(0,12000))}`);
+        throw new Error(`${route}: inline script byte drift at index ${i}`);
+      }
     }
   }
   if ([...forward.values()].some(set => set.size !== 1) || [...reverse.values()].some(set => set.size !== 1)) throw new Error('style hash mapping is not bijective');
