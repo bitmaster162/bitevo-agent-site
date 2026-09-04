@@ -100,7 +100,24 @@ check(
 );
 check(wrangler.includes('worker/index.mjs') && !wrangler.includes('scope-handoff'),'Cloudflare config unchanged for scope handoff');
 check(!worker.includes('scope-handoff'),'Cloudflare worker unchanged for scope handoff');
-check(api.includes("SCOPE_HANDOFF_R1_ENABLED === 'true'") && api.includes('enabled:false'),'API kill switch source');
+const runtimeEnabled = runtimeGlobal => runtimeGlobal?.process?.env?.SCOPE_HANDOFF_R1_ENABLED === 'true';
+check(
+  !api.includes('node:process') &&
+  api.includes('type RuntimeGlobal') &&
+  api.includes('process?:') &&
+  api.includes('env?: Record<string, string | undefined>') &&
+  api.includes("runtimeGlobal.process?.env?.SCOPE_HANDOFF_R1_ENABLED === 'true'") &&
+  api.includes('enabled:false'),
+  'API optional runtime-global kill switch source'
+);
+check(
+  runtimeEnabled({}) === false &&
+  runtimeEnabled({ process:{} }) === false &&
+  runtimeEnabled({ process:{ env:{} } }) === false &&
+  runtimeEnabled({ process:{ env:{ SCOPE_HANDOFF_R1_ENABLED:'false' } } }) === false &&
+  runtimeEnabled({ process:{ env:{ SCOPE_HANDOFF_R1_ENABLED:'true' } } }) === true,
+  'API runtime environment fails closed unless exact true'
+);
 check(client.includes('const UI_ENABLED = false') && client.includes("fetch('/api/scope-handoff'") && client.includes('testing_authorization:false'),'disabled client source');
 check(client.includes('const baseIds') && client.includes('const primaryIds') && client.includes("if (depth === 'primary')"),'Entry/Primary client payload separation');
 check(client.includes("#ruIntake") && client.includes("#secretCheck") && client.includes("v === 'да'") && client.includes("v === 'нет'"),'RU DOM and enum parity');
