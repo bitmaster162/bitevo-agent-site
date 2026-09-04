@@ -139,6 +139,23 @@ The controller already models future behavior:
 - EN/RU field and enum mapping;
 - manual copy/download/contact fallback remains available.
 
+## Post-PR50 reconciliation boundary
+
+The provider-limitation section below is historical evidence for pre-reconciliation head `5bb5ed81f78609819d4799eb1d00e36ff9072205` only.
+
+The authorized reconciliation merges protected main `cddcb79a1a041184a9dc5e142ece1b0e2b0cf78e` into the PR49 branch without history rewrite. The resulting source must retain:
+
+- Astro `7.2.10` exact;
+- Node `>=22.19.0`;
+- esbuild `0.28.1` exact;
+- `@vercel/blob` `2.8.0` exact;
+- no `@astrojs/vercel` adapter;
+- static Astro output and the reviewed CSP/minification bridge;
+- runtime and UI disabled by default;
+- zero real storage writes and no storage provisioning.
+
+Fresh GitHub, Vercel and Cloudflare evidence for the reconciled head supersedes the historical rate-limit status below. No merge, runtime enablement or storage provisioning is implied by reconciliation.
+
 ## Current provider proof limitation
 
 During P1G1R1 preparation the Vercel Hobby project reported:

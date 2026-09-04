@@ -83,8 +83,21 @@ const api=await readFile(new URL('../api/scope-handoff.ts', import.meta.url),'ut
 const client=await readFile(new URL('../public/scope-handoff-r1.js', import.meta.url),'utf8');
 const enIntake=await readFile(new URL('../src/pages/audit-intake.astro', import.meta.url),'utf8');
 const ruIntake=await readFile(new URL('../src/pages/ru/audit-intake.astro', import.meta.url),'utf8');
-check(astroConfig.includes('defineConfig({})') && !astroConfig.includes('@astrojs/vercel'),'static Astro config preserved');
-check(!pkg.dependencies?.['@astrojs/vercel'] && pkg.dependencies?.['@vercel/blob']==='2.8.0','dependency boundary');
+check(
+  astroConfig.includes('defineConfig({') &&
+  !astroConfig.includes('@astrojs/vercel') &&
+  !/\boutput\s*:\s*['"]server['"]/.test(astroConfig) &&
+  !/\badapter\s*:/.test(astroConfig),
+  'static Astro output preserved without server adapter'
+);
+check(
+  !pkg.dependencies?.['@astrojs/vercel'] &&
+  pkg.dependencies?.['@vercel/blob'] === '2.8.0' &&
+  pkg.dependencies?.astro === '7.2.10' &&
+  pkg.devDependencies?.esbuild === '0.28.1' &&
+  pkg.engines?.node === '>=22.19.0',
+  'dependency and runtime baseline'
+);
 check(wrangler.includes('worker/index.mjs') && !wrangler.includes('scope-handoff'),'Cloudflare config unchanged for scope handoff');
 check(!worker.includes('scope-handoff'),'Cloudflare worker unchanged for scope handoff');
 check(api.includes("SCOPE_HANDOFF_R1_ENABLED === 'true'") && api.includes('enabled:false'),'API kill switch source');
