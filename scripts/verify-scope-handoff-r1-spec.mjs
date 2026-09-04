@@ -10,6 +10,8 @@ const threatPath = 'docs/SCOPE_HANDOFF_R1_THREAT_MODEL_20260903.md';
 const schemaPath = 'src/data/scope-handoff-r1.schema.json';
 const enPath = 'src/pages/audit-intake.astro';
 const ruPath = 'src/pages/ru/audit-intake.astro';
+const nativeEndpointPath = 'api/scope-handoff.ts';
+const runtimeGatePath = 'scripts/verify-scope-handoff-r1-runtime.mjs';
 
 for (const rel of [specPath, threatPath, schemaPath, enPath, ruPath]) {
   check(fs.existsSync(path.resolve(rel)), `required P1 spec artifact missing: ${rel}`);
@@ -21,14 +23,14 @@ const schema = JSON.parse(read(schemaPath));
 const en = read(enPath);
 const ru = read(ruPath);
 
-check(spec.includes('SPEC_ONLY / NO_ENDPOINT / NO_PRODUCTION_EFFECT'), 'spec phase boundary missing');
+check(spec.includes('SPEC_ONLY / NO_ENDPOINT / NO_PRODUCTION_EFFECT'), 'historical spec phase boundary missing');
 check(spec.includes('submission_intent = scope_review_only'), 'scope-review-only intent missing');
 check(spec.includes('testing_authorization = false'), 'testing authorization false boundary missing');
 check(spec.includes('UNKNOWN / RECONCILE'), 'false-green unknown/reconcile state missing');
 check(spec.includes('same server `submission_id`'), 'idempotent receipt semantics missing');
 check(spec.includes('local brief generation'), 'local fallback preservation missing');
 check(spec.includes('no hidden CRM fan-out'), 'no-CRM-fanout R1 boundary missing');
-check(spec.includes('P1_SCOPE_HANDOFF_R1 = SPEC_ONLY / ENDPOINT_NOT_IMPLEMENTED / PRODUCTION_UNCHANGED / ZERO_EXTERNAL_EFFECT'), 'spec terminal missing');
+check(spec.includes('P1_SCOPE_HANDOFF_R1 = SPEC_ONLY / ENDPOINT_NOT_IMPLEMENTED / PRODUCTION_UNCHANGED / ZERO_EXTERNAL_EFFECT'), 'historical spec terminal missing');
 
 for (const marker of [
   'T1 — Secret submission',
@@ -91,16 +93,16 @@ for (const [name, definition] of Object.entries(schema.properties || {})) {
 }
 
 for (const [locale, source] of [['EN', en], ['RU', ru]]) {
-  check(!/<form[^>]+(?:action|method)=/i.test(source), `${locale}: spec phase must not add form action/method`);
+  check(!/<form[^>]+(?:action|method)=/i.test(source), `${locale}: form action/method must remain absent`);
   for (const primitive of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'FormData(']) {
-    check(!source.includes(primitive), `${locale}: spec phase must not add network primitive ${primitive}`);
+    check(!source.includes(primitive), `${locale}: page source must not embed network primitive ${primitive}`);
   }
 }
 check(en.includes('nothing here transmits data or authorizes testing'), 'EN current local-only/no-testing baseline missing');
 check(ru.includes('Ничего не отправляется'), 'RU current local-only baseline missing');
 check(ru.includes('не даёт testing authorization'), 'RU current no-testing boundary missing');
 
-const endpointPatterns = [
+const forbiddenAstroEndpointPatterns = [
   'src/pages/api/scope-handoff.ts',
   'src/pages/api/scope-handoff.js',
   'src/pages/api/scope-handoff.mjs',
@@ -108,8 +110,20 @@ const endpointPatterns = [
   'src/pages/api/scope-handoff/index.js',
   'src/pages/api/scope-handoff/index.mjs'
 ];
-for (const rel of endpointPatterns) {
-  check(!fs.existsSync(path.resolve(rel)), `endpoint implementation is forbidden in spec phase: ${rel}`);
+for (const rel of forbiddenAstroEndpointPatterns) {
+  check(!fs.existsSync(path.resolve(rel)), `Astro runtime endpoint would violate static dist contract: ${rel}`);
+}
+
+const nativeEndpointPresent = fs.existsSync(path.resolve(nativeEndpointPath));
+let phase = 'SPEC_ONLY';
+let endpointState = 'ABSENT';
+if (nativeEndpointPresent) {
+  phase = 'IMPLEMENTATION_SOURCE_PRESENT_DISABLED';
+  endpointState = 'NATIVE_VERCEL_SOURCE_PRESENT';
+  check(fs.existsSync(path.resolve(runtimeGatePath)), 'native endpoint requires runtime verifier');
+  const endpoint = read(nativeEndpointPath);
+  check(endpoint.includes("SCOPE_HANDOFF_R1_ENABLED === 'true'"), 'native endpoint missing explicit runtime enable gate');
+  check(endpoint.includes('enabled:false'), 'native endpoint missing disabled-before-I/O path');
 }
 
 if (failures.length) {
@@ -118,4 +132,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('SCOPE_HANDOFF_R1_SPEC_GATE=PASS phase=SPEC_ONLY schema=BOUNDED additional_properties=DENY endpoint=ABSENT locales=2 explicit_submit=REQUIRED idempotency=REQUIRED false_green=FAIL_CLOSED local_fallback=PRESERVED production_effect=0');
+console.log(`SCOPE_HANDOFF_R1_SPEC_GATE=PASS phase=${phase} schema=BOUNDED additional_properties=DENY endpoint=${endpointState} locales=2 explicit_submit=REQUIRED idempotency=REQUIRED false_green=FAIL_CLOSED local_fallback=PRESERVED production_effect=0`);
