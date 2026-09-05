@@ -37,9 +37,26 @@ function loadApi(extra = {}) {
 }
 
 const { api } = loadApi();
-check(api && api.UI_ENABLED === false, 'UI source default is disabled');
+check(api && api.UI_DEFAULT_ENABLED === false, 'UI source default is disabled');
+check(api.UI_ENABLED === false, 'missing activation record fails closed');
 check(api.ENDPOINT === '/api/scope-handoff', 'same-origin endpoint is fixed');
-check(source.includes('if (UI_ENABLED && typeof document'), 'automatic mount remains source-gated');
+check(source.includes('if (UI_ENABLED && typeof document'), 'automatic mount remains activation-gated');
+check(source.includes("const ACTIVATION_MODE = 'staging_preview_r1'"), 'activation mode is exact');
+check(source.includes("const STAGING_PROJECT_ID = 'prj_zQ1Mb8RJA6zCrZbPfC2z3dWFcfZI'"), 'UI is bound to exact staging project');
+
+const exactActivation = Object.freeze({
+  schema:'bitevo.scope-handoff.activation.v1', activation_mode:'staging_preview_r1', provider:'vercel',
+  project_id:'prj_zQ1Mb8RJA6zCrZbPfC2z3dWFcfZI', environment:'preview', target_environment:'preview',
+  project_bound:true, preview_bound:true, activation_bound:true, runtime_enabled:true, ui_enabled:true,
+  testing_authorization:false
+});
+const { api:enabledApi } = loadApi({ __BITEVO_SCOPE_HANDOFF_R1_ACTIVATION__:exactActivation });
+check(enabledApi.UI_ENABLED === true, 'exact frozen staging preview activation enables UI source');
+check(enabledApi.isBoundStagingPreviewActivation(exactActivation) === true, 'exact activation validator passes');
+check(enabledApi.isBoundStagingPreviewActivation({ ...exactActivation }) === false, 'mutable activation record fails closed');
+check(enabledApi.isBoundStagingPreviewActivation(Object.freeze({ ...exactActivation, project_id:'prj_wrong' })) === false, 'wrong project activation fails closed');
+check(enabledApi.isBoundStagingPreviewActivation(Object.freeze({ ...exactActivation, environment:'production' })) === false, 'production activation fails closed');
+check(enabledApi.isBoundStagingPreviewActivation(Object.freeze({ ...exactActivation, runtime_enabled:false })) === false, 'UI cannot activate without runtime gate');
 check(!source.includes('localStorage') && !source.includes('sessionStorage') && !source.includes('document.cookie'), 'browser storage and cookies are not read');
 check(!source.includes('sendBeacon') && !source.includes('XMLHttpRequest'), 'alternate network transports are absent');
 equal((source.match(/method:'POST'/g) || []).length, 1, 'one explicit POST construction exists');

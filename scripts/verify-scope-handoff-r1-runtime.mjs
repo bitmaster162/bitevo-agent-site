@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { handleScopeHandoffRequest, MAX_BODY_BYTES, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS } from '../src/lib/scope-handoff-r1/core.js';
+import {
+  SCOPE_HANDOFF_R1_ACTIVATION_MODE,
+  SCOPE_HANDOFF_R1_STAGING_PROJECT_ID,
+  evaluateScopeHandoffActivation
+} from '../src/lib/scope-handoff-r1/activation.js';
 import { InMemoryScopeHandoffStore, createVercelBlobGlobalRateLimitStore, createVercelBlobScopeHandoffStore } from '../src/lib/scope-handoff-r1/stores.js';
 
 class FakeStore {
@@ -104,17 +109,23 @@ check(
 );
 check(wrangler.includes('worker/index.mjs') && !wrangler.includes('scope-handoff'),'Cloudflare config unchanged for scope handoff');
 check(!worker.includes('scope-handoff'),'Cloudflare worker unchanged for scope handoff');
-const runtimeEnabled = runtimeGlobal => runtimeGlobal?.process?.env?.SCOPE_HANDOFF_R1_ENABLED === 'true';
+const exactPreviewEnv = {
+  VERCEL:'1',
+  VERCEL_PROJECT_ID:SCOPE_HANDOFF_R1_STAGING_PROJECT_ID,
+  VERCEL_ENV:'preview',
+  VERCEL_TARGET_ENV:'preview',
+  SCOPE_HANDOFF_R1_ACTIVATION_MODE:SCOPE_HANDOFF_R1_ACTIVATION_MODE,
+  SCOPE_HANDOFF_R1_ENABLED:'true'
+};
 check(
   !api.includes('node:process') &&
   api.includes('type RuntimeGlobal') &&
-  api.includes('process?:') &&
-  api.includes('env?: Record<string, string | undefined>') &&
-  api.includes("runtimeGlobal.process?.env?.SCOPE_HANDOFF_R1_ENABLED === 'true'") &&
+  api.includes('evaluateScopeHandoffActivation') &&
+  api.includes('activation.runtime_enabled') &&
   api.includes('parseGlobalRateLimitConfig') &&
   api.includes('createVercelBlobGlobalRateLimitStore') &&
   api.includes('enabled:false'),
-  'API optional runtime-global kill switch and required limiter source'
+  'API uses the shared preview-only activation gate before storage construction'
 );
 check(
   rateLimit.includes('blob_global_fixed_window_v1') &&
@@ -123,16 +134,29 @@ check(
   'global Blob CAS limiter source markers'
 );
 check(
-  runtimeEnabled({}) === false &&
-  runtimeEnabled({ process:{} }) === false &&
-  runtimeEnabled({ process:{ env:{} } }) === false &&
-  runtimeEnabled({ process:{ env:{ SCOPE_HANDOFF_R1_ENABLED:'false' } } }) === false &&
-  runtimeEnabled({ process:{ env:{ SCOPE_HANDOFF_R1_ENABLED:'true' } } }) === true,
-  'API runtime environment fails closed unless exact true'
+  evaluateScopeHandoffActivation({}).runtime_enabled === false &&
+  evaluateScopeHandoffActivation({ SCOPE_HANDOFF_R1_ENABLED:'true' }).runtime_enabled === false &&
+  evaluateScopeHandoffActivation({ ...exactPreviewEnv, VERCEL_PROJECT_ID:'prj_wrong' }).runtime_enabled === false &&
+  evaluateScopeHandoffActivation({ ...exactPreviewEnv, VERCEL_ENV:'production', VERCEL_TARGET_ENV:'production' }).runtime_enabled === false &&
+  evaluateScopeHandoffActivation({ ...exactPreviewEnv, VERCEL_TARGET_ENV:'production' }).runtime_enabled === false &&
+  evaluateScopeHandoffActivation({ ...exactPreviewEnv, SCOPE_HANDOFF_R1_ACTIVATION_MODE:'wrong' }).runtime_enabled === false &&
+  evaluateScopeHandoffActivation(exactPreviewEnv).runtime_enabled === true,
+  'API runtime activates only for exact staging project and exact preview boundary'
 );
-check(client.includes('const UI_ENABLED = false') && client.includes("fetch('/api/scope-handoff'") && client.includes('testing_authorization:false'),'disabled client source');
+check(
+  client.includes('const UI_DEFAULT_ENABLED = false') &&
+  client.includes('isBoundStagingPreviewActivation') &&
+  client.includes(SCOPE_HANDOFF_R1_STAGING_PROJECT_ID) &&
+  client.includes("fetch('/api/scope-handoff'") &&
+  client.includes('testing_authorization:false'),
+  'client remains default-off and exact-project activation-bound'
+);
 check(client.includes('const baseIds') && client.includes('const primaryIds') && client.includes("if (depth === 'primary')"),'Entry/Primary client payload separation');
 check(client.includes("#ruIntake") && client.includes("#secretCheck") && client.includes("v === 'да'") && client.includes("v === 'нет'"),'RU DOM and enum parity');
-check(enIntake.includes('/scope-handoff-r1.js') && ruIntake.includes('/scope-handoff-r1.js'),'EN/RU client controller wired');
+for (const [locale, source] of [['en', enIntake], ['ru', ruIntake]]) {
+  const activationIndex = source.indexOf('/scope-handoff-r1-activation.js');
+  const controllerIndex = source.indexOf('/scope-handoff-r1.js');
+  check(activationIndex >= 0 && controllerIndex > activationIndex, `${locale}: activation bootstrap precedes controller`);
+}
 
-console.log(`SCOPE_HANDOFF_R1_RUNTIME_GATE=PASS checks=${checks} fake_provider_io_only=1 real_provider_writes=0 astro_static=1 cloudflare_unchanged=1 runtime_default=DISABLED ui_default=DISABLED rate_limit=REQUIRED_SOURCE_PRESENT`);
+console.log(`SCOPE_HANDOFF_R1_RUNTIME_GATE=PASS checks=${checks} fake_provider_io_only=1 real_provider_writes=0 astro_static=1 cloudflare_unchanged=1 runtime_default=DISABLED ui_default=DISABLED activation=EXACT_STAGING_PREVIEW_BOUND rate_limit=REQUIRED_SOURCE_PRESENT`);

@@ -28,3 +28,6 @@ pnpm-debug.log*
 .idea/
 
 .vercel
+
+# generated Scope Handoff activation bootstrap
+public/scope-handoff-r1-activation.js

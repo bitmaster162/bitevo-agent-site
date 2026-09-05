@@ -1,7 +1,29 @@
 (() => {
   'use strict';
 
-  const UI_ENABLED = false;
+  const UI_DEFAULT_ENABLED = false;
+  const ACTIVATION_SCHEMA = 'bitevo.scope-handoff.activation.v1';
+  const ACTIVATION_MODE = 'staging_preview_r1';
+  const STAGING_PROJECT_ID = 'prj_zQ1Mb8RJA6zCrZbPfC2z3dWFcfZI';
+  const ACTIVATION_GLOBAL = '__BITEVO_SCOPE_HANDOFF_R1_ACTIVATION__';
+
+  function isBoundStagingPreviewActivation(candidate = globalThis[ACTIVATION_GLOBAL]) {
+    return candidate !== null && typeof candidate === 'object' && Object.isFrozen(candidate) &&
+      candidate.schema === ACTIVATION_SCHEMA &&
+      candidate.activation_mode === ACTIVATION_MODE &&
+      candidate.provider === 'vercel' &&
+      candidate.project_id === STAGING_PROJECT_ID &&
+      candidate.environment === 'preview' &&
+      candidate.target_environment === 'preview' &&
+      candidate.project_bound === true &&
+      candidate.preview_bound === true &&
+      candidate.activation_bound === true &&
+      candidate.runtime_enabled === true &&
+      candidate.ui_enabled === true &&
+      candidate.testing_authorization === false;
+  }
+
+  const UI_ENABLED = UI_DEFAULT_ENABLED || isBoundStagingPreviewActivation();
   const TEST_MODE = globalThis.__BITEVO_SCOPE_HANDOFF_R1_TEST_MODE__ === true;
   const ENDPOINT = '/api/scope-handoff';
   const REQUEST_TIMEOUT_MS = 15_000;
@@ -468,7 +490,8 @@
   }
 
   const TEST_API = Object.freeze({
-    UI_ENABLED, ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
+    UI_DEFAULT_ENABLED, UI_ENABLED, ACTIVATION_SCHEMA, ACTIVATION_MODE, STAGING_PROJECT_ID, ACTIVATION_GLOBAL,
+    isBoundStagingPreviewActivation, ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
     BASE_IDS:baseIds, PRIMARY_IDS:primaryIds, BASE_REQUIRED, PRIMARY_REQUIRED, COPY,
     stableStringify, enumValue, buildScopeFields, validateScopeFields, scopeFingerprint,
     createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, mountScopeHandoff

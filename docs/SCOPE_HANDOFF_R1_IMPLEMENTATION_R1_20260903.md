@@ -40,14 +40,23 @@ If Cloudflare runtime parity becomes required, it needs a separate architecture 
 
 ## Runtime kill switch
 
-The native function checks the enable state before constructing a storage adapter. Missing/false enable state returns:
+The native function evaluates a shared activation boundary before constructing a limiter or storage adapter. Runtime activation requires all of the following exact conditions:
+
+- Vercel system marker `VERCEL=1`;
+- project ID `prj_zQ1Mb8RJA6zCrZbPfC2z3dWFcfZI`;
+- `VERCEL_ENV=preview`;
+- `VERCEL_TARGET_ENV=preview`;
+- `SCOPE_HANDOFF_R1_ACTIVATION_MODE=staging_preview_r1`;
+- `SCOPE_HANDOFF_R1_ENABLED=true`.
+
+Any missing, malformed, production, wrong-project or wrong-mode value returns:
 
 - HTTP `503`;
 - `status=SERVICE_DISABLED`;
 - `provider_io=0`;
 - `testing_authorization=false`.
 
-The browser controller is independently disabled by source constant `UI_ENABLED=false`. Therefore the current source default injects no handoff UI and initiates no network request.
+The browser controller remains default-off through `UI_DEFAULT_ENABLED=false`. It can derive an enabled state only from a frozen build-generated activation record that satisfies the same exact staging-project and preview boundary, confirms runtime enablement, and additionally records `SCOPE_HANDOFF_R1_UI_ENABLED=true`. Without that record the source performs no DOM mount and initiates no network request.
 
 ## Request boundary
 
@@ -125,7 +134,7 @@ The secret-pattern filter is a safety layer, not a confidentiality guarantee. Us
 
 ## Client boundary
 
-Both EN and RU intake pages reference the controller source, but `UI_ENABLED=false` prevents UI creation and network transmission.
+Both EN and RU intake pages load the generated activation bootstrap before the controller. The default bootstrap is disabled; only an exact frozen staging-preview record can enable the controller, while every absent, partial, wrong-project or production record prevents UI creation and network transmission.
 
 The controller already models future behavior:
 
@@ -190,6 +199,15 @@ Cheap method, origin, content-type and declared-size checks remain ahead of the 
 
 P1G3 source verification remains deterministic and fake-provider-only. Real private-Blob CAS behavior was separately proven in isolated staging; production runtime enablement, production storage connection, production threshold selection and traffic calibration remain separately gated.
 
+## P1G5 preview-only activation boundary
+
+P1G5 introduces a shared source-level activation evaluator for both the Vercel function and the EN/RU browser controller. The evaluator is fail-closed and hard-binds activation to the isolated staging project `prj_zQ1Mb8RJA6zCrZbPfC2z3dWFcfZI` in the Vercel `preview` environment and target only.
+
+A build generator writes a small ignored browser bootstrap before Astro builds. The bootstrap contains only normalized activation metadata and booleans; it does not copy arbitrary environment values, credentials, Blob tokens or request data into the browser. The controller accepts only a frozen record with the exact schema, activation mode, staging project ID, preview environment, runtime-enabled state, UI-enabled state and `testing_authorization=false`.
+
+The server runtime independently evaluates the same system and explicit flags. Client-side activation is not treated as a security boundary: a browser-modified UI cannot bypass the server's exact project/preview/runtime gate, rate limiter, schema checks or storage reconciliation.
+
+Source and deterministic tests may model the enabled path with fake environments and fake network providers. Creating or changing provider environment variables, connecting Blob, making browser POST requests, merging, deploying to production or choosing production traffic thresholds remains separately gated.
 ## Explicit non-effects
 
 P1G1R1 does not authorize or perform:
@@ -214,6 +232,10 @@ P1G1R1 does not authorize or perform:
 `P1G2 = STAGING_PROVEN / DISABLED_EMPTY`
 
 `P1G3 = MERGED / REAL_BLOB_CAS_STAGING_PROVEN / PRODUCTION_RUNTIME_DISABLED`
+
+`P1G4 = MERGED / DEFAULT_OFF_EN_RU_UI_TRANSPORT`
+
+`P1G5_ACTIVATION_BOUNDARY = EXACT_STAGING_PROJECT / PREVIEW_ONLY / EXPLICIT_RUNTIME_AND_UI_FLAGS`
 
 `ASTRO_STATIC_DIST_CONTRACT = PRESERVED`
 
