@@ -37,14 +37,30 @@ function loadApi(extra = {}) {
 }
 
 const { api } = loadApi();
-check(api && api.UI_ENABLED === false, 'UI source default is disabled');
+check(api && api.UI_ENABLED === false, 'UI source default is disabled without an exact marker');
+check(api.BOOTSTRAP_ACTIVATION_MARKER === null, 'missing bootstrap marker remains explicit');
 check(api.ENDPOINT === '/api/scope-handoff', 'same-origin endpoint is fixed');
-check(source.includes('if (UI_ENABLED && typeof document'), 'automatic mount remains source-gated');
+check(source.includes('if (!TEST_MODE && UI_ENABLED && typeof document'), 'automatic mount remains source-gated');
 check(!source.includes('localStorage') && !source.includes('sessionStorage') && !source.includes('document.cookie'), 'browser storage and cookies are not read');
 check(!source.includes('sendBeacon') && !source.includes('XMLHttpRequest'), 'alternate network transports are absent');
 equal((source.match(/method:'POST'/g) || []).length, 1, 'one explicit POST construction exists');
 check(source.includes("credentials:'same-origin'") && source.includes("cache:'no-store'") && source.includes("redirect:'error'") && source.includes("referrerPolicy:'same-origin'"), 'fetch boundary is explicit');
 check(pkg.scripts?.['verify:core']?.includes('verify-scope-handoff-r1-ui.mjs'), 'focused UI verifier is wired into the core gate');
+
+{
+  const markerScript = {
+    getAttribute(name) {
+      return name === 'data-scope-handoff-r1-activation' ? 'isolated_staging_preview_r1' : null;
+    }
+  };
+  const { api:activatedApi } = loadApi({ document:{ currentScript:markerScript } });
+  equal(activatedApi.UI_ENABLED, true, 'exact build marker enables the test-visible UI decision');
+  equal(activatedApi.BOOTSTRAP_ACTIVATION_MARKER, 'isolated_staging_preview_r1', 'exact marker is preserved for audit');
+  check(activatedApi.isUiActivationMarkerEnabled('isolated_staging_preview_r1'), 'exact versioned marker is accepted');
+  check(!activatedApi.isUiActivationMarkerEnabled('enabled'), 'generic enabled marker is rejected');
+  check(!activatedApi.isUiActivationMarkerEnabled('isolated_staging_preview_r2'), 'wrong activation version is rejected');
+  equal(activatedApi.readBootstrapActivationMarker({ currentScript:{ getAttribute(){ throw new Error('bad marker'); } } }), null, 'marker read errors fail closed');
+}
 
 const entryValues = {
   company:'Example Co', business_contact:'Jane Doe <jane@example.com>', role:'CTO',

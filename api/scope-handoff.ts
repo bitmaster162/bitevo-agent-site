@@ -1,3 +1,7 @@
+import {
+  evaluateScopeHandoffActivation,
+  readScopeHandoffRuntimeEnvironment
+} from '../src/lib/scope-handoff-r1/activation.js';
 import { handleScopeHandoffRequest } from '../src/lib/scope-handoff-r1/core.js';
 import {
   createGlobalFixedWindowLimiter,
@@ -14,9 +18,6 @@ type RuntimeGlobal = typeof globalThis & {
   };
 };
 
-function isScopeHandoffEnabled(runtimeGlobal: RuntimeGlobal = globalThis as RuntimeGlobal) {
-  return runtimeGlobal.process?.env?.SCOPE_HANDOFF_R1_ENABLED === 'true';
-}
 
 function createConfiguredRateLimiter(env: Record<string, string | undefined> | undefined) {
   const parsed = parseGlobalRateLimitConfig(env);
@@ -29,10 +30,10 @@ function createConfiguredRateLimiter(env: Record<string, string | undefined> | u
 export default {
   async fetch(request: Request) {
     const runtimeGlobal = globalThis as RuntimeGlobal;
-    const enabled = isScopeHandoffEnabled(runtimeGlobal);
-    if (!enabled) return handleScopeHandoffRequest(request, { enabled:false });
+    const env = readScopeHandoffRuntimeEnvironment(runtimeGlobal);
+    const activation = evaluateScopeHandoffActivation(env);
+    if (!activation.runtimeEnabled) return handleScopeHandoffRequest(request, { enabled:false });
 
-    const env = runtimeGlobal.process?.env;
     const rateLimiter = createConfiguredRateLimiter(env);
     return handleScopeHandoffRequest(request, {
       enabled:true,

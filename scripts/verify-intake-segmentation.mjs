@@ -20,7 +20,7 @@ for (const [locale, rel] of pages) {
   check((html.match(/data-primary-required/g) || []).length >= 6, `${locale}: Primary required-field contract too shallow`);
   check(html.includes('/intake-segmentation.js'), `${locale}: local segmentation controller missing`);
   check(html.includes('Testing authorization: NOT GRANTED'), `${locale}: explicit authorization boundary missing`);
-  check(html.includes('data-scope-handoff'), `${locale}: manual Contact Robert handoff missing`);
+  check(/data-scope-handoff(?:="")? href="mailto:robert@bitevo\.work/.test(html), `${locale}: manual Contact Robert handoff missing`);
   check(html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: exact manual mailto route missing`);
   check(!html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body='), `${locale}: generated brief must not be embedded in mailto body`);
   check(!/<form[^>]+(?:action|method)=/i.test(html), `${locale}: form must remain browser-local without action/method`);

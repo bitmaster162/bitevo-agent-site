@@ -84,15 +84,19 @@ for (const file of htmlFiles) {
     counters.russianHomePrimary += 1;
   }
 
-  if (rel === 'audit-intake/index.html' && !html.includes('data-scope-handoff')) {
-    const downloadMatch = html.match(downloadPattern);
-    const gateMatch = html.match(gatePattern);
-    if (!downloadMatch || !gateMatch) {
-      throw new Error('Audit intake handoff markers changed; refusing silent postprocess drift.');
-    }
+  if (rel === 'audit-intake/index.html') {
+    const manualHandoffMarker = 'data-scope-handoff href="mailto:robert@bitevo.work';
+    if (!html.includes(manualHandoffMarker)) {
+      const downloadMatch = html.match(downloadPattern);
+      const gateMatch = html.match(gatePattern);
+      if (!downloadMatch || !gateMatch) {
+        throw new Error('Audit intake handoff markers changed; refusing silent postprocess drift.');
+      }
 
-    html = html.replace(downloadPattern, match => `${match}${contactButton}`);
-    html = html.replace(gatePattern, (_full, gateAttrs, spanAttrs) => `</div><p class="brief-explain" data-scope-handoff-note>Email opens your mail app; nothing is sent automatically. Copy or download the reviewed brief first, then share only the scope details you intend to send.</p><div class="gate"${gateAttrs}><span${spanAttrs}>AUTHORIZATION GATE</span>`);
+      html = html.replace(downloadPattern, match => `${match}${contactButton}`);
+      html = html.replace(gatePattern, (_full, gateAttrs, spanAttrs) => `</div><p class="brief-explain" data-scope-handoff-note>Email opens your mail app; nothing is sent automatically. Copy or download the reviewed brief first, then share only the scope details you intend to send.</p><div class="gate"${gateAttrs}><span${spanAttrs}>AUTHORIZATION GATE</span>`);
+    }
+    if (!html.includes(manualHandoffMarker)) throw new Error('Audit intake manual handoff marker missing after postprocess.');
     counters.scopeHandoff += 1;
   }
 
