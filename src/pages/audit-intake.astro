@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { evaluateScopeHandoffActivation } from '../lib/scope-handoff-r1/activation.js';
+
+const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
 ---
 
 <Layout title="Agent Authority & Evidence Audit — Decision Scope Intake" description="Prepare a local BitEvo scope brief that seeds an Authority Ledger, Evidence Contract and written Rules of Engagement for one action-capable AI workflow.">
@@ -88,7 +91,7 @@ import Layout from '../layouts/Layout.astro';
     form.addEventListener('reset', () => requestAnimationFrame(() => { brief.value=''; setReady(false); }));
   </script>
   <script is:inline src="/intake-segmentation.js"></script>
-  <script is:inline src="/scope-handoff-r1.js"></script>
+  <script is:inline src="/scope-handoff-r1.js" data-scope-handoff-r1-activation={scopeHandoffActivation.uiMarker}></script>
 </Layout>
 
 <style>

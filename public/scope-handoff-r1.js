@@ -1,8 +1,20 @@
 (() => {
   'use strict';
 
-  const UI_ENABLED = false;
+  const ACTIVATION_MODE = 'isolated_staging_preview_r1';
+  const ACTIVATION_ATTRIBUTE = 'data-scope-handoff-r1-activation';
   const TEST_MODE = globalThis.__BITEVO_SCOPE_HANDOFF_R1_TEST_MODE__ === true;
+  function readBootstrapActivationMarker(doc = globalThis.document) {
+    try {
+      const script = doc?.currentScript;
+      return typeof script?.getAttribute === 'function' ? script.getAttribute(ACTIVATION_ATTRIBUTE) : null;
+    } catch {
+      return null;
+    }
+  }
+  const isUiActivationMarkerEnabled = marker => marker === ACTIVATION_MODE;
+  const BOOTSTRAP_ACTIVATION_MARKER = readBootstrapActivationMarker();
+  const UI_ENABLED = isUiActivationMarkerEnabled(BOOTSTRAP_ACTIVATION_MARKER);
   const ENDPOINT = '/api/scope-handoff';
   const REQUEST_TIMEOUT_MS = 15_000;
   const SCHEMA_VERSION = 'bitevo.scope-handoff.r1';
@@ -468,7 +480,9 @@
   }
 
   const TEST_API = Object.freeze({
-    UI_ENABLED, ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
+    UI_ENABLED, ACTIVATION_MODE, ACTIVATION_ATTRIBUTE, BOOTSTRAP_ACTIVATION_MARKER,
+    readBootstrapActivationMarker, isUiActivationMarkerEnabled,
+    ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
     BASE_IDS:baseIds, PRIMARY_IDS:primaryIds, BASE_REQUIRED, PRIMARY_REQUIRED, COPY,
     stableStringify, enumValue, buildScopeFields, validateScopeFields, scopeFingerprint,
     createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, mountScopeHandoff
@@ -479,5 +493,5 @@
       configurable:true, enumerable:false, writable:false, value:TEST_API
     });
   }
-  if (UI_ENABLED && typeof document !== 'undefined') mountScopeHandoff();
+  if (!TEST_MODE && UI_ENABLED && typeof document !== 'undefined') mountScopeHandoff();
 })();
