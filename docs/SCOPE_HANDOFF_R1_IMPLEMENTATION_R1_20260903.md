@@ -1,6 +1,6 @@
-# BitEvo Scope Handoff R1 — implementation source boundary
+# BitEvo Scope Handoff R1 â€” implementation source boundary
 
-Status: `P1G1R1_SOURCE_ONLY / PR49_DRAFT / RUNTIME_DISABLED / STORAGE_UNPROVISIONED / PRODUCTION_UNCHANGED`
+Status: `P1G1_MERGED / P1G2_STAGING_PROVEN / P1G3_SOURCE_DRAFT / PRODUCTION_RUNTIME_DISABLED / PRODUCTION_STORAGE_UNPROVISIONED`
 
 ## Purpose
 
@@ -160,7 +160,7 @@ Fresh GitHub, Vercel and Cloudflare evidence for the reconciled head supersedes 
 
 During P1G1R1 preparation the Vercel Hobby project reported:
 
-`Deployment rate limited — retry in 24 hours.`
+`Deployment rate limited â€” retry in 24 hours.`
 
 A GitHub-core-green native function canary therefore did not receive a Vercel provider build. This is neither a source failure nor provider PASS.
 
@@ -169,6 +169,26 @@ Until a normal fresh Vercel preview runs successfully, terminal evidence must st
 `VERCEL_PROVIDER_PROOF=BLOCKED_RATE_LIMIT`
 
 No manual deploy, plan upgrade, spend or bypass is authorized by P1G1R1.
+
+## P1G3 source boundary
+
+P1G1 source is merged and P1G2 staging evidence is closed. P1G3 adds a source-only global admission circuit breaker before intake body parsing and persistence. It does not activate production runtime or storage.
+
+The required runtime configuration is:
+
+- `SCOPE_HANDOFF_R1_RATE_LIMIT_MODE=blob_global_fixed_window_v1`;
+- positive safe-integer `SCOPE_HANDOFF_R1_RATE_LIMIT_MAX_REQUESTS`;
+- positive safe-integer `SCOPE_HANDOFF_R1_RATE_LIMIT_WINDOW_SECONDS`.
+
+Missing or malformed configuration returns `503 RATE_LIMIT_CONFIG_INVALID` before intake-store I/O. Production traffic values remain unset and require a later evidence-backed owner decision.
+
+The limiter uses one private object at `scope-handoff/r1-rate-limit/global.json` with schema `bitevo.scope-handoff.rate-limit.v1`. It stores only fixed-window timing, count, configuration digest, update time and a random mutation reconciliation marker. It stores no IP, contact data, request payload or `client_submission_id`.
+
+Origin reads use `useCache:false`. First creation is create-if-absent; increments and rollover use ETag `ifMatch` CAS. Known conflicts retry within the fixed code budget. Uncertain writes are never blindly repeated: a fresh read may confirm the exact random mutation marker, otherwise the request fails closed with `503 RATE_LIMIT_UNKNOWN_RECONCILE`. At capacity, the endpoint returns `429 RATE_LIMITED` with authoritative `Retry-After` and performs no intake-store I/O.
+
+Cheap method, origin, content-type and declared-size checks remain ahead of the limiter. Malformed JSON, schema-invalid and secret-pattern bodies consume admission capacity by design because the limiter protects the expensive body and persistence path.
+
+P1G3 source verification is deterministic and fake-provider-only. Provider deployment, Blob writes, runtime enablement, production activation and threshold selection remain separately gated.
 
 ## Explicit non-effects
 
@@ -189,20 +209,22 @@ P1G1R1 does not authorize or perform:
 
 ## Terminal source target
 
-`PR49 = DRAFT / UNMERGED`
+`P1G1 = MERGED`
+
+`P1G2 = STAGING_PROVEN / DISABLED_EMPTY`
+
+`P1G3 = SOURCE_DRAFT / UNMERGED`
 
 `ASTRO_STATIC_DIST_CONTRACT = PRESERVED`
 
 `CLOUDFLARE_PROVIDER_PATH = UNCHANGED`
 
-`RUNTIME_DEFAULT = DISABLED`
+`PRODUCTION_RUNTIME_DEFAULT = DISABLED`
 
 `UI_DEFAULT = DISABLED`
 
-`REAL_STORAGE = UNPROVISIONED`
+`PRODUCTION_STORAGE = UNPROVISIONED`
 
-`PROVIDER_WRITE_COUNT = 0`
+`SOURCE_VALIDATION_PROVIDER_WRITE_COUNT = 0`
 
-`PRODUCTION = UNCHANGED`
-
-A separate P1G2 staging gate is required before any provider storage provisioning, connected synthetic write, runtime enablement or rate-limit enforcement test.
+A separate P1G3 provider-validation gate is required before staging environment changes, limiter Blob writes or runtime testing. A later production gate must state exact calibrated traffic values and rollback conditions.

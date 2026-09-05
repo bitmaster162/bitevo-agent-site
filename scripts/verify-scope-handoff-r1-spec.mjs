@@ -12,6 +12,8 @@ const enPath = 'src/pages/audit-intake.astro';
 const ruPath = 'src/pages/ru/audit-intake.astro';
 const nativeEndpointPath = 'api/scope-handoff.ts';
 const runtimeGatePath = 'scripts/verify-scope-handoff-r1-runtime.mjs';
+const rateLimitPath = 'src/lib/scope-handoff-r1/rate-limit.js';
+const rateLimitGatePath = 'scripts/verify-scope-handoff-r1-rate-limit.mjs';
 
 for (const rel of [specPath, threatPath, schemaPath, enPath, ruPath]) {
   check(fs.existsSync(path.resolve(rel)), `required P1 spec artifact missing: ${rel}`);
@@ -118,12 +120,19 @@ const nativeEndpointPresent = fs.existsSync(path.resolve(nativeEndpointPath));
 let phase = 'SPEC_ONLY';
 let endpointState = 'ABSENT';
 if (nativeEndpointPresent) {
-  phase = 'IMPLEMENTATION_SOURCE_PRESENT_DISABLED';
+  phase = 'IMPLEMENTATION_SOURCE_PRESENT_DISABLED_RATE_LIMIT_REQUIRED';
   endpointState = 'NATIVE_VERCEL_SOURCE_PRESENT';
   check(fs.existsSync(path.resolve(runtimeGatePath)), 'native endpoint requires runtime verifier');
+  check(fs.existsSync(path.resolve(rateLimitPath)), 'native endpoint requires global rate-limit source');
+  check(fs.existsSync(path.resolve(rateLimitGatePath)), 'native endpoint requires focused rate-limit verifier');
   const endpoint = read(nativeEndpointPath);
+  const rateLimit = read(rateLimitPath);
   check(endpoint.includes("SCOPE_HANDOFF_R1_ENABLED === 'true'"), 'native endpoint missing explicit runtime enable gate');
+  check(endpoint.includes('parseGlobalRateLimitConfig'), 'native endpoint missing strict limiter config parser');
+  check(endpoint.includes('createVercelBlobGlobalRateLimitStore'), 'native endpoint missing Blob CAS limiter adapter');
   check(endpoint.includes('enabled:false'), 'native endpoint missing disabled-before-I/O path');
+  check(rateLimit.includes('blob_global_fixed_window_v1'), 'global limiter mode missing');
+  check(rateLimit.includes('scope-handoff/r1-rate-limit/global.json'), 'global limiter pathname missing');
 }
 
 if (failures.length) {

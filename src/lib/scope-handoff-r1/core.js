@@ -118,7 +118,10 @@ function successReceipt(record, replayed, statusCode) {
 }
 
 export async function handleScopeHandoffRequest(request, options = {}) {
-  const { enabled = false, store = null, now = () => new Date().toISOString(), idFactory = makeSubmissionId } = options;
+  const {
+    enabled = false, store = null, rateLimiter = null,
+    now = () => new Date().toISOString(), idFactory = makeSubmissionId
+  } = options;
   if (!enabled) return response({ status:'SERVICE_DISABLED', provider_io:0, testing_authorization:false }, 503);
   if (request.method !== 'POST') return response({ error:'METHOD_NOT_ALLOWED' }, 405, { Allow:'POST' });
   const requestUrl = new URL(request.url);
@@ -128,6 +131,26 @@ export async function handleScopeHandoffRequest(request, options = {}) {
   if (mediaType !== 'application/json') return response({ error:'CONTENT_TYPE_REQUIRED' }, 415);
   const lengthHeader = Number(request.headers.get('content-length') || 0);
   if (Number.isFinite(lengthHeader) && lengthHeader > MAX_BODY_BYTES) return response({ error:'BODY_TOO_LARGE' }, 413);
+  if (!rateLimiter || typeof rateLimiter.consume !== 'function') {
+    return response({ status:'RATE_LIMIT_CONFIG_INVALID', provider_io:0, testing_authorization:false }, 503);
+  }
+  let admission;
+  try { admission = await rateLimiter.consume(); }
+  catch { return response({ status:'RATE_LIMIT_UNKNOWN_RECONCILE', testing_authorization:false }, 503); }
+  const limiterIoValid = Number.isSafeInteger(admission?.providerIo) && admission.providerIo >= 0;
+  if (!limiterIoValid) {
+    return response({ status:'RATE_LIMIT_UNKNOWN_RECONCILE', testing_authorization:false }, 503);
+  }
+  const limiterIo = admission.providerIo;
+  if (admission?.decision === 'DENY') {
+    if (!Number.isSafeInteger(admission.retryAfterSeconds) || admission.retryAfterSeconds < 1) {
+      return response({ status:'RATE_LIMIT_UNKNOWN_RECONCILE', provider_io:limiterIo, testing_authorization:false }, 503);
+    }
+    return response({ error:'RATE_LIMITED', testing_authorization:false }, 429, { 'Retry-After':String(admission.retryAfterSeconds) });
+  }
+  if (admission?.decision !== 'ALLOW') {
+    return response({ status:'RATE_LIMIT_UNKNOWN_RECONCILE', provider_io:limiterIo, testing_authorization:false }, 503);
+  }
   let text;
   try { text = await request.text(); } catch { return response({ error:'BODY_READ_FAILED' }, 400); }
   if (new TextEncoder().encode(text).byteLength > MAX_BODY_BYTES) return response({ error:'BODY_TOO_LARGE' }, 413);
