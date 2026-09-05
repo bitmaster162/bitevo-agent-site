@@ -1,6 +1,6 @@
-# BitEvo Scope Handoff R1 â€” implementation source boundary
+# BitEvo Scope Handoff R1 — implementation source boundary
 
-Status: `P1G1_MERGED / P1G2_STAGING_PROVEN / P1G3_SOURCE_DRAFT / PRODUCTION_RUNTIME_DISABLED / PRODUCTION_STORAGE_UNPROVISIONED`
+Status: `P1G1_MERGED / P1G2_STAGING_PROVEN / P1G3_MERGED_STAGING_PROVEN / PRODUCTION_RUNTIME_DISABLED / PRODUCTION_STORAGE_UNPROVISIONED`
 
 ## Purpose
 
@@ -160,7 +160,7 @@ Fresh GitHub, Vercel and Cloudflare evidence for the reconciled head supersedes 
 
 During P1G1R1 preparation the Vercel Hobby project reported:
 
-`Deployment rate limited â€” retry in 24 hours.`
+`Deployment rate limited — retry in 24 hours.`
 
 A GitHub-core-green native function canary therefore did not receive a Vercel provider build. This is neither a source failure nor provider PASS.
 
@@ -188,7 +188,7 @@ Origin reads use `useCache:false`. First creation is create-if-absent; increment
 
 Cheap method, origin, content-type and declared-size checks remain ahead of the limiter. Malformed JSON, schema-invalid and secret-pattern bodies consume admission capacity by design because the limiter protects the expensive body and persistence path.
 
-P1G3 source verification is deterministic and fake-provider-only. Provider deployment, Blob writes, runtime enablement, production activation and threshold selection remain separately gated.
+P1G3 source verification remains deterministic and fake-provider-only. Real private-Blob CAS behavior was separately proven in isolated staging; production runtime enablement, production storage connection, production threshold selection and traffic calibration remain separately gated.
 
 ## Explicit non-effects
 
@@ -213,7 +213,7 @@ P1G1R1 does not authorize or perform:
 
 `P1G2 = STAGING_PROVEN / DISABLED_EMPTY`
 
-`P1G3 = SOURCE_DRAFT / UNMERGED`
+`P1G3 = MERGED / REAL_BLOB_CAS_STAGING_PROVEN / PRODUCTION_RUNTIME_DISABLED`
 
 `ASTRO_STATIC_DIST_CONTRACT = PRESERVED`
 
@@ -227,4 +227,4 @@ P1G1R1 does not authorize or perform:
 
 `SOURCE_VALIDATION_PROVIDER_WRITE_COUNT = 0`
 
-A separate P1G3 provider-validation gate is required before staging environment changes, limiter Blob writes or runtime testing. A later production gate must state exact calibrated traffic values and rollback conditions.
+P1G3 provider validation is complete in isolated staging. Production runtime enablement, production UI transport enablement, production Blob connection or writes, and production threshold selection remain separately gated and require exact calibrated values plus rollback conditions.
