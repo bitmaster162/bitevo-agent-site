@@ -268,7 +268,7 @@ class FakeElement {
   }
 }
 
-function fakePage(locale, fetchImpl) {
+function fakePage(locale, fetchImpl, requestAnimationFrameImpl = fn => fn()) {
   const root=new FakeElement('root'); root.setAttribute('data-intake-locale',locale); root.dataset.intakeDepth='entry';
   const form=new FakeElement('form'); form.checkValidity=()=>true;
   const brief=new FakeElement('brief'); brief.value='';
@@ -283,7 +283,7 @@ function fakePage(locale, fetchImpl) {
     enabled:true, document:doc,
     fetchImpl:async (url, options)=>{ fetchCount+=1; return fetchImpl(url,options); },
     cryptoApi:{ randomUUID:()=>'56565656-5656-4565-8565-565656565656' },
-    requestAnimationFrameImpl:fn=>fn()
+    requestAnimationFrameImpl
   });
   return { root, form, brief, host, controller, fetchCount:()=>fetchCount };
 }
@@ -315,6 +315,64 @@ function fakePage(locale, fetchImpl) {
   await page.controller.handleClick();
   equal(page.fetchCount(),1,'RU explicit final action uses the same controller');
   equal(page.controller.shell.getAttribute('data-scope-state'),'unavailable','RU shares fail-closed unavailable state');
+}
+
+
+// Register the brief generator after the handoff listener, as in the browser.
+// The queued frame must observe the generated brief, but never a changed scope.
+for (const locale of ['en','ru']) {
+  const frames = [];
+  const page = fakePage(locale, async (_url, options) => response(201, acceptedBody(JSON.parse(options.body), false)), fn => frames.push(fn));
+  page.form.addEventListener('submit', () => { page.brief.value = 'first generated local brief'; });
+  await page.form.emit('submit');
+  equal(frames.length, 1, `${locale}: first Generate defers binding until all submit listeners finish`);
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'local', `${locale}: no premature binding before the frame`);
+  frames.shift()();
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'consent', `${locale}: first Generate reaches consent without a second click`);
+  equal(page.fetchCount(), 0, `${locale}: first Generate never sends a request`);
+  equal(page.controller.machine.inspect().clientId, null, `${locale}: first Generate does not mint an ID`);
+  const consent = page.controller.shell.querySelector('[data-scope-consent]');
+  consent.checked = true;
+  await consent.emit('change');
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'ready', `${locale}: separate consent reaches ready`);
+  await page.controller.handleClick();
+  equal(page.fetchCount(), 1, `${locale}: explicit click sends once after the first Generate`);
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'accepted', `${locale}: first-Generate path accepts a complete receipt`);
+}
+
+for (const locale of ['en','ru']) {
+  const frames = [];
+  const page = fakePage(locale, async () => { throw new Error('changed-scope request must never be sent'); }, fn => frames.push(fn));
+  page.form.addEventListener('submit', () => { page.brief.value = 'brief for the submitted fields'; });
+  await page.form.emit('submit');
+  page.root.querySelector('#company').value = 'Changed before deferred callback';
+  await page.form.emit('input');
+  const consent = page.controller.shell.querySelector('[data-scope-consent]');
+  consent.checked = true;
+  await consent.emit('change');
+  frames.shift()();
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'local', `${locale}: changed fields cannot bind the earlier brief`);
+  equal(page.controller.shell.querySelector('[data-scope-submit]').disabled, true, `${locale}: changed scope remains non-submittable`);
+  await page.controller.handleClick();
+  equal(page.fetchCount(), 0, `${locale}: changed scope produces zero POST`);
+  equal(page.controller.machine.inspect().clientId, null, `${locale}: changed scope creates no replacement ID`);
+  await page.form.emit('submit');
+  frames.shift()();
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'ready', `${locale}: regenerating the current scope can bind it`);
+  equal(page.fetchCount(), 0, `${locale}: regenerating still requires an explicit final action`);
+}
+
+for (const locale of ['en','ru']) {
+  const frames = [];
+  const page = fakePage(locale, async () => { throw new Error('reset scope must never be sent'); }, fn => frames.push(fn));
+  page.form.addEventListener('submit', () => { page.brief.value = 'brief before reset'; });
+  await page.form.emit('submit');
+  page.brief.value = '';
+  await page.form.emit('reset');
+  while (frames.length) frames.shift()();
+  equal(page.controller.shell.getAttribute('data-scope-state'), 'local', `${locale}: reset before the callback does not arm an empty brief`);
+  equal(page.controller.shell.querySelector('[data-scope-submit]').disabled, true, `${locale}: reset keeps submission disabled`);
+  equal(page.fetchCount(), 0, `${locale}: reset/deferred callbacks do not send`);
 }
 
 console.log(`SCOPE_HANDOFF_R1_UI_GATE=PASS checks=${checks} locales=2 progressive_enhancement=PASS auto_post=0 explicit_post_only=1 idempotency=PASS false_green=PASS accessible_states=PASS manual_fallback=PRESERVED ui_default=DISABLED`);

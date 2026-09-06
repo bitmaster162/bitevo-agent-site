@@ -462,7 +462,13 @@
     };
 
     consent.addEventListener('change', refresh);
-    form.addEventListener('submit', armGeneratedBrief);
+    form.addEventListener('submit', () => {
+      const submittedFingerprint = currentFingerprint();
+      raf(() => {
+        if (submittedFingerprint !== currentFingerprint()) return refresh();
+        armGeneratedBrief();
+      });
+    });
     form.addEventListener('input', markPotentiallyStale);
     form.addEventListener('change', markPotentiallyStale);
     form.addEventListener('reset', () => raf(() => {
