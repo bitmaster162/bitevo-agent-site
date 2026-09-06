@@ -4,73 +4,73 @@ import Layout from '../../layouts/Layout.astro';
 const deliverables = [
   ['01', 'Workflow boundary', 'One named exception workflow with start event, stop event, owner, reviewer and explicit out-of-scope actions.'],
   ['02', 'Field dictionary', 'Required, optional, conflicting and sensitive fields mapped from synthetic, redacted or schema-only inputs.'],
-  ['03', 'Exception rubric', 'Missing, conflicting, identity, policy, payroll-impact, duplicate and ambiguous cases mapped to review, hold or reject states.'],
-  ['04', 'Human-review packet', 'Every proposed internal effect has an explicit approval field, receipt/readback field and no-live-write boundary.'],
-  ['05', 'Evidence handoff', 'Workflow map, rubric, limitations, unresolved questions, acceptance result and next-decision queue.']
+  ['03', 'Exception rubric', 'Missing, conflicting, identity, policy, duplicate, ambiguous and business-impact cases mapped to review, hold or reject states.'],
+  ['04', 'Human-review packet', 'Every proposed bounded internal effect has an explicit approval field, receipt/readback field and no-live-write boundary.'],
+  ['05', 'Evidence handoff', 'Workflow map, rubric, limitations, unresolved questions, acceptance result, measurement baseline and next-decision queue.']
 ];
 const proof = [
-  ['12 / 12', 'Fixed synthetic cases executed locally/offline'],
-  ['8 / 8', 'Acceptance criteria passed'],
-  ['5 / 5', 'Injected interruption / replay cases passed'],
-  ['12', 'Red-team action classes blocked with zero real effects']
+  ['METHOD', 'One exception workflow, explicit states, human gate and evidence handoff'],
+  ['FIXTURE', 'Current public synthetic corpus is workforce-style, not a universal domain benchmark'],
+  ['BOUNDARY', 'Synthetic method evidence is not generalized to customer production or commercial outcomes'],
+  ['EFFECT', 'No first-phase production write is required for the diagnostic']
 ];
 const noFit = [
-  'Candidate or employee communications',
-  'ATS, HRIS, payroll, calendar or employment-record changes',
-  'Hiring, rejection, offer or eligibility decisions',
+  'Customer, employee, candidate or vendor communications performed by BitEvo in the first phase',
+  'ERP, accounting, CRM, HRIS, ATS, payroll, booking or other production-system changes',
+  'Tax, accounting, legal, regulatory, eligibility, hiring or other professional conclusions',
   'Identity / access provisioning, payments, signatures or account creation',
   'Production deployment, external API mutation, live migration or bulk correction',
-  'Compliance certification, ROI, savings, headcount, accuracy, SLA or customer-outcome guarantees'
+  'Certification, guaranteed ROI, savings, headcount, accuracy, SLA or customer-outcome promises'
 ];
 ---
 
-<Layout title="Thailand/SEA HR Workflow Diagnostic | BitEvo BUILD" description="Map one recurring Thailand/SEA recruiting, HR or workforce exception workflow in five business days. Receive a human-review packet, bounded internal readback and evidence handoff without candidate contact or production-system changes.">
+<Layout title="Workflow Exception Diagnostic | BitEvo BUILD" description="Map one recurring operational exception workflow in five business days. Freeze the owner, inputs, review states, evidence and measurable baseline before deeper implementation or production change.">
   <section class="bd-hero section">
     <div class="container hero-grid">
       <div>
         <div class="eyebrow">BITEVO BUILD · FIVE-DAY DIAGNOSTIC · USD 3,000</div>
-        <h1 class="display">Make one recurring HR exception reviewable in five business days.</h1>
-        <p class="lede">BitEvo maps one Thailand/SEA recruiting, HR or workforce exception workflow and produces a human-approved review packet, bounded internal task readback and evidence handoff—without contacting candidates or changing ATS, HRIS, payroll, calendar or employment records.</p>
+        <h1 class="display">Make one recurring workflow exception reviewable in five business days.</h1>
+        <p class="lede">BitEvo maps one recurring operational exception from trigger to owner decision: what information is required, where state becomes ambiguous, who reviews it, what evidence closes the case and which measurable baseline should be tracked. The first phase does not require production-system mutation.</p>
         <div class="hero-actions"><a class="button button-primary" href="mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification">Request a 20-minute qualification call <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="#scope">See the five-day scope</a></div>
       </div>
       <aside class="panel scope-card">
         <div class="scope-top"><span>FIRST COMMERCIAL SCOPE</span><strong>$3,000</strong></div>
         <div class="scope-row"><small>TIMEBOX</small><b>5 business days</b></div>
-        <div class="scope-row"><small>INPUTS</small><b>Synthetic, redacted or schema-only</b></div>
+        <div class="scope-row"><small>OBJECT</small><b>One recurring exception workflow</b></div>
+        <div class="scope-row"><small>INPUTS</small><b>Synthetic, redacted, anonymized or schema-only</b></div>
         <div class="scope-row"><small>CONTROL</small><b>Human review before any bounded internal effect</b></div>
-        <div class="scope-row"><small>PRODUCTION</small><b>No live-system write</b></div>
-        <div class="scope-row"><small>OUTPUT</small><b>Review packet + readback specification + evidence handoff</b></div>
+        <div class="scope-row"><small>OUTPUT</small><b>Workflow map + exception register + measurement baseline + evidence handoff</b></div>
       </aside>
     </div>
   </section>
 
   <section class="section section-rule" id="scope">
-    <div class="container section-head"><div><div class="eyebrow">Five-day scope</div><h2 class="section-title">One workflow. Explicit fields. Human gate. Evidence.</h2></div><p class="lede">The first phase starts before integration. We isolate the exception, make its review states explicit, and define what evidence would be required before any deeper system work is considered.</p></div>
+    <div class="container section-head"><div><div class="eyebrow">Five-day scope</div><h2 class="section-title">One exception. One owner. One measurable result.</h2></div><p class="lede">The diagnostic starts before integration. We freeze the workflow and current-state evidence first, trace representative exception cases, and define what should be measured before recommending implementation work.</p></div>
     <div class="container deliverable-grid">{deliverables.map(([n,title,text]) => <article class="panel deliverable"><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
   </section>
 
   <section class="section section-rule">
     <div class="container split">
-      <div><div class="eyebrow">Where it fits</div><h2 class="section-title">For recurring workforce exceptions with a named owner.</h2><p class="lede">Typical fits include multi-site hospitality, retail, healthcare, manufacturing, logistics, aviation, staffing, recruiting, RPO/BPO, technology, education and shared-services teams where one recurring packet, approval, site-readiness or handoff exception can be isolated safely.</p></div>
-      <div class="panel qualification"><div><small>GO</small><strong>One recurring exception, one owner, one reviewer, safe inputs, no first-phase production write.</strong></div><div><small>HOLD</small><strong>Ownership, data boundary or required system access is unclear.</strong></div><div><small>NO-FIT</small><strong>The first phase requires candidate contact, employment decisions or production mutation.</strong></div></div>
+      <div><div class="eyebrow">Where it fits</div><h2 class="section-title">For recurring operational exceptions with a named owner.</h2><p class="lede">Typical candidates include document-completeness and handoff exceptions, accounting or finance operations, service intake, reservations, customer operations, workforce administration, internal approvals and other recurring workflows where a bounded case can be reviewed without asking BitEvo to make the underlying professional or regulated decision.</p><div class="hero-actions"><a class="button button-ghost" href="/build/hr-workflow-diagnostic">Open HR / workforce specialization</a></div></div>
+      <div class="panel qualification"><div><small>GO</small><strong>One recurring exception, one owner, one reviewer, safe inputs and a measurable baseline.</strong></div><div><small>HOLD</small><strong>Ownership, data boundary, workflow definition or required evidence is unclear.</strong></div><div><small>NO-FIT</small><strong>The first phase requires professional judgment, external customer action or production mutation by BitEvo.</strong></div></div>
     </div>
   </section>
 
   <section class="section section-rule">
-    <div class="container section-head"><div><div class="eyebrow">Local synthetic proof</div><h2 class="section-title">Measured locally. Not generalized to production.</h2></div><p class="lede">The current proof is deliberately narrow: a fixed offline synthetic corpus and safety harness. It supports the diagnostic method, not claims about arbitrary customer data, production integrations, language quality, compliance, ROI or SLA.</p></div>
+    <div class="container section-head"><div><div class="eyebrow">Evidence boundary</div><h2 class="section-title">Method evidence is not a customer outcome.</h2></div><p class="lede">The current public synthetic harness was built around a workforce-style fixture. It supports the bounded diagnostic method and control pattern only. It does not prove performance, ROI, compliance, domain correctness or production behavior for accounting, finance, reservations, customer operations or another customer workflow.</p></div>
     <div class="container proof-grid">{proof.map(([value,label]) => <div class="panel proof-card"><strong>{value}</strong><span>{label}</span></div>)}</div>
-    <div class="container proof-note panel"><strong>Evidence boundary</strong><p>The local proof also verified bounded readback, one-effect preservation across replay cases, corrupted-state rejection and sealed evidence bundles. It did not test ATS/HRIS/payroll connectors, customer systems, Thai/SEA language quality, legal/compliance treatment, production volume, latency, availability, vendor resilience or commercial outcomes.</p></div>
+    <div class="container proof-note panel"><strong>Measurement rule</strong><p>Time, cost, rework or throughput impact is calculated only from customer-confirmed baseline inputs and later observations on the same frozen workflow definition. BitEvo does not borrow percentages from another customer or present a synthetic example as a case study.</p></div>
   </section>
 
   <section class="section section-rule">
     <div class="container boundaries">
-      <article class="panel"><div class="eyebrow">What you receive</div><h2>Decision-ready workflow evidence.</h2><p>Workflow boundary statement, source-of-truth map, field dictionary, exception taxonomy, human-review packet template, acceptance rubric, safe proof plan, bounded internal-task readback specification, exclusion register, unresolved-question list and evidence handoff.</p></article>
-      <article class="panel nofit"><div class="eyebrow">Explicitly excluded</div><h2>No hidden production promise.</h2><ul>{noFit.map((item) => <li>{item}</li>)}</ul></article>
+      <article class="panel"><div class="eyebrow">What you receive</div><h2>Decision-ready workflow evidence.</h2><p>Workflow boundary statement, source-of-truth map, field dictionary, exception taxonomy, representative trace summaries, human-review packet template, measurement baseline, prioritized actions, limitations, unresolved questions and evidence handoff.</p></article>
+      <article class="panel nofit"><div class="eyebrow">Explicitly excluded</div><h2>No hidden implementation or professional promise.</h2><ul>{noFit.map((item) => <li>{item}</li>)}</ul></article>
     </div>
   </section>
 
   <section class="section section-rule">
-    <div class="container final panel"><div><div class="eyebrow">Qualification first</div><h2 class="section-title">Bring one exception workflow, not your whole HR stack.</h2><p class="lede">A 20-minute qualification call is enough to confirm the workflow boundary, process owner, reviewer, safe inputs and no-live-write constraint. If the first phase fits, the five-day diagnostic is USD 3,000.</p></div><a class="button button-primary" href="mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification">Contact Robert at BitEvo →</a></div>
+    <div class="container final panel"><div><div class="eyebrow">Qualification first</div><h2 class="section-title">Bring one recurring exception, not the whole operating stack.</h2><p class="lede">A 20-minute qualification call is enough to confirm the workflow boundary, process owner, reviewer, safe inputs, representative cases and one measurable target. If the first phase fits, the five-day diagnostic is USD 3,000.</p></div><a class="button button-primary" href="mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification">Contact Robert at BitEvo →</a></div>
   </section>
 </Layout>
 

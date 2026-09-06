@@ -65,6 +65,13 @@
       "parent": "/build"
     },
     {
+      "path": "/build/hr-workflow-diagnostic",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build/exception-workflow-diagnostic"
+    },
+    {
       "path": "/mcp-governance",
       "category": "SPECIALIST",
       "indexable": true,
@@ -463,6 +470,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/build"
+    },
+    {
+      "path": "/ru/build/hr-workflow-diagnostic",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build/exception-workflow-diagnostic"
     },
     {
       "path": "/ru/mcp-governance",

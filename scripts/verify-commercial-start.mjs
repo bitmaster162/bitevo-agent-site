@@ -28,6 +28,8 @@ function hasAnchor(html, href, textFragment) {
 
 const start = await readRoute('/start');
 const pricing = await readRoute('/pricing');
+const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
+const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 
 const startContracts = [
   ['$1,500 Entry Audit', '/entry-audit', 'Open Entry Audit'],
@@ -51,6 +53,20 @@ for (const phrase of startBoundaryPhrases) {
   if (!stripTags(start).includes(phrase)) failures.push(`/start: missing boundary phrase "${phrase}"`);
 }
 
+const buildDiagnosticText = stripTags(buildDiagnostic);
+for (const phrase of ['One exception. One owner. One measurable result.', 'Method evidence is not a customer outcome.', 'five-day diagnostic is USD 3,000']) {
+  if (!buildDiagnosticText.includes(phrase)) failures.push(`/build/exception-workflow-diagnostic: missing R14 generic diagnostic phrase "${phrase}"`);
+}
+if (!hasAnchor(buildDiagnostic, '/build/hr-workflow-diagnostic', 'Open HR / workforce specialization')) failures.push('/build/exception-workflow-diagnostic: missing HR specialization link');
+for (const stale of ['Thailand/SEA HR Workflow Diagnostic', 'Bring one exception workflow, not your whole HR stack.']) {
+  if (buildDiagnosticText.includes(stale)) failures.push(`/build/exception-workflow-diagnostic: stale HR-only framing survived: "${stale}"`);
+}
+const hrDiagnosticText = stripTags(hrDiagnostic);
+for (const phrase of ['Thailand/SEA HR Workflow Diagnostic', 'Make one recurring HR exception reviewable in five business days.']) {
+  if (!hrDiagnosticText.includes(phrase)) failures.push(`/build/hr-workflow-diagnostic: missing retained HR specialization phrase "${phrase}"`);
+}
+if (!hasAnchor(hrDiagnostic, '/build/exception-workflow-diagnostic', 'Open the general diagnostic')) failures.push('/build/hr-workflow-diagnostic: missing general diagnostic backlink');
+
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
@@ -73,4 +89,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length}`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS`);
