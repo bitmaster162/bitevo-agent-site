@@ -66,15 +66,30 @@
       "enPath": "/build/exception-workflow-diagnostic",
       "category": "SPECIALIST",
       "eyebrow": "BITEVO BUILD · 5 ДНЕЙ · $3,000",
-      "title": "Сделайте один повторяющийся HR/workforce exception reviewable за пять рабочих дней.",
-      "description": "Thailand/SEA diagnostic одного recruiting/HR/workforce exception workflow с human-review packet, bounded readback и zero-live-write boundary.",
+      "title": "Сделайте одно повторяющееся исключение в рабочем процессе проверяемым за пять рабочих дней.",
+      "description": "Диагностика одного операционного exception workflow: владелец, входные данные, состояния проверки, evidence и измеримый baseline до более глубокой реализации или production-изменений.",
       "points": [
-        "Фаза ограничена одним named exception workflow с owner, reviewer и явными out-of-scope действиями.",
-        "Inputs — synthetic, redacted или schema-only; candidate/employee communication и production ATS/HRIS/payroll writes исключены.",
-        "Локальный synthetic proof подтверждает только diagnostic method и не обобщается на customer production, compliance, ROI или SLA."
+        "Фиксируем один recurring exception workflow: начало, конец, владельца, reviewer, безопасные входы и явно исключённые действия.",
+        "Трассируем representative cases и отделяем missing/conflicting inputs, handoff ambiguity, rework/reopen и другие повторяющиеся исключения от профессиональных или регулируемых решений.",
+        "Любые time/cost/rework выводы считаются только из customer-confirmed baseline inputs; synthetic example не становится customer case study или ROI promise."
       ],
       "primaryHref": "/ru/build",
       "primaryLabel": "Открыть Build"
+    },
+    {
+      "slug": "build/hr-workflow-diagnostic",
+      "enPath": "/build/hr-workflow-diagnostic",
+      "category": "SPECIALIST",
+      "eyebrow": "HR / WORKFORCE SPECIALIZATION · $3,000",
+      "title": "Сделайте одно повторяющееся HR/workforce исключение проверяемым за пять рабочих дней.",
+      "description": "HR/workforce specialization базовой BUILD-диагностики: recruiting/HR/workforce exception workflow, human-review packet, bounded readback и zero-live-write boundary.",
+      "points": [
+        "Ограничиваем один named workforce exception workflow с owner, reviewer и явными out-of-scope действиями.",
+        "Inputs — synthetic, redacted или schema-only; candidate/employee communication и production ATS/HRIS/payroll writes исключены из первой фазы.",
+        "Текущий synthetic proof относится к workforce-style fixture и подтверждает только bounded diagnostic method, а не customer production, compliance, ROI или SLA."
+      ],
+      "primaryHref": "/ru/build/exception-workflow-diagnostic",
+      "primaryLabel": "Открыть общую диагностику"
     },
     {
       "slug": "mcp-governance",
