@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bitevo.work/schemas/site-agent-envelope-v1.json",
+  "title": "Site Agent Envelope V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lane", "session_id", "created_at", "intent", "fields", "source", "state"],
+  "properties": {
+    "schema_version": {"const": "SITE_AGENT_ENVELOPE_V1"},
+    "lane": {"enum": ["yakov", "ivan", "stas", "haven", "dar", "pharaohs", "creator", "bitevo"]},
+    "session_id": {"type": "string", "minLength": 8, "maxLength": 128},
+    "created_at": {"type": "string", "format": "date-time"},
+    "intent": {"type": "string", "minLength": 1, "maxLength": 64},
+    "fields": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean", "null"]}},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "page_path": {"type": ["string", "null"], "maxLength": 512},
+        "utm_source": {"type": ["string", "null"], "maxLength": 256},
+        "utm_medium": {"type": ["string", "null"], "maxLength": 256},
+        "utm_campaign": {"type": ["string", "null"], "maxLength": 256},
+        "ref": {"type": ["string", "null"], "maxLength": 256}
+      }
+    },
+    "state": {"enum": ["DRAFT_LOCAL", "NEEDS_INFO", "BLOCKED_SENSITIVE_INPUT", "BLOCKED_POLICY", "READY_FOR_HUMAN_REVIEW", "READY_FOR_HUMAN_HANDOFF"]},
+    "proposed_claims": {"type": "array", "items": {"type": "string", "maxLength": 128}, "maxItems": 32},
+    "requested_effects": {"type": "array", "items": {"type": "string", "maxLength": 128}, "maxItems": 16},
+    "handoff_role": {"type": ["string", "null"], "maxLength": 128},
+    "evidence_refs": {"type": "array", "items": {"type": "string", "maxLength": 512}, "maxItems": 32}
+  }
+}

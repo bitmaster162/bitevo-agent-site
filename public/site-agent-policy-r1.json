@@ -1,0 +1,21 @@
+{
+  "schema_version": "SITE_AGENT_POLICY_PACK_R1",
+  "default_state": "DRAFT_LOCAL",
+  "shared_states": ["DRAFT_LOCAL", "NEEDS_INFO", "BLOCKED_SENSITIVE_INPUT", "BLOCKED_POLICY", "READY_FOR_HUMAN_REVIEW", "READY_FOR_HUMAN_HANDOFF"],
+  "global": {
+    "sensitive_terms": ["passport", "паспорт", "cvv", "card number", "номер карты", "password", "пароль", "api key", "access token", "private key", "seed phrase", "wallet seed", "medical record", "медицинская карта", "biometric", "биометрия"],
+    "forbidden_effects": ["auto_send", "auto_reply", "auto_booking", "auto_order", "auto_payment", "crm_write", "account_access", "auto_publish"],
+    "conversion_requires_evidence": true,
+    "brief_or_click_is_conversion": false
+  },
+  "lanes": {
+    "yakov": {"release_level":"L1","allowed_intents":["trip","multi_day","transport","unsure"],"required_fields":["dates","party","interest"],"human_handoff":{"type":"whatsapp","verified":true},"blocked_claims":["final_price","availability","confirmed_booking","payment_received","guaranteed_program"]},
+    "ivan": {"release_level":"L1","allowed_intents":["muay","sc","unsure"],"required_fields":["goal"],"human_handoff":{"type":"telegram","verified":true},"blocked_claims":["final_price","availability","confirmed_booking","medical_advice","guaranteed_result"]},
+    "stas": {"release_level":"L1_SOURCE_PREPARED","allowed_intents":["phuket","islands","provinces","unsure"],"required_fields":["dates","party","interest"],"human_handoff":{"type":"telegram","verified":true,"role_label_required":"Robert"},"blocked_claims":["exact_transport_setup","all_included","exact_price","no_show_rule","refund_rule","dive_master_proof","18_year_experience_proof"]},
+    "haven": {"release_level":"L0","allowed_intents":["cook","family"],"required_fields_by_intent":{"cook":["period","party","format","preferences"],"family":["period","area","need","schedule"]},"human_handoff":null,"blocked_claims":["medical_care","nursing","therapy","diagnosis","dietary_safety","allergen_safety","qualification","final_price","availability"]},
+    "dar": {"release_level":"L0","allowed_intents":["private","business","gifts","brand","production","distribution"],"human_handoff":null,"blocked_claims":["exact_price","stock","discount","moq","production_capacity","manufacturing_lead_time","delivery_date","delivery_cost","certification","health_claim","roi","final_offer"]},
+    "pharaohs": {"release_level":"L1_REVIEW","allowed_intents":["reservation","order","menu","event"],"human_handoff":{"type":"phone","verified":true},"blocked_claims":["confirmed_reservation","table_availability","order_accepted","menu_availability","exact_price","delivery_eta","delivery_area","halal_safety","dietary_safety","allergen_safety"]},
+    "creator": {"release_level":"L0","allowed_intents":["application_summary"],"required_fields":["adult_self_confirmed","voluntary_consent","country","workplace"],"human_handoff":null,"blocked_claims":["age_verified","platform_eligible","jurisdiction_cleared","onboarded","earnings_guarantee"],"extra_sensitive_terms":["identity document","id scan","explicit private content","home address"]},
+    "bitevo": {"release_level":"L0","allowed_intents":["audit","build","governance","automation","unsure"],"required_fields":["company","workflow","pain","outcome","systems","consequence","never"],"human_handoff":null,"blocked_claims":["project_accepted","deployment_authorized","testing_authorized","credentials_granted","conversion_without_evidence"]}
+  }
+}

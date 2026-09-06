@@ -57,6 +57,28 @@
     "pUeC4ZiQjsziwxvVKz3lt0g/AFWLMrZ2XPQ49OhydWE=",
     "sDb7lBPyFoFcd0Kk3RLxtu+EX3VnRf5O7A8odOHrxc0=",
     "xGM+fthzwGIz+UIsri1m2A+1Z+LoYYQzxlpxoi4m6zw=",
-    "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g="
+    "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g=",
+    "VCmT8Yrhqg0F3UIf0/0D5EWJyTju+9R305EI64WyEX8=",
+    "Vg6vrWzbl52s1mK4xX1gImoSkR063z0z+ZN6LiBWEHQ=",
+    "Cv4I0nKYq4VS2RCJlwdBtHM58ctCki1bxNtFG9nyWzA="
+  ],
+  "reviews": [
+    {
+      "deployment": "dpl_DLATx7eN3fD5wtsY7LaZxv4unhwc",
+      "sourceSha": "86cefb9fdd5cf1ae437aef3626daa7c5af66786d",
+      "note": "Site Agent lab CSS source was first observed provider-bound at 86cefb9f on Astro 6. The three <style> blocks are byte-identical through final historical PR25 head 88c108cf; only a forbidden inline style attribute was removed afterward. Current main uses Astro 7.2.10, which scopes/serializes those unchanged source blocks differently. Replace the stale Astro-6 emitted hashes with the exact Astro-7 emitted hashes verified on current-main candidate 5dcc3777; no CSS rule/source change is introduced by this review refresh.",
+      "styles": [
+        "VCmT8Yrhqg0F3UIf0/0D5EWJyTju+9R305EI64WyEX8=",
+        "Vg6vrWzbl52s1mK4xX1gImoSkR063z0z+ZN6LiBWEHQ=",
+        "Cv4I0nKYq4VS2RCJlwdBtHM58ctCki1bxNtFG9nyWzA="
+      ],
+      "historicalEmittedStyles": [
+        "FQnX7xwQHiJE9NHqOGknPgIGqrg321Ez7ah+sn/kOrI=",
+        "vrQVBN6dE5EkRIk7McjCwfqjqYfRrWO4kYUk2rE0ko0=",
+        "L9R/4fv2iRMAtAMOH8Qc4CthWz1BVMD1r1/d92qP+Bk="
+      ],
+      "currentAstro": "7.2.10",
+      "currentCandidateSha": "5dcc3777c6a3fdd2829f0bd1b7dae3146df48168"
+    }
   ]
 }

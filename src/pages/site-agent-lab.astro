@@ -1,0 +1,17 @@
+---
+const buildSha = import.meta.env.PUBLIC_BUILD_SHA || 'source-prepared';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#071013" />
+  <title>Site Agent Policy Lab | BitEvo</title>
+  <style>
+    :root{--bg:#071013;--card:#0d1a1f;--line:#20343c;--text:#eef7f7;--muted:#99aaaf;--accent:#8ff0cf}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,sans-serif}.w{width:min(980px,calc(100% - 28px));margin:auto;padding:34px 0 70px}a{color:var(--accent)}h1{font-size:clamp(44px,7vw,72px);line-height:.95;letter-spacing:-.05em;margin:28px 0 16px}.lead{color:var(--muted);font-size:18px}.card{margin-top:22px;padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--card)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}label{display:grid;gap:6px;font-weight:800}input,select,textarea{width:100%;background:#061015;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit}textarea{min-height:120px}.btn{border:0;border-radius:999px;padding:12px 18px;background:var(--accent);color:#071013;font-weight:900;cursor:pointer}.out{white-space:pre-wrap;overflow:auto;background:#03090c;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:16px}.note{color:var(--muted);font-size:13px}.state{font-size:11px;letter-spacing:.1em;color:var(--accent);font-weight:900}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}}
+  </style>
+</head>
+<body><main class="w"><a href="/concierge">← Qualification Concierge</a><div class="state">NOINDEX · LOCAL QA · NO NETWORK WRITE</div><h1>Site Agent Policy Lab.</h1><p class="lead">Exercise the shared policy pack, normalized envelope and dry-run owner-copilot decision locally in the browser. This page never submits or stores lead data.</p><section class="card"><div class="grid"><label>Lane<select id="lane"></select></label><label>Intent<select id="intent"></select></label><label class="full">Fields JSON<textarea id="fields">{}</textarea></label><label>Proposed claims (comma-separated)<input id="claims" placeholder="e.g. stock, exact_price" /></label><label>Requested effects (comma-separated)<input id="effects" placeholder="e.g. human_handoff, auto_send" /></label><label>Handoff role<input id="role" placeholder="Robert for Stas" /></label><div><button class="btn" id="run" type="button">Evaluate locally</button></div></div><p class="note">Sensitive-data, required-field, claim, effect and release-level guards run before a READY state. `write_allowed`, `write_authority` and `execute_authority` remain false.</p><pre id="out" class="out">Waiting for policy…</pre></section><footer class="note">Build: {buildSha} · source-prepared only until exact-head QA.</footer></main><script src="/site-agent-lab.js" defer></script></body>
+</html>
