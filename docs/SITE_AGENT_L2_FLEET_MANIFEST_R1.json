@@ -1,0 +1,37 @@
+{
+  "schema_version": "SITE_AGENT_L2_FLEET_MANIFEST_R1",
+  "source_parent_head": "d05c842659dd7239e2bddb1861d1cd5169daa466",
+  "policy": {
+    "path": "docs/SITE_AGENT_POLICY_PACK_R1.json",
+    "blob_sha": "79fa32803403932362faa776569f08ceffa74169",
+    "schema_version": "SITE_AGENT_POLICY_PACK_R1"
+  },
+  "readiness_schema": {
+    "path": "docs/SITE_AGENT_L2_READINESS_SCHEMA_R1.json",
+    "blob_sha": "4f919a2dc304e4881883e60eb183f057e9779027",
+    "schema_version": "SITE_AGENT_L2_READINESS_R1"
+  },
+  "waves": [
+    {
+      "name": "wave1",
+      "path": "docs/SITE_AGENT_L2_LANE_FIXTURES_R1.json",
+      "blob_sha": "eb5e26bf991dd95b9ec42a0c2c8eb30d4f76ceb2",
+      "schema_version": "SITE_AGENT_L2_LANE_FIXTURES_R1",
+      "lanes": ["dar", "pharaohs", "yakov", "ivan"]
+    },
+    {
+      "name": "wave2",
+      "path": "docs/SITE_AGENT_L2_LANE_FIXTURES_WAVE2_R1.json",
+      "blob_sha": "55a03b883baa82cbc98805fdf8080e4ea2163aa6",
+      "schema_version": "SITE_AGENT_L2_LANE_FIXTURES_WAVE2_R1",
+      "lanes": ["haven", "creator", "stas", "bitevo"]
+    }
+  ],
+  "expected_fleet_lanes": ["dar", "pharaohs", "yakov", "ivan", "haven", "creator", "stas", "bitevo"],
+  "invariants": {
+    "storage_write_allowed": false,
+    "execute_authority": false,
+    "production_effects_authorized": false,
+    "human_handoff_is_storage": false
+  }
+}

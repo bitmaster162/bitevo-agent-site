@@ -1,0 +1,124 @@
+{
+  "schema_version": "SITE_AGENT_L2_LANE_FIXTURES_WAVE2_R1",
+  "policy_version": "SITE_AGENT_POLICY_PACK_R1",
+  "authority": {
+    "runtime_authority_tail": "R6 LIVE AUTHORITY TAIL",
+    "bitevo_source_parent_head": "9664ecc0c4ab10ca9e59b94e6b75021f9c0479cf"
+  },
+  "priority_order": [
+    "haven",
+    "creator",
+    "stas",
+    "bitevo"
+  ],
+  "lanes": [
+    {
+      "lane": "haven",
+      "source_binding": {
+        "type": "pr_head",
+        "sha": "71c56e2bf4938b3d4b759ddfeb1c4b7572732630"
+      },
+      "owner_intake_state": "pending_owner_facts",
+      "verified_handoff": {
+        "available": false,
+        "type": null,
+        "ref": "none_approved",
+        "role_label": null
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "haven",
+        "destination": {"approved": false, "kind": null, "destination_ref": null},
+        "controller": {"approved": false, "controller_ref": null},
+        "retention": {"approved": false, "retention_rule": null},
+        "access": {"approved": false, "roles": []},
+        "privacy": {"approved": false, "privacy_ref": null},
+        "deletion_correction": {"approved": false, "method_ref": null},
+        "idempotency": {"approved": false, "strategy": null},
+        "policy_binding": {"approved": false, "policy_version": "SITE_AGENT_POLICY_PACK_R1"},
+        "synthetic_test": {"passed": false, "receipt_sha256": null}
+      }
+    },
+    {
+      "lane": "creator",
+      "source_binding": {
+        "type": "pr_head",
+        "sha": "f239803fc9c0730917cfdbd5539ed373091d6685"
+      },
+      "owner_intake_state": "operator_legal_privacy_verification_commercial_contract_facts_pending",
+      "verified_handoff": {
+        "available": false,
+        "type": null,
+        "ref": "none_approved",
+        "role_label": null
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "creator",
+        "destination": {"approved": false, "kind": null, "destination_ref": null},
+        "controller": {"approved": false, "controller_ref": null},
+        "retention": {"approved": false, "retention_rule": null},
+        "access": {"approved": false, "roles": []},
+        "privacy": {"approved": false, "privacy_ref": null},
+        "deletion_correction": {"approved": false, "method_ref": null},
+        "idempotency": {"approved": false, "strategy": null},
+        "policy_binding": {"approved": false, "policy_version": "SITE_AGENT_POLICY_PACK_R1"},
+        "synthetic_test": {"passed": false, "receipt_sha256": null}
+      }
+    },
+    {
+      "lane": "stas",
+      "source_binding": {
+        "type": "pr_head",
+        "sha": "cc5305a2fe49c51bcf427113f38ecb7af849504a"
+      },
+      "owner_intake_state": "received_ingested_public_release_approved_no_storage_approval",
+      "verified_handoff": {
+        "available": true,
+        "type": "telegram",
+        "ref": "https://t.me/slcteam",
+        "role_label": "Robert"
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "stas",
+        "destination": {"approved": false, "kind": null, "destination_ref": null},
+        "controller": {"approved": false, "controller_ref": null},
+        "retention": {"approved": false, "retention_rule": null},
+        "access": {"approved": false, "roles": []},
+        "privacy": {"approved": false, "privacy_ref": null},
+        "deletion_correction": {"approved": false, "method_ref": null},
+        "idempotency": {"approved": false, "strategy": null},
+        "policy_binding": {"approved": false, "policy_version": "SITE_AGENT_POLICY_PACK_R1"},
+        "synthetic_test": {"passed": false, "receipt_sha256": null}
+      }
+    },
+    {
+      "lane": "bitevo",
+      "source_binding": {
+        "type": "source_parent_head",
+        "sha": "9664ecc0c4ab10ca9e59b94e6b75021f9c0479cf"
+      },
+      "owner_intake_state": "internal_platform_no_l2_storage_approval",
+      "verified_handoff": {
+        "available": false,
+        "type": null,
+        "ref": "none_approved",
+        "role_label": null
+      },
+      "readiness": {
+        "schema_version": "SITE_AGENT_L2_READINESS_R1",
+        "lane": "bitevo",
+        "destination": {"approved": false, "kind": null, "destination_ref": null},
+        "controller": {"approved": false, "controller_ref": null},
+        "retention": {"approved": false, "retention_rule": null},
+        "access": {"approved": false, "roles": []},
+        "privacy": {"approved": false, "privacy_ref": null},
+        "deletion_correction": {"approved": false, "method_ref": null},
+        "idempotency": {"approved": false, "strategy": null},
+        "policy_binding": {"approved": false, "policy_version": "SITE_AGENT_POLICY_PACK_R1"},
+        "synthetic_test": {"passed": false, "receipt_sha256": null}
+      }
+    }
+  ]
+}

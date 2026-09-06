@@ -57,6 +57,21 @@
     "pUeC4ZiQjsziwxvVKz3lt0g/AFWLMrZ2XPQ49OhydWE=",
     "sDb7lBPyFoFcd0Kk3RLxtu+EX3VnRf5O7A8odOHrxc0=",
     "xGM+fthzwGIz+UIsri1m2A+1Z+LoYYQzxlpxoi4m6zw=",
-    "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g="
+    "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g=",
+    "FQnX7xwQHiJE9NHqOGknPgIGqrg321Ez7ah+sn/kOrI=",
+    "vrQVBN6dE5EkRIk7McjCwfqjqYfRrWO4kYUk2rE0ko0=",
+    "L9R/4fv2iRMAtAMOH8Qc4CthWz1BVMD1r1/d92qP+Bk="
+  ],
+  "reviews": [
+    {
+      "deployment": "dpl_DLATx7eN3fD5wtsY7LaZxv4unhwc",
+      "sourceSha": "86cefb9fdd5cf1ae437aef3626daa7c5af66786d",
+      "note": "Reviewed Site Agent lab style blocks emitted by the exact R6 candidate. The separate prohibited inline style attribute was removed in the follow-up source fix; only these immutable block hashes are approved.",
+      "styles": [
+        "FQnX7xwQHiJE9NHqOGknPgIGqrg321Ez7ah+sn/kOrI=",
+        "vrQVBN6dE5EkRIk7McjCwfqjqYfRrWO4kYUk2rE0ko0=",
+        "L9R/4fv2iRMAtAMOH8Qc4CthWz1BVMD1r1/d92qP+Bk="
+      ]
+    }
   ]
 }
