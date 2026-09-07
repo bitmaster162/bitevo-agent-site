@@ -31,6 +31,7 @@ const pricing = await readRoute('/pricing');
 const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 const valueExample = await readRoute('/build/workflow-value-example');
+const baselineWorksheet = await readRoute('/build/workflow-baseline-worksheet');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
 
@@ -70,6 +71,8 @@ for (const phrase of ['Thailand/SEA HR Workflow Diagnostic', 'Make one recurring
 }
 if (!hasAnchor(hrDiagnostic, '/build/exception-workflow-diagnostic', 'Open the general diagnostic')) failures.push('/build/hr-workflow-diagnostic: missing general diagnostic backlink');
 if (!hasAnchor(buildDiagnostic, '/build/workflow-value-example', 'Open synthetic measurement example')) failures.push('/build/exception-workflow-diagnostic: missing BUILD measurement proof link');
+if (!hasAnchor(buildDiagnostic, '/build/workflow-baseline-worksheet', 'Prepare your baseline locally')) failures.push('/build/exception-workflow-diagnostic: missing local baseline worksheet link');
+if (!hasAnchor(valueExample, '/build/workflow-baseline-worksheet', 'Prepare your baseline locally')) failures.push('/build/workflow-value-example: missing local baseline worksheet link');
 if (!hasAnchor(proof, '/build/workflow-value-example', 'Open BUILD measurement example')) failures.push('/proof: missing BUILD measurement proof link');
 const valueExampleText = stripTags(valueExample);
 for (const phrase of ['SYNTHETIC / NOT CUSTOMER / NOT OBSERVED', 'This is arithmetic, not ROI.', '20.4 hours and $612 are synthetic arithmetic outputs.', 'cannot substitute for payment, delivery or measured value evidence']) {
@@ -94,6 +97,11 @@ for (const [key, value] of Object.entries(calc)) {
   if (Math.abs(Number(valueExampleJson.computed[key]) - value) > 1e-9) failures.push(`/build/workflow-value-example.json: arithmetic drift ${key}`);
 }
 
+const baselineWorksheetText = stripTags(baselineWorksheet);
+for (const phrase of ['Freeze one exception-workflow baseline before discussing value.', 'LOCAL ONLY · NO NETWORK WRITE · NO STORAGE WRITE', 'Testing authorization: NOT GRANTED.']) {
+  if (!baselineWorksheetText.includes(phrase)) failures.push(`/build/workflow-baseline-worksheet: missing boundary phrase \"${phrase}\"`);
+}
+if (!hasAnchor(baselineWorksheet, '/build/exception-workflow-diagnostic', 'Back to BUILD diagnostic')) failures.push('/build/workflow-baseline-worksheet: missing diagnostic backlink');
 
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
@@ -117,4 +125,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS`);

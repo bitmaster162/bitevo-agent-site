@@ -1,0 +1,154 @@
+---
+interface Props { locale?: 'en' | 'ru' }
+const { locale = 'en' } = Astro.props;
+const ru = locale === 'ru';
+const t = ru ? {
+  eyebrow:'BUILD TOOL · BROWSER-LOCAL BASELINE', title:'Зафиксируйте baseline одного exception workflow до разговора о ценности.',
+  lede:'Введите только обобщённые buyer-confirmed числа. Worksheet считает текущую нагрузку локально в браузере, ничего не отправляет и не превращает baseline в ROI claim.',
+  boundary:'ЛОКАЛЬНО · БЕЗ NETWORK WRITE · БЕЗ STORAGE WRITE', warning:'Не вводите имена клиентов, PII, credentials, секреты, private keys или production data. Используйте обобщённое название workflow.',
+  workflow:'Workflow label', period:'Период', month:'Месяц', week:'Неделя', cases:'Exception cases за период', first:'First-pass minutes на case', repeatRate:'Repeat-touch rate (%)', repeatMinutes:'Repeat-touch minutes',
+  currency:'Currency label (optional)', labor:'Loaded labor cost / hour (optional)', metric:'Что вы хотите измерять после изменения?',
+  generate:'Рассчитать локальный baseline', reset:'Сбросить', output:'Локальный baseline JSON', copy:'Копировать JSON', download:'Скачать JSON',
+  notReady:'Ещё не рассчитано', total:'Часы exception-work за период', repeat:'Из них repeat-touch hours', cost:'Optional labor translation',
+  claim:'Это buyer-supplied unverified draft, не customer result и не ROI. Testing authorization: NOT GRANTED.', diagnostic:'Вернуться к BUILD-диагностике', example:'Открыть synthetic example'
+} : {
+  eyebrow:'BUILD TOOL · BROWSER-LOCAL BASELINE', title:'Freeze one exception-workflow baseline before discussing value.',
+  lede:'Enter only generalized buyer-confirmed numbers. The worksheet calculates current workload locally in your browser, sends nothing, and does not turn a baseline into an ROI claim.',
+  boundary:'LOCAL ONLY · NO NETWORK WRITE · NO STORAGE WRITE', warning:'Do not enter customer names, PII, credentials, secrets, private keys or production data. Use a generalized workflow label.',
+  workflow:'Workflow label', period:'Period', month:'Month', week:'Week', cases:'Exception cases per period', first:'First-pass minutes per case', repeatRate:'Repeat-touch rate (%)', repeatMinutes:'Repeat-touch minutes',
+  currency:'Currency label (optional)', labor:'Loaded labor cost / hour (optional)', metric:'What should be measured after a change?',
+  generate:'Calculate local baseline', reset:'Reset', output:'Local baseline JSON', copy:'Copy JSON', download:'Download JSON',
+  notReady:'Not calculated yet', total:'Exception-work hours per period', repeat:'Repeat-touch hours inside total', cost:'Optional labor translation',
+  claim:'Buyer-supplied unverified draft, not a customer result and not ROI. Testing authorization: NOT GRANTED.', diagnostic:'Back to BUILD diagnostic', example:'Open synthetic example'
+};
+---<section class="section" data-build-baseline-worksheet data-locale={locale} data-network-write="none" data-storage-write="none">
+  <div class="container">
+    <div class="eyebrow">{t.eyebrow}</div>
+    <h1 class="display">{t.title}</h1>
+    <p class="lede">{t.lede}</p>
+  </div>
+</section>
+<section class="section-tight section-rule">
+  <div class="container panel" role="note">
+    <strong>{t.boundary}</strong>
+    <p>{t.warning}</p>
+  </div>
+</section>
+<section class="section section-rule">
+  <div class="container">
+    <form id="workflowBaselineForm" class="panel" autocomplete="off">
+      <label>{t.workflow}<input id="baselineWorkflow" type="text" required placeholder={ru ? 'Напр. document completeness exceptions' : 'e.g. document completeness exceptions'} /></label>
+      <label>{t.period}<select id="baselinePeriod"><option value="month">{t.month}</option><option value="week">{t.week}</option></select></label>
+      <label>{t.cases}<input id="baselineCases" type="number" min="0" step="1" required inputmode="numeric" /></label>
+      <label>{t.first}<input id="baselineFirstMinutes" type="number" min="0" step="0.1" required inputmode="decimal" /></label>
+      <label>{t.repeatRate}<input id="baselineRepeatRate" type="number" min="0" max="100" step="0.1" required inputmode="decimal" /></label>
+      <label>{t.repeatMinutes}<input id="baselineRepeatMinutes" type="number" min="0" step="0.1" required inputmode="decimal" /></label>
+      <label>{t.currency}<input id="baselineCurrency" type="text" maxlength="12" placeholder="USD / THB / EUR" /></label>
+      <label>{t.labor}<input id="baselineLabor" type="number" min="0" step="0.01" inputmode="decimal" /></label>
+      <label>{t.metric}<input id="baselineMetric" type="text" maxlength="180" placeholder={ru ? 'Напр. handling time / reopen rate' : 'e.g. handling time / reopen rate'} /></label>
+    </form>
+  </div>
+</section><section class="section section-rule">
+  <div class="container panel">
+    <div class="hero-actions">
+      <button id="baselineGenerate" class="button button-primary" type="button">{t.generate}</button>
+      <button id="baselineReset" class="button button-ghost" type="button">{t.reset}</button>
+    </div>
+    <div aria-live="polite">
+      <p><strong>{t.total}:</strong> <span id="baselineTotal">—</span></p>
+      <p><strong>{t.repeat}:</strong> <span id="baselineRepeat">—</span></p>
+      <p><strong>{t.cost}:</strong> <span id="baselineCost">—</span></p>
+      <p id="baselineStatus">{t.notReady}</p>
+    </div>
+    <label>{t.output}<textarea id="baselineOutput" rows="18" readonly aria-label={t.output}></textarea></label>
+    <div class="hero-actions">
+      <button id="baselineCopy" class="button" type="button" disabled>{t.copy}</button>
+      <button id="baselineDownload" class="button button-ghost" type="button" disabled>{t.download}</button>
+    </div>
+    <p>{t.claim}</p>
+  </div>
+</section>
+<section class="section section-rule">
+  <div class="container hero-actions">
+    <a class="button button-primary" href={ru ? '/ru/build/exception-workflow-diagnostic' : '/build/exception-workflow-diagnostic'}>{t.diagnostic}</a>
+    <a class="button button-ghost" href={ru ? '/ru/build/workflow-value-example' : '/build/workflow-value-example'}>{t.example}</a>
+  </div>
+</section><script>
+  import { calculateWorkflowBaseline } from '../lib/workflow-baseline.mjs';
+  const root = document.querySelector('[data-build-baseline-worksheet]');
+  if (root) {
+    const byId = id => document.getElementById(id);
+    const form = byId('workflowBaselineForm');
+    const output = byId('baselineOutput');
+    const copy = byId('baselineCopy');
+    const download = byId('baselineDownload');
+    const status = byId('baselineStatus');
+    const total = byId('baselineTotal');
+    const repeat = byId('baselineRepeat');
+    const cost = byId('baselineCost');
+    const numberRequired = (id, label) => {
+      const raw = byId(id)?.value?.trim();
+      if (raw === '') throw new Error(`${label} is required`);
+      const n = Number(raw);
+      if (!Number.isFinite(n) || n < 0) throw new Error(`${label} must be a non-negative number`);
+      return n;
+    };
+    const resetOutput = () => {
+      output.value = ''; total.textContent = '—'; repeat.textContent = '—'; cost.textContent = '—';
+      copy.disabled = true; download.disabled = true;
+    };
+    byId('baselineGenerate')?.addEventListener('click', () => {
+      try {
+        if (!form.reportValidity()) return;
+        const workflow = byId('baselineWorkflow').value.trim();
+        const repeatPercent = numberRequired('baselineRepeatRate', 'repeat-touch rate');
+        if (repeatPercent > 100) throw new Error('repeat-touch rate must be 0–100%');        const laborRaw = byId('baselineLabor').value.trim();
+        const input = {
+          cases_per_period: numberRequired('baselineCases', 'cases per period'),
+          first_pass_minutes_per_case: numberRequired('baselineFirstMinutes', 'first-pass minutes'),
+          repeat_touch_rate: repeatPercent / 100,
+          repeat_touch_minutes: numberRequired('baselineRepeatMinutes', 'repeat-touch minutes'),
+          loaded_labor_cost_per_hour: laborRaw === '' ? null : numberRequired('baselineLabor', 'loaded labor cost')
+        };
+        const computed = calculateWorkflowBaseline(input);
+        const currency = byId('baselineCurrency').value.trim() || null;
+        const artifact = {
+          schema: 'bitevo.build-workflow-baseline.local/v1',
+          status: 'BUYER_SUPPLIED_UNVERIFIED_LOCAL_DRAFT',
+          generated_at: new Date().toISOString(),
+          workflow_label: workflow,
+          period: byId('baselinePeriod').value,
+          measurement_target: byId('baselineMetric').value.trim() || null,
+          currency_label: currency,
+          input,
+          computed,
+          customer_result: false,
+          roi_claim: false,
+          testing_authorization: false,
+          transmission: 'NONE',
+          storage_write: 'NONE'
+        };
+        output.value = JSON.stringify(artifact, null, 2);
+        total.textContent = String(computed.total_exception_hours_per_period);
+        repeat.textContent = String(computed.repeat_touch_hours_per_period);
+        cost.textContent = computed.labor_cost_per_period === null ? 'not calculated' : `${currency || 'currency units'} ${computed.labor_cost_per_period}`;
+        status.textContent = 'BUYER_SUPPLIED_UNVERIFIED_LOCAL_DRAFT';
+        copy.disabled = false; download.disabled = false;
+      } catch (error) { status.textContent = error instanceof Error ? error.message : 'Invalid baseline inputs'; resetOutput(); }
+    });    byId('baselineReset')?.addEventListener('click', () => {
+      form.reset(); resetOutput(); status.textContent = root.dataset.locale === 'ru' ? 'Ещё не рассчитано' : 'Not calculated yet';
+    });
+    copy?.addEventListener('click', async () => {
+      if (!output.value) return;
+      await navigator.clipboard.writeText(output.value);
+    });
+    download?.addEventListener('click', () => {
+      if (!output.value) return;
+      const blob = new Blob([output.value], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'bitevo-workflow-baseline.local.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+</script>
