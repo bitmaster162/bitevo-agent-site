@@ -5,6 +5,7 @@ const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const failures = [];
 const read = route => readFile(`${dist}${route}/index.html`, 'utf8');
 const strip = text => text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+const hasAnchor = (html, href, label) => [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].some(m => (m[1] || '').match(/\bhref=[\"']([^\"']+)[\"']/i)?.[1] === href && strip(m[2] || '') === label);
 const exists = async path => { try { await access(path); return true; } catch { return false; } };
 
 const en = await read('/security');
@@ -24,8 +25,8 @@ for (const phrase of [
   'Internal dogfood и synthetic proof не превращаются в customer certification.'
 ]) if (!ruText.includes(phrase)) failures.push(`RU missing: ${phrase}`);
 
-if (!en.includes('href="/security"')) failures.push('footer EN security link missing');
-if (!ru.includes('href="/ru/security"')) failures.push('footer RU security link missing');
+if (!hasAnchor(en, '/security', 'Security')) failures.push('footer EN security label/link missing');
+if (!hasAnchor(ru, '/ru/security', 'Безопасность')) failures.push('footer RU security label/link missing');
 if (!en.includes('hreflang="ru"') || !en.includes('href="https://bitevo.work/ru/security"')) failures.push('EN RU alternate missing');
 if (await exists(`${dist}/privacy/index.html`)) failures.push('privacy route unexpectedly published');
 if (await exists(`${dist}/terms/index.html`)) failures.push('terms route unexpectedly published');
