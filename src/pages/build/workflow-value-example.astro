@@ -1,0 +1,102 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import example from '../../data/build-workflow-value-example.json';
+
+const b = example.baseline;
+const c = example.illustrative_comparison_state;
+const x = example.computed;
+const fmt = (value) => Number(value).toLocaleString('en-US', { maximumFractionDigits: 1 });
+---
+
+<Layout title="Synthetic Workflow Value Example | BitEvo BUILD" description="A transparent synthetic arithmetic example for measuring one workflow-exception baseline and comparison state. Not customer evidence, not an observed implementation result, and not an ROI promise.">
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">BUILD proof · BUILD-SYN-001</div>
+      <h1 class="display">See the arithmetic before calling it value.</h1>
+      <p class="lede">This page shows how BitEvo can turn buyer-confirmed workflow inputs into a bounded time/rework measurement. Every number below is synthetic. No customer engagement, production implementation or observed commercial outcome is represented.</p>
+      <div class="hero-actions"><a class="button button-primary" href="/build/workflow-value-example.json">Open machine-readable example <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="/build/exception-workflow-diagnostic">Open the $3,000 diagnostic</a></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container panel">
+      <div class="eyebrow">Evidence boundary</div>
+      <h2 class="section-title">SYNTHETIC / NOT CUSTOMER / NOT OBSERVED</h2>
+      <p>This is arithmetic, not ROI. It is not YPN Accounting data, not a BitEvo customer result, not proof that a workflow changed, and not tax, accounting, legal or compliance advice.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Synthetic workflow</div>
+      <h2 class="section-title">Document completeness exception queue.</h2>
+      <p class="lede">Illustrative object: cases that need extra review because a required document, field or handoff is incomplete or inconsistent. The example measures handling effort only; it does not judge the professional correctness of the underlying case.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Synthetic baseline</div>
+      <h2 class="section-title">Freeze the denominator first.</h2>
+      <article class="panel">
+        <p><strong>{b.cases_per_period}</strong> exception cases / month</p>
+        <p><strong>{b.first_pass_minutes_per_case} min</strong> average first-pass exception handling</p>
+        <p><strong>{fmt(b.repeat_touch_rate * 100)}%</strong> require one additional <strong>{b.repeat_touch_minutes} min</strong> repeat touch</p>
+        <p><strong>${b.loaded_labor_usd_per_hour}/hour</strong> synthetic loaded-labor assumption</p>
+      </article>
+      <article class="panel">
+        <p>First pass = {b.cases_per_period} × {b.first_pass_minutes_per_case} / 60 = <strong>{fmt(x.baseline_first_pass_hours)} hours</strong></p>
+        <p>Repeat work = {b.cases_per_period} × {fmt(b.repeat_touch_rate * 100)}% × {b.repeat_touch_minutes} / 60 = <strong>{fmt(x.baseline_repeat_touch_hours)} hours</strong></p>
+        <p>Total = <strong>{fmt(x.baseline_total_hours)} hours/month</strong></p>
+        <p>Synthetic labor translation = <strong>${fmt(x.baseline_labor_cost_usd)}/month</strong></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Illustrative comparison state</div>
+      <h2 class="section-title">Use the same workflow definition again.</h2>
+      <article class="panel">
+        <p>{c.cases_per_period} cases/month · {c.first_pass_minutes_per_case} min first pass · {fmt(c.repeat_touch_rate * 100)}% repeat-touch rate · {c.repeat_touch_minutes} min repeat touch</p>
+        <p>First pass = <strong>{fmt(x.comparison_first_pass_hours)} hours</strong></p>
+        <p>Repeat work = <strong>{fmt(x.comparison_repeat_touch_hours)} hours</strong></p>
+        <p>Total = <strong>{fmt(x.comparison_total_hours)} hours/month</strong></p>
+        <p>Synthetic labor translation = <strong>${fmt(x.comparison_labor_cost_usd)}/month</strong></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container panel">
+      <div class="eyebrow">Illustrative delta</div>
+      <h2 class="section-title">20.4 hours and $612 are synthetic arithmetic outputs.</h2>
+      <p class="lede">The difference between the two designed states is <strong>{fmt(x.illustrative_delta_hours)} hours/month</strong>, or <strong>${fmt(x.illustrative_delta_cost_usd)}/month</strong> at the synthetic $30/hour labor assumption. These values become a real customer result only after every input is replaced with customer-confirmed data and the comparison state is actually observed on the same frozen workflow.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Real engagement rule</div>
+      <h2 class="section-title">What must change before BitEvo can state a customer result.</h2>
+      {example.measurement_rule.map((rule, i) => <article class="panel"><strong>{String(i + 1).padStart(2, '0')}</strong><p>{rule}</p></article>)}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container panel">
+      <div class="eyebrow">Claim ceiling</div>
+      <h2 class="section-title">The example cannot substitute for payment, delivery or measured value evidence.</h2>
+      <p>Issue #7 requires the real chain from scoped pain through payment, delivery and measured value. A synthetic calculation can help define what to measure; it cannot fill any missing commercial stage.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Use your own baseline</div>
+      <h2 class="section-title">Bring one workflow and the numbers you can actually defend.</h2>
+      <p class="lede">The five-day diagnostic freezes the workflow, representative exception cases, evidence boundary and one measurable target before deeper implementation work is considered.</p>
+      <a class="button button-primary" href="mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification">Request a 20-minute qualification call →</a>
+    </div>
+  </section>
+</Layout>

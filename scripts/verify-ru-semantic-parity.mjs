@@ -42,7 +42,7 @@ if (parity.schema !== 'bitevo.ru-semantic-parity/v1') failures.push(`unexpected 
 
 checks += 2;
 if (enRoutes.length !== ruRoutes.length) failures.push(`indexable locale count mismatch: en=${enRoutes.length} ru=${ruRoutes.length}`);
-if (enRoutes.length !== 45) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
+if (enRoutes.length !== 46) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
 
 const expectedGenerated = new Set();
 for (const en of enRoutes) {
@@ -92,7 +92,7 @@ for (const en of enRoutes) {
 
 const actualGenerated = new Set(parityMap.keys());
 checks += 2;
-if (expectedGenerated.size !== 28) failures.push(`unexpected generated parity route count: ${expectedGenerated.size}`);
+if (expectedGenerated.size !== 29) failures.push(`unexpected generated parity route count: ${expectedGenerated.size}`);
 if (actualGenerated.size !== parity.pages.length) failures.push('duplicate paths in ru-semantic-parity data');
 
 for (const path of expectedGenerated) {

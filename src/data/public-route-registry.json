@@ -72,6 +72,13 @@
       "parent": "/build/exception-workflow-diagnostic"
     },
     {
+      "path": "/build/workflow-value-example",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build/exception-workflow-diagnostic"
+    },
+    {
       "path": "/mcp-governance",
       "category": "SPECIALIST",
       "indexable": true,
@@ -474,6 +481,13 @@
     {
       "path": "/ru/build/hr-workflow-diagnostic",
       "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build/exception-workflow-diagnostic"
+    },
+    {
+      "path": "/ru/build/workflow-value-example",
+      "category": "PROOF",
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/build/exception-workflow-diagnostic"
