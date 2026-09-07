@@ -31,6 +31,7 @@ const ruStart = await readRoute('/ru/start');
 const buildIndex = await readRoute('/build');
 const ruBuildIndex = await readRoute('/ru/build');
 const pricing = await readRoute('/pricing');
+const ruPricing = await readRoute('/ru/pricing');
 const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 const valueExample = await readRoute('/build/workflow-value-example');
@@ -157,6 +158,7 @@ for (const phrase of ['A proposal is not a paid start.', 'This page cannot prove
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
+  ['/control-validation', 'Open Security Control Validation'],
   ['/audit-intake', 'Prepare Entry Audit scope'],
   ['/start', 'Choose the smallest scope'],
   ['/mapper', 'Map the action chain']
@@ -164,10 +166,20 @@ const pricingContracts = [
 for (const [href, cta] of pricingContracts) {
   if (!hasAnchor(pricing, href, cta)) failures.push(`/pricing: missing conversion CTA "${cta}" -> ${href}`);
 }
+const ruPricingContracts = [
+  ['/ru/control-validation', 'Открыть Security Control Validation']
+];
+for (const [href, cta] of ruPricingContracts) {
+  if (!hasAnchor(ruPricing, href, cta)) failures.push(`/ru/pricing: missing conversion CTA "${cta}" -> ${href}`);
+}
 
 const pricingText = stripTags(pricing);
-for (const required of ['Free', '$1,500', '$4,900', 'This page does not book a triage, submit an audit request or authorize testing.']) {
+for (const required of ['Free', '$1,500', '$4,900', 'Security Control Validation · fixed $1,500', 'This page does not book a triage, submit an audit request or authorize testing.']) {
   if (!pricingText.includes(required)) failures.push(`/pricing: missing commercial invariant "${required}"`);
+}
+const ruPricingText = stripTags(ruPricing);
+for (const required of ['Security Control Validation · фиксированные $1,500']) {
+  if (!ruPricingText.includes(required)) failures.push(`/ru/pricing: missing commercial invariant "${required}"`);
 }
 
 if (failures.length) {
@@ -176,4 +188,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
