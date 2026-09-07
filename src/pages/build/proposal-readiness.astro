@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import readiness from '../../data/build-proposal-readiness.json';
+
+const items = readiness.required_written_confirmation;
+---
+
+<Layout title="BUILD Proposal Readiness | BitEvo" description="Checklist for turning one accepted BUILD scope into a written proposal without creating a checkout, invoice, contract or testing authorization on the public site.">
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">BUILD · PROPOSAL READINESS · TEMPLATE ONLY</div>
+      <h1 class="display">A scope brief is not yet a proposal.</h1>
+      <p class="lede">Before the existing USD 3,000 / five-business-day BUILD diagnostic can move from scope review to a written proposal, the exact workflow, deliverables, exclusions, acceptance evidence, Rules of Engagement and commercial handoff must be explicit.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container panel" role="note">
+      <strong>TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION</strong>
+      <p>This public page does not issue a proposal, accept payment, publish a receiving rail, capture a signature, book work or authorize testing. Actual commercial/payment instructions are agreed through a direct business channel.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Written proposal gate</div>
+      <h2 class="section-title">Eight confirmations should be explicit before work starts.</h2>
+      {items.map((item, index) => (
+        <article class="panel">
+          <div class="eyebrow">{String(index + 1).padStart(2,'0')} · {item.status}</div>
+          <h3>{item.label}</h3>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container">
+      <article class="panel">
+        <div class="eyebrow">Fixed public offer facts</div>
+        <h2>One recurring exception workflow · USD 3,000 · five business days.</h2>
+        <p>Those are the current public BUILD diagnostic terms. A written proposal still has to bind them to one buyer-approved workflow boundary, safe inputs, named deliverables, exclusions and acceptance evidence.</p>
+      </article>
+      <article class="panel">
+        <div class="eyebrow">Payment boundary</div>
+        <h2>No payment rail is claimed by this page.</h2>
+        <p>Receiving-rail status is not published here. This template never creates an invoice or payment request. Any payment condition and instructions must be agreed separately through a direct business channel.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container hero-actions">
+      <a class="button button-primary" href="/audit-intake">Prepare the scope brief</a>
+      <a class="button button-ghost" href="/build/exception-workflow-diagnostic">Back to BUILD diagnostic</a>
+      <a class="button button-ghost" href="/build/proposal-readiness.json">Open machine-readable checklist</a>
+    </div>
+  </section>
+</Layout>

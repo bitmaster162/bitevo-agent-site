@@ -1,0 +1,28 @@
+---
+import RuLayout from '../../../layouts/RuLayout.astro';
+import readiness from '../../../data/build-proposal-readiness.json';
+
+const items = readiness.required_written_confirmation;
+const labels = [
+  'Точная граница workflow и owner',
+  'Цена USD 3,000 и timebox пять рабочих дней',
+  'Именованные deliverables и evidence handoff',
+  'Явные exclusions: без production write и professional judgment',
+  'Безопасные buyer inputs, access dependencies и representative cases',
+  'Acceptance evidence, reviewer и unresolved-question handoff',
+  'Письменные Rules of Engagement до testing',
+  'Commercial/payment instructions через прямой business channel'
+];
+---
+
+<RuLayout title="BUILD Proposal Readiness | BitEvo" description="Проверка готовности scope к письменному BUILD proposal без checkout, invoice, contract или testing authorization на публичном сайте." enPath="/build/proposal-readiness" ruPath="/ru/build/proposal-readiness">
+  <section class="section"><div class="narrow"><div class="eyebrow">BUILD · PROPOSAL READINESS · TEMPLATE ONLY</div><h1 class="display">Scope brief ещё не является proposal.</h1><p class="lede">До перехода существующего BUILD diagnostic за USD 3,000 / пять рабочих дней к письменному proposal нужно явно зафиксировать workflow, deliverables, exclusions, acceptance evidence, Rules of Engagement и commercial handoff.</p></div></section>
+
+  <section class="section-tight section-rule"><div class="container panel" role="note"><strong>TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION</strong><p>Эта публичная страница не выпускает proposal, не принимает оплату, не публикует receiving rail, не собирает signature, не бронирует работу и не даёт testing authorization. Commercial/payment instructions согласуются отдельно через прямой business channel.</p></div></section>
+
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Written proposal gate</div><h2 class="section-title">До старта работы восемь подтверждений должны быть явными.</h2>{items.map((item,index) => <article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{labels[index]}</h3></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container"><article class="panel"><div class="eyebrow">Fixed public offer facts</div><h2>Один recurring exception workflow · USD 3,000 · пять рабочих дней.</h2><p>Это текущие публичные условия BUILD diagnostic. Письменный proposal всё равно должен привязать их к одному buyer-approved workflow boundary, безопасным inputs, deliverables, exclusions и acceptance evidence.</p></article><article class="panel"><div class="eyebrow">Payment boundary</div><h2>Эта страница не заявляет payment rail.</h2><p>Receiving-rail status здесь не публикуется. Template не создаёт invoice или payment request. Любые payment conditions и instructions согласуются отдельно через прямой business channel.</p></article></div></section>
+
+  <section class="section section-rule"><div class="container hero-actions"><a class="button button-primary" href="/ru/audit-intake">Подготовить scope brief</a><a class="button button-ghost" href="/ru/build/exception-workflow-diagnostic">Вернуться к BUILD diagnostic</a><a class="button button-ghost" href="/build/proposal-readiness.json">Открыть machine-readable checklist</a></div></section>
+</RuLayout>

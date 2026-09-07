@@ -1,0 +1,72 @@
+{
+  "schema": "bitevo.build-proposal-readiness/v1",
+  "id": "BUILD-PROPOSAL-READINESS-001",
+  "state": "PUBLIC_PROPOSAL_READINESS_TEMPLATE",
+  "actual_proposal_issued": false,
+  "contract_formed": false,
+  "invoice_issued": false,
+  "payment_link_published": false,
+  "checkout_enabled": false,
+  "signature_capture_enabled": false,
+  "booking_enabled": false,
+  "testing_authorization": false,
+  "offer": {
+    "name": "BUILD Workflow Exception Diagnostic",
+    "price_usd": 3000,
+    "timebox_business_days": 5,
+    "scope_object": "one recurring exception workflow"
+  },
+  "required_written_confirmation": [
+    {
+      "id": "scope",
+      "label": "Exact workflow boundary and owner",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "commercial",
+      "label": "USD 3,000 price and five-business-day timebox",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "deliverables",
+      "label": "Named diagnostic deliverables and evidence handoff",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "exclusions",
+      "label": "Explicit no-production-write and professional-judgment exclusions",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "inputs",
+      "label": "Safe buyer inputs, access dependencies and representative cases",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "acceptance",
+      "label": "Acceptance evidence, reviewer and unresolved-question handoff",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "roe",
+      "label": "Written Rules of Engagement before testing",
+      "status": "REQUIRED_BEFORE_TESTING"
+    },
+    {
+      "id": "payment",
+      "label": "Commercial/payment instructions agreed through a direct business channel",
+      "status": "OUTSIDE_PUBLIC_SITE"
+    }
+  ],
+  "payment_boundary": {
+    "public_site_accepts_payment": false,
+    "receiving_rail_claim": "NOT_PUBLISHED",
+    "instructions": "TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL",
+    "invoice_or_payment_request": "NOT_ISSUED_BY_THIS_TEMPLATE"
+  },
+  "effect_boundary": {
+    "network_write": 0,
+    "storage_write": 0,
+    "external_effect": 0
+  }
+}
