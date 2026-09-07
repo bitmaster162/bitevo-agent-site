@@ -25,7 +25,10 @@ const hasAnchor = (html, href, textFragment) => [...html.matchAll(/<a\b([^>]*)>(
   const hrefValue = (match[1] || '').match(/\bhref=["']([^"']+)["']/i)?.[1];
   return hrefValue === href && stripTags(match[2] || '').includes(textFragment);
 });
-const scopeReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20scope%20review';
+const genericScopeReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20scope%20review';
+const entryAuditReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Agent%20Authority%20Entry%20Audit%20scope%20review';
+const controlValidationReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Security%20Control%20Validation%20scope%20review';
+const primaryAuditReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Primary%20Agent%20Authority%20Audit%20scope%20review';
 const buildQualificationHref = 'mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification';
 
 check(/<a[^>]*href="\/start"[^>]*data-funnel="home-primary"[^>]*>Choose the right scope/.test(home), 'home primary CTA must route to /start');
@@ -56,18 +59,21 @@ check(ruStart.includes('$4,900'), '/ru/start must retain Primary price marker');
 check(ruStart.includes('testing authorization'), '/ru/start must retain no-testing boundary');
 
 const offerHandoffs = [
-  ['/entry-audit', entryAudit, scopeReviewHref, 'Contact Robert', true],
-  ['/control-validation', controlValidation, scopeReviewHref, 'Contact Robert', true],
-  ['/agent-authority-audit', primaryAudit, scopeReviewHref, 'Contact Robert', true],
+  ['/entry-audit', entryAudit, entryAuditReviewHref, 'Contact Robert', true],
+  ['/control-validation', controlValidation, controlValidationReviewHref, 'Contact Robert', true],
+  ['/agent-authority-audit', primaryAudit, primaryAuditReviewHref, 'Contact Robert', true],
   ['/build/exception-workflow-diagnostic', buildDiagnostic, buildQualificationHref, 'Contact Robert at BitEvo', false],
-  ['/ru/entry-audit', ruEntryAudit, scopeReviewHref, 'Связаться с Робертом', true],
-  ['/ru/control-validation', ruControlValidation, scopeReviewHref, 'Связаться с Робертом', true],
-  ['/ru/agent-authority-audit', ruPrimaryAudit, scopeReviewHref, 'Связаться с Робертом', true],
+  ['/ru/entry-audit', ruEntryAudit, entryAuditReviewHref, 'Связаться с Робертом', true],
+  ['/ru/control-validation', ruControlValidation, controlValidationReviewHref, 'Связаться с Робертом', true],
+  ['/ru/agent-authority-audit', ruPrimaryAudit, primaryAuditReviewHref, 'Связаться с Робертом', true],
   ['/ru/build/exception-workflow-diagnostic', ruBuildDiagnostic, buildQualificationHref, 'Связаться с Робертом', true]
 ];
+const offerSubjectHrefs = new Set(offerHandoffs.map(([, , href]) => href));
+check(offerSubjectHrefs.size === 4, 'direct offer handoffs must use exactly four offer-specific subject families');
 for (const [route, html, href, label, injected] of offerHandoffs) {
   check(hasAnchor(html, href, label), `${route} must expose exact manual human handoff`);
   if (injected) check(html.includes(`data-offer-handoff href="${href}"`), `${route} must retain route-scoped offer handoff marker`);
+  check(!html.includes(genericScopeReviewHref), `${route} must not fall back to the generic scope-review subject`);
   check(!html.includes(`${href}&body=`), `${route} handoff must never auto-embed mailto body`);
 }
 
@@ -77,4 +83,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=2 auto_send=0 authorization_boundary=PASS`);
+console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS auto_send=0 authorization_boundary=PASS`);
