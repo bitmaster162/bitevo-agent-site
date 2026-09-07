@@ -79,6 +79,13 @@
       "parent": "/build/exception-workflow-diagnostic"
     },
     {
+      "path": "/build/workflow-baseline-worksheet",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build/exception-workflow-diagnostic"
+    },
+    {
       "path": "/mcp-governance",
       "category": "SPECIALIST",
       "indexable": true,
@@ -488,6 +495,13 @@
     {
       "path": "/ru/build/workflow-value-example",
       "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build/exception-workflow-diagnostic"
+    },
+    {
+      "path": "/ru/build/workflow-baseline-worksheet",
+      "category": "TOOL",
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/build/exception-workflow-diagnostic"

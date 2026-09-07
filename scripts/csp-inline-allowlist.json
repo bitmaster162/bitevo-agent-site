@@ -18,7 +18,8 @@
     "q7T8AC+DyYzBuagPjmVhSiudBlTLVLRuHKZXSrNsXHI=",
     "rJttwfZ5sfW8jAYAZyC6zzEb6CW8fAldRXp6khyrBWY=",
     "xb4NjaKSfqUt9+ZoQ87f6SehwUZntY8ht6aS6TsDPrA=",
-    "zUbrKUtJ/oSvyrNQOjfRJ7VIOkgMObjPXpsVBnkMiEo="
+    "zUbrKUtJ/oSvyrNQOjfRJ7VIOkgMObjPXpsVBnkMiEo=",
+    "1tSuvpcKYWJ2PSTjItAbg3gSuk3ZEVtbBSkftlHoAz4="
   ],
   "styles": [
     "2MwnM+WUiwZPe2UwQnCXpwd3kGiohBexkffQv7/3TbE=",
@@ -79,6 +80,17 @@
       ],
       "currentAstro": "7.2.10",
       "currentCandidateSha": "5dcc3777c6a3fdd2829f0bd1b7dae3146df48168"
+    },
+    {
+      "sourceSha": "LOCAL_R16_PRECOMMIT",
+      "note": "Commercial R16 adds one reviewed Astro-emitted module script for the browser-local BUILD baseline worksheet. The script performs local arithmetic, copy/download only; source scan contains no fetch/XHR/sendBeacon/WebSocket/EventSource/storage/cookie writer. Same exact emitted hash appears on EN and RU worksheet routes.",
+      "scripts": [
+        "1tSuvpcKYWJ2PSTjItAbg3gSuk3ZEVtbBSkftlHoAz4="
+      ],
+      "routes": [
+        "/build/workflow-baseline-worksheet",
+        "/ru/build/workflow-baseline-worksheet"
+      ]
     }
   ]
 }

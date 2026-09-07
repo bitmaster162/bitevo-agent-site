@@ -93,6 +93,7 @@ const ruWorkspaceSource = await readFile(`${root}/src/pages/ru/workspace.astro`,
 const ruLayoutSource = await readFile(`${root}/src/layouts/RuLayout.astro`, 'utf8');
 const ruDiagnostic = await readFile(`${dist}/ru/diagnostic/index.html`, 'utf8');
 const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
+const ruBuildBaseline = await readFile(`${dist}/ru/build/workflow-baseline-worksheet/index.html`, 'utf8');
 const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'utf8'));
 const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
 
@@ -105,6 +106,7 @@ const toolContracts = [
   ['/ru/mapper→intake handoff', ruLayoutSource.includes("sessionStorage.getItem('bitevo.mapper.handoff.v1')") && ruLayoutSource.includes("location.pathname !== '/ru/audit-intake'")],
   ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
   ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')],
+  ['/ru/build/workflow-baseline-worksheet', ruBuildBaseline.includes('data-build-baseline-worksheet') && ruBuildBaseline.includes('data-network-write="none"') && ruBuildBaseline.includes('data-storage-write="none"') && ruBuildBaseline.includes('Testing authorization: NOT GRANTED')],
   ['/ru/pricing', (ruPricing.match(/href="\/ru\/audit-intake"/g) || []).length >= 3 && !ruPricing.includes('href="/audit-intake"')],
   ['/ru/agent-authority-audit', ruAudit.includes('href="/ru/audit-intake"') && !ruAudit.includes('href="/audit-intake"')]
 ];
@@ -125,4 +127,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} global_locale_switches=EN_RU_CANONICAL ru_status_bars=RETAINED shared_chrome=RU_START functional_tools=4 mapper_workspace_schema=PASS commercial_routes=3 failures=0`);
+console.log(`RU_SURFACE_GATE=PASS routes=${routes.length} checks=${checks} reciprocal_pairs=${routes.length} global_locale_switches=EN_RU_CANONICAL ru_status_bars=RETAINED shared_chrome=RU_START functional_tools=5 mapper_workspace_schema=PASS commercial_routes=3 failures=0`);
