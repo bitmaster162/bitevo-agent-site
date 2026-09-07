@@ -30,6 +30,9 @@ const start = await readRoute('/start');
 const pricing = await readRoute('/pricing');
 const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
+const valueExample = await readRoute('/build/workflow-value-example');
+const proof = await readRoute('/proof');
+const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
 
 const startContracts = [
   ['$1,500 Entry Audit', '/entry-audit', 'Open Entry Audit'],
@@ -66,6 +69,31 @@ for (const phrase of ['Thailand/SEA HR Workflow Diagnostic', 'Make one recurring
   if (!hrDiagnosticText.includes(phrase)) failures.push(`/build/hr-workflow-diagnostic: missing retained HR specialization phrase "${phrase}"`);
 }
 if (!hasAnchor(hrDiagnostic, '/build/exception-workflow-diagnostic', 'Open the general diagnostic')) failures.push('/build/hr-workflow-diagnostic: missing general diagnostic backlink');
+if (!hasAnchor(buildDiagnostic, '/build/workflow-value-example', 'Open synthetic measurement example')) failures.push('/build/exception-workflow-diagnostic: missing BUILD measurement proof link');
+if (!hasAnchor(proof, '/build/workflow-value-example', 'Open BUILD measurement example')) failures.push('/proof: missing BUILD measurement proof link');
+const valueExampleText = stripTags(valueExample);
+for (const phrase of ['SYNTHETIC / NOT CUSTOMER / NOT OBSERVED', 'This is arithmetic, not ROI.', '20.4 hours and $612 are synthetic arithmetic outputs.', 'cannot substitute for payment, delivery or measured value evidence']) {
+  if (!valueExampleText.includes(phrase)) failures.push(`/build/workflow-value-example: missing evidence boundary phrase "${phrase}"`);
+}
+if (valueExampleJson.synthetic !== true || valueExampleJson.customer_case !== false || valueExampleJson.observed_outcome !== false || valueExampleJson.roi_claim !== false) failures.push('/build/workflow-value-example.json: provenance flags drifted');
+const b = valueExampleJson.baseline;
+const c = valueExampleJson.illustrative_comparison_state;
+const calc = {
+  baseline_first_pass_hours: b.cases_per_period * b.first_pass_minutes_per_case / 60,
+  baseline_repeat_touch_hours: b.cases_per_period * b.repeat_touch_rate * b.repeat_touch_minutes / 60,
+  comparison_first_pass_hours: c.cases_per_period * c.first_pass_minutes_per_case / 60,
+  comparison_repeat_touch_hours: c.cases_per_period * c.repeat_touch_rate * c.repeat_touch_minutes / 60
+};
+calc.baseline_total_hours = calc.baseline_first_pass_hours + calc.baseline_repeat_touch_hours;
+calc.comparison_total_hours = calc.comparison_first_pass_hours + calc.comparison_repeat_touch_hours;
+calc.illustrative_delta_hours = calc.baseline_total_hours - calc.comparison_total_hours;
+calc.baseline_labor_cost_usd = calc.baseline_total_hours * b.loaded_labor_usd_per_hour;
+calc.comparison_labor_cost_usd = calc.comparison_total_hours * c.loaded_labor_usd_per_hour;
+calc.illustrative_delta_cost_usd = calc.baseline_labor_cost_usd - calc.comparison_labor_cost_usd;
+for (const [key, value] of Object.entries(calc)) {
+  if (Math.abs(Number(valueExampleJson.computed[key]) - value) > 1e-9) failures.push(`/build/workflow-value-example.json: arithmetic drift ${key}`);
+}
+
 
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
@@ -89,4 +117,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS`);

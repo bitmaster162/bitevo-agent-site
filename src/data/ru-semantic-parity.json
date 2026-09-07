@@ -92,6 +92,21 @@
       "primaryLabel": "Открыть общую диагностику"
     },
     {
+      "slug": "build/workflow-value-example",
+      "enPath": "/build/workflow-value-example",
+      "category": "PROOF",
+      "eyebrow": "BUILD PROOF · SYNTHETIC MEASUREMENT",
+      "title": "Сначала покажите арифметику — и только потом называйте это ценностью.",
+      "description": "Синтетический worked example показывает, как фиксированный workflow baseline и comparison state превращаются в прозрачный time/rework calculation без выдуманного customer case или ROI claim.",
+      "points": [
+        "Все цифры synthetic: это не данные YPN, не результат клиента BitEvo и не observed implementation outcome.",
+        "20.4 часа и $612 в примере получены только из явно заданных synthetic inputs, включая условную ставку $30/час.",
+        "Реальный customer result допустим только после замены inputs на buyer-confirmed baseline и фактического измерения того же frozen workflow с явными limitations."
+      ],
+      "primaryHref": "/ru/build/exception-workflow-diagnostic",
+      "primaryLabel": "Открыть BUILD-диагностику"
+    },
+    {
       "slug": "mcp-governance",
       "enPath": "/mcp-governance",
       "category": "SPECIALIST",

@@ -1,0 +1,51 @@
+{
+  "schema": "bitevo.build-workflow-value-example/v1",
+  "id": "BUILD-SYN-001",
+  "status": "SYNTHETIC_WORKED_EXAMPLE_NOT_OBSERVED",
+  "synthetic": true,
+  "customer_case": false,
+  "observed_outcome": false,
+  "roi_claim": false,
+  "workflow": "Document completeness exception queue",
+  "period": "month",
+  "unit": "exception case",
+  "baseline": {
+    "cases_per_period": 120,
+    "first_pass_minutes_per_case": 22,
+    "repeat_touch_rate": 0.2,
+    "repeat_touch_minutes": 15,
+    "loaded_labor_usd_per_hour": 30
+  },
+  "illustrative_comparison_state": {
+    "cases_per_period": 120,
+    "first_pass_minutes_per_case": 14,
+    "repeat_touch_rate": 0.08,
+    "repeat_touch_minutes": 10,
+    "loaded_labor_usd_per_hour": 30
+  },
+  "computed": {
+    "baseline_first_pass_hours": 44.0,
+    "baseline_repeat_touch_hours": 6.0,
+    "baseline_total_hours": 50.0,
+    "baseline_labor_cost_usd": 1500.0,
+    "comparison_first_pass_hours": 28.0,
+    "comparison_repeat_touch_hours": 1.6,
+    "comparison_total_hours": 29.6,
+    "comparison_labor_cost_usd": 888.0,
+    "illustrative_delta_hours": 20.4,
+    "illustrative_delta_cost_usd": 612.0
+  },
+  "measurement_rule": [
+    "Freeze one workflow definition and denominator before comparing periods.",
+    "Replace every synthetic input with customer-confirmed baseline data before stating a customer result.",
+    "Measure the comparison state on the same workflow definition and report limitations and missing data.",
+    "Do not annualize or generalize one short observation window without repeatability evidence."
+  ],
+  "claim_boundary": [
+    "Not a BitEvo customer case study.",
+    "Not YPN Accounting data.",
+    "Not an observed implementation result.",
+    "Not ROI, savings, SLA, tax, accounting, legal or compliance advice.",
+    "The USD 30/hour labor figure is synthetic and exists only to demonstrate arithmetic."
+  ]
+}
