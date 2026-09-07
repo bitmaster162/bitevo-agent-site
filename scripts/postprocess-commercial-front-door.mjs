@@ -37,15 +37,17 @@ const ruHomePattern = /<a class="button button-primary" href="\/ru\/mapper"([^>]
 const downloadPattern = /<button id="download" type="button" class="button button-ghost" disabled([^>]*)>Download \.txt<\/button>/;
 const gatePattern = /<\/div><div class="gate"([^>]*)><span([^>]*)>AUTHORIZATION GATE<\/span>/;
 const contactButton = '<a class="button button-ghost" data-scope-handoff href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">Contact Robert</a>';
-const scopeReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20scope%20review';
+const entryAuditReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Agent%20Authority%20Entry%20Audit%20scope%20review';
+const controlValidationReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Security%20Control%20Validation%20scope%20review';
+const primaryAuditReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Primary%20Agent%20Authority%20Audit%20scope%20review';
 const buildQualificationHref = 'mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification';
 const offerHandoffTargets = new Map([
-  ['entry-audit/index.html', { anchorText: 'Prepare the bounded scope', href: scopeReviewHref, label: 'Contact Robert' }],
-  ['control-validation/index.html', { anchorText: 'Scope one control boundary', href: scopeReviewHref, label: 'Contact Robert' }],
-  ['agent-authority-audit/index.html', { anchorText: 'Prepare Primary Audit scope', href: scopeReviewHref, label: 'Contact Robert' }],
-  ['ru/entry-audit/index.html', { anchorText: 'Подготовить scope', href: scopeReviewHref, label: 'Связаться с Робертом' }],
-  ['ru/control-validation/index.html', { anchorText: 'Описать control boundary', href: scopeReviewHref, label: 'Связаться с Робертом' }],
-  ['ru/agent-authority-audit/index.html', { anchorText: 'Подготовить Primary scope ↗', href: scopeReviewHref, label: 'Связаться с Робертом' }],
+  ['entry-audit/index.html', { anchorText: 'Prepare the bounded scope', href: entryAuditReviewHref, label: 'Contact Robert' }],
+  ['control-validation/index.html', { anchorText: 'Scope one control boundary', href: controlValidationReviewHref, label: 'Contact Robert' }],
+  ['agent-authority-audit/index.html', { anchorText: 'Prepare Primary Audit scope', href: primaryAuditReviewHref, label: 'Contact Robert' }],
+  ['ru/entry-audit/index.html', { anchorText: 'Подготовить scope', href: entryAuditReviewHref, label: 'Связаться с Робертом' }],
+  ['ru/control-validation/index.html', { anchorText: 'Описать control boundary', href: controlValidationReviewHref, label: 'Связаться с Робертом' }],
+  ['ru/agent-authority-audit/index.html', { anchorText: 'Подготовить Primary scope ↗', href: primaryAuditReviewHref, label: 'Связаться с Робертом' }],
   ['ru/build/exception-workflow-diagnostic/index.html', { anchorText: 'Открыть Build', href: buildQualificationHref, label: 'Связаться с Робертом' }]
 ]);
 
