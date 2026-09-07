@@ -11,7 +11,7 @@ const principles = [
 ];
 ---
 
-<Layout title="Security & Data Handling — BitEvo" description="BitEvo's public security and data-handling boundaries for bounded AI-agent and workflow assurance engagements.">
+<Layout title="Security & Data Handling — BitEvo" description="BitEvo's public security and data-handling boundaries for bounded AI-agent and workflow assurance engagements." alternates={{ en: '/security', ru: '/ru/security' }}>
   <section class="section hero"><div class="narrow"><div class="eyebrow">Security & data handling</div><h1 class="display">Bound the work before access begins.</h1><p class="lede">BitEvo performs bounded engineering assurance and implementation work for consequential AI-agent and software workflows. This page explains the operating boundary visible on the public site; engagement-specific data handling is frozen separately in the SOW and Rules of Engagement.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a><a href="/proof" class="button button-ghost">Review public proof</a></div></div></section>
 
   <section class="section-tight section-rule"><div class="container grid">{principles.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h2>{title}</h2><p>{text}</p></article>)}</div></section>
