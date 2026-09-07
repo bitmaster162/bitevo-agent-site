@@ -162,17 +162,23 @@ const pricingContracts = [
   ['/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'],
   ['/audit-intake', 'Prepare Entry Audit scope'],
   ['/start', 'Choose the smallest scope'],
-  ['/mapper', 'Map the action chain']
+  ['/mapper', 'Map the action chain'],
+  ['mailto:robert@bitevo.work?subject=BitEvo%20scope%20review', 'Contact Robert']
 ];
 for (const [href, cta] of pricingContracts) {
   if (!hasAnchor(pricing, href, cta)) failures.push(`/pricing: missing conversion CTA "${cta}" -> ${href}`);
 }
 const ruPricingContracts = [
   ['/ru/control-validation', 'Открыть Security Control Validation'],
-  ['/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic']
+  ['/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic'],
+  ['mailto:robert@bitevo.work?subject=BitEvo%20scope%20review', 'Связаться с Робертом']
 ];
 for (const [href, cta] of ruPricingContracts) {
   if (!hasAnchor(ruPricing, href, cta)) failures.push(`/ru/pricing: missing conversion CTA "${cta}" -> ${href}`);
+}
+
+if (pricing.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body=') || ruPricing.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body=')) {
+  failures.push('pricing handoff must never auto-embed page or brief content in mailto body');
 }
 
 const pricingText = stripTags(pricing);
