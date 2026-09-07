@@ -7,10 +7,12 @@
       "category": "FLAGSHIP",
       "eyebrow": "КОММЕРЧЕСКИЙ ВХОД",
       "title": "Выберите самый маленький объём доказательств, который способен изменить решение.",
-      "description": "Русский коммерческий вход BitEvo: Free triage, $1,500 Entry Audit и $4,900 Primary Audit без автоматической отправки или testing authorization.",
+      "description": "Русский коммерческий вход BitEvo: Free triage и четыре bounded пути — ,500 Entry Audit, MCP / Tool Governance, ,000 BUILD Workflow Exception Diagnostic и ,900 Primary Audit — без автоматической отправки или testing authorization.",
       "points": [
         "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
         "$1,500 Entry Audit: проверить одну критическую action chain и одну основную failure hypothesis.",
+        "MCP / Tool Governance: разобрать одну agent-to-tool boundary по identity, policy, approval, bypass и retry evidence.",
+        "$3,000 BUILD Workflow Exception Diagnostic: выбрать один recurring exception, затем локально зафиксировать buyer-confirmed baseline и отдельно проверить synthetic measurement proof.",
         "$4,900 Primary Audit: решить, должен ли один action-capable workflow сохранить, получить или потерять полномочия."
       ],
       "primaryHref": "/ru/pricing",

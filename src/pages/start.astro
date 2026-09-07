@@ -21,7 +21,11 @@ const paths = [
     title: '$3,000 BUILD Workflow Exception Diagnostic',
     text: 'Use when the operational problem is exception paths, missing data, status ambiguity, retry or resume, handoffs, manual rescue or recovery rather than one isolated authorization check.',
     href: '/build/exception-workflow-diagnostic',
-    cta: 'Open BUILD Diagnostic'
+    cta: 'Open BUILD Diagnostic',
+    prep: [
+      { href: '/build/workflow-baseline-worksheet', label: 'Prepare baseline locally' },
+      { href: '/build/workflow-value-example', label: 'Inspect synthetic measurement proof' }
+    ]
   },
   {
     eyebrow: 'AUTHORITY DECISION',
@@ -76,6 +80,11 @@ const proofLinks = [
           <h3>{path.title}</h3>
           <p>{path.text}</p>
           <a class="button" href={path.href}>{path.cta} <span aria-hidden="true">↗</span></a>
+          {path.prep && (
+            <div class="hero-actions" data-build-prep-links>
+              {path.prep.map(item => <a class="text-link" href={item.href}>{item.label} →</a>)}
+            </div>
+          )}
         </article>
       ))}
     </div>

@@ -14,12 +14,22 @@ const dimensions = [
   ['10','Universe integration','Каждая публичная поверхность имеет понятную роль без копирования private state.']
 ];
 const gates = ['Public claim boundary','Metadata / accessibility / internal links / funnel / sitemap','Performance dependency policy','Homepage trust','Static asset budgets','Dogfood proof contract','Workspace decision contract'];
+
+const buyerPrep = [
+  ['01','Выбрать bounded diagnostic','/ru/build/exception-workflow-diagnostic','Ограничить один recurring exception, одного owner, безопасные inputs, reviewer states и измеримый вопрос.','Открыть диагностику'],
+  ['02','Зафиксировать buyer-confirmed baseline локально','/ru/build/workflow-baseline-worksheet','Посчитать текущие exception-work hours из обобщённых buyer inputs прямо в браузере, без network/storage write.','Зафиксировать baseline'],
+  ['03','Проверить synthetic measurement proof','/ru/build/workflow-value-example','Посмотреть арифметический метод и claim ceiling до появления customer-specific value evidence.','Проверить synthetic метод'],
+  ['04','Подготовить scope brief','/ru/audit-intake','Передать bounded workflow question в существующий intake. Подготовка scope не даёт testing authorization.','Подготовить scope brief']
+];
 ---
 
 <RuLayout title="BitEvo Build — стандарт качества 10/10" description="Русская версия BitEvo Build: десять независимых измерений качества и build-breaking machine gates без фальшивого общего score." enPath="/build" ruPath="/ru/build">
   <section class="section build-hero"><div class="container split"><div><div class="eyebrow">Public works · quality contract</div><h1 class="display">Строить proof surface, а не театр.</h1></div><div><p class="lede">Build — публичный инженерный слой BitEvo: продукты, source projects, research surfaces и проверки, которые позволяют отделять красивый интерфейс от доказуемого состояния.</p><div class="actions"><a class="button button-primary" href="/version">Проверить exact build revision ↗</a><a class="button" href="/ru/universe">Открыть Universe</a></div></div></div></section>
 
   <section class="section-tight section-rule"><div class="container signal"><div><small>PUBLIC</small><strong>Artifact + method</strong></div><div><small>VERIFIABLE</small><strong>Source / build / route</strong></div><div><small>NOT IMPLIED</small><strong>Live private state</strong></div><div><small>RULE</small><strong>Evidence class остаётся явным</strong></div></div></section>
+
+
+  <section class="section section-rule"><div class="container gate panel" data-build-buyer-prep><div><div class="eyebrow">BUILD buyer-prep chain</div><h2>От recurring exception к bounded scope — без выдуманного customer proof.</h2><p>Это supporting steps существующего $3,000 / 5-day BUILD diagnostic, а не новые service SKU. Baseline остаётся browser-local, worked value example — synthetic.</p></div><ol>{buyerPrep.map(([n,title,href,text,label]) => <li><span>{n}</span><div><strong>{title}</strong><p>{text}</p><a class="text-link" href={href}>{label} →</a></div></li>)}</ol></div></section>
 
   <section class="section section-rule"><div class="container split"><div><div class="eyebrow">BitEvo 10/10 Standard</div><h2 class="section-title">Десять измерений. Никакого self-awarded composite score.</h2></div><p class="lede">Часть требований проверяется машиной, часть требует человеческого product/design/security review. PASS одного класса не заменяет другой.</p></div><div class="container quality-grid">{dimensions.map(([n,title,text]) => <article><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div></section>
 
