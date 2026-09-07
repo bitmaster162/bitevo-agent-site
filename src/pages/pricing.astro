@@ -49,7 +49,7 @@ const comparison = [
 ];
 ---
 
-<Layout title="Pricing — Authority Decisions for AI Agent Workflows | BitEvo" description="BitEvo pricing is based on decision depth: qualify a workflow, test one uncertainty, or audit whether its authority is justified by evidence and recovery control.">
+<Layout title="Pricing — Authority Decisions for AI Agent Workflows | BitEvo" description="BitEvo pricing is based on decision depth, with a parallel fixed $1,500 Security Control Validation path for one consequential staging/test control boundary.">
   <section class="pricing-hero section">
     <div class="container hero-grid">
       <div><div class="eyebrow">Decision depth</div><h1 class="display">Buy the smallest amount of evidence that can change the decision.</h1></div>
@@ -70,6 +70,11 @@ const comparison = [
           {t.scopeCta && t.scopeHref && <a href={t.scopeHref} class="text-link">{t.scopeCta} →</a>}
         </article>
       ))}
+    </div>
+    <div class="container commercial-boundary panel">
+      <div class="eyebrow">Parallel specialist path</div>
+      <strong>Security Control Validation · fixed $1,500</strong>
+      <p>Use this when the owner question is whether one consequential staging/test control produces the expected ALLOW / DENY / HOLD / ESCALATE outcome and the real downstream state can be verified. <a class="text-link" href="/control-validation">Open Security Control Validation →</a></p>
     </div>
     <div class="container commercial-boundary panel">
       <div class="eyebrow">Public-site handoff</div>
