@@ -1,0 +1,74 @@
+{
+  "schema": "bitevo.build-paid-start-gate/v1",
+  "id": "BUILD-PAID-START-GATE-001",
+  "state": "PUBLIC_PAID_START_GATE_TEMPLATE_NOT_CUSTOMER_STATE",
+  "customer_state": "NOT_REPRESENTED",
+  "claims": {
+    "proposal_issued": false,
+    "proposal_accepted": false,
+    "contract_formed": false,
+    "invoice_issued": false,
+    "payment_received": false,
+    "payment_verified": false,
+    "delivery_started": false,
+    "measured_value_observed": false,
+    "renewal_expansion_evidence": false,
+    "testing_authorization": false
+  },
+  "offer": {
+    "name": "BUILD Workflow Exception Diagnostic",
+    "price_usd": 3000,
+    "timebox_business_days": 5,
+    "scope_object": "one recurring exception workflow"
+  },
+  "required_external_evidence": [
+    {
+      "id": "proposal_acceptance",
+      "label": "Accepted written proposal and exact workflow scope",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "payment",
+      "label": "Payment evidence verified through the agreed direct business channel",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "roe",
+      "label": "Written Rules of Engagement agreed before testing",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "baseline",
+      "label": "Buyer-confirmed baseline frozen for the same workflow definition",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "owner_reviewer",
+      "label": "Named process owner, reviewer and acceptance evidence",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "safe_inputs",
+      "label": "Safe inputs and agreed access dependencies available without secrets in the public site",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "start_authorization",
+      "label": "Explicit delivery/start authorization after all prior gates",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    }
+  ],
+  "payment_boundary": {
+    "public_site_accepts_payment": false,
+    "receiving_rail_claim": "NOT_PUBLISHED",
+    "invoice_or_payment_request": "NOT_ISSUED_BY_THIS_TEMPLATE",
+    "payment_confirmation": "NOT_AVAILABLE_FROM_PUBLIC_SITE",
+    "instructions": "TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL"
+  },
+  "effect_boundary": {
+    "network_write": 0,
+    "storage_write": 0,
+    "external_effect": 0,
+    "delivery_start": 0
+  }
+}

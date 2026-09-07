@@ -1,0 +1,25 @@
+---
+import RuLayout from '../../../layouts/RuLayout.astro';
+import gate from '../../../data/build-paid-start-gate.json';
+const labels = [
+  'Принятый письменный proposal и точный workflow scope',
+  'Payment evidence подтверждён через согласованный direct business channel',
+  'Письменные Rules of Engagement согласованы до testing',
+  'Buyer-confirmed baseline зафиксирован для того же workflow definition',
+  'Названы process owner, reviewer и acceptance evidence',
+  'Safe inputs и согласованные access dependencies доступны без secrets на public site',
+  'Явный delivery/start authorization после всех предыдущих gates'
+];
+---
+
+<RuLayout title="BUILD Paid Start Gate | BitEvo" description="Публично-безопасный gate между accepted proposal и delivery существующего BUILD diagnostic. Без payment processing, invoice, checkout, signature, booking или testing authorization." enPath="/build/paid-start-gate" ruPath="/ru/build/paid-start-gate">
+  <section class="section"><div class="narrow"><div class="eyebrow">BUILD · PAID START GATE · PUBLIC TEMPLATE ONLY</div><h1 class="display">Proposal ещё не является paid start.</h1><p class="lede">До начала delivery нужно отдельно подтвердить accepted proposal/scope, payment evidence, письменные Rules of Engagement, frozen buyer baseline, owner/reviewer, safe inputs и explicit start authorization.</p></div></section>
+
+  <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO SIGNATURE · NO BOOKING · NO DELIVERY START · NO TESTING AUTHORIZATION</strong><p>Страница не представляет customer state и не может доказать оплату. Она не создаёт contract, payment request, delivery event или testing permission.</p></div></section>
+
+  <section class="section section-rule"><div class="container"><div class="eyebrow">External-evidence gate</div><h2 class="section-title">До объявления delivery started нужны доказательства семи условий.</h2>{gate.required_external_evidence.map((item,index) => <article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{labels[index]}</h3></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container"><article class="panel"><div class="eyebrow">Payment evidence boundary</div><h2>Эта страница не может доказать payment.</h2><p>Receiving rail здесь не публикуется. Payment evidence должно прийти из отдельно согласованного direct business channel; public site его не выпускает и не подтверждает.</p></article><article class="panel"><div class="eyebrow">Delivery boundary</div><h2>Delivery по умолчанию остаётся unstarted.</h2><p>Public template не представляет accepted proposal, received payment, agreed RoE, delivery start, measured value или renewal/expansion evidence.</p></article></div></section>
+
+  <section class="section section-rule"><div class="container hero-actions"><a class="button button-primary" href="/ru/build/proposal-readiness">Вернуться к proposal readiness</a><a class="button button-ghost" href="/ru/audit-intake">Подготовить scope brief</a><a class="button button-ghost" href="/build/paid-start-gate.json">Открыть machine-readable gate</a></div></section>
+</RuLayout>

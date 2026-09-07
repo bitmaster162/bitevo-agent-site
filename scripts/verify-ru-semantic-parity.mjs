@@ -42,7 +42,7 @@ if (parity.schema !== 'bitevo.ru-semantic-parity/v1') failures.push(`unexpected 
 
 checks += 2;
 if (enRoutes.length !== ruRoutes.length) failures.push(`indexable locale count mismatch: en=${enRoutes.length} ru=${ruRoutes.length}`);
-if (enRoutes.length !== 48) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
+if (enRoutes.length !== 49) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
 
 const expectedGenerated = new Set();
 for (const en of enRoutes) {
