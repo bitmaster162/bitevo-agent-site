@@ -93,6 +93,13 @@
       "parent": "/build/exception-workflow-diagnostic"
     },
     {
+      "path": "/build/paid-start-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build/proposal-readiness"
+    },
+    {
       "path": "/mcp-governance",
       "category": "SPECIALIST",
       "indexable": true,
@@ -519,6 +526,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/build/exception-workflow-diagnostic"
+    },
+    {
+      "path": "/ru/build/paid-start-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build/proposal-readiness"
     },
     {
       "path": "/ru/mcp-governance",

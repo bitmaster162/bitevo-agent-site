@@ -36,6 +36,7 @@ const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 const valueExample = await readRoute('/build/workflow-value-example');
 const baselineWorksheet = await readRoute('/build/workflow-baseline-worksheet');
 const proposalReadiness = await readRoute('/build/proposal-readiness');
+const paidStartGate = await readRoute('/build/paid-start-gate');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
 
@@ -69,7 +70,8 @@ const buildBuyerPrep = [
   ['/build/workflow-baseline-worksheet', 'Freeze buyer-confirmed baseline locally'],
   ['/build/workflow-value-example', 'Inspect synthetic measurement proof'],
   ['/audit-intake', 'Prepare the scope brief'],
-  ['/build/proposal-readiness', 'Check proposal readiness']
+  ['/build/proposal-readiness', 'Check proposal readiness'],
+  ['/build/paid-start-gate', 'Hold at the paid-start gate']
 ];
 for (const [href, label] of buildBuyerPrep) {
   if (!hasAnchor(buildIndex, href, label)) failures.push(`/build: missing buyer-prep step "${label}" -> ${href}`);
@@ -79,7 +81,8 @@ const ruBuildBuyerPrep = [
   ['/ru/build/workflow-baseline-worksheet', 'Зафиксировать baseline'],
   ['/ru/build/workflow-value-example', 'Проверить synthetic метод'],
   ['/ru/audit-intake', 'Подготовить scope brief'],
-  ['/ru/build/proposal-readiness', 'Проверить proposal readiness']
+  ['/ru/build/proposal-readiness', 'Проверить proposal readiness'],
+  ['/ru/build/paid-start-gate', 'Проверить paid-start gate']
 ];
 for (const [href, label] of ruBuildBuyerPrep) {
   if (!hasAnchor(ruBuildIndex, href, label)) failures.push(`/ru/build: missing buyer-prep step "${label}" -> ${href}`);
@@ -145,6 +148,11 @@ const proposalReadinessText = stripTags(proposalReadiness);
 for (const phrase of ['A scope brief is not yet a proposal.', 'TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION', 'No payment rail is claimed by this page.']) {
   if (!proposalReadinessText.includes(phrase)) failures.push(`/build/proposal-readiness: missing boundary phrase \"${phrase}\"`);
 }
+if (!hasAnchor(proposalReadiness, '/build/paid-start-gate', 'Check paid-start gate')) failures.push('/build/proposal-readiness: missing paid-start gate link');
+const paidStartText = stripTags(paidStartGate);
+for (const phrase of ['A proposal is not a paid start.', 'This page cannot prove payment.', 'Delivery remains unstarted by default.']) {
+  if (!paidStartText.includes(phrase)) failures.push(`/build/paid-start-gate: missing boundary phrase \"${phrase}\"`);
+}
 
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
@@ -168,4 +176,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
