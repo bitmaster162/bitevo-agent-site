@@ -35,6 +35,7 @@ const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 const valueExample = await readRoute('/build/workflow-value-example');
 const baselineWorksheet = await readRoute('/build/workflow-baseline-worksheet');
+const proposalReadiness = await readRoute('/build/proposal-readiness');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
 
@@ -52,7 +53,8 @@ for (const [requiredText, href, cta] of startContracts) {
 
 const startBuildPrep = [
   ['/build/workflow-baseline-worksheet', 'Prepare baseline locally'],
-  ['/build/workflow-value-example', 'Inspect synthetic measurement proof']
+  ['/build/workflow-value-example', 'Inspect synthetic measurement proof'],
+  ['/build/proposal-readiness', 'Check proposal readiness']
 ];
 for (const [href, cta] of startBuildPrep) {
   if (!hasAnchor(start, href, cta)) failures.push(`/start: missing BUILD prep CTA "${cta}" -> ${href}`);
@@ -66,7 +68,8 @@ const buildBuyerPrep = [
   ['/build/exception-workflow-diagnostic', 'Choose diagnostic scope'],
   ['/build/workflow-baseline-worksheet', 'Freeze buyer-confirmed baseline locally'],
   ['/build/workflow-value-example', 'Inspect synthetic measurement proof'],
-  ['/audit-intake', 'Prepare the scope brief']
+  ['/audit-intake', 'Prepare the scope brief'],
+  ['/build/proposal-readiness', 'Check proposal readiness']
 ];
 for (const [href, label] of buildBuyerPrep) {
   if (!hasAnchor(buildIndex, href, label)) failures.push(`/build: missing buyer-prep step "${label}" -> ${href}`);
@@ -75,7 +78,8 @@ const ruBuildBuyerPrep = [
   ['/ru/build/exception-workflow-diagnostic', 'Открыть диагностику'],
   ['/ru/build/workflow-baseline-worksheet', 'Зафиксировать baseline'],
   ['/ru/build/workflow-value-example', 'Проверить synthetic метод'],
-  ['/ru/audit-intake', 'Подготовить scope brief']
+  ['/ru/audit-intake', 'Подготовить scope brief'],
+  ['/ru/build/proposal-readiness', 'Проверить proposal readiness']
 ];
 for (const [href, label] of ruBuildBuyerPrep) {
   if (!hasAnchor(ruBuildIndex, href, label)) failures.push(`/ru/build: missing buyer-prep step "${label}" -> ${href}`);
@@ -136,6 +140,11 @@ for (const phrase of ['Freeze one exception-workflow baseline before discussing 
   if (!baselineWorksheetText.includes(phrase)) failures.push(`/build/workflow-baseline-worksheet: missing boundary phrase \"${phrase}\"`);
 }
 if (!hasAnchor(baselineWorksheet, '/build/exception-workflow-diagnostic', 'Back to BUILD diagnostic')) failures.push('/build/workflow-baseline-worksheet: missing diagnostic backlink');
+if (!hasAnchor(buildDiagnostic, '/build/proposal-readiness', 'Check proposal readiness')) failures.push('/build/exception-workflow-diagnostic: missing proposal readiness link');
+const proposalReadinessText = stripTags(proposalReadiness);
+for (const phrase of ['A scope brief is not yet a proposal.', 'TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION', 'No payment rail is claimed by this page.']) {
+  if (!proposalReadinessText.includes(phrase)) failures.push(`/build/proposal-readiness: missing boundary phrase \"${phrase}\"`);
+}
 
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
@@ -159,4 +168,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS ru_start_current=PASS`);
