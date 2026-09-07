@@ -159,6 +159,7 @@ const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
   ['/control-validation', 'Open Security Control Validation'],
+  ['/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'],
   ['/audit-intake', 'Prepare Entry Audit scope'],
   ['/start', 'Choose the smallest scope'],
   ['/mapper', 'Map the action chain']
@@ -167,18 +168,19 @@ for (const [href, cta] of pricingContracts) {
   if (!hasAnchor(pricing, href, cta)) failures.push(`/pricing: missing conversion CTA "${cta}" -> ${href}`);
 }
 const ruPricingContracts = [
-  ['/ru/control-validation', 'Открыть Security Control Validation']
+  ['/ru/control-validation', 'Открыть Security Control Validation'],
+  ['/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic']
 ];
 for (const [href, cta] of ruPricingContracts) {
   if (!hasAnchor(ruPricing, href, cta)) failures.push(`/ru/pricing: missing conversion CTA "${cta}" -> ${href}`);
 }
 
 const pricingText = stripTags(pricing);
-for (const required of ['Free', '$1,500', '$4,900', 'Security Control Validation · fixed $1,500', 'This page does not book a triage, submit an audit request or authorize testing.']) {
+for (const required of ['Free', '$1,500', '$4,900', 'Security Control Validation · fixed $1,500', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 business days', 'This page does not book a triage, submit an audit request or authorize testing.']) {
   if (!pricingText.includes(required)) failures.push(`/pricing: missing commercial invariant "${required}"`);
 }
 const ruPricingText = stripTags(ruPricing);
-for (const required of ['Security Control Validation · фиксированные $1,500']) {
+for (const required of ['Security Control Validation · фиксированные $1,500', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 рабочих дней']) {
   if (!ruPricingText.includes(required)) failures.push(`/ru/pricing: missing commercial invariant "${required}"`);
 }
 
