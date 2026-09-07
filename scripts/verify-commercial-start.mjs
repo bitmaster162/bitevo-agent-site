@@ -27,6 +27,9 @@ function hasAnchor(html, href, textFragment) {
 }
 
 const start = await readRoute('/start');
+const ruStart = await readRoute('/ru/start');
+const buildIndex = await readRoute('/build');
+const ruBuildIndex = await readRoute('/ru/build');
 const pricing = await readRoute('/pricing');
 const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
@@ -45,6 +48,37 @@ const startContracts = [
 for (const [requiredText, href, cta] of startContracts) {
   if (!stripTags(start).includes(requiredText)) failures.push(`/start: missing commercial path text "${requiredText}"`);
   if (!hasAnchor(start, href, cta)) failures.push(`/start: missing CTA "${cta}" -> ${href}`);
+}
+
+const startBuildPrep = [
+  ['/build/workflow-baseline-worksheet', 'Prepare baseline locally'],
+  ['/build/workflow-value-example', 'Inspect synthetic measurement proof']
+];
+for (const [href, cta] of startBuildPrep) {
+  if (!hasAnchor(start, href, cta)) failures.push(`/start: missing BUILD prep CTA "${cta}" -> ${href}`);
+}
+const ruStartText = stripTags(ruStart);
+for (const phrase of ['MCP / Tool Governance', '$3,000 BUILD Workflow Exception Diagnostic', '$4,900 Primary Audit']) {
+  if (!ruStartText.includes(phrase)) failures.push(`/ru/start: stale commercial routing; missing "${phrase}"`);
+}
+
+const buildBuyerPrep = [
+  ['/build/exception-workflow-diagnostic', 'Choose diagnostic scope'],
+  ['/build/workflow-baseline-worksheet', 'Freeze buyer-confirmed baseline locally'],
+  ['/build/workflow-value-example', 'Inspect synthetic measurement proof'],
+  ['/audit-intake', 'Prepare the scope brief']
+];
+for (const [href, label] of buildBuyerPrep) {
+  if (!hasAnchor(buildIndex, href, label)) failures.push(`/build: missing buyer-prep step "${label}" -> ${href}`);
+}
+const ruBuildBuyerPrep = [
+  ['/ru/build/exception-workflow-diagnostic', 'Открыть диагностику'],
+  ['/ru/build/workflow-baseline-worksheet', 'Зафиксировать baseline'],
+  ['/ru/build/workflow-value-example', 'Проверить synthetic метод'],
+  ['/ru/audit-intake', 'Подготовить scope brief']
+];
+for (const [href, label] of ruBuildBuyerPrep) {
+  if (!hasAnchor(ruBuildIndex, href, label)) failures.push(`/ru/build: missing buyer-prep step "${label}" -> ${href}`);
 }
 
 const startBoundaryPhrases = [
@@ -125,4 +159,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS ru_start_current=PASS`);

@@ -105,6 +105,14 @@ const commercialSurfaces = [
   }
 ];
 
+
+const buildBuyerFlow = [
+  ['01', 'Choose diagnostic scope', '/build/exception-workflow-diagnostic', 'Bound one recurring exception, one owner, safe inputs, reviewer states and the measurable question.'],
+  ['02', 'Freeze buyer-confirmed baseline locally', '/build/workflow-baseline-worksheet', 'Calculate current exception-work hours from generalized buyer inputs in the browser. No network write or storage write.'],
+  ['03', 'Inspect synthetic measurement proof', '/build/workflow-value-example', 'See the arithmetic method and evidence ceiling before any customer-specific value claim exists.'],
+  ['04', 'Prepare the scope brief', '/audit-intake', 'Carry the bounded workflow question into the existing intake path. Scope preparation is not testing authorization.']
+];
+
 const buildPrinciples = [
   ['Bound the object', 'Start from one concrete workflow, artifact or public surface. Scope must be specific enough that another engineer can challenge the claim.'],
   ['Separate source from runtime', 'A repository state, a successful build and an observed external effect are different evidence classes. They are never collapsed into one “works” claim.'],
@@ -195,6 +203,23 @@ const pipeline = ['Hypothesis', 'Artifact', 'Evidence', 'Decision', 'Retest', 'P
           <div class="card-top"><span>{String(i + 1).padStart(2, '0')}</span><small>{surface.state}</small></div>
           <div><div class="kind">{surface.kind}</div><h3>{surface.name}</h3><p>{surface.text}</p></div>
           <div class="open">Open surface <span aria-hidden="true">↗</span></div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+
+  <section class="section section-rule" id="build-buyer-prep">
+    <div class="container section-head">
+      <div><div class="eyebrow">BUILD buyer-prep chain</div><h2 class="section-title">Move from one exception to a bounded scope without inventing customer proof.</h2></div>
+      <p class="lede">These are supporting steps for the existing $3,000 / 5-day BUILD diagnostic, not additional service SKUs. Baseline work stays browser-local; the worked value example stays synthetic.</p>
+    </div>
+    <div class="container surface-grid" data-build-buyer-prep>
+      {buildBuyerFlow.map(([n, title, href, text]) => (
+        <a class="surface-card panel" href={href}>
+          <div class="card-top"><span>{n}</span><small>BUYER PREP</small></div>
+          <div><div class="kind">BUILD FLOW</div><h3>{title}</h3><p>{text}</p></div>
+          <div class="open">Open step <span aria-hidden="true">↗</span></div>
         </a>
       ))}
     </div>
