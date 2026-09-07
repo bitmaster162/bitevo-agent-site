@@ -24,7 +24,8 @@ const counters = {
   russianMobile: 0,
   homePrimary: 0,
   russianHomePrimary: 0,
-  scopeHandoff: 0
+  scopeHandoff: 0,
+  offerHandoffPages: 0
 };
 
 const headerPattern = /<a class="header-cta" href="\/mapper"([^>]*)>Map workflow <span([^>]*)>↗<\/span><\/a>/g;
@@ -36,6 +37,30 @@ const ruHomePattern = /<a class="button button-primary" href="\/ru\/mapper"([^>]
 const downloadPattern = /<button id="download" type="button" class="button button-ghost" disabled([^>]*)>Download \.txt<\/button>/;
 const gatePattern = /<\/div><div class="gate"([^>]*)><span([^>]*)>AUTHORIZATION GATE<\/span>/;
 const contactButton = '<a class="button button-ghost" data-scope-handoff href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">Contact Robert</a>';
+const scopeReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20scope%20review';
+const buildQualificationHref = 'mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification';
+const offerHandoffTargets = new Map([
+  ['entry-audit/index.html', { anchorText: 'Prepare the bounded scope', href: scopeReviewHref, label: 'Contact Robert' }],
+  ['control-validation/index.html', { anchorText: 'Scope one control boundary', href: scopeReviewHref, label: 'Contact Robert' }],
+  ['agent-authority-audit/index.html', { anchorText: 'Prepare Primary Audit scope', href: scopeReviewHref, label: 'Contact Robert' }],
+  ['ru/entry-audit/index.html', { anchorText: 'Подготовить scope', href: scopeReviewHref, label: 'Связаться с Робертом' }],
+  ['ru/control-validation/index.html', { anchorText: 'Описать control boundary', href: scopeReviewHref, label: 'Связаться с Робертом' }],
+  ['ru/agent-authority-audit/index.html', { anchorText: 'Подготовить Primary scope ↗', href: scopeReviewHref, label: 'Связаться с Робертом' }],
+  ['ru/build/exception-workflow-diagnostic/index.html', { anchorText: 'Открыть Build', href: buildQualificationHref, label: 'Связаться с Робертом' }]
+]);
+
+const injectOfferHandoff = (html, rel, target) => {
+  const marker = `data-offer-handoff href="${target.href}"`;
+  if (html.includes(marker)) return html;
+  const anchors = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)]
+    .filter(match => match[2].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().includes(target.anchorText));
+  if (anchors.length !== 1) throw new Error(`Offer handoff anchor drift on ${rel}: expected 1, got ${anchors.length}`);
+  const anchor = anchors[0][0];
+  const button = `<a class="button button-ghost" data-offer-handoff href="${target.href}">${target.label}</a>`;
+  const updated = html.replace(anchor, `${anchor} ${button}`);
+  if (!updated.includes(marker)) throw new Error(`Offer handoff injection failed on ${rel}`);
+  return updated;
+};
 
 for (const file of htmlFiles) {
   let html = fs.readFileSync(file, 'utf8');
@@ -84,6 +109,12 @@ for (const file of htmlFiles) {
     counters.russianHomePrimary += 1;
   }
 
+  const offerTarget = offerHandoffTargets.get(rel);
+  if (offerTarget) {
+    html = injectOfferHandoff(html, rel, offerTarget);
+    counters.offerHandoffPages += 1;
+  }
+
   if (rel === 'audit-intake/index.html') {
     const manualHandoffMarker = 'data-scope-handoff href="mailto:robert@bitevo.work';
     if (!html.includes(manualHandoffMarker)) {
@@ -110,9 +141,10 @@ if (
   counters.russianMobile === 0 ||
   counters.homePrimary !== 1 ||
   counters.russianHomePrimary !== 1 ||
-  counters.scopeHandoff !== 1
+  counters.scopeHandoff !== 1 ||
+  counters.offerHandoffPages !== offerHandoffTargets.size
 ) {
   throw new Error(`Commercial front-door postprocess incomplete: ${JSON.stringify(counters)}`);
 }
 
-console.log(`COMMERCIAL_FRONT_DOOR_POSTPROCESS=PASS english_header=${counters.englishHeader} english_mobile=${counters.englishMobile} russian_header=${counters.russianHeader} russian_mobile=${counters.russianMobile} home_primary=${counters.homePrimary} ru_home_primary=${counters.russianHomePrimary} scope_handoff=${counters.scopeHandoff}`);
+console.log(`COMMERCIAL_FRONT_DOOR_POSTPROCESS=PASS english_header=${counters.englishHeader} english_mobile=${counters.englishMobile} russian_header=${counters.russianHeader} russian_mobile=${counters.russianMobile} home_primary=${counters.homePrimary} ru_home_primary=${counters.russianHomePrimary} scope_handoff=${counters.scopeHandoff} offer_handoff_pages=${counters.offerHandoffPages}`);
