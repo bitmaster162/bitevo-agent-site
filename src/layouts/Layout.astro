@@ -286,8 +286,8 @@ const globalStructuredData = [
 
   .container { width: min(1180px, calc(100vw - 44px)); margin-inline: auto; }
   .narrow { width: min(860px, calc(100vw - 44px)); margin-inline: auto; }
-  .section { padding-block: clamp(54px, 8vw, 96px); }
-  .section-tight { padding-block: clamp(36px, 5vw, 64px); }
+  .section { padding-block: clamp(48px, 6vw, 82px); }
+  .section-tight { padding-block: clamp(30px, 4vw, 52px); }
   .section-rule { border-top: 1px solid var(--line); }
 
   .eyebrow, .kicker { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; color: var(--green); font: 500 .72rem/1.2 var(--mono); letter-spacing: .13em; text-transform: uppercase; }
@@ -345,8 +345,8 @@ const globalStructuredData = [
   .dogfood-context-side { display:flex; flex-direction:column; gap:10px; align-items:flex-start; }
   .dogfood-context-side span { color:var(--gold); font:500 .62rem/1.4 var(--mono); letter-spacing:.06em; }
   .dogfood-context-side .button { margin-top:8px; }
-  .site-footer { margin-top: clamp(60px, 9vw, 120px); border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(4,8,9,.7), rgba(3,6,7,.94)); }
-  .footer-shell { padding-block: clamp(46px, 7vw, 78px) 24px; }
+  .site-footer { margin-top: clamp(44px, 7vw, 88px); border-top: 1px solid var(--line); background: linear-gradient(180deg, rgba(4,8,9,.7), rgba(3,6,7,.94)); }
+  .footer-shell { padding-block: clamp(38px, 5vw, 62px) 22px; }
   .footer-cta { display: flex; align-items: end; justify-content: space-between; gap: 32px; padding-bottom: clamp(42px, 6vw, 68px); }
   .footer-cta h2 { max-width: 760px; margin: 0; font-size: clamp(2rem, 4.2vw, 3.8rem); line-height: 1.04; letter-spacing: -.045em; }
   .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr .8fr .8fr; gap: 38px; padding-block: 34px; border-top: 1px solid var(--line); }
@@ -360,7 +360,7 @@ const globalStructuredData = [
   :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
   @media (max-width: 980px) { .desktop-nav, .header-cta { display: none; } .mobile-menu { display: block; } .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; } .footer-grid .footer-col:last-child { grid-column: 2 / -1; } }
-  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .dogfood-context-card { grid-template-columns:1fr; } .footer-cta { align-items: flex-start; flex-direction: column; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
+  @media (max-width: 720px) { .container, .narrow { width: min(100% - 30px, 1180px); } .section { padding-block: 42px; } .section-tight { padding-block: 28px; } .ru-locale-bar { display: none; } .header-inner { min-height: 68px; } .brand-copy small { display: none; } .dogfood-context { padding: 30px 0; } .dogfood-context-card { grid-template-columns:1fr; } .site-footer { margin-top: 44px; } .footer-shell { padding-block: 38px 20px; } .footer-cta { align-items: flex-start; flex-direction: column; padding-bottom: 36px; } .footer-grid { grid-template-columns: 1fr 1fr; padding-block: 26px; } .footer-brand { grid-column: 1 / -1; } .footer-grid .footer-col:last-child { grid-column: auto; } .footer-bottom { flex-direction: column; } }
   @media (max-width: 460px) { .footer-grid { grid-template-columns: 1fr; } .footer-brand, .footer-grid .footer-col:last-child { grid-column: auto; } .button { width: 100%; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 </style>
