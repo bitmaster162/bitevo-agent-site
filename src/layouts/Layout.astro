@@ -9,6 +9,7 @@ interface Props {
   lang?: SiteLocale;
   alternates?: Partial<Record<SiteLocale, string>>;
   socialImage?: string;
+  mainClass?: string;
 }
 
 const {
@@ -18,7 +19,8 @@ const {
   ogType = "website",
   lang = 'en',
   alternates = {},
-  socialImage = '/og-card.png'
+  socialImage = '/og-card.png',
+  mainClass
 } = Astro.props;
 
 const path = Astro.url.pathname;
@@ -181,7 +183,7 @@ const globalStructuredData = [
       </div>
     </header>
 
-    <main id="main-content">
+    <main id="main-content" class={mainClass || undefined}>
       <slot />
       {showDogfoodCase && (
         <section class="dogfood-context section-rule" aria-labelledby="dogfood-context-title">
