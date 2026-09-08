@@ -23,7 +23,7 @@ const ruPath = `/ru/${page.slug}`;
     <div class="container parity-grid">
       <div>
         <div class="eyebrow">{page.eyebrow}</div>
-        <h1 class="display">{page.title}</h1>
+        <h1 class:list={['display', page.slug === 'evidence-readiness' && 'ru-evidence-readiness-title']}>{page.title}</h1>
       </div>
       <div>
         <p class="lede">{page.description}</p>
