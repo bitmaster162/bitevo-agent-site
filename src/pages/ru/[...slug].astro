@@ -23,7 +23,7 @@ const ruPath = `/ru/${page.slug}`;
     <div class="container parity-grid">
       <div>
         <div class="eyebrow">{page.eyebrow}</div>
-        <h1 id={page.slug === 'failure-recovery' ? 'ruFailureRecoveryTitle' : undefined} class:list={['display', page.slug === 'evidence-readiness' && 'ru-evidence-readiness-title']}>{page.title}</h1>
+        <h1 id={page.slug === 'failure-recovery' ? 'ruFailureRecoveryTitle' : page.slug === 'reservation-action-validation' ? 'ruReservationActionValidationTitle' : undefined} class:list={['display', page.slug === 'evidence-readiness' && 'ru-evidence-readiness-title']}>{page.title}</h1>
       </div>
       <div>
         <p class="lede">{page.description}</p>
@@ -37,7 +37,7 @@ const ruPath = `/ru/${page.slug}`;
   </section>
 
   <section class="section-tight section-rule">
-    <div class="container parity-points">
+    <div id={page.slug === 'reservation-action-validation' ? 'ruReservationActionValidationPoints' : undefined} class="container parity-points">
       {page.points.map((point, index) => (
         <article class="panel">
           <span>{String(index + 1).padStart(2, '0')}</span>
