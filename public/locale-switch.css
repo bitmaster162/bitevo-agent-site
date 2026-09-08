@@ -4,3 +4,4 @@
 @media(max-width:768px){#mapper .choices label,#ruMapper .choices label{min-height:44px;box-sizing:border-box}#mapper select,#ruMapper select,#ruMapper input:not([type=radio]):not([type=file]){min-height:44px;box-sizing:border-box}}
 @media(max-width:768px){#checkpointLabel,#beforeSelect,#afterSelect{min-height:44px;box-sizing:border-box}}
 #ruDogfoodAntigravityTitle{overflow-wrap:anywhere}
+@media(max-width:380px){#ruFailureRecoveryTitle{overflow-wrap:anywhere}}
