@@ -15,3 +15,4 @@
 @media(min-width:280px) and (max-width:310px){html[lang=ru] .pricing-hero h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:308px){html[lang=ru] body:has(.concept-grid) .hero h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:308px){html[lang=ru] body:has(.parity-actions a[lang="en"][href="/sample-audit"]) .parity-grid h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:308px){html[lang=ru] body:has(.parity-actions a[lang="en"][href="/sample-deployment"]) .parity-grid h1.display{overflow-wrap:anywhere}}
