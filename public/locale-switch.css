@@ -17,3 +17,4 @@
 @media(min-width:280px) and (max-width:308px){html[lang=ru] body:has(.parity-actions a[lang="en"][href="/sample-audit"]) .parity-grid h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:308px){html[lang=ru] body:has(.parity-actions a[lang="en"][href="/sample-deployment"]) .parity-grid h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:308px){html[lang=ru] body:has(.parity-actions a[lang="en"][href="/sample-message"]) .parity-grid h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:306px){html[lang=en] body:has(a.global-locale-switch[href="/ru/agent-authority-audit"]) .dogfood-proof .lab-copy p strong:last-of-type{overflow-wrap:anywhere}}
