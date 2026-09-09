@@ -11,3 +11,4 @@
 @media(max-width:324px){html[lang=ru] .vision-hero h1.display{overflow-wrap:anywhere}}
 @media(max-width:321px){main:has(a[href="/sample-audit.json"],a[href="/sample-message.json"]) .memo .memo-head h2{font-size:16.3vw}}
 @media(min-width:280px) and (max-width:299px){html[lang=en] .vision-hero h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:313px){body:has(.parity-actions a[lang="en"][href="/phuket-ai-workflow"]) .parity-grid h1.display{overflow-wrap:anywhere}}
