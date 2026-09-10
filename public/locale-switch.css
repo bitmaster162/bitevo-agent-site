@@ -24,3 +24,4 @@
 @media(min-width:280px) and (max-width:302px){html[lang=ru] body:has(a.global-locale-switch[href="/start"]) .parity-grid h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:298px){html[lang=ru] body:has(a.global-locale-switch[href="/consequential-actions"]) .parity-points .panel:nth-child(2) p{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:297px){html[lang=ru] body:has(a.global-locale-switch[href="/artifacts"]) section.hero .container.split h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:293px){html[lang=ru] body:has(a.global-locale-switch[href="/"]) .ru-hero .hero-grid h1.display{overflow-wrap:anywhere}}
