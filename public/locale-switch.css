@@ -28,3 +28,4 @@
 @media(min-width:280px) and (max-width:292px){html[lang=ru] body:has(a.global-locale-switch[href="/build/workflow-baseline-worksheet"]) section.section .container h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:288px){html[lang=ru] body:has(a.global-locale-switch[href="/mapper"]) #ruMapper .gate-list fieldset:nth-of-type(6) legend strong{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:287px){html[lang=ru] body:has(a.global-locale-switch[href="/ruap"]) section.parity-hero .container.parity-grid h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:284px){html[lang=ru] body:has(a.global-locale-switch[href="/guides/security-sandboxing"]) section.parity-hero .container.parity-grid h1.display{overflow-wrap:anywhere}}
