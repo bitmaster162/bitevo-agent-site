@@ -26,3 +26,4 @@
 @media(min-width:280px) and (max-width:297px){html[lang=ru] body:has(a.global-locale-switch[href="/artifacts"]) section.hero .container.split h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:293px){html[lang=ru] body:has(a.global-locale-switch[href="/"]) .ru-hero .hero-grid h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:292px){html[lang=ru] body:has(a.global-locale-switch[href="/build/workflow-baseline-worksheet"]) section.section .container h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:288px){html[lang=ru] body:has(a.global-locale-switch[href="/mapper"]) #ruMapper .gate-list fieldset:nth-of-type(6) legend strong{overflow-wrap:anywhere}}
