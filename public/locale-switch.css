@@ -30,3 +30,4 @@
 @media(min-width:280px) and (max-width:287px){html[lang=ru] body:has(a.global-locale-switch[href="/ruap"]) section.parity-hero .container.parity-grid h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:284px){html[lang=ru] body:has(a.global-locale-switch[href="/guides/security-sandboxing"]) section.parity-hero .container.parity-grid h1.display{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:281px){html[lang=en] body:has(a.global-locale-switch[href="/ru/mcp-governance-checklist"]) section.section-tight.section-rule .container.stack article.panel.item:nth-of-type(6) li:nth-child(3){overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:281px){html[lang=ru] body:has(a.global-locale-switch[href="/dogfood-self-audit"]) section.section.section-rule:has(.spark) .container.split h2.section-title{overflow-wrap:anywhere}}
