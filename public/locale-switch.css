@@ -20,3 +20,4 @@
 @media(min-width:280px) and (max-width:306px){html[lang=en] body:has(a.global-locale-switch[href="/ru/agent-authority-audit"]) .dogfood-proof .lab-copy p strong:last-of-type{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:304px){html[lang=ru] body:has(a.global-locale-switch[href="/universe"]) section:has(.flow-grid) .section-head h2.section-title{overflow-wrap:anywhere}}
 @media(min-width:280px) and (max-width:302px){html[lang=ru] body:has(a.global-locale-switch[href="/agent-identity-worksheet"]) .parity-grid h1.display{overflow-wrap:anywhere}}
+@media(min-width:280px) and (max-width:302px){html[lang=ru] body:has(a.global-locale-switch[href="/consulting"]) section.hero .container.split h1.display{overflow-wrap:anywhere}}
