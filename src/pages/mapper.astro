@@ -37,7 +37,7 @@ const gates = [
         <button type="button" class="button preset" data-preset="deployment">SAMPLE-003 · Config</button>
         <label class="button import-button">Import mapper JSON<input id="importJson" type="file" accept="application/json,.json" /></label>
       </div>
-      <div id="importState" class="bootstrap-state">Blank map · local only</div>
+      <div id="importState" class="bootstrap-state" role="status" aria-live="polite" aria-atomic="true">Blank map · local only</div>
     </div>
 
     <div class="container mapper-grid">
