@@ -45,7 +45,7 @@
     "T+0EppES2NgpqcIS5av29iR82mum4BUBpU0VLilViIM=",
     "V8DCXGVe7H2zgkBqRZR/mRORc4c4YcYOE2aDoBkMGjo=",
     "V8SqOYlyLc9YD2T16zCy2keso31MDeoc+Y9AnfEqlK0=",
-    "XWzFtCe1u8Fn9sbG7H5RBauZ4Dgz8Zm+yOg2nXUig7Y=",
+    "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
     "bAUeS3KAjEqRLmU30FWi3pSeyy2wg5Jo62AostgBdSk=",
     "6vQ+1EdChjlSs2bVZvfze6zmHbUj3ZEAM6KBG/MYoyY=",
     "h9UPymzand1Bs/6+kpoTWU73axcRFkC/PdTtOlCsBp0=",
@@ -57,7 +57,7 @@
     "pSlylujjpZcKeI7ZnoDyW4P+4Br5w9WA6z2vOR7UAZw=",
     "pUeC4ZiQjsziwxvVKz3lt0g/AFWLMrZ2XPQ49OhydWE=",
     "sDb7lBPyFoFcd0Kk3RLxtu+EX3VnRf5O7A8odOHrxc0=",
-    "xGM+fthzwGIz+UIsri1m2A+1Z+LoYYQzxlpxoi4m6zw=",
+    "wdbXYwFhmp2xnqX5Y/8ZjeR4g2K1qhrisUgv9jwhbL8=",
     "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g=",
     "VCmT8Yrhqg0F3UIf0/0D5EWJyTju+9R305EI64WyEX8=",
     "Vg6vrWzbl52s1mK4xX1gImoSkR063z0z+ZN6LiBWEHQ=",
@@ -90,6 +90,22 @@
       "routes": [
         "/build/workflow-baseline-worksheet",
         "/ru/build/workflow-baseline-worksheet"
+      ]
+    },
+    {
+      "sourceSha": "62b49729cc65f3ca86c3638c9627fbf946bc33c7",
+      "note": "R71 metadata-contrast normalization changes two Astro-emitted inline style blocks. Replace the exact stale emitted style hashes with the exact hashes observed on candidate head 62b49729; no new inline script, style attribute, execution capability, or route scope is introduced.",
+      "styles": [
+        "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
+        "wdbXYwFhmp2xnqX5Y/8ZjeR4g2K1qhrisUgv9jwhbL8="
+      ],
+      "historicalEmittedStyles": [
+        "XWzFtCe1u8Fn9sbG7H5RBauZ4Dgz8Zm+yOg2nXUig7Y=",
+        "xGM+fthzwGIz+UIsri1m2A+1Z+LoYYQzxlpxoi4m6zw="
+      ],
+      "routes": [
+        "/continuityos",
+        "/guides"
       ]
     }
   ]

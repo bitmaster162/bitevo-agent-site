@@ -32,7 +32,7 @@
 
   .hypothesis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .hypothesis{padding:24px;min-height:350px;display:flex;flex-direction:column}
-  .hypothesis-top{display:flex;justify-content:space-between;color:#66726f;font:600 .6rem var(--mono)}
+  .hypothesis-top{display:flex;justify-content:space-between;color:var(--meta);font:600 .6rem var(--mono)}
   .hypothesis-top strong{color:var(--green)}
   .hypothesis h3{margin:54px 0 12px;font-size:1.15rem}
   .hypothesis>p{margin:0;color:var(--muted)}
@@ -44,7 +44,7 @@
   .revision-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;padding:18px;align-items:stretch}
   .revision-flow article{padding:18px;border:1px solid var(--line);border-radius:12px}
   .revision-flow article.accent{border-color:rgba(127,208,177,.34);background:rgba(127,208,177,.035)}
-  .revision-flow span{color:#61706b;font:600 .55rem var(--mono)}
+  .revision-flow span{color:var(--meta);font:600 .55rem var(--mono)}
   .revision-flow strong{display:block;margin:24px 0 8px;font-size:.82rem}
   .revision-flow p{margin:0;color:var(--muted);font-size:.7rem}
   .arrow{display:grid;place-items:center;color:#53615d}
