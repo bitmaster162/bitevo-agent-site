@@ -14,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="container warning panel"><div class="warning-mark">!</div><div><strong>Browser-only working state.</strong><p>Saved maps use this browser's localStorage. Imported or handed-off artifacts are not uploaded by this page. Do not store credentials, tokens, private keys, wallet seeds, production secrets or customer data.</p></div></div>
 
     <div class="container incoming panel">
-      <div><div class="eyebrow">Bring evidence structure in</div><h2>Save a mapper artifact as a decision checkpoint.</h2><p id="incomingState">No incoming map detected. Build one in Mapper or import a BitEvo mapper JSON file.</p></div>
+      <div><div class="eyebrow">Bring evidence structure in</div><h2>Save a mapper artifact as a decision checkpoint.</h2><p id="incomingState" role="status" aria-live="polite" aria-atomic="true">No incoming map detected. Build one in Mapper or import a BitEvo mapper JSON file.</p></div>
       <div class="incoming-actions">
         <label>Checkpoint label<input id="checkpointLabel" placeholder="Example: CRM workflow · before repair" /></label>
         <div class="button-row"><button id="saveIncoming" type="button" class="button button-primary" disabled>Save checkpoint</button><button id="clearIncoming" type="button" class="button button-ghost" disabled>Clear incoming</button><label class="button import-button">Import mapper JSON<input id="importJson" type="file" accept="application/json,.json" /></label></div>
