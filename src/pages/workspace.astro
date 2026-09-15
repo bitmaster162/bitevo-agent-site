@@ -65,7 +65,7 @@ import Layout from '../layouts/Layout.astro';
             <label>Decision rationale<textarea id="decisionReason" rows="3" placeholder="Why this decision is justified by the before/after evidence state"></textarea></label>
             <label>Retest criterion<textarea id="retestCriterion" rows="3" placeholder="What exact original decision condition must pass on replay?"></textarea></label>
             <div class="button-row"><button id="buildMemo" type="button" class="button button-primary">Build Decision Memo</button><button id="copyMemo" type="button" class="button" disabled>Copy memo</button><button id="downloadTxt" type="button" class="button button-ghost" disabled>TXT</button><button id="downloadJson" type="button" class="button button-ghost" disabled>JSON</button></div>
-            <div id="decisionConflict" class="decision-conflict" hidden></div>
+            <div id="decisionConflict" class="decision-conflict" role="status" aria-live="polite" aria-atomic="true" hidden></div>
             <pre id="memoOutput" class="memo-output">Select two checkpoints, compare them, then build a Decision Memo.</pre>
           </section>
         </div>
