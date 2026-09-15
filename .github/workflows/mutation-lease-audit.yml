@@ -1,0 +1,113 @@
+name: BitEvo Mutation Lease Audit
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  statuses: write
+
+concurrency:
+  group: mutation-lease-audit-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  audit-runner:
+    name: mutation-lease-audit-runner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Checkout exact trusted PR base
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Audit canonical server lease and publish exact head check
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v9.0.0
+        env:
+          VERIFIER_MODULE: ${{ github.workspace }}/scripts/verify-mutation-lease-audit.mjs
+          AUDIT_REPOSITORY: ${{ github.repository }}
+          AUDIT_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          AUDIT_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          AUDIT_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          AUDIT_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          AUDIT_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        with:
+          script: |
+            const { pathToFileURL } = await import('node:url');
+            const verifier = await import(pathToFileURL(process.env.VERIFIER_MODULE).href);
+            const [owner, repo] = process.env.AUDIT_REPOSITORY.split('/');
+            const contextInput = {
+              repository: process.env.AUDIT_REPOSITORY,
+              baseRef: process.env.AUDIT_BASE_REF,
+              baseSha: process.env.AUDIT_BASE_SHA,
+              headRef: process.env.AUDIT_HEAD_REF,
+              headSha: process.env.AUDIT_HEAD_SHA,
+              headRepository: process.env.AUDIT_HEAD_REPOSITORY,
+            };
+            const api = {
+              async fileExists(commitSha, filePath) {
+                try {
+                  await github.rest.repos.getContent({ owner, repo, path: filePath, ref: commitSha });
+                  return true;
+                } catch (error) {
+                  if (error.status === 404) return false;
+                  throw error;
+                }
+              },
+              async getFileText(commitSha, filePath) {
+                const response = await github.rest.repos.getContent({ owner, repo, path: filePath, ref: commitSha });
+                const data = response.data;
+                if (Array.isArray(data) || data.type !== 'file' || data.encoding !== 'base64') {
+                  throw new Error(`unexpected content response for ${filePath}`);
+                }
+                return Buffer.from(data.content.replace(/\n/g, ''), 'base64').toString('utf8');
+              },
+              async getRef(fullRef) {
+                try {
+                  const response = await github.rest.git.getRef({ owner, repo, ref: fullRef.replace(/^refs\//, '') });
+                  return response.data.object.sha;
+                } catch (error) {
+                  if (error.status === 404) return null;
+                  throw error;
+                }
+              },
+              async getCommit(sha) {
+                const response = await github.rest.git.getCommit({ owner, repo, commit_sha: sha });
+                return {
+                  sha: response.data.sha,
+                  treeSha: response.data.tree.sha,
+                  parents: response.data.parents.map(parent => parent.sha),
+                };
+              },
+            };
+
+            let result;
+            let failure;
+            try {
+              result = await verifier.auditMutationLease(contextInput, api);
+            } catch (error) {
+              failure = error instanceof Error ? error : new Error(String(error));
+            }
+
+            const success = !failure;
+            const summary = success
+              ? `${result.status}: base=${contextInput.baseSha} head=${contextInput.headSha}${result.coordinationSha ? ` coordination=${result.coordinationSha}` : ''}`
+              : `FAIL: ${failure.message}`;
+            await github.rest.repos.createCommitStatus({
+              owner,
+              repo,
+              sha: contextInput.headSha,
+              state: success ? 'success' : 'failure',
+              context: 'mutation-lease-audit',
+              description: success ? `lease audit ${result.status}` : 'lease audit failed',
+            });
+
+            if (failure) {
+              core.setFailed(failure.message);
+            } else {
+              core.info(`MUTATION_LEASE_AUDIT=${result.status} ${summary}`);
+            }

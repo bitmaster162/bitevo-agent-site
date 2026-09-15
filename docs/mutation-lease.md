@@ -135,3 +135,28 @@ Until that activation is complete:
 - manual provider deployment is outside the lease protocol and remains disallowed by the current site operating policy.
 
 The coordination ref is deliberately separate from feature history. Lease commits should never be merged into `main`; only the implementation and later enforcement code belong in normal PR history.
+
+
+## Mutation lease audit R1
+
+Audit code and audit activation are separate phases. Merging this implementation does not create the coordination ref or change repository protection settings.
+
+The workflow runs on `pull_request_target` and checks out the exact PR base SHA. The proposed head is identified by server-provided ref and SHA values; it is not used as the source of the audit program.
+
+The verifier accepts repository, base, and head identity from the workflow event. PR body text and discussion content are outside the audit input contract.
+
+The canonical lease source is `refs/heads/coordination/site-mutation-lease` and is read through the GitHub API.
+For a normal PR audit, the server evidence must show:
+
+- remote `main` equals the exact PR base SHA;
+- schema version and lease kind are exact;
+- state is `SEALED` and the expiry is still in the future;
+- repository identity, `targetRef`, and `baseSha` match the PR context;
+- `featureRef` equals the PR head branch and that remote ref equals the PR head SHA;
+- `sealedHead` equals the PR head SHA;
+- `sealedTree` equals the tree of the server-read head commit;
+- lease `predecessor` equals the sole parent of the coordination commit.
+
+Bootstrap is narrow: `PASS_BOOTSTRAP` is available only when both the audit workflow and verifier are absent from the exact PR base. A partial implementation fails closed.
+
+The workflow emits the `mutation-lease-audit` commit-status context on the exact PR head. Until a separate activation phase creates the coordination history and makes this context required on `main`, this remains verification code rather than an active repository lock.
