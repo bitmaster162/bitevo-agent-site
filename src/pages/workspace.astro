@@ -31,7 +31,7 @@ import Layout from '../layouts/Layout.astro';
       </aside>
 
       <div class="compare panel">
-        <div class="panel-head"><div><div class="eyebrow">Before / after</div><h2>Authority Budget comparison</h2></div><span id="compareState">Select two checkpoints</span></div>
+        <div class="panel-head"><div><div class="eyebrow">Before / after</div><h2>Authority Budget comparison</h2></div><span id="compareState" role="status" aria-live="polite" aria-atomic="true">Select two checkpoints</span></div>
         <p class="microcopy">A comparison class is an identity/scope check, not a trust score. RETEST_CANDIDATE means the pair is structurally eligible to be treated as the same workflow/scope; it does not authorize testing or establish implementation behavior.</p>
         <div class="select-grid">
           <label>Before<select id="beforeSelect"><option value="">Select checkpoint</option></select></label>
