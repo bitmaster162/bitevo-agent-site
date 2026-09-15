@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "kind": "bitevo-site-mutation-lease",
+  "leaseId": "3776df66-806c-4c93-951c-8d9cca77296d",
+  "nonce": "7178767f-b36a-47a7-8f68-dd55f14d7bcd",
+  "state": "ACTIVE",
+  "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
+  "targetRef": "refs/heads/main",
+  "baseSha": "0661dd0f89aa291f30a7e9008489cdd614283d77",
+  "owner": "chatgpt-outbox",
+  "session": "activation-canary-r1-20260916",
+  "worktree": "c:/users/coins/appdata/local/temp/bitevo_site_lease_activation_canary_r1_20260916",
+  "acquiredAt": "2026-09-15T19:20:54.676Z",
+  "updatedAt": "2026-09-15T19:20:54.676Z",
+  "expiresAt": "2026-09-15T21:20:52.586Z",
+  "sealedHead": null,
+  "sealedTree": null,
+  "featureRef": null,
+  "predecessor": null
+}
