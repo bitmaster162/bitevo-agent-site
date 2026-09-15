@@ -7,7 +7,8 @@
       "category": "FLAGSHIP",
       "eyebrow": "КОММЕРЧЕСКИЙ ВХОД",
       "title": "Выберите самый маленький объём доказательств, который способен изменить решение.",
-      "description": "Русский коммерческий вход BitEvo: Free triage и четыре bounded пути — $1,500 Entry Audit, MCP / Tool Governance, $3,000 BUILD Workflow Exception Diagnostic и $4,900 Primary Audit — без автоматической отправки или testing authorization.",
+      "metaTitle": "Начать работу с BitEvo: triage и четыре пути",
+      "description": "Вход BitEvo: free triage, Entry Audit $1,500, MCP / Tool Governance, BUILD Diagnostic $3,000, Primary Audit $4,900. Без автоотправки и testing authorization.",
       "points": [
         "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
         "$1,500 Entry Audit: проверить одну критическую action chain и одну основную failure hypothesis.",
@@ -39,6 +40,7 @@
       "category": "SPECIALIST",
       "eyebrow": "SECURITY CONTROL VALIDATION · $1,500",
       "title": "Проверьте один control там, где software реально может что-то изменить.",
+      "metaTitle": "Security Control Validation, $1,500 — BitEvo",
       "description": "Фиксированная $1,500 проверка одной consequential control boundary в staging/test с expected decision, downstream readback и воспроизводимым evidence.",
       "points": [
         "До теста фиксируется ожидаемое ALLOW / DENY / HOLD / ESCALATE поведение.",
@@ -54,6 +56,7 @@
       "category": "SPECIALIST",
       "eyebrow": "AI EVIDENCE READINESS · $1,500",
       "title": "Соберите повторяющиеся buyer-review ответы в один защищаемый evidence pack.",
+      "metaTitle": "Evidence readiness sprint, $1,500 — BitEvo",
       "description": "Пятидневный $1,500 sprint для одного AI product/workflow: buyer-question map, claims-to-evidence ledger, reusable evidence pack и gap list.",
       "points": [
         "Подходит, когда security/procurement review уже происходит, а доказательства собираются вручную.",
@@ -69,7 +72,8 @@
       "category": "SPECIALIST",
       "eyebrow": "BITEVO BUILD · 5 ДНЕЙ · $3,000",
       "title": "Сделайте одно повторяющееся исключение в рабочем процессе проверяемым за пять рабочих дней.",
-      "description": "Диагностика одного операционного exception workflow: владелец, входные данные, состояния проверки, evidence и измеримый baseline до более глубокой реализации или production-изменений.",
+      "metaTitle": "BUILD: диагностика exception workflow — BitEvo",
+      "description": "Диагностика одного операционного exception workflow: владелец, входы, состояния проверки, evidence и измеримый baseline. Без изменений в production.",
       "points": [
         "Фиксируем один recurring exception workflow: начало, конец, владельца, reviewer, безопасные входы и явно исключённые действия.",
         "Трассируем representative cases и отделяем missing/conflicting inputs, handoff ambiguity, rework/reopen и другие повторяющиеся исключения от профессиональных или регулируемых решений.",
@@ -84,7 +88,8 @@
       "category": "SPECIALIST",
       "eyebrow": "HR / WORKFORCE SPECIALIZATION · $3,000",
       "title": "Сделайте одно повторяющееся HR/workforce исключение проверяемым за пять рабочих дней.",
-      "description": "HR/workforce specialization базовой BUILD-диагностики: recruiting/HR/workforce exception workflow, human-review packet, bounded readback и zero-live-write boundary.",
+      "metaTitle": "BUILD: диагностика HR-workflow — BitEvo",
+      "description": "HR/workforce версия BUILD-диагностики: recruiting/HR exception workflow, human-review packet, bounded readback, нулевая граница live-write.",
       "points": [
         "Ограничиваем один named workforce exception workflow с owner, reviewer и явными out-of-scope действиями.",
         "Inputs — synthetic, redacted или schema-only; candidate/employee communication и production ATS/HRIS/payroll writes исключены из первой фазы.",
@@ -99,7 +104,8 @@
       "category": "PROOF",
       "eyebrow": "BUILD PROOF · SYNTHETIC MEASUREMENT",
       "title": "Сначала покажите арифметику — и только потом называйте это ценностью.",
-      "description": "Синтетический worked example показывает, как фиксированный workflow baseline и comparison state превращаются в прозрачный time/rework calculation без выдуманного customer case или ROI claim.",
+      "metaTitle": "Worked example: арифметика workflow — BitEvo",
+      "description": "Синтетический пример: как фиксированный workflow baseline и comparison state дают прозрачный расчёт времени. Не клиентский кейс и не ROI-обещание.",
       "points": [
         "Все цифры synthetic: это не данные YPN, не результат клиента BitEvo и не observed implementation outcome.",
         "20.4 часа и $612 в примере получены только из явно заданных synthetic inputs, включая условную ставку $30/час.",
@@ -114,7 +120,8 @@
       "category": "SPECIALIST",
       "eyebrow": "MCP / TOOL GOVERNANCE",
       "title": "Привяжите tool authority к точному действию, объекту и evidence gate.",
-      "description": "Специализированная BitEvo поверхность для MCP/tool governance: capability boundary, object binding, approval и external-effect evidence без создания нового публичного ценового tier.",
+      "metaTitle": "MCP / tool governance — BitEvo",
+      "description": "MCP / tool governance: capability boundary, object binding, approval и evidence внешнего эффекта. Отдельная поверхность, не новый ценовой tier.",
       "points": [
         "MCP/tool availability не равна разрешению выполнять consequential action.",
         "Authority должна быть привязана к конкретному action, target object/environment и owner approval.",
@@ -129,7 +136,8 @@
       "category": "SPECIALIST",
       "eyebrow": "CODING-AGENT GOVERNANCE",
       "title": "Отделите способность агента менять код от права выпускать изменение дальше.",
-      "description": "Специализированная поверхность для authority/evidence границ coding agents: diff generation, tests, PR/open/merge boundaries и owner decision без ложного заявления интеграции.",
+      "metaTitle": "Governance для coding-агентов — BitEvo",
+      "description": "Границы authority и evidence для coding-агентов: diff, тесты, границы PR open/merge и решение владельца. Без ложных заявлений об интеграции.",
       "points": [
         "Проверяется, какие code-changing действия агент может предложить и какие эффекты должны оставаться gated.",
         "Decision-time evidence, version/object binding и regression evidence рассматриваются отдельно от способности сгенерировать diff.",
@@ -144,6 +152,7 @@
       "category": "SPECIALIST",
       "eyebrow": "FAILURE / RETRY / RECOVERY",
       "title": "Не разрешайте retry превращать неопределённость в повторный внешний эффект.",
+      "metaTitle": "Failure recovery: retry, replay, compensation — BitEvo",
       "description": "Специализированная BitEvo поверхность про stale state, partial effects, replay, retry, compensation и recovery ownership для consequential workflows.",
       "points": [
         "Retry допустим только когда система знает, какой внешний эффект уже произошёл и к какому объекту он относится.",
@@ -159,6 +168,7 @@
       "category": "SPECIALIST",
       "eyebrow": "PHUKET · LOCAL IMPLEMENTATION",
       "title": "Локальный AI workflow pilot — отдельный implementation path, не новый audit tier.",
+      "metaTitle": "Phuket AI Workflow pilot — BitEvo",
       "description": "Русская parity-поверхность Phuket AI Workflow как отдельного local specialist implementation path, подчинённого общей BitEvo commercial hierarchy.",
       "points": [
         "Это локальный implementation pilot, а не замена global Free → Entry → Primary audit ladder.",
@@ -174,6 +184,7 @@
       "category": "TOOL",
       "eyebrow": "MCP GOVERNANCE CHECKLIST",
       "title": "Проверьте, что tool access не подменяет action authority.",
+      "metaTitle": "Чеклист MCP / tool governance — BitEvo",
       "description": "Русская checklist-поверхность для подготовки MCP/tool governance scope: action, target, approval, evidence, effect confirmation и recovery.",
       "points": [
         "Checklist помогает структурировать scope и unresolved gates до глубокой проверки.",
@@ -189,6 +200,7 @@
       "category": "TOOL",
       "eyebrow": "AGENT IDENTITY WORKSHEET",
       "title": "Свяжите действующего агента с точной identity, role и target boundary.",
+      "metaTitle": "Worksheet: identity агента — BitEvo",
       "description": "Русская worksheet-поверхность для identity/object binding перед consequential tool use или external effect.",
       "points": [
         "Identity должна быть достаточной, чтобы отличить конкретного actor/workflow от соседних сервисов и сессий.",
@@ -204,6 +216,7 @@
       "category": "TOOL",
       "eyebrow": "TRUST / EVIDENCE TEMPLATE",
       "title": "Фиксируйте claim, источник, freshness и ограничение до того, как назвать это evidence.",
+      "metaTitle": "Шаблон trust evidence — BitEvo",
       "description": "Русская template-поверхность для evidence provenance, freshness, object binding, limitations и decision use.",
       "points": [
         "Claim отделяется от verified fact, inference, assumption и unknown.",
@@ -219,6 +232,7 @@
       "category": "PROOF",
       "eyebrow": "SYNTHETIC SAMPLE · CRM WRITE",
       "title": "Синтетический CRM-write пример показывает метод, а не клиентский результат.",
+      "metaTitle": "SAMPLE-001: синтетический CRM-write — BitEvo",
       "description": "RU parity для SAMPLE-001: synthetic CRM-write finding про False Green и external-effect confirmation gap.",
       "points": [
         "Объект примера — CRM write и подтверждение фактического external state.",
@@ -234,6 +248,7 @@
       "category": "PROOF",
       "eyebrow": "SYNTHETIC SAMPLE · OUTBOUND MESSAGE",
       "title": "Синтетический outbound пример отделяет recipient binding от внутреннего send-status.",
+      "metaTitle": "SAMPLE-002: синтетический outbound — BitEvo",
       "description": "RU parity для SAMPLE-002: synthetic outbound-message finding про recipient + approval binding gap.",
       "points": [
         "Объект примера — внешний message effect и его точный recipient binding.",
@@ -249,6 +264,7 @@
       "category": "PROOF",
       "eyebrow": "SYNTHETIC SAMPLE · STAGING DEPLOYMENT",
       "title": "Синтетический deployment пример связывает environment, baseline и external readback.",
+      "metaTitle": "SAMPLE-003: синтетический deployment — BitEvo",
       "description": "RU parity для SAMPLE-003: synthetic staging deployment/config finding про environment + baseline/version binding gap.",
       "points": [
         "Объект примера — staging deployment/config effect, а не production release.",
@@ -264,6 +280,7 @@
       "category": "PROOF",
       "eyebrow": "SECURITY / TRUST BOUNDARY",
       "title": "Публикуйте границы контроля так же явно, как сами security claims.",
+      "metaTitle": "Security и границы публичных claims — BitEvo",
       "description": "Русская trust/security поверхность BitEvo: bounded engineering evidence, public claim ceiling и separation от certification/production-wide guarantees.",
       "points": [
         "Публичный security материал описывает проверяемые boundaries и evidence classes, а не универсальный safety score.",
@@ -294,6 +311,7 @@
       "category": "PROOF",
       "eyebrow": "PUBLIC SAMPLE",
       "title": "Публичный AI Skill Lab sample — пример структуры, а не customer proof.",
+      "metaTitle": "Публичный AI Skill Lab sample — BitEvo",
       "description": "Русская parity-поверхность публичного AI Skill Lab sample с явным claim ceiling и без превращения примера в certification или production evidence.",
       "points": [
         "Sample показывает способ описывать workflow/evidence структуру на публичном уровне.",
@@ -309,6 +327,7 @@
       "category": "RESEARCH",
       "eyebrow": "REVIEWED METHOD NOTE",
       "title": "Метод reliability audit начинается с action, authority, evidence, effect и recovery.",
+      "metaTitle": "Метод reliability audit для AI-агентов — BitEvo",
       "description": "Русская semantic parity для reviewed public methodology note по bounded AI-agent reliability/authority audit.",
       "points": [
         "Метод рассматривает конкретный action-capable workflow, а не абстрактный model score.",
@@ -324,6 +343,7 @@
       "category": "RESEARCH",
       "eyebrow": "REVIEWED SECURITY NOTE",
       "title": "Sandboxing ограничивает execution surface, но не заменяет authority и evidence gates.",
+      "metaTitle": "Security sandboxing: границы — BitEvo",
       "description": "Русская semantic parity для reviewed security-sandboxing note без private infrastructure disclosure и без certification claims.",
       "points": [
         "Isolation boundary должна быть связана с конкретным execution/tool surface.",
@@ -339,6 +359,7 @@
       "category": "RESEARCH",
       "eyebrow": "REVIEWED OPERATIONS NOTE",
       "title": "Drift monitoring полезен только когда baseline, freshness и объект сравнения определены явно.",
+      "metaTitle": "Drift monitoring для fleet coordinator — BitEvo",
       "description": "Русская semantic parity для reviewed architecture note по fleet coordinator drift monitoring; это не live telemetry.",
       "points": [
         "Drift требует явного baseline и идентичности сравниваемого объекта.",
@@ -354,6 +375,7 @@
       "category": "RESEARCH",
       "eyebrow": "REVIEWED INTERFACE CONTRACT",
       "title": "Tool-I/O contract должен сохранять object binding и effect semantics через границу инструмента.",
+      "metaTitle": "Контракт Tool-I/O Bridge (D3) — BitEvo",
       "description": "Русская semantic parity для reviewed D3 Tool-I/O Bridge Contract без private endpoints и без runtime-health claims.",
       "points": [
         "Input/output schema не должен терять identity, target и decision context consequential action.",
@@ -369,7 +391,8 @@
       "category": "CONTEXT",
       "eyebrow": "PRIVATE PRODUCT · PORTABLE CONTEXT",
       "title": "RUAP переносит проверенный контекст. Полномочия не переносит.",
-      "description": "Portable AI Continuity & Governance для provenance-aware cold-start packs между моделями, агентами и сессиями без превращения remembered context в permission to act.",
+      "metaTitle": "RUAP: portable AI continuity — BitEvo",
+      "description": "RUAP: provenance-aware cold-start packs между моделями, агентами и сессиями. Перенесённый контекст не становится разрешением действовать.",
       "points": [
         "Selected evidence, source locators и currentness metadata упаковываются в deterministic portable context.",
         "Trusted/internal и external-safe profiles должны сохранять fail-closed boundary для sensitive material.",
@@ -384,6 +407,7 @@
       "category": "CONTEXT",
       "eyebrow": "CONSEQUENTIAL ACTIONS",
       "title": "Класс системы важен меньше, чем внешний эффект, который она может создать.",
+      "metaTitle": "Consequential actions: границы эффекта — BitEvo",
       "description": "Русская context-поверхность BitEvo для consequential actions: commerce, reservation, regulated service и другие bounded external effects.",
       "points": [
         "Action считается consequential, когда ошибка может изменить внешний record, recipient, reservation, payment, approval или другой материальный state.",
@@ -399,6 +423,7 @@
       "category": "CONTEXT",
       "eyebrow": "COMMERCE ACTION VALIDATION",
       "title": "Commerce workflow должен доказать право изменить заказ, возврат или customer record до эффекта.",
+      "metaTitle": "Валидация действий в commerce — BitEvo",
       "description": "Русская context-поверхность для commerce consequential actions и их authority/evidence/effect/recovery boundaries.",
       "points": [
         "Target object и customer/order identity должны быть связаны с конкретным action.",
@@ -414,6 +439,7 @@
       "category": "CONTEXT",
       "eyebrow": "RESERVATION ACTION VALIDATION",
       "title": "Reservation workflow должен различать предложение действия и подтверждённое изменение бронирования.",
+      "metaTitle": "Валидация действий в бронировании — BitEvo",
       "description": "Русская context-поверхность для reservation/booking consequential actions с exact object binding, approval и downstream confirmation.",
       "points": [
         "Date/time/location/party/customer binding должны относиться к одной и той же reservation object.",
@@ -429,6 +455,7 @@
       "category": "CONTEXT",
       "eyebrow": "REGULATED-SERVICE ACTION VALIDATION",
       "title": "В regulated workflow uncertainty должна уменьшать authority, а не расширять её.",
+      "metaTitle": "Действия в regulated-service workflow — BitEvo",
       "description": "Русская context-поверхность для consequential actions в regulated-service workflows с явными approval, evidence и escalation boundaries.",
       "points": [
         "Identity, role, policy state и required approvals должны быть current и object-bound до consequential effect.",

@@ -14,7 +14,7 @@ const ruPath = `/ru/${page.slug}`;
 ---
 
 <RuLayout
-  title={`${page.title} | BitEvo`}
+  title={page.metaTitle ?? `${page.title} | BitEvo`}
   description={page.description}
   enPath={page.enPath}
   ruPath={ruPath}
