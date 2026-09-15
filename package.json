@@ -19,7 +19,9 @@
     "deploy:cloudflare": "npx wrangler deploy",
     "preview": "astro preview",
     "astro": "astro",
-    "verify:site-agent": "node scripts/site-agent-policy-harness.mjs && node scripts/site-agent-intake-adapter-harness.mjs && node scripts/site-agent-fleet-harness.mjs && node scripts/site-agent-l2-readiness-harness.mjs && node scripts/site-agent-l2-lane-fixtures-harness.mjs && node scripts/site-agent-l2-lane-fixtures-wave2-harness.mjs && node scripts/site-agent-l2-fleet-manifest-harness.mjs"
+    "verify:site-agent": "node scripts/site-agent-policy-harness.mjs && node scripts/site-agent-intake-adapter-harness.mjs && node scripts/site-agent-fleet-harness.mjs && node scripts/site-agent-l2-readiness-harness.mjs && node scripts/site-agent-l2-lane-fixtures-harness.mjs && node scripts/site-agent-l2-lane-fixtures-wave2-harness.mjs && node scripts/site-agent-l2-fleet-manifest-harness.mjs",
+    "lease:site": "node scripts/site-mutation-lease.mjs",
+    "verify:site-mutation-lease": "node scripts/site-mutation-lease-harness.mjs"
   },
   "dependencies": {
     "@vercel/blob": "2.8.0",
