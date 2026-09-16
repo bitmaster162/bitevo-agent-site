@@ -261,8 +261,23 @@ if (!fileSet.has('og-card.png')) failures.push('og-card.png missing from static 
 
 if (fileSet.has('sitemap.xml')) {
   const sitemap = await readFile(sitemapFile, 'utf8');
+  const buildMeta = JSON.parse(await readFile(join(repoRootPath, 'src/generated/build-meta.json'), 'utf8'));
+  const expectedLastmod = String(buildMeta.commitDate || '');
+  const sitemapEntries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(match => match[1]);
+  const sitemapLastmods = [];
+  sitemapChecks += 4;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(expectedLastmod)) failures.push(`sitemap.xml: build commitDate must be ISO YYYY-MM-DD (actual=${expectedLastmod || 'missing'})`);
+  if (sitemapEntries.length !== indexableCount) failures.push(`sitemap.xml: URL entry count must equal indexable routes (entries=${sitemapEntries.length} indexable=${indexableCount})`);
+  for (const entry of sitemapEntries) {
+    const lastmod = entry.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || '';
+    if (lastmod) sitemapLastmods.push(lastmod);
+    sitemapChecks += 3;
+    if (!lastmod) failures.push('sitemap.xml: every URL entry must include lastmod');
+    else if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) failures.push(`sitemap.xml: invalid lastmod format ${lastmod}`);
+    else if (lastmod !== expectedLastmod) failures.push(`sitemap.xml: lastmod must equal build commitDate ${expectedLastmod} (actual=${lastmod})`);
+  }
+  if (sitemapLastmods.length !== sitemapEntries.length) failures.push(`sitemap.xml: lastmod count must equal URL entry count (lastmod=${sitemapLastmods.length} entries=${sitemapEntries.length})`);
   if (!sitemap.includes(`${siteOrigin}/build`)) failures.push('sitemap.xml: /build missing');
-  sitemapChecks += 1;
   for (const [route, indexable] of indexabilityByRoute) {
     if (route === '/404.html') continue;
     const canonicalRoute = route === '/' ? '/' : route.replace(/\/+$/, '');

@@ -17,6 +17,14 @@ function gitRef() {
   }
 }
 
+function gitCommitDate(sha) {
+  try {
+    return execFileSync('git', ['show', '-s', '--format=%cs', sha], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch {
+    return '';
+  }
+}
+
 const candidates = [
   { provider: 'vercel', sha: process.env.VERCEL_GIT_COMMIT_SHA, ref: process.env.VERCEL_GIT_COMMIT_REF },
   { provider: 'cloudflare', sha: process.env.WORKERS_CI_COMMIT_SHA, ref: process.env.WORKERS_CI_BRANCH },
@@ -30,6 +38,7 @@ const provider = selected.provider;
 const sha = String(selected.sha || 'unknown').trim();
 const ref = String(selected.ref || '').trim();
 const validSha = /^[0-9a-f]{40}$/i.test(sha);
+const commitDate = validSha ? gitCommitDate(sha) : '';
 
 let provenanceClass = 'UNKNOWN_INVALID';
 if ((provider === 'vercel' || provider === 'cloudflare') && validSha && ref) provenanceClass = 'PROVIDER_BOUND';
@@ -43,7 +52,8 @@ const meta = {
   shortSha,
   provider,
   ref,
-  provenanceClass
+  provenanceClass,
+  commitDate
 };
 const serialized = `${JSON.stringify(meta, null, 2)}\n`;
 
@@ -52,4 +62,4 @@ mkdirSync('public', { recursive: true });
 writeFileSync('src/generated/build-meta.json', serialized, 'utf8');
 writeFileSync('public/version.json', serialized, 'utf8');
 
-console.log(`BITEVO_BUILD_META sha=${sha} provider=${provider} ref=${ref || 'unknown'} provenance=${provenanceClass}`);
+console.log(`BITEVO_BUILD_META sha=${sha} provider=${provider} ref=${ref || 'unknown'} provenance=${provenanceClass} commitDate=${commitDate || 'unknown'}`);
