@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "0fb33357-8477-4dfc-a6c0-189bc651936a",
   "nonce": "5b234fbd-9e96-46c6-954a-b0b56aca92b5",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0a3cfd433d914c573eccdd67b8daf0ed901212b5",
@@ -11,10 +11,12 @@
   "session": "p10-sitemap-lastmod-20260916",
   "worktree": "c:/users/coins/appdata/local/temp/bitevo_site_p10_lastmod_20260916",
   "acquiredAt": "2026-09-16T08:26:06.958Z",
-  "updatedAt": "2026-09-16T08:39:08.421Z",
+  "updatedAt": "2026-09-16T09:48:12.946Z",
   "expiresAt": "2026-09-16T10:26:04.091Z",
   "sealedHead": "9c633a8b577fac63f869340f641e59cabec2c6e5",
   "sealedTree": "3a8e6c34e7a932e2494af1b2514e0df1f9603016",
   "featureRef": "refs/heads/agent/site-p10-sitemap-lastmod-r1",
-  "predecessor": "d4d90a9d0e96f96fc721b6ccbaef9c5a8ddfa2ba"
+  "predecessor": "b2b2c9622adfab716f9c27b22df0d2ccee85d828",
+  "releasedAt": "2026-09-16T09:48:12.947Z",
+  "releaseReason": "p10_post_merge_cleanup"
 }
