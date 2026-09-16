@@ -25,6 +25,7 @@
       "category": "ENTRY",
       "eyebrow": "ENTRY AUDIT · $1,500",
       "title": "Одна action chain. Одна основная гипотеза. Одно решение.",
+      "metaTitle": "Entry Audit — одна гипотеза, одно решение | BitEvo",
       "description": "Фиксированный $1,500 Entry Audit для воспроизводимой проверки одной decision-relevant failure hypothesis в одном критическом action chain.",
       "points": [
         "Объект — один критический action chain, а не весь продукт или вся система.",
@@ -296,6 +297,7 @@
       "category": "PROOF",
       "eyebrow": "OPERATOR / ENTITY BOUNDARY",
       "title": "BitEvo на bitevo.work — конкретная независимая B2B engineering practice.",
+      "metaTitle": "BitEvo operator boundary — B2B engineering practice",
       "description": "Русская operator/trust поверхность с canonical entity boundary и разграничением от несвязанных crypto/Web3 проектов с похожим названием.",
       "points": [
         "Canonical public identity привязана к BitEvo на bitevo.work.",
