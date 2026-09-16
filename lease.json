@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "69cedd55-0894-47fa-9a09-f5d6e1c6359c",
   "nonce": "24d6e6c7-6b5d-43f4-af0b-d3b9b3530edc",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "e12da33f7cb14207a1ee0e7ee73e2c837b2ab8ed",
@@ -11,10 +11,12 @@
   "session": "windows-verification-hardening-r1-20260916",
   "worktree": "c:/users/coins/downloads/bitevo_post_r5_audit_20260916",
   "acquiredAt": "2026-09-16T11:30:14.988Z",
-  "updatedAt": "2026-09-16T11:32:14.605Z",
+  "updatedAt": "2026-09-16T11:40:11.271Z",
   "expiresAt": "2026-09-16T11:45:00.000Z",
   "sealedHead": "ff2acd7e8b298848e238584b8149bf4e00ffbfeb",
   "sealedTree": "dd1086917a0eba7c846e658097d8d9a50b24b76d",
   "featureRef": "refs/heads/agent/site-windows-verification-hardening-r1",
-  "predecessor": "b6691965b88f80d0522fedccb5d3169985e4c28c"
+  "predecessor": "eda7c7c1c0eb2a732a0f94b12bbd86d98e6b5cdb",
+  "releasedAt": "2026-09-16T11:40:11.272Z",
+  "releaseReason": "windows_verification_hardening_r1_post_merge_cleanup"
 }
