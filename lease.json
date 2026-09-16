@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "kind": "bitevo-site-mutation-lease",
-  "leaseId": "7975fefe-d84f-4642-b51f-38db8a28f870",
-  "nonce": "59b0e9cb-0763-4cc3-8aa8-bd1dae5d2d1b",
+  "leaseId": "ce91776f-e7c9-4bd7-b5e5-4b138cea89f9",
+  "nonce": "7a5785d8-558b-4307-9a7a-861c572cd055",
   "state": "ACTIVE",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
@@ -10,11 +10,11 @@
   "owner": "chatgpt-outbox",
   "session": "r81-decision-conflict-20260916",
   "worktree": "c:/users/coins/appdata/local/temp/bitevo_site_r81_decision_conflict_live_region_20260916",
-  "acquiredAt": "2026-09-15T20:03:43.231Z",
-  "updatedAt": "2026-09-15T20:03:43.231Z",
-  "expiresAt": "2026-09-15T21:53:39.781Z",
+  "acquiredAt": "2026-09-16T04:03:45.734Z",
+  "updatedAt": "2026-09-16T04:03:45.734Z",
+  "expiresAt": "2026-09-16T05:45:00.000Z",
   "sealedHead": null,
   "sealedTree": null,
   "featureRef": null,
-  "predecessor": "e34f885cf97e86427bd8d248924cb02781bc9451"
+  "predecessor": "ab989ddbd5a8f701a2e193e3e306fb051ae35982"
 }
