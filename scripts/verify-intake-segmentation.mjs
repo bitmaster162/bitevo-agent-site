@@ -18,6 +18,9 @@ for (const [locale, rel] of pages) {
   check(html.includes('data-intake-mode="primary"'), `${locale}: Primary selector missing`);
   check((html.match(/data-primary-only/g) || []).length >= 3, `${locale}: progressive-disclosure blocks missing`);
   check((html.match(/data-primary-required/g) || []).length >= 6, `${locale}: Primary required-field contract too shallow`);
+  const primaryRequiredTags = html.match(/<(?:input|textarea|select)\b[^>]*data-primary-required[^>]*>/gi) || [];
+  const serverRequiredPrimary = primaryRequiredTags.filter(tag => /\srequired(?:\s|\/?>)/i.test(tag.replace(/"[^"]*"|'[^']*'/g, '')));
+  check(serverRequiredPrimary.length === 0, `${locale}: Primary-only fields must not be server-rendered required`);
   check(html.includes('/intake-segmentation.js'), `${locale}: local segmentation controller missing`);
   check(html.includes('Testing authorization: NOT GRANTED'), `${locale}: explicit authorization boundary missing`);
   check(/data-scope-handoff(?:="")? href="mailto:robert@bitevo\.work/.test(html), `${locale}: manual Contact Robert handoff missing`);
