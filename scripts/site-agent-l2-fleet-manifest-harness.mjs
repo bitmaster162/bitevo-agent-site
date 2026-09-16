@@ -1,14 +1,13 @@
-import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { evaluateL2Readiness } from './site-agent-l2-readiness.mjs';
 
 const manifest = JSON.parse(await readFile(new URL('../docs/SITE_AGENT_L2_FLEET_MANIFEST_R1.json', import.meta.url), 'utf8'));
 
+const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const readText = async (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
-const gitBlobSha = (text) => crypto.createHash('sha1')
-  .update(`blob ${Buffer.byteLength(text)}\0`)
-  .update(text)
-  .digest('hex');
+const gitBlobSha = (path) => execFileSync('git', ['hash-object', `--path=${path}`, '--', path], { cwd: repoRoot, encoding: 'utf8' }).trim();
 const sameSet = (a, b) => a.length === b.length && [...a].sort().every((x, i) => x === [...b].sort()[i]);
 
 const policyText = await readText(manifest.policy.path);
@@ -27,13 +26,13 @@ tests.push(['source parent head', manifest.source_parent_head === 'd05c842659dd7
 tests.push(['two fixture waves', manifest.waves.length === 2]);
 tests.push(['unique wave paths', new Set(manifest.waves.map((x) => x.path)).size === manifest.waves.length]);
 
-tests.push(['policy blob binding', gitBlobSha(policyText) === manifest.policy.blob_sha]);
+tests.push(['policy blob binding', gitBlobSha(manifest.policy.path) === manifest.policy.blob_sha]);
 tests.push(['policy schema binding', policy.schema_version === manifest.policy.schema_version]);
-tests.push(['readiness schema blob binding', gitBlobSha(schemaText) === manifest.readiness_schema.blob_sha]);
+tests.push(['readiness schema blob binding', gitBlobSha(manifest.readiness_schema.path) === manifest.readiness_schema.blob_sha]);
 tests.push(['readiness schema id binding', readinessSchema.properties?.schema_version?.const === manifest.readiness_schema.schema_version]);
 
 for (const {spec, text, data} of waves) {
-  tests.push([`${spec.name} blob binding`, gitBlobSha(text) === spec.blob_sha]);
+  tests.push([`${spec.name} blob binding`, gitBlobSha(spec.path) === spec.blob_sha]);
   tests.push([`${spec.name} schema binding`, data.schema_version === spec.schema_version]);
 }
 

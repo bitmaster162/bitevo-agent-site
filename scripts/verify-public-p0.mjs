@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = new URL('../dist/', import.meta.url);
 const textExtensions = new Set(['.html', '.txt', '.json', '.js', '.css', '.xml', '.svg', '.map']);
@@ -37,7 +38,7 @@ async function walk(dir) {
   return files;
 }
 
-const distPath = root.pathname;
+const distPath = fileURLToPath(root);
 const files = await walk(distPath);
 const violations = [];
 
