@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "14ab375e-7c9d-4893-a97e-2c1bd8fd87ae",
   "nonce": "3f4d270e-07ca-40f7-b9f5-200bf6f82c27",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0faa8f281849378502e232428110a36c808a337b",
@@ -11,10 +11,12 @@
   "session": "svgo-security-lockfile-r1-20260916",
   "worktree": "c:/users/coins/downloads/bitevo_svgo_security_r1_20260916",
   "acquiredAt": "2026-09-16T11:55:43.801Z",
-  "updatedAt": "2026-09-16T12:03:21.602Z",
+  "updatedAt": "2026-09-16T12:11:38.796Z",
   "expiresAt": "2026-09-16T12:15:00.000Z",
   "sealedHead": "4072d2c7c167c590753ac90ba9c18f090d906f4d",
   "sealedTree": "00617689d904fb5c93ce4cf9e775339b6ef85912",
   "featureRef": "refs/heads/agent/svgo-security-lockfile-r1",
-  "predecessor": "830f4118b3080fa10402168662e1c085058a85ee"
+  "predecessor": "bbe07303b184b2a6518562463b58736dce62aa4f",
+  "releasedAt": "2026-09-16T12:11:38.797Z",
+  "releaseReason": "svgo_security_r1_post_merge_cleanup"
 }
