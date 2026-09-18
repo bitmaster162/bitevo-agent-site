@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "5d88b083-7dde-49d2-9417-3157eb781010",
   "nonce": "233aca1c-99f7-a02f-5e33-4e8845df969e",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "c066880922df1f54e56193b4b9bdbf633ce16780",
@@ -11,10 +11,12 @@
   "session": "site-seo-meta-recon-r1-20260918",
   "worktree": "c:/users/coins/downloads/bitevo_seo_meta_recon_20260918",
   "acquiredAt": "2026-09-18T12:38:47.692Z",
-  "updatedAt": "2026-09-18T12:39:37.427Z",
+  "updatedAt": "2026-09-18T14:10:28.780Z",
   "expiresAt": "2026-09-18T14:20:00.000Z",
   "sealedHead": "0a427ab35b13e93669dd288682572b382af6bb59",
   "sealedTree": "6f487308c83ac23fa6af1424ee4b35418d1fbfae",
   "featureRef": "refs/heads/agent/site-seo-meta-recon-r1",
-  "predecessor": "dc439c5cd78ac09fe8be8d687b8468149aa9cce0"
+  "predecessor": "0ccb78581b3ad412caf7a49f3aa99b36615a1799",
+  "releasedAt": "2026-09-18T14:10:28.781Z",
+  "releaseReason": "site_p11c_cloudflare_suppression_canary_release"
 }
