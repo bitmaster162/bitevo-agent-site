@@ -65,6 +65,10 @@ const indexabilityByRoute = new Map();
 const failures = [];
 let indexableCount = 0;
 let metadataChecks = 0;
+const canonicalOverrides = new Map([
+  ['/guides/ai-agent-reliability-audit', '/agent-authority-audit']
+]);
+
 let accessibilityChecks = 0;
 let alternateChecks = 0;
 let internalLinkChecks = 0;
@@ -106,7 +110,8 @@ for (const file of htmlFiles) {
 
     const canonical = attr(attrTag(html, 'rel', 'canonical'), 'href');
     const ogUrl = attr(attrTag(html, 'property', 'og:url'), 'content');
-    const expectedCanonical = new URL(route === '/' ? '/' : route.replace(/\/+$/, ''), siteOrigin).toString();
+    const canonicalRoute = canonicalOverrides.get(route) ?? (route === '/' ? '/' : route.replace(/\/+$/, ''));
+    const expectedCanonical = new URL(canonicalRoute, siteOrigin).toString();
     metadataChecks += 2;
     if (canonical && canonical !== expectedCanonical) failures.push(`${route}: canonical must match exact no-trailing-slash route URL (${canonical} != ${expectedCanonical})`);
     if (canonical && ogUrl && ogUrl !== canonical) failures.push(`${route}: og:url must exactly match canonical (${ogUrl} != ${canonical})`);

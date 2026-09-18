@@ -10,6 +10,7 @@ interface Props {
   alternates?: Partial<Record<SiteLocale, string>>;
   socialImage?: string;
   mainClass?: string;
+  canonical?: string;
 }
 
 const {
@@ -20,11 +21,13 @@ const {
   lang = 'en',
   alternates = {},
   socialImage = '/og-card.png',
-  mainClass
+  mainClass,
+  canonical
 } = Astro.props;
 
 const path = Astro.url.pathname;
-const canonicalPath = path === '/' ? '/' : path.replace(/\/+$/, '');
+const selfCanonicalPath = path === '/' ? '/' : path.replace(/\/+$/, '');
+const canonicalPath = canonical ?? selfCanonicalPath;
 const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).toString();
 const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
