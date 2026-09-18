@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "git": {
+    "deploymentEnabled": {
+      "coordination/site-mutation-lease": false
+    }
+  },
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [

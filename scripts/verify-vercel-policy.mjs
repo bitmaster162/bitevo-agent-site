@@ -11,6 +11,7 @@ let cspChecks = 0;
 let cacheChecks = 0;
 let externalFontDomainChecks = 0;
 let routingChecks = 0;
+let deploymentChecks = 0;
 let provenanceChecks = 0;
 let hashChecks = 0;
 
@@ -19,6 +20,13 @@ const headerRules = Array.isArray(vercelConfig.headers) ? vercelConfig.headers :
 const globalHeaders = headerRules.find(rule => rule.source === '/(.*)')?.headers || [];
 const globalHeaderMap = new Map(globalHeaders.map(item => [String(item.key).toLowerCase(), String(item.value)]));
 const csp = globalHeaderMap.get('content-security-policy') || '';
+
+const deploymentEnabled = vercelConfig.git?.deploymentEnabled;
+deploymentChecks += 1;
+if (!deploymentEnabled || typeof deploymentEnabled !== 'object' || Array.isArray(deploymentEnabled)) failures.push('vercel.json: git.deploymentEnabled must remain a branch map');
+deploymentChecks += 1;
+if (deploymentEnabled?.['coordination/site-mutation-lease'] !== false) failures.push('vercel.json: coordination/site-mutation-lease must not trigger Vercel deployments');
+
 
 for (const key of ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','content-security-policy']) {
   securityHeaderChecks += 1;
@@ -50,4 +58,4 @@ routingChecks += 1; if (vercelConfig.cleanUrls !== true) failures.push('vercel.j
 routingChecks += 1; if (vercelConfig.trailingSlash !== false) failures.push('vercel.json: trailingSlash must be false');
 
 if (failures.length) { console.error('VERCEL_POLICY_GATE=FAIL'); for (const failure of failures) console.error(failure); process.exit(1); }
-console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} failures=0`);
+console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} failures=0`);
