@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "d621316d-1369-482e-931e-113ba544614c",
   "nonce": "fb0c91b9-f763-88b6-9dd5-7238aab0fd3a",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "149a13311168751441e413ab7cc0ec6c5100fc71",
@@ -11,10 +11,10 @@
   "session": "site-p11a-pr139-ready-recovery-r1-20260918",
   "worktree": "c:/users/coins/downloads/bitevo_p11a_vercel_deploy_hygiene_20260917",
   "acquiredAt": "2026-09-18T10:17:56.064Z",
-  "updatedAt": "2026-09-18T10:17:56.064Z",
+  "updatedAt": "2026-09-18T10:18:11.424Z",
   "expiresAt": "2026-09-18T10:35:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "ed83f58c1c61bca036d31541ecdef8bbcbc743e0"
+  "sealedHead": "c9fbf407f4a19116e4d15df26317d3ed234c76de",
+  "sealedTree": "88334f53455682674562a7e052d0a99875704386",
+  "featureRef": "refs/heads/agent/site-p11a-vercel-coordination-deploy-suppression-r1",
+  "predecessor": "bd723615d3b971490bac6599079ed03b5a1a6fdd"
 }
