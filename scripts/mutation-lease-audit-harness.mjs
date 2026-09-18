@@ -6,6 +6,7 @@ import {
   TARGET_REF,
   WORKFLOW_PATH,
   VERIFIER_PATH,
+  COORDINATION_VERCEL_PATH,
 } from './verify-mutation-lease-audit.mjs';
 
 const BASE = '1111111111111111111111111111111111111111';
@@ -16,13 +17,17 @@ const PREDECESSOR = '5555555555555555555555555555555555555555';
 const OTHER = '6666666666666666666666666666666666666666';
 const FEATURE_REF = 'refs/heads/agent/test-lease-audit';
 const NOW = Date.parse('2029-01-01T00:00:00.000Z');
+const COORDINATION_VERCEL = {
+  $schema: 'https://openapi.vercel.sh/vercel.json',
+  git: { deploymentEnabled: false },
+};
 
 class FakeApi {
   constructor(fixture) {
     this.fixture = fixture;
   }
   async fileExists(commitSha, path) {
-    return this.fixture.baseFiles.has(`${commitSha}:${path}`);
+    return this.fixture.baseFiles.has(`${commitSha}:${path}`) || this.fixture.files.has(`${commitSha}:${path}`);
   }
   async getFileText(commitSha, path) {
     const value = this.fixture.files.get(`${commitSha}:${path}`);
@@ -84,6 +89,7 @@ function makeFixture({ baseImplementation = 'both' } = {}) {
     files: new Map(),
   };
   syncLease(fixture);
+  fixture.files.set(`${COORD}:${COORDINATION_VERCEL_PATH}`, JSON.stringify(COORDINATION_VERCEL));
   return fixture;
 }
 
@@ -128,6 +134,15 @@ await expectReject('partial implementation fails closed', fixture => {
 await expectReject('missing canonical coordination ref fails', fixture => {
   fixture.refs.set(LEASE_REF, null);
 }, /coordination ref missing/);
+await expectReject('missing coordination Vercel suppression fails', fixture => {
+  fixture.files.delete(`${COORD}:${COORDINATION_VERCEL_PATH}`);
+}, /suppression config missing/);
+await expectReject('coordination Vercel suppression must disable deployments', fixture => {
+  fixture.files.set(`${COORD}:${COORDINATION_VERCEL_PATH}`, JSON.stringify({
+    $schema: 'https://openapi.vercel.sh/vercel.json',
+    git: { deploymentEnabled: true },
+  }));
+}, /must disable Git deployments/);
 await expectReject('schema mismatch fails', fixture => {
   fixture.lease.schemaVersion = 2; syncLease(fixture);
 }, /schemaVersion/);
@@ -189,5 +204,5 @@ await expectReject('invalid head SHA fails before server reads', fixture => {
   fixture.context.headSha = 'not-a-sha';
 }, /headSha must be a full lowercase SHA-1/);
 
-assert.equal(assertions, 23);
+assert.equal(assertions, 25);
 console.log(`MUTATION_LEASE_AUDIT_HARNESS=PASS assertions=${assertions}`);
