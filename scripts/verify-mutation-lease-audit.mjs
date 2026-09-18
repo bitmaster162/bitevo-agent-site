@@ -7,6 +7,8 @@ export const LEASE_REF = 'refs/heads/coordination/site-mutation-lease';
 export const TARGET_REF = 'refs/heads/main';
 export const WORKFLOW_PATH = '.github/workflows/mutation-lease-audit.yml';
 export const VERIFIER_PATH = 'scripts/verify-mutation-lease-audit.mjs';
+export const COORDINATION_VERCEL_PATH = 'vercel.json';
+const COORDINATION_VERCEL_SCHEMA = 'https://openapi.vercel.sh/vercel.json';
 const SCHEMA_VERSION = 1;
 const KIND = 'bitevo-site-mutation-lease';
 const CHECK_NAME = 'mutation-lease-audit';
@@ -24,6 +26,19 @@ function assert(condition, message) {
 function assertSha(value, label) {
   assert(typeof value === 'string' && /^[0-9a-f]{40}$/.test(value), `${label} must be a full lowercase SHA-1`);
   return value;
+}
+
+function assertCoordinationVercelConfig(raw) {
+  let config;
+  try {
+    config = JSON.parse(raw);
+  } catch {
+    fail('coordination vercel.json must be valid JSON');
+  }
+  assert(config?.$schema === COORDINATION_VERCEL_SCHEMA, 'coordination vercel.json schema mismatch');
+  assert(config?.git?.deploymentEnabled === false, 'coordination vercel.json must disable Git deployments');
+  assert(Object.keys(config).length === 2, 'coordination vercel.json must contain only $schema and git');
+  assert(config.git && Object.keys(config.git).length === 1, 'coordination vercel.json git block must contain only deploymentEnabled');
 }
 export function normalizeRepositoryIdentity(remote) {
   assert(typeof remote === 'string' && remote.trim(), 'repositoryRemote must be a non-empty string');
@@ -84,6 +99,11 @@ export async function auditMutationLease(contextInput, api, { nowMs = Date.now()
   const coordinationCommit = await api.getCommit(coordinationSha);
   assert(Array.isArray(coordinationCommit.parents) && coordinationCommit.parents.length === 1,
     `SEALED coordination commit must have exactly one parent; actual=${coordinationCommit.parents?.length ?? 'missing'}`);
+
+  const suppressionExists = await api.fileExists(coordinationSha, COORDINATION_VERCEL_PATH);
+  assert(suppressionExists, `coordination suppression config missing: ${COORDINATION_VERCEL_PATH}`);
+  const rawSuppression = await api.getFileText(coordinationSha, COORDINATION_VERCEL_PATH);
+  assertCoordinationVercelConfig(rawSuppression);
 
   const rawLease = await api.getFileText(coordinationSha, 'lease.json');
   let lease;

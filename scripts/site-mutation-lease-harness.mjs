@@ -54,6 +54,17 @@ function parseEvent(result, event) {
   return JSON.parse(line.slice(event.length + 1));
 }
 
+function readCoordinationFile(cwd, filePath) {
+  git(cwd, 'fetch', '--no-tags', '--quiet', 'origin', 'refs/heads/coordination/site-mutation-lease');
+  return git(cwd, 'show', `FETCH_HEAD:${filePath}`);
+}
+
+function expectCoordinationVercelSuppression(cwd, label) {
+  const config = JSON.parse(readCoordinationFile(cwd, 'vercel.json'));
+  expect(config.$schema === 'https://openapi.vercel.sh/vercel.json', `${label}: coordination Vercel schema is exact`);
+  expect(config.git?.deploymentEnabled === false, `${label}: coordination Git deployments are disabled`);
+}
+
 function leaseCallAsync(cwd, args, env = {}) {
   return new Promise(resolve => {
     const child = spawn(process.execPath, [leaseCli, ...args], {
@@ -117,7 +128,9 @@ async function main() {
   const loser = winnerIsA ? raceB : raceA;
   expect(loser.status !== 0, 'losing writer is rejected');
   expect(/atomic lease update rejected|lease already held/.test(loser.stderr), 'race loser fails closed');
+  expectCoordinationVercelSuppression(winnerDir, 'acquire');
   leaseCall(winnerDir, releaseArgs(winnerOwner, winnerNonce, 'race-complete'));
+  expectCoordinationVercelSuppression(winnerDir, 'release');
 
   const acquired = leaseCall(writerA, acquireArgs(base, 'writer-a', 'transfer-source', 'transfer-nonce-a'));
   const acquiredLease = parseEvent(acquired, 'LEASE_ACQUIRED').lease;

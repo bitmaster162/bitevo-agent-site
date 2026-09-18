@@ -6,6 +6,10 @@ import path from 'node:path';
 const LEASE_REF = 'refs/heads/coordination/site-mutation-lease';
 const TARGET_REF = 'refs/heads/main';
 const SCHEMA_VERSION = 1;
+const COORDINATION_VERCEL_CONFIG = Object.freeze({
+  $schema: 'https://openapi.vercel.sh/vercel.json',
+  git: { deploymentEnabled: false },
+});
 const ACTIVE = 'ACTIVE';
 const SEALED = 'SEALED';
 const RELEASED = 'RELEASED';
@@ -129,7 +133,11 @@ function readLease(remote) {
 function buildLeaseCommit(lease, parentSha, message) {
   const json = `${JSON.stringify(lease, null, 2)}\n`;
   const blob = gitText(['hash-object', '-w', '--stdin'], { input: json });
-  const tree = gitText(['mktree'], { input: `100644 blob ${blob}\tlease.json\n` });
+  const vercelJson = `${JSON.stringify(COORDINATION_VERCEL_CONFIG, null, 2)}\n`;
+  const vercelBlob = gitText(['hash-object', '-w', '--stdin'], { input: vercelJson });
+  const tree = gitText(['mktree'], {
+    input: `100644 blob ${blob}\tlease.json\n100644 blob ${vercelBlob}\tvercel.json\n`,
+  });
   const args = ['commit-tree', tree, '-m', message];
   if (parentSha) args.push('-p', parentSha);
   const identity = {

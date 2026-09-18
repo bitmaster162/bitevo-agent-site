@@ -10,7 +10,7 @@ The canonical coordination ref is:
 
 `refs/heads/coordination/site-mutation-lease`
 
-Each lease transition is represented by a Git commit containing only `lease.json`. The new lease commit names the previous coordination commit as its parent. The update is published with a normal non-force `git push`.
+Each lease transition is represented by a Git commit containing `lease.json` plus a minimal `vercel.json` that disables Git deployments for the coordination history. The new lease commit names the previous coordination commit as its parent. The update is published with a normal non-force `git push`. Keeping the suppression file inside the coordination commit is required because this ref has its own tree and does not inherit `vercel.json` from `main`.
 
 This gives the lease a Git-native compare-and-swap property: two writers that build children of the same lease tip cannot both advance the remote ref. The second stale update is rejected by the Git server as non-fast-forward.
 
@@ -121,7 +121,8 @@ The harness creates a temporary local bare Git remote and real clones. It exerci
 - exact sealed head and tree binding;
 - remote feature-ref drift rejection;
 - local post-seal head drift rejection;
-- release and subsequent reacquisition.
+- release and subsequent reacquisition;
+- persistence of the coordination-history Vercel suppression config across acquire/release transitions.
 
 ## Activation conditions
 
