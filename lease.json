@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "8e20885e-c2e0-4e51-bc3d-803452f2e0a4",
   "nonce": "0c08d1c4-4264-ce8c-653a-1d4e93a74d6a",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "149a13311168751441e413ab7cc0ec6c5100fc71",
@@ -11,10 +11,12 @@
   "session": "site-p11a-pr139-merge-recovery-r1-20260918",
   "worktree": "c:/users/coins/downloads/bitevo_p11a_vercel_deploy_hygiene_20260917",
   "acquiredAt": "2026-09-18T10:45:08.047Z",
-  "updatedAt": "2026-09-18T10:45:27.169Z",
+  "updatedAt": "2026-09-18T10:54:07.217Z",
   "expiresAt": "2026-09-18T11:00:00.000Z",
   "sealedHead": "c9fbf407f4a19116e4d15df26317d3ed234c76de",
   "sealedTree": "88334f53455682674562a7e052d0a99875704386",
   "featureRef": "refs/heads/agent/site-p11a-vercel-coordination-deploy-suppression-r1",
-  "predecessor": "207c3388087538d4eea971b1657f313f5cfcea1c"
+  "predecessor": "716c5bef4fbfccdc78e09a34b97431156415cafa",
+  "releasedAt": "2026-09-18T10:54:07.218Z",
+  "releaseReason": "site_p11a_post_merge_cleanup_and_suppression_probe"
 }
