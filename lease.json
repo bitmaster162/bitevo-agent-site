@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "2f637778-12d2-4752-a426-f997dbc211ff",
   "nonce": "e892a5c5-3588-47de-bd8b-a880587ccb96",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "dfbd3d6a8eed977788ddad1575f70f15b1bb9ee9",
@@ -11,10 +11,10 @@
   "session": "site-p16-consulting-commercial-parity-r1-20260919",
   "worktree": "c:/users/coins/downloads/bitevo_p16_consulting_parity_20260919",
   "acquiredAt": "2026-09-19T14:56:47.410Z",
-  "updatedAt": "2026-09-19T14:56:47.410Z",
+  "updatedAt": "2026-09-19T15:10:45.857Z",
   "expiresAt": "2026-09-19T16:45:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "18360400de12fb96a09b87de1236c1a9eb1958bc"
+  "sealedHead": "6dd8ecf66a3b05f2cad4818e2dc153a4cd57b9ce",
+  "sealedTree": "c63ac0b63bf82da34987735ea17810bc9b4cb488",
+  "featureRef": "refs/heads/agent/site-p16-consulting-commercial-parity-r1",
+  "predecessor": "99c5b2d3a44ecbc973c3c9a9dec9a01719682a86"
 }
