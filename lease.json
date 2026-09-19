@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "7e98b7f3-7247-4516-970b-8fd3e06a2e43",
   "nonce": "b41e5edd-3fc3-d7df-56c4-a4068b83fe78",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "31ea7d49c7d21a8a2006cd3376f0b2b39751980a",
@@ -11,10 +11,12 @@
   "session": "site-security-devalue-594-draft-r1-20260919",
   "worktree": "c:/users/coins/downloads/bitevo_security_devalue_592_20260919",
   "acquiredAt": "2026-09-19T11:14:25.109Z",
-  "updatedAt": "2026-09-19T11:15:04.261Z",
+  "updatedAt": "2026-09-19T11:23:28.919Z",
   "expiresAt": "2026-09-19T13:15:00.000Z",
   "sealedHead": "fe9fb6b967bbc960d78a9c57350685f299c82f1a",
   "sealedTree": "8392f65266e07d00652c1e43a810a6f8f8c6a573",
   "featureRef": "refs/heads/agent/site-security-devalue-5-9-4-r1",
-  "predecessor": "c939bf952743465b88d8ac78d07cafa32e302aed"
+  "predecessor": "d073505cafd1af611a40840ff171a96f5fa6d3ab",
+  "releasedAt": "2026-09-19T11:23:28.919Z",
+  "releaseReason": "site_security_pr142_merged_and_production_verified"
 }
