@@ -266,20 +266,31 @@ if (!fileSet.has('og-card.png')) failures.push('og-card.png missing from static 
 
 if (fileSet.has('sitemap.xml')) {
   const sitemap = await readFile(sitemapFile, 'utf8');
-  const buildMeta = JSON.parse(await readFile(join(repoRootPath, 'src/generated/build-meta.json'), 'utf8'));
-  const expectedLastmod = String(buildMeta.commitDate || '');
+  const currentness = JSON.parse(await readFile(join(repoRootPath, 'src/data/sitemap-currentness.json'), 'utf8'));
+  const currentnessByRoute = new Map((currentness.routes || []).map(row => [row.path, row]));
   const sitemapEntries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(match => match[1]);
   const sitemapLastmods = [];
-  sitemapChecks += 4;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(expectedLastmod)) failures.push(`sitemap.xml: build commitDate must be ISO YYYY-MM-DD (actual=${expectedLastmod || 'missing'})`);
+  sitemapChecks += 5;
+  if (currentness.schema !== 'bitevo.sitemap-currentness/v1') failures.push(`sitemap.xml: currentness schema mismatch (actual=${currentness.schema || 'missing'})`);
+  if (currentness.normalization !== 'provider-envelope-v1') failures.push(`sitemap.xml: currentness normalization mismatch (actual=${currentness.normalization || 'missing'})`);
+  if (currentnessByRoute.size !== indexableCount) failures.push(`sitemap.xml: currentness route count must equal indexable routes (currentness=${currentnessByRoute.size} indexable=${indexableCount})`);
   if (sitemapEntries.length !== indexableCount) failures.push(`sitemap.xml: URL entry count must equal indexable routes (entries=${sitemapEntries.length} indexable=${indexableCount})`);
   for (const entry of sitemapEntries) {
+    const loc = entry.match(/<loc>([^<]+)<\/loc>/)?.[1] || '';
     const lastmod = entry.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || '';
     if (lastmod) sitemapLastmods.push(lastmod);
-    sitemapChecks += 3;
-    if (!lastmod) failures.push('sitemap.xml: every URL entry must include lastmod');
+    let route = '';
+    try {
+      const parsed = new URL(loc);
+      route = parsed.pathname === '/' ? '/' : parsed.pathname.replace(/\/+$/, '');
+    } catch {}
+    const expectedLastmod = String(currentnessByRoute.get(route)?.lastmod || '');
+    sitemapChecks += 5;
+    if (!loc) failures.push('sitemap.xml: every URL entry must include loc');
+    if (!lastmod) failures.push(`sitemap.xml: every URL entry must include lastmod (route=${route || 'unknown'})`);
     else if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) failures.push(`sitemap.xml: invalid lastmod format ${lastmod}`);
-    else if (lastmod !== expectedLastmod) failures.push(`sitemap.xml: lastmod must equal build commitDate ${expectedLastmod} (actual=${lastmod})`);
+    if (!expectedLastmod) failures.push(`sitemap.xml: currentness entry missing for ${route || loc || 'unknown'}`);
+    else if (lastmod !== expectedLastmod) failures.push(`sitemap.xml: lastmod mismatch for ${route} expected=${expectedLastmod} actual=${lastmod}`);
   }
   if (sitemapLastmods.length !== sitemapEntries.length) failures.push(`sitemap.xml: lastmod count must equal URL entry count (lastmod=${sitemapLastmods.length} entries=${sitemapEntries.length})`);
   if (!sitemap.includes(`${siteOrigin}/build`)) failures.push('sitemap.xml: /build missing');
