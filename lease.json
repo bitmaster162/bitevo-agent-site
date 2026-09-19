@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "ec409e4c-213d-4f0d-85d5-562439a2c2a5",
   "nonce": "72fe89d2-9dd0-4d5f-bd51-bbb46f9f854d",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "ebca453dbd9eb1e87885dbf267de05715dc75e04",
@@ -11,10 +11,10 @@
   "session": "site-p18-audit-proposal-readiness-r1-20260919",
   "worktree": "c:/users/coins/downloads/bitevo_p18_audit_proposal_readiness_20260919",
   "acquiredAt": "2026-09-19T15:59:34.435Z",
-  "updatedAt": "2026-09-19T15:59:34.435Z",
+  "updatedAt": "2026-09-19T16:23:06.094Z",
   "expiresAt": "2026-09-19T17:45:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "76209f4db5ebae7d4ce263bc40df18f18c5062ff"
+  "sealedHead": "09ce86de774a16ea33450b14bc0bc8b893955820",
+  "sealedTree": "5f66df45cb27ef8baca502b55f288827372decd8",
+  "featureRef": "refs/heads/agent/site-p18-audit-proposal-readiness-r1",
+  "predecessor": "8de998c8e4673de653da325042d6ab183d041f6e"
 }
