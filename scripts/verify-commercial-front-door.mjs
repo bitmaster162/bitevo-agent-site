@@ -37,6 +37,8 @@ check(/<a class="header-cta" href="\/start"[^>]*>Start here/.test(home), 'Englis
 check(/<a class="mobile-cta" href="\/start"[^>]*>Start here →<\/a>/.test(home), 'English mobile CTA must route to /start');
 
 check(start.includes('$1,500 Entry Audit'), '/start must retain Entry Audit path');
+check(start.includes('$1,500 Security Control Validation'), '/start must retain Security Control Validation path');
+check(hasAnchor(start, '/control-validation', 'Open Security Control Validation'), '/start Security Control Validation CTA must route to /control-validation');
 check(start.includes('MCP / Tool Governance'), '/start must retain MCP path');
 check(start.includes('$3,000 BUILD Workflow Exception Diagnostic'), '/start must retain BUILD path');
 check(start.includes('$4,900 Primary Audit'), '/start must retain Primary Audit path');
@@ -55,6 +57,7 @@ check(!/<a class="header-cta" href="\/ru\/mapper"[^>]*>/.test(ruHome), 'old RU M
 check(ruHome.includes('href="/ru/mapper"'), 'RU product layer must retain a visible Mapper path after moving the commercial front door');
 check(ruStart.includes('Free / 20 минут'), '/ru/start must retain Free triage path');
 check(ruStart.includes('$1,500'), '/ru/start must retain Entry price marker');
+check(ruStart.includes('Security Control Validation'), '/ru/start must retain Security Control Validation marker');
 check(ruStart.includes('$4,900'), '/ru/start must retain Primary price marker');
 check(ruStart.includes('testing authorization'), '/ru/start must retain no-testing boundary');
 

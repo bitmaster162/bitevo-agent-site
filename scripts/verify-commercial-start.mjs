@@ -44,6 +44,7 @@ const llms = await readFile(`${dist}/llms.txt`, 'utf8');
 
 const startContracts = [
   ['$1,500 Entry Audit', '/entry-audit', 'Open Entry Audit'],
+  ['$1,500 Security Control Validation', '/control-validation', 'Open Security Control Validation'],
   ['MCP / Tool Governance', '/mcp-governance', 'Open MCP Governance'],
   ['$3,000 BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic', 'Open BUILD Diagnostic'],
   ['$4,900 Primary Audit', '/agent-authority-audit', 'Open Primary Audit']
@@ -74,7 +75,7 @@ for (const [href, cta] of startBuildPrep) {
   if (!hasAnchor(start, href, cta)) failures.push(`/start: missing BUILD prep CTA "${cta}" -> ${href}`);
 }
 const ruStartText = stripTags(ruStart);
-for (const phrase of ['MCP / Tool Governance', '$3,000 BUILD Workflow Exception Diagnostic', '$4,900 Primary Audit']) {
+for (const phrase of ['$1,500 Security Control Validation', 'MCP / Tool Governance', '$3,000 BUILD Workflow Exception Diagnostic', '$4,900 Primary Audit']) {
   if (!ruStartText.includes(phrase)) failures.push(`/ru/start: stale commercial routing; missing "${phrase}"`);
 }
 
