@@ -33,7 +33,7 @@
         "Цель — принять или отвергнуть одну основную failure hypothesis на воспроизводимом evidence.",
         "Полный Authority Ledger, multi-scenario план и включённый retest относятся к более глубокому Primary Audit, а не к Entry scope."
       ],
-      "primaryHref": "/ru/audit-intake",
+      "primaryHref": "/ru/audit-intake?offer=entry-audit",
       "primaryLabel": "Подготовить scope"
     },
     {
@@ -49,7 +49,7 @@
         "Проверяется реальный downstream state, а не только внутренний tool response или ACK.",
         "Это bounded engineering validation: не pentest, не certification, не statutory audit и не доказательство безопасности всей системы."
       ],
-      "primaryHref": "/ru/audit-intake",
+      "primaryHref": "/ru/audit-intake?offer=security-control-validation",
       "primaryLabel": "Описать control boundary"
     },
     {

@@ -96,6 +96,8 @@ const ruIntake = await readFile(`${dist}/ru/audit-intake/index.html`, 'utf8');
 const ruBuildBaseline = await readFile(`${dist}/ru/build/workflow-baseline-worksheet/index.html`, 'utf8');
 const ruPricing = mainContent(await readFile(`${dist}/ru/pricing/index.html`, 'utf8'));
 const ruAudit = mainContent(await readFile(`${dist}/ru/agent-authority-audit/index.html`, 'utf8'));
+const ruEntryAudit = mainContent(await readFile(`${dist}/ru/entry-audit/index.html`, 'utf8'));
+const ruControlValidation = mainContent(await readFile(`${dist}/ru/control-validation/index.html`, 'utf8'));
 
 checks += 1;
 if (ruLayoutSource.includes('class="locale-switch"')) failures.push('/src/layouts/RuLayout.astro: legacy RU locale-switch anchor remains');
@@ -107,8 +109,10 @@ const toolContracts = [
   ['/ru/diagnostic', ruDiagnostic.includes('id="ruDiagnostic"') && ruDiagnostic.includes('Testing authorization: NOT GRANTED')],
   ['/ru/audit-intake', ruIntake.includes('id="ruIntake"') && ruIntake.includes('Testing authorization: NOT GRANTED') && ruIntake.includes('Download .txt')],
   ['/ru/build/workflow-baseline-worksheet', ruBuildBaseline.includes('data-build-baseline-worksheet') && ruBuildBaseline.includes('data-network-write="none"') && ruBuildBaseline.includes('data-storage-write="none"') && ruBuildBaseline.includes('Testing authorization: NOT GRANTED')],
-  ['/ru/pricing', (ruPricing.match(/href="\/ru\/audit-intake"/g) || []).length >= 3 && !ruPricing.includes('href="/audit-intake"')],
-  ['/ru/agent-authority-audit', ruAudit.includes('href="/ru/audit-intake"') && !ruAudit.includes('href="/audit-intake"')]
+  ['/ru/pricing', ruPricing.includes('href="/ru/audit-intake"') && ruPricing.includes('href="/ru/audit-intake?offer=entry-audit"') && ruPricing.includes('href="/ru/audit-intake?offer=primary-agent-authority-audit"') && !ruPricing.includes('href="/audit-intake')],
+  ['/ru/agent-authority-audit', ruAudit.includes('href="/ru/audit-intake?offer=primary-agent-authority-audit"') && !ruAudit.includes('href="/audit-intake')],
+  ['/ru/entry-audit', ruEntryAudit.includes('href="/ru/audit-intake?offer=entry-audit"')],
+  ['/ru/control-validation', ruControlValidation.includes('href="/ru/audit-intake?offer=security-control-validation"')]
 ];
 checks += toolContracts.length;
 for (const [route, ok] of toolContracts) if (!ok) failures.push(`${route}: localized functional/commercial boundary contract failed`);

@@ -200,17 +200,18 @@ for (const [route, marker, href] of funnelContracts) {
 
 const funnelTextContracts = [
   ['/agent-authority-audit', '/mapper', 'Map the workflow'],
-  ['/agent-authority-audit', '/audit-intake', 'Prepare Primary Audit scope'],
+  ['/agent-authority-audit', '/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope'],
   ['/pricing', '/audit-intake', 'Prepare triage brief'],
-  ['/pricing', '/audit-intake', 'Prepare Entry Audit scope'],
-  ['/pricing', '/audit-intake', 'Prepare Primary Audit scope'],
+  ['/pricing', '/audit-intake?offer=entry-audit', 'Prepare Entry Audit scope'],
+  ['/pricing', '/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope'],
   ['/pricing', '/mapper', 'Map the action chain'],
   ['/consulting', '/audit-intake', 'Prepare triage brief'],
-  ['/consulting', '/audit-intake', 'Prepare Entry Audit scope'],
+  ['/consulting', '/audit-intake?offer=entry-audit', 'Prepare Entry Audit scope'],
   ['/consulting', '/agent-authority-audit', 'See the decision model'],
-  ['/consulting', '/audit-intake', 'Prepare Primary Audit scope'],
+  ['/consulting', '/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope'],
   ['/consulting', '/mapper', 'Map a workflow'],
   ['/consulting', '/mapper', 'Map the critical action'],
+  ['/assurance', '/audit-intake?offer=security-control-validation', 'Scope one control boundary'],
   ['/doctrine', '/mapper', 'Map one workflow']
 ];
 for (const [route, href, label] of funnelTextContracts) {

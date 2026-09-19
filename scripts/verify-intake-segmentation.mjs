@@ -34,9 +34,19 @@ const controller = fs.readFileSync(path.resolve('public/intake-segmentation.js')
 for (const forbidden of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'FormData(']) {
   check(!controller.includes(forbidden), `controller must not contain network primitive ${forbidden}`);
 }
-check(controller.includes("apply('entry')"), 'Entry must be the default first-step depth');
+check(controller.includes("offer?.depth ?? 'entry'"), 'queryless/unknown offer must fall back to Entry depth');
 check(controller.includes("field.required = mode === 'primary'"), 'Primary-only required fields must be activated only at Primary depth');
 check(controller.includes('INTAKE DEPTH:'), 'generated brief must record selected intake depth');
+check(controller.includes('new URLSearchParams(window.location.search)'), 'offer intent must be derived only from the local URL query');
+for (const offer of ['entry-audit', 'security-control-validation', 'primary-agent-authority-audit']) {
+  check(controller.includes(`'${offer}'`), `allowlisted offer intent missing: ${offer}`);
+}
+for (const subject of ['BitEvo Agent Authority Entry Audit scope review', 'BitEvo Security Control Validation scope review', 'BitEvo Primary Agent Authority Audit scope review']) {
+  check(controller.includes(subject), `offer-specific handoff subject missing: ${subject}`);
+}
+check(controller.includes('OFFER INTENT:'), 'generated brief must preserve selected offer intent');
+check(controller.includes('encodeURIComponent(offer.subject)'), 'offer-specific subject must be encoded locally');
+check(!controller.includes('&body='), 'offer-aware handoff must never embed the generated brief in mailto body');
 
 if (failures.length) {
   console.error(`INTAKE_SEGMENTATION_GATE=FAIL failures=${failures.length}`);
@@ -44,4 +54,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('INTAKE_SEGMENTATION_GATE=PASS locales=2 entry_default=1 primary_full=1 local_only=1 manual_handoff=1 auto_transfer=0 authorization_boundary=PASS');
+console.log('INTAKE_SEGMENTATION_GATE=PASS locales=2 entry_default=1 primary_full=1 offer_allowlist=3 offer_intent_brief=1 local_only=1 manual_handoff=1 auto_transfer=0 authorization_boundary=PASS');

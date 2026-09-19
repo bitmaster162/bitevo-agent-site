@@ -15,27 +15,27 @@
     {
       "path": "/pricing",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:a9cc423b03de577859dffcdf2e2ad99b8d3213b8010d4dce67a845a7490500f1"
+      "fingerprint": "sha256:7cffb2ab440b3067b6882cc4735d755f75ad3d29ce6c99350cef34a640f8ff8c"
     },
     {
       "path": "/consulting",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:74780038e90912044eddd2f8496b9ed414638e04124fb458952eb9c7d311ad43"
+      "fingerprint": "sha256:0e38169782e28082fdf4fdad8b8f5f5024104b86c2f78dc1a3b6d57e8937c38d"
     },
     {
       "path": "/agent-authority-audit",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:73bca7a165afa834130c8ef2241d420299e9dcd261141127d9ece1b9f1a1301d"
+      "fingerprint": "sha256:2c222c57527ffb66dff9e70f6df6d97746ae16ae9d15c1d7fd96327014cf3fd0"
     },
     {
       "path": "/entry-audit",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:9a04bfa37b95932a03bfda4f45204b65f7210fc4eaccf6d78247a33af6e4b033"
+      "fingerprint": "sha256:89ca87b77ab43fb0d64eacce3262f03194a01ed9789f7663322b56b293c749a1"
     },
     {
       "path": "/control-validation",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:8698af9a14319bf483d2657cbf04f3dfa0556b5ac3f9f6fc158d192086875fa0"
+      "fingerprint": "sha256:1ab32d759ad52a1d309c974ff4a06015c0c03e93cc78387a72a122ab4431e9e3"
     },
     {
       "path": "/evidence-readiness",
@@ -255,17 +255,17 @@
     {
       "path": "/ru/pricing",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:297b8d00f1cfc99da1f78aa9847fd3b3e78e59b5f83516361bf76c101d689b6d"
+      "fingerprint": "sha256:9e668e8a70be70b77ed3577e006b77b9965d284f59c4433d9ac5a5858297ec26"
     },
     {
       "path": "/ru/consulting",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:838abf7f558e7e41f77c20ad9bfdb1fd8358a4e83b1b9bcbe9817a3275009968"
+      "fingerprint": "sha256:447aa411a5b88ae85b917c79575b4e797a0b2c0489b7e046c2a104f44caafe14"
     },
     {
       "path": "/ru/agent-authority-audit",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:63f80265678f977f3f9276215b88fcc3439b81cd45317365eca5ad8e87380786"
+      "fingerprint": "sha256:b576a1e34f18e3de569fcb2f1c84f78387138e1be23862dbe6a238aab30f7398"
     },
     {
       "path": "/ru/mapper",
@@ -340,12 +340,12 @@
     {
       "path": "/ru/entry-audit",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:58df723f6323e01317ab75bf4d67001ddfa255b95385930ea6a9214c13e538ad"
+      "fingerprint": "sha256:71c13e2c3ed85d45d62e5fdcfb6b69e5c85898389a0f3572c51b2358982fdece"
     },
     {
       "path": "/ru/control-validation",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:96a3f292e7cdc06b7ecf2478c2c92c150c492167cf749ad33cde7585bdfcea2a"
+      "fingerprint": "sha256:5136980e8af3bc3b3b4f4d9b2c14b87158e9503e452934175079280f9085925c"
     },
     {
       "path": "/ru/evidence-readiness",
