@@ -116,6 +116,8 @@ export function GET() {
     '## Commercial decision ladder',
     '- Free / 20 minutes: decide whether the workflow is worth auditing and identify the critical action, authority owner and staging boundary.',
     '- USD 1,500 Entry Audit: determine whether one primary failure hypothesis on one critical action chain is reproducible and decision-relevant.',
+    '- USD 1,500 Security Control Validation: validate one consequential staging/test control boundary by comparing the expected ALLOW / DENY / HOLD / ESCALATE decision with the real downstream state.',
+    '- USD 3,000 BUILD Workflow Exception Diagnostic / 5 business days: bound one recurring operational exception to a named owner, review states, evidence handoff and measurable baseline before deeper implementation; the first phase does not require production-system mutation.',
     '- USD 4,900 Primary Audit: decide whether one workflow has enough evidence, effect confirmation and recovery control for its current or proposed authority.',
     '- Homepage Primary Audit timing uses the same qualified five-working-day window after complete evidence/access + written scope; its public Phase A-D sequence describes method, not a guaranteed day-by-day allocation.',
     '- Public Homepage, Pricing/Consulting and Agent Authority Audit scope-preparation CTAs, including the Primary Audit path, prepare a local scope brief only; they do not book or submit an engagement and do not authorize testing.',
