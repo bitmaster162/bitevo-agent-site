@@ -8,10 +8,11 @@ const distRoot = join(repoRoot, 'dist');
 const registryPath = join(repoRoot, 'src/data/public-route-registry.json');
 const manifestPath = join(repoRoot, 'src/data/sitemap-currentness.json');
 const schema = 'bitevo.sitemap-currentness/v1';
-const normalization = 'build-receipt-v1';
+const normalization = 'provider-envelope-v1';
 
 function normalizeRenderedHtml(html) {
   return html
+    .replace(/<meta\b(?=[^>]*\bdata-cloudflare-csp="hash-bound")[^>]*>/gi, '')
     .replace(/data-build-sha="[0-9a-f]{40}"/gi, 'data-build-sha="__BUILD_SHA__"')
     .replace(/<meta name="bitevo-build-sha" content="[0-9a-f]{40}">/gi, '<meta name="bitevo-build-sha" content="__BUILD_SHA__">')
     .replace(/data-public-build-receipt="[0-9a-f]{40}"/gi, 'data-public-build-receipt="__BUILD_SHA__"')

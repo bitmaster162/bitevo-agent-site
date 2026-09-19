@@ -5,7 +5,7 @@ BitEvo sitemap `lastmod` values are bound to rendered route content, not to ever
 ## Model
 
 - `src/data/sitemap-currentness.json` stores one `lastmod` and normalized rendered-HTML SHA-256 fingerprint per indexable route.
-- Normalization removes only the four build-receipt values injected into every page (`data-build-sha`, `bitevo-build-sha`, `data-public-build-receipt`, and the visible `Build <shortSha>` footer value).
+- Normalization removes only provider/build envelope values that do not represent route content: the Cloudflare-only hash-bound CSP meta tag plus the four build-receipt values injected into every page (`data-build-sha`, `bitevo-build-sha`, `data-public-build-receipt`, and the visible `Build <shortSha>` footer value).
 - `npm run verify:sitemap-currentness` fails closed when an indexable route is missing/stale, a fingerprint drifts, or a manifest route becomes stale.
 - `scripts/verify-public-quality.mjs` separately requires every sitemap `<lastmod>` to equal the corresponding manifest value.
 

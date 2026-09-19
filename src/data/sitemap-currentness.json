@@ -1,6 +1,6 @@
 {
   "schema": "bitevo.sitemap-currentness/v1",
-  "normalization": "build-receipt-v1",
+  "normalization": "provider-envelope-v1",
   "routes": [
     {
       "path": "/",
