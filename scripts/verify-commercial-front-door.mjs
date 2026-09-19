@@ -9,6 +9,8 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
 const home = read('index.html');
 const intake = read('audit-intake/index.html');
 const start = read('start/index.html');
+const consulting = read('consulting/index.html');
+const ruConsulting = read('ru/consulting/index.html');
 const ruHome = read('ru/index.html');
 const ruStart = read('ru/start/index.html');
 const entryAudit = read('entry-audit/index.html');
@@ -43,6 +45,15 @@ check(start.includes('MCP / Tool Governance'), '/start must retain MCP path');
 check(start.includes('$3,000 BUILD Workflow Exception Diagnostic'), '/start must retain BUILD path');
 check(start.includes('$4,900 Primary Audit'), '/start must retain Primary Audit path');
 check(start.includes('The public site does not authorize testing.'), '/start must retain no-testing boundary');
+
+check(consulting.includes('Security Control Validation') && consulting.includes('$1,500'), '/consulting must expose Security Control Validation at $1,500');
+check(hasAnchor(consulting, '/control-validation', 'Open Security Control Validation'), '/consulting Security Control CTA must route to /control-validation');
+check(consulting.includes('BUILD Workflow Exception Diagnostic') && consulting.includes('$3,000'), '/consulting must expose BUILD Workflow Exception Diagnostic at $3,000');
+check(hasAnchor(consulting, '/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'), '/consulting BUILD CTA must route to /build/exception-workflow-diagnostic');
+check(ruConsulting.includes('Security Control Validation') && ruConsulting.includes('$1,500'), '/ru/consulting must expose Security Control Validation at $1,500');
+check(hasAnchor(ruConsulting, '/ru/control-validation', 'Открыть Security Control Validation'), '/ru/consulting Security Control CTA must route to /ru/control-validation');
+check(ruConsulting.includes('BUILD Workflow Exception Diagnostic') && ruConsulting.includes('$3,000'), '/ru/consulting must expose BUILD Workflow Exception Diagnostic at $3,000');
+check(hasAnchor(ruConsulting, '/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic'), '/ru/consulting BUILD CTA must route to /ru/build/exception-workflow-diagnostic');
 
 check(/<a class="button button-ghost" data-scope-handoff href="mailto:robert@bitevo\.work\?subject=BitEvo%20scope%20review">Contact Robert<\/a>/.test(intake), 'audit intake must expose explicit manual human handoff');
 check(intake.includes('nothing is sent automatically'), 'audit intake must state that the handoff does not auto-send');
@@ -86,4 +97,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS auto_send=0 authorization_boundary=PASS`);
+console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
