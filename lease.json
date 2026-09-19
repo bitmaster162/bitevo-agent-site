@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "096f5fcd-7fdc-47e4-b662-64cd09f1dec0",
   "nonce": "27e9f3b2-d257-4894-a2c4-4b98340c7c36",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "54110a36aba4da677e0ef8b0c20856f42aecba4f",
@@ -11,10 +11,10 @@
   "session": "site-p13b-vercel-ru404-cleanurl-r1-20260919",
   "worktree": "c:/users/coins/downloads/bitevo_p13b_ru404_vercel_20260919",
   "acquiredAt": "2026-09-19T13:33:04.951Z",
-  "updatedAt": "2026-09-19T13:33:04.951Z",
+  "updatedAt": "2026-09-19T13:50:54.257Z",
   "expiresAt": "2026-09-19T15:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "2af7d660fb218ce3b464672d820fa4edc94e81d4"
+  "sealedHead": "4b4afb967f403cb24e2c4e3ef5c7fabaeb5a56b4",
+  "sealedTree": "ab835244bcc6d6e25af0d9d47e4dd69d717429ef",
+  "featureRef": "refs/heads/agent/site-p13b-vercel-ru404-cleanurl-r1",
+  "predecessor": "e2b59e34456501f01a58c1b37591a73287edea9c"
 }
