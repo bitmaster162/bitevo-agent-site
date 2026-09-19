@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "f6702b4d-97b5-4c88-b27b-aba2b8d98336",
   "nonce": "33540281-954e-43db-baf4-fc2b4925d8ba",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0f30423230efb13879cfa7976e6866b64b874cbb",
@@ -11,10 +11,12 @@
   "session": "site-p15-start-security-control-parity-r1-20260919",
   "worktree": "c:/users/coins/downloads/bitevo_p15_start_security_parity_20260919",
   "acquiredAt": "2026-09-19T14:31:22.920Z",
-  "updatedAt": "2026-09-19T14:44:04.675Z",
+  "updatedAt": "2026-09-19T14:52:40.510Z",
   "expiresAt": "2026-09-19T16:30:00.000Z",
   "sealedHead": "a222be2f70302ca5d9701182d66dc9d8e1669931",
   "sealedTree": "c8b3e8f3371bd264a351aac13e0ae956e5f1777d",
   "featureRef": "refs/heads/agent/site-p15-start-security-control-parity-r1",
-  "predecessor": "1dfa6d5301b9c1b0899bda3745a291eaababa3ef"
+  "predecessor": "59dcb87dd91603b91282cb1636d91c312fb92997",
+  "releasedAt": "2026-09-19T14:52:40.511Z",
+  "releaseReason": "site_p15_pr147_merged_and_production_verified_exact_dfbd3d6a8eed977788ddad1575f70f15b1bb9ee9"
 }
