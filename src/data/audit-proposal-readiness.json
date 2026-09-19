@@ -1,0 +1,89 @@
+{
+  "schema": "bitevo.audit-proposal-readiness/v1",
+  "id": "AUDIT-PROPOSAL-READINESS-001",
+  "state": "PUBLIC_AUDIT_PROPOSAL_READINESS_TEMPLATE_NOT_CUSTOMER_STATE",
+  "customer_state": "NOT_REPRESENTED",
+  "actual_proposal_issued": false,
+  "proposal_accepted": false,
+  "contract_formed": false,
+  "invoice_issued": false,
+  "payment_link_published": false,
+  "checkout_enabled": false,
+  "signature_capture_enabled": false,
+  "booking_enabled": false,
+  "testing_authorization": false,
+  "offer_query_allowlist": [
+    {
+      "key": "entry-audit",
+      "name": "Entry Audit",
+      "price_usd": 1500,
+      "scope": "one consequential action chain and one primary evidence/control hypothesis"
+    },
+    {
+      "key": "security-control-validation",
+      "name": "Security Control Validation",
+      "price_usd": 1500,
+      "scope": "one consequential staging/test control boundary"
+    },
+    {
+      "key": "primary-agent-authority-audit",
+      "name": "Primary Agent Authority & Evidence Audit",
+      "price_usd": 4900,
+      "scope": "one staging/test workflow within the published Primary audit boundary"
+    }
+  ],
+  "required_written_confirmation": [
+    {
+      "id": "selected_offer",
+      "label": "Selected audit offer and exact fixed public price",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "scope",
+      "label": "Exact workflow/action/control boundary and owner decision",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "deliverables",
+      "label": "Named deliverables and evidence handoff",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "exclusions",
+      "label": "Explicit exclusions, prohibited effects and no-production-write boundary unless separately authorized",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "inputs",
+      "label": "Safe buyer inputs, access dependencies, data classification and minimum necessary evidence",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "acceptance",
+      "label": "Acceptance evidence, named reviewer and unresolved-question handoff",
+      "status": "REQUIRED_IN_WRITTEN_PROPOSAL"
+    },
+    {
+      "id": "roe",
+      "label": "Written Rules of Engagement before any testing",
+      "status": "REQUIRED_BEFORE_TESTING"
+    },
+    {
+      "id": "payment",
+      "label": "Commercial/payment instructions agreed through a direct business channel",
+      "status": "OUTSIDE_PUBLIC_SITE"
+    }
+  ],
+  "payment_boundary": {
+    "public_site_accepts_payment": false,
+    "receiving_rail_claim": "NOT_PUBLISHED",
+    "instructions": "TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL",
+    "invoice_or_payment_request": "NOT_ISSUED_BY_THIS_TEMPLATE",
+    "payment_confirmation": "NOT_AVAILABLE_FROM_PUBLIC_SITE"
+  },
+  "effect_boundary": {
+    "network_write": 0,
+    "storage_write": 0,
+    "external_effect": 0
+  }
+}

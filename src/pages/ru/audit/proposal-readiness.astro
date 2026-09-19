@@ -1,0 +1,31 @@
+---
+import RuLayout from '../../../layouts/RuLayout.astro';
+import readiness from '../../../data/audit-proposal-readiness.json';
+
+const items = readiness.required_written_confirmation;
+const offers = readiness.offer_query_allowlist;
+const itemLabels = [
+  'Выбранный audit offer и точная фиксированная публичная цена',
+  'Точная граница workflow/action/control и owner decision',
+  'Именованные deliverables и evidence handoff',
+  'Явные exclusions, prohibited effects и no-production-write boundary без отдельного разрешения',
+  'Безопасные buyer inputs, access dependencies, data classification и minimum necessary evidence',
+  'Acceptance evidence, named reviewer и unresolved-question handoff',
+  'Письменные Rules of Engagement до любого testing',
+  'Commercial/payment instructions через прямой business channel'
+];
+---
+
+<RuLayout title="Audit Proposal Readiness | BitEvo" description="Evidence-safe checklist для перехода от scope review к письменному audit proposal. Без proposal issuance, contract, invoice, payment rail, checkout или testing authorization." enPath="/audit/proposal-readiness" ruPath="/ru/audit/proposal-readiness">
+  <section class="section"><div class="narrow"><div class="eyebrow">AUDIT · PROPOSAL READINESS · TEMPLATE ONLY</div><h1 class="display">Scope brief ещё не является proposal.</h1><p class="lede">Checklist применяется после scope review для Entry Audit, Security Control Validation или Primary Agent Authority & Evidence Audit. Он показывает, что должно быть явно зафиксировано до появления реального письменного proposal через прямой business channel.</p></div></section>
+
+  <section class="section-tight section-rule"><div class="container panel" role="note"><strong>TEMPLATE ONLY · NO PROPOSAL ISSUED · NO CONTRACT · NO INVOICE · NO PAYMENT RAIL · NO CHECKOUT · NO TESTING AUTHORIZATION</strong><p>Эта публичная страница не выпускает proposal, не принимает и не подтверждает payment, не публикует receiving rail, не собирает signature, не бронирует работу и не даёт testing authorization. Query <code>offer</code> — только routing context, не acceptance.</p></div></section>
+
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Fixed public offer allowlist</div><h2 class="section-title">Здесь допустимы только три audit-family offer key.</h2>{offers.map((offer,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {offer.key}</div><h3>{offer.name} · USD {offer.price_usd.toLocaleString('en-US')}</h3><p>{offer.scope}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Written proposal gate</div><h2 class="section-title">До существования proposal восемь подтверждений должны быть явными.</h2>{items.map((item,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{itemLabels[index]}</h3></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container"><article class="panel"><div class="eyebrow">Proposal state boundary</div><h2>Страница не представляет customer или proposal state.</h2><p><strong>actual_proposal_issued=false</strong>. Она также не представляет accepted proposal, contract, invoice, signature, booking или testing authorization.</p></article><article class="panel"><div class="eyebrow">Payment boundary</div><h2>Эта страница не публикует payment rail.</h2><p>Public-site payment acceptance=false. Payment instructions остаются TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL; public site не подтверждает payment.</p></article></div></section>
+
+  <section class="section section-rule"><div class="container hero-actions"><a class="button button-primary" href="/ru/audit-intake?offer=entry-audit">Подготовить Entry scope</a><a class="button button-ghost" href="/ru/audit-intake?offer=security-control-validation">Подготовить Security Control scope</a><a class="button button-ghost" href="/ru/audit-intake?offer=primary-agent-authority-audit">Подготовить Primary scope</a><a class="button button-ghost" href="/audit/proposal-readiness.json">Открыть machine-readable checklist</a></div></section>
+</RuLayout>
