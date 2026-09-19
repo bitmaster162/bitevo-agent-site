@@ -32,6 +32,8 @@ const buildIndex = await readRoute('/build');
 const ruBuildIndex = await readRoute('/ru/build');
 const pricing = await readRoute('/pricing');
 const ruPricing = await readRoute('/ru/pricing');
+const consulting = await readRoute('/consulting');
+const ruConsulting = await readRoute('/ru/consulting');
 const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 const valueExample = await readRoute('/build/workflow-value-example');
@@ -190,6 +192,25 @@ for (const [href, cta] of ruPricingContracts) {
   if (!hasAnchor(ruPricing, href, cta)) failures.push(`/ru/pricing: missing conversion CTA "${cta}" -> ${href}`);
 }
 
+const consultingSpecialistContracts = [
+  ['$1,500', 'Security Control Validation', '/control-validation', 'Open Security Control Validation'],
+  ['$3,000', 'BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic']
+];
+for (const [price, offer, href, cta] of consultingSpecialistContracts) {
+  const text = stripTags(consulting);
+  if (!text.includes(price) || !text.includes(offer)) failures.push(`/consulting: missing specialist offer "${offer}" at ${price}`);
+  if (!hasAnchor(consulting, href, cta)) failures.push(`/consulting: missing specialist CTA "${cta}" -> ${href}`);
+}
+const ruConsultingSpecialistContracts = [
+  ['$1,500', 'Security Control Validation', '/ru/control-validation', 'Открыть Security Control Validation'],
+  ['$3,000', 'BUILD Workflow Exception Diagnostic', '/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic']
+];
+for (const [price, offer, href, cta] of ruConsultingSpecialistContracts) {
+  const text = stripTags(ruConsulting);
+  if (!text.includes(price) || !text.includes(offer)) failures.push(`/ru/consulting: missing specialist offer "${offer}" at ${price}`);
+  if (!hasAnchor(ruConsulting, href, cta)) failures.push(`/ru/consulting: missing specialist CTA "${cta}" -> ${href}`);
+}
+
 if (pricing.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body=') || ruPricing.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body=')) {
   failures.push('pricing handoff must never auto-embed page or brief content in mailto body');
 }
@@ -209,4 +230,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
