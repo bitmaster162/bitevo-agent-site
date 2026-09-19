@@ -56,6 +56,13 @@ if (!String(immutableCache).includes('immutable') || !String(immutableCache).inc
 for (const domain of ['fonts.googleapis.com','fonts.gstatic.com']) { externalFontDomainChecks += 1; if (raw.includes(domain)) failures.push(`vercel.json: external font domain allowed by deployment policy ${domain}`); }
 routingChecks += 1; if (vercelConfig.cleanUrls !== true) failures.push('vercel.json: cleanUrls must remain true');
 routingChecks += 1; if (vercelConfig.trailingSlash !== false) failures.push('vercel.json: trailingSlash must be false');
+const customRoutes = Array.isArray(vercelConfig.routes) ? vercelConfig.routes : [];
+const filesystemIndex = customRoutes.findIndex(route => route?.handle === 'filesystem');
+const ru404Index = customRoutes.findIndex(route => route?.src === '/ru(?:/.*)?' && Number(route?.status) === 404 && route?.dest === '/ru/404.html');
+routingChecks += 1; if (filesystemIndex < 0) failures.push('vercel.json: localized 404 routing requires filesystem phase');
+routingChecks += 1; if (ru404Index < 0) failures.push('vercel.json: missing exact RU 404 fallback route');
+routingChecks += 1; if (filesystemIndex < 0 || ru404Index <= filesystemIndex) failures.push('vercel.json: RU 404 fallback must run after filesystem phase');
+routingChecks += 1; if (customRoutes.some(route => Number(route?.status) === 404 && route?.src !== '/ru(?:/.*)?')) failures.push('vercel.json: 404 fallback must remain scoped to /ru');
 
 if (failures.length) { console.error('VERCEL_POLICY_GATE=FAIL'); for (const failure of failures) console.error(failure); process.exit(1); }
 console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} failures=0`);

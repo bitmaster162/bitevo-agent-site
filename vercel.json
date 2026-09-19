@@ -7,6 +7,10 @@
   },
   "cleanUrls": true,
   "trailingSlash": false,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/ru(?:/.*)?", "status": 404, "dest": "/ru/404.html" }
+  ],
   "redirects": [
     {
       "source": "/intake",
