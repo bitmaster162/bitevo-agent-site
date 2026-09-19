@@ -40,6 +40,7 @@ const proposalReadiness = await readRoute('/build/proposal-readiness');
 const paidStartGate = await readRoute('/build/paid-start-gate');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
+const llms = await readFile(`${dist}/llms.txt`, 'utf8');
 
 const startContracts = [
   ['$1,500 Entry Audit', '/entry-audit', 'Open Entry Audit'],
@@ -51,6 +52,17 @@ const startContracts = [
 for (const [requiredText, href, cta] of startContracts) {
   if (!stripTags(start).includes(requiredText)) failures.push(`/start: missing commercial path text "${requiredText}"`);
   if (!hasAnchor(start, href, cta)) failures.push(`/start: missing CTA "${cta}" -> ${href}`);
+}
+
+const llmsCommercialContracts = [
+  ['USD 1,500 Entry Audit', '/entry-audit'],
+  ['USD 1,500 Security Control Validation', '/control-validation'],
+  ['USD 3,000 BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic'],
+  ['USD 4,900 Primary Audit', '/agent-authority-audit']
+];
+for (const [offer, route] of llmsCommercialContracts) {
+  if (!llms.includes(offer)) failures.push(`llms.txt: missing SELL_NOW offer "${offer}"`);
+  if (!llms.includes(route)) failures.push(`llms.txt: missing SELL_NOW route "${route}"`);
 }
 
 const startBuildPrep = [
