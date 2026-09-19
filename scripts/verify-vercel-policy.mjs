@@ -58,7 +58,7 @@ routingChecks += 1; if (vercelConfig.cleanUrls !== true) failures.push('vercel.j
 routingChecks += 1; if (vercelConfig.trailingSlash !== false) failures.push('vercel.json: trailingSlash must be false');
 const customRoutes = Array.isArray(vercelConfig.routes) ? vercelConfig.routes : [];
 const filesystemIndex = customRoutes.findIndex(route => route?.handle === 'filesystem');
-const ru404Index = customRoutes.findIndex(route => route?.src === '/ru(?:/.*)?' && Number(route?.status) === 404 && route?.dest === '/ru/404.html');
+const ru404Index = customRoutes.findIndex(route => route?.src === '/ru(?:/.*)?' && Number(route?.status) === 404 && route?.dest === '/ru/404');
 routingChecks += 1; if (filesystemIndex < 0) failures.push('vercel.json: localized 404 routing requires filesystem phase');
 routingChecks += 1; if (ru404Index < 0) failures.push('vercel.json: missing exact RU 404 fallback route');
 routingChecks += 1; if (filesystemIndex < 0 || ru404Index <= filesystemIndex) failures.push('vercel.json: RU 404 fallback must run after filesystem phase');

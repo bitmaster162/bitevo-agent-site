@@ -9,7 +9,7 @@
   "trailingSlash": false,
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/ru(?:/.*)?", "status": 404, "dest": "/ru/404.html" }
+    { "src": "/ru(?:/.*)?", "status": 404, "dest": "/ru/404" }
   ],
   "redirects": [
     {
