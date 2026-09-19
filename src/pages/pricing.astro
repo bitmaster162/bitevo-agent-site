@@ -25,7 +25,7 @@ const tiers = [
     desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
     includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
     excludes: ['No full Authority Ledger / Evidence Contract', 'No multi-scenario failure plan', 'No included retest'],
-    cta: 'Open Entry Audit', href: '/entry-audit', scopeCta: 'Prepare Entry Audit scope', scopeHref: '/audit-intake'
+    cta: 'Open Entry Audit', href: '/entry-audit', scopeCta: 'Prepare Entry Audit scope', scopeHref: '/audit-intake?offer=entry-audit'
   },
   {
     eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days after complete evidence/access + written scope', title: 'Agent Authority & Evidence Audit',
@@ -33,7 +33,7 @@ const tiers = [
     includes: ['1 staging/test workflow', 'Up to 3 tools / APIs / MCP servers', '10–20 agreed failure scenarios'],
     deliverables: primaryDeliverables,
     excludes: ['No certification', 'No universal safety score', 'No production penetration testing by default'],
-    cta: 'Prepare Primary Audit scope', href: '/audit-intake', featured: true
+    cta: 'Prepare Primary Audit scope', href: '/audit-intake?offer=primary-agent-authority-audit', featured: true
   }
 ];
 

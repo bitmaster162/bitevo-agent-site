@@ -12,6 +12,28 @@
   const locale = root.getAttribute('data-intake-locale') === 'ru' ? 'ru' : 'en';
   let mode = 'entry';
 
+  const offerIntents = Object.freeze({
+    'entry-audit': {
+      key: 'entry-audit', depth: 'entry', label: 'Entry Audit ($1,500)',
+      subject: 'BitEvo Agent Authority Entry Audit scope review'
+    },
+    'security-control-validation': {
+      key: 'security-control-validation', depth: 'entry', label: 'Security Control Validation ($1,500)',
+      subject: 'BitEvo Security Control Validation scope review'
+    },
+    'primary-agent-authority-audit': {
+      key: 'primary-agent-authority-audit', depth: 'primary', label: 'Primary Agent Authority & Evidence Audit ($4,900)',
+      subject: 'BitEvo Primary Agent Authority Audit scope review'
+    }
+  });
+  const requestedOffer = new URLSearchParams(window.location.search).get('offer');
+  const offer = requestedOffer && Object.prototype.hasOwnProperty.call(offerIntents, requestedOffer)
+    ? offerIntents[requestedOffer]
+    : null;
+  const handoff = document.querySelector('[data-scope-handoff]');
+  if (offer) root.dataset.offerIntent = offer.key;
+  if (offer && handoff) handoff.href = `mailto:robert@bitevo.work?subject=${encodeURIComponent(offer.subject)}`;
+
   const copy = {
     en: {
       entry: 'ENTRY · reduced first-step fields · Primary evidence/RoE fields deferred until deeper scope review',
@@ -43,7 +65,7 @@
   };
 
   for (const button of buttons) button.addEventListener('click', () => apply(button.dataset.intakeMode));
-  apply('entry');
+  apply(offer?.depth ?? 'entry');
 
   form?.addEventListener('submit', () => {
     if (!form.checkValidity() || !brief?.value) return;
@@ -54,6 +76,12 @@
     const existing = lines.findIndex(line => line.startsWith('INTAKE DEPTH:'));
     if (existing >= 0) lines[existing] = marker;
     else lines.splice(2, 0, marker);
+    if (offer) {
+      const offerMarker = `OFFER INTENT: ${offer.key} — ${offer.label}`;
+      const existingOffer = lines.findIndex(line => line.startsWith('OFFER INTENT:'));
+      if (existingOffer >= 0) lines[existingOffer] = offerMarker;
+      else lines.splice(3, 0, offerMarker);
+    }
     brief.value = lines.join('\n');
   });
 

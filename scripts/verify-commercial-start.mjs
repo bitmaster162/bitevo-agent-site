@@ -34,6 +34,7 @@ const pricing = await readRoute('/pricing');
 const ruPricing = await readRoute('/ru/pricing');
 const consulting = await readRoute('/consulting');
 const ruConsulting = await readRoute('/ru/consulting');
+const assurance = await readRoute('/assurance');
 const buildDiagnostic = await readRoute('/build/exception-workflow-diagnostic');
 const hrDiagnostic = await readRoute('/build/hr-workflow-diagnostic');
 const valueExample = await readRoute('/build/workflow-value-example');
@@ -175,7 +176,8 @@ const pricingContracts = [
   ['/entry-audit', 'Open Entry Audit'],
   ['/control-validation', 'Open Security Control Validation'],
   ['/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'],
-  ['/audit-intake', 'Prepare Entry Audit scope'],
+  ['/audit-intake?offer=entry-audit', 'Prepare Entry Audit scope'],
+  ['/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope'],
   ['/start', 'Choose the smallest scope'],
   ['/mapper', 'Map the action chain'],
   ['mailto:robert@bitevo.work?subject=BitEvo%20scope%20review', 'Contact Robert']
@@ -184,12 +186,32 @@ for (const [href, cta] of pricingContracts) {
   if (!hasAnchor(pricing, href, cta)) failures.push(`/pricing: missing conversion CTA "${cta}" -> ${href}`);
 }
 const ruPricingContracts = [
+  ['/ru/audit-intake?offer=entry-audit', 'Entry'],
+  ['/ru/audit-intake?offer=primary-agent-authority-audit', 'Primary'],
   ['/ru/control-validation', 'Открыть Security Control Validation'],
   ['/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic'],
   ['mailto:robert@bitevo.work?subject=BitEvo%20scope%20review', 'Связаться с Робертом']
 ];
 for (const [href, cta] of ruPricingContracts) {
   if (!hasAnchor(ruPricing, href, cta)) failures.push(`/ru/pricing: missing conversion CTA "${cta}" -> ${href}`);
+}
+
+const consultingAuditIntentContracts = [
+  ['/audit-intake?offer=entry-audit', 'Prepare Entry Audit scope'],
+  ['/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope']
+];
+for (const [href, cta] of consultingAuditIntentContracts) {
+  if (!hasAnchor(consulting, href, cta)) failures.push(`/consulting: missing offer-aware audit CTA "${cta}" -> ${href}`);
+}
+const ruConsultingAuditIntentContracts = [
+  ['/ru/audit-intake?offer=entry-audit', 'Entry'],
+  ['/ru/audit-intake?offer=primary-agent-authority-audit', 'Primary']
+];
+for (const [href, cta] of ruConsultingAuditIntentContracts) {
+  if (!hasAnchor(ruConsulting, href, cta)) failures.push(`/ru/consulting: missing offer-aware audit CTA containing "${cta}" -> ${href}`);
+}
+if (!hasAnchor(assurance, '/audit-intake?offer=security-control-validation', 'Scope one control boundary')) {
+  failures.push('/assurance: Security Control scope CTA must preserve offer intent');
 }
 
 const consultingSpecialistContracts = [
@@ -230,4 +252,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);

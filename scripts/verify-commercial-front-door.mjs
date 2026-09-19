@@ -21,6 +21,7 @@ const ruEntryAudit = read('ru/entry-audit/index.html');
 const ruControlValidation = read('ru/control-validation/index.html');
 const ruPrimaryAudit = read('ru/agent-authority-audit/index.html');
 const ruBuildDiagnostic = read('ru/build/exception-workflow-diagnostic/index.html');
+const intakeController = fs.readFileSync(path.resolve('public/intake-segmentation.js'), 'utf8');
 
 const stripTags = text => text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 const hasAnchor = (html, href, textFragment) => [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].some(match => {
@@ -61,6 +62,24 @@ check(intake.includes('Copy or download the reviewed brief first'), 'audit intak
 check(intake.includes('Testing authorization: NOT GRANTED by this form.'), 'audit intake must retain explicit authorization boundary');
 check(!intake.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body='), 'scope brief must not be auto-embedded into mailto body');
 
+const offerIntentRoutes = [
+  ['/entry-audit', entryAudit, '/audit-intake?offer=entry-audit'],
+  ['/control-validation', controlValidation, '/audit-intake?offer=security-control-validation'],
+  ['/agent-authority-audit', primaryAudit, '/audit-intake?offer=primary-agent-authority-audit'],
+  ['/ru/entry-audit', ruEntryAudit, '/ru/audit-intake?offer=entry-audit'],
+  ['/ru/control-validation', ruControlValidation, '/ru/audit-intake?offer=security-control-validation'],
+  ['/ru/agent-authority-audit', ruPrimaryAudit, '/ru/audit-intake?offer=primary-agent-authority-audit']
+];
+for (const [route, html, href] of offerIntentRoutes) {
+  check(html.includes(`href="${href}"`), `${route} must preserve selected offer intent into audit intake`);
+}
+for (const offer of ['entry-audit', 'security-control-validation', 'primary-agent-authority-audit']) {
+  check(intakeController.includes(`'${offer}'`), `audit-intake controller missing allowlisted offer ${offer}`);
+}
+check(intakeController.includes('OFFER INTENT:'), 'audit-intake brief must record offer intent');
+check(!intakeController.includes('&body='), 'audit-intake offer-aware handoff must not embed mailto body');
+check(!buildDiagnostic.includes('audit-intake?offer=') && !ruBuildDiagnostic.includes('audit-intake?offer='), 'BUILD qualification flow must remain outside audit offer-intent query');
+
 check(/<a class="header-cta" href="\/ru\/start"[^>]*>Начать/.test(ruHome), 'RU header CTA must route to /ru/start');
 check(/<a class="mobile-cta" href="\/ru\/start"[^>]*>Начать →<\/a>/.test(ruHome), 'RU mobile CTA must route to /ru/start');
 check(ruHome.includes('href="/ru/start"') && ruHome.includes('Выбрать формат'), 'RU home primary commercial CTA must route to /ru/start');
@@ -97,4 +116,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
+console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS offer_intent_routes=6 consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
