@@ -10,6 +10,13 @@ const paths = [
     cta: 'Open Entry Audit'
   },
   {
+    eyebrow: 'CONTROL OUTCOME / FIXED',
+    title: '$1,500 Security Control Validation',
+    text: 'Use when the owner question is whether one consequential staging/test control produces the expected ALLOW / DENY / HOLD / ESCALATE outcome and the real downstream state can be verified.',
+    href: '/control-validation',
+    cta: 'Open Security Control Validation'
+  },
+  {
     eyebrow: 'AGENT → TOOL',
     title: 'MCP / Tool Governance',
     text: 'Use when the core question is which tool calls are actually governed by identity, policy and approval, and whether another path bypasses the assumed control boundary.',
@@ -72,7 +79,7 @@ const proofLinks = [
   <section class="section section-rule" aria-labelledby="scope-paths-title">
     <div class="container">
       <div class="eyebrow">Choose the question</div>
-      <h2 class="section-title" id="scope-paths-title">Four paths cover most first conversations.</h2>
+      <h2 class="section-title" id="scope-paths-title">Five paths cover most first conversations.</h2>
       <p class="lede">These are routing choices into existing BitEvo work. This page does not create new flagship service SKUs.</p>
 
       {paths.map(path => (

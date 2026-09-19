@@ -7,11 +7,12 @@
       "category": "FLAGSHIP",
       "eyebrow": "КОММЕРЧЕСКИЙ ВХОД",
       "title": "Выберите самый маленький объём доказательств, который способен изменить решение.",
-      "metaTitle": "Начать работу с BitEvo: triage и четыре пути",
-      "description": "Вход BitEvo: free triage, Entry Audit $1,500, MCP / Tool Governance, BUILD Diagnostic $3,000, Primary Audit $4,900. Без автоотправки и testing authorization.",
+      "metaTitle": "Начать работу с BitEvo: triage и пять путей",
+      "description": "Вход BitEvo: free triage, Entry Audit $1,500, Security Control Validation $1,500, MCP / Tool Governance, BUILD Diagnostic $3,000, Primary Audit $4,900. Без автоотправки и testing authorization.",
       "points": [
         "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
         "$1,500 Entry Audit: проверить одну критическую action chain и одну основную failure hypothesis.",
+        "$1,500 Security Control Validation: проверить одну consequential staging/test control boundary и сопоставить ожидаемое ALLOW / DENY / HOLD / ESCALATE решение с реальным downstream state.",
         "MCP / Tool Governance: разобрать одну agent-to-tool boundary по identity, policy, approval, bypass и retry evidence.",
         "$3,000 BUILD Workflow Exception Diagnostic: выбрать один recurring exception, затем локально зафиксировать buyer-confirmed baseline и отдельно проверить synthetic measurement proof.",
         "$4,900 Primary Audit: решить, должен ли один action-capable workflow сохранить, получить или потерять полномочия."
