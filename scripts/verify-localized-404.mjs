@@ -29,7 +29,7 @@ check('en404 remains canonical /404', en404.includes('rel="canonical" href="http
 
 const routes = Array.isArray(vercel.routes) ? vercel.routes : [];
 const filesystemIndex = routes.findIndex(route => route?.handle === 'filesystem');
-const ruFallbackIndex = routes.findIndex(route => route?.src === '/ru(?:/.*)?' && route?.status === 404 && route?.dest === '/ru/404.html');
+const ruFallbackIndex = routes.findIndex(route => route?.src === '/ru(?:/.*)?' && route?.status === 404 && route?.dest === '/ru/404');
 check('vercel filesystem phase exists', filesystemIndex >= 0);
 check('vercel RU 404 fallback exists', ruFallbackIndex >= 0);
 check('vercel RU fallback after filesystem', filesystemIndex >= 0 && ruFallbackIndex > filesystemIndex);
