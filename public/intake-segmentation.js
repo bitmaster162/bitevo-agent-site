@@ -31,8 +31,13 @@
     ? offerIntents[requestedOffer]
     : null;
   const handoff = document.querySelector('[data-scope-handoff]');
+  const proposalReadiness = document.querySelector('[data-proposal-readiness]');
+  const proposalReadinessBase = locale === 'ru' ? '/ru/audit/proposal-readiness' : '/audit/proposal-readiness';
   if (offer) root.dataset.offerIntent = offer.key;
   if (offer && handoff) handoff.href = `mailto:robert@bitevo.work?subject=${encodeURIComponent(offer.subject)}`;
+  if (proposalReadiness) proposalReadiness.href = offer
+    ? `${proposalReadinessBase}?offer=${encodeURIComponent(offer.key)}`
+    : proposalReadinessBase;
 
   const copy = {
     en: {

@@ -61,6 +61,17 @@ if (!aiAudit.includes('href="/start"')) failures.push('/ai-audit missing current
 const intakeRedirect = (vercel.redirects || []).find(item => item.source === '/intake');
 if (!intakeRedirect || intakeRedirect.destination !== '/audit-intake' || intakeRedirect.permanent !== true) failures.push('vercel missing permanent /intake -> /audit-intake redirect');
 
+const routeByPath = new Map(registry.routes.map(route => [route.path, route]));
+for (const [route, parent, locale] of [
+  ['/audit/proposal-readiness', '/audit-intake', 'en'],
+  ['/ru/audit/proposal-readiness', '/ru/audit-intake', 'ru']
+]) {
+  const item = routeByPath.get(route);
+  if (!item || item.category !== 'TOOL' || item.indexable !== true || item.locale !== locale || item.parent !== parent) failures.push(`${route}: audit proposal-readiness taxonomy drift`);
+  const html = await readHtml(route);
+  if (!html.includes('PROPOSAL READINESS') || !html.includes('NO PROPOSAL ISSUED')) failures.push(`${route}: readiness boundary marker missing`);
+}
+
 const pricing = await readHtml('/pricing');
 for (const marker of ['Scope / Authority Triage', 'Entry Audit', 'Agent Authority &amp; Evidence Audit']) {
   if (!pricing.includes(marker)) failures.push(`/pricing missing canonical ladder marker: ${marker}`);
@@ -78,4 +89,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);
+console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS audit_proposal_readiness=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);

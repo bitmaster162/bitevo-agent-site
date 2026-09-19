@@ -26,6 +26,9 @@ for (const [locale, rel] of pages) {
   check(/data-scope-handoff(?:="")? href="mailto:robert@bitevo\.work/.test(html), `${locale}: manual Contact Robert handoff missing`);
   check(html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: exact manual mailto route missing`);
   check(!html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&body='), `${locale}: generated brief must not be embedded in mailto body`);
+  const readinessBase = locale === 'RU' ? '/ru/audit/proposal-readiness' : '/audit/proposal-readiness';
+  check(html.includes('data-proposal-readiness'), `${locale}: proposal-readiness handoff missing`);
+  check(html.includes(`href="${readinessBase}"`), `${locale}: generic proposal-readiness fallback missing`);
   check(!/<form[^>]+(?:action|method)=/i.test(html), `${locale}: form must remain browser-local without action/method`);
   check(!/api\.telegram\.org|t\.me\//i.test(html), `${locale}: Telegram transfer must not exist`);
 }
@@ -46,6 +49,9 @@ for (const subject of ['BitEvo Agent Authority Entry Audit scope review', 'BitEv
 }
 check(controller.includes('OFFER INTENT:'), 'generated brief must preserve selected offer intent');
 check(controller.includes('encodeURIComponent(offer.subject)'), 'offer-specific subject must be encoded locally');
+check(controller.includes("proposalReadinessBase = locale === 'ru' ? '/ru/audit/proposal-readiness' : '/audit/proposal-readiness'"), 'localized proposal-readiness base route missing');
+check(controller.includes('encodeURIComponent(offer.key)'), 'proposal-readiness query must preserve only the allowlisted offer key');
+check(controller.includes('proposalReadiness.href = offer'), 'proposal-readiness handoff must branch on validated offer intent');
 check(!controller.includes('&body='), 'offer-aware handoff must never embed the generated brief in mailto body');
 
 if (failures.length) {
@@ -54,4 +60,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('INTAKE_SEGMENTATION_GATE=PASS locales=2 entry_default=1 primary_full=1 offer_allowlist=3 offer_intent_brief=1 local_only=1 manual_handoff=1 auto_transfer=0 authorization_boundary=PASS');
+console.log('INTAKE_SEGMENTATION_GATE=PASS locales=2 entry_default=1 primary_full=1 offer_allowlist=3 offer_intent_brief=1 proposal_readiness_handoff=PASS local_only=1 manual_handoff=1 auto_transfer=0 authorization_boundary=PASS');

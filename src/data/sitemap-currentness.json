@@ -110,7 +110,12 @@
     {
       "path": "/audit-intake",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:2bd9b6ba613128d6a8bc6667f18c0dbcc93ff3ca011e7fc97798e7c6a241c143"
+      "fingerprint": "sha256:bde280bea7f54c3fa066a4371957bbe75e176d5ba67bb71431ffb1a9130e73df"
+    },
+    {
+      "path": "/audit/proposal-readiness",
+      "lastmod": "2026-09-19",
+      "fingerprint": "sha256:166c1965b6ea08cc19958c80beb2c3f887bf09d3fff6fecc12b8ba15dd4df6d1"
     },
     {
       "path": "/mcp-governance-checklist",
@@ -285,7 +290,12 @@
     {
       "path": "/ru/audit-intake",
       "lastmod": "2026-09-19",
-      "fingerprint": "sha256:db297a4029237d62545c3955a259bbb4e5723d6898a919c8fb5e11356001f74a"
+      "fingerprint": "sha256:f1fc3604bc19519e263ad14868e68c9df01552c2b3f53529d83b47235ce8fffc"
+    },
+    {
+      "path": "/ru/audit/proposal-readiness",
+      "lastmod": "2026-09-19",
+      "fingerprint": "sha256:1278024bf157537e44b2b0e5fa8dc4df45755e00679932609bbd990b1d95ab3e"
     },
     {
       "path": "/ru/artifacts",

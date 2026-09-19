@@ -157,6 +157,13 @@
       "parent": "/start"
     },
     {
+      "path": "/audit/proposal-readiness",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/audit-intake"
+    },
+    {
       "path": "/mcp-governance-checklist",
       "category": "TOOL",
       "indexable": true,
@@ -400,6 +407,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru"
+    },
+    {
+      "path": "/ru/audit/proposal-readiness",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/audit-intake"
     },
     {
       "path": "/ru/artifacts",
