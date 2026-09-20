@@ -41,8 +41,13 @@ const valueExample = await readRoute('/build/workflow-value-example');
 const baselineWorksheet = await readRoute('/build/workflow-baseline-worksheet');
 const proposalReadiness = await readRoute('/build/proposal-readiness');
 const paidStartGate = await readRoute('/build/paid-start-gate');
+const auditIntake = await readRoute('/audit-intake');
+const ruAuditIntake = await readRoute('/ru/audit-intake');
+const auditProposalReadiness = await readRoute('/audit/proposal-readiness');
+const ruAuditProposalReadiness = await readRoute('/ru/audit/proposal-readiness');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
+const auditProposalJson = JSON.parse(await readFile(`${dist}/audit/proposal-readiness.json`, 'utf8'));
 const llms = await readFile(`${dist}/llms.txt`, 'utf8');
 
 const startContracts = [
@@ -171,6 +176,42 @@ for (const phrase of ['A proposal is not a paid start.', 'This page cannot prove
   if (!paidStartText.includes(phrase)) failures.push(`/build/paid-start-gate: missing boundary phrase \"${phrase}\"`);
 }
 
+const auditProposalText = stripTags(auditProposalReadiness);
+const ruAuditProposalText = stripTags(ruAuditProposalReadiness);
+for (const phrase of ['A scope brief is not yet a proposal.', 'TEMPLATE ONLY · NO PROPOSAL ISSUED · NO CONTRACT · NO INVOICE · NO PAYMENT RAIL · NO CHECKOUT · NO TESTING AUTHORIZATION', 'No payment rail is published by this page.', 'actual_proposal_issued=false']) {
+  if (!auditProposalText.includes(phrase)) failures.push(`/audit/proposal-readiness: missing boundary phrase "${phrase}"`);
+}
+for (const phrase of ['Scope brief ещё не является proposal.', 'TEMPLATE ONLY · NO PROPOSAL ISSUED · NO CONTRACT · NO INVOICE · NO PAYMENT RAIL · NO CHECKOUT · NO TESTING AUTHORIZATION', 'actual_proposal_issued=false']) {
+  if (!ruAuditProposalText.includes(phrase)) failures.push(`/ru/audit/proposal-readiness: missing boundary phrase "${phrase}"`);
+}
+const expectedAuditOffers = [
+  ['entry-audit','Entry Audit',1500],
+  ['security-control-validation','Security Control Validation',1500],
+  ['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',4900]
+];
+if (auditProposalJson.schema !== 'bitevo.audit-proposal-readiness/v1' || auditProposalJson.state !== 'PUBLIC_AUDIT_PROPOSAL_READINESS_TEMPLATE_NOT_CUSTOMER_STATE' || auditProposalJson.customer_state !== 'NOT_REPRESENTED') failures.push('/audit/proposal-readiness.json: schema/state/customer-state drift');
+for (const key of ['actual_proposal_issued','proposal_accepted','contract_formed','invoice_issued','payment_link_published','checkout_enabled','signature_capture_enabled','booking_enabled','testing_authorization']) if (auditProposalJson[key] !== false) failures.push(`/audit/proposal-readiness.json: ${key} must remain false`);
+if (auditProposalJson.payment_boundary?.public_site_accepts_payment !== false || auditProposalJson.payment_boundary?.receiving_rail_claim !== 'NOT_PUBLISHED' || auditProposalJson.payment_boundary?.instructions !== 'TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL' || auditProposalJson.payment_boundary?.payment_confirmation !== 'NOT_AVAILABLE_FROM_PUBLIC_SITE') failures.push('/audit/proposal-readiness.json: payment boundary drifted');
+if (auditProposalJson.effect_boundary?.network_write !== 0 || auditProposalJson.effect_boundary?.storage_write !== 0 || auditProposalJson.effect_boundary?.external_effect !== 0) failures.push('/audit/proposal-readiness.json: public effect boundary drifted');
+if (auditProposalJson.offer_query_allowlist?.length !== expectedAuditOffers.length) failures.push('/audit/proposal-readiness.json: offer allowlist length drifted');
+for (const [key,name,price] of expectedAuditOffers) {
+  const offer = auditProposalJson.offer_query_allowlist?.find(item => item.key === key);
+  if (!offer || offer.name !== name || offer.price_usd !== price) failures.push(`/audit/proposal-readiness.json: offer allowlist drift ${key}`);
+  if (!auditProposalText.includes(key) || !ruAuditProposalText.includes(key)) failures.push(`/audit/proposal-readiness: rendered offer key missing ${key}`);
+}
+if (!hasAnchor(auditIntake, '/audit/proposal-readiness', 'Check proposal readiness')) failures.push('/audit-intake: missing generic proposal-readiness handoff');
+if (!hasAnchor(ruAuditIntake, '/ru/audit/proposal-readiness', 'proposal readiness')) failures.push('/ru/audit-intake: missing generic proposal-readiness handoff');
+for (const [href,label] of [
+  ['/audit-intake?offer=entry-audit','Prepare Entry scope'],
+  ['/audit-intake?offer=security-control-validation','Prepare Security Control scope'],
+  ['/audit-intake?offer=primary-agent-authority-audit','Prepare Primary scope']
+]) if (!hasAnchor(auditProposalReadiness, href, label)) failures.push(`/audit/proposal-readiness: missing scoped backlink ${href}`);
+for (const [href,label] of [
+  ['/ru/audit-intake?offer=entry-audit','Entry scope'],
+  ['/ru/audit-intake?offer=security-control-validation','Security Control scope'],
+  ['/ru/audit-intake?offer=primary-agent-authority-audit','Primary scope']
+]) if (!hasAnchor(ruAuditProposalReadiness, href, label)) failures.push(`/ru/audit/proposal-readiness: missing scoped backlink ${href}`);
+
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
@@ -252,4 +293,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS audit_proposal_readiness=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS ru_start_current=PASS`);
