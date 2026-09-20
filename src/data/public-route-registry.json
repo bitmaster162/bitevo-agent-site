@@ -178,6 +178,13 @@
       "parent": "/audit/paid-start-gate"
     },
     {
+      "path": "/audit/renewal-expansion-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/audit/measured-value-gate"
+    },
+    {
       "path": "/mcp-governance-checklist",
       "category": "TOOL",
       "indexable": true,
@@ -442,6 +449,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/audit/paid-start-gate"
+    },
+    {
+      "path": "/ru/audit/renewal-expansion-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/audit/measured-value-gate"
     },
     {
       "path": "/ru/artifacts",

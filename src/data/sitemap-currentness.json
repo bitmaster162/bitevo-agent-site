@@ -125,7 +125,12 @@
     {
       "path": "/audit/measured-value-gate",
       "lastmod": "2026-09-20",
-      "fingerprint": "sha256:31fd7b2a6e044fc2421e20ddad64b4e1dcffa36e981c9c1a49803ef325f0ab62"
+      "fingerprint": "sha256:e5abb5117bd6fcb6eeee54bb5f96f49f905cf6582a8fc8fbecaf600039179397"
+    },
+    {
+      "path": "/audit/renewal-expansion-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:5aa70c3f9bfb334948cc05cf3ea6afdd54cb84219aa099b431dafcd16096d64f"
     },
     {
       "path": "/mcp-governance-checklist",
@@ -315,7 +320,12 @@
     {
       "path": "/ru/audit/measured-value-gate",
       "lastmod": "2026-09-20",
-      "fingerprint": "sha256:5f2ff80cd034c171a5ceb93d7d9da1222792dd82f4dd51bb585a5bfd8102e7c9"
+      "fingerprint": "sha256:2403ca9ea2f309dc98c0223be2c8742bfed058a2e1e83287b87016b6c07208b4"
+    },
+    {
+      "path": "/ru/audit/renewal-expansion-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:81f8471ac039f4261762b2cac1ba2909d5826379d8c1989ff67a8cfe1fdd1416"
     },
     {
       "path": "/ru/artifacts",
