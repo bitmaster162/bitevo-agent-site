@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "739b87d8-7ae1-42d6-9f02-fe6b6e00a5cc",
   "nonce": "b70f7543-0a9f-4189-ad32-60d84b73deb3",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "b14a98f593a3e8042f30c6a934c9e8535d3911e0",
@@ -11,10 +11,10 @@
   "session": "site-p19-audit-paid-start-gate-r1-20260920",
   "worktree": "c:/users/coins/downloads/bitevo_p19_audit_paid_start_gate_20260920",
   "acquiredAt": "2026-09-20T11:59:32.463Z",
-  "updatedAt": "2026-09-20T11:59:32.463Z",
+  "updatedAt": "2026-09-20T12:09:14.159Z",
   "expiresAt": "2026-09-20T14:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "b8c84b9d7000e62a7ea02d75cd57d9d963b748e4"
+  "sealedHead": "e48b5efdb45f218c756b109ff54eb15b4e66a93d",
+  "sealedTree": "992a232767189381abb737a3ad39fb4ebb4ed8c9",
+  "featureRef": "refs/heads/agent/site-p19-audit-paid-start-gate-r1",
+  "predecessor": "3c45f071c8a15845946bc02cdcbe073763660ea8"
 }
