@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import gate from '../../data/audit-paid-start-gate.json';
+
+const items = gate.required_external_evidence;
+const offers = gate.offer_query_allowlist;
+---
+
+<Layout title="Audit Paid Start Gate | BitEvo" description="External-evidence gate between an accepted audit proposal and delivery. No payment processing, invoice, checkout, delivery start or testing authorization is created here.">
+  <section class="section"><div class="narrow"><div class="eyebrow">AUDIT · PAID START GATE · PUBLIC TEMPLATE ONLY</div><h1 class="display">A proposal is not a paid start.</h1><p class="lede">Before an Entry, Security Control or Primary audit can move to delivery, proposal acceptance, payment evidence, Rules of Engagement, authority/reviewer ownership, safe inputs, the evidence/test boundary and explicit start authorization must all be confirmed outside this public page.</p></div></section>
+
+  <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO DELIVERY START · NO TESTING AUTHORIZATION</strong><p>This public template represents no customer state and cannot prove acceptance or payment. Query parameter <code>offer</code> is routing context only; it creates no contract, payment request, delivery event or testing permission.</p></div></section>
+
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Fixed public offer allowlist</div><h2 class="section-title">Only three audit-family offer keys are valid routing context.</h2>{offers.map((offer,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {offer.key}</div><h3>{offer.name} · USD {offer.price_usd.toLocaleString('en-US')}</h3><p>{offer.scope}</p></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container"><div class="eyebrow">External-evidence gate</div><h2 class="section-title">Seven conditions require real-world evidence before delivery can be called started.</h2>{items.map((item,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{item.label}</h3></article>)}</div></section>
+
+  <section class="section section-rule"><div class="container"><article class="panel"><div class="eyebrow">Payment evidence boundary</div><h2>This page cannot prove payment.</h2><p>No receiving rail, invoice, payment request or checkout is published here. Payment evidence must come from the separately agreed direct business channel; public-site payment acceptance remains false.</p></article><article class="panel"><div class="eyebrow">Delivery boundary</div><h2>Delivery remains unstarted by default.</h2><p><strong>payment_received=false · payment_verified=false · delivery_started=false · testing_authorization=false</strong>. Measured value and renewal/expansion evidence also remain false until separate real-world evidence exists.</p></article></div></section>
+
+  <section class="section section-rule"><div class="container hero-actions"><a class="button button-primary" href="/audit/proposal-readiness">Back to proposal readiness</a><a class="button button-ghost" href="/audit-intake?offer=entry-audit">Prepare Entry scope</a><a class="button button-ghost" href="/audit-intake?offer=security-control-validation">Prepare Security Control scope</a><a class="button button-ghost" href="/audit-intake?offer=primary-agent-authority-audit">Prepare Primary scope</a><a class="button button-ghost" href="/audit/paid-start-gate.json">Open machine-readable gate</a></div></section>
+</Layout>
