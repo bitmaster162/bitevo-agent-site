@@ -1,0 +1,102 @@
+{
+  "schema": "bitevo.audit-measured-value-gate/v1",
+  "id": "AUDIT-MEASURED-VALUE-GATE-001",
+  "state": "PUBLIC_AUDIT_MEASURED_VALUE_READINESS_TEMPLATE_NOT_CUSTOMER_STATE",
+  "customer_state": "NOT_REPRESENTED",
+  "claims": {
+    "payment_received": false,
+    "payment_verified": false,
+    "delivery_started": false,
+    "delivery_completed": false,
+    "measurement_window_closed": false,
+    "measured_value_observed": false,
+    "customer_case_evidence": false,
+    "renewal_expansion_evidence": false,
+    "roi_claim_published": false,
+    "customer_result_claim_published": false
+  },
+  "offer_query_allowlist": [
+    {
+      "key": "entry-audit",
+      "name": "Entry Audit",
+      "price_usd": 1500,
+      "scope": "one consequential action chain and one primary evidence/control hypothesis"
+    },
+    {
+      "key": "security-control-validation",
+      "name": "Security Control Validation",
+      "price_usd": 1500,
+      "scope": "one consequential staging/test control boundary"
+    },
+    {
+      "key": "primary-agent-authority-audit",
+      "name": "Primary Agent Authority & Evidence Audit",
+      "price_usd": 4900,
+      "scope": "one staging/test workflow within the published Primary audit boundary"
+    }
+  ],
+  "required_measurement_evidence": [
+    {
+      "id": "delivered_scope",
+      "label": "Exact delivered scope and delivery evidence bound to the selected audit offer",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "frozen_baseline",
+      "label": "Pre-delivery baseline frozen for the same workflow, metric and evidence definition",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "observation_window",
+      "label": "Defined observation window with start/end criteria and sufficient sample/evidence rule",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "same_workflow_comparison",
+      "label": "Post-delivery comparison uses the same workflow/object/metric definition as the baseline",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "evidence_provenance",
+      "label": "Observed values have source, timestamp, object/environment binding and reproducible provenance",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "attribution_limits",
+      "label": "Known confounders, external changes and attribution limits are recorded rather than hidden",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "owner_reviewer_acceptance",
+      "label": "Named owner/reviewer accepts the measurement evidence and unresolved limitations",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "measured_value_acceptance",
+      "label": "Explicit written acceptance of the bounded measured-value statement before publication or renewal use",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    }
+  ],
+  "claim_boundary": {
+    "synthetic_example_is_customer_evidence": false,
+    "build_receipt_is_measured_value": false,
+    "delivery_is_measured_value": false,
+    "public_site_may_publish_roi_without_external_evidence": false,
+    "customer_result_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE",
+    "roi_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE"
+  },
+  "payment_boundary": {
+    "public_site_accepts_payment": false,
+    "receiving_rail_claim": "NOT_PUBLISHED",
+    "invoice_or_payment_request": "NOT_ISSUED_BY_THIS_TEMPLATE",
+    "payment_confirmation": "NOT_AVAILABLE_FROM_PUBLIC_SITE",
+    "instructions": "TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL"
+  },
+  "effect_boundary": {
+    "network_write": 0,
+    "storage_write": 0,
+    "external_effect": 0,
+    "delivery_start": 0,
+    "measurement_claim_publish": 0
+  }
+}
