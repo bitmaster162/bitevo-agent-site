@@ -1,0 +1,22 @@
+{
+  "schema": "bitevo.build-measured-value-gate/v1",
+  "id": "BUILD-MEASURED-VALUE-GATE-001",
+  "state": "PUBLIC_BUILD_MEASURED_VALUE_READINESS_TEMPLATE_NOT_CUSTOMER_STATE",
+  "customer_state": "NOT_REPRESENTED",
+  "claims": {"payment_received": false, "payment_verified": false, "delivery_started": false, "delivery_completed": false, "measurement_window_closed": false, "measured_value_observed": false, "customer_case_evidence": false, "renewal_expansion_evidence": false, "roi_claim_published": false, "customer_result_claim_published": false},
+  "offer": {"name": "BUILD Workflow Exception Diagnostic", "price_usd": 3000, "timebox_business_days": 5, "scope_object": "one recurring exception workflow"},
+  "synthetic_reference": {"route": "/build/workflow-value-example", "status": "SYNTHETIC_WORKED_EXAMPLE_NOT_OBSERVED", "customer_evidence": false, "measured_value_evidence": false},
+  "required_measurement_evidence": [
+    {"id": "buyer_confirmed_baseline", "label": "Buyer-confirmed baseline frozen for the same workflow definition and denominator", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "delivery_completion", "label": "Delivery completion evidence for the agreed workflow scope and deliverables", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "observation_window", "label": "Defined post-delivery observation window with start/end and sufficient data coverage", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "same_workflow_comparison", "label": "Observed comparison uses the same workflow definition, denominator and measurement rules", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "observed_metrics", "label": "Observed metric values come from buyer-approved source evidence rather than synthetic inputs", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "confounder_review", "label": "Material workflow, volume, staffing, environment and process changes are recorded", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "owner_acceptance", "label": "Named buyer owner/reviewer accepts the bounded measured-value statement and limitations", "status": "REQUIRES_EXTERNAL_EVIDENCE"},
+    {"id": "claim_provenance", "label": "Any customer-result or ROI statement is traceable to verified external evidence and explicit approval", "status": "REQUIRES_EXTERNAL_EVIDENCE"}
+  ],
+  "claim_boundary": {"synthetic_workflow_value_example_is_customer_evidence": false, "synthetic_workflow_value_example_is_measured_value": false, "delivery_is_measured_value": false, "public_site_may_publish_roi_without_external_evidence": false, "customer_result_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE", "roi_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE"},
+  "payment_boundary": {"public_site_accepts_payment": false, "receiving_rail_claim": "NOT_PUBLISHED", "invoice_or_payment_request": "NOT_ISSUED_BY_THIS_TEMPLATE", "payment_confirmation": "NOT_AVAILABLE_FROM_PUBLIC_SITE", "instructions": "TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL"},
+  "effect_boundary": {"network_write": 0, "storage_write": 0, "external_effect": 0, "delivery_start": 0, "measurement_claim_publish": 0}
+}

@@ -69,8 +69,13 @@
     },
     {
       "path": "/build/paid-start-gate",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:6b3ef2656b2b0ad813a75dc1455dc93df63f05614fdedeb5e8f275d9ab5be7d4"
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:fcf2d77eac7beee62b2139a8eff55f3c89fa7ddcc34f775dc82062d52104f5bb"
+    },
+    {
+      "path": "/build/measured-value-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:60014226caaea8e1d54db14d408379b896bf6cc0e56bbb8311a9d0674019e132"
     },
     {
       "path": "/mcp-governance",
@@ -419,8 +424,13 @@
     },
     {
       "path": "/ru/build/paid-start-gate",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:8ac915a6a546680040a44835b1dfe3c77026ff438affa408767998dd1929e05a"
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:169d37cf1a54ac2ae0756a77eef774acfe2cc3dc04ca249c5201fde355dc5b9e"
+    },
+    {
+      "path": "/ru/build/measured-value-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:36879db15289578c56191d76039d5e060a6f645a778b878c2955da18198e6c71"
     },
     {
       "path": "/ru/mcp-governance",
