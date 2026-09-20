@@ -63,6 +63,15 @@ if (!intakeRedirect || intakeRedirect.destination !== '/audit-intake' || intakeR
 
 const routeByPath = new Map(registry.routes.map(route => [route.path, route]));
 for (const [route, parent, locale] of [
+  ['/build/measured-value-gate', '/build/paid-start-gate', 'en'],
+  ['/ru/build/measured-value-gate', '/ru/build/paid-start-gate', 'ru']
+]) {
+  const item = routeByPath.get(route);
+  if (!item || item.category !== 'TOOL' || item.indexable !== true || item.locale !== locale || item.parent !== parent) failures.push(`${route}: build measured-value taxonomy drift`);
+  const html = await readHtml(route);
+  if (!html.includes('MEASURED VALUE READINESS') || !html.includes('NO ROI CLAIM') || !html.includes('NO MEASURED VALUE CLAIM') || !html.includes('SYNTHETIC EXAMPLE IS NOT CUSTOMER EVIDENCE')) failures.push(`${route}: build measured-value boundary marker missing`);
+}
+for (const [route, parent, locale] of [
   ['/audit/proposal-readiness', '/audit-intake', 'en'],
   ['/ru/audit/proposal-readiness', '/ru/audit-intake', 'ru']
 ]) {
@@ -116,4 +125,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);
+console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS build_measured_value_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);

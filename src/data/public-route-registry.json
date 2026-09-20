@@ -100,6 +100,13 @@
       "parent": "/build/proposal-readiness"
     },
     {
+      "path": "/build/measured-value-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build/paid-start-gate"
+    },
+    {
       "path": "/mcp-governance",
       "category": "SPECIALIST",
       "indexable": true,
@@ -589,6 +596,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/build/proposal-readiness"
+    },
+    {
+      "path": "/ru/build/measured-value-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build/paid-start-gate"
     },
     {
       "path": "/ru/mcp-governance",

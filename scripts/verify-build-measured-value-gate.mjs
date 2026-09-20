@@ -1,0 +1,24 @@
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const dist=fileURLToPath(new URL('../dist/',import.meta.url)); const failures=[];
+const read=route=>readFile(`${dist}${route}/index.html`,'utf8');
+const strip=t=>t.replace(/<[^>]*>/g,' ').replace(/&[a-z0-9#]+;/gi,' ').replace(/\s+/g,' ').trim();
+const hasAnchor=(html,href,label)=>[...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].some(m=>(m[1]||'').match(/\bhref=["']([^"']+)["']/i)?.[1]===href && strip(m[2]||'').includes(label));
+const en=await read('/build/measured-value-gate'), ru=await read('/ru/build/measured-value-gate'), paid=await read('/build/paid-start-gate'), ruPaid=await read('/ru/build/paid-start-gate');
+const data=JSON.parse(await readFile(`${dist}/build/measured-value-gate.json`,'utf8')), synthetic=JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`,'utf8'));
+for(const p of ['Delivery is not measured value.','NO CUSTOMER RESULT · NO ROI CLAIM · NO MEASURED VALUE CLAIM · SYNTHETIC EXAMPLE IS NOT CUSTOMER EVIDENCE','No delivery or measurement state is represented.','Synthetic arithmetic cannot substitute for measured value.']) if(!strip(en).includes(p)) failures.push(`EN missing: ${p}`);
+for(const p of ['Delivery ещё не является measured value.','NO CUSTOMER RESULT · NO ROI CLAIM · NO MEASURED VALUE CLAIM · SYNTHETIC EXAMPLE IS NOT CUSTOMER EVIDENCE','Никакой delivery или measurement state здесь не представлен.','Synthetic arithmetic не заменяет measured value.']) if(!strip(ru).includes(p)) failures.push(`RU missing: ${p}`);
+if(data.schema!=='bitevo.build-measured-value-gate/v1'||data.state!=='PUBLIC_BUILD_MEASURED_VALUE_READINESS_TEMPLATE_NOT_CUSTOMER_STATE'||data.customer_state!=='NOT_REPRESENTED') failures.push('schema/state/customer-state drift');
+for(const [k,v] of Object.entries(data.claims||{})) if(v!==false) failures.push(`claim ${k} must remain false`);
+if(Object.keys(data.claims||{}).length!==10) failures.push('claim count drift');
+if(data.offer?.name!=='BUILD Workflow Exception Diagnostic'||data.offer?.price_usd!==3000||data.offer?.timebox_business_days!==5||data.offer?.scope_object!=='one recurring exception workflow') failures.push('fixed offer facts drifted');
+if(!Array.isArray(data.required_measurement_evidence)||data.required_measurement_evidence.length!==8||data.required_measurement_evidence.some(x=>x.status!=='REQUIRES_EXTERNAL_EVIDENCE')) failures.push('measurement evidence gate drifted');
+if(data.synthetic_reference?.route!=='/build/workflow-value-example'||data.synthetic_reference?.status!=='SYNTHETIC_WORKED_EXAMPLE_NOT_OBSERVED'||data.synthetic_reference?.customer_evidence!==false||data.synthetic_reference?.measured_value_evidence!==false) failures.push('synthetic reference boundary drifted');
+if(data.claim_boundary?.synthetic_workflow_value_example_is_customer_evidence!==false||data.claim_boundary?.synthetic_workflow_value_example_is_measured_value!==false||data.claim_boundary?.delivery_is_measured_value!==false||data.claim_boundary?.public_site_may_publish_roi_without_external_evidence!==false||data.claim_boundary?.customer_result_claim!=='NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE'||data.claim_boundary?.roi_claim!=='NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE') failures.push('claim boundary drifted');
+if(data.payment_boundary?.public_site_accepts_payment!==false||data.payment_boundary?.receiving_rail_claim!=='NOT_PUBLISHED'||data.payment_boundary?.payment_confirmation!=='NOT_AVAILABLE_FROM_PUBLIC_SITE') failures.push('payment boundary drifted');
+if(data.effect_boundary?.network_write!==0||data.effect_boundary?.storage_write!==0||data.effect_boundary?.external_effect!==0||data.effect_boundary?.delivery_start!==0||data.effect_boundary?.measurement_claim_publish!==0) failures.push('effect boundary drifted');
+if(synthetic.status!=='SYNTHETIC_WORKED_EXAMPLE_NOT_OBSERVED'||synthetic.synthetic!==true||synthetic.customer_case!==false||synthetic.observed_outcome!==false||synthetic.roi_claim!==false) failures.push('existing synthetic value example provenance drifted');
+if(!hasAnchor(paid,'/build/measured-value-gate','Check measured-value readiness')||!hasAnchor(ruPaid,'/ru/build/measured-value-gate','Проверить measured-value readiness')) failures.push('paid-start forward links missing');
+if(!hasAnchor(en,'/build/workflow-value-example','Inspect synthetic value example')||!hasAnchor(ru,'/ru/build/workflow-value-example','Проверить synthetic value example')) failures.push('synthetic reference links missing');
+if(failures.length){console.error('BUILD_MEASURED_VALUE_GATE=FAIL');failures.forEach(x=>console.error(x));process.exit(1)}
+console.log('BUILD_MEASURED_VALUE_GATE=PASS checks=45 customer_state=NOT_REPRESENTED claims_false=10 measurement_evidence=8 synthetic_customer_evidence=0 delivery_claim=0 measured_value_claim=0 roi_claim=0 network_write=0 storage_write=0 locales=2 failures=0');

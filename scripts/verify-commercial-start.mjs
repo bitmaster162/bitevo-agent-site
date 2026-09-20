@@ -41,6 +41,8 @@ const valueExample = await readRoute('/build/workflow-value-example');
 const baselineWorksheet = await readRoute('/build/workflow-baseline-worksheet');
 const proposalReadiness = await readRoute('/build/proposal-readiness');
 const paidStartGate = await readRoute('/build/paid-start-gate');
+const buildMeasuredValueGate = await readRoute('/build/measured-value-gate');
+const ruBuildMeasuredValueGate = await readRoute('/ru/build/measured-value-gate');
 const auditIntake = await readRoute('/audit-intake');
 const ruAuditIntake = await readRoute('/ru/audit-intake');
 const auditProposalReadiness = await readRoute('/audit/proposal-readiness');
@@ -53,6 +55,7 @@ const auditRenewalExpansionGate = await readRoute('/audit/renewal-expansion-gate
 const ruAuditRenewalExpansionGate = await readRoute('/ru/audit/renewal-expansion-gate');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
+const buildMeasuredValueJson = JSON.parse(await readFile(`${dist}/build/measured-value-gate.json`, 'utf8'));
 const auditProposalJson = JSON.parse(await readFile(`${dist}/audit/proposal-readiness.json`, 'utf8'));
 const auditPaidStartJson = JSON.parse(await readFile(`${dist}/audit/paid-start-gate.json`, 'utf8'));
 const auditMeasuredValueJson = JSON.parse(await readFile(`${dist}/audit/measured-value-gate.json`, 'utf8'));
@@ -184,6 +187,18 @@ const paidStartText = stripTags(paidStartGate);
 for (const phrase of ['A proposal is not a paid start.', 'This page cannot prove payment.', 'Delivery remains unstarted by default.']) {
   if (!paidStartText.includes(phrase)) failures.push(`/build/paid-start-gate: missing boundary phrase \"${phrase}\"`);
 }
+
+const buildMeasuredValueText = stripTags(buildMeasuredValueGate);
+const ruBuildMeasuredValueText = stripTags(ruBuildMeasuredValueGate);
+for (const phrase of ['Delivery is not measured value.', 'No delivery or measurement state is represented.', 'Synthetic arithmetic cannot substitute for measured value.']) if (!buildMeasuredValueText.includes(phrase)) failures.push(`/build/measured-value-gate: missing boundary phrase "${phrase}"`);
+for (const phrase of ['Delivery ещё не является measured value.', 'Никакой delivery или measurement state здесь не представлен.', 'Synthetic arithmetic не заменяет measured value.']) if (!ruBuildMeasuredValueText.includes(phrase)) failures.push(`/ru/build/measured-value-gate: missing boundary phrase "${phrase}"`);
+if (buildMeasuredValueJson.schema !== 'bitevo.build-measured-value-gate/v1' || buildMeasuredValueJson.state !== 'PUBLIC_BUILD_MEASURED_VALUE_READINESS_TEMPLATE_NOT_CUSTOMER_STATE' || buildMeasuredValueJson.customer_state !== 'NOT_REPRESENTED') failures.push('/build/measured-value-gate.json: schema/state/customer-state drift');
+for (const key of ['payment_received','payment_verified','delivery_started','delivery_completed','measurement_window_closed','measured_value_observed','customer_case_evidence','renewal_expansion_evidence','roi_claim_published','customer_result_claim_published']) if (buildMeasuredValueJson.claims?.[key] !== false) failures.push(`/build/measured-value-gate.json: ${key} must remain false`);
+if (buildMeasuredValueJson.required_measurement_evidence?.length !== 8 || buildMeasuredValueJson.required_measurement_evidence?.some(item => item.status !== 'REQUIRES_EXTERNAL_EVIDENCE')) failures.push('/build/measured-value-gate.json: measurement evidence gate drifted');
+if (buildMeasuredValueJson.synthetic_reference?.route !== '/build/workflow-value-example' || buildMeasuredValueJson.synthetic_reference?.customer_evidence !== false || buildMeasuredValueJson.synthetic_reference?.measured_value_evidence !== false) failures.push('/build/measured-value-gate.json: synthetic reference boundary drifted');
+if (buildMeasuredValueJson.claim_boundary?.synthetic_workflow_value_example_is_customer_evidence !== false || buildMeasuredValueJson.claim_boundary?.synthetic_workflow_value_example_is_measured_value !== false || buildMeasuredValueJson.claim_boundary?.delivery_is_measured_value !== false || buildMeasuredValueJson.claim_boundary?.public_site_may_publish_roi_without_external_evidence !== false) failures.push('/build/measured-value-gate.json: claim boundary drifted');
+if (buildMeasuredValueJson.offer?.name !== 'BUILD Workflow Exception Diagnostic' || buildMeasuredValueJson.offer?.price_usd !== 3000 || buildMeasuredValueJson.offer?.timebox_business_days !== 5 || buildMeasuredValueJson.offer?.scope_object !== 'one recurring exception workflow') failures.push('/build/measured-value-gate.json: fixed offer facts drifted');
+if (!hasAnchor(paidStartGate, '/build/measured-value-gate', 'Check measured-value readiness')) failures.push('/build/paid-start-gate: missing measured-value gate link');
 
 const auditProposalText = stripTags(auditProposalReadiness);
 const ruAuditProposalText = stripTags(ruAuditProposalReadiness);
@@ -354,4 +369,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS audit_delivery_boundary=PASS audit_measurement_boundary=PASS audit_renewal_boundary=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS build_measured_value_gate=PASS build_measurement_boundary=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS audit_delivery_boundary=PASS audit_measurement_boundary=PASS audit_renewal_boundary=PASS ru_start_current=PASS`);
