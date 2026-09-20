@@ -75,7 +75,12 @@
     {
       "path": "/build/measured-value-gate",
       "lastmod": "2026-09-20",
-      "fingerprint": "sha256:60014226caaea8e1d54db14d408379b896bf6cc0e56bbb8311a9d0674019e132"
+      "fingerprint": "sha256:d3f7aece1ad9afa20ee415ca45d491bbc1617c496fd4f0324eff3a33cc6d8e61"
+    },
+    {
+      "path": "/build/renewal-expansion-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:227e5e8196623a3d3e237f75feac4961e51976c5d428fa9f9eda21f6e50c1e7e"
     },
     {
       "path": "/mcp-governance",
@@ -430,7 +435,12 @@
     {
       "path": "/ru/build/measured-value-gate",
       "lastmod": "2026-09-20",
-      "fingerprint": "sha256:36879db15289578c56191d76039d5e060a6f645a778b878c2955da18198e6c71"
+      "fingerprint": "sha256:837f02217562ccf579e6f5212b67900025a1e2557d4405c8990436ed409112ff"
+    },
+    {
+      "path": "/ru/build/renewal-expansion-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:c6ae7974e9707cd8f9a0ea2cd5d73239ad81d9d248e7705dd6d33688a9607ec9"
     },
     {
       "path": "/ru/mcp-governance",

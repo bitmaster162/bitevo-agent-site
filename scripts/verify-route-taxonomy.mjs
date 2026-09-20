@@ -63,6 +63,15 @@ if (!intakeRedirect || intakeRedirect.destination !== '/audit-intake' || intakeR
 
 const routeByPath = new Map(registry.routes.map(route => [route.path, route]));
 for (const [route, parent, locale] of [
+  ['/build/renewal-expansion-gate', '/build/measured-value-gate', 'en'],
+  ['/ru/build/renewal-expansion-gate', '/ru/build/measured-value-gate', 'ru']
+]) {
+  const item = routeByPath.get(route);
+  if (!item || item.category !== 'TOOL' || item.indexable !== true || item.locale !== locale || item.parent !== parent) failures.push(`${route}: build renewal-expansion taxonomy drift`);
+  const html = await readHtml(route);
+  if (!html.includes('RENEWAL / EXPANSION READINESS') || !html.includes('NO RETAINED REVENUE CLAIM') || !html.includes('NO NRR CLAIM')) failures.push(`${route}: build renewal-expansion boundary marker missing`);
+}
+for (const [route, parent, locale] of [
   ['/build/measured-value-gate', '/build/paid-start-gate', 'en'],
   ['/ru/build/measured-value-gate', '/ru/build/paid-start-gate', 'ru']
 ]) {
@@ -125,4 +134,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS build_measured_value_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);
+console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS build_measured_value_gate=PASS build_renewal_expansion_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);

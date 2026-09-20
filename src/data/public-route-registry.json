@@ -107,6 +107,13 @@
       "parent": "/build/paid-start-gate"
     },
     {
+      "path": "/build/renewal-expansion-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/build/measured-value-gate"
+    },
+    {
       "path": "/mcp-governance",
       "category": "SPECIALIST",
       "indexable": true,
@@ -603,6 +610,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/build/paid-start-gate"
+    },
+    {
+      "path": "/ru/build/renewal-expansion-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/build/measured-value-gate"
     },
     {
       "path": "/ru/mcp-governance",
