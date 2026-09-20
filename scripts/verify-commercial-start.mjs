@@ -45,9 +45,12 @@ const auditIntake = await readRoute('/audit-intake');
 const ruAuditIntake = await readRoute('/ru/audit-intake');
 const auditProposalReadiness = await readRoute('/audit/proposal-readiness');
 const ruAuditProposalReadiness = await readRoute('/ru/audit/proposal-readiness');
+const auditPaidStartGate = await readRoute('/audit/paid-start-gate');
+const ruAuditPaidStartGate = await readRoute('/ru/audit/paid-start-gate');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
 const auditProposalJson = JSON.parse(await readFile(`${dist}/audit/proposal-readiness.json`, 'utf8'));
+const auditPaidStartJson = JSON.parse(await readFile(`${dist}/audit/paid-start-gate.json`, 'utf8'));
 const llms = await readFile(`${dist}/llms.txt`, 'utf8');
 
 const startContracts = [
@@ -212,6 +215,23 @@ for (const [href,label] of [
   ['/ru/audit-intake?offer=primary-agent-authority-audit','Primary scope']
 ]) if (!hasAnchor(ruAuditProposalReadiness, href, label)) failures.push(`/ru/audit/proposal-readiness: missing scoped backlink ${href}`);
 
+const auditPaidStartText = stripTags(auditPaidStartGate);
+const ruAuditPaidStartText = stripTags(ruAuditPaidStartGate);
+for (const phrase of ['A proposal is not a paid start.', 'This page cannot prove payment.', 'Delivery remains unstarted by default.']) if (!auditPaidStartText.includes(phrase)) failures.push(`/audit/paid-start-gate: missing boundary phrase "${phrase}"`);
+for (const phrase of ['Proposal ещё не является paid start.', 'Эта страница не может доказать payment.', 'Delivery по умолчанию остаётся unstarted.']) if (!ruAuditPaidStartText.includes(phrase)) failures.push(`/ru/audit/paid-start-gate: missing boundary phrase "${phrase}"`);
+if (auditPaidStartJson.schema !== 'bitevo.audit-paid-start-gate/v1' || auditPaidStartJson.state !== 'PUBLIC_AUDIT_PAID_START_GATE_TEMPLATE_NOT_CUSTOMER_STATE' || auditPaidStartJson.customer_state !== 'NOT_REPRESENTED') failures.push('/audit/paid-start-gate.json: schema/state/customer-state drift');
+for (const key of ['proposal_issued','proposal_accepted','contract_formed','invoice_issued','payment_received','payment_verified','delivery_started','measured_value_observed','renewal_expansion_evidence','testing_authorization']) if (auditPaidStartJson.claims?.[key] !== false) failures.push(`/audit/paid-start-gate.json: ${key} must remain false`);
+if (auditPaidStartJson.required_external_evidence?.length !== 7 || auditPaidStartJson.required_external_evidence?.some(item => item.status !== 'REQUIRES_EXTERNAL_EVIDENCE')) failures.push('/audit/paid-start-gate.json: external evidence gate drifted');
+if (auditPaidStartJson.payment_boundary?.public_site_accepts_payment !== false || auditPaidStartJson.payment_boundary?.receiving_rail_claim !== 'NOT_PUBLISHED' || auditPaidStartJson.payment_boundary?.checkout_enabled !== false || auditPaidStartJson.payment_boundary?.payment_confirmation !== 'NOT_AVAILABLE_FROM_PUBLIC_SITE') failures.push('/audit/paid-start-gate.json: payment boundary drifted');
+if (auditPaidStartJson.effect_boundary?.network_write !== 0 || auditPaidStartJson.effect_boundary?.storage_write !== 0 || auditPaidStartJson.effect_boundary?.external_effect !== 0 || auditPaidStartJson.effect_boundary?.delivery_start !== 0) failures.push('/audit/paid-start-gate.json: effect boundary drifted');
+if (auditPaidStartJson.offer_query_allowlist?.length !== expectedAuditOffers.length) failures.push('/audit/paid-start-gate.json: offer allowlist length drifted');
+for (const [key,name,price] of expectedAuditOffers) {
+  const offer = auditPaidStartJson.offer_query_allowlist?.find(item => item.key === key);
+  if (!offer || offer.name !== name || offer.price_usd !== price) failures.push(`/audit/paid-start-gate.json: offer allowlist drift ${key}`);
+}
+for (const [href,label] of [['/audit/paid-start-gate?offer=entry-audit','Entry paid-start gate'],['/audit/paid-start-gate?offer=security-control-validation','Security Control paid-start gate'],['/audit/paid-start-gate?offer=primary-agent-authority-audit','Primary paid-start gate']]) if (!hasAnchor(auditProposalReadiness,href,label)) failures.push(`/audit/proposal-readiness: missing paid-start link ${href}`);
+for (const [href,label] of [['/ru/audit/paid-start-gate?offer=entry-audit','Entry paid-start gate'],['/ru/audit/paid-start-gate?offer=security-control-validation','Security Control paid-start gate'],['/ru/audit/paid-start-gate?offer=primary-agent-authority-audit','Primary paid-start gate']]) if (!hasAnchor(ruAuditProposalReadiness,href,label)) failures.push(`/ru/audit/proposal-readiness: missing paid-start link ${href}`);
+
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
@@ -293,4 +313,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS audit_proposal_readiness=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS audit_delivery_boundary=PASS ru_start_current=PASS`);

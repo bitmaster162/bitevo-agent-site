@@ -164,6 +164,13 @@
       "parent": "/audit-intake"
     },
     {
+      "path": "/audit/paid-start-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/audit/proposal-readiness"
+    },
+    {
       "path": "/mcp-governance-checklist",
       "category": "TOOL",
       "indexable": true,
@@ -414,6 +421,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/audit-intake"
+    },
+    {
+      "path": "/ru/audit/paid-start-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/audit/proposal-readiness"
     },
     {
       "path": "/ru/artifacts",

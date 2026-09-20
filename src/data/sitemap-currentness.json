@@ -114,8 +114,13 @@
     },
     {
       "path": "/audit/proposal-readiness",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:166c1965b6ea08cc19958c80beb2c3f887bf09d3fff6fecc12b8ba15dd4df6d1"
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:886a924cf02b811311e278765c34520848e96e679eb60b105a311e3ea30d7850"
+    },
+    {
+      "path": "/audit/paid-start-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:8ab172f1063d3c13d27f56e9b4947ab3e7e17cda1a7582cfa727bc26f4c923e6"
     },
     {
       "path": "/mcp-governance-checklist",
@@ -294,8 +299,13 @@
     },
     {
       "path": "/ru/audit/proposal-readiness",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:1278024bf157537e44b2b0e5fa8dc4df45755e00679932609bbd990b1d95ab3e"
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:7dc14f277095ef89bdb8473f599349e167e5e74c77293847c48a5ef283da7281"
+    },
+    {
+      "path": "/ru/audit/paid-start-gate",
+      "lastmod": "2026-09-20",
+      "fingerprint": "sha256:a7bc8b28fa9203946827c1dc1502ed7c155ee5c35a4cf2c0cef66352d84d00a0"
     },
     {
       "path": "/ru/artifacts",

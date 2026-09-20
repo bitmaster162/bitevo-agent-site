@@ -71,6 +71,15 @@ for (const [route, parent, locale] of [
   const html = await readHtml(route);
   if (!html.includes('PROPOSAL READINESS') || !html.includes('NO PROPOSAL ISSUED')) failures.push(`${route}: readiness boundary marker missing`);
 }
+for (const [route, parent, locale] of [
+  ['/audit/paid-start-gate', '/audit/proposal-readiness', 'en'],
+  ['/ru/audit/paid-start-gate', '/ru/audit/proposal-readiness', 'ru']
+]) {
+  const item = routeByPath.get(route);
+  if (!item || item.category !== 'TOOL' || item.indexable !== true || item.locale !== locale || item.parent !== parent) failures.push(`${route}: audit paid-start taxonomy drift`);
+  const html = await readHtml(route);
+  if (!html.includes('PAID START GATE') || !html.includes('NO PAYMENT PROCESSING') || !html.includes('NO DELIVERY START')) failures.push(`${route}: paid-start boundary marker missing`);
+}
 
 const pricing = await readHtml('/pricing');
 for (const marker of ['Scope / Authority Triage', 'Entry Audit', 'Agent Authority &amp; Evidence Audit']) {
@@ -89,4 +98,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS audit_proposal_readiness=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);
+console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);
