@@ -49,11 +49,14 @@ const auditPaidStartGate = await readRoute('/audit/paid-start-gate');
 const ruAuditPaidStartGate = await readRoute('/ru/audit/paid-start-gate');
 const auditMeasuredValueGate = await readRoute('/audit/measured-value-gate');
 const ruAuditMeasuredValueGate = await readRoute('/ru/audit/measured-value-gate');
+const auditRenewalExpansionGate = await readRoute('/audit/renewal-expansion-gate');
+const ruAuditRenewalExpansionGate = await readRoute('/ru/audit/renewal-expansion-gate');
 const proof = await readRoute('/proof');
 const valueExampleJson = JSON.parse(await readFile(`${dist}/build/workflow-value-example.json`, 'utf8'));
 const auditProposalJson = JSON.parse(await readFile(`${dist}/audit/proposal-readiness.json`, 'utf8'));
 const auditPaidStartJson = JSON.parse(await readFile(`${dist}/audit/paid-start-gate.json`, 'utf8'));
 const auditMeasuredValueJson = JSON.parse(await readFile(`${dist}/audit/measured-value-gate.json`, 'utf8'));
+const auditRenewalExpansionJson = JSON.parse(await readFile(`${dist}/audit/renewal-expansion-gate.json`, 'utf8'));
 const llms = await readFile(`${dist}/llms.txt`, 'utf8');
 
 const startContracts = [
@@ -252,6 +255,24 @@ for (const key of expectedAuditOffers.map(item=>item[0])) {
   if (!ruAuditPaidStartGate.includes(`/ru/audit/measured-value-gate?offer=${key}`)) failures.push(`/ru/audit/paid-start-gate: missing measurement link ${key}`);
 }
 
+const auditRenewalExpansionText = stripTags(auditRenewalExpansionGate);
+const ruAuditRenewalExpansionText = stripTags(ruAuditRenewalExpansionGate);
+for (const phrase of ['Measured value is not renewal.', 'No renewal or expansion state is represented.', 'Measured value cannot substitute for a buyer renewal decision.']) if (!auditRenewalExpansionText.includes(phrase)) failures.push(`/audit/renewal-expansion-gate: missing boundary phrase "${phrase}"`);
+for (const phrase of ['Measured value ещё не является renewal.', 'Никакой renewal или expansion state здесь не представлен.', 'Measured value не заменяет buyer renewal decision.']) if (!ruAuditRenewalExpansionText.includes(phrase)) failures.push(`/ru/audit/renewal-expansion-gate: missing boundary phrase "${phrase}"`);
+if (auditRenewalExpansionJson.schema !== 'bitevo.audit-renewal-expansion-gate/v1' || auditRenewalExpansionJson.state !== 'PUBLIC_AUDIT_RENEWAL_EXPANSION_READINESS_TEMPLATE_NOT_CUSTOMER_STATE' || auditRenewalExpansionJson.customer_state !== 'NOT_REPRESENTED') failures.push('/audit/renewal-expansion-gate.json: schema/state/customer-state drift');
+for (const key of ['measured_value_observed','customer_case_evidence','renewal_expansion_evidence','renewal_committed','expansion_committed','retained_revenue_evidence','nrr_evidence','roi_claim_published','customer_result_claim_published']) if (auditRenewalExpansionJson.claims?.[key] !== false) failures.push(`/audit/renewal-expansion-gate.json: ${key} must remain false`);
+if (Object.keys(auditRenewalExpansionJson.claims||{}).length !== 12) failures.push('/audit/renewal-expansion-gate.json: claim count drifted');
+if (auditRenewalExpansionJson.required_renewal_expansion_evidence?.length !== 8 || auditRenewalExpansionJson.required_renewal_expansion_evidence?.some(item => item.status !== 'REQUIRES_EXTERNAL_EVIDENCE')) failures.push('/audit/renewal-expansion-gate.json: renewal evidence gate drifted');
+if (auditRenewalExpansionJson.claim_boundary?.measured_value_is_renewal_evidence !== false || auditRenewalExpansionJson.claim_boundary?.delivery_is_renewal_evidence !== false || auditRenewalExpansionJson.claim_boundary?.synthetic_example_is_renewal_evidence !== false || auditRenewalExpansionJson.claim_boundary?.public_site_may_claim_retained_revenue_without_external_evidence !== false || auditRenewalExpansionJson.claim_boundary?.public_site_may_claim_nrr_without_external_evidence !== false || auditRenewalExpansionJson.claim_boundary?.renewal_claim !== 'NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE' || auditRenewalExpansionJson.claim_boundary?.expansion_claim !== 'NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE' || auditRenewalExpansionJson.claim_boundary?.roi_claim !== 'NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE') failures.push('/audit/renewal-expansion-gate.json: claim boundary drifted');
+if (auditRenewalExpansionJson.payment_boundary?.public_site_accepts_payment !== false || auditRenewalExpansionJson.payment_boundary?.receiving_rail_claim !== 'NOT_PUBLISHED' || auditRenewalExpansionJson.payment_boundary?.invoice_or_payment_request !== 'NOT_ISSUED_BY_THIS_TEMPLATE' || auditRenewalExpansionJson.payment_boundary?.payment_confirmation !== 'NOT_AVAILABLE_FROM_PUBLIC_SITE') failures.push('/audit/renewal-expansion-gate.json: payment boundary drifted');
+if (auditRenewalExpansionJson.effect_boundary?.network_write !== 0 || auditRenewalExpansionJson.effect_boundary?.storage_write !== 0 || auditRenewalExpansionJson.effect_boundary?.external_effect !== 0 || auditRenewalExpansionJson.effect_boundary?.renewal_commit !== 0 || auditRenewalExpansionJson.effect_boundary?.expansion_commit !== 0 || auditRenewalExpansionJson.effect_boundary?.commercial_claim_publish !== 0) failures.push('/audit/renewal-expansion-gate.json: effect boundary drifted');
+if (auditRenewalExpansionJson.offer_query_allowlist?.length !== expectedAuditOffers.length) failures.push('/audit/renewal-expansion-gate.json: offer allowlist length drifted');
+for (const [key,name,price] of expectedAuditOffers) { const offer=auditRenewalExpansionJson.offer_query_allowlist?.find(item=>item.key===key); if(!offer||offer.name!==name||offer.price_usd!==price) failures.push(`/audit/renewal-expansion-gate.json: offer allowlist drift ${key}`); }
+for (const key of expectedAuditOffers.map(item=>item[0])) {
+  if (!auditMeasuredValueGate.includes(`/audit/renewal-expansion-gate?offer=${key}`)) failures.push(`/audit/measured-value-gate: missing renewal/expansion link ${key}`);
+  if (!ruAuditMeasuredValueGate.includes(`/ru/audit/renewal-expansion-gate?offer=${key}`)) failures.push(`/ru/audit/measured-value-gate: missing renewal/expansion link ${key}`);
+}
+
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
@@ -333,4 +354,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS audit_delivery_boundary=PASS audit_measurement_boundary=PASS ru_start_current=PASS`);
+console.log(`COMMERCIAL_START_GATE=PASS start_paths=${startContracts.length} start_build_prep=${startBuildPrep.length} build_buyer_prep=${buildBuyerPrep.length} ru_build_buyer_prep=${ruBuildBuyerPrep.length} pricing_ctas=${pricingContracts.length} ru_pricing_ctas=${ruPricingContracts.length} audit_offer_intent=PASS consulting_specialists=${consultingSpecialistContracts.length} ru_consulting_specialists=${ruConsultingSpecialistContracts.length} boundary_phrases=${startBoundaryPhrases.length} build_generic=PASS hr_specialization=PASS build_value_example=PASS build_baseline_worksheet=PASS build_proposal_readiness=PASS build_paid_start_gate=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS audit_offer_allowlist=3 audit_payment_boundary=PASS audit_delivery_boundary=PASS audit_measurement_boundary=PASS audit_renewal_boundary=PASS ru_start_current=PASS`);

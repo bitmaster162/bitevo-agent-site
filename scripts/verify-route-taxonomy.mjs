@@ -89,6 +89,15 @@ for (const [route, parent, locale] of [
   const html = await readHtml(route);
   if (!html.includes('MEASURED VALUE READINESS') || !html.includes('NO ROI CLAIM') || !html.includes('NO MEASURED VALUE CLAIM')) failures.push(`${route}: measured-value boundary marker missing`);
 }
+for (const [route, parent, locale] of [
+  ['/audit/renewal-expansion-gate', '/audit/measured-value-gate', 'en'],
+  ['/ru/audit/renewal-expansion-gate', '/ru/audit/measured-value-gate', 'ru']
+]) {
+  const item = routeByPath.get(route);
+  if (!item || item.category !== 'TOOL' || item.indexable !== true || item.locale !== locale || item.parent !== parent) failures.push(`${route}: audit renewal-expansion taxonomy drift`);
+  const html = await readHtml(route);
+  if (!html.includes('RENEWAL / EXPANSION READINESS') || !html.includes('NO RETAINED REVENUE CLAIM') || !html.includes('NO NRR CLAIM')) failures.push(`${route}: renewal-expansion boundary marker missing`);
+}
 
 const pricing = await readHtml('/pricing');
 for (const marker of ['Scope / Authority Triage', 'Entry Audit', 'Agent Authority &amp; Evidence Audit']) {
@@ -107,4 +116,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);
+console.log(`ROUTE_TAXONOMY_GATE=PASS registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} legacy=${legacy.length} hierarchy=PASS specialist_parent=PASS audit_proposal_readiness=PASS audit_paid_start_gate=PASS audit_measured_value_gate=PASS audit_renewal_expansion_gate=PASS assurance_transition=PASS pricing_ladder=PASS failures=0`);

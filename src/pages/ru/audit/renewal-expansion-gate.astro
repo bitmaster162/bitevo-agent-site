@@ -1,0 +1,25 @@
+---
+import RuLayout from '../../../layouts/RuLayout.astro';
+import gate from '../../../data/audit-renewal-expansion-gate.json';
+
+const labels = [
+  'Принятый measured-value statement, привязанный к тому же workflow, offer, metric и evidence provenance',
+  'Явно определены renewal/expansion decision window и применимый service period',
+  'Named buyer/owner проверяет continued need, observed value и unresolved limitations',
+  'Зафиксированы material workflow, environment, scope и attribution changes после measurement',
+  'Любые proposed renewal/expansion scope, price и term заданы явно и не выводятся из template',
+  'Любое renewal/expansion decision подтверждено explicit buyer-authorized evidence',
+  'Retained revenue или NRR, если заявляются, подтверждены verified commercial/payment records, а не арифметикой',
+  'Named owner/reviewer принимает bounded renewal/expansion statement до публикации или reuse'
+];
+const offers = gate.offer_query_allowlist;
+---
+
+<RuLayout title="Audit Renewal / Expansion Readiness Gate | BitEvo" description="Evidence-safe gate между measured value и renewal/expansion claim. Public template не создаёт customer, retained-revenue, NRR, ROI, renewal или expansion evidence." enPath="/audit/renewal-expansion-gate" ruPath="/ru/audit/renewal-expansion-gate">
+  <section class="section"><div class="narrow"><div class="eyebrow">AUDIT · RENEWAL / EXPANSION READINESS · PUBLIC TEMPLATE ONLY</div><h1 class="display">Measured value ещё не является renewal.</h1><p class="lede">Bounded measured-value statement может поддержать дальнейшее коммерческое решение, но не доказывает, что buyer продлил работу, расширил scope, сохранил revenue или создал NRR. Для этого нужны explicit buyer-authorized и commercial evidence, привязанные к тому же offer и workflow.</p></div></section>
+  <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO RENEWAL CLAIM · NO EXPANSION CLAIM · NO RETAINED REVENUE CLAIM · NO NRR CLAIM · NO ROI CLAIM</strong><p>Public template не представляет customer state. Query <code>offer</code> — только routing context; он не доказывает measured value, buyer intent, renewal, expansion, retained revenue, NRR или ROI.</p></div></section>
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Fixed audit offer allowlist</div><h2 class="section-title">Renewal context остаётся привязан к одному из трёх published audit offers.</h2>{offers.map((offer,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {offer.key}</div><h3>{offer.name} · USD {offer.price_usd.toLocaleString('en-US')}</h3><p>{offer.scope}</p></article>)}</div></section>
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Renewal / expansion evidence gate</div><h2 class="section-title">До renewal или expansion statement нужны реальные доказательства восьми условий.</h2>{gate.required_renewal_expansion_evidence.map((item,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{labels[index]}</h3></article>)}</div></section>
+  <section class="section section-rule"><div class="container"><article class="panel"><div class="eyebrow">Current-state boundary</div><h2>Никакой renewal или expansion state здесь не представлен.</h2><p><strong>measured_value_observed=false · renewal_expansion_evidence=false · renewal_committed=false · expansion_committed=false · retained_revenue_evidence=false · nrr_evidence=false</strong>.</p></article><article class="panel"><div class="eyebrow">Claim ceiling</div><h2>Measured value не заменяет buyer renewal decision.</h2><p>Public template не даёт retained-revenue, NRR, ROI, customer-result, renewal или expansion claim. Любое последующее утверждение должно быть bounded к explicit buyer authority и verified commercial provenance.</p></article></div></section>
+  <section class="section section-rule"><div class="container hero-actions"><a class="button button-primary" href="/ru/audit/measured-value-gate">Вернуться к measured-value gate</a><a class="button button-ghost" href="/ru/proof">Открыть evidence ladder</a><a class="button button-ghost" href="/audit/renewal-expansion-gate.json">Открыть machine-readable gate</a></div></section>
+</RuLayout>

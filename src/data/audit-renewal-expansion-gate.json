@@ -1,0 +1,107 @@
+{
+  "schema": "bitevo.audit-renewal-expansion-gate/v1",
+  "id": "AUDIT-RENEWAL-EXPANSION-GATE-001",
+  "state": "PUBLIC_AUDIT_RENEWAL_EXPANSION_READINESS_TEMPLATE_NOT_CUSTOMER_STATE",
+  "customer_state": "NOT_REPRESENTED",
+  "claims": {
+    "payment_received": false,
+    "delivery_completed": false,
+    "measurement_window_closed": false,
+    "measured_value_observed": false,
+    "customer_case_evidence": false,
+    "renewal_expansion_evidence": false,
+    "renewal_committed": false,
+    "expansion_committed": false,
+    "retained_revenue_evidence": false,
+    "nrr_evidence": false,
+    "roi_claim_published": false,
+    "customer_result_claim_published": false
+  },
+  "offer_query_allowlist": [
+    {
+      "key": "entry-audit",
+      "name": "Entry Audit",
+      "price_usd": 1500,
+      "scope": "one consequential action chain and one primary evidence/control hypothesis"
+    },
+    {
+      "key": "security-control-validation",
+      "name": "Security Control Validation",
+      "price_usd": 1500,
+      "scope": "one consequential staging/test control boundary"
+    },
+    {
+      "key": "primary-agent-authority-audit",
+      "name": "Primary Agent Authority & Evidence Audit",
+      "price_usd": 4900,
+      "scope": "one staging/test workflow within the published Primary audit boundary"
+    }
+  ],
+  "required_renewal_expansion_evidence": [
+    {
+      "id": "accepted_measured_value",
+      "label": "Accepted measured-value statement bound to the same workflow, offer, metric and evidence provenance",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "decision_window",
+      "label": "Renewal or expansion decision window and applicable service period are explicitly defined",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "continued_need_review",
+      "label": "Named buyer or owner reviews continued need, observed value and unresolved limitations",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "change_and_confounder_review",
+      "label": "Material workflow, environment, scope and attribution changes since measurement are recorded",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "commercial_scope",
+      "label": "Any proposed renewal or expansion scope, price and term are explicit and not inferred from this template",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "buyer_decision_evidence",
+      "label": "Any renewal or expansion decision is supported by explicit buyer-authorized evidence",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "revenue_provenance",
+      "label": "Retained revenue or NRR evidence, if claimed, comes from verified commercial and payment records rather than arithmetic inference",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    },
+    {
+      "id": "claim_acceptance",
+      "label": "Named owner or reviewer accepts the bounded renewal or expansion statement before publication or reuse",
+      "status": "REQUIRES_EXTERNAL_EVIDENCE"
+    }
+  ],
+  "claim_boundary": {
+    "measured_value_is_renewal_evidence": false,
+    "delivery_is_renewal_evidence": false,
+    "synthetic_example_is_renewal_evidence": false,
+    "public_site_may_claim_retained_revenue_without_external_evidence": false,
+    "public_site_may_claim_nrr_without_external_evidence": false,
+    "renewal_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE",
+    "expansion_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE",
+    "roi_claim": "NOT_AVAILABLE_FROM_PUBLIC_TEMPLATE"
+  },
+  "payment_boundary": {
+    "public_site_accepts_payment": false,
+    "receiving_rail_claim": "NOT_PUBLISHED",
+    "invoice_or_payment_request": "NOT_ISSUED_BY_THIS_TEMPLATE",
+    "payment_confirmation": "NOT_AVAILABLE_FROM_PUBLIC_SITE",
+    "instructions": "TO_BE_AGREED_THROUGH_DIRECT_BUSINESS_CHANNEL"
+  },
+  "effect_boundary": {
+    "network_write": 0,
+    "storage_write": 0,
+    "external_effect": 0,
+    "renewal_commit": 0,
+    "expansion_commit": 0,
+    "commercial_claim_publish": 0
+  }
+}
