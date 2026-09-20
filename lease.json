@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "804321d1-9845-4678-ac2d-ab9ef7bf0e60",
   "nonce": "94226644-9fc1-4606-90a8-53013012c717",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0af901df263733ed03847c258d9a3d618358c4c1",
@@ -11,10 +11,10 @@
   "session": "site-p21-audit-renewal-expansion-gate-r1-20260920",
   "worktree": "c:/users/coins/downloads/bitevo_p21_audit_renewal_expansion_gate_20260920",
   "acquiredAt": "2026-09-20T13:38:37.162Z",
-  "updatedAt": "2026-09-20T13:38:37.162Z",
+  "updatedAt": "2026-09-20T14:12:20.520Z",
   "expiresAt": "2026-09-20T16:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "509ec5bb398cdb1e30e78b1ba7f3b1fb211fb914"
+  "sealedHead": "55dc000ca9c515b1a8c7509fa9d59098beb3f023",
+  "sealedTree": "bec46d85a1126fe2f1aa99f4a2b69fd6c505fe75",
+  "featureRef": "refs/heads/agent/site-p21-audit-renewal-expansion-gate-r1",
+  "predecessor": "682d860b1fad6b9066058a13653af3a4ff6e6c0e"
 }
