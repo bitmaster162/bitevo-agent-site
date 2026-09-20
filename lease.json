@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "0f4b94d7-70e9-462b-b153-78245b533295",
   "nonce": "504e5ee9-3be0-4d23-a51d-197a671736b5",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "76fde1e7190a59d38a79898904f691a9e2810dfa",
@@ -11,10 +11,10 @@
   "session": "site-p22-build-measured-value-gate-r1-20260920",
   "worktree": "c:/users/coins/downloads/bitevo_p22_build_measured_value_gate_20260920",
   "acquiredAt": "2026-09-20T14:41:15.892Z",
-  "updatedAt": "2026-09-20T14:41:15.892Z",
+  "updatedAt": "2026-09-20T15:31:14.588Z",
   "expiresAt": "2026-09-20T17:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "c0dbb667a4e89102aa9f27030fb00f85c8bf3ed6"
+  "sealedHead": "89023a5d9bf8e422f014bb657db467205796d795",
+  "sealedTree": "6408f3c284d804dd02e8dc93dfd70e8de34a01f7",
+  "featureRef": "refs/heads/agent/site-p22-build-measured-value-gate-r1",
+  "predecessor": "b8912b6d4dbcb29feaed9737f6f0a2273a9eb156"
 }
