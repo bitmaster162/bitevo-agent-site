@@ -171,6 +171,13 @@
       "parent": "/audit/proposal-readiness"
     },
     {
+      "path": "/audit/measured-value-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/audit/paid-start-gate"
+    },
+    {
       "path": "/mcp-governance-checklist",
       "category": "TOOL",
       "indexable": true,
@@ -428,6 +435,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/audit/proposal-readiness"
+    },
+    {
+      "path": "/ru/audit/measured-value-gate",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/audit/paid-start-gate"
     },
     {
       "path": "/ru/artifacts",
