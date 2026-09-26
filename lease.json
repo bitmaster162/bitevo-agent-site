@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "45aa8e36-a5de-438e-ba01-004847d9f699",
   "nonce": "79e3593a-a434-4093-b23a-0e22fcc1dde2",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "38ccb63290cac0784fe8dafd8c744a13ac88b01b",
@@ -11,10 +11,12 @@
   "session": "bitevo-p24-b7-guide-font-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p24_b7_20260926_01",
   "acquiredAt": "2026-09-26T05:26:27.018Z",
-  "updatedAt": "2026-09-26T05:39:00.253Z",
+  "updatedAt": "2026-09-26T05:50:26.627Z",
   "expiresAt": "2026-09-26T09:26:23.859Z",
   "sealedHead": "473ac3c99b40f129d7b0fdb6326ef30e48f4a140",
   "sealedTree": "64b10590c683b23d97592dcb007ae4516a668e63",
   "featureRef": "refs/heads/agent/p24-b7-guide-font-r1",
-  "predecessor": "b1e57aa63aa9f53ad8a4b7cdab64fc4782765835"
+  "predecessor": "bf487f94af74a1c6bf7b811da3862e4c68592397",
+  "releasedAt": "2026-09-26T05:50:26.628Z",
+  "releaseReason": "p24_b7_pr164_live_verified_complete"
 }
