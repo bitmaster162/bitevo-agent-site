@@ -215,17 +215,17 @@
     {
       "path": "/guides/security-sandboxing",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:fdc02ce93fe9af7ff8d722db86cade3b898969f4cfab6fe25620f938d6034f6d"
+      "fingerprint": "sha256:b49dd090869a09b0eda6bcc267671ef20e8390c6457412c65a7220854922790b"
     },
     {
       "path": "/guides/fleet-coordinator-drift-monitoring",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:9aa77705d7d2defa3a66ba14e786b430024b0b5250fb1848f8fba17596e0fc69"
+      "fingerprint": "sha256:cb88a1fc6fe73cca239a5063624dcaee930b433dfde3b72bc1c117dc2361c943"
     },
     {
       "path": "/guides/d3-tool-io-bridge-contract",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:2cfe9d532471b23bfe874c4e1952dfec547a27ffe4eecafa02acc05783bfc2ab"
+      "fingerprint": "sha256:0cfcaec588f82bb3ac88fa42e5e19ae4e0d23a8c74f914259dcc01216f22e744"
     },
     {
       "path": "/doctrine",
