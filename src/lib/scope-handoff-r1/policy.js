@@ -1,6 +1,10 @@
 export const SCOPE_HANDOFF_R1_RETENTION_POLICY_SCHEMA = 'bitevo.scope-handoff-retention-policy.v1';
-export const SCOPE_HANDOFF_R1_RETENTION_DAYS = 30;
-export const SCOPE_HANDOFF_R1_STORAGE_OWNER = 'Robert Dumanyan, Founder, BitEvo';
+export const SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS = 'ROBERT_DECISION_PENDING';
+export const SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS = 30;
+export const SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER = 'Robert Dumanyan, Founder, BitEvo';
+// Compatibility aliases preserve existing fail-closed comparisons; these values are proposals, not an owner-authored decision.
+export const SCOPE_HANDOFF_R1_RETENTION_DAYS = SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS;
+export const SCOPE_HANDOFF_R1_STORAGE_OWNER = SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER;
 export const SCOPE_HANDOFF_R1_STORAGE_OWNER_EMAIL = 'robert@bitevo.work';
 export const SCOPE_HANDOFF_R1_RETENTION_CRON_PATH = '/api/scope-handoff-retention';
 export const SCOPE_HANDOFF_R1_RETENTION_CRON_SCHEDULE = '0 3 * * *';

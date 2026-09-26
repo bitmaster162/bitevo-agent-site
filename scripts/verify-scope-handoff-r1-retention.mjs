@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
+  SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS,
+  SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS,
+  SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER,
   SCOPE_HANDOFF_R1_RETENTION_DAYS,
   SCOPE_HANDOFF_R1_RETENTION_CRON_PATH,
   SCOPE_HANDOFF_R1_RETENTION_CRON_SCHEDULE,
@@ -19,8 +22,11 @@ let checks = 0;
 const check = (value, message) => { assert.ok(value, message); checks += 1; };
 const equal = (actual, expected, message) => { assert.deepEqual(actual, expected, message); checks += 1; };
 
-equal(SCOPE_HANDOFF_R1_RETENTION_DAYS, 30, 'retention policy is exactly 30 days');
-equal(SCOPE_HANDOFF_R1_STORAGE_OWNER, 'Robert Dumanyan, Founder, BitEvo', 'accountable storage owner is exact');
+equal(SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS, 'ROBERT_DECISION_PENDING', 'retention/data-owner provenance is explicitly pending');
+equal(SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS, 30, 'source retention proposal is exactly 30 days');
+equal(SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER, 'Robert Dumanyan, Founder, BitEvo', 'source storage-owner proposal is exact');
+equal(SCOPE_HANDOFF_R1_RETENTION_DAYS, SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS, 'compatibility retention value equals the proposal');
+equal(SCOPE_HANDOFF_R1_STORAGE_OWNER, SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER, 'compatibility storage-owner value equals the proposal');
 equal(SCOPE_HANDOFF_R1_STORAGE_OWNER_EMAIL, 'robert@bitevo.work', 'privacy/deletion contact is exact');
 equal(SCOPE_HANDOFF_R1_RETENTION_CRON_PATH, '/api/scope-handoff-retention', 'cron path is exact');
 equal(SCOPE_HANDOFF_R1_RETENTION_CRON_SCHEDULE, '0 3 * * *', 'daily cron schedule is exact');
@@ -30,7 +36,7 @@ const exactEnv = {
   SCOPE_HANDOFF_R1_RETENTION_DAYS:String(SCOPE_HANDOFF_R1_RETENTION_DAYS),
   CRON_SECRET:'z'.repeat(48)
 };
-equal(evaluateScopeHandoffRetentionPolicyEnvironment(exactEnv).ready, true, 'exact owner/retention/secret make retention policy environment ready');
+equal(evaluateScopeHandoffRetentionPolicyEnvironment(exactEnv).ready, true, 'exact proposal owner/retention plus secret make the existing fail-closed environment check mechanically ready');
 equal(evaluateScopeHandoffRetentionPolicyEnvironment({ ...exactEnv, SCOPE_HANDOFF_R1_STORAGE_OWNER:'Other Owner' }).ready, false, 'wrong owner fails closed');
 equal(evaluateScopeHandoffRetentionPolicyEnvironment({ ...exactEnv, SCOPE_HANDOFF_R1_RETENTION_DAYS:'29' }).ready, false, 'wrong retention fails closed');
 equal(evaluateScopeHandoffRetentionPolicyEnvironment({ ...exactEnv, CRON_SECRET:'short' }).ready, false, 'short cron secret fails closed');
@@ -105,14 +111,16 @@ check(client.includes('up to 30 days') && client.includes('Robert Dumanyan, Foun
 check(client.includes('до 30 дней') && client.includes('Ответственный за данные: Robert Dumanyan'), 'RU handoff disclosure includes retention and owner');
 check(client.includes('data-scope-retention'), 'rendered handoff shell exposes dedicated retention disclosure');
 check(Array.isArray(vercel.crons) && vercel.crons.length === 1, 'exactly one bounded Vercel cron is configured');
-check(vercel.crons?.[0]?.path === SCOPE_HANDOFF_R1_RETENTION_CRON_PATH && vercel.crons?.[0]?.schedule === SCOPE_HANDOFF_R1_RETENTION_CRON_SCHEDULE, 'Vercel cron matches decided path/schedule');
+check(vercel.crons?.[0]?.path === SCOPE_HANDOFF_R1_RETENTION_CRON_PATH && vercel.crons?.[0]?.schedule === SCOPE_HANDOFF_R1_RETENTION_CRON_SCHEDULE, 'Vercel cron matches configured path/schedule');
 check(pkg.scripts?.['verify:core']?.includes('verify-scope-handoff-r1-retention.mjs'), 'retention safety gate is wired into verify:core');
 for (const marker of [
-  'RETENTION_DAYS = 30',
-  'STORAGE_OWNER = Robert Dumanyan, Founder, BitEvo',
+  'RETENTION_DAYS = OPERATOR_CONFIG_REQUIRED',
+  'STORAGE_OWNER = OPERATOR_CONFIG_REQUIRED',
   'PRIVACY_CONTACT = robert@bitevo.work',
+  'ROBERT_DECISION_PENDING',
+  'implementation proposals',
   'AUTO_PURGE_SOURCE = PRESENT',
   'PRODUCTION_ENABLE = NOT_AUTHORIZED'
-]) check(doc.includes(marker), `retention policy doc marker missing: ${marker}`);
+]) check(doc.includes(marker), `retention provenance doc marker missing: ${marker}`);
 
-console.log(`SCOPE_HANDOFF_R1_RETENTION_GATE=PASS checks=${checks} retention_days=${SCOPE_HANDOFF_R1_RETENTION_DAYS} owner=ROBERT_DUMANYAN daily_purge=SOURCE_PRESENT cron_auth=REQUIRED automatic_delete=EXPIRED_ONLY privacy_delete=IMMEDIATE_PATH_PRESENT runtime_activation=UNCHANGED`);
+console.log(`SCOPE_HANDOFF_R1_RETENTION_GATE=PASS checks=${checks} retention_proposal=${SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS} owner_proposal=ROBERT_DUMANYAN decision=${SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS} daily_purge=SOURCE_PRESENT cron_auth=REQUIRED automatic_delete=EXPIRED_ONLY privacy_delete=IMMEDIATE_PATH_PRESENT runtime_activation=UNCHANGED`);
