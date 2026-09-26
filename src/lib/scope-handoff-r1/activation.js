@@ -1,3 +1,8 @@
+import {
+  SCOPE_HANDOFF_R1_RETENTION_DAYS,
+  SCOPE_HANDOFF_R1_STORAGE_OWNER
+} from './policy.js';
+
 export const SCOPE_HANDOFF_R1_ACTIVATION_SCHEMA = 'bitevo.scope-handoff.activation.v1';
 export const SCOPE_HANDOFF_R1_ACTIVATION_MODE = 'isolated_staging_preview_r1';
 export const SCOPE_HANDOFF_R1_PRODUCTION_ACTIVATION_MODE = 'production_scope_review_r1';
@@ -62,8 +67,8 @@ function boundaryReason(checks, profile) {
 function productionReadinessReason(checks) {
   if (!checks.operatorReviewSwitch) return 'OPERATOR_REVIEW_SWITCH_OFF';
   if (!checks.operatorReviewToken) return 'OPERATOR_REVIEW_TOKEN_MISSING';
-  if (!checks.storageOwner) return 'STORAGE_OWNER_MISSING';
-  if (!checks.retentionConfigured) return 'RETENTION_NOT_CONFIGURED';
+  if (!checks.storageOwner) return 'STORAGE_OWNER_POLICY_MISMATCH';
+  if (!checks.retentionConfigured) return 'RETENTION_POLICY_MISMATCH';
   return 'READY';
 }
 
@@ -81,8 +86,8 @@ export function evaluateScopeHandoffActivation(env = {}) {
     uiSwitch: readExact(env, 'SCOPE_HANDOFF_R1_UI_ENABLED') === 'true',
     operatorReviewSwitch: readExact(env, 'SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED') === 'true',
     operatorReviewToken: readExact(env, 'SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN').length >= 32,
-    storageOwner: storageOwner.length >= 3,
-    retentionConfigured: retention.ok
+    storageOwner: storageOwner === SCOPE_HANDOFF_R1_STORAGE_OWNER,
+    retentionConfigured: retention.ok && retention.days === SCOPE_HANDOFF_R1_RETENTION_DAYS
   });
   const boundary = checks.vercel && checks.project && checks.environment && checks.target && checks.mode;
   const productionReady = profile.name !== 'production' ||

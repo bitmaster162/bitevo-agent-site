@@ -58,21 +58,25 @@ The operator endpoint is not linked from the public site. It requires an exact b
 
 ## Retention and deletion
 
-P24 deliberately does not choose a universal retention threshold.
+The production retention decision is now explicit:
 
-`RETENTION_DAYS = OPERATOR_CONFIG_REQUIRED`
+`RETENTION_DAYS = 30`
 
-`STORAGE_OWNER = OPERATOR_CONFIG_REQUIRED`
+`STORAGE_OWNER = Robert Dumanyan, Founder, BitEvo`
 
-A future production environment must provide `SCOPE_HANDOFF_R1_STORAGE_OWNER` as a named accountable owner and `SCOPE_HANDOFF_R1_RETENTION_DAYS` as an explicit positive integer before runtime or UI can enable. The accepted record and review queue carry the resulting retention horizon.
+`PRIVACY_CONTACT = robert@bitevo.work`
 
-For this production, Robert must explicitly decide both the retention period and the accountable data/storage owner before any activation. Until both decisions are recorded and the required production switches are separately authorized, Scope Handoff must remain disabled.
+The production environment must provide `SCOPE_HANDOFF_R1_STORAGE_OWNER` and `SCOPE_HANDOFF_R1_RETENTION_DAYS` with those exact policy values before runtime or UI can enable. A different owner or retention horizon fails closed before provider I/O. The accepted record and review queue carry the resulting 30-day retention horizon.
 
-The authenticated operator endpoint supports bounded deletion only for:
+The authenticated operator endpoint supports bounded deletion for:
 - `retention_expired`;
 - `privacy_request`.
 
-No automatic deletion scheduler is claimed in P24. No deletion occurs in this phase.
+A privacy deletion request does not wait for the retention horizon. Automatic expiry cleanup is implemented as a daily Vercel cron source at `/api/scope-handoff-retention`, scheduled for `0 3 * * *`, authenticated by `CRON_SECRET`, and bound to the exact production project plus the decided owner/retention policy.
+
+`AUTO_PURGE_SOURCE = PRESENT`
+
+This source addition does not enable Scope Handoff runtime or UI. Production activation remains separately gated.
 
 ## Manual fallback
 
@@ -100,4 +104,4 @@ Live verification on 2026-09-26 returned `503 SERVICE_DISABLED` from `/api/scope
 
 ## Terminal
 
-`P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / OPERATOR_QUEUE_BOUND / RETENTION_CONFIG_REQUIRED / ROBERT_DECISION_PENDING / PRODUCTION_ENABLE_NOT_AUTHORIZED`
+`P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / OPERATOR_QUEUE_BOUND / RETENTION_POLICY_30_DAYS / STORAGE_OWNER_ROBERT_DUMANYAN / AUTO_PURGE_SOURCE_PRESENT / PRODUCTION_ENABLE_NOT_AUTHORIZED`

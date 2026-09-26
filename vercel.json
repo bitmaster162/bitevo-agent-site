@@ -6,6 +6,12 @@
       "agent/site-p24-scope-handoff-production-readiness-r1": false
     }
   },
+  "crons": [
+    {
+      "path": "/api/scope-handoff-retention",
+      "schedule": "0 3 * * *"
+    }
+  ],
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [

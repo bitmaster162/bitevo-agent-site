@@ -122,6 +122,31 @@ export function createVercelBlobScopeHandoffReviewQueue() {
   };
 }
 
+export function createVercelBlobScopeHandoffRetentionStore() {
+  return {
+    async listPage(prefix, options = {}) {
+      const limit = Number.isSafeInteger(options.limit) && options.limit > 0 ? options.limit : 250;
+      const cursor = typeof options.cursor === 'string' && options.cursor.length ? options.cursor : undefined;
+      const result = await list({ prefix, limit, cursor });
+      const blobs = result.blobs || [];
+      const items = [];
+      for (const blob of blobs) {
+        const snapshot = await readJsonBlob(blob.pathname);
+        if (snapshot) items.push({ pathname:blob.pathname, value:snapshot.value });
+      }
+      return {
+        items,
+        cursor:typeof result.cursor === 'string' && result.cursor.length ? result.cursor : null,
+        providerIo:1 + blobs.length
+      };
+    },
+    async deleteMany(pathnames) {
+      await del(pathnames);
+      return { deleted:true, providerIo:1 };
+    }
+  };
+}
+
 export function createVercelBlobGlobalRateLimitStore() {
   return {
     read:readJsonBlob,

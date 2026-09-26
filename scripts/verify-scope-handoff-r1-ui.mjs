@@ -279,6 +279,8 @@ for (const locale of ['en','ru']) {
   check(markup.includes('role="status"') && markup.includes('aria-live="polite"') && markup.includes('aria-atomic="true"'), `${locale}: accessible status semantics`);
   check(markup.includes('data-scope-consent') && markup.includes('data-scope-submit disabled'), `${locale}: separate consent and disabled final action`);
   check(markup.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: manual fallback is preserved`);
+  check(markup.includes('data-scope-retention'), `${locale}: dedicated retention disclosure is rendered`);
+  check(markup.includes('30') && markup.includes('Robert Dumanyan') && markup.includes('robert@bitevo.work'), `${locale}: retention, accountable owner and deletion contact are disclosed`);
   check(markup.includes('data-scope-client-id'), `${locale}: reconciliation ID output exists`);
 }
 
