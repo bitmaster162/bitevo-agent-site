@@ -28,7 +28,8 @@ deploymentChecks += 1;
 if (deploymentEnabled?.['coordination/site-mutation-lease'] !== false) failures.push('vercel.json: coordination/site-mutation-lease must not trigger Vercel deployments');
 
 
-for (const key of ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','content-security-policy']) {
+const requiredSecurityHeaderKeys = ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy','content-security-policy'];
+for (const key of requiredSecurityHeaderKeys) {
   securityHeaderChecks += 1;
   if (!globalHeaderMap.has(key)) failures.push(`vercel.json: missing global ${key} header`);
 }
@@ -57,9 +58,16 @@ for (const domain of ['fonts.googleapis.com','fonts.gstatic.com']) { externalFon
 routingChecks += 1; if (vercelConfig.cleanUrls !== true) failures.push('vercel.json: cleanUrls must remain true');
 routingChecks += 1; if (vercelConfig.trailingSlash !== false) failures.push('vercel.json: trailingSlash must be false');
 const customRoutes = Array.isArray(vercelConfig.routes) ? vercelConfig.routes : [];
+const routeHeaderIndex = customRoutes.findIndex(route => route?.src === '/(.*)' && route?.continue === true && route?.headers && typeof route.headers === 'object');
+const routeHeaderMap = new Map(Object.entries(routeHeaderIndex >= 0 ? customRoutes[routeHeaderIndex].headers : {}).map(([key,value]) => [String(key).toLowerCase(), String(value)]));
+const intakeRedirectIndex = customRoutes.findIndex(route => route?.src === '/intake' && Number(route?.status) === 308 && route?.headers?.Location === '/audit-intake');
 const filesystemIndex = customRoutes.findIndex(route => route?.handle === 'filesystem');
 const ru404Index = customRoutes.findIndex(route => route?.src === '/ru(?:/.*)?' && Number(route?.status) === 404 && route?.dest === '/ru/404');
+routingChecks += 1; if (routeHeaderIndex !== 0) failures.push('vercel.json: security header route must be the first custom route');
+for (const key of requiredSecurityHeaderKeys) { routingChecks += 1; if (routeHeaderMap.get(key) !== globalHeaderMap.get(key)) failures.push('vercel.json: route-level ' + key + ' must exactly match global header policy'); }
+routingChecks += 1; if (intakeRedirectIndex < 0) failures.push('vercel.json: missing effective /intake 308 redirect route');
 routingChecks += 1; if (filesystemIndex < 0) failures.push('vercel.json: localized 404 routing requires filesystem phase');
+routingChecks += 1; if (!(routeHeaderIndex < intakeRedirectIndex && intakeRedirectIndex < filesystemIndex)) failures.push('vercel.json: security headers and /intake redirect must run before filesystem phase');
 routingChecks += 1; if (ru404Index < 0) failures.push('vercel.json: missing exact RU 404 fallback route');
 routingChecks += 1; if (filesystemIndex < 0 || ru404Index <= filesystemIndex) failures.push('vercel.json: RU 404 fallback must run after filesystem phase');
 routingChecks += 1; if (customRoutes.some(route => Number(route?.status) === 404 && route?.src !== '/ru(?:/.*)?')) failures.push('vercel.json: 404 fallback must remain scoped to /ru');
