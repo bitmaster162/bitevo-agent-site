@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "edd36e5c-a584-4f46-afcd-3f41b4e3311f",
   "nonce": "a3a3e593-44ce-4d35-a916-9cbaf6f49e33",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "92866a2f44fcbc18adc753f2206ae98f27c74095",
@@ -11,10 +11,10 @@
   "session": "bitevo-p24-currentness-activation-normalization-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p24_currentness_activation_20260926_01",
   "acquiredAt": "2026-09-26T09:11:34.019Z",
-  "updatedAt": "2026-09-26T09:11:34.019Z",
+  "updatedAt": "2026-09-26T10:09:13.731Z",
   "expiresAt": "2026-09-26T13:11:31.076Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "34017df871373f79593a13601957448665ab8726"
+  "sealedHead": "19f0f9b4dd65625c4b8ad611edb25a19b6b0899e",
+  "sealedTree": "35417e1982c14658daf1be38983152012a4c5a7a",
+  "featureRef": "refs/heads/agent/p24-currentness-activation-normalization-r1",
+  "predecessor": "df7664d6d84159efceab9dc4c808f901cadbb9d4"
 }
