@@ -23,6 +23,12 @@ let externalFontChecks = 0;
 let externalStylesheetChecks = 0;
 let externalScriptChecks = 0;
 let deploymentPolicyChecks = 0;
+let guideFontChecks = 0;
+const siteFontGuideRoutes = new Set([
+  'guides/security-sandboxing/index.html',
+  'guides/fleet-coordinator-drift-monitoring/index.html',
+  'guides/d3-tool-io-bridge-contract/index.html'
+]);
 
 for (const file of htmlFiles) {
   htmlScanned += 1;
@@ -45,6 +51,11 @@ for (const file of htmlFiles) {
     const src = match[1] || '';
     if (/^https?:\/\//i.test(src)) failures.push(`${route}: external script dependency ${src}`);
   }
+
+  if (siteFontGuideRoutes.has(route)) {
+    guideFontChecks += 1;
+    if (html.includes('Playfair Display')) failures.push(`${route}: stale Playfair Display declaration on canonical guide`);
+  }
 }
 
 if (failures.length) {
@@ -53,4 +64,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`PUBLIC_PERFORMANCE_GATE=PASS html_scanned=${htmlScanned} external_font_checks=${externalFontChecks} external_stylesheet_checks=${externalStylesheetChecks} external_script_checks=${externalScriptChecks} deployment_policy_checks=${deploymentPolicyChecks} failures=0`);
+console.log(`PUBLIC_PERFORMANCE_GATE=PASS html_scanned=${htmlScanned} external_font_checks=${externalFontChecks} external_stylesheet_checks=${externalStylesheetChecks} external_script_checks=${externalScriptChecks} deployment_policy_checks=${deploymentPolicyChecks} guide_font_checks=${guideFontChecks} failures=0`);

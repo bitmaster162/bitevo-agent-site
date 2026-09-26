@@ -22,10 +22,10 @@
     "1tSuvpcKYWJ2PSTjItAbg3gSuk3ZEVtbBSkftlHoAz4="
   ],
   "styles": [
-    "2MwnM+WUiwZPe2UwQnCXpwd3kGiohBexkffQv7/3TbE=",
+    "46zxDvCllLCTT+Y3W0EaA0MAdACBivtzhybtP5VF50o=",
     "2Oc0LKe26TlpoxLbBg9PNuYz+1rIDyYWhhwY06JiJXM=",
     "2sPQJ/n9cnnvjD95r4kh80oEKP7IvrtrU58xbnYS4Wk=",
-    "3ggRL6WhkWyDWyiWDD/1G+xm3Fu/dkgLcg+Pd1u2xPM=",
+    "DqZpIEnoTVzuaSzuCGzdfOzryksFYi0Pp15rWk29RJM=",
     "4prdFlEbXvLbAJ+H8KmXHhm0pOcQMsKvwhKAQXAHakE=",
     "6I2dELFdBtdcVmxqbsSpJ9RmFO+iOKKrBxiiPnRrFow=",
     "7zkttbV9RAGChm6cMMhoiwaohgUYda/xPjRWkBoJfoU=",
@@ -44,7 +44,7 @@
     "Sbua3T/E96DoGwnuC4K9LD40wS4pGQsCk4thF68+5vI=",
     "T+0EppES2NgpqcIS5av29iR82mum4BUBpU0VLilViIM=",
     "V8DCXGVe7H2zgkBqRZR/mRORc4c4YcYOE2aDoBkMGjo=",
-    "V8SqOYlyLc9YD2T16zCy2keso31MDeoc+Y9AnfEqlK0=",
+    "wLiliA2Pg7MYZxkFsCmQiOdnEcEMMOFePSig5vDJOI8=",
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
     "bAUeS3KAjEqRLmU30FWi3pSeyy2wg5Jo62AostgBdSk=",
     "6vQ+1EdChjlSs2bVZvfze6zmHbUj3ZEAM6KBG/MYoyY=",
@@ -119,6 +119,25 @@
       ],
       "routes": [
         "/ru"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_P24_B7_PRECOMMIT",
+      "note": "P24 B7 replaces stale Playfair Display declarations on the three canonical reviewed guide pages with the site's existing var(--sans) stack. Replace only the three exact Astro-emitted inline style hashes; no new script, external font dependency, style attribute or CSP relaxation is introduced.",
+      "styles": [
+        "46zxDvCllLCTT+Y3W0EaA0MAdACBivtzhybtP5VF50o=",
+        "DqZpIEnoTVzuaSzuCGzdfOzryksFYi0Pp15rWk29RJM=",
+        "wLiliA2Pg7MYZxkFsCmQiOdnEcEMMOFePSig5vDJOI8="
+      ],
+      "historicalEmittedStyles": [
+        "2MwnM+WUiwZPe2UwQnCXpwd3kGiohBexkffQv7/3TbE=",
+        "3ggRL6WhkWyDWyiWDD/1G+xm3Fu/dkgLcg+Pd1u2xPM=",
+        "V8SqOYlyLc9YD2T16zCy2keso31MDeoc+Y9AnfEqlK0="
+      ],
+      "routes": [
+        "/guides/security-sandboxing",
+        "/guides/fleet-coordinator-drift-monitoring",
+        "/guides/d3-tool-io-bridge-contract"
       ]
     }
   ]
