@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "1c06375f-969b-4aac-88dc-f9b48031ca1b",
   "nonce": "c4340a2f-4e6d-488c-bb4c-5ba8cd8ee5d3",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "8244dc9f27deb8e6e5f92758de7007b93369e132",
@@ -11,10 +11,12 @@
   "session": "bitevo-p24-scope-handoff-retention-safety-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p24_scope_retention_20260926_01",
   "acquiredAt": "2026-09-26T06:25:59.620Z",
-  "updatedAt": "2026-09-26T06:47:55.051Z",
+  "updatedAt": "2026-09-26T07:09:52.850Z",
   "expiresAt": "2026-09-26T10:25:56.355Z",
   "sealedHead": "2f0cb720fcd5821fecbc3bef7eaef3c6ee738941",
   "sealedTree": "791fa1e8e429c99096a0dac5165ad71a29839fd9",
   "featureRef": "refs/heads/agent/p24-scope-handoff-retention-safety-r1",
-  "predecessor": "2fa6bf4bee99bc971c870736692be1f7e97e270c"
+  "predecessor": "bba25b61fdaf6d5013bab58e5f3c27bd67a3f3c3",
+  "releasedAt": "2026-09-26T07:09:53.185Z",
+  "releaseReason": "p24_scope_handoff_retention_safety_pr166_live_verified_complete"
 }
