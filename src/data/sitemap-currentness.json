@@ -315,22 +315,22 @@
     {
       "path": "/ru/audit/proposal-readiness",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:7dcd1b8550147da4ca353f0395f2b1c26e65f1807dc83b2e35f575416a86cd44"
+      "fingerprint": "sha256:dff95f822aa9d45e533ff8b9fce79cf08850d499ad0cc3d8f5578c6e5b471af6"
     },
     {
       "path": "/ru/audit/paid-start-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:48f48f65dcf59c207de4bc3a9fd7c4686a25c8f7251a6d2f7f3ba0044273b6bb"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:0f17c5bf9517d0cfbb700cb4eefa1ef4a83726f6e5a38b05d02a7a740620f8f0"
     },
     {
       "path": "/ru/audit/measured-value-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:2403ca9ea2f309dc98c0223be2c8742bfed058a2e1e83287b87016b6c07208b4"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:acc41c55976e5cfbb3b25e8e526b3e89101776e6ddae507ea0bbeef90d4a6950"
     },
     {
       "path": "/ru/audit/renewal-expansion-gate",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:f53cd7d7a0a9bd6a42f3df7045e9563c2fe984b19d84bd696e87f982d2e96cb8"
+      "fingerprint": "sha256:4591e04b8f3c7b68bc89a8a4ce38c9e543ece32fd85be80257ddae1078153cff"
     },
     {
       "path": "/ru/artifacts",
@@ -429,13 +429,13 @@
     },
     {
       "path": "/ru/build/measured-value-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:837f02217562ccf579e6f5212b67900025a1e2557d4405c8990436ed409112ff"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:3d13f640d7fa3445de1838d9417790d1d2b75de611995fd52c4eaceb4ebbe550"
     },
     {
       "path": "/ru/build/renewal-expansion-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:c6ae7974e9707cd8f9a0ea2cd5d73239ad81d9d248e7705dd6d33688a9607ec9"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:298433dd4bce4179ce50a58a612f5c22be66d3bcc38172aff2d80d84245618f5"
     },
     {
       "path": "/ru/mcp-governance",

@@ -14,7 +14,7 @@ const ruPaid = await read('/ru/audit/paid-start-gate');
 const data = JSON.parse(await readFile(`${dist}/audit/measured-value-gate.json`,'utf8'));
 
 for (const phrase of ['Delivery is not measured value.','NO CUSTOMER RESULT · NO ROI CLAIM · NO MEASURED VALUE CLAIM · NO RENEWAL EVIDENCE','No delivery or measurement state is represented.','cannot substitute for measured value']) if (!strip(en).includes(phrase)) failures.push(`EN missing: ${phrase}`);
-for (const phrase of ['Delivery ещё не является measured value.','NO CUSTOMER RESULT · NO ROI CLAIM · NO MEASURED VALUE CLAIM · NO RENEWAL EVIDENCE','Никакой delivery или measurement state здесь не представлен.','не заменяют measured value']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
+for (const phrase of ['Выполнение ещё не означает измеренную ценность.','NO CUSTOMER RESULT · NO ROI CLAIM · NO MEASURED VALUE CLAIM · NO RENEWAL EVIDENCE','Никакой delivery или measurement state здесь не представлен.','не заменяют measured value']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
 if (data.schema !== 'bitevo.audit-measured-value-gate/v1' || data.state !== 'PUBLIC_AUDIT_MEASURED_VALUE_READINESS_TEMPLATE_NOT_CUSTOMER_STATE' || data.customer_state !== 'NOT_REPRESENTED') failures.push('schema/state/customer-state drift');
 for (const [key,value] of Object.entries(data.claims||{})) if (value !== false) failures.push(`claim ${key} must remain false`);
 if (Object.keys(data.claims||{}).length !== 10) failures.push('claim count drift');
