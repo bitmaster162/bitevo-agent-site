@@ -60,6 +60,17 @@ if (!aiAudit.includes('href="/start"')) failures.push('/ai-audit missing current
 
 const intakeRedirect = (vercel.redirects || []).find(item => item.source === '/intake');
 if (!intakeRedirect || intakeRedirect.destination !== '/audit-intake' || intakeRedirect.permanent !== true) failures.push('vercel missing permanent /intake -> /audit-intake redirect');
+for (const [source, destination, locale] of [
+  ['/guides/ai-agent-reliability-audit', '/agent-authority-audit', 'en'],
+  ['/ru/guides/ai-agent-reliability-audit', '/ru/agent-authority-audit', 'ru']
+]) {
+  const route = registry.routes.find(item => item.path === source);
+  if (!route || route.category !== 'LEGACY' || route.indexable !== false || route.locale !== locale || route.parent !== destination || route.state !== 'redirect') failures.push(`${source}: retired reliability route taxonomy drift`);
+  const registryRedirect = (registry.redirects || []).find(item => item.source === source);
+  if (!registryRedirect || registryRedirect.destination !== destination || registryRedirect.permanent !== true) failures.push(`${source}: registry missing permanent canonical redirect`);
+  const vercelRedirect = (vercel.redirects || []).find(item => item.source === source);
+  if (!vercelRedirect || vercelRedirect.destination !== destination || vercelRedirect.permanent !== true) failures.push(`${source}: vercel missing permanent canonical redirect`);
+}
 
 const routeByPath = new Map(registry.routes.map(route => [route.path, route]));
 for (const [route, parent, locale] of [

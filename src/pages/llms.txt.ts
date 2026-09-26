@@ -150,7 +150,6 @@ export function GET() {
     '- /universe',
     '',
     '## Reviewed public research notes',
-    '- /guides/ai-agent-reliability-audit',
     '- /guides/security-sandboxing',
     '- /guides/fleet-coordinator-drift-monitoring',
     '- /guides/d3-tool-io-bridge-contract',

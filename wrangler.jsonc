@@ -11,7 +11,7 @@
     "not_found_handling": "404-page",
     "run_worker_first": [
       "/guides/*",
-      "!/guides/ai-agent-reliability-audit",
+      "/ru/guides/ai-agent-reliability-audit",
       "!/guides/security-sandboxing",
       "!/guides/fleet-coordinator-drift-monitoring",
       "!/guides/d3-tool-io-bridge-contract"

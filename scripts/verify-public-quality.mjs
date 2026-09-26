@@ -186,9 +186,7 @@ const indexabilityByRoute = new Map();
 const failures = [];
 let indexableCount = 0;
 let metadataChecks = 0;
-const canonicalOverrides = new Map([
-  ['/guides/ai-agent-reliability-audit', '/agent-authority-audit']
-]);
+const canonicalOverrides = new Map();
 
 let accessibilityChecks = 0;
 let alternateChecks = 0;

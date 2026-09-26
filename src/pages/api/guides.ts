@@ -8,7 +8,6 @@ export function GET() {
     primary_audit: '/agent-authority-audit',
     audit_intake: '/audit-intake',
     reviewed_guides: [
-      '/guides/ai-agent-reliability-audit',
       '/guides/security-sandboxing',
       '/guides/fleet-coordinator-drift-monitoring',
       '/guides/d3-tool-io-bridge-contract'

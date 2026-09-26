@@ -21,6 +21,8 @@
       },
       "continue": true
     },
+    { "src": "/guides/ai-agent-reliability-audit", "status": 301, "headers": { "Location": "/agent-authority-audit" } },
+    { "src": "/ru/guides/ai-agent-reliability-audit", "status": 301, "headers": { "Location": "/ru/agent-authority-audit" } },
     { "src": "/intake", "status": 308, "headers": { "Location": "/audit-intake" } },
     { "handle": "filesystem" },
     { "src": "/ru(?:/.*)?", "status": 404, "dest": "/ru/404" }
@@ -32,7 +34,17 @@
       "permanent": true
     },
     {
-      "source": "/guides/:slug((?!ai-agent-reliability-audit|security-sandboxing|fleet-coordinator-drift-monitoring|d3-tool-io-bridge-contract).*)",
+      "source": "/guides/ai-agent-reliability-audit",
+      "destination": "/agent-authority-audit",
+      "permanent": true
+    },
+    {
+      "source": "/ru/guides/ai-agent-reliability-audit",
+      "destination": "/ru/agent-authority-audit",
+      "permanent": true
+    },
+    {
+      "source": "/guides/:slug((?!security-sandboxing|fleet-coordinator-drift-monitoring|d3-tool-io-bridge-contract).*)",
       "destination": "/guides",
       "permanent": false
     }

@@ -209,13 +209,8 @@
     },
     {
       "path": "/guides",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:e8b8954e10a78ac9eb8443f9fb6d408fcf0484daf12f7726ec48d4d206dba70e"
-    },
-    {
-      "path": "/guides/ai-agent-reliability-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:dc0c0e1133373c7d291c7a1b8ed5ce8245dd13727990ebb0058066abc718b969"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:eb8efc0a763e0b6f3b118c11e25328d1f83c4b463266489d9180d9462cef62e8"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -359,8 +354,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:547f2cc91981018e4a4f32f0fc419be11a20bb7ccbc44e485b5db8bfa3c59a54"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:c1676865147cc09691e0d18ec444528363577f6902e012edb45a189bee9f1cc6"
     },
     {
       "path": "/ru/doctrine",
@@ -506,11 +501,6 @@
       "path": "/ru/ai-skill-lab-sample",
       "lastmod": "2026-09-19",
       "fingerprint": "sha256:f02fbe85b7d38950593b70865766ea9a95a6ca214345a002a7f3a9feb35b2028"
-    },
-    {
-      "path": "/ru/guides/ai-agent-reliability-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:8d23a1be1f5ce39e5c25661c4487ab9da6f331e0f71df6acbdcd98e8e7708139"
     },
     {
       "path": "/ru/guides/security-sandboxing",
