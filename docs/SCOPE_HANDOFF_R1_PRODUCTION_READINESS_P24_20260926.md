@@ -1,10 +1,10 @@
 # Scope Handoff R1 — Production Readiness P24
 
-Status: `P24_SOURCE_CANDIDATE / DEFAULT_OFF / NO_PRODUCTION_EFFECT`
+Status: `P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / NO_RUNTIME_EFFECT`
 
 Base source: `57ffe15e43e578aec611af8486b6bf328dad221b`
 
-This phase prepares the existing bounded Scope Handoff R1 for a future production activation without activating it. It does not authorize Vercel environment changes, Blob writes, live browser POSTs, deployment, promotion, or customer-facing transmission.
+This phase prepared the existing bounded Scope Handoff R1 for a future production activation without activating it. The source was later pushed, reviewed in PR #158, merged normally, and deployed automatically with the site. That source deployment did not authorize Vercel environment changes, Blob writes, live browser POSTs, feature activation, promotion, or customer-facing transmission.
 
 ## Gap closed
 
@@ -66,6 +66,8 @@ P24 deliberately does not choose a universal retention threshold.
 
 A future production environment must provide `SCOPE_HANDOFF_R1_STORAGE_OWNER` as a named accountable owner and `SCOPE_HANDOFF_R1_RETENTION_DAYS` as an explicit positive integer before runtime or UI can enable. The accepted record and review queue carry the resulting retention horizon.
 
+For this production, Robert must explicitly decide both the retention period and the accountable data/storage owner before any activation. Until both decisions are recorded and the required production switches are separately authorized, Scope Handoff must remain disabled.
+
 The authenticated operator endpoint supports bounded deletion only for:
 - `retention_expired`;
 - `privacy_request`.
@@ -76,20 +78,26 @@ No automatic deletion scheduler is claimed in P24. No deletion occurs in this ph
 
 Copy, download, and `mailto:robert@bitevo.work` remain available. Generating the local brief never posts automatically. An enabled online handoff still requires a separate consent and an explicit final submit action.
 
-## P24 non-effects
+## P24 factual effects and non-effects
 
-- Production source deployment: 0
-- Production environment mutation: 0
-- Production activation: 0
-- Vercel Blob write/read/delete caused by P24 validation: 0
-- Live browser POST: 0
-- Customer email or notification: 0
-- Feature push: 0
-- Pull request: 0
-- Merge: 0
-- Manual deploy: 0
-- Branch deletion: 0
+Source delivery history:
+- Feature branch push: occurred once for the P24 production-readiness candidate at head `781a6f8b7aaa71f1ddf19f2059547b533e037166`.
+- Pull request: PR #158.
+- Normal merge: `4300657ee025e2cf65912302606c1daf548982a4`.
+- Production source deployment: occurred automatically after the merge; Vercel production reached READY on the exact merge SHA.
+- Manual deploy: 0.
+- Branch deletion: 0.
+
+Runtime / data effects remain absent:
+- Production environment mutation: 0.
+- Production activation: 0.
+- Vercel Blob write/read/delete caused by P24 validation: 0.
+- Live browser POST caused by P24 validation: 0.
+- Customer email or notification: 0.
+- Production provider I/O from the disabled handoff path: 0.
+
+Live verification on 2026-09-26 returned `503 SERVICE_DISABLED` from `/api/scope-handoff` with `provider_io=0` and `testing_authorization=false`. Source presence in production is therefore not evidence of feature activation.
 
 ## Terminal
 
-`P24_SOURCE_CANDIDATE / DEFAULT_OFF / OPERATOR_QUEUE_BOUND / RETENTION_CONFIG_REQUIRED / PRODUCTION_ENABLE_NOT_AUTHORIZED`
+`P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / OPERATOR_QUEUE_BOUND / RETENTION_CONFIG_REQUIRED / ROBERT_DECISION_PENDING / PRODUCTION_ENABLE_NOT_AUTHORIZED`

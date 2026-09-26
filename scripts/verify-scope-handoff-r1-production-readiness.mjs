@@ -167,12 +167,23 @@ for (const [locale, html] of [['EN',enDist],['RU',ruDist]]) {
   check(html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: manual fallback preserved`);
 }
 for (const marker of [
-  'P24_SOURCE_CANDIDATE / DEFAULT_OFF / NO_PRODUCTION_EFFECT',
+  'P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / NO_RUNTIME_EFFECT',
   'production_scope_review_r1',
   'RETENTION_DAYS = OPERATOR_CONFIG_REQUIRED',
   'STORAGE_OWNER = OPERATOR_CONFIG_REQUIRED',
   'HUMAN_REVIEW = NOT_CONFIRMED',
-  'PRODUCTION_ENABLE = NOT_AUTHORIZED'
+  'PRODUCTION_ENABLE = NOT_AUTHORIZED',
+  'PR #158',
+  '4300657ee025e2cf65912302606c1daf548982a4',
+  'ROBERT_DECISION_PENDING',
+  '503 SERVICE_DISABLED',
+  'provider_io=0',
+  'testing_authorization=false'
 ]) check(doc.includes(marker), `P24 doc marker missing: ${marker}`);
+for (const stale of [
+  'Production source deployment: 0',
+  'Pull request: 0',
+  'Merge: 0'
+]) check(!doc.includes(stale), `P24 doc stale pre-merge claim remains: ${stale}`);
 
 console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY default_off=PASS operator_queue=BOUND retention=EXPLICIT_CONFIG_REQUIRED human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
