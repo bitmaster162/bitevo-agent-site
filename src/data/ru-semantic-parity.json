@@ -8,7 +8,7 @@
       "eyebrow": "КОММЕРЧЕСКИЙ ВХОД",
       "title": "Выберите самый маленький объём доказательств, который способен изменить решение.",
       "metaTitle": "Начать работу с BitEvo: triage и пять путей",
-      "description": "Вход BitEvo: free triage, Entry Audit $1,500, Security Control Validation $1,500, MCP / Tool Governance, BUILD Diagnostic $3,000, Primary Audit $4,900. Без автоотправки и testing authorization.",
+      "description": "Вход BitEvo: free triage, Entry Audit $1,500, Security Control Validation $1,500, BUILD Diagnostic $3,000 и Primary Audit $4,900.",
       "points": [
         "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
         "$1,500 Entry Audit: проверить одну критическую action chain и одну основную failure hypothesis.",
@@ -203,7 +203,7 @@
       "eyebrow": "AGENT IDENTITY WORKSHEET",
       "title": "Свяжите действующего агента с точной identity, role и target boundary.",
       "metaTitle": "Worksheet: identity агента — BitEvo",
-      "description": "Русская worksheet-поверхность для identity/object binding перед consequential tool use или external effect.",
+      "description": "Русская worksheet-поверхность для identity/object binding перед consequential tool use или external effect; worksheet не выдаёт authority.",
       "points": [
         "Identity должна быть достаточной, чтобы отличить конкретного actor/workflow от соседних сервисов и сессий.",
         "Role или tool credential сами по себе не доказывают permission на конкретный target object.",
@@ -219,7 +219,7 @@
       "eyebrow": "TRUST / EVIDENCE TEMPLATE",
       "title": "Фиксируйте claim, источник, freshness и ограничение до того, как назвать это evidence.",
       "metaTitle": "Шаблон trust evidence — BitEvo",
-      "description": "Русская template-поверхность для evidence provenance, freshness, object binding, limitations и decision use.",
+      "description": "Русская template-поверхность для evidence provenance, freshness, object binding и limitations; заполнение не повышает authority автоматически.",
       "points": [
         "Claim отделяется от verified fact, inference, assumption и unknown.",
         "Evidence должно сохранять source, freshness и scope, а не только удобный summary.",
@@ -235,7 +235,7 @@
       "eyebrow": "SYNTHETIC SAMPLE · CRM WRITE",
       "title": "Синтетический CRM-write пример показывает метод, а не клиентский результат.",
       "metaTitle": "SAMPLE-001: синтетический CRM-write — BitEvo",
-      "description": "RU parity для SAMPLE-001: synthetic CRM-write finding про False Green и external-effect confirmation gap.",
+      "description": "RU parity для SAMPLE-001: synthetic CRM-write finding про False Green и external-effect confirmation gap; не customer proof и не executed audit.",
       "points": [
         "Объект примера — CRM write и подтверждение фактического external state.",
         "Worked owner decision — CONSTRAIN в рамках synthetic example.",
@@ -251,7 +251,7 @@
       "eyebrow": "SYNTHETIC SAMPLE · OUTBOUND MESSAGE",
       "title": "Синтетический outbound пример отделяет recipient binding от внутреннего send-status.",
       "metaTitle": "SAMPLE-002: синтетический outbound — BitEvo",
-      "description": "RU parity для SAMPLE-002: synthetic outbound-message finding про recipient + approval binding gap.",
+      "description": "RU parity для SAMPLE-002: synthetic outbound-message finding про recipient и approval binding gap; sample не доказывает реальную доставку.",
       "points": [
         "Объект примера — внешний message effect и его точный recipient binding.",
         "Worked owner decision — CONSTRAIN в рамках synthetic example.",
@@ -267,7 +267,7 @@
       "eyebrow": "SYNTHETIC SAMPLE · STAGING DEPLOYMENT",
       "title": "Синтетический deployment пример связывает environment, baseline и external readback.",
       "metaTitle": "SAMPLE-003: синтетический deployment — BitEvo",
-      "description": "RU parity для SAMPLE-003: synthetic staging deployment/config finding про environment + baseline/version binding gap.",
+      "description": "RU parity для SAMPLE-003: synthetic staging deployment/config finding про environment и baseline/version binding; не production runtime proof.",
       "points": [
         "Объект примера — staging deployment/config effect, а не production release.",
         "Worked owner decision — REPAIR в рамках synthetic example.",
@@ -347,7 +347,7 @@
       "eyebrow": "REVIEWED OPERATIONS NOTE",
       "title": "Drift monitoring полезен только когда baseline, freshness и объект сравнения определены явно.",
       "metaTitle": "Drift monitoring для fleet coordinator — BitEvo",
-      "description": "Русская semantic parity для reviewed architecture note по fleet coordinator drift monitoring; это не live telemetry.",
+      "description": "Русская semantic parity для reviewed fleet drift note: baseline, freshness и provenance обязательны; это не live telemetry или runtime proof.",
       "points": [
         "Drift требует явного baseline и идентичности сравниваемого объекта.",
         "Freshness и provenance должны быть частью наблюдения, иначе green status может быть ложным.",
@@ -363,7 +363,7 @@
       "eyebrow": "REVIEWED INTERFACE CONTRACT",
       "title": "Tool-I/O contract должен сохранять object binding и effect semantics через границу инструмента.",
       "metaTitle": "Контракт Tool-I/O Bridge (D3) — BitEvo",
-      "description": "Русская semantic parity для reviewed D3 Tool-I/O Bridge Contract без private endpoints и без runtime-health claims.",
+      "description": "Русская semantic parity для reviewed D3 Tool-I/O Bridge Contract: object/effect binding без private operator endpoints и runtime-health claims.",
       "points": [
         "Input/output schema не должен терять identity, target и decision context consequential action.",
         "Tool success не заменяет external confirmation того же объекта и эффекта.",
@@ -411,7 +411,7 @@
       "eyebrow": "COMMERCE ACTION VALIDATION",
       "title": "Commerce workflow должен доказать право изменить заказ, возврат или customer record до эффекта.",
       "metaTitle": "Валидация действий в commerce — BitEvo",
-      "description": "Русская context-поверхность для commerce consequential actions и их authority/evidence/effect/recovery boundaries.",
+      "description": "Русская context-поверхность для commerce consequential actions: object binding, authority, evidence, external effect и bounded recovery.",
       "points": [
         "Target object и customer/order identity должны быть связаны с конкретным action.",
         "Approval, policy и freshness evidence проверяются до write/refund/return effect.",
