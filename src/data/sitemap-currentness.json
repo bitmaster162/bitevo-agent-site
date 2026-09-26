@@ -1,6 +1,6 @@
 {
   "schema": "bitevo.sitemap-currentness/v1",
-  "normalization": "provider-envelope-v1",
+  "normalization": "provider-envelope-v2",
   "routes": [
     {
       "path": "/",
@@ -120,7 +120,7 @@
     {
       "path": "/audit-intake",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:21b79ff7b5cf75f2f02a6255865a01c74e9b9e04284c521c9bf114a3fbcb307a"
+      "fingerprint": "sha256:1a5ef1b0f5336c8d5b6640343a3109e87c5e2a7d28f4e9e2d7c56a2e29a9076b"
     },
     {
       "path": "/audit/proposal-readiness",
@@ -310,7 +310,7 @@
     {
       "path": "/ru/audit-intake",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:dd16396d2e36785f213407df175a05f8e5cd20546640299309289a41d092368a"
+      "fingerprint": "sha256:20961b14f83e2f74888eb70dfb6c9d59faccb7a02d6e91eb735ce2fdc26b1e51"
     },
     {
       "path": "/ru/audit/proposal-readiness",
