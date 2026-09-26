@@ -35,7 +35,7 @@ function attrTag(html, attrName, attrValue) {
 }
 
 function attr(tag, name) {
-  return tag?.match(new RegExp(`\\b${name}=["']([^"']+)["']`, 'i'))?.[1] || null;
+  return tag?.match(new RegExp(`\\b${name}=(["'])(.*?)\\1`, 'i'))?.[2] || null;
 }
 
 function stripTags(text) {
@@ -211,10 +211,11 @@ for (const file of htmlFiles) {
 
   if (indexable) {
     indexableCount += 1;
+    const description = attr(attrTag(html, 'name', 'description'), 'content') || '';
     const checks = [
       ['html lang', /<html\b[^>]*\blang=["'][^"']+["']/i.test(html)],
       ['title', /<title>[^<]+<\/title>/i.test(html)],
-      ['description', Boolean(attr(attrTag(html, 'name', 'description'), 'content'))],
+      ['description', Boolean(description)],
       ['canonical', Boolean(attr(attrTag(html, 'rel', 'canonical'), 'href'))],
       ['og:title', Boolean(attr(attrTag(html, 'property', 'og:title'), 'content'))],
       ['og:description', Boolean(attr(attrTag(html, 'property', 'og:description'), 'content'))],
@@ -225,8 +226,9 @@ for (const file of htmlFiles) {
       ['Organization JSON-LD', html.includes('"@type":"Organization"')],
       ['WebSite JSON-LD', html.includes('"@type":"WebSite"')]
     ];
-    metadataChecks += checks.length;
+    metadataChecks += checks.length + 1;
     for (const [label, ok] of checks) if (!ok) failures.push(`${route}: missing ${label}`);
+    if (description.length < 120 || description.length > 155) failures.push(`${route}: description length ${description.length} outside 120-155`);
 
     const canonical = attr(attrTag(html, 'rel', 'canonical'), 'href');
     const ogUrl = attr(attrTag(html, 'property', 'og:url'), 'content');

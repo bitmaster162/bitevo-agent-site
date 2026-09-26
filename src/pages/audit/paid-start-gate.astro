@@ -6,7 +6,7 @@ const items = gate.required_external_evidence;
 const offers = gate.offer_query_allowlist;
 ---
 
-<Layout title="Audit Paid Start Gate | BitEvo" description="External-evidence gate between an accepted audit proposal and delivery. No payment processing, invoice, checkout, delivery start or testing authorization is created here.">
+<Layout title="Audit Paid Start Gate | BitEvo" description="External-evidence gate between an accepted audit proposal and delivery. No payment processing, delivery start or testing authorization is created.">
   <section class="section"><div class="narrow"><div class="eyebrow">AUDIT · PAID START GATE · PUBLIC TEMPLATE ONLY</div><h1 class="display">A proposal is not a paid start.</h1><p class="lede">Before an Entry, Security Control or Primary audit can move to delivery, proposal acceptance, payment evidence, Rules of Engagement, authority/reviewer ownership, safe inputs, the evidence/test boundary and explicit start authorization must all be confirmed outside this public page.</p></div></section>
 
   <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO DELIVERY START · NO TESTING AUTHORIZATION</strong><p>This public template represents no customer state and cannot prove acceptance or payment. Query parameter <code>offer</code> is routing context only; it creates no contract, payment request, delivery event or testing permission.</p></div></section>
