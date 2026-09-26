@@ -102,9 +102,11 @@ for (const [locale, source] of [['EN', en], ['RU', ru]]) {
     check(!source.includes(primitive), `${locale}: page source must not embed network primitive ${primitive}`);
   }
 }
-check(en.includes('nothing here transmits data or authorizes testing'), 'EN current local-only/no-testing baseline missing');
-check(ru.includes('Ничего не отправляется'), 'RU current local-only baseline missing');
-check(ru.includes('не даёт testing authorization'), 'RU current no-testing boundary missing');
+check(en.includes('Generating the brief does not transmit data or authorize testing'), 'EN local-generation/no-testing boundary missing');
+check(en.includes('separate consent and submit action'), 'EN optional online-handoff boundary missing');
+check(ru.includes('Генерация brief ничего не отправляет'), 'RU local-generation boundary missing');
+check(ru.includes('отдельного consent и явного submit'), 'RU optional online-handoff boundary missing');
+check(ru.includes('testing authorization это не создаёт'), 'RU current no-testing boundary missing');
 
 const forbiddenAstroEndpointPatterns = [
   'src/pages/api/scope-handoff.ts',
@@ -134,7 +136,8 @@ if (nativeEndpointPresent) {
   const rateLimit = read(rateLimitPath);
   check(endpoint.includes('evaluateScopeHandoffActivation') && endpoint.includes('activation.runtimeEnabled'), 'native endpoint missing shared isolated runtime activation gate');
   check(activation.includes('prj_zQ1Mb8RJA6zCrZbPfC2z3dWFcfZI') && activation.includes('isolated_staging_preview_r1'), 'activation source missing exact staging project/version binding');
-  check(activation.includes("VERCEL_ENV') === 'preview'") && activation.includes("VERCEL_TARGET_ENV') === 'preview'"), 'activation source missing dual preview boundary');
+  check(activation.includes("environment:'preview'") && activation.includes("target:'preview'"), 'activation source missing isolated staging preview profile');
+  check(activation.includes("environment:'production'") && activation.includes("target:'production'"), 'activation source missing exact production profile');
   check(activation.includes("SCOPE_HANDOFF_R1_ENABLED') === 'true'") && activation.includes("SCOPE_HANDOFF_R1_UI_ENABLED') === 'true'"), 'activation source missing explicit runtime/UI switches');
   check(endpoint.includes('parseGlobalRateLimitConfig'), 'native endpoint missing strict limiter config parser');
   check(endpoint.includes('createVercelBlobGlobalRateLimitStore'), 'native endpoint missing Blob CAS limiter adapter');

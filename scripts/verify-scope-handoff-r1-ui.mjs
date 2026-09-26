@@ -62,6 +62,42 @@ check(pkg.scripts?.['verify:core']?.includes('verify-scope-handoff-r1-ui.mjs'), 
   equal(activatedApi.readBootstrapActivationMarker({ currentScript:{ getAttribute(){ throw new Error('bad marker'); } } }), null, 'marker read errors fail closed');
 }
 
+{
+  const markerScript = {
+    getAttribute(name) {
+      return name === 'data-scope-handoff-r1-activation' ? 'production_scope_review_r1' : null;
+    }
+  };
+  const { api:productionApi } = loadApi({ document:{ currentScript:markerScript } });
+  equal(productionApi.UI_ENABLED, true, 'exact production marker enables only the production-bound UI decision');
+  check(productionApi.isUiActivationMarkerEnabled('production_scope_review_r1'), 'exact production marker is accepted');
+  const clientId = 'client_submit_prod_ui_0001';
+  const baseReceipt = {
+    schema_version:productionApi.SCHEMA_VERSION,
+    status:productionApi.RECEIPT_STATUS,
+    delivery_status:productionApi.DELIVERY_STATUS,
+    human_review_status:productionApi.HUMAN_REVIEW_STATUS,
+    testing_authorization:false,
+    submission_id:'sh_r1_' + 'a'.repeat(32),
+    client_submission_id:clientId,
+    accepted_at:'2026-09-26T00:00:00.000Z',
+    replayed:false
+  };
+  check(!productionApi.validReceipt(201, baseReceipt, clientId), 'production mode rejects old receipt without storage/review delivery proof');
+  check(productionApi.validReceipt(201, {
+    ...baseReceipt,
+    storage_status:productionApi.STORAGE_STATUS,
+    operator_delivery_status:productionApi.OPERATOR_DELIVERY_STATUS,
+    retention_until:'2026-10-26T00:00:00.000Z'
+  }, clientId), 'production mode accepts exact stored + queued + retention receipt');
+  check(!productionApi.validReceipt(201, {
+    ...baseReceipt,
+    storage_status:productionApi.STORAGE_STATUS,
+    operator_delivery_status:productionApi.OPERATOR_DELIVERY_STATUS,
+    retention_until:'2026-09-25T00:00:00.000Z'
+  }, clientId), 'production mode rejects expired or non-forward retention receipt');
+}
+
 const entryValues = {
   company:'Example Co', business_contact:'Jane Doe <jane@example.com>', role:'CTO',
   owner_decision:'Decide whether the workflow retains write authority.', workflow:'Prepare one bounded update.',

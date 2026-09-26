@@ -2,7 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
-      "coordination/site-mutation-lease": false
+      "coordination/site-mutation-lease": false,
+      "agent/site-p24-scope-handoff-production-readiness-r1": false
     }
   },
   "cleanUrls": true,

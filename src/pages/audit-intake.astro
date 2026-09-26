@@ -6,7 +6,7 @@ const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
 ---
 
 <Layout title="Agent Authority & Evidence Audit — Decision Scope Intake" description="Prepare a local BitEvo scope brief that seeds an Authority Ledger, Evidence Contract and written Rules of Engagement for one action-capable AI workflow.">
-  <section class="intake-hero section-tight"><div class="container hero-grid"><div><div class="eyebrow">Decision scope intake</div><h1 class="page-title">Define the action, evidence gate and authority owner before anyone tests it.</h1></div><div><p class="lede">Build the scope locally. Mapper drafts can be handed into this page through browser session storage; nothing here transmits data or authorizes testing.</p></div></div></section>
+  <section class="intake-hero section-tight"><div class="container hero-grid"><div><div class="eyebrow">Decision scope intake</div><h1 class="page-title">Define the action, evidence gate and authority owner before anyone tests it.</h1></div><div><p class="lede">Build the scope locally. Mapper drafts can be handed into this page through browser session storage. Generating the brief does not transmit data or authorize testing; any online handoff, when explicitly available, requires a separate consent and submit action.</p></div></div></section>
 
   <div data-intake-segmentation data-intake-locale="en">
   <link rel="stylesheet" href="/intake-segmentation.css">
@@ -22,7 +22,7 @@ const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
         <button type="button" class="button button-primary" data-intake-mode="entry" aria-pressed="true">Entry depth · reduced first step</button>
         <button type="button" class="button button-ghost" data-intake-mode="primary" aria-pressed="false">Primary depth · full intake</button>
       </div>
-      <p class="intake-depth-note">Both modes are browser-local. Choosing a depth does not transmit data, book work or authorize testing.</p>
+      <p class="intake-depth-note">Choosing a depth and generating the brief are browser-local. No data is transmitted, work booked or testing authorized unless a separately enabled online handoff is explicitly consented to and submitted.</p>
     </div>
 
     <div class="container intake-grid">
