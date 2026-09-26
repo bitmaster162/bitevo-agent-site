@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { extname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inflateSync } from 'node:zlib';
 
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
 const repoRootPath = fileURLToPath(new URL('../', import.meta.url));
@@ -41,6 +42,126 @@ function stripTags(text) {
   return text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 }
 
+const PNG_SIGNATURE = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+
+function crc32(buffer) {
+  let crc = 0xffffffff;
+  for (const byte of buffer) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) {
+      crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+    }
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function paethPredictor(a, b, c) {
+  const p = a + b - c;
+  const pa = Math.abs(p - a);
+  const pb = Math.abs(p - b);
+  const pc = Math.abs(p - c);
+  if (pa <= pb && pa <= pc) return a;
+  if (pb <= pc) return b;
+  return c;
+}
+
+function decodePng(buffer) {
+  if (buffer.length < 8 || !buffer.subarray(0, 8).equals(PNG_SIGNATURE)) {
+    throw new Error('invalid PNG signature');
+  }
+
+  let offset = 8;
+  let ihdr = null;
+  let sawIend = false;
+  const idat = [];
+
+  while (offset + 12 <= buffer.length) {
+    const length = buffer.readUInt32BE(offset);
+    const typeStart = offset + 4;
+    const dataStart = offset + 8;
+    const dataEnd = dataStart + length;
+    const chunkEnd = dataEnd + 4;
+    if (chunkEnd > buffer.length) throw new Error('truncated PNG chunk');
+
+    const type = buffer.toString('ascii', typeStart, dataStart);
+    const chunkData = buffer.subarray(dataStart, dataEnd);
+    const expectedCrc = buffer.readUInt32BE(dataEnd);
+    const actualCrc = crc32(Buffer.concat([buffer.subarray(typeStart, dataStart), chunkData]));
+    if (actualCrc !== expectedCrc) throw new Error(type + ' CRC mismatch');
+
+    if (type === 'IHDR') {
+      if (ihdr) throw new Error('duplicate IHDR');
+      if (length !== 13) throw new Error('invalid IHDR length');
+      ihdr = Buffer.from(chunkData);
+    } else if (type === 'IDAT') {
+      idat.push(Buffer.from(chunkData));
+    } else if (type === 'IEND') {
+      if (length !== 0) throw new Error('invalid IEND length');
+      sawIend = true;
+      offset = chunkEnd;
+      break;
+    }
+    offset = chunkEnd;
+  }
+
+  if (!ihdr) throw new Error('missing IHDR');
+  if (!idat.length) throw new Error('missing IDAT');
+  if (!sawIend) throw new Error('missing IEND');
+  if (offset !== buffer.length) throw new Error('trailing bytes after IEND');
+
+  const width = ihdr.readUInt32BE(0);
+  const height = ihdr.readUInt32BE(4);
+  const bitDepth = ihdr[8];
+  const colorType = ihdr[9];
+  const compression = ihdr[10];
+  const filterMethod = ihdr[11];
+  const interlace = ihdr[12];
+
+  if (width < 1 || height < 1) throw new Error('invalid dimensions');
+  if (bitDepth !== 8) throw new Error('PNG must use 8-bit channels');
+  if (![2, 6].includes(colorType)) throw new Error('PNG must be truecolor RGB or RGBA');
+  if (compression !== 0 || filterMethod !== 0 || interlace !== 0) {
+    throw new Error('unsupported PNG compression/filter/interlace method');
+  }
+
+  const channels = colorType === 2 ? 3 : 4;
+  const bytesPerPixel = channels;
+  const rowBytes = width * channels;
+  const inflated = inflateSync(Buffer.concat(idat));
+  const expectedInflated = height * (rowBytes + 1);
+  if (inflated.length !== expectedInflated) {
+    throw new Error('decoded byte length mismatch');
+  }
+
+  let cursor = 0;
+  let previous = Buffer.alloc(rowBytes);
+  for (let y = 0; y < height; y += 1) {
+    const filter = inflated[cursor];
+    cursor += 1;
+    if (filter > 4) throw new Error('invalid PNG scanline filter');
+    const source = inflated.subarray(cursor, cursor + rowBytes);
+    cursor += rowBytes;
+    const decoded = Buffer.allocUnsafe(rowBytes);
+
+    for (let x = 0; x < rowBytes; x += 1) {
+      const raw = source[x];
+      const left = x >= bytesPerPixel ? decoded[x - bytesPerPixel] : 0;
+      const up = previous[x];
+      const upLeft = x >= bytesPerPixel ? previous[x - bytesPerPixel] : 0;
+      let value;
+      if (filter === 0) value = raw;
+      else if (filter === 1) value = raw + left;
+      else if (filter === 2) value = raw + up;
+      else if (filter === 3) value = raw + Math.floor((left + up) / 2);
+      else value = raw + paethPredictor(left, up, upLeft);
+      decoded[x] = value & 0xff;
+    }
+    previous = decoded;
+  }
+
+  return { width, height, bitDepth, colorType, decodedBytes: width * height * channels };
+}
+
 function anchorHasFunnel(html, marker, href) {
   return [...html.matchAll(/<a\b[^>]*>/gi)].some(match => {
     const tag = match[0];
@@ -77,6 +198,7 @@ let trustBoundaryChecks = 0;
 let sitemapChecks = 0;
 let externalBlankChecks = 0;
 let configChecks = 0;
+let imageChecks = 0;
 
 for (const file of htmlFiles) {
   const route = routeFromHtml(file);
@@ -263,7 +385,22 @@ const llmsFile = join(distPath, 'llms.txt');
 if (!fileSet.has('build/index.html')) failures.push('/build: route missing from static output');
 if (!fileSet.has('sitemap.xml')) failures.push('sitemap.xml missing from static output');
 if (!fileSet.has('llms.txt')) failures.push('llms.txt missing from static output');
-if (!fileSet.has('og-card.png')) failures.push('og-card.png missing from static output');
+if (!fileSet.has('og-card.png')) {
+  failures.push('og-card.png missing from static output');
+} else {
+  imageChecks += 5;
+  try {
+    const distOg = await readFile(join(distPath, 'og-card.png'));
+    const sourceOg = await readFile(join(repoRootPath, 'public', 'og-card.png'));
+    const decoded = decodePng(distOg);
+    if (decoded.width !== 1200) failures.push('og-card.png: width must be 1200');
+    if (decoded.height !== 630) failures.push('og-card.png: height must be 630');
+    if (decoded.decodedBytes <= 0) failures.push('og-card.png: decoded pixel buffer must be non-empty');
+    if (!distOg.equals(sourceOg)) failures.push('og-card.png: dist output must be byte-identical to public source');
+  } catch (error) {
+    failures.push('og-card.png: decode failed: ' + (error instanceof Error ? error.message : String(error)));
+  }
+}
 
 if (fileSet.has('sitemap.xml')) {
   const sitemap = await readFile(sitemapFile, 'utf8');
@@ -334,6 +471,15 @@ const rootEntries = await readdir(repoRootPath, { withFileTypes: true });
 const rootScriptNames = rootEntries
   .filter(entry => entry.isFile() && ['.bat', '.cmd', '.ps1', '.sh'].includes(extname(entry.name).toLowerCase()))
   .map(entry => entry.name);
+
+configChecks += 1;
+try {
+  const attributes = await readFile(join(repoRootPath, '.gitattributes'), 'utf8');
+  const pngBinary = attributes.split(/\r?\n/).some(line => line.trim() === '*.png binary');
+  if (!pngBinary) failures.push('.gitattributes: missing exact *.png binary policy');
+} catch {
+  failures.push('.gitattributes: missing exact *.png binary policy');
+}
 
 configChecks += 1;
 for (const scriptName of rootScriptNames) {
