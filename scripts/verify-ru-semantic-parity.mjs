@@ -117,9 +117,9 @@ for (const [ruPath, page] of parityMap) {
     failures.push(`${ruPath}: generated page missing from build`);
     continue;
   }
-  if (!html.includes('RU semantic parity')) failures.push(`${ruPath}: missing semantic parity marker`);
-  if (!html.includes('Semantic boundary')) failures.push(`${ruPath}: missing semantic boundary`);
-  if (!html.includes('testing authorization')) failures.push(`${ruPath}: missing no-authorization claim boundary`);
+  if (!html.includes('Смысловое соответствие RU')) failures.push(`${ruPath}: missing semantic parity marker`);
+  if (!html.includes('Граница смысла')) failures.push(`${ruPath}: missing semantic boundary`);
+  if (!html.includes('разрешение на тестирование')) failures.push(`${ruPath}: missing no-authorization claim boundary`);
   if (!html.includes(`href="${page.enPath}"`)) failures.push(`${ruPath}: missing paired EN route link`);
   if (!html.includes(`href="${page.primaryHref}"`)) failures.push(`${ruPath}: missing localized next-decision route ${page.primaryHref}`);
 }
@@ -132,7 +132,7 @@ if (!ruHome.includes('<a class="header-cta" href="/ru/start"') || !ruHome.includ
 if (!ruStart.includes('Free / 20 минут')) failures.push('/ru/start: missing Free triage marker');
 if (!ruStart.includes('$1,500')) failures.push('/ru/start: missing Entry price marker');
 if (!ruStart.includes('$4,900')) failures.push('/ru/start: missing Primary price marker');
-if (!ruStart.includes('testing authorization')) failures.push('/ru/start: missing authorization boundary');
+if (!ruStart.includes('разрешение на тестирование')) failures.push('/ru/start: missing authorization boundary');
 if (!ruStart.includes('href="/ru/pricing"')) failures.push('/ru/start: missing pricing decision path');
 
 if (failures.length) {

@@ -38,7 +38,7 @@ const isActive = (href: string) => href === homeHref ? path === homeHref || path
 const showDogfoodCase = !isRu && (path === '/proof' || path === '/agent-authority-audit');
 const nav = isRu ? [
   ['Доктрина', '/ru/doctrine'],
-  ['Proof', '/ru/proof'],
+  ['Доказательства', '/ru/proof'],
   ['Mapper', '/ru/mapper'],
   ['Workspace', '/ru/workspace'],
   ['Build', '/ru/build'],
@@ -62,11 +62,11 @@ const mobileExtra = isRu ? [
 ];
 const footerMethod = isRu ? [
   ['Доктрина', '/ru/doctrine'],
-  ['Proof matrix', '/ru/proof'],
-  ['Internal dogfood', '/ru/dogfood-self-audit'],
+  ['Матрица доказательств', '/ru/proof'],
+  ['Внутренний сам-аудит', '/ru/dogfood-self-audit'],
   ['Authority Mapper', '/ru/mapper'],
   ['Decision Workspace', '/ru/workspace'],
-  ['7-gate diagnostic', '/ru/diagnostic']
+  ['Диагностика по 7 гейтам', '/ru/diagnostic']
 ] : [
   ['Doctrine', '/doctrine'],
   ['Proof matrix', '/proof'],
@@ -76,11 +76,11 @@ const footerMethod = isRu ? [
   ['7-gate diagnostic', '/diagnostic']
 ];
 const footerWork = isRu ? [
-  ['Authority & Evidence Audit', '/ru/agent-authority-audit'],
+  ['Аудит полномочий и доказательств', '/ru/agent-authority-audit'],
   ['Безопасность', '/ru/security'],
   ['Цены', '/ru/pricing'],
   ['Услуги', '/ru/consulting'],
-  ['Scope intake', '/ru/audit-intake']
+  ['Форма границ аудита', '/ru/audit-intake']
 ] : [
   ['Authority & Evidence Audit', '/agent-authority-audit'],
   ['Security', '/security'],
@@ -89,9 +89,9 @@ const footerWork = isRu ? [
   ['Audit intake', '/audit-intake']
 ];
 const footerBuild = isRu ? [
-  ['Build index', '/ru/build'],
+  ['Индекс Build', '/ru/build'],
   ['ContinuityOS', '/ru/continuityos'],
-  ['Research library', '/ru/guides'],
+  ['Исследовательская библиотека', '/ru/guides'],
   ['BitEvo Universe', '/ru/universe'],
   ['LLMs.txt', '/llms.txt']
 ] : [
@@ -201,14 +201,14 @@ const globalStructuredData = [
     <footer class="site-footer">
       <div class="container footer-shell">
         <section class="footer-cta" aria-labelledby="footer-cta-title">
-          <div><div class="eyebrow">{isRu ? 'Authority до effect' : 'Authority before effect'}</div><h2 id="footer-cta-title">{isRu ? 'Сначала карта authority. Потом сравнение repair. Затем owner decision.' : 'Map the authority. Compare the repair. Then make the owner decision.'}</h2></div>
+          <div><div class="eyebrow">{isRu ? 'Полномочия до эффекта' : 'Authority before effect'}</div><h2 id="footer-cta-title">{isRu ? 'Сначала карта полномочий. Потом сравнение исправления. Затем решение владельца.' : 'Map the authority. Compare the repair. Then make the owner decision.'}</h2></div>
           <a class="button button-primary" href={mapperHref}>{isRu ? 'Открыть Authority Mapper' : 'Open Authority Mapper'} <span aria-hidden="true">↗</span></a>
         </section>
 
         <div class="footer-grid">
           <div class="footer-brand">
             <a href={homeHref} class="brand" aria-label={isRu ? 'BitEvo — главная' : 'BitEvo home'}><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span class="brand-copy"><strong>BITEVO</strong><small>AGENT SYSTEMS</small></span></a>
-            <p><strong>Authority Budget. Evidence Before Effect. False Green.</strong><br />{isRu ? 'BitEvo превращает consequential agent capability в object-bound authority, явные evidence gates, external confirmation и bounded owner decisions.' : 'BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.'}</p>
+            <p><strong>{isRu ? 'Бюджет полномочий. Доказательства до эффекта. Ложный зелёный сигнал.' : 'Authority Budget. Evidence Before Effect. False Green.'}</strong><br />{isRu ? 'BitEvo превращает возможности агента с внешними последствиями в привязанные к объекту полномочия, явные контрольные точки доказательств, внешнее подтверждение и ограниченные решения владельца.' : 'BitEvo turns consequential agent capability into object-bound authority, explicit evidence gates, external confirmation and bounded owner decisions.'}</p>
           </div>
           <div class="footer-col"><strong>{isRu ? 'Метод' : 'Method'}</strong>{footerMethod.map(([label, href]) => <a href={href}>{label}</a>)}</div>
           <div class="footer-col"><strong>{isRu ? 'Работа' : 'Work'}</strong>{footerWork.map(([label, href]) => <a href={href}>{label}</a>)}</div>
