@@ -1,4 +1,4 @@
-import { BlobPreconditionFailedError, get, put } from '@vercel/blob';
+import { BlobPreconditionFailedError, del, get, list, put } from '@vercel/blob';
 
 export class InMemoryScopeHandoffStore {
   constructor() {
@@ -20,6 +20,19 @@ export class InMemoryScopeHandoffStore {
     if (this.records.has(pathname)) return { created:false };
     this.records.set(pathname, structuredClone(record));
     return { created:true };
+  }
+  async listPrefix(prefix) {
+    this.readCount += 1;
+    if (this.failRead) throw new Error('FAKE_READ_UNCERTAIN');
+    return [...this.records.entries()]
+      .filter(([pathname]) => pathname.startsWith(prefix))
+      .map(([pathname, value]) => ({ pathname, value:structuredClone(value) }));
+  }
+  async deleteMany(pathnames) {
+    this.writeCount += 1;
+    if (this.failWrite) throw new Error('FAKE_WRITE_UNCERTAIN');
+    for (const pathname of pathnames) this.records.delete(pathname);
+    return { deleted:true };
   }
 }
 
@@ -69,6 +82,42 @@ export function createVercelBlobScopeHandoffStore() {
         if (existing) return { created:false };
         throw error;
       }
+    }
+  };
+}
+
+export function createVercelBlobScopeHandoffReviewQueue() {
+  const read = async pathname => {
+    const snapshot = await readJsonBlob(pathname);
+    return snapshot?.value ?? null;
+  };
+  return {
+    read,
+    async createIfAbsent(pathname, record) {
+      try {
+        await put(pathname, JSON.stringify(record), {
+          access:'private', addRandomSuffix:false, allowOverwrite:false,
+          contentType:'application/json; charset=utf-8'
+        });
+        return { created:true };
+      } catch (error) {
+        const existing = await read(pathname);
+        if (existing) return { created:false };
+        throw error;
+      }
+    },
+    async listPrefix(prefix, limit = 50) {
+      const result = await list({ prefix, limit });
+      const rows = [];
+      for (const blob of result.blobs || []) {
+        const snapshot = await readJsonBlob(blob.pathname);
+        if (snapshot) rows.push({ pathname:blob.pathname, value:snapshot.value });
+      }
+      return rows;
+    },
+    async deleteMany(pathnames) {
+      await del(pathnames);
+      return { deleted:true };
     }
   };
 }

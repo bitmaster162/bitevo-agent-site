@@ -2,6 +2,7 @@
   'use strict';
 
   const ACTIVATION_MODE = 'isolated_staging_preview_r1';
+  const PRODUCTION_ACTIVATION_MODE = 'production_scope_review_r1';
   const ACTIVATION_ATTRIBUTE = 'data-scope-handoff-r1-activation';
   const TEST_MODE = globalThis.__BITEVO_SCOPE_HANDOFF_R1_TEST_MODE__ === true;
   function readBootstrapActivationMarker(doc = globalThis.document) {
@@ -12,7 +13,7 @@
       return null;
     }
   }
-  const isUiActivationMarkerEnabled = marker => marker === ACTIVATION_MODE;
+  const isUiActivationMarkerEnabled = marker => marker === ACTIVATION_MODE || marker === PRODUCTION_ACTIVATION_MODE;
   const BOOTSTRAP_ACTIVATION_MARKER = readBootstrapActivationMarker();
   const UI_ENABLED = isUiActivationMarkerEnabled(BOOTSTRAP_ACTIVATION_MARKER);
   const ENDPOINT = '/api/scope-handoff';
@@ -20,6 +21,8 @@
   const SCHEMA_VERSION = 'bitevo.scope-handoff.r1';
   const RECEIPT_STATUS = 'RECEIVED_FOR_SCOPE_REVIEW';
   const DELIVERY_STATUS = 'INTAKE_RECORD_ACCEPTED';
+  const STORAGE_STATUS = 'STORED_PRIVATE';
+  const OPERATOR_DELIVERY_STATUS = 'QUEUED_FOR_HUMAN_REVIEW';
   const HUMAN_REVIEW_STATUS = 'NOT_CONFIRMED';
 
   const baseIds = {
@@ -201,14 +204,19 @@
     throw new Error('SECURE_RANDOM_UNAVAILABLE');
   }
 
-  function validReceipt(statusCode, body, expectedClientId) {
+  function validReceipt(statusCode, body, expectedClientId, productionDeliveryRequired = BOOTSTRAP_ACTIVATION_MARKER === PRODUCTION_ACTIVATION_MODE) {
     if (![200,201].includes(statusCode) || !body || typeof body !== 'object') return false;
     const replayMatchesStatus = (statusCode === 201 && body.replayed === false) || (statusCode === 200 && body.replayed === true);
-    return body.schema_version === SCHEMA_VERSION && body.status === RECEIPT_STATUS &&
+    const baseValid = body.schema_version === SCHEMA_VERSION && body.status === RECEIPT_STATUS &&
       body.delivery_status === DELIVERY_STATUS && body.human_review_status === HUMAN_REVIEW_STATUS &&
       body.testing_authorization === false && body.client_submission_id === expectedClientId &&
       typeof body.submission_id === 'string' && /^sh_r1_[a-f0-9]{32}$/.test(body.submission_id) &&
       typeof body.accepted_at === 'string' && Number.isFinite(Date.parse(body.accepted_at)) && replayMatchesStatus;
+    if (!baseValid || !productionDeliveryRequired) return baseValid;
+    return body.storage_status === STORAGE_STATUS &&
+      body.operator_delivery_status === OPERATOR_DELIVERY_STATUS &&
+      typeof body.retention_until === 'string' && Number.isFinite(Date.parse(body.retention_until)) &&
+      Date.parse(body.retention_until) > Date.parse(body.accepted_at);
   }
 
   function headerValue(headers, name) {
@@ -486,9 +494,9 @@
   }
 
   const TEST_API = Object.freeze({
-    UI_ENABLED, ACTIVATION_MODE, ACTIVATION_ATTRIBUTE, BOOTSTRAP_ACTIVATION_MARKER,
+    UI_ENABLED, ACTIVATION_MODE, PRODUCTION_ACTIVATION_MODE, ACTIVATION_ATTRIBUTE, BOOTSTRAP_ACTIVATION_MARKER,
     readBootstrapActivationMarker, isUiActivationMarkerEnabled,
-    ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
+    ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, STORAGE_STATUS, OPERATOR_DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
     BASE_IDS:baseIds, PRIMARY_IDS:primaryIds, BASE_REQUIRED, PRIMARY_REQUIRED, COPY,
     stableStringify, enumValue, buildScopeFields, validateScopeFields, scopeFingerprint,
     createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, mountScopeHandoff

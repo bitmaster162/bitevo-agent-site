@@ -9,6 +9,7 @@ import {
 } from '../src/lib/scope-handoff-r1/rate-limit.js';
 import {
   createVercelBlobGlobalRateLimitStore,
+  createVercelBlobScopeHandoffReviewQueue,
   createVercelBlobScopeHandoffStore
 } from '../src/lib/scope-handoff-r1/stores.js';
 
@@ -38,7 +39,10 @@ export default {
     return handleScopeHandoffRequest(request, {
       enabled:true,
       rateLimiter,
-      store:rateLimiter ? createVercelBlobScopeHandoffStore() : null
+      store:rateLimiter ? createVercelBlobScopeHandoffStore() : null,
+      reviewQueue:activation.operatorReviewEnabled ? createVercelBlobScopeHandoffReviewQueue() : null,
+      storageOwner:activation.operatorReviewEnabled ? activation.storageOwner : null,
+      retentionDays:activation.operatorReviewEnabled ? activation.retentionDays : null
     });
   }
 };

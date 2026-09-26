@@ -1,4 +1,11 @@
 import { createHash, randomUUID } from 'node:crypto';
+import {
+  ensureReviewQueued,
+  OPERATOR_DELIVERY_STATUS,
+  retentionUntil,
+  scopeRecordPath,
+  STORAGE_STATUS
+} from './review.js';
 
 export const MAX_BODY_BYTES = 64 * 1024;
 export const RECEIPT_STATUS = 'RECEIVED_FOR_SCOPE_REVIEW';
@@ -103,23 +110,26 @@ export function makeSubmissionId() {
   return `sh_r1_${randomUUID().replaceAll('-','')}`;
 }
 
-function successReceipt(record, replayed, statusCode) {
+function successReceipt(record, replayed, statusCode, reviewQueued = false) {
   return response({
     schema_version: record.schema_version,
     status: RECEIPT_STATUS,
     delivery_status: DELIVERY_STATUS,
+    storage_status: STORAGE_STATUS,
+    operator_delivery_status: reviewQueued ? OPERATOR_DELIVERY_STATUS : 'NOT_CONFIGURED_STAGING',
     human_review_status: HUMAN_REVIEW_STATUS,
     testing_authorization: false,
     submission_id: record.submission_id,
     client_submission_id: record.client_submission_id,
     accepted_at: record.accepted_at,
+    retention_until: record.retention_until ?? null,
     replayed
   }, statusCode);
 }
 
 export async function handleScopeHandoffRequest(request, options = {}) {
   const {
-    enabled = false, store = null, rateLimiter = null,
+    enabled = false, store = null, reviewQueue = null, storageOwner = null, retentionDays = null, rateLimiter = null,
     now = () => new Date().toISOString(), idFactory = makeSubmissionId
   } = options;
   if (!enabled) return response({ status:'SERVICE_DISABLED', provider_io:0, testing_authorization:false }, 503);
@@ -163,21 +173,51 @@ export async function handleScopeHandoffRequest(request, options = {}) {
   if (!store || typeof store.read !== 'function' || typeof store.createIfAbsent !== 'function') return response({ status:'UNKNOWN_RECONCILE', reason:'STORE_UNAVAILABLE' }, 503);
 
   const digest = canonicalDigest(payload);
-  const pathname = `scope-handoff/r1/${payload.client_submission_id}.json`;
+  const pathname = scopeRecordPath(payload.client_submission_id);
+  const reviewRequired = reviewQueue !== null;
+  if (reviewRequired && (typeof storageOwner !== 'string' || storageOwner.length < 3)) {
+    return response({ status:'STORAGE_OWNER_CONFIG_INVALID', provider_io:limiterIo, testing_authorization:false }, 503);
+  }
+  if (reviewRequired && (!Number.isSafeInteger(retentionDays) || retentionDays < 1)) {
+    return response({ status:'RETENTION_CONFIG_INVALID', provider_io:limiterIo, testing_authorization:false }, 503);
+  }
+
+  const finalize = async (record, replayed, statusCode) => {
+    if (!reviewRequired) return successReceipt(record, replayed, statusCode, false);
+    const queued = await ensureReviewQueued(reviewQueue, record);
+    if (!queued.ok) {
+      return response({
+        status:'REVIEW_QUEUE_UNKNOWN_RECONCILE',
+        reason:queued.reason,
+        testing_authorization:false
+      }, 503);
+    }
+    return successReceipt(record, replayed, statusCode, true);
+  };
+
   let existing;
   try { existing = await store.read(pathname); }
   catch { return response({ status:'UNKNOWN_RECONCILE', reason:'STORE_READ_UNCERTAIN' }, 503); }
   if (existing) {
     if (existing.request_digest !== digest) return response({ error:'IDEMPOTENCY_CONFLICT', client_submission_id:payload.client_submission_id }, 409);
-    return successReceipt(existing, true, 200);
+    return finalize(existing, true, 200);
   }
 
+  const acceptedAt = now();
+  const retentionUntilValue = reviewRequired ? retentionUntil(acceptedAt, retentionDays) : null;
+  if (reviewRequired && !retentionUntilValue) {
+    return response({ status:'RETENTION_CONFIG_INVALID', provider_io:limiterIo, testing_authorization:false }, 503);
+  }
   const record = {
     schema_version: payload.schema_version,
     submission_id: idFactory(),
     client_submission_id: payload.client_submission_id,
     request_digest: digest,
-    accepted_at: now(),
+    accepted_at: acceptedAt,
+    retention_until: retentionUntilValue,
+    retention_days: reviewRequired ? retentionDays : null,
+    storage_owner: reviewRequired ? storageOwner : null,
+    storage_status: STORAGE_STATUS,
     locale: payload.locale,
     intake_depth: payload.intake_depth,
     status: RECEIPT_STATUS,
@@ -190,12 +230,12 @@ export async function handleScopeHandoffRequest(request, options = {}) {
   let created;
   try { created = await store.createIfAbsent(pathname, record); }
   catch { return response({ status:'UNKNOWN_RECONCILE', reason:'STORE_WRITE_UNCERTAIN' }, 503); }
-  if (created?.created === true) return successReceipt(record, false, 201);
+  if (created?.created === true) return finalize(record, false, 201);
 
   let reconciled;
   try { reconciled = await store.read(pathname); }
   catch { return response({ status:'UNKNOWN_RECONCILE', reason:'STORE_RECONCILE_UNCERTAIN' }, 503); }
   if (!reconciled) return response({ status:'UNKNOWN_RECONCILE', reason:'WRITE_CONFLICT_WITHOUT_RECORD' }, 503);
   if (reconciled.request_digest !== digest) return response({ error:'IDEMPOTENCY_CONFLICT', client_submission_id:payload.client_submission_id }, 409);
-  return successReceipt(reconciled, true, 200);
+  return finalize(reconciled, true, 200);
 }

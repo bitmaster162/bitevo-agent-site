@@ -26,6 +26,8 @@ deploymentChecks += 1;
 if (!deploymentEnabled || typeof deploymentEnabled !== 'object' || Array.isArray(deploymentEnabled)) failures.push('vercel.json: git.deploymentEnabled must remain a branch map');
 deploymentChecks += 1;
 if (deploymentEnabled?.['coordination/site-mutation-lease'] !== false) failures.push('vercel.json: coordination/site-mutation-lease must not trigger Vercel deployments');
+deploymentChecks += 1;
+if (deploymentEnabled?.['agent/site-p24-scope-handoff-production-readiness-r1'] !== false) failures.push('vercel.json: P24 feature branch must not trigger Vercel deployments');
 
 
 const requiredSecurityHeaderKeys = ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy','content-security-policy'];
