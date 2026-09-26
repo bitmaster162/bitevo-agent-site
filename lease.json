@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "a9b5fba2-ed70-480d-85e6-b4d4ac1d4b88",
   "nonce": "d038972f-6b73-4428-b066-d12322067e4a",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "4d770553a5e7a76ea0018f7ad7238e41ed54d6a7",
@@ -11,10 +11,12 @@
   "session": "bitevo-p24-b2-og-card-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p24_b2_20260926_01",
   "acquiredAt": "2026-09-26T01:17:14.764Z",
-  "updatedAt": "2026-09-26T01:27:31.860Z",
+  "updatedAt": "2026-09-26T01:35:45.094Z",
   "expiresAt": "2026-09-26T05:17:11.865Z",
   "sealedHead": "c1e8b89af742767c5c201c054a66be2359fc3822",
   "sealedTree": "8b8aa51182aee609cd4d7b54fadd7151db3844fc",
   "featureRef": "refs/heads/agent/p24-b2-og-card-repair-r1",
-  "predecessor": "2f81b7e801570bd3b6cf4a12e2c87babd42adbcc"
+  "predecessor": "71396ce6eba7d17d0fd18940fea4463f12b88494",
+  "releasedAt": "2026-09-26T01:35:45.095Z",
+  "releaseReason": "p24_b2_live_verified_complete"
 }
