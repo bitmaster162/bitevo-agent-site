@@ -325,22 +325,6 @@
       "primaryLabel": "Открыть Proof"
     },
     {
-      "slug": "guides/ai-agent-reliability-audit",
-      "enPath": "/guides/ai-agent-reliability-audit",
-      "category": "RESEARCH",
-      "eyebrow": "REVIEWED METHOD NOTE",
-      "title": "Метод reliability audit начинается с action, authority, evidence, effect и recovery.",
-      "metaTitle": "Метод reliability audit для AI-агентов — BitEvo",
-      "description": "Русская semantic parity для reviewed public methodology note по bounded AI-agent reliability/authority audit.",
-      "points": [
-        "Метод рассматривает конкретный action-capable workflow, а не абстрактный model score.",
-        "Decision-time evidence и external effect confirmation отделяются от post-hoc logs.",
-        "Research note не является customer finding, certification или текущим runtime claim."
-      ],
-      "primaryHref": "/ru/guides",
-      "primaryLabel": "Research library"
-    },
-    {
       "slug": "guides/security-sandboxing",
       "enPath": "/guides/security-sandboxing",
       "category": "RESEARCH",

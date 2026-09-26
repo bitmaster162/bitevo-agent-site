@@ -1,7 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /guides/
-Allow: /guides/ai-agent-reliability-audit
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
@@ -9,7 +8,6 @@ Allow: /guides/d3-tool-io-bridge-contract
 User-agent: Google-Extended
 Allow: /
 Disallow: /guides/
-Allow: /guides/ai-agent-reliability-audit
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
@@ -17,7 +15,6 @@ Allow: /guides/d3-tool-io-bridge-contract
 User-agent: GPTBot
 Allow: /
 Disallow: /guides/
-Allow: /guides/ai-agent-reliability-audit
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
@@ -25,7 +22,6 @@ Allow: /guides/d3-tool-io-bridge-contract
 User-agent: ClaudeBot
 Allow: /
 Disallow: /guides/
-Allow: /guides/ai-agent-reliability-audit
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract

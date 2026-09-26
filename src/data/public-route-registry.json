@@ -298,10 +298,11 @@
     },
     {
       "path": "/guides/ai-agent-reliability-audit",
-      "category": "RESEARCH",
-      "indexable": true,
+      "category": "LEGACY",
+      "indexable": false,
       "locale": "en",
-      "parent": "/guides"
+      "parent": "/agent-authority-audit",
+      "state": "redirect"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -712,10 +713,11 @@
     },
     {
       "path": "/ru/guides/ai-agent-reliability-audit",
-      "category": "RESEARCH",
-      "indexable": true,
+      "category": "LEGACY",
+      "indexable": false,
       "locale": "ru",
-      "parent": "/ru/guides"
+      "parent": "/ru/agent-authority-audit",
+      "state": "redirect"
     },
     {
       "path": "/ru/guides/security-sandboxing",
@@ -834,6 +836,16 @@
     {
       "source": "/intake",
       "destination": "/audit-intake",
+      "permanent": true
+    },
+    {
+      "source": "/guides/ai-agent-reliability-audit",
+      "destination": "/agent-authority-audit",
+      "permanent": true
+    },
+    {
+      "source": "/ru/guides/ai-agent-reliability-audit",
+      "destination": "/ru/agent-authority-audit",
       "permanent": true
     }
   ]

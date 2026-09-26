@@ -62,17 +62,25 @@ routingChecks += 1; if (vercelConfig.trailingSlash !== false) failures.push('ver
 const customRoutes = Array.isArray(vercelConfig.routes) ? vercelConfig.routes : [];
 const routeHeaderIndex = customRoutes.findIndex(route => route?.src === '/(.*)' && route?.continue === true && route?.headers && typeof route.headers === 'object');
 const routeHeaderMap = new Map(Object.entries(routeHeaderIndex >= 0 ? customRoutes[routeHeaderIndex].headers : {}).map(([key,value]) => [String(key).toLowerCase(), String(value)]));
+const enReliabilityRedirectIndex = customRoutes.findIndex(route => route?.src === '/guides/ai-agent-reliability-audit' && Number(route?.status) === 301 && route?.headers?.Location === '/agent-authority-audit');
+const ruReliabilityRedirectIndex = customRoutes.findIndex(route => route?.src === '/ru/guides/ai-agent-reliability-audit' && Number(route?.status) === 301 && route?.headers?.Location === '/ru/agent-authority-audit');
 const intakeRedirectIndex = customRoutes.findIndex(route => route?.src === '/intake' && Number(route?.status) === 308 && route?.headers?.Location === '/audit-intake');
 const filesystemIndex = customRoutes.findIndex(route => route?.handle === 'filesystem');
 const ru404Index = customRoutes.findIndex(route => route?.src === '/ru(?:/.*)?' && Number(route?.status) === 404 && route?.dest === '/ru/404');
 routingChecks += 1; if (routeHeaderIndex !== 0) failures.push('vercel.json: security header route must be the first custom route');
 for (const key of requiredSecurityHeaderKeys) { routingChecks += 1; if (routeHeaderMap.get(key) !== globalHeaderMap.get(key)) failures.push('vercel.json: route-level ' + key + ' must exactly match global header policy'); }
+routingChecks += 1; if (enReliabilityRedirectIndex < 0) failures.push('vercel.json: missing effective EN reliability 301 redirect');
+routingChecks += 1; if (ruReliabilityRedirectIndex < 0) failures.push('vercel.json: missing effective RU reliability 301 redirect');
 routingChecks += 1; if (intakeRedirectIndex < 0) failures.push('vercel.json: missing effective /intake 308 redirect route');
 routingChecks += 1; if (filesystemIndex < 0) failures.push('vercel.json: localized 404 routing requires filesystem phase');
-routingChecks += 1; if (!(routeHeaderIndex < intakeRedirectIndex && intakeRedirectIndex < filesystemIndex)) failures.push('vercel.json: security headers and /intake redirect must run before filesystem phase');
+routingChecks += 1; if (!(routeHeaderIndex < enReliabilityRedirectIndex && enReliabilityRedirectIndex < ruReliabilityRedirectIndex && ruReliabilityRedirectIndex < intakeRedirectIndex && intakeRedirectIndex < filesystemIndex)) failures.push('vercel.json: security headers, B4 redirects and /intake redirect must run before filesystem phase');
 routingChecks += 1; if (ru404Index < 0) failures.push('vercel.json: missing exact RU 404 fallback route');
 routingChecks += 1; if (filesystemIndex < 0 || ru404Index <= filesystemIndex) failures.push('vercel.json: RU 404 fallback must run after filesystem phase');
 routingChecks += 1; if (customRoutes.some(route => Number(route?.status) === 404 && route?.src !== '/ru(?:/.*)?')) failures.push('vercel.json: 404 fallback must remain scoped to /ru');
+const redirects = Array.isArray(vercelConfig.redirects) ? vercelConfig.redirects : [];
+const exactRedirect = (source, destination) => redirects.some(item => item?.source === source && item?.destination === destination && item?.permanent === true);
+routingChecks += 1; if (!exactRedirect('/guides/ai-agent-reliability-audit', '/agent-authority-audit')) failures.push('vercel.json: missing permanent EN reliability redirect declaration');
+routingChecks += 1; if (!exactRedirect('/ru/guides/ai-agent-reliability-audit', '/ru/agent-authority-audit')) failures.push('vercel.json: missing permanent RU reliability redirect declaration');
 
 if (failures.length) { console.error('VERCEL_POLICY_GATE=FAIL'); for (const failure of failures) console.error(failure); process.exit(1); }
 console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} failures=0`);
