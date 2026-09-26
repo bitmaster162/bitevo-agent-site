@@ -8,6 +8,9 @@ import {
 } from '../src/lib/scope-handoff-r1/activation.js';
 import { handleScopeHandoffRequest } from '../src/lib/scope-handoff-r1/core.js';
 import {
+  SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS,
+  SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS,
+  SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER,
   SCOPE_HANDOFF_R1_RETENTION_DAYS,
   SCOPE_HANDOFF_R1_STORAGE_OWNER,
   SCOPE_HANDOFF_R1_STORAGE_OWNER_EMAIL
@@ -42,12 +45,15 @@ const production = Object.freeze({
 const enabled = evaluateScopeHandoffActivation(production);
 equal(enabled.profile, 'production', 'production profile selected only by exact mode');
 equal(enabled.boundary, true, 'production provider boundary binds exact project/env/target');
-equal(enabled.productionReady, true, 'review switch/token, named storage owner and retention make source production-ready');
-equal(enabled.runtimeEnabled, true, 'runtime can enable only when every production gate is true');
+equal(enabled.productionReady, true, 'existing evaluator is mechanically ready when review controls and proposal comparison values match');
+equal(enabled.runtimeEnabled, true, 'pure evaluator can enable only when every existing production gate is true; owner-decision provenance is tracked separately');
 equal(enabled.uiEnabled, true, 'UI remains a separate explicit switch');
 equal(enabled.operatorReviewEnabled, true, 'operator queue is required in production profile');
-equal(enabled.storageOwner, SCOPE_HANDOFF_R1_STORAGE_OWNER, 'production storage owner must exactly match the decided policy');
-equal(enabled.retentionDays, SCOPE_HANDOFF_R1_RETENTION_DAYS, 'production retention must exactly match the decided policy');
+equal(SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS, 'ROBERT_DECISION_PENDING', 'retention/data-owner provenance remains pending');
+equal(SCOPE_HANDOFF_R1_RETENTION_DAYS, SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS, 'compatibility retention value matches the source proposal');
+equal(SCOPE_HANDOFF_R1_STORAGE_OWNER, SCOPE_HANDOFF_R1_PROPOSED_STORAGE_OWNER, 'compatibility storage-owner value matches the source proposal');
+equal(enabled.storageOwner, SCOPE_HANDOFF_R1_STORAGE_OWNER, 'production storage owner must exactly match the current source proposal');
+equal(enabled.retentionDays, SCOPE_HANDOFF_R1_RETENTION_DAYS, 'production retention must exactly match the current source proposal');
 
 for (const [key, reason] of [
   ['SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED','OPERATOR_REVIEW_SWITCH_OFF'],
@@ -176,16 +182,16 @@ for (const [locale, html] of [['EN',enDist],['RU',ruDist]]) {
 for (const marker of [
   'P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / NO_RUNTIME_EFFECT',
   'production_scope_review_r1',
-  `RETENTION_DAYS = ${SCOPE_HANDOFF_R1_RETENTION_DAYS}`,
-  `STORAGE_OWNER = ${SCOPE_HANDOFF_R1_STORAGE_OWNER}`,
+  'RETENTION_DAYS = OPERATOR_CONFIG_REQUIRED',
+  'STORAGE_OWNER = OPERATOR_CONFIG_REQUIRED',
   `PRIVACY_CONTACT = ${SCOPE_HANDOFF_R1_STORAGE_OWNER_EMAIL}`,
+  'ROBERT_DECISION_PENDING',
+  'implementation proposals',
   'AUTO_PURGE_SOURCE = PRESENT',
   'HUMAN_REVIEW = NOT_CONFIRMED',
   'PRODUCTION_ENABLE = NOT_AUTHORIZED',
   'PR #158',
   '4300657ee025e2cf65912302606c1daf548982a4',
-  'RETENTION_POLICY_30_DAYS',
-  'STORAGE_OWNER_ROBERT_DUMANYAN',
   '503 SERVICE_DISABLED',
   'provider_io=0',
   'testing_authorization=false'
@@ -193,7 +199,12 @@ for (const marker of [
 for (const stale of [
   'Production source deployment: 0',
   'Pull request: 0',
-  'Merge: 0'
-]) check(!doc.includes(stale), `P24 doc stale pre-merge claim remains: ${stale}`);
+  'Merge: 0',
+  'The production retention decision is now explicit',
+  '`RETENTION_DAYS = 30`',
+  '`STORAGE_OWNER = Robert Dumanyan, Founder, BitEvo`',
+  'RETENTION_POLICY_30_DAYS',
+  'STORAGE_OWNER_ROBERT_DUMANYAN'
+]) check(!doc.includes(stale), `P24 doc stale claim remains: ${stale}`);
 
-console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY default_off=PASS operator_queue=BOUND retention=EXACT_30D_POLICY owner=ROBERT_DUMANYAN human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
+console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY default_off=PASS operator_queue=BOUND retention_proposal=${SCOPE_HANDOFF_R1_PROPOSED_RETENTION_DAYS} owner_proposal=ROBERT_DUMANYAN decision=${SCOPE_HANDOFF_R1_RETENTION_DECISION_STATUS} human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
