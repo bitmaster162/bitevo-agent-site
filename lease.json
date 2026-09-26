@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "81368889-4391-4ef3-9d63-2219a20671bd",
   "nonce": "5eb8895e-b875-4754-853f-1ba943456deb",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "9db0c1ce20957e312bee315de6e28952053ea8d4",
@@ -11,10 +11,10 @@
   "session": "bitevo-p25-b10-retention-provenance-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p25_b10_20260926_01",
   "acquiredAt": "2026-09-26T16:13:56.112Z",
-  "updatedAt": "2026-09-26T16:13:56.112Z",
+  "updatedAt": "2026-09-26T16:32:48.139Z",
   "expiresAt": "2026-09-26T20:13:48.986Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "bcaeb5404313ce4dc0e9e789785c2fb3623be3a2"
+  "sealedHead": "d7a1341010da4fb98cf275840dc32f89316c2144",
+  "sealedTree": "c5f9e9fca20b0bf11123f2b7412c65be707fa883",
+  "featureRef": "refs/heads/agent/p25-b10-retention-provenance-r1",
+  "predecessor": "9461e99a3dbc03ba3ae12962d2a9bee5a29f296a"
 }
