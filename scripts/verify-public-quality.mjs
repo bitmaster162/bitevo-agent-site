@@ -410,7 +410,7 @@ if (fileSet.has('sitemap.xml')) {
   const sitemapLastmods = [];
   sitemapChecks += 5;
   if (currentness.schema !== 'bitevo.sitemap-currentness/v1') failures.push(`sitemap.xml: currentness schema mismatch (actual=${currentness.schema || 'missing'})`);
-  if (currentness.normalization !== 'provider-envelope-v1') failures.push(`sitemap.xml: currentness normalization mismatch (actual=${currentness.normalization || 'missing'})`);
+  if (currentness.normalization !== 'provider-envelope-v2') failures.push(`sitemap.xml: currentness normalization mismatch (actual=${currentness.normalization || 'missing'})`);
   if (currentnessByRoute.size !== indexableCount) failures.push(`sitemap.xml: currentness route count must equal indexable routes (currentness=${currentnessByRoute.size} indexable=${indexableCount})`);
   if (sitemapEntries.length !== indexableCount) failures.push(`sitemap.xml: URL entry count must equal indexable routes (entries=${sitemapEntries.length} indexable=${indexableCount})`);
   for (const entry of sitemapEntries) {
