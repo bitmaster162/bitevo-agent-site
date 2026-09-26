@@ -284,23 +284,23 @@
     },
     {
       "path": "/ru/consulting",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:447aa411a5b88ae85b917c79575b4e797a0b2c0489b7e046c2a104f44caafe14"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:22a8d5a7be0ae37ee8f5faef6c870416c96cc010a25a41ff48154a2b074c8952"
     },
     {
       "path": "/ru/agent-authority-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:b576a1e34f18e3de569fcb2f1c84f78387138e1be23862dbe6a238aab30f7398"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:51b8ea50854ac32842635bc9df96adf4e2a46e123dd46592071e64f5db9fd09c"
     },
     {
       "path": "/ru/mapper",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:f284fc234d4789418bf293f25875904a518439ac5b6accc30770956d92fced3e"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:3edcde8d5d27683a4e3dc2cbccb6097c81272af6cec09a8f0d90bd2d28b3bbb0"
     },
     {
       "path": "/ru/workspace",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:f43c5a061a6d1c6346614f0dc35a02a8514a3e7a3fe48cef0b571ff73e51fc1c"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:6347151fa14e266f800a0eba040888639312c1f7b33b5ab30ef6fd266ef25751"
     },
     {
       "path": "/ru/diagnostic",
@@ -320,7 +320,7 @@
     {
       "path": "/ru/audit/paid-start-gate",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:0f17c5bf9517d0cfbb700cb4eefa1ef4a83726f6e5a38b05d02a7a740620f8f0"
+      "fingerprint": "sha256:d04653872252b2fbae92c35812af4371079f15801c18bae718b1f059a474928b"
     },
     {
       "path": "/ru/audit/measured-value-gate",
@@ -334,8 +334,8 @@
     },
     {
       "path": "/ru/artifacts",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:c5c46c155278de9f4438ca4b6854dbe2c8b8bffd4a0f8123fb7df675a1f715e6"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:ff9e08a374455e16039f45d40253e2234ab52d23d53a54b9dcb8d27f13007414"
     },
     {
       "path": "/ru/proof",
@@ -344,8 +344,8 @@
     },
     {
       "path": "/ru/dogfood-self-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:49866019179a61ac15e6d5113aa7522a2987aa4a800164d87c56f21a83e4497d"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:399866a09091d6bb357a5b6fc8dc5d1b1bc522dd8f8a74b442166311d0026c70"
     },
     {
       "path": "/ru/build",
@@ -355,7 +355,7 @@
     {
       "path": "/ru/guides",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:c1676865147cc09691e0d18ec444528363577f6902e012edb45a189bee9f1cc6"
+      "fingerprint": "sha256:eb88c9b97988d17bdac56e30b2b72e48b06383961d1fb4ceadd288887b49b70d"
     },
     {
       "path": "/ru/doctrine",
@@ -364,8 +364,8 @@
     },
     {
       "path": "/ru/continuityos",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:f07ec7d244a66d88d2adac113f2082b834690bd11b49d31682a45b407ff1b293"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:a11352e8c53574f88ab6187cbc7ade55ccfd8eef3d92e081a9f3ed27f0d3624d"
     },
     {
       "path": "/ru/universe",
@@ -419,13 +419,13 @@
     },
     {
       "path": "/ru/build/proposal-readiness",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:8d011bbe1f5874ad4e5f28dfdeb53a268ad55c7fce790dade4eca761f7b991cd"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:2cb115b750a6a39a58f908493daeeaa6d2092cd15e2b36275fdd979e3434628a"
     },
     {
       "path": "/ru/build/paid-start-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:169d37cf1a54ac2ae0756a77eef774acfe2cc3dc04ca249c5201fde355dc5b9e"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:348338d37335a81ee5edcc752381115f4353f9af0077505d85b0f5564a96fe3a"
     },
     {
       "path": "/ru/build/measured-value-gate",
@@ -485,7 +485,7 @@
     {
       "path": "/ru/sample-deployment",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:9b60ed9e2184fb88b1bc56a95a2ca0995b4d7339c9c21f3255ddfe867202b473"
+      "fingerprint": "sha256:3cc0b990f7154697cd097d59fbb1b2526867011ac8e8fac69eb4d843f693e84a"
     },
     {
       "path": "/ru/security",

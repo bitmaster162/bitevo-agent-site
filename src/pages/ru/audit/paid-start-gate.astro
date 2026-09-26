@@ -14,7 +14,7 @@ const labels = [
 const offers = gate.offer_query_allowlist;
 ---
 
-<RuLayout title="Аудит: готовность оплаченного старта | BitEvo" description="Проверка внешних доказательств между принятым предложением аудита и началом работ. Без обработки оплаты, счёта, checkout или разрешения на тестирование." enPath="/audit/paid-start-gate" ruPath="/ru/audit/paid-start-gate">
+<RuLayout title="Аудит: готовность оплаченного старта | BitEvo" description="Проверка внешних доказательств между принятым предложением аудита и началом работ. Без обработки оплаты, счёта или разрешения на тестирование." enPath="/audit/paid-start-gate" ruPath="/ru/audit/paid-start-gate">
   <section class="section"><div class="narrow"><div class="eyebrow">AUDIT · PAID START GATE · PUBLIC TEMPLATE ONLY</div><h1 class="display">Предложение ещё не означает оплаченный старт.</h1><p class="lede">До перехода Entry, Security Control или Primary audit к delivery нужно отдельно подтвердить proposal acceptance, payment evidence, Rules of Engagement, authority/reviewer ownership, safe inputs, evidence/test boundary и explicit start authorization.</p></div></section>
 
   <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO DELIVERY START · NO TESTING AUTHORIZATION</strong><p>Public template не представляет customer state и не может доказать acceptance или payment. Query <code>offer</code> — только routing context; он не создаёт contract, payment request, delivery event или testing permission.</p></div></section>
