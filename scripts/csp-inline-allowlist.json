@@ -36,7 +36,7 @@
     "GMLEwbcmgV4uwo7ZuC6Ka/CYG0ZllP9THGcv8WuZHd8=",
     "GrV9bwdU2yiPlgcgbwh9teFoDlibuNOOJiXbojBAGS8=",
     "HEIoiuktl7c2Q5CX3BpP1zLghau3GUYL9mF3zQ/0bK4=",
-    "JTw7W7lNYJfVxO9xj7qaAaSj3tGpNDI6IQosx3/hdbc=",
+    "5f9K4zhyKJfe23Q/mX5t/fEMCHwzu0akHmpyQkW19WE=",
     "Mqd1SEX8IurSyzvr6f1sqdxT50J/7xBJ8FQqYnLdHHk=",
     "PoUjUZPO7Y7zlvRHLp4g5Ws4GhYilsTxTlWIGbf86zc=",
     "SJ/V74f7GS2b9ISGd+YHuW0ldOvHN/lwcjvaaZ8x2I4=",
@@ -106,6 +106,19 @@
       "routes": [
         "/continuityos",
         "/guides"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_P24_B3_PRECOMMIT",
+      "note": "P24 B3 changes only the reviewed inline style emitted by /ru to align the desktop hero structure with the English home layout while preserving existing responsive media rules. Replace the exact stale /ru style hash with the exact candidate-emitted hash; no new inline script, style attribute, or CSP relaxation is introduced.",
+      "styles": [
+        "5f9K4zhyKJfe23Q/mX5t/fEMCHwzu0akHmpyQkW19WE="
+      ],
+      "historicalEmittedStyles": [
+        "JTw7W7lNYJfVxO9xj7qaAaSj3tGpNDI6IQosx3/hdbc="
+      ],
+      "routes": [
+        "/ru"
       ]
     }
   ]
