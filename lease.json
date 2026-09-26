@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "597d1716-5d5a-473b-b25e-854fb68a2cd7",
   "nonce": "d22a89d0-6c9d-4f5c-b4d5-c3cde546e7f1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "cbc6b7271d372290aca335462a7050f9b3a8850a",
@@ -11,10 +11,10 @@
   "session": "bitevo-p24-b6-gates-plan-r2-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p24_b6_r2_20260926_01",
   "acquiredAt": "2026-09-26T05:00:32.220Z",
-  "updatedAt": "2026-09-26T05:00:32.220Z",
+  "updatedAt": "2026-09-26T05:14:59.493Z",
   "expiresAt": "2026-09-26T09:00:29.067Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "d63bb68aa637682eabec24e793727f999d971091"
+  "sealedHead": "48772440d96956350f88d1a31da7cc6820baddc1",
+  "sealedTree": "fd6b745ee491d84f3a30682022d8873fcb1120f6",
+  "featureRef": "refs/heads/agent/p24-b6-gates-plan-r2",
+  "predecessor": "fbadfcd76d8a646d6cdec43617709ff40d5cdacd"
 }
