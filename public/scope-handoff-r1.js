@@ -77,8 +77,9 @@
   const COPY = Object.freeze({
     en: {
       title:'Submit scope for human review',
-      consent:'I explicitly submit only the structured scope fields shown above for human review. This does not authorize testing, access, deployment, booking, payment or execution.',
+      consent:'I explicitly submit only the structured scope fields shown above for human review. I understand the 30-day private-retention boundary shown here. This does not authorize testing, access, deployment, booking, payment or execution.',
       boundary:'Only the bounded structured fields are sent. The generated brief, mapper draft, browser storage, cookies, analytics identifiers and files are not sent.',
+      retention:'If accepted, the scope record is stored privately for up to 30 days. Accountable data owner: Robert Dumanyan, Founder, BitEvo (robert@bitevo.work). Privacy deletion requests may be sent to that address and do not wait for the 30-day horizon.',
       manual:'Online handoff is optional. Copy, download and Contact Robert remain available as the manual fallback.',
       submit:'Submit scope for review', retry:'Retry same request', accepted:'Accepted for scope review',
       local:'Generate the local brief first. Nothing has been transmitted.',
@@ -98,8 +99,9 @@
     },
     ru: {
       title:'Отправить scope на ручной review',
-      consent:'Я явно отправляю только структурированные scope-поля выше на ручной review. Это не разрешает testing, access, deployment, booking, payment или execution.',
+      consent:'Я явно отправляю только структурированные scope-поля выше на ручной review. Я понимаю границу приватного хранения до 30 дней. Это не разрешает testing, access, deployment, booking, payment или execution.',
       boundary:'Передаются только bounded structured fields. Generated brief, mapper draft, browser storage, cookies, analytics identifiers и файлы не передаются.',
+      retention:'Если запрос принят, scope-запись хранится приватно до 30 дней. Ответственный за данные: Robert Dumanyan, Founder, BitEvo (robert@bitevo.work). Запрос на удаление по privacy можно отправить на этот адрес; он не ждёт окончания 30-дневного срока.',
       manual:'Online handoff необязателен. Copy, download и Contact Robert остаются ручным fallback.',
       submit:'Отправить scope на review', retry:'Повторить тот же request', accepted:'Принято на scope review',
       local:'Сначала сгенерируйте local brief. Ничего не передано.',
@@ -331,6 +333,7 @@
     return `<div class="eyebrow">SCOPE HANDOFF · R1</div>
       <h2>${text.title}</h2>
       <p class="brief-explain" data-scope-boundary>${text.boundary}</p>
+      <p class="brief-explain" data-scope-retention>${text.retention}</p>
       <label class="${locale === 'ru' ? 'check' : 'confirm'} scope-handoff-r1-consent"><input type="checkbox" data-scope-consent><span>${text.consent}</span></label>
       <div class="brief-actions"><button type="button" class="button button-primary" data-scope-submit disabled>${text.submit}</button></div>
       <p class="brief-explain" data-scope-manual>${text.manual} <a data-scope-manual-link href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">${text.manualLink}</a></p>

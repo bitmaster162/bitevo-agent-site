@@ -12,6 +12,7 @@ let cacheChecks = 0;
 let externalFontDomainChecks = 0;
 let routingChecks = 0;
 let deploymentChecks = 0;
+let cronChecks = 0;
 let provenanceChecks = 0;
 let hashChecks = 0;
 
@@ -29,6 +30,11 @@ if (deploymentEnabled?.['coordination/site-mutation-lease'] !== false) failures.
 deploymentChecks += 1;
 if (deploymentEnabled?.['agent/site-p24-scope-handoff-production-readiness-r1'] !== false) failures.push('vercel.json: P24 feature branch must not trigger Vercel deployments');
 
+const crons = Array.isArray(vercelConfig.crons) ? vercelConfig.crons : [];
+cronChecks += 1;
+if (crons.length !== 1) failures.push('vercel.json: expected exactly one bounded cron job');
+cronChecks += 1;
+if (!crons.some(item => item?.path === '/api/scope-handoff-retention' && item?.schedule === '0 3 * * *')) failures.push('vercel.json: missing exact daily Scope Handoff retention cron');
 
 const requiredSecurityHeaderKeys = ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy','content-security-policy'];
 for (const key of requiredSecurityHeaderKeys) {
@@ -83,4 +89,4 @@ routingChecks += 1; if (!exactRedirect('/guides/ai-agent-reliability-audit', '/a
 routingChecks += 1; if (!exactRedirect('/ru/guides/ai-agent-reliability-audit', '/ru/agent-authority-audit')) failures.push('vercel.json: missing permanent RU reliability redirect declaration');
 
 if (failures.length) { console.error('VERCEL_POLICY_GATE=FAIL'); for (const failure of failures) console.error(failure); process.exit(1); }
-console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} failures=0`);
+console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} cron_checks=${cronChecks} failures=0`);

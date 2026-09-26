@@ -8,6 +8,11 @@ import {
 } from '../src/lib/scope-handoff-r1/activation.js';
 import { handleScopeHandoffRequest } from '../src/lib/scope-handoff-r1/core.js';
 import {
+  SCOPE_HANDOFF_R1_RETENTION_DAYS,
+  SCOPE_HANDOFF_R1_STORAGE_OWNER,
+  SCOPE_HANDOFF_R1_STORAGE_OWNER_EMAIL
+} from '../src/lib/scope-handoff-r1/policy.js';
+import {
   deletionDecision,
   operatorTokenMatches,
   OPERATOR_DELIVERY_STATUS,
@@ -30,8 +35,8 @@ const production = Object.freeze({
   SCOPE_HANDOFF_R1_UI_ENABLED:'true',
   SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED:'true',
   SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN:'x'.repeat(48),
-  SCOPE_HANDOFF_R1_STORAGE_OWNER:'Named BitEvo operator',
-  SCOPE_HANDOFF_R1_RETENTION_DAYS:'30'
+  SCOPE_HANDOFF_R1_STORAGE_OWNER:SCOPE_HANDOFF_R1_STORAGE_OWNER,
+  SCOPE_HANDOFF_R1_RETENTION_DAYS:String(SCOPE_HANDOFF_R1_RETENTION_DAYS)
 });
 
 const enabled = evaluateScopeHandoffActivation(production);
@@ -41,14 +46,14 @@ equal(enabled.productionReady, true, 'review switch/token, named storage owner a
 equal(enabled.runtimeEnabled, true, 'runtime can enable only when every production gate is true');
 equal(enabled.uiEnabled, true, 'UI remains a separate explicit switch');
 equal(enabled.operatorReviewEnabled, true, 'operator queue is required in production profile');
-equal(enabled.storageOwner, 'Named BitEvo operator', 'named storage owner comes from explicit operator configuration');
-equal(enabled.retentionDays, 30, 'retention comes from explicit operator configuration');
+equal(enabled.storageOwner, SCOPE_HANDOFF_R1_STORAGE_OWNER, 'production storage owner must exactly match the decided policy');
+equal(enabled.retentionDays, SCOPE_HANDOFF_R1_RETENTION_DAYS, 'production retention must exactly match the decided policy');
 
 for (const [key, reason] of [
   ['SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED','OPERATOR_REVIEW_SWITCH_OFF'],
   ['SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN','OPERATOR_REVIEW_TOKEN_MISSING'],
-  ['SCOPE_HANDOFF_R1_STORAGE_OWNER','STORAGE_OWNER_MISSING'],
-  ['SCOPE_HANDOFF_R1_RETENTION_DAYS','RETENTION_NOT_CONFIGURED']
+  ['SCOPE_HANDOFF_R1_STORAGE_OWNER','STORAGE_OWNER_POLICY_MISMATCH'],
+  ['SCOPE_HANDOFF_R1_RETENTION_DAYS','RETENTION_POLICY_MISMATCH']
 ]) {
   const value = key === 'SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED' ? 'false' : '';
   const result = evaluateScopeHandoffActivation({ ...production, [key]:value });
@@ -57,7 +62,9 @@ for (const [key, reason] of [
   equal(result.runtimeReason, reason, `${key}: failure reason is explicit`);
 }
 equal(parseScopeHandoffRetentionDays({ SCOPE_HANDOFF_R1_RETENTION_DAYS:'0' }).ok, false, 'zero retention is rejected');
-equal(parseScopeHandoffRetentionDays({ SCOPE_HANDOFF_R1_RETENTION_DAYS:'30 ' }).ok, false, 'retention matching is exact');
+equal(parseScopeHandoffRetentionDays({ SCOPE_HANDOFF_R1_RETENTION_DAYS:'30 ' }).ok, false, 'retention parsing is exact');
+equal(evaluateScopeHandoffActivation({ ...production, SCOPE_HANDOFF_R1_STORAGE_OWNER:'Another Owner' }).runtimeReason, 'STORAGE_OWNER_POLICY_MISMATCH', 'wrong named owner fails closed');
+equal(evaluateScopeHandoffActivation({ ...production, SCOPE_HANDOFF_R1_RETENTION_DAYS:'29' }).runtimeReason, 'RETENTION_POLICY_MISMATCH', 'wrong retention horizon fails closed');
 
 const entry = id => ({
   schema_version:'bitevo.scope-handoff.r1',
@@ -95,8 +102,8 @@ const allowLimiter = Object.freeze({ consume:async () => ({ decision:'ALLOW', pr
     enabled:true,
     store,
     reviewQueue:queue,
-    storageOwner:'Named BitEvo operator',
-    retentionDays:30,
+    storageOwner:SCOPE_HANDOFF_R1_STORAGE_OWNER,
+    retentionDays:SCOPE_HANDOFF_R1_RETENTION_DAYS,
     rateLimiter:allowLimiter,
     idFactory:()=> 'sh_r1_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     now:()=> '2026-09-26T00:00:00.000Z'
@@ -109,7 +116,7 @@ const allowLimiter = Object.freeze({ consume:async () => ({ decision:'ALLOW', pr
   equal(queued?.status, REVIEW_QUEUE_STATUS, 'durable queue entry exists');
   const stored = [...store.records.values()][0];
   equal(queued?.request_digest, stored.request_digest, 'queue binds exact stored request digest');
-  equal(stored.storage_owner, 'Named BitEvo operator', 'accepted record binds named accountable storage owner');
+  equal(stored.storage_owner, SCOPE_HANDOFF_R1_STORAGE_OWNER, 'accepted record binds the exact accountable storage owner');
   check(!Object.prototype.hasOwnProperty.call(queued || {}, 'company'), 'queue metadata does not duplicate company/contact payload data');
 }
 
@@ -122,8 +129,8 @@ const allowLimiter = Object.freeze({ consume:async () => ({ decision:'ALLOW', pr
     enabled:true,
     store,
     reviewQueue:queue,
-    storageOwner:'Named BitEvo operator',
-    retentionDays:7,
+    storageOwner:SCOPE_HANDOFF_R1_STORAGE_OWNER,
+    retentionDays:SCOPE_HANDOFF_R1_RETENTION_DAYS,
     rateLimiter:allowLimiter,
     idFactory:()=> 'sh_r1_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
     now:()=> '2026-09-26T00:00:00.000Z'
@@ -133,7 +140,7 @@ const allowLimiter = Object.freeze({ consume:async () => ({ decision:'ALLOW', pr
   equal(store.records.size, 1, 'stored record remains available for same-ID reconciliation');
   queue.failWrite = false;
   const retry = await json(await handleScopeHandoffRequest(req(payload), {
-    enabled:true, store, reviewQueue:queue, storageOwner:'Named BitEvo operator', retentionDays:7, rateLimiter:allowLimiter
+    enabled:true, store, reviewQueue:queue, storageOwner:SCOPE_HANDOFF_R1_STORAGE_OWNER, retentionDays:SCOPE_HANDOFF_R1_RETENTION_DAYS, rateLimiter:allowLimiter
   }));
   equal(retry.status, 200, 'same request reconciles without a second record');
   equal(retry.body.replayed, true, 'reconciliation preserves idempotency');
@@ -169,13 +176,16 @@ for (const [locale, html] of [['EN',enDist],['RU',ruDist]]) {
 for (const marker of [
   'P24_SOURCE_MERGED_DEPLOYED / DEFAULT_OFF / NO_RUNTIME_EFFECT',
   'production_scope_review_r1',
-  'RETENTION_DAYS = OPERATOR_CONFIG_REQUIRED',
-  'STORAGE_OWNER = OPERATOR_CONFIG_REQUIRED',
+  `RETENTION_DAYS = ${SCOPE_HANDOFF_R1_RETENTION_DAYS}`,
+  `STORAGE_OWNER = ${SCOPE_HANDOFF_R1_STORAGE_OWNER}`,
+  `PRIVACY_CONTACT = ${SCOPE_HANDOFF_R1_STORAGE_OWNER_EMAIL}`,
+  'AUTO_PURGE_SOURCE = PRESENT',
   'HUMAN_REVIEW = NOT_CONFIRMED',
   'PRODUCTION_ENABLE = NOT_AUTHORIZED',
   'PR #158',
   '4300657ee025e2cf65912302606c1daf548982a4',
-  'ROBERT_DECISION_PENDING',
+  'RETENTION_POLICY_30_DAYS',
+  'STORAGE_OWNER_ROBERT_DUMANYAN',
   '503 SERVICE_DISABLED',
   'provider_io=0',
   'testing_authorization=false'
@@ -186,4 +196,4 @@ for (const stale of [
   'Merge: 0'
 ]) check(!doc.includes(stale), `P24 doc stale pre-merge claim remains: ${stale}`);
 
-console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY default_off=PASS operator_queue=BOUND retention=EXPLICIT_CONFIG_REQUIRED human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
+console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY default_off=PASS operator_queue=BOUND retention=EXACT_30D_POLICY owner=ROBERT_DUMANYAN human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
