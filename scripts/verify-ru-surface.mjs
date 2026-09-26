@@ -10,8 +10,51 @@ const routes = registry.routes
   .map(route => [route.path === '/' ? '/ru' : `/ru${route.path}`, route.path]);
 const navRequired = ['/ru/start','/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
 const requiredCyrillic = /[А-Яа-яЁё]/;
+const gateLocalizationExpected = new Map([
+  ['/ru/audit/proposal-readiness', {
+    title: 'Аудит: готовность письменного предложения | BitEvo',
+    h1: 'Краткое описание границ ещё не является предложением.',
+    description: 'Проверка готовности после согласования границ аудита к письменному предложению. Без договора, счёта, оформления оплаты или разрешения на тестирование.'
+  }],
+  ['/ru/audit/paid-start-gate', {
+    title: 'Аудит: готовность оплаченного старта | BitEvo',
+    h1: 'Предложение ещё не означает оплаченный старт.',
+    description: 'Проверка внешних доказательств между принятым предложением аудита и началом работ. Без обработки оплаты, счёта, checkout или разрешения на тестирование.'
+  }],
+  ['/ru/audit/measured-value-gate', {
+    title: 'Аудит: готовность измеренной ценности | BitEvo',
+    h1: 'Выполнение ещё не означает измеренную ценность.',
+    description: 'Проверка между выполнением аудита и заявлением об измеренной ценности. Шаблон не создаёт результат клиента, ROI, продление или доказательство ценности.'
+  }],
+  ['/ru/audit/renewal-expansion-gate', {
+    title: 'Аудит: готовность к продлению / расширению | BitEvo',
+    h1: 'Измеренная ценность ещё не означает продление.',
+    description: 'Проверка между измеренной ценностью и заявлением о продлении или расширении. Публичный шаблон не создаёт доказательства клиента, NRR, ROI или продления.'
+  }],
+  ['/ru/build/measured-value-gate', {
+    title: 'BUILD: готовность измеренной ценности | BitEvo',
+    h1: 'Выполнение ещё не означает измеренную ценность.',
+    description: 'Проверка BUILD между выполнением и заявлением об измеренной ценности или ROI. Синтетический пример не является доказательством результата клиента.'
+  }],
+  ['/ru/build/renewal-expansion-gate', {
+    title: 'BUILD: готовность к продлению / расширению | BitEvo',
+    h1: 'Измеренная ценность ещё не означает продление.',
+    description: 'Проверка BUILD между измеренной ценностью и заявлением о продлении или расширении. Публичный шаблон не создаёт доказательства клиента, NRR или ROI.'
+  }]
+]);
 const failures = [];
 let checks = 0;
+
+function visibleText(html, tag) {
+  const raw = html.match(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'))?.[1] || '';
+  return raw.replace(/<[^>]+>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function descriptionText(html) {
+  return html.match(/<meta\b[^>]*\bname=["']description["'][^>]*\bcontent=(["'])(.*?)\1[^>]*>/i)?.[2]
+    || html.match(/<meta\b[^>]*\bcontent=(["'])(.*?)\1[^>]*\bname=["']description["'][^>]*>/i)?.[2]
+    || '';
+}
 
 function fileFor(route) {
   return route === '/' ? `${dist}/index.html` : route === '/ru' ? `${dist}/ru/index.html` : `${dist}${route}/index.html`;
@@ -52,6 +95,20 @@ for (const [route, enRoute] of routes) {
   ];
   checks += assertions.length;
   for (const [label, ok] of assertions) if (!ok) failures.push(`${route}: ${label} failed`);
+
+  const expectedLocalization = gateLocalizationExpected.get(route);
+  if (expectedLocalization) {
+    const actualTitle = visibleText(html, 'title');
+    const actualH1 = visibleText(html, 'h1');
+    const actualDescription = descriptionText(html);
+    const localizationChecks = [
+      ['localized gate title', actualTitle === expectedLocalization.title],
+      ['localized gate H1', actualH1 === expectedLocalization.h1],
+      ['localized gate description', actualDescription === expectedLocalization.description]
+    ];
+    checks += localizationChecks.length;
+    for (const [label, ok] of localizationChecks) if (!ok) failures.push(`${route}: ${label} failed`);
+  }
 
   const enHtml = await readFile(fileFor(enRoute), 'utf8');
   const reciprocal = [

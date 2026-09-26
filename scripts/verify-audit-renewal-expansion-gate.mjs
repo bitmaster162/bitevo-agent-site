@@ -13,7 +13,7 @@ const ruMeasured = await read('/ru/audit/measured-value-gate');
 const data = JSON.parse(await readFile(`${dist}/audit/renewal-expansion-gate.json`,'utf8'));
 
 for (const phrase of ['Measured value is not renewal.','NO RENEWAL CLAIM · NO EXPANSION CLAIM · NO RETAINED REVENUE CLAIM · NO NRR CLAIM · NO ROI CLAIM','No renewal or expansion state is represented.','Measured value cannot substitute for a buyer renewal decision.']) if (!strip(en).includes(phrase)) failures.push(`EN missing: ${phrase}`);
-for (const phrase of ['Measured value ещё не является renewal.','NO RENEWAL CLAIM · NO EXPANSION CLAIM · NO RETAINED REVENUE CLAIM · NO NRR CLAIM · NO ROI CLAIM','Никакой renewal или expansion state здесь не представлен.','Measured value не заменяет buyer renewal decision.']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
+for (const phrase of ['Измеренная ценность ещё не означает продление.','NO RENEWAL CLAIM · NO EXPANSION CLAIM · NO RETAINED REVENUE CLAIM · NO NRR CLAIM · NO ROI CLAIM','Никакой renewal или expansion state здесь не представлен.','Measured value не заменяет buyer renewal decision.']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
 if (data.schema !== 'bitevo.audit-renewal-expansion-gate/v1' || data.state !== 'PUBLIC_AUDIT_RENEWAL_EXPANSION_READINESS_TEMPLATE_NOT_CUSTOMER_STATE' || data.customer_state !== 'NOT_REPRESENTED') failures.push('schema/state/customer-state drift');
 for (const [key,value] of Object.entries(data.claims||{})) if (value !== false) failures.push(`claim ${key} must remain false`);
 if (Object.keys(data.claims||{}).length !== 12) failures.push('claim count drift');
