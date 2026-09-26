@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "0e93ffe4-436f-4dee-8af3-1adbb6168269",
   "nonce": "e2497a11-d376-4338-bf63-c30510877476",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "9762a7485c4f040296989283bb475dbdfe753c6e",
@@ -11,10 +11,12 @@
   "session": "site-p24-r3-post-b2-recon-20260926",
   "worktree": "c:/users/coins/downloads/bitevo_p24_scope_handoff_production_readiness_20260926",
   "acquiredAt": "2026-09-26T01:45:53.5911875+00:00",
-  "updatedAt": "2026-09-26T02:39:03.923Z",
+  "updatedAt": "2026-09-26T03:15:08.759Z",
   "expiresAt": "2026-09-26T05:45:53.5911875+00:00",
   "sealedHead": "781a6f8b7aaa71f1ddf19f2059547b533e037166",
   "sealedTree": "40b4a326e57aa0574fc9afe43794f5334913f725",
   "featureRef": "refs/heads/agent/site-p24-scope-handoff-production-readiness-r1",
-  "predecessor": "33ab6de439ccf0c5d212efe508bf3e20cbd155ad"
+  "predecessor": "9f2b0b9cbae3558d8a27f023f656312227b8aced",
+  "releasedAt": "2026-09-26T03:15:08.760Z",
+  "releaseReason": "p24_scope_handoff_pr158_live_verified_complete"
 }
