@@ -2,18 +2,18 @@
 import RuLayout from '../../../layouts/RuLayout.astro';
 import gate from '../../../data/build-paid-start-gate.json';
 const labels = [
-  'Принятый письменный proposal и точный workflow scope',
-  'Payment evidence подтверждён через согласованный direct business channel',
-  'Письменные Rules of Engagement согласованы до testing',
-  'Buyer-confirmed baseline зафиксирован для того же workflow definition',
-  'Названы process owner, reviewer и acceptance evidence',
-  'Safe inputs и согласованные access dependencies доступны без secrets на public site',
-  'Явный delivery/start authorization после всех предыдущих gates'
+  'Принятое письменное предложение и точные границы workflow',
+  'Доказательство оплаты подтверждено через согласованный прямой business channel',
+  'Письменные Rules of Engagement согласованы до тестирования',
+  'Buyer-confirmed baseline зафиксирован для того же определения workflow',
+  'Названы process owner, reviewer и доказательство принятия',
+  'Безопасные inputs и согласованные зависимости доступа доступны без secrets на public site',
+  'Явное разрешение на старт выполнения после всех предыдущих gates'
 ];
 ---
 
-<RuLayout title="Проверить paid-start gate | BitEvo" description="Gate между принятым proposal и delivery BUILD-диагностики. Без payment processing, invoice, checkout, подписи, booking и testing authorization." enPath="/build/paid-start-gate" ruPath="/ru/build/paid-start-gate">
-  <section class="section"><div class="narrow"><div class="eyebrow">BUILD · PAID START GATE · PUBLIC TEMPLATE ONLY</div><h1 class="display">Proposal ещё не является paid start.</h1><p class="lede">До начала delivery нужно отдельно подтвердить accepted proposal/scope, payment evidence, письменные Rules of Engagement, frozen buyer baseline, owner/reviewer, safe inputs и explicit start authorization.</p></div></section>
+<RuLayout title="Проверка готовности оплаченного старта | BitEvo" description="Gate между принятым proposal и delivery BUILD-диагностики. Без payment processing, invoice, checkout, подписи, booking и testing authorization." enPath="/build/paid-start-gate" ruPath="/ru/build/paid-start-gate">
+  <section class="section"><div class="narrow"><div class="eyebrow">BUILD · PAID START GATE · PUBLIC TEMPLATE ONLY</div><h1 class="display">Предложение ещё не означает оплаченный старт.</h1><p class="lede">До начала delivery нужно отдельно подтвердить accepted proposal/scope, payment evidence, письменные Rules of Engagement, frozen buyer baseline, owner/reviewer, safe inputs и explicit start authorization.</p></div></section>
 
   <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO SIGNATURE · NO BOOKING · NO DELIVERY START · NO TESTING AUTHORIZATION</strong><p>Страница не представляет customer state и не может доказать оплату. Она не создаёт contract, payment request, delivery event или testing permission.</p></div></section>
 

@@ -284,23 +284,23 @@
     },
     {
       "path": "/ru/consulting",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:447aa411a5b88ae85b917c79575b4e797a0b2c0489b7e046c2a104f44caafe14"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:7ec8b12dc2a0c4b95d2a684216cd3c17773b47c2aa30f83808e2df4aaa1249db"
     },
     {
       "path": "/ru/agent-authority-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:b576a1e34f18e3de569fcb2f1c84f78387138e1be23862dbe6a238aab30f7398"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:462f4597a873763493b7cabfd154caa977fe2f02f32e2582407d56a8ed1f7077"
     },
     {
       "path": "/ru/mapper",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:f284fc234d4789418bf293f25875904a518439ac5b6accc30770956d92fced3e"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:411e9a4d6627a690b828e3507c0b57378ad61108fcfed4a6c747f570a61feb23"
     },
     {
       "path": "/ru/workspace",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:f43c5a061a6d1c6346614f0dc35a02a8514a3e7a3fe48cef0b571ff73e51fc1c"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:3dfc16375c8a027ca5f9da08bd0787054e1a6593fa762b651df5fcfd83707696"
     },
     {
       "path": "/ru/diagnostic",
@@ -315,27 +315,27 @@
     {
       "path": "/ru/audit/proposal-readiness",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:7dcd1b8550147da4ca353f0395f2b1c26e65f1807dc83b2e35f575416a86cd44"
+      "fingerprint": "sha256:c72d0774381fd2c0c153859ccd898dd8d81d38c2d3f3038553ef7559772f4796"
     },
     {
       "path": "/ru/audit/paid-start-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:48f48f65dcf59c207de4bc3a9fd7c4686a25c8f7251a6d2f7f3ba0044273b6bb"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:18a3fec09408f2bf541046e74f07ae3138a2d29eb412efb6e666a4ce6966eb24"
     },
     {
       "path": "/ru/audit/measured-value-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:2403ca9ea2f309dc98c0223be2c8742bfed058a2e1e83287b87016b6c07208b4"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:3b3bea9529b7957f3669e59af02b93eb79df223af69f4dcc1176ab3c42648315"
     },
     {
       "path": "/ru/audit/renewal-expansion-gate",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:f53cd7d7a0a9bd6a42f3df7045e9563c2fe984b19d84bd696e87f982d2e96cb8"
+      "fingerprint": "sha256:ff0dd103a41bbeb65df2f8670fbd5b6475eea84383fd61be2a42fe9f91bd0a1f"
     },
     {
       "path": "/ru/artifacts",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:c5c46c155278de9f4438ca4b6854dbe2c8b8bffd4a0f8123fb7df675a1f715e6"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:a77a30f3cabe1146f98e8f6ac6054c3a64c9eaa978f6791125d1b940977c7511"
     },
     {
       "path": "/ru/proof",
@@ -344,8 +344,8 @@
     },
     {
       "path": "/ru/dogfood-self-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:49866019179a61ac15e6d5113aa7522a2987aa4a800164d87c56f21a83e4497d"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:d3275f5b298a68e1ed4959c87d79239d30ef220e3909a04d43af10a5195704b1"
     },
     {
       "path": "/ru/build",
@@ -355,7 +355,7 @@
     {
       "path": "/ru/guides",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:c1676865147cc09691e0d18ec444528363577f6902e012edb45a189bee9f1cc6"
+      "fingerprint": "sha256:c913b5b2c2b03bd1879973b2d5d4cfa8d4ff8945ab00e69a527b628e01ca7dc0"
     },
     {
       "path": "/ru/doctrine",
@@ -364,8 +364,8 @@
     },
     {
       "path": "/ru/continuityos",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:f07ec7d244a66d88d2adac113f2082b834690bd11b49d31682a45b407ff1b293"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:ad3b3d032d22caf6814a09d3e770162222f067b8ff8f6a1424314af3f39dfc6c"
     },
     {
       "path": "/ru/universe",
@@ -419,23 +419,23 @@
     },
     {
       "path": "/ru/build/proposal-readiness",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:8d011bbe1f5874ad4e5f28dfdeb53a268ad55c7fce790dade4eca761f7b991cd"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:f1f929c4477ca9aca26c662f28f590bf28423d11aceab3af48ff688f8522b47f"
     },
     {
       "path": "/ru/build/paid-start-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:169d37cf1a54ac2ae0756a77eef774acfe2cc3dc04ca249c5201fde355dc5b9e"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:06a33b74a67787a15a2235e7adda8022204afd816819d89333112b02d2a988f8"
     },
     {
       "path": "/ru/build/measured-value-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:837f02217562ccf579e6f5212b67900025a1e2557d4405c8990436ed409112ff"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:6e503b662a2538a8584adcaa178e7cc325fc871c4c274b5b8e52fdfe4c7f8c7d"
     },
     {
       "path": "/ru/build/renewal-expansion-gate",
-      "lastmod": "2026-09-20",
-      "fingerprint": "sha256:c6ae7974e9707cd8f9a0ea2cd5d73239ad81d9d248e7705dd6d33688a9607ec9"
+      "lastmod": "2026-09-26",
+      "fingerprint": "sha256:3a6985ca9a6141eda9e3db46a80968ffdc0e93f6c3a47ecbbaf46044de66396c"
     },
     {
       "path": "/ru/mcp-governance",
@@ -485,7 +485,7 @@
     {
       "path": "/ru/sample-deployment",
       "lastmod": "2026-09-26",
-      "fingerprint": "sha256:9b60ed9e2184fb88b1bc56a95a2ca0995b4d7339c9c21f3255ddfe867202b473"
+      "fingerprint": "sha256:57c04d70ff4fdf4ebb23f7579f0ec3f6ffe0548095bddcc3a6be86b718f8d792"
     },
     {
       "path": "/ru/security",

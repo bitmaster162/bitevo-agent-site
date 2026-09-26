@@ -265,11 +265,11 @@
       "enPath": "/sample-deployment",
       "category": "PROOF",
       "eyebrow": "SYNTHETIC SAMPLE · STAGING DEPLOYMENT",
-      "title": "Синтетический deployment пример связывает environment, baseline и external readback.",
-      "metaTitle": "SAMPLE-003: синтетический deployment — BitEvo",
-      "description": "RU parity для SAMPLE-003: synthetic staging deployment/config finding про environment и baseline/version binding; не production runtime proof.",
+      "title": "Синтетический пример развёртывания связывает environment, baseline и external readback.",
+      "metaTitle": "SAMPLE-003: синтетическое staging-развёртывание — BitEvo",
+      "description": "RU parity для SAMPLE-003: синтетический finding staging deployment/config про environment и baseline/version binding; не production runtime proof.",
       "points": [
-        "Объект примера — staging deployment/config effect, а не production release.",
+        "Объект примера — эффект staging deployment/config, а не production release.",
         "Worked owner decision — REPAIR в рамках synthetic example.",
         "customer_evidence=false, executed_audit=false, certification=false; sample не является runtime proof."
       ],

@@ -11,7 +11,7 @@ const en = await read('/build/paid-start-gate');
 const ru = await read('/ru/build/paid-start-gate');
 const data = JSON.parse(await readFile(`${dist}/build/paid-start-gate.json`,'utf8'));
 for (const phrase of ['A proposal is not a paid start.','NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO SIGNATURE · NO BOOKING · NO DELIVERY START · NO TESTING AUTHORIZATION','This page cannot prove payment.','Delivery remains unstarted by default.']) if (!strip(en).includes(phrase)) failures.push(`EN missing: ${phrase}`);
-for (const phrase of ['Proposal ещё не является paid start.','NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO SIGNATURE · NO BOOKING · NO DELIVERY START · NO TESTING AUTHORIZATION','Эта страница не может доказать payment.','Delivery по умолчанию остаётся unstarted.']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
+for (const phrase of ['Предложение ещё не означает оплаченный старт.','NO PAYMENT PROCESSING · NO INVOICE · NO CHECKOUT · NO SIGNATURE · NO BOOKING · NO DELIVERY START · NO TESTING AUTHORIZATION','Эта страница не может доказать payment.','Delivery по умолчанию остаётся unstarted.']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
 if (data.schema !== 'bitevo.build-paid-start-gate/v1' || data.state !== 'PUBLIC_PAID_START_GATE_TEMPLATE_NOT_CUSTOMER_STATE' || data.customer_state !== 'NOT_REPRESENTED') failures.push('schema/state/customer-state drift');
 for (const [key,value] of Object.entries(data.claims||{})) if (value !== false) failures.push(`claim ${key} must remain false`);
 if (Object.keys(data.claims||{}).length !== 10) failures.push('claim count drift');

@@ -10,8 +10,40 @@ const routes = registry.routes
   .map(route => [route.path === '/' ? '/ru' : `/ru${route.path}`, route.path]);
 const navRequired = ['/ru/start','/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
 const requiredCyrillic = /[А-Яа-яЁё]/;
+const gateLocalizationRoutes = new Set([
+  '/ru/audit/measured-value-gate',
+  '/ru/audit/paid-start-gate',
+  '/ru/audit/proposal-readiness',
+  '/ru/audit/renewal-expansion-gate',
+  '/ru/build/measured-value-gate',
+  '/ru/build/renewal-expansion-gate'
+]);
 const failures = [];
 let checks = 0;
+
+function visibleLetterShare(html) {
+  const body = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1] || html;
+  const text = body
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<svg\b[^>]*>[\s\S]*?<\/svg>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z0-9#]+;/gi, ' ');
+  const cyr = (text.match(/[А-Яа-яЁё]/g) || []).length;
+  const lat = (text.match(/[A-Za-z]/g) || []).length;
+  return { cyr, lat, share: cyr + lat ? cyr / (cyr + lat) : 0 };
+}
+
+function textOfFirst(html, tag) {
+  const raw = html.match(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'))?.[1] || '';
+  return raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function metaDescription(html) {
+  return html.match(/<meta\b[^>]*\bname=["']description["'][^>]*\bcontent=(["'])(.*?)\1[^>]*>/i)?.[2]
+    || html.match(/<meta\b[^>]*\bcontent=(["'])(.*?)\1[^>]*\bname=["']description["'][^>]*>/i)?.[2]
+    || '';
+}
 
 function fileFor(route) {
   return route === '/' ? `${dist}/index.html` : route === '/ru' ? `${dist}/ru/index.html` : `${dist}${route}/index.html`;
@@ -52,6 +84,20 @@ for (const [route, enRoute] of routes) {
   ];
   checks += assertions.length;
   for (const [label, ok] of assertions) if (!ok) failures.push(`${route}: ${label} failed`);
+
+  const letterShare = visibleLetterShare(html);
+  checks += 1;
+  if (!(letterShare.share > 0.33)) failures.push(`${route}: Cyrillic share ${(letterShare.share * 100).toFixed(2)}% must be >33% (cyr=${letterShare.cyr}, lat=${letterShare.lat})`);
+
+  if (gateLocalizationRoutes.has(route)) {
+    const titleText = textOfFirst(html, 'title');
+    const h1Text = textOfFirst(html, 'h1');
+    const descriptionText = metaDescription(html);
+    checks += 3;
+    if (!requiredCyrillic.test(titleText)) failures.push(`${route}: gate title is not localized`);
+    if (!requiredCyrillic.test(h1Text)) failures.push(`${route}: gate H1 is not localized`);
+    if (!requiredCyrillic.test(descriptionText)) failures.push(`${route}: gate description is not localized`);
+  }
 
   const enHtml = await readFile(fileFor(enRoute), 'utf8');
   const reciprocal = [

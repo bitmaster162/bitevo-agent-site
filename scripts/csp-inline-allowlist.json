@@ -3,12 +3,12 @@
   "observedFrom": {
     "deployment": "dpl_4jxhm6SHU4bF3NPmDEqyiDvjjMXX",
     "sourceSha": "8b3ee591af545f982b8cae47a676573a3527f067",
-    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by reviewed public-site candidates. Existing hashes retain their prior review provenance. Site Recovery R5 adds one reviewed shared style hash emitted identically by the 27 generated RU semantic-parity pages; the source block is the static scoped style in src/pages/ru/[...slug].astro. No new executable inline script hash is authorized by this R5 change. P1G5 replaces the reviewed RU audit-intake style hash after direct old-production versus candidate comparison proved a 4,998-byte pure cyclic rotation at offset 955 with identical CSS content and no added rule."
+    "note": "Exact SHA-256 hashes of immutable inline blocks emitted by reviewed public-site candidates. Existing hashes retain their prior review provenance. Site Recovery R5 adds one reviewed shared style hash emitted identically by the 27 generated RU semantic-parity pages; the source block is the static scoped style in src/pages/ru/[...slug].astro. No new executable inline script hash is authorized by this R5 change. P1G5 replaces the reviewed RU audit-intake style hash after direct old-production versus candidate comparison proved a 4,998-byte pure cyclic rotation at offset 955 with identical CSS content and no added rule. P24 B6 replaces only the reviewed RU Mapper inline script hash after translating user-facing Russian UI strings; runtime identifiers, storage keys, state tokens, effect logic and execution behavior remain unchanged."
   },
   "scripts": [
     "+rVF0gm454fmrPRReUtPZqCWRh3reD8JRBpaCUxlNrU=",
     "/mc54KxmNBh5K+s5oI/o0oIIsOPAGz9ZnggWK33OBlc=",
-    "N/VFMCRqc/DbmBJMyBttUdgTGApVdZkP/fyufRW/qjE=",
+    "oBvWxsr15Phvvk7m+5aGUlFYTMZY7Zgy8ixVwtzEKRM=",
     "Q8uzedO5addVpTyf/QHQLbSO3OWvyXZ05eqR6fBhoFM=",
     "VCHYdN9WB0fRdXlDSLPvR02Z29wA4KPF06SL/2HRGrI=",
     "ViMFOCFRTytZPXHFAJs0Uunpn0q04K8tJpLtJ1Ca92k=",

@@ -2,21 +2,21 @@
 import RuLayout from '../../../layouts/RuLayout.astro';
 import gate from '../../../data/build-renewal-expansion-gate.json';
 const labels = [
-  'Принятый measured-value statement, привязанный к тому же workflow, offer, metric и evidence provenance',
-  'Явно определены renewal/expansion decision window и применимый service period',
-  'Named buyer/owner проверяет continued need, observed value и unresolved limitations',
-  'Зафиксированы material workflow, environment, scope и attribution changes после measurement',
-  'Любые proposed renewal/expansion scope, price и term заданы явно и не выводятся из template',
-  'Любое renewal/expansion decision подтверждено explicit buyer-authorized evidence',
-  'Retained revenue или NRR, если заявляются, подтверждены verified commercial/payment records, а не арифметикой',
-  'Named owner/reviewer принимает bounded renewal/expansion statement до публикации или reuse'
+  'Принятое заявление измеренной ценности, привязанное к тому же workflow, offer, метрике и provenance доказательств',
+  'Явно определены окно решения о продлении/расширении и применимый service period',
+  'Названный buyer/owner проверяет сохраняющуюся потребность, observed value и нерешённые ограничения',
+  'Зафиксированы существенные изменения workflow, environment, scope и attribution после измерения',
+  'Любые предложенные scope, price и term продления/расширения заданы явно и не выводятся из шаблона',
+  'Любое решение о продлении/расширении подтверждено явным buyer-authorized evidence',
+  'Retained revenue или NRR, если заявляются, подтверждены проверенными commercial/payment records, а не арифметикой',
+  'Названный owner/reviewer принимает ограниченное заявление о продлении/расширении до публикации или reuse'
 ];
 ---
-<RuLayout title="BUILD Renewal / Expansion Readiness | BitEvo" description="Evidence-safe BUILD gate между measured value и renewal/expansion claim. Public template не создаёт customer, retained-revenue, NRR или ROI evidence." enPath="/build/renewal-expansion-gate" ruPath="/ru/build/renewal-expansion-gate">
-  <section class="section"><div class="narrow"><div class="eyebrow">BUILD · RENEWAL / EXPANSION READINESS · PUBLIC TEMPLATE ONLY</div><h1 class="display">Measured value ещё не является renewal.</h1><p class="lede">Fixed BUILD Workflow Exception Diagnostic за USD 3,000 / пять рабочих дней может дать bounded measured-value statement только при наличии real evidence. Но он не доказывает buyer renewal, expansion, retained revenue или NRR. Для этого нужны explicit buyer-authorized и commercial evidence того же workflow и offer.</p></div></section>
+<RuLayout title="BUILD: готовность к продлению / расширению | BitEvo" description="Проверка BUILD между измеренной ценностью и заявлением о продлении или расширении. Шаблон не создаёт customer, retained revenue, NRR или ROI evidence." enPath="/build/renewal-expansion-gate" ruPath="/ru/build/renewal-expansion-gate">
+  <section class="section"><div class="narrow"><div class="eyebrow">BUILD · RENEWAL / EXPANSION READINESS · PUBLIC TEMPLATE ONLY</div><h1 class="display">Измеренная ценность ещё не означает продление.</h1><p class="lede">BUILD Workflow Exception Diagnostic за USD 3,000 / пять рабочих дней может дать ограниченное заявление измеренной ценности только при наличии реальных доказательств. Но он не доказывает buyer renewal, expansion, retained revenue или NRR. Для этого нужны явные buyer-authorized и commercial evidence того же workflow и offer.</p></div></section>
   <section class="section-tight section-rule"><div class="container panel" role="note"><strong>NO RENEWAL CLAIM · NO EXPANSION CLAIM · NO RETAINED REVENUE CLAIM · NO NRR CLAIM · NO ROI CLAIM</strong><p>Public template не представляет customer state. Measured value, delivery или synthetic arithmetic не доказывают buyer intent, renewal, expansion, retained revenue, NRR, ROI или customer outcome.</p></div></section>
   <section class="section section-rule"><div class="container"><div class="eyebrow">Fixed BUILD offer</div><h2 class="section-title">One recurring exception workflow · USD 3,000 · пять рабочих дней.</h2><article class="panel"><p>Commercial scope остаётся фиксированным. Любые later renewal/expansion scope, price или term должны подтверждаться explicit external commercial evidence и не могут выводиться из public template.</p></article></div></section>
-  <section class="section section-rule"><div class="container"><div class="eyebrow">Renewal / expansion evidence gate</div><h2 class="section-title">До renewal или expansion statement нужны реальные доказательства восьми условий.</h2>{gate.required_renewal_expansion_evidence.map((item,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{labels[index]}</h3></article>)}</div></section>
+  <section class="section section-rule"><div class="container"><div class="eyebrow">Проверка доказательств продления / расширения</div><h2 class="section-title">До заявления о продлении или расширении нужны реальные доказательства восьми условий.</h2>{gate.required_renewal_expansion_evidence.map((item,index)=><article class="panel"><div class="eyebrow">{String(index+1).padStart(2,'0')} · {item.status}</div><h3>{labels[index]}</h3></article>)}</div></section>
   <section class="section section-rule"><div class="container"><article class="panel"><div class="eyebrow">Current-state boundary</div><h2>Никакой renewal или expansion state здесь не представлен.</h2><p><strong>measured_value_observed=false · renewal_expansion_evidence=false · renewal_committed=false · expansion_committed=false · retained_revenue_evidence=false · nrr_evidence=false</strong>.</p></article><article class="panel"><div class="eyebrow">Claim ceiling</div><h2>Measured value не заменяет buyer renewal decision.</h2><p>Public template не даёт retained-revenue, NRR, ROI, customer-result, renewal или expansion claim. Любое последующее утверждение должно быть bounded к explicit buyer authority и verified commercial provenance.</p></article></div></section>
   <section class="section section-rule"><div class="container hero-actions"><a class="button button-primary" href="/ru/build/measured-value-gate">Вернуться к measured-value gate</a><a class="button button-ghost" href="/ru/proof">Открыть evidence ladder</a><a class="button button-ghost" href="/build/renewal-expansion-gate.json">Открыть machine-readable gate</a></div></section>
 </RuLayout>

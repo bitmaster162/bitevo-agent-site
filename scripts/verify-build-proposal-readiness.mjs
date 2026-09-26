@@ -12,7 +12,7 @@ const ru = await read('/ru/build/proposal-readiness');
 const data = JSON.parse(await readFile(`${dist}/build/proposal-readiness.json`,'utf8'));
 
 for (const phrase of ['A scope brief is not yet a proposal.','TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION','No payment rail is claimed by this page.']) if (!strip(en).includes(phrase)) failures.push(`EN missing: ${phrase}`);
-for (const phrase of ['Scope brief ещё не является proposal.','TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION','Эта страница не заявляет payment rail.']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
+for (const phrase of ['Краткое описание границ ещё не является предложением.','TEMPLATE ONLY · NO CONTRACT · NO INVOICE · NO CHECKOUT · NO TESTING AUTHORIZATION','Эта страница не заявляет payment rail.']) if (!strip(ru).includes(phrase)) failures.push(`RU missing: ${phrase}`);
 if (data.schema !== 'bitevo.build-proposal-readiness/v1') failures.push('schema drift');
 if (data.state !== 'PUBLIC_PROPOSAL_READINESS_TEMPLATE') failures.push('state drift');
 for (const key of ['actual_proposal_issued','contract_formed','invoice_issued','payment_link_published','checkout_enabled','signature_capture_enabled','booking_enabled','testing_authorization']) if (data[key] !== false) failures.push(`${key} must remain false`);
