@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "dd6a7e8d-13b6-41e1-a53e-8611ca2d396d",
   "nonce": "p278-control-center-20261002-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "2aff605ec546292966a7d3df60518a97096b4906",
@@ -11,10 +11,10 @@
   "session": "bitevo-p27-8-20261002",
   "worktree": "c:/users/coins/downloads/bitevo_p27_8_hypothesis_builder_20261002_01",
   "acquiredAt": "2026-10-02T10:43:44.355Z",
-  "updatedAt": "2026-10-02T10:43:44.355Z",
+  "updatedAt": "2026-10-02T11:02:34.721Z",
   "expiresAt": "2026-10-02T15:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "3ff560674c736f5bc833c8f73fba0838606ea4a0"
+  "sealedHead": "94dbcac47c6f987abe36010cc35919af0f788f2d",
+  "sealedTree": "72598fbd45d81f3bc582007b099d20eb71aad524",
+  "featureRef": "refs/heads/agent/p27-8-hypothesis-builder-r1",
+  "predecessor": "49ba46cd4962ba120e76bcee926d828f501ea9bb"
 }
