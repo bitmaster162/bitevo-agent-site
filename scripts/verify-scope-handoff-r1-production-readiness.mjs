@@ -164,6 +164,10 @@ const operatorApi = await readFile(new URL('../api/scope-handoff-review.ts', imp
 const reviewSource = await readFile(new URL('../src/lib/scope-handoff-r1/review.js', import.meta.url), 'utf8');
 const publicClient = await readFile(new URL('../public/scope-handoff-r1.js', import.meta.url), 'utf8');
 const vercel = await readFile(new URL('../vercel.json', import.meta.url), 'utf8');
+const sourceDefault = evaluateScopeHandoffActivation({});
+equal(sourceDefault.uiEnabled, false, 'source default remains UI-off without provider environment');
+const currentBuildActivation = evaluateScopeHandoffActivation(process.env);
+const expectedBuildAttribute = `data-scope-handoff-r1-activation="${currentBuildActivation.uiMarker}"`;
 const enDist = await readFile(new URL('../dist/audit-intake/index.html', import.meta.url), 'utf8');
 const ruDist = await readFile(new URL('../dist/ru/audit-intake/index.html', import.meta.url), 'utf8');
 const doc = await readFile(new URL('../docs/SCOPE_HANDOFF_R1_PRODUCTION_READINESS_P24_20260926.md', import.meta.url), 'utf8');
@@ -178,7 +182,7 @@ check(!vercel.includes('SCOPE_HANDOFF_R1_STORAGE_OWNER'), 'storage owner is not 
 check(!vercel.includes('SCOPE_HANDOFF_R1_RATE_LIMIT_KEY_SECRET'), 'HMAC bucket secret is not committed to provider config');
 check(!vercel.includes('SCOPE_HANDOFF_R1_TELEGRAM_BOT_TOKEN') && !vercel.includes('SCOPE_HANDOFF_R1_TELEGRAM_CHAT_ID'), 'Telegram secrets are not committed to provider config');
 for (const [locale, html] of [['EN',enDist],['RU',ruDist]]) {
-  check(html.includes('data-scope-handoff-r1-activation="disabled"'), `${locale}: local build remains default-off`);
+  check(html.includes(expectedBuildAttribute), `${locale}: build marker matches evaluated environment`);
   check(html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: manual fallback preserved`);
 }
 for (const marker of [
@@ -204,4 +208,4 @@ for (const stale of [
   'Merge: 0'
 ]) check(!doc.includes(stale), `P24 doc stale pre-merge claim remains: ${stale}`);
 
-console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY default_off=PASS operator_queue=BOUND retention=EXACT_30D_POLICY owner=ROBERT_DUMANYAN human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
+console.log(`SCOPE_HANDOFF_R1_PRODUCTION_READINESS_GATE=PASS checks=${checks} production_mode=SOURCE_READY source_default_off=PASS build_ui=${currentBuildActivation.uiEnabled ? 'ENABLED' : 'DISABLED'} build_marker=${currentBuildActivation.uiMarker} operator_queue=BOUND retention=EXACT_30D_POLICY owner=ROBERT_DUMANYAN human_review=NOT_CONFIRMED provider_writes=0 production_enable=0`);
