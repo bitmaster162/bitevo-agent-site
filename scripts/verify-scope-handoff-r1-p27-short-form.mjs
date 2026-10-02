@@ -61,7 +61,9 @@ const shortMountSource=controller.split('function mountShortScopeHandoffs(option
 check(shortMountSource.indexOf("if (trim(honeypot.value))") >= 0 && shortMountSource.indexOf("if (trim(honeypot.value))") < shortMountSource.indexOf('const outcome = await machine.submit(fields)'),'honeypot exits before short-form network submission');
 check(controller.includes('maxlength="600"'),'browser enforces the 600-char ceiling');
 check(!controller.includes('Robert replies within') && !controller.includes('Robert ответит в течение'),'no unsupported response-time SLA is published');
-check(component.includes('hidden={!activation.uiEnabled}') && component.includes('data-scope-handoff-short'),'short UI remains fail-closed behind the existing activation gate');
+check(component.includes('hidden data-scope-short-section') && component.includes('data-scope-handoff-short'),'short UI is statically hidden before runtime reveal');
+check(!component.includes('hidden={!activation.uiEnabled}'),'short section visibility is not server-rendered from provider state');
+check(controller.includes('function revealScopeHandoffUi') && controller.includes("[data-scope-short-section], [data-scope-handoff-ui-control]"),'browser controller owns runtime UI reveal');
 check(component.includes('up to 30 days') && component.includes('до 30 дней'),'short UI discloses the approved retention horizon');
 check(component.includes('does not authorize testing or execution') && component.includes('не разрешает testing или execution'),'short UI preserves authorization boundary');
 check(JSON.stringify(schema.properties.intake_depth.enum)===JSON.stringify(['short','entry','primary']),'schema exposes the three explicit depths');
@@ -83,10 +85,15 @@ for(const [rel,marker] of surfaces){
   const source=await readFile(new URL(`../${rel}`,import.meta.url),'utf8');
   check(source.includes('ScopeHandoffShort') && source.includes(marker),`${rel}: short form marker exact`);
 }
+for(const rel of ['src/pages/diagnostic.astro','src/pages/mapper.astro','src/pages/ru/diagnostic.astro','src/pages/ru/mapper.astro']){
+  const source=await readFile(new URL(`../${rel}`,import.meta.url),'utf8');
+  check(source.includes('hidden data-scope-handoff-ui-control'),'diagnostic/mapper CTA is statically hidden: '+rel);
+  check(!source.includes('scopeHandoffActivation') && !source.includes('evaluateScopeHandoffActivation'),'diagnostic/mapper static HTML is provider-state independent: '+rel);
+}
 for(const rel of ['src/pages/audit-intake.astro','src/pages/ru/audit-intake.astro']){
   const source=await readFile(new URL(`../${rel}`,import.meta.url),'utf8');
   check(!source.includes('ScopeHandoffShort'),'full audit intake is not duplicated by the short form');
 }
 check(packageJson.scripts?.['verify:core']?.includes('verify-scope-handoff-r1-p27-short-form.mjs'),'P27 short-form gate is wired into verify:core');
 
-console.log(`SCOPE_HANDOFF_R1_P27_SHORT_FORM_GATE=PASS checks=${checks} fields=5 honeypot=1 consent=1 sla_claim=0 production_enable=0 surfaces=10`);
+console.log(`SCOPE_HANDOFF_R1_P27_SHORT_FORM_GATE=PASS checks=${checks} fields=5 honeypot=1 consent=1 sla_claim=0 production_enable=0 surfaces=10 runtime_reveal=CLIENT_ONLY static_cta=4`);

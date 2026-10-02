@@ -105,7 +105,7 @@
     {
       "path": "/mapper",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:8f4e100d0b6cf5ce89a467fed700fc57f469a93534f1123514a9f47262382d8b"
+      "fingerprint": "sha256:e2453dfe2ac66a9d408630e88bfc6c7529ed4f8eafe8ce2d2f40d58d089ac1a8"
     },
     {
       "path": "/workspace",
@@ -115,7 +115,7 @@
     {
       "path": "/diagnostic",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:9e5946896b6f6c86ce95c630f4a1cdd438e3463c6ac6a649d33a5f2831019340"
+      "fingerprint": "sha256:c3ea38afa095844a0b40c9003a4fb17b2c3c3066457c8e19ea567886f1a25a25"
     },
     {
       "path": "/audit-intake",
@@ -295,7 +295,7 @@
     {
       "path": "/ru/mapper",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:ed233c14c5b7c93ac06881aacef48d69a47cc5653041e929a461f7130ea21b93"
+      "fingerprint": "sha256:efc3b16510df575d743c8ff0b0e78627626631172053a2f31bf0cecd154d155c"
     },
     {
       "path": "/ru/workspace",
@@ -305,7 +305,7 @@
     {
       "path": "/ru/diagnostic",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:2e307dd80faa4f9a86e527f37d8dcf74499f3ca854ca46898109986dbdbd9897"
+      "fingerprint": "sha256:4b64b557b3a6d6c5f1ca03a7f08964c7b0c83274215fe6e615057ff2e69e4daf"
     },
     {
       "path": "/ru/audit-intake",
