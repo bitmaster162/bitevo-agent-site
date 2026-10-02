@@ -56,6 +56,15 @@ const categoryRu = {
     </div>
   </section>
 
+  {page.slug === 'security' && page.retentionFacts?.length > 0 && (
+    <section class="section section-rule">
+      <div class="container parity-boundary panel">
+        <div><div class="eyebrow">Данные и сроки хранения</div><h2 class="section-title">{page.retentionHeading}</h2></div>
+        <div>{page.retentionFacts.map((fact) => <p>{fact}</p>)}</div>
+      </div>
+    </section>
+  )}
+
   <section class="section section-rule">
     <div class="container parity-boundary panel">
       <div>
