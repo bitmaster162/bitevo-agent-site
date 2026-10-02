@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "8186b323-ad0a-469a-9c6b-284340403aee",
   "nonce": "p271b-control-center-20261002-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "3db3fcb066c7fe5653d3f34a923c8de0281a4f84",
@@ -11,10 +11,10 @@
   "session": "bitevo-p27-1b-20261002",
   "worktree": "c:/users/coins/downloads/bitevo_p27_1b_short_form_20261002_01",
   "acquiredAt": "2026-10-02T06:56:42.569Z",
-  "updatedAt": "2026-10-02T06:56:42.569Z",
+  "updatedAt": "2026-10-02T07:24:54.815Z",
   "expiresAt": "2026-10-02T10:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "3417786a723488610c55f046c22ff50a19eb486b"
+  "sealedHead": "52b2413d4e22f7d7205db9be04d557501498bb3e",
+  "sealedTree": "9d34ea1002bbd0792abfdc07994701ffcd9bde88",
+  "featureRef": "refs/heads/agent/p27-1b-short-scope-form-r1",
+  "predecessor": "4524f030b9ce2ba75a57f7e49438b6ea1d8a098a"
 }
