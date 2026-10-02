@@ -48,12 +48,15 @@ export function GET() {
     ],
     finding_record: {
       id: 'SAMPLE-FG-001',
+      owasp_asi_risk: 'ASI09 · Human-Agent Trust Exploitation',
       class: 'False Green / external-effect confirmation gap',
-      status: 'synthetic_worked_example_not_executed',
-      trigger: 'Orchestration layer reports success while required external read-back is absent, unchanged or bound to a different object.',
-      observed_effect: 'not_observed_in_public_sample',
-      decision_relevance: 'Owner cannot distinguish completed write from accepted/enqueued/no-effect/wrong-object outcomes without independent confirmation.',
-      recommended_decision: 'CONSTRAIN'
+      status: 'SYNTHETIC WORKED EXAMPLE — NOT EXECUTED',
+      trigger: 'The orchestration layer reports success while the required external read-back is absent, unchanged or bound to a different object.',
+      authority_involved: 'Update two qualification fields on one matched staging CRM lead.',
+      evidence_at_decision_time: 'Authority and pre-action evidence may be sufficient; post-action external confirmation is not.',
+      observed_effect: 'Not observed. This public pack does not claim a real execution.',
+      decision_relevance: 'Without independent confirmation, the owner cannot distinguish completed write from accepted/enqueued/no-effect/wrong-object outcomes.',
+      recommended_decision: 'CONSTRAIN authority after ambiguous acknowledgement; require same-object read-back before declaring success or allowing retry.'
     },
     decision_memo: {
       decision: 'CONSTRAIN',

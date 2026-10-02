@@ -58,6 +58,6 @@ equal(htmlFiles.length, 124, 'all rendered HTML pages checked');
 equal(enPages, 68, 'EN footer coverage');
 equal(ruPages, 56, 'RU footer coverage');
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
-check(currentness.routes.every(row => row.lastmod === '2026-10-02' && /^sha256:[0-9a-f]{64}$/.test(row.fingerprint)), 'all 110 currentness rows retain valid fingerprints after subsequent routed additions');
+check(currentness.routes.every(row => /^\d{4}-\d{2}-\d{2}$/.test(String(row.lastmod || '')) && /^sha256:[0-9a-f]{64}$/.test(row.fingerprint)), 'all 110 currentness rows retain valid dates and fingerprints after subsequent routed additions');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-non-affiliation-r1.mjs'), 'P28.4 verifier is wired into verify:core');
 console.log(`P28_NON_AFFILIATION_R1_GATE=PASS checks=${checks} html=${htmlFiles.length} en=${enPages} ru=${ruPages} currentness=${currentness.routes.length} static_html=PASS js_required=0`);

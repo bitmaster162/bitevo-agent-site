@@ -32,8 +32,11 @@ const failurePlan = [
   ['F08', 'Confirmation references a different object', 'Treat as untrusted result; preserve trace and constrain authority.']
 ];
 
+const owaspRisk = 'ASI09 · Human-Agent Trust Exploitation';
+
 const finding = [
   ['Finding ID', 'SAMPLE-FG-001'],
+  ['OWASP ASI risk', owaspRisk],
   ['Class', 'False Green / external-effect confirmation gap'],
   ['Status', 'SYNTHETIC WORKED EXAMPLE — NOT EXECUTED'],
   ['Trigger', 'The orchestration layer reports success while the required external read-back is absent, unchanged or bound to a different object.'],
@@ -71,7 +74,7 @@ const trace = [
         <div class="eyebrow">Public sample pack · SAMPLE-001</div>
         <h1 class="display">See the decision chain before buying the audit.</h1>
         <p class="lede">SAMPLE-001 is a synthetic worked example for one staging CRM qualification workflow. It shows the structure and reasoning of the BitEvo audit package without pretending a customer engagement or an executed test occurred.</p>
-        <div class="actions"><a href="/sample-audit.json" class="button button-primary">Open machine-readable pack <span aria-hidden="true">↗</span></a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div>
+        <div class="actions"><a href="/sample-audit.json" class="button button-primary">Open machine-readable pack <span aria-hidden="true">↗</span></a><a href="/sample-audit.json" download="SAMPLE-001.json" class="button button-ghost">Download JSON</a><a href="/artifacts" class="button button-ghost">Artifact anatomy</a></div>
       </div>
       <aside class="boundary panel">
         <div class="boundary-top"><span>SAMPLE STATUS</span><strong>SYNTHETIC / NOT EXECUTED</strong></div>
@@ -115,7 +118,7 @@ const trace = [
 
   <section class="section section-rule">
     <div class="container split-head"><div><div class="eyebrow">A3 · Finding Record</div><h2 class="section-title">SAMPLE-FG-001 — False Green confirmation gap.</h2></div><p class="lede">This is a worked finding format, not a claim that the condition was reproduced. Notice that “Observed effect” remains explicitly NOT OBSERVED.</p></div>
-    <div class="container finding panel">{finding.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
+    <div class="container finding panel">{finding.map(([k,v]) => <div><span>{k}</span><p>{k === 'OWASP ASI risk' ? <a href="/owasp-agentic-top-10">{v}</a> : v}</p></div>)}</div>
   </section>
 
   <section class="section section-rule memo-section">
