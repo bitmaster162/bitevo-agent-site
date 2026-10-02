@@ -41,9 +41,9 @@ check(EN.includes('staging or test, not the model in isolation.'), 'EN definitio
 check(RU.includes('в staging или test, а не модель в отрыве от неё.'), 'RU definition preserves staging/test and model-isolation boundary');
 
 const expectedCurrentness = {
-  '/': 'sha256:c761bdaf988b8f21a8288995c568c3dd4d6251f517f7ed2b33ffc74ea27e1756',
-  '/ru': 'sha256:021196e9e0013e139a5835fc46f24f44f450a8aabf89fa72283c749b0625ba3b',
-  '/agent-authority-audit': 'sha256:a3f32f54c17fd1e739e09fe4afe3fb8b00e8a4fa26d6b24fb81fb8629edb3046'
+  '/': 'sha256:03128a3d424fee7dd3c7a9cb5aa76b00f96d514fccb759f091462b42fe8e177a',
+  '/ru': 'sha256:d439af420aedb5fc170b19e463dbdf8baad1849fca43d9599b29cc8e84918c93',
+  '/agent-authority-audit': 'sha256:a3b0f56f4de85837105f54c0e4e35b8653383c8016b76713b2f7332c6b2fe25c'
 };
 for (const [route, fingerprint] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
