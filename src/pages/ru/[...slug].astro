@@ -11,6 +11,15 @@ export function getStaticPaths() {
 
 const { page } = Astro.props;
 const ruPath = `/ru/${page.slug}`;
+const categoryRu = {
+  FLAGSHIP:'ГЛАВНЫЙ',
+  ENTRY:'ВХОД',
+  SPECIALIST:'СПЕЦИАЛИЗАЦИЯ',
+  TOOL:'ИНСТРУМЕНТ',
+  PROOF:'ДОКАЗАТЕЛЬСТВА',
+  RESEARCH:'ИССЛЕДОВАНИЯ',
+  CONTEXT:'КОНТЕКСТ'
+}[page.category] ?? page.category;
 ---
 
 <RuLayout
@@ -27,10 +36,10 @@ const ruPath = `/ru/${page.slug}`;
       </div>
       <div>
         <p class="lede">{page.description}</p>
-        <div class="parity-meta panel" role="group" aria-label="RU semantic parity status">
-          <span>{page.category}</span>
-          <strong>RU semantic parity</strong>
-          <small>Назначение и claim ceiling связаны с paired EN route.</small>
+        <div class="parity-meta panel" role="group" aria-label="Статус смыслового соответствия RU">
+          <span>{categoryRu}</span>
+          <strong>Смысловое соответствие RU</strong>
+          <small>Назначение и граница заявлений связаны с парным EN-маршрутом.</small>
         </div>
       </div>
     </div>
@@ -50,23 +59,23 @@ const ruPath = `/ru/${page.slug}`;
   <section class="section section-rule">
     <div class="container parity-boundary panel">
       <div>
-        <div class="eyebrow">Semantic boundary</div>
+        <div class="eyebrow">Граница смысла</div>
         <h2 class="section-title">Русская версия сохраняет смысл. Не расширяет полномочия или обещания.</h2>
       </div>
       <div>
-        <p>Эта RU-поверхность локализует назначение, decision boundary и claim ceiling paired English route. Она не создаёт новый SKU, цену, certification claim, production permission или testing authorization.</p>
-        <p>Если operational решение зависит от свежего состояния продукта, провайдера или внешней системы, требуется отдельная current verification.</p>
+        <p>Эта RU-поверхность локализует назначение, границу решения и границу заявлений парного EN-маршрута. Она не создаёт новое предложение, цену, заявление о сертификации, разрешение на production или разрешение на тестирование.</p>
+        <p>Если операционное решение зависит от свежего состояния продукта, провайдера или внешней системы, требуется отдельная проверка актуального состояния.</p>
       </div>
     </div>
   </section>
 
   <section class="section section-rule">
     <div class="narrow parity-actions">
-      <div class="eyebrow">Next decision</div>
-      <h2 class="section-title">Продолжайте по текущему BitEvo decision path.</h2>
+      <div class="eyebrow">Следующее решение</div>
+      <h2 class="section-title">Продолжайте по текущему пути решения BitEvo.</h2>
       <div class="actions">
         <a class="button button-primary" href={page.primaryHref}>{page.primaryLabel} <span aria-hidden="true">↗</span></a>
-        <a class="button button-ghost" href={page.enPath} lang="en">Paired EN route</a>
+        <a class="button button-ghost" href={page.enPath} lang="en">Парный EN-маршрут</a>
       </div>
     </div>
   </section>

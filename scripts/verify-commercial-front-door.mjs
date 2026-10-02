@@ -89,7 +89,7 @@ check(ruStart.includes('Free / 20 минут'), '/ru/start must retain Free tria
 check(ruStart.includes('$1,500'), '/ru/start must retain Entry price marker');
 check(ruStart.includes('Security Control Validation'), '/ru/start must retain Security Control Validation marker');
 check(ruStart.includes('$4,900'), '/ru/start must retain Primary price marker');
-check(ruStart.includes('testing authorization'), '/ru/start must retain no-testing boundary');
+check(ruStart.includes('разрешение на тестирование'), '/ru/start must retain no-testing boundary');
 
 const offerHandoffs = [
   ['/entry-audit', entryAudit, entryAuditReviewHref, 'Contact Robert', true],
