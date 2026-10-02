@@ -36,7 +36,7 @@ check(llms.includes('Submission does not create a booking and does not authorize
 check(!llms.includes('prepare a local scope brief only; they do not book or submit an engagement'), 'llms stale local-only claim removed');
 check(short.includes('explicit consent') && short.includes('up to 30 days'), 'shared P27.1 component keeps consent and retention disclosure');
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
-const expected = {"/pricing":"sha256:26dae95a1feb6563989b4605c471ae7a0929475a2567e6e64b19178ec29efa4b","/ru/pricing":"sha256:622860e85cd2ce4a521e6e0e90b5d3439f41c7e2bf26d24de84b16ecd5e7ad62","/agent-authority-audit":"sha256:db6c81fbaff4700abc5d0575dec18d37e1abc45f865ccd9c8152dc7b8472f71e"};
+const expected = {"/pricing":"sha256:26dae95a1feb6563989b4605c471ae7a0929475a2567e6e64b19178ec29efa4b","/ru/pricing":"sha256:622860e85cd2ce4a521e6e0e90b5d3439f41c7e2bf26d24de84b16ecd5e7ad62","/agent-authority-audit":"sha256:a3f32f54c17fd1e739e09fe4afe3fb8b00e8a4fa26d6b24fb81fb8629edb3046"};
 for (const [path, fingerprint] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.fingerprint === fingerprint && row?.lastmod === '2026-10-02', 'currentness exact for ' + path);
