@@ -43,13 +43,13 @@ check(RU.includes('в staging или test, а не модель в отрыве 
 const expectedCurrentness = {
   '/': 'sha256:03128a3d424fee7dd3c7a9cb5aa76b00f96d514fccb759f091462b42fe8e177a',
   '/ru': 'sha256:d439af420aedb5fc170b19e463dbdf8baad1849fca43d9599b29cc8e84918c93',
-  '/agent-authority-audit': 'sha256:a3b0f56f4de85837105f54c0e4e35b8653383c8016b76713b2f7332c6b2fe25c'
+  '/agent-authority-audit': 'sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556'
 };
 for (const [route, fingerprint] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.fingerprint === fingerprint && row?.lastmod === '2026-10-02', 'currentness exact for ' + route);
 }
-equal(currentness.routes.length, 108, 'currentness route count remains 108');
+equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-definition-r1.mjs'), 'P28.1 verifier is wired into verify:core');
 
 console.log('P28_DEFINITION_R1_GATE=PASS checks=' + checks + ' locales=2 pages=3 definition_first=PASS static_html=PASS js_required=0');
