@@ -1,0 +1,59 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+
+let checks = 0;
+const check = (value, message) => { assert.ok(value, message); checks += 1; };
+const equal = (actual, expected, message) => { assert.equal(actual, expected, message); checks += 1; };
+const sha = value => createHash('sha256').update(value, 'utf8').digest('hex');
+const root = new URL('../', import.meta.url);
+
+const EN = 'Typical failures we test for: a CRM update applied to the wrong record, a message sent twice after a retry, a ticket marked “done” before the external system confirmed it.';
+const RU = 'Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.';
+
+equal(sha(EN), 'ce33e2c0177865848c38dc2a64ec74827cd7e80a57805239190c862c90a07c87', 'approved EN P29.2 copy hash');
+equal(sha(RU), 'c3e54d59fe1591bffd05e2fb4e88376c91e9297b72a7352c708890ad4200b870', 'approved RU P29.2 copy hash');
+
+const enSource = await readFile(new URL('src/pages/index.astro', root), 'utf8');
+const ruSource = await readFile(new URL('src/pages/ru/index.astro', root), 'utf8');
+const enHtml = await readFile(new URL('dist/index.html', root), 'utf8');
+const ruHtml = await readFile(new URL('dist/ru/index.html', root), 'utf8');
+const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
+const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
+
+const enLead = 'An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
+const ruLead = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
+
+for (const [name, source, html, lead, copy, actionsMarker] of [
+  ['EN', enSource, enHtml, enLead, EN, '<div class="hero-actions">'],
+  ['RU', ruSource, ruHtml, ruLead, RU, '<div class="hero-actions">']
+]) {
+  equal(source.split(copy).length - 1, 1, `${name}: exact P29.2 copy once in source`);
+  equal(html.split(copy).length - 1, 1, `${name}: exact P29.2 copy once in static HTML`);
+  const leadIndex = source.indexOf(lead);
+  const copyIndex = source.indexOf(copy);
+  const actionsIndex = source.indexOf(actionsMarker, leadIndex);
+  check(leadIndex >= 0 && copyIndex > leadIndex && actionsIndex > copyIndex, `${name}: copy is immediately in hero flow after lead and before actions`);
+  const between = source.slice(leadIndex + lead.length, actionsIndex);
+  check(between.includes(copy), `${name}: hero lead-to-actions segment contains exact copy`);
+  check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|href=|src=)/i.test(between), `${name}: inserted hero segment adds no JS, network call or CTA`);
+}
+
+check(!enSource.includes('Book a free 20-minute triage'), 'P29.1 EN Cal.com CTA remains unpublished');
+check(!ruSource.includes('Записаться на бесплатный разбор, 20 минут'), 'P29.1 RU Cal.com CTA remains unpublished');
+check(!enSource.includes('cal.com') && !ruSource.includes('cal.com'), 'no Cal.com link published');
+check(enSource.includes('$4,900'), 'existing EN price remains present');
+check(ruSource.includes('$4,900'), 'existing RU price remains present');
+
+const expected = {
+  '/': { lastmod: '2026-10-03', fingerprint: 'sha256:f244e65c855cfe2eac250ecb9ba605b41114588d63fd487249155e4413c49efe' },
+  '/ru': { lastmod: '2026-10-03', fingerprint: 'sha256:98f55e3ff9b51bb81bd82eddfadd2ee2dd35af84d5790adbd00d0f2ecd325e26' }
+};
+for (const [path, value] of Object.entries(expected)) {
+  const row = currentness.routes.find(item => item.path === path);
+  check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
+}
+equal(currentness.routes.length, 110, 'currentness route count remains 110');
+check(packageJson.scripts?.['verify:core']?.includes('verify-p29-2-home-failure-examples-r1.mjs'), 'P29.2 verifier wired into verify:core');
+
+console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_LEAD_BEFORE_ACTIONS js_required=0 network_on_load_added=0 p29_1_calcom=OMITTED`);

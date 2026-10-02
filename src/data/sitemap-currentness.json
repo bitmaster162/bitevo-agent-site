@@ -4,8 +4,8 @@
   "routes": [
     {
       "path": "/",
-      "lastmod": "2026-10-02",
-      "fingerprint": "sha256:03128a3d424fee7dd3c7a9cb5aa76b00f96d514fccb759f091462b42fe8e177a"
+      "lastmod": "2026-10-03",
+      "fingerprint": "sha256:f244e65c855cfe2eac250ecb9ba605b41114588d63fd487249155e4413c49efe"
     },
     {
       "path": "/start",
@@ -279,8 +279,8 @@
     },
     {
       "path": "/ru",
-      "lastmod": "2026-10-02",
-      "fingerprint": "sha256:d439af420aedb5fc170b19e463dbdf8baad1849fca43d9599b29cc8e84918c93"
+      "lastmod": "2026-10-03",
+      "fingerprint": "sha256:98f55e3ff9b51bb81bd82eddfadd2ee2dd35af84d5790adbd00d0f2ecd325e26"
     },
     {
       "path": "/ru/pricing",
