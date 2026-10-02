@@ -11,6 +11,16 @@ const questions = [
   { id: 'confirm', gate: 'External confirmation', q: 'Is the intended external effect independently confirmed after the action?', why: 'Internal completion or a tool acknowledgement is not proof that the outside system reached the expected state.' },
   { id: 'recovery', gate: 'Recovery', q: 'When evidence or confirmation becomes uncertain, does the workflow enter a defined constrained/recovery state?', why: 'Retrying or continuing through ambiguity can turn one uncertain action into repeated effects.' }
 ];
+
+const sampleResult = [
+  { gate: 'Authority Budget', answer: 'YES' },
+  { gate: 'Object binding', answer: 'YES' },
+  { gate: 'Authority owner', answer: 'YES' },
+  { gate: 'Evidence Before Effect', answer: 'UNKNOWN' },
+  { gate: 'Freshness', answer: 'UNKNOWN' },
+  { gate: 'External confirmation', answer: 'NO' },
+  { gate: 'Recovery', answer: 'UNKNOWN' }
+];
 ---
 
 <Layout title="Authority & Evidence Diagnostic — BitEvo" description="A local seven-gate BitEvo diagnostic for action-capable AI workflows. No trust score — it shows which authority, evidence and recovery questions stay open." mainClass="diagnostic-touch-targets">
@@ -18,6 +28,31 @@ const questions = [
     <div class="container hero-grid">
       <div><div class="eyebrow">Local workflow diagnostic</div><h1 class="display">Seven gates. No fake trust score.</h1></div>
       <div><p class="lede">Answer <strong>YES / NO / UNKNOWN</strong> for one real workflow. Nothing is transmitted. The result is a list of unresolved decision gates — not certification, a vulnerability verdict or a numerical safety rating.</p><a href="/doctrine" class="button button-ghost">Read the doctrine →</a></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule" data-p29-3-example-result>
+    <div class="container">
+      <details class="panel">
+        <summary><span>Example result</span> <span>SAMPLE</span></summary>
+        <div class="summary">
+          <small>SYNTHETIC SAMPLE</small>
+          <h3>3 YES · 1 NO · 3 UNKNOWN</h3>
+          <p>This is a worked preview of the seven-gate output before you answer the form. It is not an audit finding, certification or testing authorization.</p>
+        </div>
+        <div class="gaps">
+          {sampleResult.map((item) => (
+            <article>
+              <span>{item.answer}</span>
+              <div><strong>{item.gate}</strong><p>Synthetic example status.</p></div>
+            </article>
+          ))}
+        </div>
+        <div class="boundary p29-example-boundary">
+          <span>UNRESOLVED</span>
+          <p>Evidence Before Effect [UNKNOWN] · Freshness [UNKNOWN] · External confirmation [NO] · Recovery [UNKNOWN]. These four gates require explicit engineering evidence before authority expands.</p>
+        </div>
+      </details>
     </div>
   </section>
 
