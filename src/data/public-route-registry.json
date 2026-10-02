@@ -290,6 +290,13 @@
       "parent": "/proof"
     },
     {
+      "path": "/owasp-agentic-top-10",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/agent-authority-audit"
+    },
+    {
       "path": "/guides",
       "category": "RESEARCH",
       "indexable": true,
@@ -710,6 +717,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/proof"
+    },
+    {
+      "path": "/ru/owasp-agentic-top-10",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/agent-authority-audit"
     },
     {
       "path": "/ru/guides/ai-agent-reliability-audit",

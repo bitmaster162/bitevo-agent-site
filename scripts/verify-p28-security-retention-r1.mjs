@@ -46,6 +46,6 @@ for (const [path, fingerprint] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === '2026-10-02' && row?.fingerprint === fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 108, 'currentness route count remains 108');
+equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-security-retention-r1.mjs'), 'P28.5 verifier is wired into verify:core');
 console.log(`P28_SECURITY_RETENTION_R1_GATE=PASS checks=${checks} routes=2 static_html=PASS nda_unconfirmed=OMITTED model_training_unconfirmed=OMITTED js_required=0`);

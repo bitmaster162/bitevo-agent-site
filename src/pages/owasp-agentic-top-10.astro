@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const risks = [
+  { id:'ASI01', name:'Agent Goal Hijack', gates:['Authority Budget','Evidence Before Effect'], evidence:'The attempted action and the rule that allowed or refused it', scope:'We test what a hijacked agent can still do, not whether the model resists injected text' },
+  { id:'ASI02', name:'Tool Misuse and Exploitation', gates:['Authority Budget','Object binding'], evidence:'The object ID checked before execution, and the ID that actually changed', scope:'Core scope' },
+  { id:'ASI03', name:'Identity and Privilege Abuse', gates:['Authority owner','Authority Budget'], evidence:'The grant or approval record that links the role to the action', scope:'Core scope' },
+  { id:'ASI04', name:'Agentic Supply Chain Vulnerabilities', gates:['Authority Budget'], evidence:'Which third-party tools and MCP servers can act, and with what permissions', scope:'We map their authority; we do not audit their code' },
+  { id:'ASI05', name:'Unexpected Code Execution (RCE)', gates:['Authority Budget'], evidence:'Whether code execution is an allowed action at all, and for which inputs', scope:'Exploit development is out of scope' },
+  { id:'ASI06', name:'Memory & Context Poisoning', gates:['Freshness','Evidence Before Effect'], evidence:'Time, source and version of each item the agent relied on at decision time', scope:'We test whether stale or unverified context can trigger an action' },
+  { id:'ASI07', name:'Insecure Inter-Agent Communication', gates:['Authority owner','External confirmation'], evidence:'Who delegated authority between agents, and independent confirmation of the effect', scope:'Within the one workflow in scope' },
+  { id:'ASI08', name:'Cascading Failures', gates:['Recovery','External confirmation'], evidence:'The state change when confirmation is missing, and who released the workflow', scope:'Core scope: retries, resume, duplicate effects' },
+  { id:'ASI09', name:'Human-Agent Trust Exploitation', gates:['External confirmation','Authority owner'], evidence:'Whether "done" was reported before the external system confirmed it, and what the approver was shown', scope:'We test approval evidence, not user training' },
+  { id:'ASI10', name:'Rogue Agents', gates:['Authority Budget','Recovery'], evidence:'Actions outside the agreed budget, and the stop or constrained state that follows', scope:'Detection tooling is out of scope' }
+];
+---
+
+<Layout
+  mainClass="longform-density"
+  title="OWASP Agentic Top 10 (ASI01–ASI10) mapped to agent authority tests — BitEvo"
+  description="How BitEvo's seven authority gates cover each OWASP Top 10 for Agentic Applications risk, what evidence we check, and where the audit scope stops."
+  alternates={{ en: '/owasp-agentic-top-10', ru: '/ru/owasp-agentic-top-10' }}
+>
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">OWASP / Agentic security mapping</div>
+      <h1 class="display">OWASP Top 10 for Agentic Applications, mapped to what BitEvo tests</h1>
+      <p class="lede">OWASP published its Top 10 for Agentic Applications on 9 December 2025. BitEvo audits the action chain of one workflow in staging or test. The table shows which of our seven gates reach each risk, what evidence we look for, and where our scope stops.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="narrow">
+      <div class="eyebrow">ASI01–ASI10</div>
+      <h2 class="section-title">Risk → gate → evidence → scope</h2>
+    </div>
+  </section>
+
+  {risks.map((risk) => (
+    <section class="dogfood-context section-rule">
+      <article class="container dogfood-context-card panel" data-asi={risk.id}>
+        <div>
+          <div class="eyebrow">{risk.id} · OWASP risk</div>
+          <h2>{risk.name}</h2>
+          <p><strong>BitEvo gates:</strong> {risk.gates.join(' · ')}</p>
+        </div>
+        <div class="dogfood-context-side">
+          <span>Evidence we look for</span>
+          <p>{risk.evidence}</p>
+          <span>Scope note</span>
+          <p>{risk.scope}</p>
+        </div>
+      </article>
+    </section>
+  ))}
+
+  <section class="dogfood-context section-rule">
+    <div class="container dogfood-context-card panel">
+      <div>
+        <div class="eyebrow">Scope boundary</div>
+        <h2>Mapping by BitEvo for scoping.</h2>
+        <p>Not an OWASP certification or endorsement.</p>
+      </div>
+      <div class="dogfood-context-side">
+        <span>Official source</span>
+        <a class="button" href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">OWASP GenAI Security Project — Top 10 for Agentic Applications 2026</a>
+      </div>
+    </div>
+  </section>
+</Layout>

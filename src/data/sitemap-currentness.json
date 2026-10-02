@@ -15,7 +15,7 @@
     {
       "path": "/pricing",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:16c5606e1cac93ec5dd7c038e5af6fc370c80738b19eed22c7f894998f82f38a"
+      "fingerprint": "sha256:c39a6c135341211fa8e2246d5a482dc0bf69e9ff287897b3fc5600fe02b5671a"
     },
     {
       "path": "/consulting",
@@ -25,7 +25,7 @@
     {
       "path": "/agent-authority-audit",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:a3b0f56f4de85837105f54c0e4e35b8653383c8016b76713b2f7332c6b2fe25c"
+      "fingerprint": "sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556"
     },
     {
       "path": "/entry-audit",
@@ -206,6 +206,11 @@
       "path": "/ai-skill-lab-sample",
       "lastmod": "2026-10-02",
       "fingerprint": "sha256:eca485a3d4e4c2679f080ff07f80e0309f3bb19dd5fa7f83eee2acfcf34a5be5"
+    },
+    {
+      "path": "/owasp-agentic-top-10",
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:4f8d2b58079cef11abea0033eefb00bb44bdc11a3ff1656feaafbd6a9ed1d2ff"
     },
     {
       "path": "/guides",
@@ -501,6 +506,11 @@
       "path": "/ru/ai-skill-lab-sample",
       "lastmod": "2026-10-02",
       "fingerprint": "sha256:7499eb3e1b9ddff6387e26b1250b6df9974b42ade2af0d499d19d60d3c3ca276"
+    },
+    {
+      "path": "/ru/owasp-agentic-top-10",
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:690e445dfd9c562fa495c94553657fb79816556dae7f2636b415c297a2647770"
     },
     {
       "path": "/ru/guides/security-sandboxing",
