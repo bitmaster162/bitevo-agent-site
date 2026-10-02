@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "50aca9a6-a1ac-4bb6-a665-ff200d7b4efb",
   "nonce": "b6b9be4f-37ab-4c41-a9b1-9ef1f3d6b7c2",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "f08545ab83daccb4e61478122fb01c7a2eb0cf31",
@@ -11,10 +11,12 @@
   "session": "bitevo-p26-b6-3-pr171-requalification-20261002",
   "worktree": "c:/users/coins/downloads/bitevo_p26_b6_3_pr1_shared_20260927_01",
   "acquiredAt": "2026-10-02T04:55:57.148Z",
-  "updatedAt": "2026-10-02T05:00:00.000Z",
+  "updatedAt": "2026-10-02T05:15:16.288Z",
   "expiresAt": "2026-10-02T08:55:53.481Z",
   "sealedHead": "472d32b63de3a4906ccae4fa8b12b286d61b545d",
   "sealedTree": "cee295a719286203813069600b641fdcd22ca60c",
   "featureRef": "refs/heads/agent/p26-b6-3-shared-ru-r1",
-  "predecessor": "b7e52f51126143fa7c84a4c4d25594c227014cd6"
+  "predecessor": "6f53da753874d2386a19199b9c33c3ce0562a23b",
+  "releasedAt": "2026-10-02T05:15:16.288Z",
+  "releaseReason": "pr171_merged_production_ready_live_ru54_facts_parity_verified"
 }
