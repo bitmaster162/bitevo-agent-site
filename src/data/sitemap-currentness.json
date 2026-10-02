@@ -9,13 +9,13 @@
     },
     {
       "path": "/start",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:2c27c9adf5e5274c6e1bc641a35b29567134b5382ce6dafcbda95e5ac15abeb7"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:0f88569d3c07bce2b6dcbfd14830245cea9dba246e680adad167b0ebbf169831"
     },
     {
       "path": "/pricing",
-      "lastmod": "2026-09-26",
-      "fingerprint": "sha256:ba109905db1d03f6519d88cff756b9a865ad3a3ba9a47cb68a0b73571c5e38bb"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:2ec018975906c6b3e6c6b43bf57c9c6a537cc9f903f5ed6ad9e188b44c20e318"
     },
     {
       "path": "/consulting",
@@ -29,8 +29,8 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:89ca87b77ab43fb0d64eacce3262f03194a01ed9789f7663322b56b293c749a1"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:6b34907dbffda92d50b23f04b3a9ad3efa52cad866812d624f79d1e35d6e0554"
     },
     {
       "path": "/control-validation",
@@ -104,8 +104,8 @@
     },
     {
       "path": "/mapper",
-      "lastmod": "2026-09-26",
-      "fingerprint": "sha256:84b957da0103f3347577eeece93806ef9c9d9958da2dfa92c8551d4b34405f61"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:8f4e100d0b6cf5ce89a467fed700fc57f469a93534f1123514a9f47262382d8b"
     },
     {
       "path": "/workspace",
@@ -114,8 +114,8 @@
     },
     {
       "path": "/diagnostic",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:103b993a4134c9b91ed4b585f9576edb9ba90f6628dd7b9c7ee81548c993ea23"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:9e5946896b6f6c86ce95c630f4a1cdd438e3463c6ac6a649d33a5f2831019340"
     },
     {
       "path": "/audit-intake",
@@ -279,8 +279,8 @@
     },
     {
       "path": "/ru/pricing",
-      "lastmod": "2026-09-27",
-      "fingerprint": "sha256:6070003a3799b84955c8df753932bc541d3fe36ec002b69baf0e0de8daa25ab3"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:9ed0b8221d172cf3cac17e4a344d791705304290623429ac2d91a54bf3e24326"
     },
     {
       "path": "/ru/consulting",
@@ -294,8 +294,8 @@
     },
     {
       "path": "/ru/mapper",
-      "lastmod": "2026-09-27",
-      "fingerprint": "sha256:7f8743f5d3126c90a1352bd6dd30336f24d556c16bf9b9303329bcb9bd98f070"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:ed233c14c5b7c93ac06881aacef48d69a47cc5653041e929a461f7130ea21b93"
     },
     {
       "path": "/ru/workspace",
@@ -304,8 +304,8 @@
     },
     {
       "path": "/ru/diagnostic",
-      "lastmod": "2026-09-27",
-      "fingerprint": "sha256:77953a76a7010b9771bd5983c6130d726af361fe82d543fc7ad0fa9e81b5779b"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:2e307dd80faa4f9a86e527f37d8dcf74499f3ca854ca46898109986dbdbd9897"
     },
     {
       "path": "/ru/audit-intake",
@@ -379,13 +379,13 @@
     },
     {
       "path": "/ru/start",
-      "lastmod": "2026-09-27",
-      "fingerprint": "sha256:e61ea8ebd46fd5465635d67d84841c5c3a5065171ab8b9a8d0e84bbc380a03c5"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:8ba32183cf8a1c1a9216b6a95d781d0e96619ad720afad8b301fe76203c948f9"
     },
     {
       "path": "/ru/entry-audit",
-      "lastmod": "2026-09-27",
-      "fingerprint": "sha256:b923c18d764c2324e9c88574e4f937d9b10bc82219b31b5335faf72fc71471d5"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:b79a07d4b378ca946a97eb36c8ec97fff09da09add983d1ad571092d7f26b56a"
     },
     {
       "path": "/ru/control-validation",

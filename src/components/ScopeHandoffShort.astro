@@ -1,0 +1,26 @@
+---
+import { evaluateScopeHandoffActivation } from '../lib/scope-handoff-r1/activation.js';
+
+interface Props {
+  locale?: 'en' | 'ru';
+  offer: 'start' | 'entry_audit' | 'pricing' | 'diagnostic' | 'mapper' | 'triage' | 'scope_review';
+  id?: string;
+}
+
+const { locale = 'en', offer, id = 'send-scope' } = Astro.props;
+const ru = locale === 'ru';
+const activation = evaluateScopeHandoffActivation(process.env);
+const detailedHref = ru ? '/ru/audit-intake' : '/audit-intake';
+---
+
+<section id={id} class="section section-rule scope-short-section" hidden={!activation.uiEnabled} data-scope-short-section>
+  <div class="narrow">
+    <div class="eyebrow">{ru ? 'Короткий scope' : 'Short scope'}</div>
+    <h2 class="section-title">{ru ? 'Отправьте только то, что нужно для первого ручного review.' : 'Send only what is needed for the first human review.'}</h2>
+    <p class="lede">{ru ? 'Пять полей, явное согласие и никаких secrets. Принятая запись хранится приватно до 30 дней; отправка не разрешает testing или execution.' : 'Five fields, explicit consent and no secrets. An accepted record is stored privately for up to 30 days; submission does not authorize testing or execution.'}</p>
+    <div class="panel scope-short-host" data-scope-handoff-short data-scope-locale={locale} data-scope-offer={offer}></div>
+    <p class="scope-short-detail">{ru ? 'Нужен полный контекст?' : 'Need the full context?'} <a class="text-link" href={detailedHref}>{ru ? 'Открыть подробный brief →' : 'Open the detailed brief →'}</a></p>
+  </div>
+</section>
+<link rel="stylesheet" href="/scope-handoff-short.css" />
+<script is:inline src="/scope-handoff-r1.js" data-scope-handoff-r1-activation={activation.uiMarker}></script>

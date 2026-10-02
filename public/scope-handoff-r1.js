@@ -54,13 +54,17 @@
   };
 
   const STRING_LIMITS = Object.freeze({
-    company:200, business_contact:200, role:160, owner_decision:2000, workflow:3000, critical_action:2000,
+    contact_name:160, company:200, business_contact:200, scope_request:600, role:160, owner_decision:2000, workflow:3000, critical_action:2000,
     target_object:2000, authority_owner:500, expensive_error:2000, environment:500, access_approver:500,
     external_systems:3000, forbidden_effects:3000, pre_action_evidence:4000, freshness_rule:2000,
     object_binding_evidence:2000, external_confirmation:2000, uncertainty_behavior:2000, allowed_tests:4000,
     prohibited_audit_actions:4000, data_classification:500, minimum_necessary_data:3000,
     secret_handling_boundary:3000
   });
+
+  const SHORT_REQUIRED = Object.freeze([
+    'contact_name','company','business_contact','scope_request','environment','offer'
+  ]);
 
   const PRIMARY_REQUIRED = Object.freeze([
     'access_approver','external_systems','forbidden_effects','pre_action_evidence','freshness_rule',
@@ -121,6 +125,39 @@
     }
   });
 
+  const SHORT_COPY = Object.freeze({
+    en:{
+      title:'Send a short scope',
+      name:'Name', company:'Company', email:'Work email',
+      request:'What agent action and what decision do you need?', environment:'Environment',
+      environments:{staging:'Staging',test:'Test',other:'Other'},
+      consent:'I am sending this scope for human review, I have not included credentials, private keys, tokens or customer secrets, and I understand accepted records are stored privately for up to 30 days. This does not authorize testing or execution.',
+      submit:'Send your scope', submitting:'Sending one bounded request…',
+      accepted:'Received for human scope review. Testing remains unauthorized.',
+      unavailable:'Online submission is unavailable. No acceptance receipt was issued.',
+      rejected:'The request was rejected. Check the fields and do not include secrets.',
+      unknown:'Status is unknown. Do not create a second request; retry the same request or contact Robert with the request ID.',
+      rateLimited:'This request was rate-limited. Retry the same request after the stated delay.',
+      conflict:'Request ID conflict. Do not resend changed data under the same ID.',
+      manual:'Use the detailed brief instead', manualHref:'/audit-intake'
+    },
+    ru:{
+      title:'Отправить короткий scope',
+      name:'Имя', company:'Компания', email:'Рабочий email',
+      request:'Какое действие агента и какое решение нужно?', environment:'Среда',
+      environments:{staging:'Staging',test:'Test',other:'Другое'},
+      consent:'Я отправляю этот scope на ручной review, не включил credentials, private keys, tokens или customer secrets и понимаю, что принятая запись хранится приватно до 30 дней. Это не разрешает testing или execution.',
+      submit:'Отправить scope', submitting:'Отправляется один bounded request…',
+      accepted:'Заявка получена на ручной scope review. Testing authorization не предоставлен.',
+      unavailable:'Online submission недоступен. Acceptance receipt не выдан.',
+      rejected:'Request отклонён. Проверьте поля и не включайте secrets.',
+      unknown:'Статус неизвестен. Не создавайте второй request; повторите тот же request или свяжитесь с Robert, указав request ID.',
+      rateLimited:'Request ограничен rate limit. Повторите тот же request после указанной задержки.',
+      conflict:'Конфликт request ID. Не отправляйте изменённые данные с тем же ID.',
+      manual:'Нужен подробный brief', manualHref:'/ru/audit-intake'
+    }
+  });
+
   const TERMINAL_NO_RETRY = new Set(['accepted','rejected','conflict']);
   const CHANGE_LOCKED = new Set(['submitting','unknown','conflict']);
   const CHANGE_RELEASED = new Set(['accepted','rejected','rate_limited','unavailable']);
@@ -141,6 +178,24 @@
     if (v === 'yes' || v === 'да') return 'yes';
     if (v === 'no' || v === 'нет') return 'no';
     return 'unknown';
+  }
+
+  function buildShortScopeFields({ locale, offer, values, consent = true }) {
+    return {
+      schema_version:SCHEMA_VERSION,
+      submission_intent:'scope_review_only',
+      testing_authorization:false,
+      locale:locale === 'ru' ? 'ru' : 'en',
+      intake_depth:'short',
+      secret_confirmation:consent === true,
+      consent_scope_review:consent === true,
+      contact_name:trim(values?.contact_name),
+      company:trim(values?.company),
+      business_contact:trim(values?.business_contact),
+      scope_request:trim(values?.scope_request),
+      environment:trim(values?.environment).toLowerCase(),
+      offer:trim(offer || 'scope_review')
+    };
   }
 
   function buildScopeFields({ locale, depth:requestedDepth, values, secretConfirmation = true, consent = true }) {
@@ -171,14 +226,21 @@
     if (payload.submission_intent !== 'scope_review_only') errors.push('SUBMISSION_INTENT');
     if (payload.testing_authorization !== false) errors.push('TESTING_AUTHORIZATION');
     if (!['en','ru'].includes(payload.locale)) errors.push('LOCALE');
-    if (!['entry','primary'].includes(payload.intake_depth)) errors.push('INTAKE_DEPTH');
+    if (!['short','entry','primary'].includes(payload.intake_depth)) errors.push('INTAKE_DEPTH');
     if (payload.secret_confirmation !== true) errors.push('SECRET_CONFIRMATION');
     if (payload.consent_scope_review !== true) errors.push('CONSENT_SCOPE_REVIEW');
-    const required = payload.intake_depth === 'primary' ? [...BASE_REQUIRED, ...PRIMARY_REQUIRED] : BASE_REQUIRED;
+    const required = payload.intake_depth === 'short' ? SHORT_REQUIRED : payload.intake_depth === 'primary' ? [...BASE_REQUIRED, ...PRIMARY_REQUIRED] : BASE_REQUIRED;
     for (const key of required) {
       const value = payload[key];
       if (typeof value !== 'string' || value.length < 1) errors.push(`MISSING:${key}`);
       else if (key in STRING_LIMITS && value.length > STRING_LIMITS[key]) errors.push(`LENGTH:${key}`);
+    }
+    if (payload.intake_depth === 'short') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.business_contact || '')) errors.push('CONTACT_EMAIL');
+      if (!['staging','test','other'].includes(payload.environment)) errors.push('SHORT_ENVIRONMENT');
+      if (!['start','entry_audit','pricing','diagnostic','mapper','triage','scope_review'].includes(payload.offer)) errors.push('SHORT_OFFER');
+      const allowed = new Set(['schema_version','submission_intent','testing_authorization','locale','intake_depth','secret_confirmation','consent_scope_review',...SHORT_REQUIRED]);
+      for (const key of Object.keys(payload)) if (!allowed.has(key)) errors.push(`SHORT_FIELD:${key}`);
     }
     if (payload.intake_depth === 'entry') {
       for (const key of PRIMARY_REQUIRED) if (key in payload) errors.push(`ENTRY_PRIMARY:${key}`);
@@ -496,13 +558,112 @@
     return Object.freeze({ mounted:true, locale, shell, machine, refresh, armGeneratedBrief, handleClick, collectFields });
   }
 
+  function renderShortForm(locale) {
+    const text = SHORT_COPY[locale];
+    return `<form class="scope-short-form" data-scope-short-form novalidate>
+      <div class="scope-short-grid">
+        <label>${text.name}<input type="text" maxlength="160" autocomplete="name" required data-scope-short-field="contact_name"></label>
+        <label>${text.company}<input type="text" maxlength="200" autocomplete="organization" required data-scope-short-field="company"></label>
+        <label>${text.email}<input type="email" maxlength="200" autocomplete="email" required data-scope-short-field="business_contact"></label>
+        <label>${text.environment}<select required data-scope-short-field="environment"><option value=""></option><option value="staging">${text.environments.staging}</option><option value="test">${text.environments.test}</option><option value="other">${text.environments.other}</option></select></label>
+      </div>
+      <label>${text.request}<textarea rows="5" maxlength="600" required data-scope-short-field="scope_request"></textarea></label>
+      <label class="scope-short-honeypot" aria-hidden="true">Website<input type="text" tabindex="-1" autocomplete="off" data-scope-honeypot></label>
+      <label class="scope-short-consent"><input type="checkbox" required data-scope-short-consent><span>${text.consent}</span></label>
+      <div class="scope-short-actions"><button type="submit" class="button button-primary" data-scope-short-submit>${text.submit}</button><a class="button button-ghost" href="${text.manualHref}">${text.manual} →</a></div>
+      <output data-scope-short-client-id hidden></output>
+      <p class="scope-short-status" data-scope-short-status role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>`;
+  }
+
+  function mountShortScopeHandoffs(options = {}) {
+    const enabled = options.enabled ?? UI_ENABLED;
+    if (!enabled) return Object.freeze({ mounted:0, reason:'UI_DISABLED' });
+    const doc = options.document || globalThis.document;
+    if (!doc || typeof doc.querySelectorAll !== 'function') return Object.freeze({ mounted:0, reason:'DOCUMENT_UNAVAILABLE' });
+    const roots = [...doc.querySelectorAll('[data-scope-handoff-short]')];
+    if (!roots.length) return Object.freeze({ mounted:0, reason:'ROOT_MISSING' });
+    const mounted = [];
+    for (const root of roots) {
+      if (root.getAttribute('data-scope-mounted') === 'true') continue;
+      const locale = root.getAttribute('data-scope-locale') === 'ru' ? 'ru' : 'en';
+      const offer = trim(root.getAttribute('data-scope-offer') || 'scope_review');
+      if (!['start','entry_audit','pricing','diagnostic','mapper','triage','scope_review'].includes(offer)) continue;
+      root.innerHTML = renderShortForm(locale);
+      root.setAttribute('data-scope-mounted','true');
+      const text = SHORT_COPY[locale];
+      const form = root.querySelector('[data-scope-short-form]');
+      const submitButton = root.querySelector('[data-scope-short-submit]');
+      const status = root.querySelector('[data-scope-short-status]');
+      const clientOutput = root.querySelector('[data-scope-short-client-id]');
+      const consent = root.querySelector('[data-scope-short-consent]');
+      const honeypot = root.querySelector('[data-scope-honeypot]');
+      if (!form || !submitButton || !status || !clientOutput || !consent || !honeypot) continue;
+      const machine = createSubmissionMachine({
+        fetchImpl:options.fetchImpl,
+        cryptoApi:options.cryptoApi,
+        AbortControllerImpl:options.AbortControllerImpl,
+        setTimeoutImpl:options.setTimeoutImpl,
+        clearTimeoutImpl:options.clearTimeoutImpl,
+        timeoutMs:options.timeoutMs
+      });
+      const read = key => trim(root.querySelector(`[data-scope-short-field="${key}"]`)?.value);
+      const collectFields = () => buildShortScopeFields({
+        locale, offer,
+        values:{
+          contact_name:read('contact_name'),
+          company:read('company'),
+          business_contact:read('business_contact'),
+          scope_request:read('scope_request'),
+          environment:read('environment')
+        },
+        consent:consent.checked === true
+      });
+      const showId = id => {
+        clientOutput.hidden = !id;
+        clientOutput.textContent = id ? `Request ID: ${id}` : '';
+      };
+      const setState = (state, message, id = null) => {
+        root.setAttribute('data-scope-state', state);
+        status.textContent = message;
+        showId(id);
+      };
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        if (trim(honeypot.value)) {
+          setState('honeypot', locale === 'ru' ? 'Заявка получена.' : 'Received.');
+          return;
+        }
+        if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
+        const fields = collectFields();
+        const errors = validateScopeFields(fields);
+        if (errors.length) {
+          setState('invalid', text.rejected);
+          return;
+        }
+        submitButton.disabled = true;
+        setState('submitting', text.submitting, machine.inspect().clientId);
+        const outcome = await machine.submit(fields);
+        submitButton.disabled = false;
+        if (outcome.kind === 'accepted') setState('accepted', text.accepted, outcome.clientId);
+        else if (outcome.kind === 'rate_limited') setState('rate-limited', text.rateLimited, outcome.clientId);
+        else if (outcome.kind === 'unavailable') setState('unavailable', text.unavailable, outcome.clientId);
+        else if (outcome.kind === 'conflict' || outcome.kind === 'payload_changed_locked') setState('conflict', text.conflict, outcome.clientId);
+        else if (outcome.kind === 'rejected' || outcome.kind === 'client_invalid') setState('rejected', text.rejected, outcome.clientId);
+        else setState('unknown', text.unknown, outcome.clientId);
+      });
+      mounted.push(Object.freeze({ root, locale, offer, form, machine, collectFields }));
+    }
+    return Object.freeze({ mounted:mounted.length, forms:Object.freeze(mounted) });
+  }
+
   const TEST_API = Object.freeze({
     UI_ENABLED, ACTIVATION_MODE, PRODUCTION_ACTIVATION_MODE, ACTIVATION_ATTRIBUTE, BOOTSTRAP_ACTIVATION_MARKER,
     readBootstrapActivationMarker, isUiActivationMarkerEnabled,
     ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, STORAGE_STATUS, OPERATOR_DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
-    BASE_IDS:baseIds, PRIMARY_IDS:primaryIds, BASE_REQUIRED, PRIMARY_REQUIRED, COPY,
-    stableStringify, enumValue, buildScopeFields, validateScopeFields, scopeFingerprint,
-    createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, mountScopeHandoff
+    BASE_IDS:baseIds, PRIMARY_IDS:primaryIds, SHORT_REQUIRED, BASE_REQUIRED, PRIMARY_REQUIRED, COPY, SHORT_COPY,
+    stableStringify, enumValue, buildShortScopeFields, buildScopeFields, validateScopeFields, scopeFingerprint,
+    createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, renderShortForm, mountScopeHandoff, mountShortScopeHandoffs
   });
 
   if (TEST_MODE) {
@@ -510,5 +671,8 @@
       configurable:true, enumerable:false, writable:false, value:TEST_API
     });
   }
-  if (!TEST_MODE && UI_ENABLED && typeof document !== 'undefined') mountScopeHandoff();
+  if (!TEST_MODE && UI_ENABLED && typeof document !== 'undefined') {
+    mountScopeHandoff();
+    mountShortScopeHandoffs();
+  }
 })();

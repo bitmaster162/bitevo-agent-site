@@ -1,0 +1,14 @@
+.scope-short-host{padding:clamp(22px,4vw,34px);margin-top:24px}
+.scope-short-detail{margin-top:16px;color:var(--muted)}
+.scope-short-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.scope-short-form label{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;color:var(--muted);font:500 .62rem/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase}
+.scope-short-form input,.scope-short-form textarea,.scope-short-form select{width:100%;border:1px solid var(--line-strong);border-radius:10px;background:rgba(255,255,255,.025);color:var(--ink);padding:11px 12px;font:.82rem/1.5 var(--sans);letter-spacing:0;text-transform:none;outline:none}
+.scope-short-form input:focus,.scope-short-form textarea:focus,.scope-short-form select:focus{border-color:rgba(127,208,177,.55);box-shadow:0 0 0 3px rgba(127,208,177,.06)}
+.scope-short-form textarea{resize:vertical}
+.scope-short-consent{display:grid!important;grid-template-columns:18px 1fr;gap:10px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:10px;text-transform:none!important;font-family:var(--sans)!important;font-size:.76rem!important;letter-spacing:0!important}
+.scope-short-consent input{width:16px;height:16px;margin:2px 0 0;padding:0;accent-color:var(--green)}
+.scope-short-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.scope-short-status{min-height:1.5em;margin:14px 0 0;color:var(--muted);font-size:.78rem}
+.scope-short-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+[data-scope-short-client-id]{display:block;margin-top:10px;color:var(--muted);font:500 .6rem var(--mono)}
+@media(max-width:700px){.scope-short-grid{grid-template-columns:1fr}.scope-short-actions .button{width:100%}}

@@ -12,10 +12,17 @@ export const RECEIPT_STATUS = 'RECEIVED_FOR_SCOPE_REVIEW';
 export const DELIVERY_STATUS = 'INTAKE_RECORD_ACCEPTED';
 export const HUMAN_REVIEW_STATUS = 'NOT_CONFIRMED';
 
-const BASE_REQUIRED = [
+const COMMON_REQUIRED = [
   'schema_version','client_submission_id','submission_intent','testing_authorization','locale','intake_depth',
-  'secret_confirmation','consent_scope_review','company','business_contact','role','owner_decision','workflow',
-  'critical_action','target_object','authority_owner','expensive_error','environment'
+  'secret_confirmation','consent_scope_review'
+];
+
+const SHORT_REQUIRED = [
+  'contact_name','company','business_contact','scope_request','environment','offer'
+];
+
+const BASE_REQUIRED = [
+  'company','business_contact','role','owner_decision','workflow','critical_action','target_object','authority_owner','expensive_error','environment'
 ];
 
 const PRIMARY_REQUIRED = [
@@ -26,7 +33,7 @@ const PRIMARY_REQUIRED = [
 ];
 
 const STRING_LIMITS = {
-  client_submission_id:[16,80], company:[1,200], business_contact:[1,200], role:[1,160], owner_decision:[1,2000],
+  client_submission_id:[16,80], contact_name:[1,160], company:[1,200], business_contact:[1,200], scope_request:[1,600], role:[1,160], owner_decision:[1,2000],
   workflow:[1,3000], critical_action:[1,2000], target_object:[1,2000], authority_owner:[1,500], expensive_error:[1,2000],
   environment:[1,500], access_approver:[1,500], external_systems:[1,3000], forbidden_effects:[1,3000],
   pre_action_evidence:[1,4000], freshness_rule:[1,2000], object_binding_evidence:[1,2000], external_confirmation:[1,2000],
@@ -40,11 +47,12 @@ const CONSTS = {
 };
 
 const ENUMS = {
-  locale:new Set(['en','ru']), intake_depth:new Set(['entry','primary']),
+  locale:new Set(['en','ru']), intake_depth:new Set(['short','entry','primary']),
+  offer:new Set(['start','entry_audit','pricing','diagnostic','mapper','triage','scope_review']),
   staging_available:new Set(['yes','no','partial','unknown']), safe_replay_available:new Set(['yes','no','unknown'])
 };
 
-export const ALLOWED_FIELDS = Object.freeze([...BASE_REQUIRED, ...PRIMARY_REQUIRED]);
+export const ALLOWED_FIELDS = Object.freeze([...new Set([...COMMON_REQUIRED, ...SHORT_REQUIRED, ...BASE_REQUIRED, ...PRIMARY_REQUIRED])]);
 const ALLOWED_SET = new Set(ALLOWED_FIELDS);
 
 const SECRET_PATTERNS = [
@@ -73,7 +81,11 @@ export function validateScopePayload(payload) {
   const errors = [];
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return { ok:false, errors:['BODY_NOT_OBJECT'] };
   for (const key of Object.keys(payload)) if (!ALLOWED_SET.has(key)) errors.push(`UNEXPECTED_FIELD:${key}`);
-  const required = payload.intake_depth === 'primary' ? [...BASE_REQUIRED, ...PRIMARY_REQUIRED] : BASE_REQUIRED;
+  const required = payload.intake_depth === 'short'
+    ? [...COMMON_REQUIRED, ...SHORT_REQUIRED]
+    : payload.intake_depth === 'primary'
+      ? [...COMMON_REQUIRED, ...BASE_REQUIRED, ...PRIMARY_REQUIRED]
+      : [...COMMON_REQUIRED, ...BASE_REQUIRED];
   for (const key of required) if (!(key in payload)) errors.push(`MISSING_FIELD:${key}`);
   for (const [key, expected] of Object.entries(CONSTS)) if (key in payload && payload[key] !== expected) errors.push(`CONST_MISMATCH:${key}`);
   for (const [key, set] of Object.entries(ENUMS)) if (key in payload && !set.has(payload[key])) errors.push(`ENUM_INVALID:${key}`);
@@ -83,6 +95,12 @@ export function validateScopePayload(payload) {
     else if (payload[key].length < min || payload[key].length > max) errors.push(`LENGTH_INVALID:${key}`);
   }
   if ('client_submission_id' in payload && typeof payload.client_submission_id === 'string' && !/^[A-Za-z0-9_-]+$/.test(payload.client_submission_id)) errors.push('PATTERN_INVALID:client_submission_id');
+  if (payload.intake_depth === 'short') {
+    if (typeof payload.business_contact === 'string' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.business_contact)) errors.push('PATTERN_INVALID:business_contact');
+    if (!['staging','test','other'].includes(payload.environment)) errors.push('ENUM_INVALID:environment');
+    const shortAllowed = new Set([...COMMON_REQUIRED, ...SHORT_REQUIRED]);
+    for (const key of Object.keys(payload)) if (!shortAllowed.has(key)) errors.push(`SHORT_FIELD_FORBIDDEN:${key}`);
+  }
   if (payload.intake_depth === 'entry') for (const key of PRIMARY_REQUIRED) if (key in payload) errors.push(`ENTRY_PRIMARY_FIELD_FORBIDDEN:${key}`);
   return { ok:errors.length === 0, errors };
 }
