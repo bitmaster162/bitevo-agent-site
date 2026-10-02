@@ -15,7 +15,7 @@
     {
       "path": "/pricing",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:2ec018975906c6b3e6c6b43bf57c9c6a537cc9f903f5ed6ad9e188b44c20e318"
+      "fingerprint": "sha256:72bba6601e1e2bfb61e79153023a428865b9bc7bd48da8163a74a3cf0a10f8ec"
     },
     {
       "path": "/consulting",
@@ -24,8 +24,8 @@
     },
     {
       "path": "/agent-authority-audit",
-      "lastmod": "2026-09-19",
-      "fingerprint": "sha256:2c222c57527ffb66dff9e70f6df6d97746ae16ae9d15c1d7fd96327014cf3fd0"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:db6c81fbaff4700abc5d0575dec18d37e1abc45f865ccd9c8152dc7b8472f71e"
     },
     {
       "path": "/entry-audit",
@@ -280,7 +280,7 @@
     {
       "path": "/ru/pricing",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:9ed0b8221d172cf3cac17e4a344d791705304290623429ac2d91a54bf3e24326"
+      "fingerprint": "sha256:622860e85cd2ce4a521e6e0e90b5d3439f41c7e2bf26d24de84b16ecd5e7ad62"
     },
     {
       "path": "/ru/consulting",

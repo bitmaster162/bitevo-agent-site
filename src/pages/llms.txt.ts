@@ -120,7 +120,7 @@ export function GET() {
     '- USD 3,000 BUILD Workflow Exception Diagnostic / 5 business days: bound one recurring operational exception to a named owner, review states, evidence handoff and measurable baseline before deeper implementation; the first phase does not require production-system mutation.',
     '- USD 4,900 Primary Audit: decide whether one workflow has enough evidence, effect confirmation and recovery control for its current or proposed authority.',
     '- Homepage Primary Audit timing uses the same qualified five-working-day window after complete evidence/access + written scope; its public Phase A-D sequence describes method, not a guaranteed day-by-day allocation.',
-    '- Public Homepage, Pricing/Consulting and Agent Authority Audit scope-preparation CTAs, including the Primary Audit path, prepare a local scope brief only; they do not book or submit an engagement and do not authorize testing.',
+    '- Public Homepage, Pricing/Consulting and Agent Authority Audit Scope Handoff forms send only fields the user fills after explicit consent; accepted records are stored privately for up to 30 days. Submission does not create a booking and does not authorize testing.',
     '- Hardening: quoted separately only after verified findings identify the real control gap.',
     '',
     '## Boundaries',
