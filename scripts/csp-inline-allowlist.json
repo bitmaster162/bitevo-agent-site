@@ -58,7 +58,9 @@
     "pUeC4ZiQjsziwxvVKz3lt0g/AFWLMrZ2XPQ49OhydWE=",
     "sDb7lBPyFoFcd0Kk3RLxtu+EX3VnRf5O7A8odOHrxc0=",
     "wdbXYwFhmp2xnqX5Y/8ZjeR4g2K1qhrisUgv9jwhbL8=",
-    "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g=",
+    "F3yU1QSLyhZOIMXnrRPJHqbrKN2e96VFPZmDR+wz7jU=",
+    "2uz/BRgrqU/DQltCdJk4XSrehF1+3Ejl3OFyDWpg79g=",
+    "h7AaBeZR3fp7zFHP4Pe3ULuWTIWNMX1Ie1QIju44lcw=",
     "VCmT8Yrhqg0F3UIf0/0D5EWJyTju+9R305EI64WyEX8=",
     "Vg6vrWzbl52s1mK4xX1gImoSkR063z0z+ZN6LiBWEHQ=",
     "Cv4I0nKYq4VS2RCJlwdBtHM58ctCki1bxNtFG9nyWzA="
@@ -138,6 +140,23 @@
         "/guides/security-sandboxing",
         "/guides/fleet-coordinator-drift-monitoring",
         "/guides/d3-tool-io-bridge-contract"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_P27_1B_PRECOMMIT",
+      "note": "P27.1B makes /ru/start and /ru/entry-audit explicit source pages so only the ten intended short-form routes change. The exact Astro-emitted style hashes below were observed on the reviewed candidate build. One stale generated-parity style hash is removed. No new inline script, style attribute, wildcard, unsafe-inline directive, or CSP relaxation is introduced.",
+      "styles": [
+        "F3yU1QSLyhZOIMXnrRPJHqbrKN2e96VFPZmDR+wz7jU=",
+        "2uz/BRgrqU/DQltCdJk4XSrehF1+3Ejl3OFyDWpg79g=",
+        "h7AaBeZR3fp7zFHP4Pe3ULuWTIWNMX1Ie1QIju44lcw="
+      ],
+      "historicalEmittedStyles": [
+        "zN9cX+0zKFan1oV6J4epqcFcnmnb3Q6wjP5Bj/fGK2g="
+      ],
+      "routes": [
+        "/ru/start",
+        "/ru/entry-audit",
+        "/ru/pricing"
       ]
     }
   ]

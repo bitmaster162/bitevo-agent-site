@@ -45,6 +45,7 @@ if (enRoutes.length !== ruRoutes.length) failures.push(`indexable locale count m
 if (enRoutes.length !== 54) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
 
 const expectedGenerated = new Set();
+const explicitParityReuse = new Set(['/ru/start','/ru/entry-audit']);
 for (const en of enRoutes) {
   const ruPath = en.path === '/' ? '/ru' : `/ru${en.path}`;
   const ru = ruMap.get(ruPath);
@@ -92,7 +93,7 @@ for (const en of enRoutes) {
 
 const actualGenerated = new Set(parityMap.keys());
 checks += 2;
-if (expectedGenerated.size !== 28) failures.push(`unexpected generated parity route count: ${expectedGenerated.size}`);
+if (expectedGenerated.size !== 26) failures.push(`unexpected generated parity route count: ${expectedGenerated.size}`);
 if (actualGenerated.size !== parity.pages.length) failures.push('duplicate paths in ru-semantic-parity data');
 
 for (const path of expectedGenerated) {
@@ -101,7 +102,12 @@ for (const path of expectedGenerated) {
 }
 for (const path of actualGenerated) {
   checks += 1;
-  if (!expectedGenerated.has(path)) failures.push(`parity data unexpectedly shadows explicit RU source route ${path}`);
+  if (!expectedGenerated.has(path) && !explicitParityReuse.has(path)) failures.push(`parity data unexpectedly shadows explicit RU source route ${path}`);
+}
+for (const path of explicitParityReuse) {
+  checks += 2;
+  if (!actualGenerated.has(path)) failures.push(`explicit RU route missing parity data reuse ${path}`);
+  if (!(await exists(explicitSourceFile(path)))) failures.push(`explicit RU route missing source file ${path}`);
 }
 
 for (const [ruPath, page] of parityMap) {

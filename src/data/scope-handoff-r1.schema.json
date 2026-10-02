@@ -12,17 +12,7 @@
     "locale",
     "intake_depth",
     "secret_confirmation",
-    "consent_scope_review",
-    "company",
-    "business_contact",
-    "role",
-    "owner_decision",
-    "workflow",
-    "critical_action",
-    "target_object",
-    "authority_owner",
-    "expensive_error",
-    "environment"
+    "consent_scope_review"
   ],
   "properties": {
     "schema_version": { "const": "bitevo.scope-handoff.r1" },
@@ -30,12 +20,18 @@
     "submission_intent": { "const": "scope_review_only" },
     "testing_authorization": { "const": false },
     "locale": { "type": "string", "enum": ["en", "ru"] },
-    "intake_depth": { "type": "string", "enum": ["entry", "primary"] },
+    "intake_depth": { "type": "string", "enum": ["short", "entry", "primary"] },
     "secret_confirmation": { "const": true },
     "consent_scope_review": { "const": true },
 
+    "contact_name": { "type": "string", "minLength": 1, "maxLength": 160 },
     "company": { "type": "string", "minLength": 1, "maxLength": 200 },
     "business_contact": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "scope_request": { "type": "string", "minLength": 1, "maxLength": 600 },
+    "offer": {
+      "type": "string",
+      "enum": ["start", "entry_audit", "pricing", "diagnostic", "mapper", "triage", "scope_review"]
+    },
     "role": { "type": "string", "minLength": 1, "maxLength": 160 },
     "owner_decision": { "type": "string", "minLength": 1, "maxLength": 2000 },
     "workflow": { "type": "string", "minLength": 1, "maxLength": 3000 },
@@ -63,9 +59,46 @@
   },
   "allOf": [
     {
+      "if": { "properties": { "intake_depth": { "const": "short" } }, "required": ["intake_depth"] },
+      "then": {
+        "required": ["contact_name", "company", "business_contact", "scope_request", "environment", "offer"],
+        "properties": {
+          "business_contact": { "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$" },
+          "environment": { "enum": ["staging", "test", "other"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "intake_depth": { "const": "entry" } }, "required": ["intake_depth"] },
+      "then": {
+        "required": [
+          "company",
+          "business_contact",
+          "role",
+          "owner_decision",
+          "workflow",
+          "critical_action",
+          "target_object",
+          "authority_owner",
+          "expensive_error",
+          "environment"
+        ]
+      }
+    },
+    {
       "if": { "properties": { "intake_depth": { "const": "primary" } }, "required": ["intake_depth"] },
       "then": {
         "required": [
+          "company",
+          "business_contact",
+          "role",
+          "owner_decision",
+          "workflow",
+          "critical_action",
+          "target_object",
+          "authority_owner",
+          "expensive_error",
+          "environment",
           "access_approver",
           "external_systems",
           "forbidden_effects",

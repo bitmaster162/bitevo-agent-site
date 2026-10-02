@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
 
 const tests = [
   ['Object binding', 'Does the action still target the exact customer, order, booking, account or resource it was authorized for?'],
@@ -63,6 +64,8 @@ const outputs = [
       <p class="lede">A useful result may be PASS, FAIL, PARTIAL, REJECTED HYPOTHESIS or BLOCKED. Success is not defined as finding a vulnerability.</p>
     </div>
   </section>
+
+  <ScopeHandoffShort locale="en" offer="entry_audit" />
 
   <section class="section section-rule">
     <div class="narrow">

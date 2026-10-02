@@ -60,25 +60,33 @@ check(schema.properties?.testing_authorization?.const === false, 'testing_author
 check(schema.properties?.secret_confirmation?.const === true, 'secret_confirmation must be constant true');
 check(schema.properties?.consent_scope_review?.const === true, 'consent_scope_review must be constant true');
 check(JSON.stringify(schema.properties?.locale?.enum) === JSON.stringify(['en', 'ru']), 'locale enum must be EN/RU only');
-check(JSON.stringify(schema.properties?.intake_depth?.enum) === JSON.stringify(['entry', 'primary']), 'intake depth enum must be Entry/Primary only');
+check(JSON.stringify(schema.properties?.intake_depth?.enum) === JSON.stringify(['short', 'entry', 'primary']), 'intake depth enum must be Short/Entry/Primary only');
 
 const required = new Set(schema.required || []);
 for (const field of [
   'schema_version', 'client_submission_id', 'submission_intent', 'testing_authorization', 'locale', 'intake_depth',
-  'secret_confirmation', 'consent_scope_review', 'company', 'business_contact', 'role', 'owner_decision', 'workflow',
-  'critical_action', 'target_object', 'authority_owner', 'expensive_error', 'environment'
-]) {
-  check(required.has(field), `required Entry field missing from schema: ${field}`);
+  'secret_confirmation', 'consent_scope_review'
+]) check(required.has(field), `required common field missing from schema: ${field}`);
+for (const field of ['company','business_contact','role','owner_decision','workflow','critical_action','target_object','authority_owner','expensive_error','environment']) {
+  check(!required.has(field), `depth-specific field must not be globally required: ${field}`);
 }
+const shortThen = schema.allOf?.find(x => x?.if?.properties?.intake_depth?.const === 'short')?.then;
+const entryThen = schema.allOf?.find(x => x?.if?.properties?.intake_depth?.const === 'entry')?.then;
+const primaryThen = schema.allOf?.find(x => x?.if?.properties?.intake_depth?.const === 'primary')?.then;
+for (const field of ['contact_name','company','business_contact','scope_request','environment','offer']) check(shortThen?.required?.includes(field), `Short field missing: ${field}`);
+check(shortThen?.properties?.scope_request === undefined && schema.properties?.scope_request?.maxLength === 600, 'Short scope request ceiling must be 600 chars');
+check(typeof shortThen?.properties?.business_contact?.pattern === 'string', 'Short contact must require an email-shaped value');
+check(JSON.stringify(shortThen?.properties?.environment?.enum) === JSON.stringify(['staging','test','other']), 'Short environment enum exact');
+for (const field of ['company','business_contact','role','owner_decision','workflow','critical_action','target_object','authority_owner','expensive_error','environment']) check(entryThen?.required?.includes(field), `Entry field missing: ${field}`);
 
-const primaryThen = schema.allOf?.find(x => x?.if?.properties?.intake_depth?.const === 'primary')?.then?.required || [];
+const primaryRequired = primaryThen?.required || [];
 for (const field of [
   'access_approver', 'external_systems', 'forbidden_effects', 'pre_action_evidence', 'freshness_rule',
   'object_binding_evidence', 'external_confirmation', 'uncertainty_behavior', 'staging_available',
   'safe_replay_available', 'allowed_tests', 'prohibited_audit_actions', 'data_classification',
   'minimum_necessary_data', 'secret_handling_boundary'
 ]) {
-  check(primaryThen.includes(field), `Primary conditional field missing from schema: ${field}`);
+  check(primaryRequired.includes(field), `Primary conditional field missing from schema: ${field}`);
 }
 
 const forbiddenPayloadFields = [

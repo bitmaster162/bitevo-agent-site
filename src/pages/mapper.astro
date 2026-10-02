@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
+import { evaluateScopeHandoffActivation } from '../lib/scope-handoff-r1/activation.js';
+const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
 
 const actionClasses = [
   ['crm', 'CRM / record write', 'Update or mutate one external record or object.'],
@@ -84,12 +87,14 @@ const gates = [
           <div class="posture"><small>PLANNING POSTURE</small><h3 id="posture"></h3><p id="postureWhy"></p></div>
           <div class="artifact-tabs" role="tablist" aria-label="Generated artifact sections"><button type="button" class="active" data-view="ledger">Authority Ledger</button><button type="button" data-view="contract">Evidence Contract</button><button type="button" data-view="failures">Failure Plan</button><button type="button" data-view="brief">Full Brief</button></div>
           <pre id="artifactText" tabindex="0"></pre>
-          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="workspace" type="button" class="button button-ghost">Save / compare in Workspace ↗</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button></div>
+          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="workspace" type="button" class="button button-ghost">Save / compare in Workspace ↗</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button>{scopeHandoffActivation.uiEnabled && <a href="#send-scope" class="button button-ghost">Send to Robert</a>}</div>
           <div class="boundary"><span>LOCAL HANDOFFS</span><p>Workspace and Intake handoffs use sessionStorage between BitEvo pages. No workflow content is placed in the URL, uploaded by this page or treated as testing authorization.</p></div>
         </div>
       </aside>
     </div>
   </section>
+
+  <ScopeHandoffShort locale="en" offer="mapper" />
 
   <section class="section section-rule"><div class="container explain-grid"><div><div class="eyebrow">Product path</div><h2 class="section-title">Proof → map → compare → diagnose → scope.</h2></div><div class="explain-list"><article><span>01</span><div><strong>Proof gives you worked structures.</strong><p>Three synthetic packs show how authority changes across writes, messages and configuration effects.</p></div></article><article><span>02</span><div><strong>Mapper applies the structure to your workflow.</strong><p>Import, export and handoff preserve the artifact without converting it into a score.</p></div></article><article><span>03</span><div><strong>Workspace compares before/after checkpoints.</strong><p>It shows exact authority, evidence and gate deltas and builds a local Decision Memo.</p></div></article><article><span>04</span><div><strong>Diagnostic keeps unresolved claims visible.</strong><p>UNKNOWN remains engineering uncertainty rather than a silent pass.</p></div></article><article><span>05</span><div><strong>Intake adds owner, access and Rules-of-Engagement context.</strong><p>Handoff saves retyping while keeping authorization separate.</p></div></article></div></div></section>
 </Layout>

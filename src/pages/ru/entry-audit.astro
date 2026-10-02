@@ -1,15 +1,10 @@
 ---
 import RuLayout from '../../layouts/RuLayout.astro';
+import ScopeHandoffShort from '../../components/ScopeHandoffShort.astro';
 import parity from '../../data/ru-semantic-parity.json';
 
-export function getStaticPaths() {
-  return parity.pages.filter((page) => !['start','entry-audit'].includes(page.slug)).map((page) => ({
-    params: { slug: page.slug },
-    props: { page }
-  }));
-}
-
-const { page } = Astro.props;
+const page = parity.pages.find((item) => item.slug === 'entry-audit');
+if (!page) throw new Error('RU parity page missing: entry-audit');
 const ruPath = `/ru/${page.slug}`;
 const categoryRu = {
   FLAGSHIP:'ГЛАВНЫЙ',
@@ -68,6 +63,8 @@ const categoryRu = {
       </div>
     </div>
   </section>
+
+  <ScopeHandoffShort locale="ru" offer="entry_audit" />
 
   <section class="section section-rule">
     <div class="narrow parity-actions">
