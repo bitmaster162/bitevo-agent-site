@@ -1,8 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
-import { evaluateScopeHandoffActivation } from '../lib/scope-handoff-r1/activation.js';
-const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
 
 const actionClasses = [
   ['crm', 'CRM / record write', 'Update or mutate one external record or object.'],
@@ -87,7 +85,7 @@ const gates = [
           <div class="posture"><small>PLANNING POSTURE</small><h3 id="posture"></h3><p id="postureWhy"></p></div>
           <div class="artifact-tabs" role="tablist" aria-label="Generated artifact sections"><button type="button" class="active" data-view="ledger">Authority Ledger</button><button type="button" data-view="contract">Evidence Contract</button><button type="button" data-view="failures">Failure Plan</button><button type="button" data-view="brief">Full Brief</button></div>
           <pre id="artifactText" tabindex="0"></pre>
-          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="workspace" type="button" class="button button-ghost">Save / compare in Workspace ↗</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button>{scopeHandoffActivation.uiEnabled && <a href="#send-scope" class="button button-ghost">Send to Robert</a>}</div>
+          <div class="output-actions"><button id="copy" type="button" class="button">Copy view</button><button id="downloadTxt" type="button" class="button button-ghost">TXT</button><button id="downloadJson" type="button" class="button button-ghost">JSON</button><button id="workspace" type="button" class="button button-ghost">Save / compare in Workspace ↗</button><button id="handoff" type="button" class="button button-primary">Continue to Audit Intake ↗</button><a href="#send-scope" class="button button-ghost" hidden data-scope-handoff-ui-control>Send to Robert</a></div>
           <div class="boundary"><span>LOCAL HANDOFFS</span><p>Workspace and Intake handoffs use sessionStorage between BitEvo pages. No workflow content is placed in the URL, uploaded by this page or treated as testing authorization.</p></div>
         </div>
       </aside>

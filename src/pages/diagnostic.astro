@@ -1,8 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
-import { evaluateScopeHandoffActivation } from '../lib/scope-handoff-r1/activation.js';
-const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
 
 const questions = [
   { id: 'action', gate: 'Authority Budget', q: 'Can you name the exact external action this workflow is allowed to perform?', why: 'If the consequential action is vague, the authority boundary cannot be tested.' },
@@ -46,7 +44,7 @@ const questions = [
           <div class="summary"><small>INTERPRETATION</small><h3 id="headline"></h3><p id="summaryText"></p></div>
           <div id="gaps" class="gaps"></div>
           <div class="boundary"><span>BOUNDARY</span><p>This diagnostic does not establish that a workflow is safe or unsafe and does not authorize testing. It identifies whether key decision gates are explicitly answered; written Rules of Engagement remain required before any test execution.</p></div>
-          <div class="result-actions"><button id="copy" type="button" class="button">Copy brief</button><a href="/mapper" class="button button-primary">Map the authority ↗</a><a href="/workspace" class="button">Compare checkpoints</a><a href="/audit-intake" class="button button-ghost">Turn gaps into scope</a>{scopeHandoffActivation.uiEnabled && <a href="#send-scope" class="button button-ghost">Send to Robert</a>}</div>
+          <div class="result-actions"><button id="copy" type="button" class="button">Copy brief</button><a href="/mapper" class="button button-primary">Map the authority ↗</a><a href="/workspace" class="button">Compare checkpoints</a><a href="/audit-intake" class="button button-ghost">Turn gaps into scope</a><a href="#send-scope" class="button button-ghost" hidden data-scope-handoff-ui-control>Send to Robert</a></div>
         </div>
       </aside>
     </div>

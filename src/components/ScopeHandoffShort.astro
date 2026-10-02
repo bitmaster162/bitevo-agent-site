@@ -13,7 +13,7 @@ const activation = evaluateScopeHandoffActivation(process.env);
 const detailedHref = ru ? '/ru/audit-intake' : '/audit-intake';
 ---
 
-<section id={id} class="section section-rule scope-short-section" hidden={!activation.uiEnabled} data-scope-short-section>
+<section id={id} class="section section-rule scope-short-section" hidden data-scope-short-section>
   <div class="narrow">
     <div class="eyebrow">{ru ? 'Короткий scope' : 'Short scope'}</div>
     <h2 class="section-title">{ru ? 'Отправьте только то, что нужно для первого ручного review.' : 'Send only what is needed for the first human review.'}</h2>

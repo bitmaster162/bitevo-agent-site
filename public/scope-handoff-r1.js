@@ -576,6 +576,16 @@
     </form>`;
   }
 
+  function revealScopeHandoffUi(options = {}) {
+    const enabled = options.enabled ?? UI_ENABLED;
+    if (!enabled) return Object.freeze({ revealed:0, reason:'UI_DISABLED' });
+    const doc = options.document || globalThis.document;
+    if (!doc || typeof doc.querySelectorAll !== 'function') return Object.freeze({ revealed:0, reason:'DOCUMENT_UNAVAILABLE' });
+    const nodes = [...doc.querySelectorAll('[data-scope-short-section], [data-scope-handoff-ui-control]')];
+    for (const node of nodes) node.hidden = false;
+    return Object.freeze({ revealed:nodes.length, reason:null });
+  }
+
   function mountShortScopeHandoffs(options = {}) {
     const enabled = options.enabled ?? UI_ENABLED;
     if (!enabled) return Object.freeze({ mounted:0, reason:'UI_DISABLED' });
@@ -663,7 +673,7 @@
     ENDPOINT, SCHEMA_VERSION, RECEIPT_STATUS, DELIVERY_STATUS, STORAGE_STATUS, OPERATOR_DELIVERY_STATUS, HUMAN_REVIEW_STATUS,
     BASE_IDS:baseIds, PRIMARY_IDS:primaryIds, SHORT_REQUIRED, BASE_REQUIRED, PRIMARY_REQUIRED, COPY, SHORT_COPY,
     stableStringify, enumValue, buildShortScopeFields, buildScopeFields, validateScopeFields, scopeFingerprint,
-    createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, renderShortForm, mountScopeHandoff, mountShortScopeHandoffs
+    createClientId, validReceipt, classifyResponse, createSubmissionMachine, renderShell, renderShortForm, revealScopeHandoffUi, mountScopeHandoff, mountShortScopeHandoffs
   });
 
   if (TEST_MODE) {
@@ -672,6 +682,7 @@
     });
   }
   if (!TEST_MODE && UI_ENABLED && typeof document !== 'undefined') {
+    revealScopeHandoffUi();
     mountScopeHandoff();
     mountShortScopeHandoffs();
   }

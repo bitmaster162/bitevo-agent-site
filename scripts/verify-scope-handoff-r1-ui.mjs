@@ -98,6 +98,22 @@ check(pkg.scripts?.['verify:core']?.includes('verify-scope-handoff-r1-ui.mjs'), 
   }, clientId), 'production mode rejects expired or non-forward retention receipt');
 }
 
+{
+  let queries = 0;
+  const nodes = [{ hidden:true }, { hidden:true }];
+  const fakeDocument = {
+    querySelectorAll(selector) {
+      queries += 1;
+      equal(selector, '[data-scope-short-section], [data-scope-handoff-ui-control]', 'runtime reveal selector is exact and bounded');
+      return nodes;
+    }
+  };
+  equal(api.revealScopeHandoffUi({ document:fakeDocument, enabled:false }), { revealed:0, reason:'UI_DISABLED' }, 'disabled runtime reveal fails closed');
+  equal(queries, 0, 'disabled runtime reveal performs no DOM query');
+  equal(api.revealScopeHandoffUi({ document:fakeDocument, enabled:true }), { revealed:2, reason:null }, 'enabled runtime reveal reports exact node count');
+  equal(nodes.map(node => node.hidden), [false,false], 'enabled runtime reveal only removes hidden state');
+}
+
 const entryValues = {
   company:'Example Co', business_contact:'Jane Doe <jane@example.com>', role:'CTO',
   owner_decision:'Decide whether the workflow retains write authority.', workflow:'Prepare one bounded update.',
