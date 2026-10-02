@@ -36,13 +36,17 @@ const production = Object.freeze({
   SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED:'true',
   SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN:'x'.repeat(48),
   SCOPE_HANDOFF_R1_STORAGE_OWNER:SCOPE_HANDOFF_R1_STORAGE_OWNER,
-  SCOPE_HANDOFF_R1_RETENTION_DAYS:String(SCOPE_HANDOFF_R1_RETENTION_DAYS)
+  SCOPE_HANDOFF_R1_RETENTION_DAYS:String(SCOPE_HANDOFF_R1_RETENTION_DAYS),
+  SCOPE_HANDOFF_R1_RATE_LIMIT_KEY_SECRET:'k'.repeat(48),
+  SCOPE_HANDOFF_R1_NOTIFICATION_ENABLED:'true',
+  SCOPE_HANDOFF_R1_TELEGRAM_BOT_TOKEN:`123456:${'A'.repeat(32)}`,
+  SCOPE_HANDOFF_R1_TELEGRAM_CHAT_ID:'123456789'
 });
 
 const enabled = evaluateScopeHandoffActivation(production);
 equal(enabled.profile, 'production', 'production profile selected only by exact mode');
 equal(enabled.boundary, true, 'production provider boundary binds exact project/env/target');
-equal(enabled.productionReady, true, 'review switch/token, named storage owner and retention make source production-ready');
+equal(enabled.productionReady, true, 'review, retention, HMAC rate-limit identity and metadata-only notification prerequisites make source production-ready');
 equal(enabled.runtimeEnabled, true, 'runtime can enable only when every production gate is true');
 equal(enabled.uiEnabled, true, 'UI remains a separate explicit switch');
 equal(enabled.operatorReviewEnabled, true, 'operator queue is required in production profile');
@@ -53,7 +57,9 @@ for (const [key, reason] of [
   ['SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED','OPERATOR_REVIEW_SWITCH_OFF'],
   ['SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN','OPERATOR_REVIEW_TOKEN_MISSING'],
   ['SCOPE_HANDOFF_R1_STORAGE_OWNER','STORAGE_OWNER_POLICY_MISMATCH'],
-  ['SCOPE_HANDOFF_R1_RETENTION_DAYS','RETENTION_POLICY_MISMATCH']
+  ['SCOPE_HANDOFF_R1_RETENTION_DAYS','RETENTION_POLICY_MISMATCH'],
+  ['SCOPE_HANDOFF_R1_RATE_LIMIT_KEY_SECRET','RATE_LIMIT_KEY_SECRET_MISSING'],
+  ['SCOPE_HANDOFF_R1_NOTIFICATION_ENABLED','NOTIFICATION_CONFIG_INVALID']
 ]) {
   const value = key === 'SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED' ? 'false' : '';
   const result = evaluateScopeHandoffActivation({ ...production, [key]:value });
@@ -169,6 +175,8 @@ check(publicClient.includes("PRODUCTION_ACTIVATION_MODE = 'production_scope_revi
 check(!vercel.includes('SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN'), 'production secret is not committed to provider config');
 check(!vercel.includes('SCOPE_HANDOFF_R1_RETENTION_DAYS'), 'retention value is not silently selected in source');
 check(!vercel.includes('SCOPE_HANDOFF_R1_STORAGE_OWNER'), 'storage owner is not silently selected in source');
+check(!vercel.includes('SCOPE_HANDOFF_R1_RATE_LIMIT_KEY_SECRET'), 'HMAC bucket secret is not committed to provider config');
+check(!vercel.includes('SCOPE_HANDOFF_R1_TELEGRAM_BOT_TOKEN') && !vercel.includes('SCOPE_HANDOFF_R1_TELEGRAM_CHAT_ID'), 'Telegram secrets are not committed to provider config');
 for (const [locale, html] of [['EN',enDist],['RU',ruDist]]) {
   check(html.includes('data-scope-handoff-r1-activation="disabled"'), `${locale}: local build remains default-off`);
   check(html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: manual fallback preserved`);

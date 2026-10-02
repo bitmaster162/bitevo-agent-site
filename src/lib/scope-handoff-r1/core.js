@@ -130,7 +130,7 @@ function successReceipt(record, replayed, statusCode, reviewQueued = false) {
 export async function handleScopeHandoffRequest(request, options = {}) {
   const {
     enabled = false, store = null, reviewQueue = null, storageOwner = null, retentionDays = null, rateLimiter = null,
-    now = () => new Date().toISOString(), idFactory = makeSubmissionId
+    notifier = null, now = () => new Date().toISOString(), idFactory = makeSubmissionId
   } = options;
   if (!enabled) return response({ status:'SERVICE_DISABLED', provider_io:0, testing_authorization:false }, 503);
   if (request.method !== 'POST') return response({ error:'METHOD_NOT_ALLOWED' }, 405, { Allow:'POST' });
@@ -191,6 +191,9 @@ export async function handleScopeHandoffRequest(request, options = {}) {
         reason:queued.reason,
         testing_authorization:false
       }, 503);
+    }
+    if (!replayed && notifier && typeof notifier.notify === 'function') {
+      try { notifier.notify(record); } catch { /* notification never rolls back durable intake */ }
     }
     return successReceipt(record, replayed, statusCode, true);
   };

@@ -102,6 +102,7 @@ check(
 check(
   !pkg.dependencies?.['@astrojs/vercel'] &&
   pkg.dependencies?.['@vercel/blob'] === '2.8.0' &&
+  pkg.dependencies?.['@vercel/functions'] === '3.9.9' &&
   pkg.dependencies?.astro === '7.2.10' &&
   pkg.devDependencies?.esbuild === '0.28.1' &&
   pkg.engines?.node === '>=22.19.0',
@@ -126,6 +127,11 @@ check(
   !api.includes("runtimeGlobal.process?.env?.SCOPE_HANDOFF_R1_ENABLED === 'true'") &&
   api.includes('parseGlobalRateLimitConfig') &&
   api.includes('createVercelBlobGlobalRateLimitStore') &&
+  api.includes('ipAddress(request)') &&
+  api.includes('createPerIpDualWindowLimiter') &&
+  api.includes('createCompositeScopeHandoffLimiter') &&
+  api.includes('createTelegramScopeHandoffNotifier') &&
+  api.includes('waitUntil') &&
   api.includes('enabled:false'),
   'API requires exact staging-preview activation before limiter or storage source'
 );

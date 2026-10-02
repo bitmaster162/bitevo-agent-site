@@ -2,6 +2,7 @@ import {
   SCOPE_HANDOFF_R1_RETENTION_DAYS,
   SCOPE_HANDOFF_R1_STORAGE_OWNER
 } from './policy.js';
+import { parseScopeHandoffTelegramConfig } from './notify.js';
 
 export const SCOPE_HANDOFF_R1_ACTIVATION_SCHEMA = 'bitevo.scope-handoff.activation.v1';
 export const SCOPE_HANDOFF_R1_ACTIVATION_MODE = 'isolated_staging_preview_r1';
@@ -69,6 +70,8 @@ function productionReadinessReason(checks) {
   if (!checks.operatorReviewToken) return 'OPERATOR_REVIEW_TOKEN_MISSING';
   if (!checks.storageOwner) return 'STORAGE_OWNER_POLICY_MISMATCH';
   if (!checks.retentionConfigured) return 'RETENTION_POLICY_MISMATCH';
+  if (!checks.rateLimitKeySecret) return 'RATE_LIMIT_KEY_SECRET_MISSING';
+  if (!checks.notificationReady) return 'NOTIFICATION_CONFIG_INVALID';
   return 'READY';
 }
 
@@ -76,6 +79,7 @@ export function evaluateScopeHandoffActivation(env = {}) {
   const profile = activationProfile(env);
   const retention = parseScopeHandoffRetentionDays(env);
   const storageOwner = readExact(env, 'SCOPE_HANDOFF_R1_STORAGE_OWNER');
+  const notification = parseScopeHandoffTelegramConfig(env);
   const checks = Object.freeze({
     vercel: readExact(env, 'VERCEL') === '1',
     project: readExact(env, 'VERCEL_PROJECT_ID') === profile.projectId,
@@ -87,11 +91,14 @@ export function evaluateScopeHandoffActivation(env = {}) {
     operatorReviewSwitch: readExact(env, 'SCOPE_HANDOFF_R1_OPERATOR_REVIEW_ENABLED') === 'true',
     operatorReviewToken: readExact(env, 'SCOPE_HANDOFF_R1_OPERATOR_REVIEW_TOKEN').length >= 32,
     storageOwner: storageOwner === SCOPE_HANDOFF_R1_STORAGE_OWNER,
-    retentionConfigured: retention.ok && retention.days === SCOPE_HANDOFF_R1_RETENTION_DAYS
+    retentionConfigured: retention.ok && retention.days === SCOPE_HANDOFF_R1_RETENTION_DAYS,
+    rateLimitKeySecret: readExact(env, 'SCOPE_HANDOFF_R1_RATE_LIMIT_KEY_SECRET').length >= 32,
+    notificationReady: notification.ok
   });
   const boundary = checks.vercel && checks.project && checks.environment && checks.target && checks.mode;
   const productionReady = profile.name !== 'production' ||
-    (checks.operatorReviewSwitch && checks.operatorReviewToken && checks.storageOwner && checks.retentionConfigured);
+    (checks.operatorReviewSwitch && checks.operatorReviewToken && checks.storageOwner && checks.retentionConfigured &&
+      checks.rateLimitKeySecret && checks.notificationReady);
   const runtimeEnabled = boundary && checks.runtimeSwitch && productionReady;
   const uiEnabled = runtimeEnabled && checks.uiSwitch;
   const operatorReviewEnabled = profile.name === 'production' && runtimeEnabled && checks.operatorReviewSwitch;
@@ -112,6 +119,7 @@ export function evaluateScopeHandoffActivation(env = {}) {
     operatorReviewEnabled,
     storageOwner:profile.name === 'production' && checks.storageOwner ? storageOwner : null,
     retentionDays:retention.days,
+    notificationReady:profile.name === 'production' && checks.notificationReady,
     runtimeReason,
     uiReason,
     uiMarker:uiEnabled ? profile.mode : SCOPE_HANDOFF_R1_DISABLED_MARKER
