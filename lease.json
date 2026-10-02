@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "5aebe117-208f-4150-b7f5-898afcdc5f29",
   "nonce": "depsec-r1-control-center-20261002-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "861291324a43b8bb74f2414cab52ca48478a0a9f",
@@ -11,10 +11,10 @@
   "session": "bitevo-depsec-r1-20261002",
   "worktree": "c:/users/coins/downloads/bitevo_depsec_r1_undici_lockfile_20261002_01",
   "acquiredAt": "2026-10-02T10:25:09.543Z",
-  "updatedAt": "2026-10-02T10:25:09.543Z",
+  "updatedAt": "2026-10-02T10:30:14.813Z",
   "expiresAt": "2026-10-02T14:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "96b9f4b8a0e300e1fbb1fe216f712732f06e9d07"
+  "sealedHead": "e185f8af1ae129eb393ffc82a4f566879fdb1124",
+  "sealedTree": "f2166258896f64e0b7a481eeba7e77689fbb2d34",
+  "featureRef": "refs/heads/agent/depsec-r1-undici-lockfile-only",
+  "predecessor": "d0e38a3766de66ef0f8fe88aa24789bd2bc4a944"
 }
