@@ -4,8 +4,8 @@
   "routes": [
     {
       "path": "/",
-      "lastmod": "2026-09-26",
-      "fingerprint": "sha256:a08ec8dd1d2db8c177a73b41494c285b519963077d8911204ea9252ad4fec33a"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:c761bdaf988b8f21a8288995c568c3dd4d6251f517f7ed2b33ffc74ea27e1756"
     },
     {
       "path": "/start",
@@ -25,7 +25,7 @@
     {
       "path": "/agent-authority-audit",
       "lastmod": "2026-10-02",
-      "fingerprint": "sha256:db6c81fbaff4700abc5d0575dec18d37e1abc45f865ccd9c8152dc7b8472f71e"
+      "fingerprint": "sha256:a3f32f54c17fd1e739e09fe4afe3fb8b00e8a4fa26d6b24fb81fb8629edb3046"
     },
     {
       "path": "/entry-audit",
@@ -274,8 +274,8 @@
     },
     {
       "path": "/ru",
-      "lastmod": "2026-09-27",
-      "fingerprint": "sha256:0fef73e38c78499f69c5fb7a39b4a958e527d20df83b83eed07332f862fed7b2"
+      "lastmod": "2026-10-02",
+      "fingerprint": "sha256:021196e9e0013e139a5835fc46f24f44f450a8aabf89fa72283c749b0625ba3b"
     },
     {
       "path": "/ru/pricing",
