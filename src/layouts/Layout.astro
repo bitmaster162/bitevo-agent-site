@@ -102,6 +102,9 @@ const footerBuild = isRu ? [
   ['LLMs.txt', '/llms.txt']
 ];
 const mapperHref = isRu ? '/ru/mapper' : '/mapper';
+const footerNonAffiliation = isRu
+  ? 'bitevo.work — независимая B2B-практика по полномочиям и доказательствам AI-агентов. Мы не связаны со сторонними криптовалютными, кошельковыми, токен- и Web3-проектами, которые используют имя BitEvo.'
+  : 'bitevo.work is an independent B2B AI-agent authority and evidence engineering practice and is not affiliated with unrelated cryptocurrency, wallet, token, or Web3 projects that use the BitEvo name.';
 
 const globalStructuredData = [
   {
@@ -215,6 +218,7 @@ const globalStructuredData = [
           <div class="footer-col"><strong>Build</strong>{footerBuild.map(([label, href]) => <a href={href}>{label}</a>)}</div>
         </div>
 
+        <p class="footer-non-affiliation">{footerNonAffiliation}</p>
         <div class="footer-bottom"><span>© 2026 BitEvo</span><span>{isRu ? 'Полномочия должны быть обоснованы доказательствами.' : 'Authority is earned by evidence.'}</span></div>
       </div>
     </footer>
@@ -364,6 +368,7 @@ const globalStructuredData = [
   .footer-col strong { margin-bottom: 4px; color: var(--ink-soft); font: 500 .68rem/1.2 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
   .footer-col a { color: var(--muted); font-size: .8rem; transition: color .18s ease, transform .18s ease; }
   .footer-col a:hover { color: var(--ink); transform: translateX(2px); }
+  .footer-non-affiliation { margin: 0; padding: 18px 0; border-top: 1px solid var(--line); color: var(--meta); font-size: .74rem; line-height: 1.6; }
   .footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--meta); font: 500 .66rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
   :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
