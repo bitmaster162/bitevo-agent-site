@@ -33,7 +33,7 @@ const deliverables = [
         <h1 class="display">Агент должен заслужить полномочия доказательствами.</h1>
       </div>
       <div>
-        <p class="lede">Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.</p>
+        <p class="lede">BitEvo проверяет слой действий AI-систем: что процесс может изменить, какие доказательства нужны до действия, как подтверждается внешний результат и что система делает, когда уверенности нет.</p>
         <p class="tool-note">Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.</p>
         <div class="hero-actions"><a class="button button-primary" href="/ru/mapper">Собрать карту workflow <span aria-hidden="true">↗</span></a><a class="button" href="/ru/agent-authority-audit">Посмотреть аудит</a></div>
         <p class="tool-note">Русский product path уже включает Mapper, Decision Workspace, Diagnostic и Decision Scope Intake. Все они browser-local и не создают testing authorization.</p>
@@ -43,10 +43,10 @@ const deliverables = [
 
   <section class="section-tight section-rule">
     <div class="container signal-grid">
-      <div><small>ОБЪЕКТ</small><strong>Один action-capable workflow</strong></div>
-      <div><small>ВОПРОС</small><strong>Что ему можно делать — и почему?</strong></div>
-      <div><small>ТЕСТ</small><strong>10–20 согласованных failure scenarios</strong></div>
-      <div><small>РЕШЕНИЕ</small><strong>Expand · constrain · repair · retest</strong></div>
+      <div><small>ОБЪЕКТ</small><strong>один процесс, в котором агент может действовать</strong></div>
+      <div><small>ВОПРОС</small><strong>что ему можно делать и почему</strong></div>
+      <div><small>ТЕСТ</small><strong>10–20 согласованных сценариев сбоя</strong></div>
+      <div><small>РЕШЕНИЕ</small><strong>расширить, ограничить, исправить, перепроверить</strong></div>
     </div>
   </section>
 

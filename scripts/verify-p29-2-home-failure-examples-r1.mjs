@@ -22,7 +22,7 @@ const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentn
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 
 const enLead = 'An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
-const ruLead = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
+const ruLead = 'BitEvo проверяет слой действий AI-систем: что процесс может изменить, какие доказательства нужны до действия, как подтверждается внешний результат и что система делает, когда уверенности нет.';
 
 for (const [name, source, html, lead, copy, actionsMarker] of [
   ['EN', enSource, enHtml, enLead, EN, '<div class="hero-actions">'],
@@ -47,7 +47,7 @@ check(ruSource.includes('$4,900'), 'existing RU price remains present');
 
 const expected = {
   '/': { lastmod: '2026-10-03', fingerprint: 'sha256:f244e65c855cfe2eac250ecb9ba605b41114588d63fd487249155e4413c49efe' },
-  '/ru': { lastmod: '2026-10-03', fingerprint: 'sha256:98f55e3ff9b51bb81bd82eddfadd2ee2dd35af84d5790adbd00d0f2ecd325e26' }
+  '/ru': { lastmod: '2026-10-03', fingerprint: 'sha256:d38fd94db1fa4404d62f853428b4aa8a2bc9b79fc997b99b41edbe474a577000' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
