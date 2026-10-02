@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "2c08d144-2b3b-4e39-a782-1c20a0d85267",
   "nonce": "p285-control-center-20261002-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "c65a3c7fe3a10ebc3a5452359fe3023e19c93902",
@@ -11,10 +11,10 @@
   "session": "bitevo-p28-5-20261002",
   "worktree": "c:/users/coins/downloads/bitevo_p28_5_security_retention_20261002_01",
   "acquiredAt": "2026-10-02T15:02:34.056Z",
-  "updatedAt": "2026-10-02T15:02:34.056Z",
+  "updatedAt": "2026-10-02T15:18:09.869Z",
   "expiresAt": "2026-10-02T21:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "3f7c9215b9d86da9a606c9a5e3c6f215abf20e86"
+  "sealedHead": "b508cf10a639d2e9b33d26f59f367730ed9dd49b",
+  "sealedTree": "f61345bbdc56f69f190cec566b01b25553e3f46e",
+  "featureRef": "refs/heads/agent/p28-5-security-retention-r1",
+  "predecessor": "bdbc8a5aab8b5d81d93923b8d8b549380aa47d04"
 }
