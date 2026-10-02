@@ -114,8 +114,8 @@
     },
     {
       "path": "/diagnostic",
-      "lastmod": "2026-10-02",
-      "fingerprint": "sha256:22da44f1b4581770775df3eb76073b37923f427ad2bd759d7bbb50371943ab04"
+      "lastmod": "2026-10-03",
+      "fingerprint": "sha256:d2b1a98d286d9506d622d757b4505ec730d8b0b68d435f0898399e4fa8dec33f"
     },
     {
       "path": "/audit-intake",
@@ -309,8 +309,8 @@
     },
     {
       "path": "/ru/diagnostic",
-      "lastmod": "2026-10-02",
-      "fingerprint": "sha256:0460d34c3d19bf93202b2e1529833ec2afa9fc194969e3123369393106ed6bc8"
+      "lastmod": "2026-10-03",
+      "fingerprint": "sha256:83db94c3ae6d6750e6ef33f8b87af67ed27d0e3fab35628c5abed9e8b5ffa2b6"
     },
     {
       "path": "/ru/audit-intake",
