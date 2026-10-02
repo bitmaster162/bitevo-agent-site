@@ -289,6 +289,11 @@
         "Internal dogfood и synthetic proof не превращаются в customer certification.",
         "Private runtime health, secrets и control endpoints не должны выводиться как публичное доказательство."
       ],
+      "retentionHeading": "Что мы храним и как долго",
+      "retentionFacts": [
+        "Заявки с сайта: только отправленные поля, хранятся 30 дней, затем удаляются. Уведомления Robert в Telegram не содержат персональных данных.",
+        "Доказательства по проекту: состав, срок хранения и доступ фиксируются в письменном scope до начала тестов."
+      ],
       "primaryHref": "/ru/operator",
       "primaryLabel": "Operator boundary"
     },
