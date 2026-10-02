@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "1662cfaa-d4f5-4036-afc6-6fdd63696e13",
   "nonce": "p289-control-center-20261003-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "01cef642b07ab4b3b5990926ee2bad1c8c21c9e0",
@@ -11,10 +11,10 @@
   "session": "bitevo-p28-9-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p28_9_sample_audit_owasp_20261003_01",
   "acquiredAt": "2026-10-02T18:49:44.118Z",
-  "updatedAt": "2026-10-02T18:49:44.118Z",
+  "updatedAt": "2026-10-02T19:14:46.354Z",
   "expiresAt": "2026-10-03T04:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "20f13eb411c886cc88cc9d883b076b386f6e0e8a"
+  "sealedHead": "83a39f4eb7d1d05a86e5c7a2758f24233843f4a3",
+  "sealedTree": "cb3c1650dac198fa40c9ca6709fec5e3df215403",
+  "featureRef": "refs/heads/agent/p28-9-sample-audit-owasp-r1",
+  "predecessor": "ff0dac98e6fd7f875bc8c9ad651d87b667afa4e5"
 }
