@@ -76,3 +76,4 @@ equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');
 
 console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2_q3=OMITTED prices=UNCHANGED ctas=UNCHANGED js_added=0 network_added=0 ru_routes_changed=0`);
+// P29.5A Cloudflare CI retrigger marker; no verification behavior change.
