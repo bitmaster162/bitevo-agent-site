@@ -13,7 +13,7 @@ const deepEqual = (actual, expected, message) => { assert.deepEqual(actual, expe
 const root = fileURLToPath(new URL('../', import.meta.url));
 const config = JSON.parse(await readFile(join(root, 'src/data/indexnow.json'), 'utf8'));
 const keyFile = await readFile(join(root, 'public', `${config.key}.txt`), 'utf8');
-const workflow = await readFile(join(root, '.github/workflows/indexnow.yml'), 'utf8');
+const workflow = (await readFile(join(root, '.github/workflows/indexnow.yml'), 'utf8')).replace(/\r\n/g, '\n');
 const robots = await readFile(join(root, 'public/robots.txt'), 'utf8');
 const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
 const manifest = JSON.parse(await readFile(join(root, 'src/data/sitemap-currentness.json'), 'utf8'));
@@ -66,13 +66,29 @@ equal(fixturePayload.key, config.key, 'payload key matches public key');
 equal(fixturePayload.keyLocation, config.keyLocation, 'payload keyLocation matches public key');
 deepEqual(fixturePayload.urlList, ['https://bitevo.work/a', 'https://bitevo.work/b'], 'payload URLs stay on canonical origin');
 
+function gitShow(ref, path) {
+  try {
+    return execFileSync('git', ['show', `${ref}:${path}`], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  } catch {
+    return null;
+  }
+}
+
 const generated = JSON.parse(execFileSync(process.execPath, [
   join(root, 'scripts/indexnow-changed-urls.mjs'),
   'HEAD^',
   'HEAD',
 ], { cwd: root, encoding: 'utf8' }));
-equal(generated.urlList.length, manifest.routes.length, 'pre-IndexNow history produces one-time bootstrap of all current indexable routes');
-check(generated.urlList.every(url => url.startsWith('https://bitevo.work/')), 'bootstrap URLs stay on canonical host');
-check(generated.urlList.length <= 10000, 'bootstrap stays below IndexNow bulk limit');
+const parentIndexNow = gitShow('HEAD^', 'src/data/indexnow.json');
+const parentManifestRaw = gitShow('HEAD^', 'src/data/sitemap-currentness.json');
+const parentManifest = parentManifestRaw ? JSON.parse(parentManifestRaw) : null;
+const expectedPaths = parentIndexNow && parentManifest
+  ? changedRoutePaths(parentManifest, manifest)
+  : changedRoutePaths(null, manifest, { bootstrap: true });
+const expectedPayload = buildIndexNowPayload(config, expectedPaths);
 
-console.log('P27_4_INDEXNOW_R1_GATE=PASS checks=' + checks + ' bootstrap=' + generated.urlList.length + ' delta_add_modify_delete=PASS provider_write=WORKFLOW_MAIN_ONLY secrets=0 endpoint=GLOBAL_INDEXNOW key_file=ROOT_UTF8');
+deepEqual(generated.urlList, expectedPayload.urlList, parentIndexNow ? 'post-bootstrap history emits exact semantic delta' : 'pre-IndexNow history emits exact one-time bootstrap');
+check(generated.urlList.every(url => url.startsWith('https://bitevo.work/')), 'generated URLs stay on canonical host');
+check(generated.urlList.length <= 10000, 'generated batch stays below IndexNow bulk limit');
+
+console.log('P27_4_INDEXNOW_R1_GATE=PASS checks=' + checks + ' mode=' + (parentIndexNow ? 'DELTA' : 'BOOTSTRAP') + ' urls=' + generated.urlList.length + ' delta_add_modify_delete=PASS provider_write=WORKFLOW_MAIN_ONLY secrets=0 endpoint=GLOBAL_INDEXNOW key_file=ROOT_UTF8');
