@@ -1,0 +1,72 @@
+name: IndexNow Changed URLs
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bitevo-indexnow-main
+  cancel-in-progress: false
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact main push
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Build changed-URL payload
+        id: payload
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          node scripts/indexnow-changed-urls.mjs "$BEFORE_SHA" "$GITHUB_SHA" > indexnow-payload.json
+          COUNT="$(node -e "const p=require('./indexnow-payload.json'); process.stdout.write(String(p.urlList.length))")"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "INDEXNOW_CHANGED_URLS=$COUNT"
+
+      - name: Wait for exact production build and public key
+        if: steps.payload.outputs.count != '0'
+        run: |
+          KEY="$(node -e "const c=require('./src/data/indexnow.json'); process.stdout.write(c.key)")"
+          for ATTEMPT in $(seq 1 36); do
+            HOME="$(curl -fsSL --max-time 15 https://bitevo.work/ || true)"
+            LIVE_KEY="$(curl -fsSL --max-time 15 "https://bitevo.work/${KEY}.txt" || true)"
+            if printf '%s' "$HOME" | grep -q "data-build-sha=\"$GITHUB_SHA\"" && [ "$LIVE_KEY" = "$KEY" ]; then
+              echo "INDEXNOW_LIVE_GATE=PASS attempt=$ATTEMPT sha=$GITHUB_SHA"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "INDEXNOW_LIVE_GATE=FAIL sha=$GITHUB_SHA" >&2
+          exit 1
+
+      - name: Submit changed URLs to IndexNow
+        if: steps.payload.outputs.count != '0'
+        run: |
+          HTTP_CODE="$(curl -sS -o indexnow-response.txt -w '%{http_code}' \
+            -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data-binary @indexnow-payload.json)"
+          case "$HTTP_CODE" in
+            200|202)
+              echo "INDEXNOW_SUBMIT=PASS http=$HTTP_CODE urls=${{ steps.payload.outputs.count }}"
+              ;;
+            *)
+              echo "INDEXNOW_SUBMIT=FAIL http=$HTTP_CODE" >&2
+              cat indexnow-response.txt >&2 || true
+              exit 1
+              ;;
+          esac
