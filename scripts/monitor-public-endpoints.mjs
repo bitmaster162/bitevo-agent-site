@@ -4,7 +4,7 @@ const config = JSON.parse(await readFile(new URL('../src/data/public-monitor.jso
 
 function validateConfig(value) {
   if (!value || value.schema !== 'bitevo.public-monitor/v1') throw new Error('public monitor config schema mismatch');
-  if (value.cron !== '*/30 * * * *') throw new Error('public monitor cron mismatch');
+  if (value.cron !== '17,47 * * * *') throw new Error('public monitor cron mismatch');
   if (!Number.isInteger(value.timeoutMs) || value.timeoutMs < 1000 || value.timeoutMs > 30000) throw new Error('public monitor timeout out of bounds');
   if (!Array.isArray(value.targets) || value.targets.length !== 5) throw new Error('public monitor target count mismatch');
 
