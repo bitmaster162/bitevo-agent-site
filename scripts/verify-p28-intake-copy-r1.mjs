@@ -36,10 +36,14 @@ check(llms.includes('Submission does not create a booking and does not authorize
 check(!llms.includes('prepare a local scope brief only; they do not book or submit an engagement'), 'llms stale local-only claim removed');
 check(short.includes('explicit consent') && short.includes('up to 30 days'), 'shared P27.1 component keeps consent and retention disclosure');
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
-const expected = {"/pricing":"sha256:c39a6c135341211fa8e2246d5a482dc0bf69e9ff287897b3fc5600fe02b5671a","/ru/pricing":"sha256:2f115c3c5a68bf857fea6aa9220a6d0aa029ea3f40097830cccb512e07539a18","/agent-authority-audit":"sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556"};
-for (const [path, fingerprint] of Object.entries(expected)) {
+const expected = {
+  "/pricing": { fingerprint: "sha256:5d57feb82eead53aeb06cffeaa27334344b21f0a3641a3026bb9721263339999", lastmod: "2026-10-03" },
+  "/ru/pricing": { fingerprint: "sha256:2f115c3c5a68bf857fea6aa9220a6d0aa029ea3f40097830cccb512e07539a18", lastmod: "2026-10-02" },
+  "/agent-authority-audit": { fingerprint: "sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556", lastmod: "2026-10-02" }
+};
+for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.fingerprint === fingerprint && row?.lastmod === '2026-10-02', 'currentness exact for ' + path);
+  check(row?.fingerprint === value.fingerprint && row?.lastmod === value.lastmod, 'currentness exact for ' + path);
 }
 check(currentness.routes.length === 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-intake-copy-r1.mjs'), 'P28 intake copy verifier is wired into verify:core');
