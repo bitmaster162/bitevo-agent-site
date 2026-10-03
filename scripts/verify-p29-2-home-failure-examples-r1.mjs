@@ -10,6 +10,9 @@ const root = new URL('../', import.meta.url);
 
 const EN = 'Typical failures we test for: a CRM update applied to the wrong record, a message sent twice after a retry, a ticket marked “done” before the external system confirmed it.';
 const RU = 'Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.';
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+const EN_TRIAGE = 'Book a free 20-minute triage';
+const RU_TRIAGE = 'Записаться на бесплатный разбор, 20 минут';
 
 equal(sha(EN), 'ce33e2c0177865848c38dc2a64ec74827cd7e80a57805239190c862c90a07c87', 'approved EN P29.2 copy hash');
 equal(sha(RU), 'c3e54d59fe1591bffd05e2fb4e88376c91e9297b72a7352c708890ad4200b870', 'approved RU P29.2 copy hash');
@@ -39,15 +42,15 @@ for (const [name, source, html, lead, copy, actionsMarker] of [
   check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|href=|src=)/i.test(between), `${name}: inserted hero segment adds no JS, network call or CTA`);
 }
 
-check(!enSource.includes('Book a free 20-minute triage'), 'P29.1 EN Cal.com CTA remains unpublished');
-check(!ruSource.includes('Записаться на бесплатный разбор, 20 минут'), 'P29.1 RU Cal.com CTA remains unpublished');
-check(!enSource.includes('cal.com') && !ruSource.includes('cal.com'), 'no Cal.com link published');
+check(enSource.includes(EN_TRIAGE) && enSource.includes(TRIAGE_URL), 'P29.1 EN Cal.com CTA is published');
+check(!ruSource.includes(RU_TRIAGE) && !ruSource.includes(TRIAGE_URL), 'RU source remains CSP-stable; P29.1 RU Cal.com CTA is emitted by bounded postprocess');
+check(enHtml.includes(TRIAGE_URL) && ruHtml.includes(TRIAGE_URL), 'P29.1 verified Cal.com URL is present in both home static pages');
 check(enSource.includes('$4,900'), 'existing EN price remains present');
 check(ruSource.includes('$4,900'), 'existing RU price remains present');
 
 const expected = {
-  '/': { lastmod: '2026-10-03', fingerprint: 'sha256:f244e65c855cfe2eac250ecb9ba605b41114588d63fd487249155e4413c49efe' },
-  '/ru': { lastmod: '2026-10-03', fingerprint: 'sha256:d38fd94db1fa4404d62f853428b4aa8a2bc9b79fc997b99b41edbe474a577000' }
+  '/': { lastmod: '2026-10-03', fingerprint: 'sha256:87cd06668fb7fc5a831db9af3ef38b9dcc6a8a0e5c73b75df65bb651cc639b25' },
+  '/ru': { lastmod: '2026-10-03', fingerprint: 'sha256:5dcd4229ce98ba9b2b13b0d771257f2f7c228612df80eafec51776cd00f50e12' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
@@ -56,4 +59,4 @@ for (const [path, value] of Object.entries(expected)) {
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-2-home-failure-examples-r1.mjs'), 'P29.2 verifier wired into verify:core');
 
-console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_LEAD_BEFORE_ACTIONS js_required=0 network_on_load_added=0 p29_1_calcom=OMITTED`);
+console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_LEAD_BEFORE_ACTIONS p29_1_calcom=PUBLISHED`);

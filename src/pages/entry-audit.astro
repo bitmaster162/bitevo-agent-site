@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
 
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+
 const tests = [
   ['Object binding', 'Does the action still target the exact customer, order, booking, account or resource it was authorized for?'],
   ['Approval binding', 'Does confirmation remain tied to the exact material action parameters rather than a generic approval state?'],
@@ -27,7 +29,7 @@ const outputs = [
       <div class="eyebrow">Fixed bounded entry</div>
       <h1 class="display">One consequential action. One question worth $1,500.</h1>
       <p class="lede">The Entry Audit is the smallest paid BitEvo engagement. We test one action chain and one primary control or failure hypothesis in staging/test by default, preserve the evidence, and return a bounded owner decision.</p>
-      <div><a class="button button-primary" href="/audit-intake?offer=entry-audit">Prepare Entry Audit scope <span aria-hidden="true">↗</span></a> <a class="button button-ghost" href="/artifacts">See worked proof</a> <a class="button button-ghost" href="/start">Compare all scope paths</a></div>
+      <div><a class="button button-primary" href={TRIAGE_URL} data-triage-click="true" data-triage-source="entry-audit">Book a free 20-minute triage <span aria-hidden="true">↗</span></a> <a class="button button-ghost" href="#send-scope">Send a short scope</a> <a class="button button-ghost" href="/artifacts">See worked proof</a> <a class="button button-ghost" href="/start">Compare all scope paths</a></div>
     </div>
   </section>
 
@@ -76,4 +78,5 @@ const outputs = [
       <a class="button button-ghost" href="/start">Not sure this is the right depth? Compare paths</a>
     </div>
   </section>
+  <script is:inline src="/triage-click.js"></script>
 </Layout>

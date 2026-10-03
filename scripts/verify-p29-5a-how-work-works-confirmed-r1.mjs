@@ -53,7 +53,7 @@ for (const banned of [
 }
 
 check(pricing.includes("price: 'Free'") && pricing.includes("price: '$1,500'") && pricing.includes("price: '$4,900'"), '/pricing prices remain unchanged');
-check(pricing.includes("cta: 'Prepare triage brief'") && pricing.includes("cta: 'Open Entry Audit'") && pricing.includes("cta: 'Prepare Primary Audit scope'"), '/pricing tier CTAs remain unchanged');
+check(pricing.includes("cta: 'Book a free 20-minute triage'") && pricing.includes("cta: 'Open Entry Audit'") && pricing.includes("cta: 'Prepare Primary Audit scope'"), '/pricing P29.1 Free CTA updated while paid CTAs remain unchanged');
 check(security.includes('Prepare scope brief') && security.includes('Review public proof') && security.includes('Prepare the boundary'), '/security CTAs remain unchanged');
 
 check(entryAudit.includes('Expected-vs-observed test matrix'), 'Q4 expected-vs-observed matrix is supported by existing Entry Audit source');
@@ -68,12 +68,12 @@ for (const path of ['/pricing', '/security']) {
   check(Boolean(row), path + ' currentness row exists');
   equal(row?.lastmod, '2026-10-03', path + ' currentness date exact');
 }
-equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:5d57feb82eead53aeb06cffeaa27334344b21f0a3641a3026bb9721263339999', '/pricing currentness fingerprint exact');
+equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:e7ad38ab0a6f39642297368960151fb740de1871fe31e1341e79387d2a43defd', '/pricing currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:5ffa4df2a5745f63fc81db86e8120e2d4970a17eddffdf16a04bb2abd048ac1d', '/security currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:2f115c3c5a68bf857fea6aa9220a6d0aa029ea3f40097830cccb512e07539a18', '/ru/pricing unchanged');
 equal(currentness.routes.find(item => item.path === '/ru/security')?.fingerprint, 'sha256:831bbba4664cf72adc6f99e2242120c1ac765fcdd962157c5c4449dae7f1ab73', '/ru/security unchanged');
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');
 
-console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2_q3=OMITTED prices=UNCHANGED ctas=UNCHANGED js_added=0 network_added=0 ru_routes_changed=0`);
+console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2_q3=OMITTED prices=UNCHANGED free_cta=P29_1 paid_ctas=UNCHANGED ru_routes_changed=0`);
 // P29.5A Cloudflare CI retrigger marker; no verification behavior change.
