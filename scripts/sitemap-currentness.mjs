@@ -8,11 +8,12 @@ const distRoot = join(repoRoot, 'dist');
 const registryPath = join(repoRoot, 'src/data/public-route-registry.json');
 const manifestPath = join(repoRoot, 'src/data/sitemap-currentness.json');
 const schema = 'bitevo.sitemap-currentness/v1';
-const normalization = 'provider-envelope-v2';
+const normalization = 'provider-envelope-v3';
 
 function normalizeRenderedHtml(html) {
   return html
     .replace(/<meta\b(?=[^>]*\bdata-cloudflare-csp="hash-bound")[^>]*>/gi, '')
+    .replace(/<script\b(?=[^>]*\bsrc="\/_vercel\/insights\/script\.js")[^>]*><\/script>/gi, '')
     .replace(/data-scope-handoff-r1-activation="(?:disabled|isolated_staging_preview_r1|production_scope_review_r1)"/gi, 'data-scope-handoff-r1-activation="__SCOPE_HANDOFF_ACTIVATION__"')
     .replace(/data-build-sha="[0-9a-f]{40}"/gi, 'data-build-sha="__BUILD_SHA__"')
     .replace(/<meta name="bitevo-build-sha" content="[0-9a-f]{40}">/gi, '<meta name="bitevo-build-sha" content="__BUILD_SHA__">')
@@ -22,6 +23,14 @@ function normalizeRenderedHtml(html) {
 
 function fingerprint(html) {
   return `sha256:${createHash('sha256').update(normalizeRenderedHtml(html)).digest('hex')}`;
+}
+
+function verifyVercelAnalyticsNormalization() {
+  const base = fingerprint('<head></head>');
+  const firstParty = fingerprint('<head><script defer src="/_vercel/insights/script.js"></script></head>');
+  if (firstParty !== base) throw new Error('Vercel analytics provider envelope must normalize');
+  const external = fingerprint('<head><script defer src="https://cdn.vercel-insights.com/v1/script.js"></script></head>');
+  if (external === base) throw new Error('external analytics script must not normalize');
 }
 
 function verifyActivationMarkerNormalization() {
@@ -65,6 +74,7 @@ async function currentRows() {
 }
 
 async function verify() {
+  verifyVercelAnalyticsNormalization();
   verifyActivationMarkerNormalization();
   const manifest = await readJson(manifestPath);
   if (manifest.schema !== schema) throw new Error(`sitemap currentness schema mismatch: ${manifest.schema || 'missing'}`);
