@@ -16,7 +16,7 @@ const runtime = await readFile(join(root, 'scripts/monitor-public-endpoints.mjs'
 const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
 
 equal(config.schema, 'bitevo.public-monitor/v1', 'monitor config schema');
-equal(config.cron, '*/30 * * * *', 'monitor config cadence');
+equal(config.cron, '17,47 * * * *', 'monitor config cadence');
 equal(config.timeoutMs, 15000, 'monitor timeout');
 equal(config.targets.length, 5, 'monitor target count');
 
@@ -28,7 +28,7 @@ deepEqual(config.targets, [
   { id: 'aiskillab-start', url: 'https://aiskillab.work/start', expectedStatus: 200 },
 ], 'monitor target allowlist is exact');
 
-check(workflow.includes("cron: '*/30 * * * *'"), 'workflow cadence is every 30 minutes');
+check(workflow.includes("cron: '17,47 * * * *'"), 'workflow cadence is every 30 minutes on off-peak minute offsets');
 check(!workflow.includes('push:'), 'workflow has no push trigger');
 check(!workflow.includes('pull_request:'), 'workflow has no pull request trigger');
 check(workflow.includes('workflow_dispatch:'), 'workflow exposes bounded manual trigger');
@@ -77,4 +77,4 @@ equal(dryRun.status, 1, 'manual test dry-run fails closed without secrets');
 check((dryRun.stdout + dryRun.stderr).includes('TELEGRAM_ALERT_ROUTE=BLOCKED'), 'manual test dry-run reaches Telegram secret gate');
 check(!(dryRun.stdout + dryRun.stderr).includes('TELEGRAM_ALERT=PASS'), 'manual test dry-run cannot report Telegram success without secrets');
 
-console.log('P27_7_PUBLIC_MONITOR_R2_GATE=PASS checks=' + checks + ' targets=5 cadence=30m manual_test=EXACT_CONFIRM healthy_gets_before_test=5 synthetic_outage=0 form_posts=0 telegram_post=FAILURE_OR_EXPLICIT_TEST repo_permissions=READ_ONLY secrets=2');
+console.log('P27_7_PUBLIC_MONITOR_R2_GATE=PASS checks=' + checks + ' targets=5 cadence=30m_offpeak_17_47 manual_test=EXACT_CONFIRM healthy_gets_before_test=5 synthetic_outage=0 form_posts=0 telegram_post=FAILURE_OR_EXPLICIT_TEST repo_permissions=READ_ONLY secrets=2');

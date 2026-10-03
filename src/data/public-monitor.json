@@ -1,6 +1,6 @@
 {
   "schema": "bitevo.public-monitor/v1",
-  "cron": "*/30 * * * *",
+  "cron": "17,47 * * * *",
   "timeoutMs": 15000,
   "targets": [
     {
