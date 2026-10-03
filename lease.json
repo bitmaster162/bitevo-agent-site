@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "6ff5b08d-3533-4e28-97ea-a3a4cb4ae492",
   "nonce": "p277-cron-recovery-control-center-20261004-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "3fb8d3a5afe9f4aa50b2aeae72e874cbc189084b",
@@ -11,10 +11,10 @@
   "session": "bitevo-p27-7-cron-recovery-20261004",
   "worktree": "c:/users/coins/downloads/bitevo_p27_7_cron_recovery_prep_20261004_01",
   "acquiredAt": "2026-10-03T17:26:27.750Z",
-  "updatedAt": "2026-10-03T17:26:27.750Z",
+  "updatedAt": "2026-10-03T17:27:50.223Z",
   "expiresAt": "2026-10-04T04:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "904194a352acfc530b8b3b420e2172332302146c"
+  "sealedHead": "0b75eb1aa433ee166597ede4a430c06eb4a7a4a6",
+  "sealedTree": "9ea0af5e89236dd62537064183a00d44e009f966",
+  "featureRef": "refs/heads/agent/p27-7-cron-recovery-r1",
+  "predecessor": "750f58c82b90f7cfac179076d90fc41edb0fa7f7"
 }
