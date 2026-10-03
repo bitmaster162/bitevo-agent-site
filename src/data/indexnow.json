@@ -1,0 +1,8 @@
+{
+  "schema": "bitevo.indexnow/v1",
+  "host": "bitevo.work",
+  "origin": "https://bitevo.work",
+  "endpoint": "https://api.indexnow.org/indexnow",
+  "key": "64b13c5dac74a286ccf182837b71d965",
+  "keyLocation": "https://bitevo.work/64b13c5dac74a286ccf182837b71d965.txt"
+}
