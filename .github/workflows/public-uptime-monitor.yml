@@ -3,6 +3,13 @@ name: Public Uptime Monitor
 on:
   schedule:
     - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type SEND_TEST_ALERT to send one test Telegram alert after healthy GET checks'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: read
@@ -24,8 +31,9 @@ jobs:
         with:
           node-version: '24'
 
-      - name: GET public endpoints and alert on failure
+      - name: GET public endpoints and alert on failure or explicit test
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PUBLIC_MONITOR_TEST_CONFIRM: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm || '' }}
         run: node scripts/monitor-public-endpoints.mjs

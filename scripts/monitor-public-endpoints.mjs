@@ -110,6 +110,23 @@ async function main() {
   }
 
   const failures = results.filter(result => !result.ok);
+  const testRequested = String(process.env.PUBLIC_MONITOR_TEST_CONFIRM || '') === 'SEND_TEST_ALERT';
+  if (failures.length === 0 && testRequested) {
+    const testText = [
+      'BitEvo public uptime monitor TEST',
+      `UTC: ${new Date().toISOString()}`,
+      `Healthy targets: ${results.length}/${results.length}`,
+      'No outage was simulated. This message verifies the Telegram alert route only.',
+    ].join('\n');
+    const testAlert = await sendTelegramAlert(testText);
+    if (!testAlert.sent) {
+      console.error(`PUBLIC_MONITOR_TEST=FAIL targets=${results.length} alert=${testAlert.state}`);
+      return 1;
+    }
+    console.log(`PUBLIC_MONITOR_TEST=PASS targets=${results.length} alert=${testAlert.state}`);
+    return 0;
+  }
+
   if (failures.length === 0) {
     console.log(`PUBLIC_MONITOR=PASS targets=${results.length} failures=0`);
     return 0;
