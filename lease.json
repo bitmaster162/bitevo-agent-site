@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "1c890bb9-0936-4488-8975-8ce260857836",
   "nonce": "p273-vercel-analytics-control-center-20261003-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0f765ed0d2fddab5ec028ba11ebde90d7f6cbeb8",
@@ -11,10 +11,10 @@
   "session": "bitevo-p27-3-vercel-analytics-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p27_3_vercel_analytics_prep_20261003_01",
   "acquiredAt": "2026-10-03T12:09:10.163Z",
-  "updatedAt": "2026-10-03T12:09:10.163Z",
+  "updatedAt": "2026-10-03T12:10:35.349Z",
   "expiresAt": "2026-10-03T15:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "c3f41678a9e4a04098889b0c1604c7736f721344"
+  "sealedHead": "3f32eb1aab8c88fb40ae7ee68f2d504e66ed798a",
+  "sealedTree": "2ff787ee1a1407a6a80d690079f6cf4386c8d15d",
+  "featureRef": "refs/heads/agent/p27-3-vercel-analytics-r1",
+  "predecessor": "f8663b57a1ef3c176aa4a22ce199422c4821d3a4"
 }
