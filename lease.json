@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "0a0687d6-4eb9-480b-a5d7-6fbac95eaa86",
   "nonce": "p277-manual-alert-test-control-center-20261003-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "e03c51ba77f2139f990fa438358b65e261da6ce1",
@@ -11,10 +11,12 @@
   "session": "bitevo-p27-7-manual-alert-test-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p27_7_manual_test_prep_20261003_01",
   "acquiredAt": "2026-10-03T14:57:49.031Z",
-  "updatedAt": "2026-10-03T14:59:20.335Z",
+  "updatedAt": "2026-10-03T16:56:16.405Z",
   "expiresAt": "2026-10-03T19:30:00.000Z",
   "sealedHead": "f6d5469035da4bce297220c2d0c3decbe9b14791",
   "sealedTree": "79b643fa8ce9d4b33ee1ac94993fad99ad0dfb4c",
   "featureRef": "refs/heads/agent/p27-7-manual-alert-test-r1",
-  "predecessor": "e8deaadb08fefe35e70aa7e475d0012f2924b53a"
+  "predecessor": "c0ba1e2caaa73e5f9428b29e3717314b979f7386",
+  "releasedAt": "2026-10-03T16:56:16.406Z",
+  "releaseReason": "pr194_merged_manual_test_pass_terminal"
 }
