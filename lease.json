@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "5aa71bf6-8e0f-4226-bfec-da80f9bcb752",
   "nonce": "p295a-ci-retrigger-control-center-20261003-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "68a01ad96a09bc5b7d9473fb7764266f381b5190",
@@ -11,10 +11,12 @@
   "session": "bitevo-p29-5a-ci-retrigger-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p29_5a_how_work_works_confirmed_20261003_01",
   "acquiredAt": "2026-10-03T08:05:12.703Z",
-  "updatedAt": "2026-10-03T08:06:25.936Z",
+  "updatedAt": "2026-10-03T08:36:14.423Z",
   "expiresAt": "2026-10-03T12:00:00.000Z",
   "sealedHead": "aebee13e6355b5144b30ab7596357b712c5aa709",
   "sealedTree": "34d59dbd19bd7abb8a18ae1e61fb9f38c904d767",
   "featureRef": "refs/heads/agent/p29-5a-how-work-works-confirmed-r1",
-  "predecessor": "caf367d58d947333048499bda37e9d6501052975"
+  "predecessor": "b094138df96f182d0f262c9315e6ba5e44a15eb0",
+  "releasedAt": "2026-10-03T08:36:14.433Z",
+  "releaseReason": "p29_5a_cloudflare_ci_file_retrigger"
 }
