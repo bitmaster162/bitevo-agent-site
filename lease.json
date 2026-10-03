@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "4c81400a-ffd3-4ab0-aea2-a8b51199fc8d",
   "nonce": "p295a-control-center-20261003-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "68a01ad96a09bc5b7d9473fb7764266f381b5190",
@@ -11,10 +11,10 @@
   "session": "bitevo-p29-5a-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p29_5a_how_work_works_confirmed_20261003_01",
   "acquiredAt": "2026-10-03T05:46:34.185Z",
-  "updatedAt": "2026-10-03T05:46:34.185Z",
+  "updatedAt": "2026-10-03T05:56:21.815Z",
   "expiresAt": "2026-10-03T10:30:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "8bb70ae2b3210cd932ccc210c1bf387179c628a3"
+  "sealedHead": "9ccfe50172dcb087d5b819359f6dcdfddc618e8d",
+  "sealedTree": "34d59dbd19bd7abb8a18ae1e61fb9f38c904d767",
+  "featureRef": "refs/heads/agent/p29-5a-how-work-works-confirmed-r1",
+  "predecessor": "71c00b40333d95b1fd39c73a2715dca95752a693"
 }
