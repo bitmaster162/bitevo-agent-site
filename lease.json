@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "2ada9999-a71a-4390-baff-db394c5eb4a4",
   "nonce": "p277-pr193-vercel-repair-control-center-20261003-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0b1dd58703f0ad79ec3efc0144e7d6d031ac3dfa",
@@ -11,10 +11,10 @@
   "session": "bitevo-p27-7-pr193-vercel-repair-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_pr193_vercel_repair_prep_20261003_01",
   "acquiredAt": "2026-10-03T13:43:48.019Z",
-  "updatedAt": "2026-10-03T13:43:48.019Z",
+  "updatedAt": "2026-10-03T13:45:42.583Z",
   "expiresAt": "2026-10-03T18:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "562997d3f14355a7c7b18b78f2e6522af0344f0f"
+  "sealedHead": "df63eb1411718a78c88945fbde619f28b24f21db",
+  "sealedTree": "02f0451dc744655f5ec4b290bc3b5040cb0d8f99",
+  "featureRef": "refs/heads/agent/p27-7-public-monitor-r1",
+  "predecessor": "6e736f66e8e793f5cb2c16e7dffd50a39ce08f26"
 }
