@@ -13,7 +13,7 @@ const deepEqual = (actual, expected, message) => { assert.deepEqual(actual, expe
 const root = fileURLToPath(new URL('../', import.meta.url));
 const config = JSON.parse(await readFile(join(root, 'src/data/indexnow.json'), 'utf8'));
 const keyFile = await readFile(join(root, 'public', `${config.key}.txt`), 'utf8');
-const workflow = await readFile(join(root, '.github/workflows/indexnow.yml'), 'utf8');
+const workflow = (await readFile(join(root, '.github/workflows/indexnow.yml'), 'utf8')).replace(/\r\n/g, '\n');
 const robots = await readFile(join(root, 'public/robots.txt'), 'utf8');
 const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
 const manifest = JSON.parse(await readFile(join(root, 'src/data/sitemap-currentness.json'), 'utf8'));

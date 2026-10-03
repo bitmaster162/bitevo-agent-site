@@ -1,0 +1,32 @@
+{
+  "schema": "bitevo.public-monitor/v1",
+  "cron": "*/30 * * * *",
+  "timeoutMs": 15000,
+  "targets": [
+    {
+      "id": "bitevo-home",
+      "url": "https://bitevo.work/",
+      "expectedStatus": 200
+    },
+    {
+      "id": "bitevo-pricing",
+      "url": "https://bitevo.work/pricing",
+      "expectedStatus": 200
+    },
+    {
+      "id": "bitevo-start",
+      "url": "https://bitevo.work/start",
+      "expectedStatus": 200
+    },
+    {
+      "id": "aiskillab-home",
+      "url": "https://aiskillab.work/",
+      "expectedStatus": 200
+    },
+    {
+      "id": "aiskillab-start",
+      "url": "https://aiskillab.work/start",
+      "expectedStatus": 200
+    }
+  ]
+}
