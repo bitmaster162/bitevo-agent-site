@@ -39,12 +39,12 @@ for (const [label, html, facts] of [['EN', enHtml, [HEADING, EN_SCOPE, EN_EVIDEN
   check(!html.includes('ваши данные не используются для обучения AI-моделей'), `${label}: unconfirmed RU model-training claim omitted`);
 }
 const expected = {
-  '/security': 'sha256:0235534f94d4d572d1ac7bb3f95b4205d846c26e76e87cb572e0e4c915a68662',
-  '/ru/security': 'sha256:831bbba4664cf72adc6f99e2242120c1ac765fcdd962157c5c4449dae7f1ab73'
+  '/security': { fingerprint:'sha256:5ffa4df2a5745f63fc81db86e8120e2d4970a17eddffdf16a04bb2abd048ac1d', lastmod:'2026-10-03' },
+  '/ru/security': { fingerprint:'sha256:831bbba4664cf72adc6f99e2242120c1ac765fcdd962157c5c4449dae7f1ab73', lastmod:'2026-10-02' }
 };
-for (const [path, fingerprint] of Object.entries(expected)) {
+for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.lastmod === '2026-10-02' && row?.fingerprint === fingerprint, `currentness exact for ${path}`);
+  check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-security-retention-r1.mjs'), 'P28.5 verifier is wired into verify:core');

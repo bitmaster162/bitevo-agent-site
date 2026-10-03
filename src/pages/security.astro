@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import HowWorkWorksConfirmed from '../components/HowWorkWorksConfirmed.astro';
 
 const principles = [
   ['Staging/test by default', 'Public scope preparation does not authorize testing. Production effects require separately agreed written scope and Rules of Engagement.'],
@@ -15,6 +16,8 @@ const principles = [
   <section class="section hero"><div class="narrow"><div class="eyebrow">Security & data handling</div><h1 class="display">Bound the work before access begins.</h1><p class="lede">BitEvo performs bounded engineering assurance and implementation work for consequential AI-agent and software workflows. This page explains the operating boundary visible on the public site; engagement-specific data handling is frozen separately in the SOW and Rules of Engagement.</p><div class="actions"><a href="/audit-intake" class="button button-primary">Prepare scope brief <span aria-hidden="true">↗</span></a><a href="/proof" class="button button-ghost">Review public proof</a></div></div></section>
 
   <section class="section-tight section-rule"><div class="container grid">{principles.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h2>{title}</h2><p>{text}</p></article>)}</div></section>
+
+  <section class="section section-rule"><HowWorkWorksConfirmed /></section>
 
   <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Evidence handled in scope</div><h2 class="section-title">Collect what the decision needs — not everything available.</h2></div><div><p class="lede">Depending on the engagement, evidence may include logs, request/response traces, configuration snapshots, screenshots, test identifiers, downstream readback and integrity hashes/manifests where applicable. The exact set, retention expectations and access path belong in the written engagement scope.</p></div></div></section>
 
