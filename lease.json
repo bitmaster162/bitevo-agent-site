@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "e7194fcb-6656-4625-a877-b01467770478",
   "nonce": "p291-calcom-triage-control-center-20261003-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "1746528378e31c220f69d3f7009012e5c83a7e69",
@@ -11,10 +11,12 @@
   "session": "bitevo-p29-1-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p29_1_calcom_triage_20261003_01",
   "acquiredAt": "2026-10-03T10:07:01.862Z",
-  "updatedAt": "2026-10-03T10:57:21.941Z",
+  "updatedAt": "2026-10-03T11:35:54.651Z",
   "expiresAt": "2026-10-03T14:00:00.000Z",
   "sealedHead": "9917bd1708fe31c5b4c8ac410cb9b63fc823bc87",
   "sealedTree": "82d351b541de5cc99a1cd6d6a57cacfac7d38433",
   "featureRef": "refs/heads/agent/p29-1-calcom-triage-cta-r1",
-  "predecessor": "99db382b3d99e3f8a2021f49164c42d321a0ffac"
+  "predecessor": "75f5b20e42a1a0104090ff5327ac0e3efa116f8a",
+  "releasedAt": "2026-10-03T11:35:54.661Z",
+  "releaseReason": "p29_1_merged_terminal"
 }
