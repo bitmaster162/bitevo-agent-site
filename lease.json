@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "f5793eae-ca9b-4f8d-be83-3ea08dd615f6",
   "nonce": "p277-public-monitor-control-center-20261003-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0b1dd58703f0ad79ec3efc0144e7d6d031ac3dfa",
@@ -11,10 +11,12 @@
   "session": "bitevo-p27-7-public-monitor-20261003",
   "worktree": "c:/users/coins/downloads/bitevo_p27_7_monitoring_prep_20261003_01",
   "acquiredAt": "2026-10-03T13:28:02.308Z",
-  "updatedAt": "2026-10-03T13:29:29.887Z",
+  "updatedAt": "2026-10-03T13:43:26.103Z",
   "expiresAt": "2026-10-03T17:30:00.000Z",
   "sealedHead": "0743b3f5e1a364961da776984ab862e9d900016c",
   "sealedTree": "9c0ed4e297bad6c5c77da74c9b42e7ac0abb256e",
   "featureRef": "refs/heads/agent/p27-7-public-monitor-r1",
-  "predecessor": "678d7eaf0fec59929e1463247503554e9224b5f8"
+  "predecessor": "9ca50100f4785563da0e984541697f2974420fc4",
+  "releasedAt": "2026-10-03T13:43:26.104Z",
+  "releaseReason": "pr193_vercel_failed_indexnow_delta_verifier_assumption"
 }
