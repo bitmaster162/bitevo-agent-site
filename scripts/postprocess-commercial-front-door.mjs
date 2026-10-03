@@ -17,6 +17,11 @@ const walk = dir => {
 };
 walk(distDir);
 
+const ruPricingTemplateHtml = fs.readFileSync(path.join(distDir, 'ru', 'pricing', 'index.html'), 'utf8');
+const ruScopeTemplateMatch = ruPricingTemplateHtml.match(/<section id="send-scope" class="section section-rule scope-short-section" hidden data-scope-short-section>[\s\S]*?<\/section><link rel="stylesheet" href="\/scope-handoff-short\.css"><script src="\/scope-handoff-r1\.js"[^>]*><\/script>/);
+if (!ruScopeTemplateMatch) throw new Error('RU P27.1 short-scope rendered template missing from /ru/pricing');
+const ruTriageScopeTemplate = ruScopeTemplateMatch[0].replace('data-scope-offer="pricing"', 'data-scope-offer="triage"');
+
 const counters = {
   englishHeader: 0,
   englishMobile: 0,
@@ -32,8 +37,12 @@ const headerPattern = /<a class="header-cta" href="\/mapper"([^>]*)>Map workflow
 const mobilePattern = /<a class="mobile-cta" href="\/mapper"([^>]*)>Map workflow →<\/a>/g;
 const ruHeaderPattern = /<a class="header-cta" href="\/ru\/mapper"([^>]*)>Собрать workflow <span([^>]*)>↗<\/span><\/a>/g;
 const ruMobilePattern = /<a class="mobile-cta" href="\/ru\/mapper"([^>]*)>Собрать workflow →<\/a>/g;
-const homePattern = /<a href="\/mapper" class="button button-primary" data-funnel="home-primary"([^>]*)>Map one workflow <span([^>]*)>↗<\/span><\/a>/;
-const ruHomePattern = /<a class="button button-primary" href="\/ru\/mapper"([^>]*)>Собрать карту workflow <span([^>]*)>↗<\/span><\/a>/;
+const TRIAGE_HREF = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+const homeTriageMarker = 'data-triage-source="home-en"';
+const ruHomeTriageMarker = 'data-triage-source="home-ru"';
+const ruHomeSourcePrimaryPattern = /<a class="button button-primary" href="\/ru\/mapper"([^>]*)>Собрать карту workflow <span([^>]*)>↗<\/span><\/a>/;
+const ruHomeSourceSecondaryPattern = /<a class="button" href="\/ru\/agent-authority-audit"([^>]*)>Посмотреть аудит<\/a>/;
+const ruProductPathNeedle = 'Сначала локально сформируйте Authority Ledger и Evidence Contract, затем сравните checkpoints, найдите unresolved gates и только после этого готовьте written scope.';
 const downloadPattern = /<button id="download" type="button" class="button button-ghost" disabled([^>]*)>Download \.txt<\/button>/;
 const gatePattern = /<\/div><div class="gate"([^>]*)><span([^>]*)>AUTHORIZATION GATE<\/span>/;
 const contactButton = '<a class="button button-ghost" data-scope-handoff href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">Contact Robert</a>';
@@ -99,15 +108,51 @@ for (const file of htmlFiles) {
     }
   }
 
-  if (rel === 'index.html' && homePattern.test(html)) {
-    homePattern.lastIndex = 0;
-    html = html.replace(homePattern, (_full, anchorAttrs, spanAttrs) => `<a href="/start" class="button button-primary" data-funnel="home-primary"${anchorAttrs}>Choose the right scope <span${spanAttrs}>↗</span></a>`);
+  if (rel === 'index.html') {
+    const count = html.split(homeTriageMarker).length - 1;
+    if (count !== 1 || !html.includes(`href="${TRIAGE_HREF}"`) || !html.includes('Book a free 20-minute triage')) {
+      throw new Error('EN home triage CTA drift');
+    }
+    const startMarker = 'data-funnel="home-primary"';
+    if (!html.includes(startMarker)) {
+      html = html.replace(/<a class="header-cta" href="\/start"([^>]*)>/, '<a class="header-cta" href="/start" data-funnel="home-primary"$1>');
+    }
+    if (!html.includes(startMarker)) throw new Error('EN home /start funnel compatibility marker missing');
     counters.homePrimary += 1;
   }
 
-  if (rel === 'ru/index.html' && ruHomePattern.test(html)) {
-    ruHomePattern.lastIndex = 0;
-    html = html.replace(ruHomePattern, (_full, anchorAttrs, spanAttrs) => `<a class="button button-primary" href="/ru/start"${anchorAttrs}>Выбрать формат <span${spanAttrs}>↗</span></a>`);
+  if (rel === 'ru/index.html') {
+    const primary = html.match(ruHomeSourcePrimaryPattern);
+    const secondary = html.match(ruHomeSourceSecondaryPattern);
+    if (!primary || !secondary) throw new Error('RU home source CTA drift before P29.1 postprocess');
+
+    html = html.replace(
+      ruHomeSourcePrimaryPattern,
+      (_full, anchorAttrs, spanAttrs) => `<a class="button button-primary" href="${TRIAGE_HREF}" data-triage-click="true" data-triage-source="home-ru"${anchorAttrs}>Записаться на бесплатный разбор, 20 минут <span${spanAttrs}>↗</span></a>`
+    );
+    html = html.replace(
+      ruHomeSourceSecondaryPattern,
+      (_full, anchorAttrs) => `<a class="button" href="#send-scope"${anchorAttrs}>Отправить короткий scope</a>`
+    );
+
+    const signalSection = html.match(/<section class="section-tight section-rule"[^>]*>/);
+    if (!signalSection) throw new Error('RU home signal section marker missing for short-scope injection');
+    html = html.replace(signalSection[0], `${ruTriageScopeTemplate}${signalSection[0]}`);
+
+    if (!html.includes(ruProductPathNeedle)) throw new Error('RU product-path copy drift');
+    html = html.replace(ruProductPathNeedle, `${ruProductPathNeedle} <a class="text-link" href="/ru/start">Выбрать формат →</a>`);
+
+    if (!html.includes('src="/triage-click.js"')) {
+      html = html.replace('</body>', '<script src="/triage-click.js"></script></body>');
+    }
+
+    const count = html.split(ruHomeTriageMarker).length - 1;
+    if (count !== 1 || !html.includes(`href="${TRIAGE_HREF}"`) || !html.includes('Записаться на бесплатный разбор, 20 минут')) {
+      throw new Error('RU home triage CTA drift after P29.1 postprocess');
+    }
+    if (!html.includes('data-scope-offer="triage"') || !html.includes('id="send-scope"')) {
+      throw new Error('RU home P27.1 short-scope injection failed');
+    }
     counters.russianHomePrimary += 1;
   }
 

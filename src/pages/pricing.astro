@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
 import HowWorkWorksConfirmed from '../components/HowWorkWorksConfirmed.astro';
 
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+
 const primaryDeliverables = [
   'Executive report',
   'Authority / effect map',
@@ -20,7 +22,7 @@ const tiers = [
     desc: 'Use when the first unknown is whether the workflow is even a useful audit target. We isolate the external action, the authority owner and the staging/test boundary.',
     includes: ['1 critical action identified', 'Authority owner identified', 'Staging/test fit check'],
     excludes: ['No tested finding', 'No written security conclusion', 'No deep evidence review'],
-    cta: 'Prepare triage brief', href: '/audit-intake'
+    cta: 'Book a free 20-minute triage', href: TRIAGE_URL, triage: true, scopeCta: 'Send a short scope', scopeHref: '#send-scope', detailCta: 'Prepare triage brief', detailHref: '/audit-intake'
   },
   {
     eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
@@ -68,8 +70,9 @@ const comparison = [
           <div class="feature-group"><strong>Evidence ceiling</strong><ul>{t.includes.map(item => <li>{item}</li>)}</ul></div>
           {t.deliverables && <div class="feature-group"><strong>Primary deliverables</strong><ul>{t.deliverables.map(item => <li>{item}</li>)}</ul></div>}
           <div class="feature-group muted"><strong>Not purchased</strong><ul>{t.excludes.map(item => <li>{item}</li>)}</ul></div>
-          <a href={t.href} class:list={['button', t.featured && 'button-primary']}>{t.cta} <span aria-hidden="true">↗</span></a>
+          <a href={t.href} class:list={['button', (t.featured || t.triage) && 'button-primary']} data-triage-click={t.triage ? 'true' : undefined} data-triage-source={t.triage ? 'pricing-free' : undefined}>{t.cta} <span aria-hidden="true">↗</span></a>
           {t.scopeCta && t.scopeHref && <a href={t.scopeHref} class="text-link">{t.scopeCta} →</a>}
+          {t.detailCta && t.detailHref && <a href={t.detailHref} class="text-link">{t.detailCta} →</a>}
         </article>
       ))}
     </div>
@@ -92,7 +95,7 @@ const comparison = [
     <div class="container commercial-boundary panel">
       <div class="eyebrow">Public-site handoff</div>
       <strong>This page does not book a triage, submit an audit request or authorize testing.</strong>
-      <p>The Free, Entry and Primary scope-preparation CTAs lead into bounded scope preparation. The Scope Handoff form sends only the fields you fill after explicit consent. Accepted records are stored privately for up to 30 days. Submission does not create a booking and does not authorize testing. The dedicated Entry Audit CTA additionally opens the exact $1,500 bounded scope before the buyer chooses whether to submit intake. Scheduling, payment and written Rules of Engagement continue only through an agreed business channel outside this page.</p>
+      <p>The Free triage CTA opens the verified external Cal.com booking page, where the visitor can choose a time and complete the booking. The Free, Entry and Primary scope-preparation CTAs remain separate from the external booking flow. The Scope Handoff form sends only the fields you fill after explicit consent. Accepted records are stored privately for up to 30 days. Submission through the Scope Handoff form does not create a booking and does not authorize testing. The dedicated Entry Audit CTA additionally opens the exact $1,500 bounded scope before the buyer chooses whether to submit intake. Payment and written Rules of Engagement continue only through an agreed business channel.</p>
     </div>
   </section>
 
@@ -147,6 +150,7 @@ const comparison = [
       <div class="hero-actions"><a href="/start" class="button button-primary">Choose the smallest scope <span aria-hidden="true">↗</span></a><a href="/mapper" class="button button-ghost">Map the action chain <span aria-hidden="true">↗</span></a></div>
     </div>
   </section>
+  <script is:inline src="/triage-click.js"></script>
 </Layout>
 
 <style>

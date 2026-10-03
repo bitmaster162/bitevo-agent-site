@@ -41,8 +41,8 @@ check(EN.includes('staging or test, not the model in isolation.'), 'EN definitio
 check(RU.includes('какие доказательства нужны до действия') && RU.includes('когда уверенности нет.'), 'RU P29.4 lead preserves evidence-before-action and uncertainty boundary');
 
 const expectedCurrentness = {
-  '/': { fingerprint: 'sha256:f244e65c855cfe2eac250ecb9ba605b41114588d63fd487249155e4413c49efe', lastmod: '2026-10-03' },
-  '/ru': { fingerprint: 'sha256:d38fd94db1fa4404d62f853428b4aa8a2bc9b79fc997b99b41edbe474a577000', lastmod: '2026-10-03' },
+  '/': { fingerprint: 'sha256:87cd06668fb7fc5a831db9af3ef38b9dcc6a8a0e5c73b75df65bb651cc639b25', lastmod: '2026-10-03' },
+  '/ru': { fingerprint: 'sha256:5dcd4229ce98ba9b2b13b0d771257f2f7c228612df80eafec51776cd00f50e12', lastmod: '2026-10-03' },
   '/agent-authority-audit': { fingerprint: 'sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556', lastmod: '2026-10-02' }
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {

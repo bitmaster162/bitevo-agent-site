@@ -15,10 +15,11 @@ const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentn
 
 check(audit.includes('Up to 3 tools / APIs / MCP servers'), 'Primary Audit uses exact tools/APIs/MCP scope');
 check(!audit.includes('Up to 3 integrations'), 'stale integrations-only label removed');
-check(pricing.includes('The Free, Entry and Primary scope-preparation CTAs'), 'EN pricing preserves public-quality CTA anchor');
+check(pricing.includes('The Free triage CTA opens the verified external Cal.com booking page'), 'EN pricing exposes verified external Free triage booking');
 check(pricing.includes('The Scope Handoff form sends only the fields you fill after explicit consent.'), 'EN pricing states filled-fields + consent boundary');
 check(pricing.includes('Accepted records are stored privately for up to 30 days.'), 'EN pricing states 30-day retention');
-check(pricing.includes('Submission does not create a booking and does not authorize testing.'), 'EN pricing preserves booking/testing boundary');
+check(pricing.includes('Submission through the Scope Handoff form does not create a booking and does not authorize testing.'), 'EN pricing preserves scope-form booking/testing boundary');
+check(pricing.includes('The Free, Entry and Primary scope-preparation CTAs remain separate from the external booking flow.'), 'EN pricing separates scope preparation from external booking');
 check(!pricing.includes('nothing is transmitted by the public intake'), 'EN stale local-only intake claim removed');
 check(pricing.includes('ScopeHandoffShort locale="en" offer="pricing"'), 'EN pricing keeps P27.1 receiver');
 check(ruPricing.includes('Форма Scope Handoff отправляет только заполненные вами поля после явного согласия.'), 'RU pricing states filled-fields + consent boundary');
@@ -27,17 +28,16 @@ check(ruPricing.includes('Отправка не создаёт booking и не �
 check(!ruPricing.includes('Публичный сайт помогает подготовить локальный scope brief.'), 'RU stale local-only hero claim removed');
 check(!ruPricing.includes('не отправляет audit request'), 'RU stale no-submit claim removed');
 check(ruPricing.includes('ScopeHandoffShort locale="ru" offer="pricing"'), 'RU pricing keeps P27.1 receiver');
-check(llms.includes('Public Homepage, Pricing/Consulting and Agent Authority Audit scope-preparation CTAs'), 'llms preserves public-quality CTA anchor');
-check(llms.includes('including the Primary Audit path'), 'llms preserves Primary Audit anchor');
-check(llms.includes('they do not book or submit an engagement'), 'llms preserves no-book/no-engagement CTA anchor');
-check(llms.includes('Scope Handoff form is available, it sends only fields the user fills after explicit consent'), 'llms describes consent-gated filled-fields submission');
+check(llms.includes('Free / 20 minutes booking CTAs on the Homepage, Pricing and Entry Audit surfaces open the verified Cal.com booking page'), 'llms exposes verified Free triage booking');
+check(llms.includes('The separate Scope Handoff form sends only fields the user fills after explicit consent'), 'llms describes consent-gated filled-fields submission');
 check(llms.includes('accepted records are stored privately for up to 30 days'), 'llms states retention horizon');
-check(llms.includes('Submission does not create a booking and does not authorize testing.'), 'llms preserves booking/testing boundary');
+check(llms.includes('Submission through that form does not create a booking and does not authorize testing.'), 'llms preserves scope-form booking/testing boundary');
+check(llms.includes('Other scope-preparation CTAs do not book or submit an engagement by themselves.'), 'llms preserves non-booking semantics for other scope CTAs');
 check(!llms.includes('prepare a local scope brief only; they do not book or submit an engagement'), 'llms stale local-only claim removed');
 check(short.includes('explicit consent') && short.includes('up to 30 days'), 'shared P27.1 component keeps consent and retention disclosure');
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
 const expected = {
-  "/pricing": { fingerprint: "sha256:5d57feb82eead53aeb06cffeaa27334344b21f0a3641a3026bb9721263339999", lastmod: "2026-10-03" },
+  "/pricing": { fingerprint: "sha256:e7ad38ab0a6f39642297368960151fb740de1871fe31e1341e79387d2a43defd", lastmod: "2026-10-03" },
   "/ru/pricing": { fingerprint: "sha256:2f115c3c5a68bf857fea6aa9220a6d0aa029ea3f40097830cccb512e07539a18", lastmod: "2026-10-02" },
   "/agent-authority-audit": { fingerprint: "sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556", lastmod: "2026-10-02" }
 };
@@ -48,4 +48,4 @@ for (const [path, value] of Object.entries(expected)) {
 check(currentness.routes.length === 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-intake-copy-r1.mjs'), 'P28 intake copy verifier is wired into verify:core');
 
-console.log('P28_INTAKE_COPY_R1_GATE=PASS checks=' + checks + ' scope=UP_TO_3_TOOLS_APIS_MCP consent=EXPLICIT retention=UP_TO_30D booking=0 testing_authorization=0 stale_local_only_claims=0 locales=2');
+console.log('P28_INTAKE_COPY_R1_GATE=PASS checks=' + checks + ' scope=UP_TO_3_TOOLS_APIS_MCP consent=EXPLICIT retention=UP_TO_30D triage_booking_link=1 scope_form_booking=0 testing_authorization=0 stale_local_only_claims=0 locales=2');

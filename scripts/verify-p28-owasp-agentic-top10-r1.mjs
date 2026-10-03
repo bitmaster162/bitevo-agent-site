@@ -69,7 +69,7 @@ equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length
 const expectedCurrentness = {
   '/agent-authority-audit': { fingerprint:'sha256:29fe3d7772c41678a964d99ac275b9a3c2c530502da261bafe8ba7fd9248c556', lastmod:'2026-10-02' },
   '/owasp-agentic-top-10': { fingerprint:'sha256:4f8d2b58079cef11abea0033eefb00bb44bdc11a3ff1656feaafbd6a9ed1d2ff', lastmod:'2026-10-02' },
-  '/pricing': { fingerprint:'sha256:5d57feb82eead53aeb06cffeaa27334344b21f0a3641a3026bb9721263339999', lastmod:'2026-10-03' },
+  '/pricing': { fingerprint:'sha256:e7ad38ab0a6f39642297368960151fb740de1871fe31e1341e79387d2a43defd', lastmod:'2026-10-03' },
   '/ru/owasp-agentic-top-10': { fingerprint:'sha256:690e445dfd9c562fa495c94553657fb79816556dae7f2636b415c297a2647770', lastmod:'2026-10-02' }
 };
 for (const [path,value] of Object.entries(expectedCurrentness)) {

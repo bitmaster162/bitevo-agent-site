@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
+
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
 
 const auditAxes = [
   { n: '01', title: 'Authority', text: 'Define what the workflow is permitted to change, which object that permission applies to, and where human authorization is required.' },
@@ -79,8 +82,8 @@ const structuredData = {
         <p class="lede">An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.</p>
         <p class="hero-boundary">Typical failures we test for: a CRM update applied to the wrong record, a message sent twice after a retry, a ticket marked “done” before the external system confirmed it.</p>
         <div class="hero-actions">
-          <a href="/mapper" class="button button-primary" data-funnel="home-primary">Map one workflow <span aria-hidden="true">↗</span></a>
-          <a href="/proof" class="button button-ghost" data-funnel="home-proof">See worked proof</a>
+          <a href={TRIAGE_URL} class="button button-primary" data-triage-click="true" data-triage-source="home-en">Book a free 20-minute triage <span aria-hidden="true">↗</span></a>
+          <a href="#send-scope" class="button button-ghost">Send a short scope</a>
         </div>
         <div class="hero-boundary"><span class="dot"></span> Browser-local mapping first · staging/test by default · written Rules of Engagement before testing</div>
       </div>
@@ -95,6 +98,8 @@ const structuredData = {
       </div>
     </div>
   </section>
+
+  <ScopeHandoffShort locale="en" offer="triage" />
 
   <section class="section-tight section-rule" aria-labelledby="start-path-title">
     <div class="container split-head">
@@ -163,7 +168,7 @@ const structuredData = {
         <div class="lab-top"><span>LAB-001</span><span>SYNTHETIC · WORKED</span></div>
         <h3>False Green: healthy surface, stale truth.</h3>
         <p>In this worked scenario, a service surface is treated as apparently healthy while source freshness stops advancing. The modeled finding is not “the agent is unsafe.” It is that the workflow could appear operable after the evidence required to justify action had become stale. The modeled owner decision is therefore to constrain the Authority Budget until freshness and confirmation are made explicit.</p>
-        <a href="/proof" class="text-link">Inspect evidence strength →</a>
+        <a href="/proof" class="text-link" data-funnel="home-proof">Inspect evidence strength →</a>
       </article>
       <div class="proof-links">
         {proofSurfaces.map(([href, title, text, marker]) => (
@@ -242,6 +247,7 @@ const structuredData = {
   </section>
 
   <div class="mobile-dock" aria-label="Audit quick action"><span><small>PRIMARY AUDIT</small><strong>$4,900 · 5 working days after complete evidence/access + written scope</strong></span><a href="/audit-intake" data-funnel="home-primary-scope-mobile">Prepare scope ↗</a></div>
+  <script is:inline src="/triage-click.js"></script>
 </Layout>
 
 <style>

@@ -11,6 +11,8 @@ const root = new URL('../', import.meta.url);
 const H1 = 'Агент должен заслужить полномочия доказательствами.';
 const LEDE = 'BitEvo проверяет слой действий AI-систем: что процесс может изменить, какие доказательства нужны до действия, как подтверждается внешний результат и что система делает, когда уверенности нет.';
 const P29_2 = 'Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.';
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+const P29_1 = 'Записаться на бесплатный разбор, 20 минут';
 const SIGNALS = [
   ['ОБЪЕКТ', 'один процесс, в котором агент может действовать'],
   ['ВОПРОС', 'что ему можно делать и почему'],
@@ -54,7 +56,7 @@ const ledeIndex = source.indexOf(LEDE);
 const failureIndex = source.indexOf(P29_2);
 const actionsIndex = source.indexOf('<div class="hero-actions">', ledeIndex);
 check(ledeIndex >= 0 && failureIndex > ledeIndex && actionsIndex > failureIndex, 'P29.2 failure copy remains after new lead and before hero actions');
-check(!source.includes('Записаться на бесплатный разбор, 20 минут') && !source.includes('cal.com'), 'P29.1 Cal.com CTA remains omitted');
+check(html.includes(P29_1) && html.includes(TRIAGE_URL) && !source.includes(P29_1) && !source.includes(TRIAGE_URL), 'P29.1 Cal.com CTA is published in RU static HTML while source stays CSP-stable');
 check(source.includes('Agent Authority & Evidence Audit') && source.includes('$4,900'), 'package name and price remain present');
 check(baseLayout.includes('Authority Budget. Evidence Before Effect. False Green.'), 'Authority Budget / Evidence Before Effect / False Green terms remain unchanged');
 
@@ -68,8 +70,8 @@ equal((firstScreen.match(/<a\b/g) || []).length, 2, 'existing two hero CTAs pres
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
 equal(row?.lastmod, '2026-10-03', '/ru currentness date exact');
-equal(row?.fingerprint, 'sha256:d38fd94db1fa4404d62f853428b4aa8a2bc9b79fc997b99b41edbe474a577000', '/ru currentness fingerprint exact');
+equal(row?.fingerprint, 'sha256:5dcd4229ce98ba9b2b13b0d771257f2f7c228612df80eafec51776cd00f50e12', '/ru currentness fingerprint exact');
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');
 
-console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=6b88673b35e79864c271782ab37dec5c19d1111c17b1602460d8f563d23fe1a8 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=OMITTED js_added=0 network_added=0`);
+console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=6b88673b35e79864c271782ab37dec5c19d1111c17b1602460d8f563d23fe1a8 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);

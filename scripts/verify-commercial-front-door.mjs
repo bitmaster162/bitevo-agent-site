@@ -33,9 +33,11 @@ const entryAuditReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Agent%2
 const controlValidationReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Security%20Control%20Validation%20scope%20review';
 const primaryAuditReviewHref = 'mailto:robert@bitevo.work?subject=BitEvo%20Primary%20Agent%20Authority%20Audit%20scope%20review';
 const buildQualificationHref = 'mailto:robert@bitevo.work?subject=BUILD%20workflow%20diagnostic%20qualification';
+const triageHref = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
 
-check(/<a[^>]*href="\/start"[^>]*data-funnel="home-primary"[^>]*>Choose the right scope/.test(home), 'home primary CTA must route to /start');
-check(!/<a[^>]*href="\/mapper"[^>]*data-funnel="home-primary"[^>]*>Map one workflow/.test(home), 'old Mapper home-primary CTA must not survive build output');
+check(hasAnchor(home, triageHref, 'Book a free 20-minute triage'), 'home primary CTA must route to verified Cal.com triage');
+check(home.includes('data-triage-source="home-en"') && home.includes('data-triage-click="true"'), 'home triage CTA must retain local analytics markers');
+check([...home.matchAll(/<a\b[^>]*>/gi)].some(match => /data-funnel="home-primary"/.test(match[0]) && /href="\/start"/.test(match[0])), 'home-primary compatibility funnel marker must remain bound to /start');
 check(/<a class="header-cta" href="\/start"[^>]*>Start here/.test(home), 'English header CTA must route to /start');
 check(/<a class="mobile-cta" href="\/start"[^>]*>Start here →<\/a>/.test(home), 'English mobile CTA must route to /start');
 
@@ -82,7 +84,8 @@ check(!buildDiagnostic.includes('audit-intake?offer=') && !ruBuildDiagnostic.inc
 
 check(/<a class="header-cta" href="\/ru\/start"[^>]*>Начать/.test(ruHome), 'RU header CTA must route to /ru/start');
 check(/<a class="mobile-cta" href="\/ru\/start"[^>]*>Начать →<\/a>/.test(ruHome), 'RU mobile CTA must route to /ru/start');
-check(ruHome.includes('href="/ru/start"') && ruHome.includes('Выбрать формат'), 'RU home primary commercial CTA must route to /ru/start');
+check(hasAnchor(ruHome, triageHref, 'Записаться на бесплатный разбор, 20 минут'), 'RU home primary CTA must route to verified Cal.com triage');
+check(ruHome.includes('data-triage-source="home-ru"') && ruHome.includes('data-triage-click="true"'), 'RU home triage CTA must retain local analytics markers');
 check(!/<a class="header-cta" href="\/ru\/mapper"[^>]*>/.test(ruHome), 'old RU Mapper header CTA must not survive R5 build output');
 check(ruHome.includes('href="/ru/mapper"'), 'RU product layer must retain a visible Mapper path after moving the commercial front door');
 check(ruStart.includes('Free / 20 минут'), '/ru/start must retain Free triage path');
@@ -116,4 +119,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_start=1 en_header_start=1 en_mobile_start=1 ru_home_start=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS offer_intent_routes=6 consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
+console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_triage=1 en_header_start=1 en_mobile_start=1 ru_home_triage=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS offer_intent_routes=6 consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
