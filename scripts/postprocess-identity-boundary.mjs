@@ -13,6 +13,22 @@ const identity = {
   name: 'BitEvo',
   url: 'https://bitevo.work',
   identifier: 'bitevo.work',
+  logo: 'https://bitevo.work/bitevo-logo-512.png',
+  sameAs: [
+    'https://github.com/bitmaster162',
+    'https://linkedin.com/in/robert-dumanyan-984171335',
+    'https://aiskillab.work/'
+  ],
+  founder: {
+    '@type': 'Person',
+    '@id': 'https://bitevo.work/operator#person',
+    name: 'Robert Dumanyan',
+    url: 'https://bitevo.work/operator',
+    sameAs: [
+      'https://github.com/bitmaster162',
+      'https://linkedin.com/in/robert-dumanyan-984171335'
+    ]
+  },
   description: 'Independent B2B engineering practice for authority and evidence validation of action-capable AI-agent workflows.',
   disambiguatingDescription: 'BitEvo at bitevo.work is an independent B2B AI-agent authority and evidence engineering practice and is not affiliated with unrelated cryptocurrency, wallet, token, or Web3 projects that use the BitEvo name.'
 };

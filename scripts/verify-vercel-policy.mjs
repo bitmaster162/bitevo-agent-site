@@ -36,12 +36,13 @@ if (crons.length !== 1) failures.push('vercel.json: expected exactly one bounded
 cronChecks += 1;
 if (!crons.some(item => item?.path === '/api/scope-handoff-retention' && item?.schedule === '0 3 * * *')) failures.push('vercel.json: missing exact daily Scope Handoff retention cron');
 
-const requiredSecurityHeaderKeys = ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy','content-security-policy'];
+const requiredSecurityHeaderKeys = ['x-content-type-options','x-frame-options','referrer-policy','permissions-policy','cross-origin-opener-policy','strict-transport-security','content-security-policy'];
 for (const key of requiredSecurityHeaderKeys) {
   securityHeaderChecks += 1;
   if (!globalHeaderMap.has(key)) failures.push(`vercel.json: missing global ${key} header`);
 }
 for (const [ok, message] of [
+  [globalHeaderMap.get('strict-transport-security') === 'max-age=63072000; includeSubDomains', 'vercel.json: HSTS must use max-age=63072000; includeSubDomains'],
   [csp.includes("frame-ancestors 'none'"), "vercel.json: CSP must include frame-ancestors 'none'"],
   [csp.includes("script-src 'self'"), "vercel.json: CSP script-src must include self"],
   [csp.includes("style-src 'self'"), "vercel.json: CSP style-src must include self"],
@@ -58,14 +59,19 @@ for (const [ok, message] of [
   [typeof buildMeta.ref === 'string' && buildMeta.ref.trim().length > 0, 'build receipt must contain non-empty Vercel Git ref']
 ]) { provenanceChecks += 1; if (!ok) failures.push(message); }
 
-const immutableRule = headerRules.find(rule => rule.source === '/_astro/(.*)');
-const immutableCache = immutableRule?.headers?.find(item => String(item.key).toLowerCase() === 'cache-control')?.value || '';
+const customRoutes = Array.isArray(vercelConfig.routes) ? vercelConfig.routes : [];
+const cacheRoute = source => customRoutes.find(route => route?.src === source && route?.continue === true && route?.headers && typeof route.headers === 'object');
+const immutableCache = String(cacheRoute('/_astro/(.*)')?.headers?.['Cache-Control'] || '');
 cacheChecks += 1;
-if (!String(immutableCache).includes('immutable') || !String(immutableCache).includes('31536000')) failures.push('vercel.json: hashed Astro assets must use one-year immutable cache');
+if (!immutableCache.includes('immutable') || !immutableCache.includes('31536000')) failures.push('vercel.json: hashed Astro assets must use one-year immutable cache route');
+for (const source of ['/og-card.png','/favicon.svg','/bitevo-logo-512.png']) {
+  cacheChecks += 1;
+  const value = String(cacheRoute(source)?.headers?.['Cache-Control'] || '');
+  if (!value.includes('max-age=3600') || !value.includes('stale-while-revalidate=86400')) failures.push(`vercel.json: missing bounded cache route for ${source}`);
+}
 for (const domain of ['fonts.googleapis.com','fonts.gstatic.com']) { externalFontDomainChecks += 1; if (raw.includes(domain)) failures.push(`vercel.json: external font domain allowed by deployment policy ${domain}`); }
 routingChecks += 1; if (vercelConfig.cleanUrls !== true) failures.push('vercel.json: cleanUrls must remain true');
 routingChecks += 1; if (vercelConfig.trailingSlash !== false) failures.push('vercel.json: trailingSlash must be false');
-const customRoutes = Array.isArray(vercelConfig.routes) ? vercelConfig.routes : [];
 const routeHeaderIndex = customRoutes.findIndex(route => route?.src === '/(.*)' && route?.continue === true && route?.headers && typeof route.headers === 'object');
 const routeHeaderMap = new Map(Object.entries(routeHeaderIndex >= 0 ? customRoutes[routeHeaderIndex].headers : {}).map(([key,value]) => [String(key).toLowerCase(), String(value)]));
 const enReliabilityRedirectIndex = customRoutes.findIndex(route => route?.src === '/guides/ai-agent-reliability-audit' && Number(route?.status) === 301 && route?.headers?.Location === '/agent-authority-audit');
@@ -87,6 +93,8 @@ const redirects = Array.isArray(vercelConfig.redirects) ? vercelConfig.redirects
 const exactRedirect = (source, destination) => redirects.some(item => item?.source === source && item?.destination === destination && item?.permanent === true);
 routingChecks += 1; if (!exactRedirect('/guides/ai-agent-reliability-audit', '/agent-authority-audit')) failures.push('vercel.json: missing permanent EN reliability redirect declaration');
 routingChecks += 1; if (!exactRedirect('/ru/guides/ai-agent-reliability-audit', '/ru/agent-authority-audit')) failures.push('vercel.json: missing permanent RU reliability redirect declaration');
+routingChecks += 1;
+if (!redirects.some(item => item?.source === '/guides/:slug((?!security-sandboxing|fleet-coordinator-drift-monitoring|d3-tool-io-bridge-contract).*)' && item?.destination === '/guides' && item?.permanent === true)) failures.push('vercel.json: generic non-reviewed guide fallback must be permanent (308)');
 
 if (failures.length) { console.error('VERCEL_POLICY_GATE=FAIL'); for (const failure of failures) console.error(failure); process.exit(1); }
 console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} cron_checks=${cronChecks} failures=0`);

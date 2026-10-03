@@ -111,7 +111,7 @@ for (const path of explicitParityReuse) {
 }
 
 for (const [ruPath, page] of parityMap) {
-  checks += 8;
+  checks += 9;
   if (!page.slug || !page.enPath || !page.title || !page.description || !page.primaryHref || !page.primaryLabel) failures.push(`${ruPath}: incomplete parity data`);
   if (!Array.isArray(page.points) || page.points.length < 3) failures.push(`${ruPath}: expected at least 3 semantic points`);
   if (!cyrillic.test(`${page.title} ${page.description} ${(page.points || []).join(' ')}`)) failures.push(`${ruPath}: parity data lacks Cyrillic semantic content`);
@@ -123,7 +123,8 @@ for (const [ruPath, page] of parityMap) {
     failures.push(`${ruPath}: generated page missing from build`);
     continue;
   }
-  if (!html.includes('Смысловое соответствие RU')) failures.push(`${ruPath}: missing semantic parity marker`);
+  if (html.includes('Смысловое соответствие RU')) failures.push(`${ruPath}: internal semantic parity service marker must not be public`);
+  if (!cyrillic.test(page.eyebrow || '') && !html.includes('lang="en"')) failures.push(`${ruPath}: English-only eyebrow fragment must declare lang=en`);
   if (!html.includes('Граница смысла')) failures.push(`${ruPath}: missing semantic boundary`);
   if (!html.includes('разрешение на тестирование')) failures.push(`${ruPath}: missing no-authorization claim boundary`);
   if (!html.includes(`href="${page.enPath}"`)) failures.push(`${ruPath}: missing paired EN route link`);

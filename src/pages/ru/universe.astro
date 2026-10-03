@@ -1,5 +1,6 @@
 ---
 import RuLayout from '../../layouts/RuLayout.astro';
+import routeRegistry from '../../data/public-route-registry.json';
 
 const modules = [
   {
@@ -65,6 +66,15 @@ const evidence = [
   ['READBACK', 'Что возвращает публичная или protected surface.'],
   ['EFFECT', 'Что системе реально разрешено делать.']
 ];
+
+const ruRouteGroups = Object.entries(
+  routeRegistry.routes
+    .filter((route) => route.indexable && route.locale === 'ru' && route.path !== '/ru/universe')
+    .reduce((groups, route) => {
+      (groups[route.category] ??= []).push(route.path);
+      return groups;
+    }, {})
+).map(([category, paths]) => ({ category, paths: paths.sort() }));
 ---
 
 <RuLayout
@@ -166,6 +176,26 @@ const evidence = [
         <p>Private/local context для memory, continuity и decision support по всей экосистеме. Raw personal memory не является функцией публичного сайта, а этот слой не подразумевает autonomous execution authority.</p>
         <span class="private-badge">PRIVATE BY DEFAULT</span>
       </div>
+    </div>
+  </section>
+
+  <section class="section section-rule" id="ru-route-directory">
+    <div class="container section-head">
+      <div>
+        <div class="eyebrow">Публичные RU-маршруты</div>
+        <h2 class="section-title">Карта опубликованных русских страниц.</h2>
+      </div>
+      <p class="lede">Список строится из текущего публичного route registry. Это навигация по уже опубликованным страницам, а не отдельный статус или новое предложение.</p>
+    </div>
+    <div class="container route-directory">
+      {ruRouteGroups.map((group) => (
+        <section class="route-group" aria-label={group.category}>
+          <strong>{group.category}</strong>
+          <div>
+            {group.paths.map((path) => <a href={path}>{path}</a>)}
+          </div>
+        </section>
+      ))}
     </div>
   </section>
 

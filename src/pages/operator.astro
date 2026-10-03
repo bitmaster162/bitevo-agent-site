@@ -4,15 +4,15 @@ import Layout from '../layouts/Layout.astro';
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Robert',
+  '@id': 'https://bitevo.work/operator#person',
+  name: 'Robert Dumanyan',
   url: 'https://bitevo.work/operator',
   jobTitle: 'Operator, BitEvo',
-  affiliation: {
-    '@type': 'Organization',
-    name: 'BitEvo',
-    url: 'https://bitevo.work'
-  },
-  sameAs: ['https://github.com/bitmaster162']
+  affiliation: { '@id': 'https://bitevo.work/#organization' },
+  sameAs: [
+    'https://github.com/bitmaster162',
+    'https://linkedin.com/in/robert-dumanyan-984171335'
+  ]
 };
 ---
 

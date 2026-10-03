@@ -39,8 +39,8 @@ for (const [label, html, facts] of [['EN', enHtml, [HEADING, EN_SCOPE, EN_EVIDEN
   check(!html.includes('ваши данные не используются для обучения AI-моделей'), `${label}: unconfirmed RU model-training claim omitted`);
 }
 const expected = {
-  '/security': { fingerprint:'sha256:5ffa4df2a5745f63fc81db86e8120e2d4970a17eddffdf16a04bb2abd048ac1d', lastmod:'2026-10-03' },
-  '/ru/security': { fingerprint:'sha256:831bbba4664cf72adc6f99e2242120c1ac765fcdd962157c5c4449dae7f1ab73', lastmod:'2026-10-02' }
+  '/security': { fingerprint:'sha256:57b1b205931ee48921b2023b1add0a0088bd0e459c8e4f4e1aecc92eeb3ad2a9', lastmod:'2026-10-03' },
+  '/ru/security': { fingerprint:'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', lastmod:'2026-10-03' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

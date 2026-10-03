@@ -1,5 +1,8 @@
 ---
 import { SITE_ORIGIN, absoluteSiteUrl, localeMeta, type SiteLocale } from '../lib/i18n';
+import routeRegistry from '../data/public-route-registry.json';
+import '../styles/locale-switch.css';
+import '../styles/p27-seo.css';
 
 interface Props {
   title: string;
@@ -106,17 +109,68 @@ const footerNonAffiliation = isRu
   ? 'bitevo.work — независимая B2B-практика по полномочиям и доказательствам AI-агентов. Мы не связаны со сторонними криптовалютными, кошельковыми, токен- и Web3-проектами, которые используют имя BitEvo.'
   : 'bitevo.work is an independent B2B AI-agent authority and evidence engineering practice and is not affiliated with unrelated cryptocurrency, wallet, token, or Web3 projects that use the BitEvo name.';
 
+const organizationId = `${SITE_ORIGIN}/#organization`;
+const personId = `${SITE_ORIGIN}/operator#person`;
+const sameAs = [
+  'https://github.com/bitmaster162',
+  'https://linkedin.com/in/robert-dumanyan-984171335',
+  'https://aiskillab.work/'
+];
+
+const routeByPath = new Map((routeRegistry.routes ?? []).map((route) => [route.path, route]));
+const breadcrumbEligible =
+  selfCanonicalPath.startsWith('/build/') ||
+  selfCanonicalPath.startsWith('/audit/') ||
+  selfCanonicalPath.startsWith('/ru/');
+
+const breadcrumbPaths: string[] = [];
+if (breadcrumbEligible) {
+  let cursor = routeByPath.get(selfCanonicalPath);
+  const seen = new Set<string>();
+  while (cursor && !seen.has(cursor.path)) {
+    seen.add(cursor.path);
+    breadcrumbPaths.unshift(cursor.path);
+    cursor = cursor.parent ? routeByPath.get(cursor.parent) : undefined;
+  }
+}
+const breadcrumbName = (routePath: string, index: number) => {
+  if (index === breadcrumbPaths.length - 1) return title.replace(/\s*[|—-]\s*BitEvo.*$/i, '').trim();
+  if (routePath === '/') return 'BitEvo';
+  if (routePath === '/ru') return 'BitEvo RU';
+  return routePath.split('/').filter(Boolean).at(-1)?.replaceAll('-', ' ') || 'BitEvo';
+};
+const breadcrumbStructuredData = breadcrumbPaths.length >= 2 ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbPaths.map((routePath, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: breadcrumbName(routePath, index),
+    item: absoluteSiteUrl(routePath)
+  }))
+} : null;
+
 const globalStructuredData = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': `${SITE_ORIGIN}/#organization`,
+    '@id': organizationId,
     name: 'BitEvo',
     url: SITE_ORIGIN,
-    logo: absoluteSiteUrl('/favicon.svg'),
+    identifier: 'bitevo.work',
+    logo: absoluteSiteUrl('/bitevo-logo-512.png'),
+    sameAs,
+    founder: {
+      '@type': 'Person',
+      '@id': personId,
+      name: 'Robert Dumanyan',
+      url: absoluteSiteUrl('/operator'),
+      sameAs: sameAs.slice(0, 2)
+    },
     description: isRu
       ? 'Инженерия полномочий и доказательств для AI-agent workflow, способных выполнять внешние действия.'
-      : 'Authority and evidence engineering for action-capable AI-agent workflows.'
+      : 'Authority and evidence engineering for action-capable AI-agent workflows.',
+    disambiguatingDescription: 'BitEvo at bitevo.work is an independent B2B AI-agent authority and evidence engineering practice and is not affiliated with unrelated cryptocurrency, wallet, token, or Web3 projects that use the BitEvo name.'
   },
   {
     '@context': 'https://schema.org',
@@ -124,9 +178,10 @@ const globalStructuredData = [
     '@id': `${SITE_ORIGIN}/#website`,
     url: SITE_ORIGIN,
     name: 'BitEvo',
-    publisher: { '@id': `${SITE_ORIGIN}/#organization` },
+    publisher: { '@id': organizationId },
     inLanguage: language.htmlLang
-  }
+  },
+  ...(breadcrumbStructuredData ? [breadcrumbStructuredData] : [])
 ];
 ---
 
@@ -162,7 +217,7 @@ const globalStructuredData = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
     <meta name="twitter:image:alt" content={isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence'} />
-    <script type="application/ld+json" set:html={JSON.stringify(globalStructuredData)} />
+    <script type="application/ld+json" data-bitevo-identity-boundary set:html={JSON.stringify(globalStructuredData)} />
     <script defer src="/_vercel/insights/script.js"></script>
     <title>{title}</title>
   </head>
