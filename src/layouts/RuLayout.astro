@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { title, description, enPath, ruPath, robots } = Astro.props;
+const isRuHome = Astro.url.pathname === '/ru' || Astro.url.pathname === '/ru/';
 ---
 
 <Layout
@@ -21,7 +22,7 @@ const { title, description, enPath, ruPath, robots } = Astro.props;
 >
   <div class="ru-locale-bar" data-locale-surface="ru">
     <div class="container locale-inner">
-      <span><i></i> RU · ПУБЛИЧНЫЙ ПРОДУКТОВЫЙ СЛОЙ</span>
+      <span><i></i> {isRuHome ? 'RU' : 'RU · ПУБЛИЧНЫЙ ПРОДУКТОВЫЙ СЛОЙ'}</span>
       <div><a href="/ru/universe">Universe</a></div>
     </div>
   </div>
