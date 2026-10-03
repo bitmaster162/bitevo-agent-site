@@ -98,8 +98,8 @@ check(!enSource.includes('Book a free 20-minute triage') && !ruSource.includes('
 check(!enSource.includes('cal.com') && !ruSource.includes('cal.com'), 'no Cal.com URL published by P29.3');
 
 const expected = {
-  '/diagnostic': { lastmod: '2026-10-03', fingerprint: 'sha256:d2b1a98d286d9506d622d757b4505ec730d8b0b68d435f0898399e4fa8dec33f' },
-  '/ru/diagnostic': { lastmod: '2026-10-03', fingerprint: 'sha256:83db94c3ae6d6750e6ef33f8b87af67ed27d0e3fab35628c5abed9e8b5ffa2b6' }
+  '/diagnostic': { lastmod: '2026-10-03', fingerprint: 'sha256:4f1556dca54c3af8092e0430d825e13c0b73651fdc60c066c61228e3901e1f03' },
+  '/ru/diagnostic': { lastmod: '2026-10-03', fingerprint: 'sha256:eaacd8b9818ff9afbc3b6aef7cafaa825da39d93f3aa929966e45bdc5707c2bd' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

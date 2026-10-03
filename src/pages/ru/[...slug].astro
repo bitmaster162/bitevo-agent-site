@@ -11,15 +11,7 @@ export function getStaticPaths() {
 
 const { page } = Astro.props;
 const ruPath = `/ru/${page.slug}`;
-const categoryRu = {
-  FLAGSHIP:'ГЛАВНЫЙ',
-  ENTRY:'ВХОД',
-  SPECIALIST:'СПЕЦИАЛИЗАЦИЯ',
-  TOOL:'ИНСТРУМЕНТ',
-  PROOF:'ДОКАЗАТЕЛЬСТВА',
-  RESEARCH:'ИССЛЕДОВАНИЯ',
-  CONTEXT:'КОНТЕКСТ'
-}[page.category] ?? page.category;
+const eyebrowIsEnglish = !/[А-Яа-яЁё]/.test(page.eyebrow ?? '');
 ---
 
 <RuLayout
@@ -31,16 +23,11 @@ const categoryRu = {
   <section class="parity-hero section">
     <div class="container parity-grid">
       <div>
-        <div class="eyebrow">{page.eyebrow}</div>
+        <div class="eyebrow" lang={eyebrowIsEnglish ? 'en' : undefined}>{page.eyebrow}</div>
         <h1 id={page.slug === 'failure-recovery' ? 'ruFailureRecoveryTitle' : page.slug === 'reservation-action-validation' ? 'ruReservationActionValidationTitle' : undefined} class:list={['display', page.slug === 'evidence-readiness' && 'ru-evidence-readiness-title', (page.slug === 'build/exception-workflow-diagnostic' || page.slug === 'build/hr-workflow-diagnostic') && 'ru-build-diagnostic-title']}>{page.title}</h1>
       </div>
       <div>
         <p class="lede">{page.description}</p>
-        <div class="parity-meta panel" role="group" aria-label="Статус смыслового соответствия RU">
-          <span>{categoryRu}</span>
-          <strong>Смысловое соответствие RU</strong>
-          <small>Назначение и граница заявлений связаны с парным EN-маршрутом.</small>
-        </div>
       </div>
     </div>
   </section>
@@ -93,11 +80,7 @@ const categoryRu = {
 <style>
   .parity-hero{padding-top:clamp(70px,9vw,120px)}
   .parity-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.78fr);gap:clamp(38px,7vw,96px);align-items:end}
-  .parity-grid .lede{margin:0 0 24px}
-  .parity-meta{padding:18px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:center}
-  .parity-meta span{color:var(--green);font:600 .6rem/1.2 var(--mono);letter-spacing:.08em}
-  .parity-meta strong{font-size:.82rem}
-  .parity-meta small{grid-column:1/-1;color:var(--muted)}
+  .parity-grid .lede{margin:0}
   .parity-points{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
   .parity-points article{padding:26px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
   .parity-points span{color:var(--green);font:600 .62rem var(--mono)}

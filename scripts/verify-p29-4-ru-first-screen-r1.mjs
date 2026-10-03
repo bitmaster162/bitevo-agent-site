@@ -70,7 +70,7 @@ equal((firstScreen.match(/<a\b/g) || []).length, 2, 'existing two hero CTAs pres
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
 equal(row?.lastmod, '2026-10-03', '/ru currentness date exact');
-equal(row?.fingerprint, 'sha256:5dcd4229ce98ba9b2b13b0d771257f2f7c228612df80eafec51776cd00f50e12', '/ru currentness fingerprint exact');
+equal(row?.fingerprint, 'sha256:48a4a25f70906aee63f9583786b41a49f883bcd12a36866e38cf51193ec1aaa8', '/ru currentness fingerprint exact');
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');
 

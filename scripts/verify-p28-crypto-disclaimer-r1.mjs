@@ -25,14 +25,14 @@ for (const [route, file, disclaimer] of routes) {
 }
 const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
 const expected = {
-  '/ru/universe':'sha256:729f50300779ad80c7466a904140449553f329868032c4a50c90edf0a06c12f6',
-  '/ru/vision':'sha256:66a51ddfa3c483d0732b62a452d721987c74948ea11147fcd33ea6e515703b50',
-  '/universe':'sha256:fbbb258d54ef02f183591e3f7a4c327268e4cb0e4fcb0ee9c8151b5efdc643bb',
-  '/vision':'sha256:ecdf08f2fa847b55774a5f7e349c71c9446fb97d25a3db4edcca96463fdea04d'
+  '/ru/universe':['2026-10-03','sha256:33e15c72601b41acb38301772e176f8d3d7520a00eeb34097b65d07aaddb2c6c'],
+  '/ru/vision':['2026-10-03','sha256:e96019902180e4eae6f575139339c2413c4defa94643338d045ec75eef553f65'],
+  '/universe':['2026-10-03','sha256:39e2c007daa9fe06be416065dae9d9ded03ac40b379289daa94e23c2da8b75cb'],
+  '/vision':['2026-10-03','sha256:39199aea253e86816c8d8f5e9f1f156dd2d7b8489a30271238c81d57e1eeb188']
 };
-for (const [route, fingerprint] of Object.entries(expected)) {
+for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
-  check(row?.lastmod === '2026-10-02' && row?.fingerprint === fingerprint, `${route}: exact currentness`);
+  check(row?.lastmod === lastmod && row?.fingerprint === fingerprint, `${route}: exact currentness`);
 }
 equal(currentness.routes.length, 110, 'currentness route count remains 110');
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));

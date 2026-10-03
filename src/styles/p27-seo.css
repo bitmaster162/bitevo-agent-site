@@ -1,0 +1,7 @@
+.route-directory{display:grid;gap:14px}
+.route-group{display:grid;grid-template-columns:140px 1fr;gap:22px;padding:22px;border:1px solid var(--line);border-radius:14px}
+.route-group>strong{color:var(--green);font:600 .58rem var(--mono);letter-spacing:.08em}
+.route-group>div{display:flex;flex-wrap:wrap;gap:8px 14px}
+.route-group a{color:var(--ink-soft);font:500 .68rem var(--mono);text-decoration:underline;text-decoration-color:rgba(127,208,177,.22);text-underline-offset:3px}
+.route-group a:hover{color:var(--ink);text-decoration-color:rgba(127,208,177,.7)}
+@media(max-width:620px){.route-group{grid-template-columns:1fr}}

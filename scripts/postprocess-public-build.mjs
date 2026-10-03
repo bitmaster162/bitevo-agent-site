@@ -66,8 +66,6 @@ for (const [enRoute, ruRoute] of localizedPairs) {
   }
 }
 
-const localeSwitchStylesheet = '<link rel="stylesheet" href="/locale-switch.css" data-global-locale-switch-stylesheet>';
-
 const { readdir } = await import('node:fs/promises');
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -111,9 +109,6 @@ for (const path of await walk(dist)) {
   if (hasRuLocaleBar) retainedRuLocaleBars += 1;
 
   if (locale && html.includes('<header class="site-header">') && !html.includes('data-global-locale-switch=')) {
-    if (!html.includes('data-global-locale-switch-stylesheet')) {
-      html = html.replace('</head>', `${localeSwitchStylesheet}</head>`);
-    }
     const switchMarkup = `<a class="global-locale-switch" data-global-locale-switch="${locale.current}-to-${locale.target}" data-locale-pair="paired" href="${locale.href}" lang="${locale.target}" aria-label="${locale.aria}">${locale.label}</a>`;
     const ctaMarker = '<a class="header-cta"';
     if (html.includes(ctaMarker)) {

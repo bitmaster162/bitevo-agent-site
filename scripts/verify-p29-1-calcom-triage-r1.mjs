@@ -82,10 +82,10 @@ check(llms.includes(TRIAGE) && llms.includes('verified Cal.com booking page'), '
 const currentness = JSON.parse(await read('src/data/sitemap-currentness.json'));
 const packageJson = JSON.parse(await read('package.json'));
 const expected = {
-  '/': ['2026-10-03', 'sha256:87cd06668fb7fc5a831db9af3ef38b9dcc6a8a0e5c73b75df65bb651cc639b25'],
-  '/ru': ['2026-10-03', 'sha256:5dcd4229ce98ba9b2b13b0d771257f2f7c228612df80eafec51776cd00f50e12'],
-  '/pricing': ['2026-10-03', 'sha256:e7ad38ab0a6f39642297368960151fb740de1871fe31e1341e79387d2a43defd'],
-  '/entry-audit': ['2026-10-03', 'sha256:3024cdde77bc5894145ef0557e3ca02edaff6c103b27ca1863a1c5356fa913ff']
+  '/': ['2026-10-03', 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429'],
+  '/ru': ['2026-10-03', 'sha256:48a4a25f70906aee63f9583786b41a49f883bcd12a36866e38cf51193ec1aaa8'],
+  '/pricing': ['2026-10-03', 'sha256:c8d331a2e8445395e02068ae7a4c02c7b8df221634cbf1c52565cfbdcbada1f2'],
+  '/entry-audit': ['2026-10-03', 'sha256:5f57214e401a52d73a03ae85ebd399087f26c675593d7e01f2bfde10a03e9bfe']
 };
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
