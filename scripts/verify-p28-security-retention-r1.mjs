@@ -39,7 +39,7 @@ for (const [label, html, facts] of [['EN', enHtml, [HEADING, EN_SCOPE, EN_EVIDEN
   check(!html.includes('ваши данные не используются для обучения AI-моделей'), `${label}: unconfirmed RU model-training claim omitted`);
 }
 const expected = {
-  '/security': { fingerprint:'sha256:57b1b205931ee48921b2023b1add0a0088bd0e459c8e4f4e1aecc92eeb3ad2a9', lastmod:'2026-10-03' },
+  '/security': { fingerprint:'sha256:dd99b4245ad155b3db9d627696ff2260506271b6ca55bae48ffccf82ea25b717', lastmod:'2026-10-04' },
   '/ru/security': { fingerprint:'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', lastmod:'2026-10-03' }
 };
 for (const [path, value] of Object.entries(expected)) {
