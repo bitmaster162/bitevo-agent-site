@@ -2,7 +2,7 @@ name: Public Uptime Monitor
 
 on:
   schedule:
-    - cron: '17,47 * * * *'
+    - cron: '4,9,14,19,24,29,34,39,44,49,54,59 * * * *'
   workflow_dispatch:
     inputs:
       confirm:
@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: bitevo-public-uptime-monitor
@@ -31,9 +32,33 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Resolve 30-minute monitor slot
+        id: slot
+        if: github.event_name == 'schedule'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/public-monitor-slot-gate.mjs
+
       - name: GET public endpoints and alert on failure or explicit test
+        if: github.event_name != 'schedule' || steps.slot.outputs.should_run == 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PUBLIC_MONITOR_TEST_CONFIRM: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm || '' }}
         run: node scripts/monitor-public-endpoints.mjs
+
+      - name: Write completed slot marker
+        if: always() && github.event_name == 'schedule' && steps.slot.outputs.should_run == 'true'
+        shell: bash
+        run: |
+          mkdir -p .public-monitor-slot
+          printf '%s\n' "${{ steps.slot.outputs.slot_key }}" > .public-monitor-slot/slot.txt
+
+      - name: Persist completed slot marker
+        if: always() && github.event_name == 'schedule' && steps.slot.outputs.should_run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.slot.outputs.slot_key }}
+          path: .public-monitor-slot/slot.txt
+          retention-days: 1
+          if-no-files-found: error
