@@ -1,12 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import generated from '../../generated/research-notes.json';
+import RuLayout from '../../../layouts/RuLayout.astro';
+import generated from '../../../generated/research-notes.json';
 
-const modules = import.meta.glob('../../content/research-notes/*.md', { eager: true });
+const modules = import.meta.glob('../../../content/research-notes/*.md', { eager: true });
 
 export function getStaticPaths() {
   return generated.notes
-    .filter((note) => note.lang === 'en')
+    .filter((note) => note.lang === 'ru')
     .map((note) => ({ params: { slug: note.slug }, props: { note } }));
 }
 
@@ -22,51 +22,41 @@ const article = {
   description: note.description,
   datePublished: note.reviewed,
   dateModified: note.reviewed,
-  inLanguage: 'en',
+  inLanguage: 'ru',
   mainEntityOfPage: origin + note.path,
   publisher: { '@id': origin + '/#organization' }
 };
-const breadcrumb = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Research Library', item: origin + '/guides' },
-    { '@type': 'ListItem', position: 2, name: note.title, item: origin + note.path }
-  ]
-};
 ---
 
-<Layout
+<RuLayout
   title={note.seo_title}
   description={note.description}
-  lang="en"
-  canonical={note.path}
-  alternates={{ en: note.path, ru: note.alternate }}
-  ogType="article"
+  enPath={note.alternate}
+  ruPath={note.path}
 >
-  <script type="application/ld+json" set:html={JSON.stringify([article, breadcrumb])}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(article)}></script>
   <article class="research-note section">
     <div class="container research-shell panel">
-      <div class="review-meta" aria-label="Research review dates">
-        <span>Reviewed <strong>{note.reviewed}</strong></span>
-        <span>Next review <strong>{note.next_review}</strong></span>
+      <div class="review-meta" aria-label="Даты проверки заметки">
+        <span>Проверено <strong>{note.reviewed}</strong></span>
+        <span>Следующая проверка <strong>{note.next_review}</strong></span>
       </div>
       <div class="research-content"><Content /></div>
     </div>
   </article>
-</Layout>
+</RuLayout>
 
 <style>
-  .research-note{padding-top:clamp(72px,9vw,118px)}
+  .research-note{padding-top:clamp(64px,8vw,108px)}
   .research-shell{max-width:900px;padding:clamp(28px,5vw,54px)}
   .review-meta{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--line);color:var(--muted);font:500 .62rem/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase}
   .review-meta strong{color:var(--ink-soft);font-weight:650}
-  .research-content :global(>p:first-child){margin:0 0 12px;color:var(--gold);font:650 .68rem/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase}
+  .research-content :global(>p:first-child){margin:0 0 12px;color:var(--gold);font:650 .68rem/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase}
   .research-content :global(h1){margin:0 0 24px;font-size:clamp(2.4rem,6vw,5rem);line-height:1.02;letter-spacing:-.055em}
   .research-content :global(h2){margin:48px 0 16px;font-size:clamp(1.55rem,3vw,2.25rem);letter-spacing:-.035em}
   .research-content :global(h3){margin:30px 0 10px;padding-top:22px;border-top:1px solid var(--line);font-size:1.08rem}
   .research-content :global(p){color:var(--muted);line-height:1.78}
   .research-content :global(strong){color:var(--ink)}
   .research-content :global(a){color:var(--green);text-decoration:underline;text-decoration-color:rgba(127,208,177,.34);text-underline-offset:3px}
-  @media(max-width:620px){.research-shell{padding:24px 18px}.review-meta{gap:10px 18px}.research-content :global(h1){font-size:2.4rem}}
+  @media(max-width:620px){.research-shell{padding:24px 18px}.review-meta{gap:10px 18px}.research-content :global(h1){font-size:2.35rem}}
 </style>

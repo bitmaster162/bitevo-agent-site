@@ -112,14 +112,18 @@ async function update() {
   const date = String(process.env.SITEMAP_CURRENTNESS_DATE || new Date().toISOString().slice(0, 10));
   if (!validDate(date)) throw new Error(`invalid SITEMAP_CURRENTNESS_DATE: ${date}`);
   const existing = await readJson(manifestPath, { schema, normalization, routes: [] });
+  const registry = await readJson(registryPath);
+  const routeByPath = new Map(registry.routes.map(route => [route.path, route]));
   const oldByPath = new Map(Array.isArray(existing.routes) ? existing.routes.map(row => [row.path, row]) : []);
   const rows = await currentRows();
   let changed = 0;
   const nextRoutes = rows.map(row => {
     const old = oldByPath.get(row.path);
     const stable = old && old.fingerprint === row.fingerprint && validDate(old.lastmod);
+    const route = routeByPath.get(row.path);
+    const generatedLastmod = route?.generatedBy === 'research-notes' && validDate(route.reviewed) ? route.reviewed : date;
     if (!stable) changed += 1;
-    return { path: row.path, lastmod: stable ? old.lastmod : date, fingerprint: row.fingerprint };
+    return { path: row.path, lastmod: stable ? old.lastmod : generatedLastmod, fingerprint: row.fingerprint };
   });
   const next = { schema, normalization, routes: nextRoutes };
   const serialized = `${JSON.stringify(next, null, 2)}\n`;

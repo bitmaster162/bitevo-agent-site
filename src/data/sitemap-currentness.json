@@ -24,8 +24,8 @@
     },
     {
       "path": "/agent-authority-audit",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:0024fa7d716a78f48ee2c892b8820c7dd6a2955d8c4c349f4a16b47dfcb7980f"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:cdf886c8089bf407f95b64202a36b3560e659c94d59870ced5e57bd8d98d1d01"
     },
     {
       "path": "/entry-audit",
@@ -114,8 +114,8 @@
     },
     {
       "path": "/diagnostic",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:4f1556dca54c3af8092e0430d825e13c0b73651fdc60c066c61228e3901e1f03"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:f1f486289fda486e3e851e175651c5b35d410d2a36fc5630e0fcdf64ef8a0718"
     },
     {
       "path": "/audit-intake",
@@ -214,8 +214,8 @@
     },
     {
       "path": "/guides",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:a2e6decbcf64b40ee445a7a5156810301cf78882f9fb61602076d51d75ae1db9"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:10ef700f2c70f3bad773147f4e8421878bae26b004460507fa24b03c8f748736"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -294,8 +294,8 @@
     },
     {
       "path": "/ru/agent-authority-audit",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:e0dd767733ad28a3f24fe7ab0811f30b6e4bad7f3ca49a9dc4a5aaa005e8fad8"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:100a245555b9348d9a641ddbe66c91bb0e4305131d95a88ef1b8b2bdb45a5b36"
     },
     {
       "path": "/ru/mapper",
@@ -309,8 +309,8 @@
     },
     {
       "path": "/ru/diagnostic",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:eaacd8b9818ff9afbc3b6aef7cafaa825da39d93f3aa929966e45bdc5707c2bd"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:ddc94d00f5d0b8d33b7e96da5e822ce3166d51e20a83df689b674f94c51a0358"
     },
     {
       "path": "/ru/audit-intake",
@@ -359,8 +359,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:3fd0e9f32f7623d4781dec4084497db8f57d0f683b42961f8fe95a0196ddca55"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:69c64acb0993bb0ee2caad9a6007af3de3001e35cc5e3644544113eb71a81418"
     },
     {
       "path": "/ru/doctrine",
@@ -374,8 +374,8 @@
     },
     {
       "path": "/ru/universe",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:33e15c72601b41acb38301772e176f8d3d7520a00eeb34097b65d07aaddb2c6c"
+      "lastmod": "2026-10-04",
+      "fingerprint": "sha256:e69846624cfd3e0a30ed15a044e76ed73ec79773f8f0c2985e1504f91d91c4d8"
     },
     {
       "path": "/ru/vision",
@@ -551,6 +551,16 @@
       "path": "/ru/regulated-service-action-validation",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:88929c9a3a74bc9b9dca747e6531b28b705a0d6f33318251cecdd262192fb26c"
+    },
+    {
+      "path": "/guides/before-write-access",
+      "lastmod": "2026-10-01",
+      "fingerprint": "sha256:473bdedb92082318fb4f8cc3d0249877ee3d9c8a017b10ca39863506526653eb"
+    },
+    {
+      "path": "/ru/guides/before-write-access",
+      "lastmod": "2026-10-01",
+      "fingerprint": "sha256:5320d90031411630d478bfb9a3930961d73e91f2caf6cd05b4a198bcd3880639"
     }
   ]
 }

@@ -5,6 +5,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const vercelConfig = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
 const buildMeta = JSON.parse(await readFile(new URL('../src/generated/build-meta.json', import.meta.url), 'utf8'));
 const allowlist = JSON.parse(await readFile(new URL('./csp-inline-allowlist.json', import.meta.url), 'utf8'));
+const researchNotes = JSON.parse(await readFile(new URL('../src/generated/research-notes.json', import.meta.url), 'utf8'));
 const failures = [];
 let securityHeaderChecks = 0;
 let cspChecks = 0;
@@ -93,8 +94,15 @@ const redirects = Array.isArray(vercelConfig.redirects) ? vercelConfig.redirects
 const exactRedirect = (source, destination) => redirects.some(item => item?.source === source && item?.destination === destination && item?.permanent === true);
 routingChecks += 1; if (!exactRedirect('/guides/ai-agent-reliability-audit', '/agent-authority-audit')) failures.push('vercel.json: missing permanent EN reliability redirect declaration');
 routingChecks += 1; if (!exactRedirect('/ru/guides/ai-agent-reliability-audit', '/ru/agent-authority-audit')) failures.push('vercel.json: missing permanent RU reliability redirect declaration');
+const reviewedGuideSlugs = [...new Set([
+  'security-sandboxing',
+  'fleet-coordinator-drift-monitoring',
+  'd3-tool-io-bridge-contract',
+  ...(researchNotes.notes || []).filter(note => note.lang === 'en').map(note => note.slug)
+])].sort();
+const expectedGuideFallback = `/guides/:slug((?!${reviewedGuideSlugs.join('|')}).*)`;
 routingChecks += 1;
-if (!redirects.some(item => item?.source === '/guides/:slug((?!security-sandboxing|fleet-coordinator-drift-monitoring|d3-tool-io-bridge-contract).*)' && item?.destination === '/guides' && item?.permanent === true)) failures.push('vercel.json: generic non-reviewed guide fallback must be permanent (308)');
+if (!redirects.some(item => item?.source === expectedGuideFallback && item?.destination === '/guides' && item?.permanent === true)) failures.push(`vercel.json: generic non-reviewed guide fallback must be exact and permanent (308): ${expectedGuideFallback}`);
 
 if (failures.length) { console.error('VERCEL_POLICY_GATE=FAIL'); for (const failure of failures) console.error(failure); process.exit(1); }
 console.log(`VERCEL_POLICY_GATE=PASS security_header_checks=${securityHeaderChecks} csp_checks=${cspChecks} hash_checks=${hashChecks} provenance_checks=${provenanceChecks} cache_checks=${cacheChecks} external_font_domain_checks=${externalFontDomainChecks} routing_checks=${routingChecks} deployment_checks=${deploymentChecks} cron_checks=${cronChecks} failures=0`);

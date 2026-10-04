@@ -1,26 +1,40 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import generated from '../../generated/research-notes.json';
 
 const published = [
   {
+    number: '01',
     type: 'Security',
     title: 'Security Sandboxing',
     href: '/guides/security-sandboxing',
     text: 'Public-safe note on isolation boundaries and tool-execution controls without private infrastructure disclosure.'
   },
   {
+    number: '02',
     type: 'Operations',
     title: 'Fleet Coordinator Drift Monitoring',
     href: '/guides/fleet-coordinator-drift-monitoring',
     text: 'Public-safe architecture note focused on drift concepts rather than live internal telemetry.'
   },
   {
+    number: '03',
     type: 'Contract',
     title: 'Tool-I/O Bridge Contract',
     href: '/guides/d3-tool-io-bridge-contract',
     text: 'Public-safe interface contract that excludes private operator-control routes and internal endpoints.'
-  }
-];
+  },
+  ...generated.notes.filter((note) => note.lang === 'en').map((note) => {
+    const [title, ...summary] = note.card_text.split(' — ');
+    return {
+      number: note.card_number,
+      type: note.card_type,
+      title,
+      href: note.path,
+      text: summary.join(' — ') || note.description
+    };
+  })
+].sort((a,b) => a.number.localeCompare(b.number));
 ---
 
 <Layout title="BitEvo Research Library — Reviewed Public Notes" description="Reviewed public BitEvo research on AI-agent authority, sandboxing, drift monitoring and tool-I/O contracts, kept separate from customer proof.">
@@ -40,9 +54,9 @@ const published = [
 
   <section class="section section-rule">
     <div class="container notes-grid">
-      {published.map((note, i) => (
+      {published.map((note) => (
         <a class="note-card panel" href={note.href}>
-          <div class="note-top"><span>{String(i + 1).padStart(2, '0')}</span><small>{note.type}</small></div>
+          <div class="note-top"><span>{note.number}</span><small>{note.type}</small></div>
           <div><h2>{note.title}</h2><p>{note.text}</p></div>
           <div class="open">Read reviewed note <span aria-hidden="true">↗</span></div>
         </a>
