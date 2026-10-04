@@ -48,14 +48,14 @@ check(RU_AUDIT.includes('staging или test') && RU_AUDIT.includes('а не м�
 const expectedCurrentness = {
   '/': { fingerprint: 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429', lastmod: '2026-10-03' },
   '/ru': { fingerprint: 'sha256:48a4a25f70906aee63f9583786b41a49f883bcd12a36866e38cf51193ec1aaa8', lastmod: '2026-10-03' },
-  '/agent-authority-audit': { fingerprint: 'sha256:0024fa7d716a78f48ee2c892b8820c7dd6a2955d8c4c349f4a16b47dfcb7980f', lastmod: '2026-10-03' },
-  '/ru/agent-authority-audit': { fingerprint: 'sha256:e0dd767733ad28a3f24fe7ab0811f30b6e4bad7f3ca49a9dc4a5aaa005e8fad8', lastmod: '2026-10-03' }
+  '/agent-authority-audit': { fingerprint: 'sha256:cdf886c8089bf407f95b64202a36b3560e659c94d59870ced5e57bd8d98d1d01', lastmod: '2026-10-04' },
+  '/ru/agent-authority-audit': { fingerprint: 'sha256:100a245555b9348d9a641ddbe66c91bb0e4305131d95a88ef1b8b2bdb45a5b36', lastmod: '2026-10-04' }
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.fingerprint === expected.fingerprint && row?.lastmod === expected.lastmod, 'currentness exact for ' + route);
 }
-equal(currentness.routes.length, 110, 'currentness route count remains 110');
+equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-definition-r1.mjs'), 'P28.1 verifier is wired into verify:core');
 
 console.log('P28_DEFINITION_R1_GATE=PASS checks=' + checks + ' locales=2 pages=4 definition_first=PASS static_html=PASS js_required=0');

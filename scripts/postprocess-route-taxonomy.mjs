@@ -23,6 +23,11 @@ for (const [heading, categories] of groupSpec) {
     const suffix = route.path === '/start' ? ' — commercial front door' : route.category === 'ENTRY' ? ' — canonical paid entry' : '';
     hierarchy.push(`- ${route.path}${suffix}`);
   }
+  if (heading === 'Research') {
+    for (const route of registry.routes.filter(item => item.indexable && item.locale === 'ru' && item.category === 'RESEARCH' && item.generatedBy === 'research-notes')) {
+      hierarchy.push(`- ${route.path}`);
+    }
+  }
 }
 
 const llmsPath = join(dist, 'llms.txt');

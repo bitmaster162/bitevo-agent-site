@@ -72,7 +72,7 @@ equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 's
 equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:57b1b205931ee48921b2023b1add0a0088bd0e459c8e4f4e1aecc92eeb3ad2a9', '/security currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:586bdae1520076200a2cdbbd6e2ca1faa08076e6db4f011ebda06b51f3bd6bcd', '/ru/pricing currentness exact');
 equal(currentness.routes.find(item => item.path === '/ru/security')?.fingerprint, 'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', '/ru/security currentness exact');
-equal(currentness.routes.length, 110, 'currentness route count remains 110');
+equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');
 
 console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2_q3=OMITTED prices=UNCHANGED free_cta=P29_1 paid_ctas=UNCHANGED currentness_rebased=P27_6`);

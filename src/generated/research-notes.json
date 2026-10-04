@@ -1,0 +1,60 @@
+{
+  "schema": "bitevo.research-notes/v1",
+  "generatedBy": "research-notes",
+  "notes": [
+    {
+      "source": "src/content/research-notes/before-write-access.en.md",
+      "filename": "before-write-access.en.md",
+      "slug": "before-write-access",
+      "path": "/guides/before-write-access",
+      "alternate": "/ru/guides/before-write-access",
+      "lang": "en",
+      "card": "04 · Method · Before an AI agent gets write access — Seven questions to answer with evidence before an agent can change records, money or code.",
+      "card_number": "04",
+      "card_type": "Method",
+      "card_text": "Before an AI agent gets write access — Seven questions to answer with evidence before an agent can change records, money or code.",
+      "title": "Before an AI agent gets write access: seven checks",
+      "seo_title": "Before an AI agent gets write access: 7 checks | BitEvo",
+      "description": "Seven questions to answer with evidence before an AI agent can change CRM records, tickets, payments, code or data — each with a public incident.",
+      "reviewed": "2026-10-01",
+      "next_review": "2027-01-01",
+      "related": [
+        "/agent-authority-audit",
+        "/diagnostic",
+        "/doctrine"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "БИБЛИОТЕКА-ИНЦИДЕНТОВ-N2 (12 cases, verified 01.10.2026); BitEvo doctrine; R057 TL;DR"
+    },
+    {
+      "source": "src/content/research-notes/before-write-access.ru.md",
+      "filename": "before-write-access.ru.md",
+      "slug": "before-write-access",
+      "path": "/ru/guides/before-write-access",
+      "alternate": "/guides/before-write-access",
+      "lang": "ru",
+      "card": "04 · Метод · Перед тем как дать AI-агенту право записи — семь вопросов, на которые нужно ответить доказательствами, прежде чем агент сможет менять записи, деньги или код.",
+      "card_number": "04",
+      "card_type": "Метод",
+      "card_text": "Перед тем как дать AI-агенту право записи — семь вопросов, на которые нужно ответить доказательствами, прежде чем агент сможет менять записи, деньги или код.",
+      "title": "Перед тем как дать AI-агенту право записи: семь проверок",
+      "seo_title": "Право записи для AI-агента: семь проверок | BitEvo",
+      "description": "Семь вопросов, на которые нужно ответить доказательствами, прежде чем AI-агент сможет менять записи в CRM, тикеты, платежи, код или данные, — с публичным случаем для каждого.",
+      "reviewed": "2026-10-01",
+      "next_review": "2027-01-01",
+      "related": [
+        "/ru/agent-authority-audit",
+        "/ru/diagnostic",
+        "/ru/doctrine"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "БИБЛИОТЕКА-ИНЦИДЕНТОВ-N2 (12 случаев, сверено 01.10.2026); доктрина BitEvo; R057 TL;DR"
+    }
+  ]
+}

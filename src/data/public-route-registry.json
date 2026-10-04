@@ -844,6 +844,24 @@
       "locale": "en",
       "parent": "/start",
       "state": "experimental"
+    },
+    {
+      "path": "/guides/before-write-access",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-01"
+    },
+    {
+      "path": "/ru/guides/before-write-access",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-01"
     }
   ],
   "redirects": [

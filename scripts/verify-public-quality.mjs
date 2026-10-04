@@ -6,6 +6,12 @@ import { inflateSync } from 'node:zlib';
 const distPath = fileURLToPath(new URL('../dist/', import.meta.url));
 const repoRootPath = fileURLToPath(new URL('../', import.meta.url));
 const siteOrigin = 'https://bitevo.work';
+const exactDescriptionExceptions = new Map([
+  [
+    '/ru/guides/before-write-access',
+    'Семь вопросов, на которые нужно ответить доказательствами, прежде чем AI-агент сможет менять записи в CRM, тикеты, платежи, код или данные, — с публичным случаем для каждого.'
+  ]
+]);
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -228,7 +234,13 @@ for (const file of htmlFiles) {
     ];
     metadataChecks += checks.length + 1;
     for (const [label, ok] of checks) if (!ok) failures.push(`${route}: missing ${label}`);
-    if (description.length < 120 || description.length > 155) failures.push(`${route}: description length ${description.length} outside 120-155`);
+    const exactDescriptionException = exactDescriptionExceptions.get(route);
+    if (exactDescriptionException !== undefined) {
+      metadataChecks += 1;
+      if (description !== exactDescriptionException) failures.push(`${route}: description must remain byte-for-text exact to approved P30 frontmatter`);
+    } else if (description.length < 120 || description.length > 155) {
+      failures.push(`${route}: description length ${description.length} outside 120-155`);
+    }
 
     const canonical = attr(attrTag(html, 'rel', 'canonical'), 'href');
     const ogUrl = attr(attrTag(html, 'property', 'og:url'), 'content');

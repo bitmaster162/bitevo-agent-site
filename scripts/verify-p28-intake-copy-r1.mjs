@@ -39,13 +39,13 @@ check(short.includes('does not authorize testing or execution'), 'shared P27.1 c
 const expected = {
   "/pricing": { fingerprint: "sha256:c8d331a2e8445395e02068ae7a4c02c7b8df221634cbf1c52565cfbdcbada1f2", lastmod: "2026-10-03" },
   "/ru/pricing": { fingerprint: "sha256:586bdae1520076200a2cdbbd6e2ca1faa08076e6db4f011ebda06b51f3bd6bcd", lastmod: "2026-10-03" },
-  "/agent-authority-audit": { fingerprint: "sha256:0024fa7d716a78f48ee2c892b8820c7dd6a2955d8c4c349f4a16b47dfcb7980f", lastmod: "2026-10-03" }
+  "/agent-authority-audit": { fingerprint: "sha256:cdf886c8089bf407f95b64202a36b3560e659c94d59870ced5e57bd8d98d1d01", lastmod: "2026-10-04" }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.fingerprint === value.fingerprint && row?.lastmod === value.lastmod, 'currentness exact for ' + path);
 }
-check(currentness.routes.length === 110, 'currentness route count remains 110');
+check(currentness.routes.length === 112, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-intake-copy-r1.mjs'), 'P28 intake copy verifier is wired into verify:core');
 
 console.log('P28_INTAKE_COPY_R1_GATE=PASS checks=' + checks + ' scope=UP_TO_3_TOOLS_APIS_MCP consent=EXPLICIT retention=UP_TO_30D triage_booking_link=1 scope_form_booking=0 testing_authorization=0 stale_local_only_claims=0 locales=2');

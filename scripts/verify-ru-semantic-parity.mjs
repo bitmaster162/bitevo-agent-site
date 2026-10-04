@@ -40,9 +40,10 @@ checks += 2;
 if (registry.schema !== 'bitevo.public-route-registry/v1') failures.push(`unexpected registry schema: ${registry.schema}`);
 if (parity.schema !== 'bitevo.ru-semantic-parity/v1') failures.push(`unexpected parity schema: ${parity.schema}`);
 
+const generatedResearchEn = enRoutes.filter(route => route.generatedBy === 'research-notes').length;
 checks += 2;
 if (enRoutes.length !== ruRoutes.length) failures.push(`indexable locale count mismatch: en=${enRoutes.length} ru=${ruRoutes.length}`);
-if (enRoutes.length !== 55) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
+if (enRoutes.length !== 55 + generatedResearchEn) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
 
 const expectedGenerated = new Set();
 const explicitParityReuse = new Set(['/ru/start','/ru/entry-audit']);
@@ -56,7 +57,7 @@ for (const en of enRoutes) {
   }
   if (ru.category !== en.category) failures.push(`${en.path} ↔ ${ruPath}: category drift ${en.category}/${ru.category}`);
 
-  if (!(await exists(explicitSourceFile(ruPath)))) expectedGenerated.add(ruPath);
+  if (ru.generatedBy !== 'research-notes' && !(await exists(explicitSourceFile(ruPath)))) expectedGenerated.add(ruPath);
 
   let enHtml = '';
   let ruHtml = '';

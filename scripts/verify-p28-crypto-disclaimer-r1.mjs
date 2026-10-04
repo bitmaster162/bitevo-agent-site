@@ -25,7 +25,7 @@ for (const [route, file, disclaimer] of routes) {
 }
 const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
 const expected = {
-  '/ru/universe':['2026-10-03','sha256:33e15c72601b41acb38301772e176f8d3d7520a00eeb34097b65d07aaddb2c6c'],
+  '/ru/universe':['2026-10-04','sha256:e69846624cfd3e0a30ed15a044e76ed73ec79773f8f0c2985e1504f91d91c4d8'],
   '/ru/vision':['2026-10-03','sha256:e96019902180e4eae6f575139339c2413c4defa94643338d045ec75eef553f65'],
   '/universe':['2026-10-03','sha256:39e2c007daa9fe06be416065dae9d9ded03ac40b379289daa94e23c2da8b75cb'],
   '/vision':['2026-10-03','sha256:39199aea253e86816c8d8f5e9f1f156dd2d7b8489a30271238c81d57e1eeb188']
@@ -34,7 +34,7 @@ for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.lastmod === lastmod && row?.fingerprint === fingerprint, `${route}: exact currentness`);
 }
-equal(currentness.routes.length, 110, 'currentness route count remains 110');
+equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-crypto-disclaimer-r1.mjs'), 'P28.7A verifier is wired into verify:core');
 console.log(`P28_CRYPTO_DISCLAIMER_R1_GATE=PASS checks=${checks} routes=4 static_html=PASS js_required=0`);

@@ -87,7 +87,10 @@
     "yVv4vY1VsxS4Pj3Wz8pW7g2oGr0Ngz7gPb7NIyY+xRI=",
     "yhzomOw3aC8/hk6AsXgKaolK8Ah3VHD0bEMShuYQLzQ=",
     "zBII+rDOlVVaoentX+bx3q9C+Lz2rOXAI9PKW318qxE=",
-    "zv1z3czbyvOLaGOF4w4xVLKpOceV2hcrLLBRQlAwMJc="
+    "zv1z3czbyvOLaGOF4w4xVLKpOceV2hcrLLBRQlAwMJc=",
+    "1ByaKSE26AWukXGd+pDTgPP1YEvWDdE1VbyL77tmMRQ=",
+    "EI+n19aNoWrzpc5TB3O/F/Btwxyo+4Hufs+zFkVlhrk=",
+    "QFQQQMK/q02qGx8G79C8oIMW0kXgjxS4uCByMaFwuEg="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -121,7 +124,6 @@
     "Vg6vrWzbl52s1mK4xX1gImoSkR063z0z+ZN6LiBWEHQ=",
     "ZLHnxgBxZqZ2b7i72McMjHQ5nZl2Zw67ixlfToKFqjM=",
     "bAUeS3KAjEqRLmU30FWi3pSeyy2wg5Jo62AostgBdSk=",
-    "h9UPymzand1Bs/6+kpoTWU73axcRFkC/PdTtOlCsBp0=",
     "iX3OKcg6G5AyxW6tjawaEzE4XMU4bqlWSVIek+w/rCU=",
     "j+dvr0MUt+kTxBBwwNBHf/rXl5Yps9omovPQycPTTDU=",
     "kYoFbSstjCsvY89ptq7/sPzaaYkkOv0n4eCGXsoNbI8=",
@@ -131,7 +133,10 @@
     "pUeC4ZiQjsziwxvVKz3lt0g/AFWLMrZ2XPQ49OhydWE=",
     "sDb7lBPyFoFcd0Kk3RLxtu+EX3VnRf5O7A8odOHrxc0=",
     "wLiliA2Pg7MYZxkFsCmQiOdnEcEMMOFePSig5vDJOI8=",
-    "wdbXYwFhmp2xnqX5Y/8ZjeR4g2K1qhrisUgv9jwhbL8="
+    "wdbXYwFhmp2xnqX5Y/8ZjeR4g2K1qhrisUgv9jwhbL8=",
+    "ojTeqL3hpz2CwBHiPSr8QrtETFFUQ5KHo+qvIFh9KYc=",
+    "Fen3CZj8/p0LD2yqg7urwGVD4eaaOntf6R8VLl5Ojok=",
+    "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8="
   ],
   "reviews": [
     {
@@ -249,6 +254,28 @@
         "F3yU1QSLyhZOIMXnrRPJHqbrKN2e96VFPZmDR+wz7jU=",
         "PoUjUZPO7Y7zlvRHLp4g5Ws4GhYilsTxTlWIGbf86zc=",
         "h7AaBeZR3fp7zFHP4Pe3ULuWTIWNMX1Ie1QIju44lcw="
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_P30_RESEARCH_LIBRARY_PRECOMMIT",
+      "note": "P30 reviewed emitted CSP refresh for two Markdown-generated research-note routes and the updated RU research index. Three new script hashes are inert application/ld+json only; three style hashes are exact Astro-emitted page styles. One stale RU guides index style hash is removed. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, or CSP relaxation is authorized.",
+      "scripts": [
+        "1ByaKSE26AWukXGd+pDTgPP1YEvWDdE1VbyL77tmMRQ=",
+        "EI+n19aNoWrzpc5TB3O/F/Btwxyo+4Hufs+zFkVlhrk=",
+        "QFQQQMK/q02qGx8G79C8oIMW0kXgjxS4uCByMaFwuEg="
+      ],
+      "styles": [
+        "ojTeqL3hpz2CwBHiPSr8QrtETFFUQ5KHo+qvIFh9KYc=",
+        "Fen3CZj8/p0LD2yqg7urwGVD4eaaOntf6R8VLl5Ojok=",
+        "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8="
+      ],
+      "historicalEmittedStyles": [
+        "h9UPymzand1Bs/6+kpoTWU73axcRFkC/PdTtOlCsBp0="
+      ],
+      "routes": [
+        "/guides/before-write-access",
+        "/ru/guides/before-write-access",
+        "/ru/guides"
       ]
     }
   ]
