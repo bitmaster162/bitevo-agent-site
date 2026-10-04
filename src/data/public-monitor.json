@@ -1,6 +1,8 @@
 {
   "schema": "bitevo.public-monitor/v1",
-  "cron": "17,47 * * * *",
+  "cron": "4,9,14,19,24,29,34,39,44,49,54,59 * * * *",
+  "monitorCadenceMinutes": 30,
+  "triggerAttemptsPerWindow": 6,
   "timeoutMs": 15000,
   "targets": [
     {
