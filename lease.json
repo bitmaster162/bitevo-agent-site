@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "7e1febc4-8ba0-4ab5-b24b-898e0267e5c7",
   "nonce": "p29-5b-owner-facts-r1-control-center-20261004-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d8b6619d9d3f96929912151f1c641e6c2b4b1629",
@@ -11,10 +11,12 @@
   "session": "bitevo-p29-5b-owner-facts-r1-20261004",
   "worktree": "c:/users/coins/downloads/bitevo_p29_5b_owner_facts_20261004_01",
   "acquiredAt": "2026-10-04T17:06:11.438Z",
-  "updatedAt": "2026-10-04T17:20:41.925Z",
+  "updatedAt": "2026-10-04T18:01:38.338Z",
   "expiresAt": "2026-10-04T20:30:00.000Z",
   "sealedHead": "7d5eedc018cb5eb73e3f0e7ee76daae84ef09f3e",
   "sealedTree": "95515f6d34e5da0c3bcf91ceced4040e352843b6",
   "featureRef": "refs/heads/agent/p29-5b-owner-facts-r1",
-  "predecessor": "b621870c26e3ae594b5dbcf23daafb1be34d0224"
+  "predecessor": "360030721bffac391cd618198e353844b7a7a701",
+  "releasedAt": "2026-10-04T18:01:38.339Z",
+  "releaseReason": "p29_5b_terminal_production_verified"
 }
