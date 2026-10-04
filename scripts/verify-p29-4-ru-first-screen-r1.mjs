@@ -9,7 +9,7 @@ const sha = value => createHash('sha256').update(value, 'utf8').digest('hex');
 const root = new URL('../', import.meta.url);
 
 const H1 = 'Агент должен заслужить полномочия доказательствами.';
-const LEDE = 'BitEvo проверяет слой действий AI-систем: что процесс может изменить, какие доказательства нужны до действия, как подтверждается внешний результат и что система делает, когда уверенности нет.';
+const LEDE = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
 const P29_2 = 'Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.';
 const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
 const P29_1 = 'Записаться на бесплатный разбор, 20 минут';
@@ -20,7 +20,7 @@ const SIGNALS = [
   ['РЕШЕНИЕ', 'расширить, ограничить, исправить, перепроверить']
 ];
 const COPY_BUNDLE = [H1, LEDE, ...SIGNALS.map(([label, value]) => `${label} — ${value}`)].join('\n');
-equal(sha(COPY_BUNDLE), '6b88673b35e79864c271782ab37dec5c19d1111c17b1602460d8f563d23fe1a8', 'approved P29.4 copy bundle hash');
+equal(sha(COPY_BUNDLE), 'b12d9fbc775d2fb31be7ecb144a0b271bf2ed0d48b0e06f762f339f1ab0b1773', 'approved P29.4 copy bundle hash');
 
 const source = await readFile(new URL('src/pages/ru/index.astro', root), 'utf8');
 const ruLayout = await readFile(new URL('src/layouts/RuLayout.astro', root), 'utf8');
@@ -35,8 +35,8 @@ check(h1Index >= 0, 'RU home H1 preserved');
 const h1End = source.indexOf('</h1>', h1Index);
 const ledeMatch = source.slice(h1End + 5).match(/<p class="lede">([\s\S]*?)<\/p>/);
 check(Boolean(ledeMatch), 'first lede after H1 exists');
-equal(ledeMatch?.[1] || '', LEDE, 'RU home first lede is exact P29.4 copy');
-equal((source.match(/BitEvo проверяет слой действий AI-систем:/g) || []).length, 1, 'P29.4 lede appears once in source');
+equal(ledeMatch?.[1] || '', LEDE, 'RU home first lede is canonical P28.1 definition while P29.4 localization remains');
+equal((source.match(/Аудит полномочий AI-агента \(Agent Authority Audit\) — ограниченная инженерная проверка/g) || []).length, 1, 'canonical P28.1 RU definition appears once in source');
 
 for (const [label, value] of SIGNALS) {
   check(source.includes(`<small>${label}</small><strong>${value}</strong>`), `${label}: exact Russian signal row in source`);
@@ -69,9 +69,9 @@ equal((firstScreen.match(/<a\b/g) || []).length, 2, 'existing two hero CTAs pres
 
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
-equal(row?.lastmod, '2026-10-03', '/ru currentness date exact');
-equal(row?.fingerprint, 'sha256:48a4a25f70906aee63f9583786b41a49f883bcd12a36866e38cf51193ec1aaa8', '/ru currentness fingerprint exact');
+equal(row?.lastmod, '2026-10-04', '/ru currentness date exact');
+equal(row?.fingerprint, 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436', '/ru currentness fingerprint exact');
 equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');
 
-console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=6b88673b35e79864c271782ab37dec5c19d1111c17b1602460d8f563d23fe1a8 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);
+console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=b12d9fbc775d2fb31be7ecb144a0b271bf2ed0d48b0e06f762f339f1ab0b1773 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);
