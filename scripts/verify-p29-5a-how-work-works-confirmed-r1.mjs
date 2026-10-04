@@ -39,8 +39,6 @@ check(pricing.includes("import HowWorkWorksConfirmed from '../components/HowWork
 check(security.includes("import HowWorkWorksConfirmed from '../components/HowWorkWorksConfirmed.astro';") && security.includes('<HowWorkWorksConfirmed />'), '/security uses shared confirmed component');
 
 for (const banned of [
-  'How do you get access?',
-  'Do you sign an NDA?',
   'Which stacks do you work with?',
   'test accounts',
   'staging endpoint',
@@ -66,14 +64,14 @@ check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b
 for (const path of ['/pricing', '/security']) {
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ' currentness row exists');
-  equal(row?.lastmod, '2026-10-03', path + ' currentness date exact');
+  equal(row?.lastmod, '2026-10-04', path + ' currentness date exact');
 }
-equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:c8d331a2e8445395e02068ae7a4c02c7b8df221634cbf1c52565cfbdcbada1f2', '/pricing currentness fingerprint exact');
-equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:57b1b205931ee48921b2023b1add0a0088bd0e459c8e4f4e1aecc92eeb3ad2a9', '/security currentness fingerprint exact');
+equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:e992e70a98980de3247276d21da17f68c9d69791cf92f01ef0b4cfe2fb6e36ef', '/pricing currentness fingerprint exact');
+equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:dd99b4245ad155b3db9d627696ff2260506271b6ca55bae48ffccf82ea25b717', '/security currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:586bdae1520076200a2cdbbd6e2ca1faa08076e6db4f011ebda06b51f3bd6bcd', '/ru/pricing currentness exact');
 equal(currentness.routes.find(item => item.path === '/ru/security')?.fingerprint, 'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', '/ru/security currentness exact');
 equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');
 
-console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2_q3=OMITTED prices=UNCHANGED free_cta=P29_1 paid_ctas=UNCHANGED currentness_rebased=P27_6`);
+console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2=DELEGATED_P29_5B q3=OMITTED prices=UNCHANGED free_cta=P29_1 paid_ctas=UNCHANGED currentness_rebased=P27_6`);
 // P29.5A Cloudflare CI retrigger marker; no verification behavior change.

@@ -84,7 +84,7 @@ const packageJson = JSON.parse(await read('package.json'));
 const expected = {
   '/': ['2026-10-03', 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429'],
   '/ru': ['2026-10-04', 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436'],
-  '/pricing': ['2026-10-03', 'sha256:c8d331a2e8445395e02068ae7a4c02c7b8df221634cbf1c52565cfbdcbada1f2'],
+  '/pricing': ['2026-10-04', 'sha256:e992e70a98980de3247276d21da17f68c9d69791cf92f01ef0b4cfe2fb6e36ef'],
   '/entry-audit': ['2026-10-03', 'sha256:5f57214e401a52d73a03ae85ebd399087f26c675593d7e01f2bfde10a03e9bfe']
 };
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
