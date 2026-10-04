@@ -71,6 +71,8 @@ check(runtime.includes('TELEGRAM_ALERT=PASS'), 'runtime emits Telegram success r
 check(!runtime.includes('/api/scope-handoff') && !runtime.includes('/audit-intake') && !runtime.includes('scope-handoff'), 'runtime contains no form submission route');
 check(!runtime.includes('console.log(botToken)') && !runtime.includes('console.error(botToken)'), 'runtime never logs bot token variable');
 
+check(slotGate.includes("import { pathToFileURL } from 'node:url';"), 'slot gate uses cross-platform file URL entrypoint detection');
+check(slotGate.includes('import.meta.url === pathToFileURL(process.argv[1]).href'), 'slot gate direct-run detection is provider-portable');
 check(slotGate.includes('const SLOT_MINUTES = 30'), 'slot gate is fixed to 30-minute monitoring windows');
 check(slotGate.includes('/actions/artifacts?per_page=100'), 'slot gate reads only GitHub Actions artifact metadata');
 check(slotGate.includes("state = 'FAIL_OPEN'"), 'slot gate fails open on metadata-read failure');

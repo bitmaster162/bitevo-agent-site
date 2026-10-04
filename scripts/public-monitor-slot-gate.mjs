@@ -1,4 +1,5 @@
 import { appendFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 
 const SLOT_MINUTES = 30;
 const SLOT_MS = SLOT_MINUTES * 60 * 1000;
@@ -81,7 +82,7 @@ async function main() {
   return 0;
 }
 
-if (import.meta.url === `file:///${process.argv[1]?.replaceAll('\\', '/')}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.exit(await main());
 }
 
