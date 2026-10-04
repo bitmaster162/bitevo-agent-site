@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "76ca8037-bdbb-4610-b4c3-5770c7a30720",
   "nonce": "p277-scheduler-resilience-linux-repair-control-center-20261004-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "7657804d0b9a8b2f507eb37ed5362ec407d60c5b",
@@ -11,10 +11,10 @@
   "session": "bitevo-p27-7-scheduler-resilience-linux-repair-20261004",
   "worktree": "c:/users/coins/downloads/bitevo_p27_7_scheduler_resilience_prep_20261004_01",
   "acquiredAt": "2026-10-04T08:05:37.860Z",
-  "updatedAt": "2026-10-04T08:05:37.860Z",
+  "updatedAt": "2026-10-04T08:07:12.487Z",
   "expiresAt": "2026-10-04T12:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "5ebb0d527efd287f3d7f14a2b427dff956f1bf1d"
+  "sealedHead": "041e90b080e36cd0d15c7036d150ea7cb4eb3c90",
+  "sealedTree": "170f8fdce10c4f46645748c29054bbac86f4d854",
+  "featureRef": "refs/heads/agent/p27-7-scheduler-resilience-r1",
+  "predecessor": "4d7411737a324485e29f58027a1ec6a3244cb4d9"
 }
