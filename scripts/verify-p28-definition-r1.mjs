@@ -14,7 +14,7 @@ const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'ut
 const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
 
 const EN = 'An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
-const RU = 'BitEvo проверяет слой действий AI-систем: что процесс может изменить, какие доказательства нужны до действия, как подтверждается внешний результат и что система делает, когда уверенности нет.';
+const RU = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
 const RU_AUDIT = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
 
 function firstLedeAfterH1(source) {
@@ -33,7 +33,7 @@ equal(firstLedeAfterH1(audit), EN, 'Agent Authority Audit first text after h1 is
 equal(firstLedeAfterH1(ruAudit), RU_AUDIT, 'RU Agent Authority Audit first text after h1 is approved definition');
 
 equal((home.match(/An Agent Authority Audit is a bounded engineering review/g) || []).length, 1, 'EN homepage definition appears once');
-equal((ruHome.match(/BitEvo проверяет слой действий AI-систем: что процесс может изменить/g) || []).length, 1, 'RU homepage P29.4 lead appears once');
+equal((ruHome.match(/Аудит полномочий AI-агента \(Agent Authority Audit\) — ограниченная инженерная проверка/g) || []).length, 1, 'RU homepage definition appears once');
 equal((audit.match(/An Agent Authority Audit is a bounded engineering review/g) || []).length, 1, 'audit definition appears once');
 equal((ruAudit.match(/Аудит полномочий AI-агента \(Agent Authority Audit\) — ограниченная инженерная проверка/g) || []).length, 1, 'RU audit definition appears once');
 
@@ -42,12 +42,12 @@ check(!ruHome.includes('BitEvo проверяет action layer AI-систем: 
 check(!audit.includes('The audit answers one operational question: does this action-capable workflow have enough evidence'), 'old audit lead removed');
 
 check(EN.includes('staging or test, not the model in isolation.'), 'EN definition preserves staging/test and model-isolation boundary');
-check(RU.includes('какие доказательства нужны до действия') && RU.includes('когда уверенности нет.'), 'RU P29.4 lead preserves evidence-before-action and uncertainty boundary');
+check(RU.includes('в staging или test') && RU.includes('а не модель в отрыве от неё.'), 'RU homepage definition preserves staging/test and model-isolation boundary');
 check(RU_AUDIT.includes('staging или test') && RU_AUDIT.includes('а не модель в отрыве от неё.'), 'RU audit definition preserves staging/test and model-isolation boundary');
 
 const expectedCurrentness = {
   '/': { fingerprint: 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429', lastmod: '2026-10-03' },
-  '/ru': { fingerprint: 'sha256:48a4a25f70906aee63f9583786b41a49f883bcd12a36866e38cf51193ec1aaa8', lastmod: '2026-10-03' },
+  '/ru': { fingerprint: 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436', lastmod: '2026-10-04' },
   '/agent-authority-audit': { fingerprint: 'sha256:cdf886c8089bf407f95b64202a36b3560e659c94d59870ced5e57bd8d98d1d01', lastmod: '2026-10-04' },
   '/ru/agent-authority-audit': { fingerprint: 'sha256:100a245555b9348d9a641ddbe66c91bb0e4305131d95a88ef1b8b2bdb45a5b36', lastmod: '2026-10-04' }
 };
