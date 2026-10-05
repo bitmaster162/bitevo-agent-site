@@ -385,6 +385,13 @@
       "parent": "/"
     },
     {
+      "path": "/glossary",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/doctrine"
+    },
+    {
       "path": "/continuityos",
       "category": "CONTEXT",
       "indexable": true,
@@ -565,6 +572,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru"
+    },
+    {
+      "path": "/ru/glossary",
+      "category": "CONTEXT",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/doctrine"
     },
     {
       "path": "/ru/continuityos",
