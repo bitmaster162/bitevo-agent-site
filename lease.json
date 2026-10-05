@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "041fb3bc-0c51-4ca4-90bd-c37115fa4d78",
   "nonce": "n12-agent-loop-cost-calculator-r1-control-center-20261006-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "09bb4e2bfab9a69f7880d30ea927e67343178c45",
@@ -11,10 +11,10 @@
   "session": "bitevo-n12-agent-loop-cost-calculator-r1-20261006",
   "worktree": "c:/users/coins/downloads/bitevo_n12_loop_cost_calculator_prep_20261005_01",
   "acquiredAt": "2026-10-05T17:35:53.282Z",
-  "updatedAt": "2026-10-05T17:35:53.282Z",
+  "updatedAt": "2026-10-05T17:50:37.488Z",
   "expiresAt": "2026-10-05T21:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "8d1d84632e87c5788f0f2015dc637964ccee90f2"
+  "sealedHead": "1038d8dff4ca05577cb1ac3f1dc23e843019298d",
+  "sealedTree": "1e867e277d0dea5ddaf2c02ecbf57b7d22c2389a",
+  "featureRef": "refs/heads/agent/n12-agent-loop-cost-calculator-r1",
+  "predecessor": "2fcdea2daaf1a18eede570024d19faf066750afd"
 }
