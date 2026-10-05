@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "2b62ea6f-16a9-45d2-bcca-461348c09071",
   "nonce": "f1-1-authority-precheck-r1-control-center-20261005-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "c2f43cfa1f33ea9e22215027fb96ecabfeb236b1",
@@ -11,10 +11,12 @@
   "session": "bitevo-f1-1-authority-precheck-r1-20261005",
   "worktree": "c:/users/coins/downloads/bitevo_f1_1_authority_precheck_prep_20261005_01",
   "acquiredAt": "2026-10-05T10:33:49.317Z",
-  "updatedAt": "2026-10-05T10:46:06.522Z",
+  "updatedAt": "2026-10-05T10:54:06.026Z",
   "expiresAt": "2026-10-05T13:30:00.000Z",
   "sealedHead": "0901b284fef6d66858e8c129e1d4e61591441b5e",
   "sealedTree": "15490b735900e752210b1ece6ea0209e9040ab12",
   "featureRef": "refs/heads/agent/f1-1-authority-precheck-r1",
-  "predecessor": "2b44a07630587fcbca1be2a8e92d7b97e1e6b504"
+  "predecessor": "e612ba4942649b7036bff9877871cdd5eea14ce7",
+  "releasedAt": "2026-10-05T10:54:06.026Z",
+  "releaseReason": "F1_1_SOURCE_ONLY_PRODUCTION_VERIFIED"
 }
