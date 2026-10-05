@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "3f538087-ee91-43d0-8482-57d3408a22c7",
   "nonce": "n9-owasp-skills-acs-r1-control-center-20261005-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "9a8c9903eb1bd545857c60e3e9f46e5b3e6219b4",
@@ -11,10 +11,10 @@
   "session": "bitevo-n9-owasp-skills-acs-r1-20261005",
   "worktree": "c:/users/coins/downloads/bitevo_n9_owasp_skills_acs_prep_20261005_01",
   "acquiredAt": "2026-10-05T14:15:38.123Z",
-  "updatedAt": "2026-10-05T14:15:38.123Z",
+  "updatedAt": "2026-10-05T14:41:42.857Z",
   "expiresAt": "2026-10-05T18:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "04bf18b8746da367d809effbf62605d134693326"
+  "sealedHead": "0543fc1d8af1352311e312bcaade296f3787528c",
+  "sealedTree": "cab8ba51a5b6c6ae580aa818f04aedd1033d7ff8",
+  "featureRef": "refs/heads/agent/n9-owasp-skills-acs-r1",
+  "predecessor": "8893feffc596038139901a753d484d98fe142171"
 }
