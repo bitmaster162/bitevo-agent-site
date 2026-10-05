@@ -29,7 +29,7 @@ const tiers = [
     desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
     includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
     excludes: ['No full Authority Ledger / Evidence Contract', 'No multi-scenario failure plan', 'No included retest'],
-    cta: 'Open Entry Audit', href: '/entry-audit', scopeCta: 'Prepare Entry Audit scope', scopeHref: '/audit-intake?offer=entry-audit'
+    cta: 'Open Entry Audit', href: '/entry-audit', scopeCta: 'Prepare Entry Audit scope', scopeHref: '/audit-intake?offer=entry-audit', sampleCta: 'See sample report', sampleHref: '/sample-audit'
   },
   {
     eyebrow: 'Authority decision', price: '$4,900', cadence: '5 working days after complete evidence/access + written scope', title: 'Agent Authority & Evidence Audit',
@@ -88,6 +88,7 @@ const offerCatalog = {
           <div class="feature-group muted"><strong>Not purchased</strong><ul>{t.excludes.map(item => <li>{item}</li>)}</ul></div>
           <a href={t.href} class:list={['button', (t.featured || t.triage) && 'button-primary']} data-triage-click={t.triage ? 'true' : undefined} data-triage-source={t.triage ? 'pricing-free' : undefined}>{t.cta} <span aria-hidden="true">↗</span></a>
           {t.scopeCta && t.scopeHref && <a href={t.scopeHref} class="text-link">{t.scopeCta} →</a>}
+          {t.sampleCta && t.sampleHref && <a href={t.sampleHref} class="text-link">{t.sampleCta} →</a>}
           {t.detailCta && t.detailHref && <a href={t.detailHref} class="text-link">{t.detailCta} →</a>}
         </article>
       ))}
