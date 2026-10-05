@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AgentLoopCostCalculator from '../components/AgentLoopCostCalculator.astro';
+---
+<Layout
+  title="Agent Loop Cost Calculator — BitEvo"
+  description="Local browser calculator for estimating loop burn, detection-window spend and hard-stop budget limits for action-capable AI workflows."
+  alternates={{ en: '/agent-loop-cost-calculator', ru: '/ru/agent-loop-cost-calculator' }}
+>
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">N12 · bounded cost model</div>
+      <h1 class="display">Price the loop before the loop prices itself.</h1>
+      <p class="lede">Use your own cost per attempt, attempt rate, concurrency, detection window and owner-approved loss budget. The result is arithmetic, not a safety verdict.</p>
+    </div>
+  </section>
+  <AgentLoopCostCalculator locale="en" />
+  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Control boundary</div><h2 class="section-title">A budget cap is necessary, not sufficient.</h2><p class="lede">A spend cap can stop monetary burn. It does not replace object binding, evidence-before-effect, external confirmation, retry semantics or recovery controls. Set a separate retry cap and stop condition for the actual workflow.</p><div class="actions"><a class="button button-primary" href="/failure-recovery">Review failure recovery →</a><a class="button" href="/diagnostic">Run the 7-gate diagnostic</a></div></div></section>
+</Layout>

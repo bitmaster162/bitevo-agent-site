@@ -61,15 +61,15 @@ for (const [path,locale,parent] of expectedRoutes) {
   check(/^\d{4}-\d{2}-\d{2}$/.test(String(current?.lastmod || '')), path + ' currentness date valid');
   check(/^sha256:[0-9a-f]{64}$/.test(String(current?.fingerprint || '')), path + ' currentness fingerprint valid');
 }
-equal(registry.routes.filter(row => row.indexable).length, 119, 'indexable route count N11 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 60, 'EN indexable route count N11 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 59, 'RU indexable route count N11 baseline');
-equal(currentness.routes.length, 119, 'currentness route count N11 baseline');
+equal(registry.routes.filter(row => row.indexable).length, 121, 'indexable route count N11 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 61, 'EN indexable route count N11 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 60, 'RU indexable route count N11 baseline');
+equal(currentness.routes.length, 121, 'currentness route count N11 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-n11-procurement-comparison-r1.mjs'), 'N11 verifier wired into verify:core');
 
 console.log(
   'N11_PROCUREMENT_COMPARISON_R1_GATE=PASS checks=' + checks +
-  ' rows=4 routes=2 checked=2026-10-05 indexable=119 en=60 ru=59' +
+  ' rows=4 routes=2 checked=2026-10-05 indexable=121 en=61 ru=60' +
   ' cobalt_public_price=BOUND secureframe_public_price=BOUND mindgard_price=NOT_PUBLIC' +
   ' market_average_claim=0 replacement_claim=0'
 );

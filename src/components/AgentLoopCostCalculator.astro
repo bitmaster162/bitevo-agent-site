@@ -1,0 +1,101 @@
+---
+const { locale = 'en' } = Astro.props;
+const ru = locale === 'ru';
+const t = ru ? {
+  title: 'Сколько может сжечь зациклившийся агент?',
+  intro: 'Введите свои допущения. Калькулятор работает только в браузере, ничего не отправляет и не подставляет рыночные цены или «безопасные» лимиты.',
+  cost: 'Оценочная стоимость одного шага, $',
+  rate: 'Шагов в минуту на одного агента',
+  parallel: 'Параллельных агентов',
+  detection: 'Минут до обнаружения цикла',
+  budget: 'Owner-approved loss budget, $',
+  calculate: 'Посчитать burn и лимиты',
+  reset: 'Сбросить',
+  empty: 'Заполните пять полей, чтобы получить расчёт.',
+  burn: 'Burn в минуту',
+  attempts: 'Шагов до обнаружения',
+  spend: 'Расход до обнаружения',
+  budgetTime: 'Время до исчерпания бюджета',
+  budgetAttempts: 'Шагов до бюджетного cap',
+  proposal: 'Hard-stop proposal из вашего бюджета',
+  spendCap: 'Global spend cap',
+  attemptCap: 'Aggregate attempt cap',
+  runtimeCap: 'Runtime cap при введённой скорости',
+  retry: 'Retry cap на одну задачу',
+  retryText: 'Нужен отдельный owner-defined лимит. Из стоимости его честно вывести нельзя.',
+  boundary: 'Это cost model, а не safety score. Он не учитывает неизвестные внешние эффекты, скрытые тарифы или последствия, которых нет во входных данных.',
+  local: 'LOCAL ONLY · 0 network requests'
+} : {
+  title: 'How much can a looping agent burn?',
+  intro: 'Enter your own assumptions. The calculator runs only in your browser, sends nothing, and does not invent market prices or “safe” limits.',
+  cost: 'Estimated cost per attempt, $',
+  rate: 'Attempts per minute per agent',
+  parallel: 'Parallel agents',
+  detection: 'Minutes until the loop is detected',
+  budget: 'Owner-approved loss budget, $',
+  calculate: 'Calculate burn and limits',
+  reset: 'Reset',
+  empty: 'Fill all five fields to calculate the exposure.',
+  burn: 'Burn per minute',
+  attempts: 'Attempts before detection',
+  spend: 'Spend before detection',
+  budgetTime: 'Time to consume the budget',
+  budgetAttempts: 'Attempts at the budget cap',
+  proposal: 'Hard-stop proposal from your budget',
+  spendCap: 'Global spend cap',
+  attemptCap: 'Aggregate attempt cap',
+  runtimeCap: 'Runtime cap at the entered rate',
+  retry: 'Retry cap per task',
+  retryText: 'Needs a separate owner-defined limit. Cost math cannot infer it honestly.',
+  boundary: 'This is a cost model, not a safety score. It cannot include unknown external effects, hidden pricing, or consequences absent from the inputs.',
+  local: 'LOCAL ONLY · 0 network requests'
+};
+---
+<section class="section-tight section-rule" data-loop-cost-calculator data-locale={locale}>
+  <div class="container calc-grid">
+    <form class="panel calc-form" data-calc-form>
+      <div class="eyebrow">{t.local}</div>
+      <h2>{t.title}</h2>
+      <p>{t.intro}</p>
+      <div class="field-grid">
+        <label><span>{t.cost}</span><input name="cost" inputmode="decimal" type="number" min="0.000001" step="0.000001" placeholder="0.02" required /></label>
+        <label><span>{t.rate}</span><input name="rate" inputmode="decimal" type="number" min="0.000001" step="0.000001" placeholder="60" required /></label>
+        <label><span>{t.parallel}</span><input name="parallel" inputmode="numeric" type="number" min="1" step="1" placeholder="1" required /></label>
+        <label><span>{t.detection}</span><input name="detection" inputmode="decimal" type="number" min="0.000001" step="0.000001" placeholder="30" required /></label>
+        <label><span>{t.budget}</span><input name="budget" inputmode="decimal" type="number" min="0.000001" step="0.000001" placeholder="100" required /></label>
+      </div>
+      <div class="actions">
+        <button class="button button-primary" type="submit">{t.calculate}</button>
+        <button class="button button-ghost" type="reset">{t.reset}</button>
+      </div>
+    </form>
+
+    <aside class="panel calc-result" aria-live="polite">
+      <div data-calc-empty>{t.empty}</div>
+      <div data-calc-output hidden>
+        <div class="metric-grid">
+          <article><small>{t.burn}</small><strong data-burn></strong></article>
+          <article><small>{t.attempts}</small><strong data-attempts></strong></article>
+          <article><small>{t.spend}</small><strong data-spend></strong></article>
+          <article><small>{t.budgetTime}</small><strong data-budget-time></strong></article>
+          <article><small>{t.budgetAttempts}</small><strong data-budget-attempts></strong></article>
+        </div>
+        <p class="verdict" data-verdict></p>
+        <section class="limits">
+          <div class="eyebrow">{t.proposal}</div>
+          <dl>
+            <div><dt>{t.spendCap}</dt><dd data-limit-spend></dd></div>
+            <div><dt>{t.attemptCap}</dt><dd data-limit-attempts></dd></div>
+            <div><dt>{t.runtimeCap}</dt><dd data-limit-runtime></dd></div>
+            <div><dt>{t.retry}</dt><dd>{t.retryText}</dd></div>
+          </dl>
+        </section>
+        <p class="boundary">{t.boundary}</p>
+      </div>
+    </aside>
+  </div>
+</section>
+<script src="/agent-loop-cost-calculator.js" defer></script>
+<style is:inline>
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.calc-form,.calc-result{padding:28px}.calc-form h2{margin:7px 0 10px;font-size:1.5rem}.calc-form>p,.boundary,.verdict{color:var(--muted)}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}.field-grid label{display:flex;flex-direction:column;gap:7px}.field-grid label:last-child{grid-column:1/-1}.field-grid span{font:600 .58rem var(--mono);color:var(--ink-soft)}.field-grid input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#050b0db8;color:var(--ink);font:600 .9rem var(--mono)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}.calc-result{min-height:460px}.calc-result>[data-calc-empty]{min-height:400px;display:grid;place-items:center;text-align:center;color:var(--muted)}.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric-grid article{padding:18px;border:1px solid var(--line);border-radius:12px}.metric-grid small{display:block;color:var(--muted);font:600 .54rem var(--mono);text-transform:uppercase}.metric-grid strong{display:block;margin-top:8px;font-size:1.2rem}.verdict{padding:18px 0;margin:18px 0;border-block:1px solid var(--line)}.limits dl{margin:12px 0 0}.limits dl>div{display:grid;grid-template-columns:180px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}.limits dt{color:var(--muted);font:600 .56rem var(--mono);text-transform:uppercase}.limits dd{margin:0}.boundary{margin:18px 0 0;font-size:.76rem}@media(max-width:860px){.calc-grid{grid-template-columns:1fr}.calc-result{min-height:0}.calc-result>[data-calc-empty]{min-height:220px}}@media(max-width:620px){.field-grid,.metric-grid{grid-template-columns:1fr}.field-grid label:last-child{grid-column:auto}.limits dl>div{grid-template-columns:1fr}.actions .button{width:100%}}
+</style>

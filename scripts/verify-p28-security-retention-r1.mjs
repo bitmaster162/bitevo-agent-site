@@ -46,6 +46,6 @@ for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 119, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 121, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-security-retention-r1.mjs'), 'P28.5 verifier is wired into verify:core');
 console.log(`P28_SECURITY_RETENTION_R1_GATE=PASS checks=${checks} routes=2 static_html=PASS nda_unconfirmed=OMITTED model_training_unconfirmed=OMITTED js_required=0`);

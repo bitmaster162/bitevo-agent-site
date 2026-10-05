@@ -1,0 +1,20 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+import AgentLoopCostCalculator from '../../components/AgentLoopCostCalculator.astro';
+---
+<RuLayout
+  title="Калькулятор стоимости цикла агента — BitEvo"
+  description="Локальный browser-калькулятор burn, расхода до обнаружения и жёстких бюджетных лимитов для action-capable AI workflows в работе."
+  enPath="/agent-loop-cost-calculator"
+  ruPath="/ru/agent-loop-cost-calculator"
+>
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">N12 · bounded cost model</div>
+      <h1 class="display">Посчитайте цикл до того, как цикл посчитает ваш бюджет.</h1>
+      <p class="lede">Введите собственную стоимость шага, частоту, параллельность, окно до обнаружения и owner-approved loss budget. Результат — арифметика, а не safety verdict.</p>
+    </div>
+  </section>
+  <AgentLoopCostCalculator locale="ru" />
+  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Граница контроля</div><h2 class="section-title">Budget cap необходим, но недостаточен.</h2><p class="lede">Spend cap может остановить денежный burn. Он не заменяет object binding, Evidence Before Effect, external confirmation, retry semantics или recovery controls. Для реального workflow отдельно задайте retry cap и stop condition.</p><div class="actions"><a class="button button-primary" href="/ru/failure-recovery">Проверить failure recovery →</a><a class="button" href="/ru/diagnostic">Диагностика по 7 гейтам</a></div></div></section>
+</RuLayout>
