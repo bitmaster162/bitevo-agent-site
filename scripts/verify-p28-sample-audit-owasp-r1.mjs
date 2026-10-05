@@ -85,7 +85,7 @@ check(jsonSource.includes(authority) && jsonSource.includes(evidence), 'JSON sou
 const row = currentness.routes.find(item => item.path === '/sample-audit');
 check(row?.lastmod === '2026-10-05', 'sample-audit lastmod is 2026-10-05 after N2 footer discovery link');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'sample-audit currentness fingerprint valid');
-equal(currentness.routes.length, 117, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 119, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-sample-audit-owasp-r1.mjs'), 'P28.9 verifier wired into verify:core');
 
 console.log(`P28_SAMPLE_AUDIT_OWASP_R1_GATE=PASS checks=${checks} findings=1 finding_fields=10 owasp=ASI09 download_json=PASS synthetic_boundary=PASS js_required=0`);

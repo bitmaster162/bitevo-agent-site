@@ -91,7 +91,7 @@ for (const path of ['/sample-audit', '/pricing', '/entry-audit']) {
   equal(row?.lastmod, '2026-10-05', path + ' lastmod remains current date');
   check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint || ''), path + ' currentness fingerprint valid');
 }
-equal(currentness.routes.length, 117, 'indexable currentness route count unchanged');
+equal(currentness.routes.length, 119, 'indexable currentness route count unchanged');
 check(packageJson.scripts?.['verify:core']?.includes('verify-f1-3-sample-report-r1.mjs'), 'F1.3 verifier wired into verify:core');
 
 console.log(

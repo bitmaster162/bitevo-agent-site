@@ -92,7 +92,8 @@
     "EI+n19aNoWrzpc5TB3O/F/Btwxyo+4Hufs+zFkVlhrk=",
     "QFQQQMK/q02qGx8G79C8oIMW0kXgjxS4uCByMaFwuEg=",
     "1hz+qY+q50cZAO2+exBc6668JoPM0FdStNuYGYGXI3g=",
-    "RuzUBJTVMtgt1S98x8KSy/yQX+9UcRN0zxW2lq7jAoU="
+    "RuzUBJTVMtgt1S98x8KSy/yQX+9UcRN0zxW2lq7jAoU=",
+    "A4p/3wGO9UX7APQjqHDslskGASj2shtjjhx0w/g7O/4="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -138,9 +139,26 @@
     "wdbXYwFhmp2xnqX5Y/8ZjeR4g2K1qhrisUgv9jwhbL8=",
     "ojTeqL3hpz2CwBHiPSr8QrtETFFUQ5KHo+qvIFh9KYc=",
     "Fen3CZj8/p0LD2yqg7urwGVD4eaaOntf6R8VLl5Ojok=",
-    "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8="
+    "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8=",
+    "qvyZOXzeICnbGoTSDCoQLsKTeeI8OQVtpBptOX/TKPc=",
+    "iRmPnDwWusLHHdpZ4RQZ3SPovA0dPXHHNL+SlFD8bUQ="
   ],
   "reviews": [
+    {
+      "sourceSha": "LOCAL_N11_PRECOMMIT",
+      "note": "N11 adds one explicit EN/RU procurement-comparison route pair. Two new inline style hashes are the exact Astro-emitted page styles; one new script hash is the inert application/ld+json identity payload emitted by RuLayout. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, or new external origin is authorized.",
+      "scripts": [
+        "A4p/3wGO9UX7APQjqHDslskGASj2shtjjhx0w/g7O/4="
+      ],
+      "styles": [
+        "qvyZOXzeICnbGoTSDCoQLsKTeeI8OQVtpBptOX/TKPc=",
+        "iRmPnDwWusLHHdpZ4RQZ3SPovA0dPXHHNL+SlFD8bUQ="
+      ],
+      "routes": [
+        "/entry-audit-vs-pentest-ai-security-grc",
+        "/ru/entry-audit-vs-pentest-ai-security-grc"
+      ]
+    },
     {
       "sourceSha": "LOCAL_N9_PRECOMMIT",
       "note": "N9 adds two explicit RU research routes. Their only new inline script hashes are inert application/ld+json identity payloads emitted by RuLayout; no executable inline JavaScript, inline style attribute, wildcard, unsafe-inline directive, or CSP relaxation is introduced.",

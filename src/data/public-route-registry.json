@@ -44,6 +44,13 @@
       "parent": "/pricing"
     },
     {
+      "path": "/entry-audit-vs-pentest-ai-security-grc",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/entry-audit"
+    },
+    {
       "path": "/control-validation",
       "category": "SPECIALIST",
       "indexable": true,
@@ -586,6 +593,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/pricing"
+    },
+    {
+      "path": "/ru/entry-audit-vs-pentest-ai-security-grc",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/entry-audit"
     },
     {
       "path": "/ru/control-validation",

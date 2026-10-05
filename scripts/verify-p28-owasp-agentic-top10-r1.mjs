@@ -62,9 +62,9 @@ const enRoute = registry.routes.find(row => row.path === '/owasp-agentic-top-10'
 const ruRoute = registry.routes.find(row => row.path === '/ru/owasp-agentic-top-10');
 check(enRoute?.category === 'RESEARCH' && enRoute?.indexable === true && enRoute?.locale === 'en' && enRoute?.parent === '/agent-authority-audit', 'EN registry route exact');
 check(ruRoute?.category === 'RESEARCH' && ruRoute?.indexable === true && ruRoute?.locale === 'ru' && ruRoute?.parent === '/ru/agent-authority-audit', 'RU registry route exact');
-equal(registry.routes.filter(row => row.indexable).length, 117, 'indexable route count is exact N2 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 59, 'EN indexable route count is exact N2 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 58, 'RU indexable route count remains exact');
+equal(registry.routes.filter(row => row.indexable).length, 119, 'indexable route count is exact N2 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 60, 'EN indexable route count is exact N2 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 59, 'RU indexable route count remains exact');
 
 const expectedCurrentness = {
   '/agent-authority-audit': { fingerprint:'sha256:6df48cbb322e67243498d9d2632465d3a132340a645b6a6857d77e682dffea55', lastmod:'2026-10-05' },
@@ -76,7 +76,7 @@ for (const [path,value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 117, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 119, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-owasp-agentic-top10-r1.mjs'), 'P28.6 verifier is wired into verify:core');
 
-console.log(`P28_OWASP_AGENTIC_TOP10_R1_GATE=PASS checks=${checks} rows=10 indexable=117 en=59 ru=58 static_html=PASS source_link=BOUND deferred_precheck=OMITTED deferred_booking=OMITTED js_required=0`);
+console.log(`P28_OWASP_AGENTIC_TOP10_R1_GATE=PASS checks=${checks} rows=10 indexable=119 en=60 ru=59 static_html=PASS source_link=BOUND deferred_precheck=OMITTED deferred_booking=OMITTED js_required=0`);
