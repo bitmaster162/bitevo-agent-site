@@ -33,6 +33,11 @@
       "fingerprint": "sha256:4bb6364cb8edf10326380828228a8fa03ea9920a50fcfa4f3a8f40daf240f5e7"
     },
     {
+      "path": "/entry-audit-vs-pentest-ai-security-grc",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:bf53aea67d0d318bd1f4e2e2dcb81a35ef1dee6273a8561a06372d3299a9b2fb"
+    },
+    {
       "path": "/control-validation",
       "lastmod": "2026-10-05",
       "fingerprint": "sha256:58c597c46ac934349ef3a1b9c502aaed80db7c2e98638ca3cb2bfae44bcef62e"
@@ -390,7 +395,7 @@
     {
       "path": "/ru/universe",
       "lastmod": "2026-10-05",
-      "fingerprint": "sha256:ebfc94a7f59204eef3d0a002282ab2447ae42f4fbbd6404dbf74e0a5c108e62d"
+      "fingerprint": "sha256:18cc720425fc61777a9278e939117b03401498decaa6cf13e36e344937db397a"
     },
     {
       "path": "/ru/vision",
@@ -406,6 +411,11 @@
       "path": "/ru/entry-audit",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:b09de8ea7837612d314192beb646845801983f072e952ccf2f3292d4f1b06a80"
+    },
+    {
+      "path": "/ru/entry-audit-vs-pentest-ai-security-grc",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:9dc26331daf0ac89452947a511739245c254f1e5166bf9b5ca40244a40478fc5"
     },
     {
       "path": "/ru/control-validation",
