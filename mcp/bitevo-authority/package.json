@@ -1,0 +1,28 @@
+{
+  "name": "bitevo-authority-mcp-local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only BitEvo authority diagnostic, hypothesis builder and Pre-Check MCP server.",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "test": "node test/unit.mjs && node test/stdio-smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.3.1"
+  },
+  "bin": {
+    "bitevo-authority": "src/index.mjs"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ]
+}
