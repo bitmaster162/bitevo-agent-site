@@ -33,7 +33,18 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
       </div>
     </section>
 
-    <section class="section section-rule">
+    <section class="section-tight section-rule">
+      <div class="narrow">
+        <div class="eyebrow">Choose a mode</div>
+        <div class="precheck-result-actions" aria-label="Pre-Check mode">
+          <button class="button button-primary" type="button" data-precheck-mode="authority" aria-pressed="true">Authority map</button>
+          <button class="button button-ghost" type="button" data-precheck-mode="config" aria-pressed="false">Instruction / config scan</button>
+        </div>
+        <p class="lede">The instruction/config mode scans pasted text only in this browser. It does not call the Pre-Check API or a model.</p>
+      </div>
+    </section>
+
+    <section class="section section-rule" data-precheck-authority-form-panel>
       <div class="narrow">
         <form class="panel precheck-form-panel" data-precheck-form>
           <label for="precheckInput">Tools, manifest or description (no secrets)</label>
@@ -59,7 +70,33 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
       </div>
     </section>
 
-    <section class="section section-rule precheck-result" data-precheck-result hidden>
+    <section class="section section-rule" data-config-scan-form-panel hidden>
+      <div class="narrow">
+        <form class="panel precheck-form-panel" data-config-scan-form>
+          <label for="configScanInput">SKILL.md, CLAUDE.md, .cursorrules or mcp.json</label>
+          <textarea
+            id="configScanInput"
+            class="precheck-input"
+            data-config-scan-input
+            required
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="Paste instruction or configuration text here..."
+          ></textarea>
+          <div class="precheck-input-meta">
+            <span>Local static pattern scan. Nothing is sent and no model is called.</span>
+            <span data-config-scan-count>0 characters</span>
+          </div>
+          <div class="precheck-form-actions">
+            <button class="button button-primary" type="submit">Scan locally</button>
+            <button class="button button-ghost" type="reset">Reset</button>
+          </div>
+          <p class="precheck-status" data-config-scan-status role="status" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section-rule precheck-result" data-precheck-authority-result-panel data-precheck-result hidden>
       <div class="container">
         <div class="precheck-result-head">
           <div>
@@ -103,8 +140,37 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
       </div>
     </section>
 
-    <ScopeHandoffShort locale="en" offer="scope_review" id="precheck-send-scope" />
+    <section class="section section-rule precheck-result" data-config-scan-result-panel hidden>
+      <div class="container">
+        <div class="precheck-result-head">
+          <div>
+            <div class="eyebrow">Local static scan</div>
+            <h2 class="section-title">Instruction and config warnings</h2>
+            <p>Pattern matches are review signals only. They are not audit findings, a safety verdict or testing authorization.</p>
+          </div>
+          <strong data-config-scan-result-count>0 local warnings</strong>
+        </div>
+        <div class="precheck-columns">
+          <section class="panel precheck-block precheck-block-wide">
+            <h2>Matched patterns</h2>
+            <div class="precheck-cards" data-config-scan-warnings></div>
+          </section>
+          <section class="panel precheck-block precheck-block-wide">
+            <h2>Boundary</h2>
+            <p>The pasted text stays in this browser. This mode makes zero network requests and zero model calls.</p>
+            <div class="precheck-result-actions">
+              <button class="button button-primary" type="button" data-config-scan-copy>Copy local report</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <div data-precheck-authority-scope-panel>
+      <ScopeHandoffShort locale="en" offer="scope_review" id="precheck-send-scope" />
+    </div>
   </main>
   <link rel="stylesheet" href="/pre-check-r1.css" />
   <script is:inline src="/pre-check-r1.js" defer></script>
+  <script is:inline src="/pre-check-config-scan-r1.js" defer></script>
 </Layout>
