@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const profiles = [
+  { id:'acs-core', name:'ACS-Core', gates:['Authority Budget','Object binding','Authority owner'], evidence:'For a consequential step: the agent and Guardian identities, the requested action and object, and the Guardian decision that is bound before the action proceeds.', scope:'ACS-Core is the mandatory v0.1.0 baseline. This mapping does not claim that Core alone makes a deployment secure or its policy strict.' },
+  { id:'acs-trace', name:'Trace', gates:['Evidence Before Effect','Freshness'], evidence:'A trace or event record that links the Guardian decision to the governed step with enough identity and time context to reconstruct what happened.', scope:'Trace is observability evidence. A trace event is not, by itself, proof that the external system reached the intended state.' },
+  { id:'acs-inspect', name:'Inspect', gates:['Authority Budget','Freshness'], evidence:'The Agent Bill of Materials visible for the session: models, MCP servers, A2A peers, tools, knowledge sources and memory stores relevant to the scoped action.', scope:'We use the component inventory as evidence for the scoped workflow; this is not a software-composition certification.' },
+  { id:'acs-inspect-dynamic', name:'Inspect Dynamic', gates:['Freshness','Recovery'], evidence:'The component mutation reported during the session and the control response when the component set changes after the original decision context.', scope:'We test the agreed change path and constrained response, not every possible runtime mutation.' },
+  { id:'acs-provenance', name:'Provenance', gates:['Evidence Before Effect','Freshness'], evidence:'Origin, source identifier and lineage available for decision-bearing fields at the control boundary.', scope:'We test whether the decision can bind to provenance evidence. We do not assign a universal trust score to the source.' },
+  { id:'acs-crypto', name:'Crypto', gates:['Evidence Before Effect','Authority owner'], evidence:'Where the profile is in scope, the signed audit material, verification result and identity or key relationship used to attribute the record.', scope:'Cryptographic evidence does not turn an unsafe policy into a safe one, and this mapping is not a key-management or non-repudiation certification.' },
+  { id:'acs-audit', name:'Audit', gates:['Recovery','Evidence Before Effect'], evidence:'A reconstructable audit chain for the governed action and the defined response when required audit evidence is missing, broken or cannot be verified.', scope:'We test evidence continuity and constrained behavior for the agreed action. This is not an ACS conformance audit.' }
+];
+
+const sourceUrl = 'https://genai.owasp.org/resource/agent-control-standard-acs/';
+const specUrl = 'https://github.com/GenAI-Security-Project/agent-control-standard';
+---
+
+<Layout
+  mainClass="longform-density"
+  title="Agent Control Standard (ACS) mapped to authority and evidence tests — BitEvo"
+  description="A BitEvo scoping map from ACS v0.1.0 control profiles to authority, evidence, freshness and recovery questions for one action-capable workflow."
+  alternates={{ en: '/agent-control-standard', ru: '/ru/agent-control-standard' }}
+>
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">OWASP GenAI / Agent Control Standard</div>
+      <h1 class="display">Agent Control Standard, mapped to BitEvo authority and evidence gates</h1>
+      <p class="lede">The OWASP GenAI Security Project added the Agent Control Standard on 1 September 2026. ACS v0.1.0 defines a Guardian-mediated control channel and conformance profiles. This page maps those control surfaces to evidence questions BitEvo can scope. It is not an ACS implementation, conformance test or certification claim.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="narrow">
+      <div class="eyebrow">v0.1.0 · seven declared profile IDs</div>
+      <h2 class="section-title">ACS profile → BitEvo gates → evidence → boundary</h2>
+    </div>
+  </section>
+
+  {profiles.map((profile) => (
+    <section class="dogfood-context section-rule">
+      <article class="container dogfood-context-card panel" data-acs-profile={profile.id}>
+        <div>
+          <div class="eyebrow">{profile.id}</div>
+          <h2>{profile.name}</h2>
+          <p><strong>BitEvo gates:</strong> {profile.gates.join(' · ')}</p>
+        </div>
+        <div class="dogfood-context-side">
+          <span>Evidence we would scope</span>
+          <p>{profile.evidence}</p>
+          <span>Boundary</span>
+          <p>{profile.scope}</p>
+        </div>
+      </article>
+    </section>
+  ))}
+
+  <section class="dogfood-context section-rule">
+    <div class="container dogfood-context-card panel">
+      <div>
+        <div class="eyebrow">Control boundary</div>
+        <h2>ACS and BitEvo answer different questions.</h2>
+        <p>ACS defines a control and observability protocol surface. BitEvo's seven gates ask whether authority for a specific external effect is bounded and evidenced. This page is a scoping crosswalk, not an ACS conformance statement or OWASP endorsement.</p>
+      </div>
+      <div class="dogfood-context-side">
+        <span>Official sources</span>
+        <a class="button" href={sourceUrl}>OWASP GenAI — Agent Control Standard →</a>
+        <a class="button" href={specUrl}>ACS specification repository →</a>
+        <a class="button" href="/owasp-agentic-skills-top-10">Agentic Skills Top 10 mapping →</a>
+      </div>
+    </div>
+  </section>
+</Layout>

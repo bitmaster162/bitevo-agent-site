@@ -305,6 +305,20 @@
       "parent": "/agent-authority-audit"
     },
     {
+      "path": "/owasp-agentic-skills-top-10",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/owasp-agentic-top-10"
+    },
+    {
+      "path": "/agent-control-standard",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/owasp-agentic-top-10"
+    },
+    {
       "path": "/agent-incidents",
       "category": "RESEARCH",
       "indexable": true,
@@ -741,6 +755,20 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/agent-authority-audit"
+    },
+    {
+      "path": "/ru/owasp-agentic-skills-top-10",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/owasp-agentic-top-10"
+    },
+    {
+      "path": "/ru/agent-control-standard",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/owasp-agentic-top-10"
     },
     {
       "path": "/ru/guides/ai-agent-reliability-audit",
