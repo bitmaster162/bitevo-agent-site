@@ -142,6 +142,13 @@
       "parent": "/start"
     },
     {
+      "path": "/agent-loop-cost-calculator",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/failure-recovery"
+    },
+    {
       "path": "/phuket-ai-workflow",
       "category": "SPECIALIST",
       "indexable": true,
@@ -691,6 +698,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/start"
+    },
+    {
+      "path": "/ru/agent-loop-cost-calculator",
+      "category": "TOOL",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/failure-recovery"
     },
     {
       "path": "/ru/phuket-ai-workflow",

@@ -103,6 +103,11 @@
       "fingerprint": "sha256:9cb9de73b875bdda5b5294d9ed31965b87c6d4e33c3dade773df0fd53fcbd1fd"
     },
     {
+      "path": "/agent-loop-cost-calculator",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:8d8dba1cbca08d5345d67018e6b8731dbe23056a21082642cf6e5f32c0db3826"
+    },
+    {
       "path": "/phuket-ai-workflow",
       "lastmod": "2026-10-05",
       "fingerprint": "sha256:cf42ab7db09b0b4fcf9e02864b15ca88e11102afaeded37d46f42d62bf45509d"
@@ -395,7 +400,7 @@
     {
       "path": "/ru/universe",
       "lastmod": "2026-10-05",
-      "fingerprint": "sha256:18cc720425fc61777a9278e939117b03401498decaa6cf13e36e344937db397a"
+      "fingerprint": "sha256:622e32256dd64c5a6a3a82a07a7d9447a9379fc76c12a0ea1e2c092dc02d3d90"
     },
     {
       "path": "/ru/vision",
@@ -481,6 +486,11 @@
       "path": "/ru/failure-recovery",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:7e8fecfb3ca3829c67baadf31e874a346127d3883488a20c643ee6eb593978ed"
+    },
+    {
+      "path": "/ru/agent-loop-cost-calculator",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:fa4905917e58ab4c869d706dbddc844d9095281b10f4c2bd2d5a139095893945"
     },
     {
       "path": "/ru/phuket-ai-workflow",

@@ -71,7 +71,7 @@ const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
 equal(row?.lastmod, '2026-10-04', '/ru currentness date exact');
 equal(row?.fingerprint, 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436', '/ru currentness fingerprint exact');
-equal(currentness.routes.length, 119, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 121, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');
 
 console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=b12d9fbc775d2fb31be7ecb144a0b271bf2ed0d48b0e06f762f339f1ab0b1773 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);

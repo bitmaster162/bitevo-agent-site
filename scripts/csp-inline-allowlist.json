@@ -93,7 +93,8 @@
     "QFQQQMK/q02qGx8G79C8oIMW0kXgjxS4uCByMaFwuEg=",
     "1hz+qY+q50cZAO2+exBc6668JoPM0FdStNuYGYGXI3g=",
     "RuzUBJTVMtgt1S98x8KSy/yQX+9UcRN0zxW2lq7jAoU=",
-    "A4p/3wGO9UX7APQjqHDslskGASj2shtjjhx0w/g7O/4="
+    "A4p/3wGO9UX7APQjqHDslskGASj2shtjjhx0w/g7O/4=",
+    "1QZ12tnOOwfT9AeBcFPNWZkDcbRP689MrPct6/WLJ7c="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -141,9 +142,23 @@
     "Fen3CZj8/p0LD2yqg7urwGVD4eaaOntf6R8VLl5Ojok=",
     "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8=",
     "qvyZOXzeICnbGoTSDCoQLsKTeeI8OQVtpBptOX/TKPc=",
-    "iRmPnDwWusLHHdpZ4RQZ3SPovA0dPXHHNL+SlFD8bUQ="
+    "iRmPnDwWusLHHdpZ4RQZ3SPovA0dPXHHNL+SlFD8bUQ=",
+    "Q9jePoPyiSkBkHIchh2aDSFuvYYrAZo39YF+EFFGpzE="
   ],
   "reviews": [
+    {
+      "sourceSha": "LOCAL_N12_PRECOMMIT",
+      "note": "N12 adds one explicit EN/RU browser-local calculator pair. Its calculator JavaScript is a first-party external asset; one shared hash-bound inline style avoids adding a new CSS bundle. The only new inline script hash is the inert application/ld+json identity payload emitted by RuLayout. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",
+      "scripts": [
+        "1QZ12tnOOwfT9AeBcFPNWZkDcbRP689MrPct6/WLJ7c="
+      ],
+      "styles": [
+        "Q9jePoPyiSkBkHIchh2aDSFuvYYrAZo39YF+EFFGpzE="
+      ],
+      "routes": [
+        "/ru/agent-loop-cost-calculator"
+      ]
+    },
     {
       "sourceSha": "LOCAL_N11_PRECOMMIT",
       "note": "N11 adds one explicit EN/RU procurement-comparison route pair. Two new inline style hashes are the exact Astro-emitted page styles; one new script hash is the inert application/ld+json identity payload emitted by RuLayout. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, or new external origin is authorized.",
