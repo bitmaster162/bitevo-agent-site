@@ -164,6 +164,14 @@
       "parent": "/start"
     },
     {
+      "path": "/pre-check",
+      "category": "INTERNAL_NO_INDEX",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/diagnostic",
+      "state": "activation_pending"
+    },
+    {
       "path": "/audit-intake",
       "category": "TOOL",
       "indexable": true,
