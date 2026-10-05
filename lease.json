@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "22d5d3e2-b19d-4fee-8c80-fb5ace5d3bd2",
   "nonce": "n2-agent-incidents-r1-control-center-20261005-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "6cb8b41a10bf3271483cac2b3a0f2af667b3fe4b",
@@ -11,10 +11,10 @@
   "session": "bitevo-n2-agent-incidents-r1-20261005",
   "worktree": "c:/users/coins/downloads/bitevo_n2_agent_incidents_prep_20261005_01",
   "acquiredAt": "2026-10-05T09:06:14.906Z",
-  "updatedAt": "2026-10-05T09:06:14.906Z",
+  "updatedAt": "2026-10-05T09:20:04.175Z",
   "expiresAt": "2026-10-05T12:06:12.050Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "fed57e633306ab7b59595ab1f63d56c3a2b6f840"
+  "sealedHead": "1343b9536e9aa728b9619a8ab2942e83d68138ed",
+  "sealedTree": "0a82f9da8e11a5c958091ecbe57e79093ce59881",
+  "featureRef": "refs/heads/agent/n2-agent-incidents-r1",
+  "predecessor": "8193e920b37b159b5fdcb94d929be71c28c515ba"
 }
