@@ -46,16 +46,16 @@ check(RU.includes('в staging или test') && RU.includes('а не модель
 check(RU_AUDIT.includes('staging или test') && RU_AUDIT.includes('а не модель в отрыве от неё.'), 'RU audit definition preserves staging/test and model-isolation boundary');
 
 const expectedCurrentness = {
-  '/': { fingerprint: 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429', lastmod: '2026-10-03' },
+  '/': { fingerprint: 'sha256:858879ec74e74b17b3476ed23103b6f6cb213bce5429bb15df3a60e679776203', lastmod: '2026-10-05' },
   '/ru': { fingerprint: 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436', lastmod: '2026-10-04' },
-  '/agent-authority-audit': { fingerprint: 'sha256:cdf886c8089bf407f95b64202a36b3560e659c94d59870ced5e57bd8d98d1d01', lastmod: '2026-10-04' },
+  '/agent-authority-audit': { fingerprint: 'sha256:6df48cbb322e67243498d9d2632465d3a132340a645b6a6857d77e682dffea55', lastmod: '2026-10-05' },
   '/ru/agent-authority-audit': { fingerprint: 'sha256:100a245555b9348d9a641ddbe66c91bb0e4305131d95a88ef1b8b2bdb45a5b36', lastmod: '2026-10-04' }
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.fingerprint === expected.fingerprint && row?.lastmod === expected.lastmod, 'currentness exact for ' + route);
 }
-equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 113, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-definition-r1.mjs'), 'P28.1 verifier is wired into verify:core');
 
 console.log('P28_DEFINITION_R1_GATE=PASS checks=' + checks + ' locales=2 pages=4 definition_first=PASS static_html=PASS js_required=0');

@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+import incidents from '../data/agent-incidents.json';
+import sourceDates from '../data/agent-incident-source-dates.json';
+
+const gateOptions = [
+  'Authority Budget',
+  'Evidence Before Effect',
+  'Object binding',
+  'Freshness',
+  'External confirmation',
+  'Recovery',
+  'Authority owner'
+];
+
+const asiOptions = ['ASI01','ASI02','ASI03','ASI04','ASI05','ASI06','ASI07','ASI08','ASI09','ASI10'];
+
+const organizationsById = {
+  'INC-01': 'Replit · SaaStr',
+  'INC-02': 'PocketOS · Cursor · Railway',
+  'INC-03': 'Google Antigravity',
+  'INC-04': 'OpenClaw',
+  'INC-05': 'Meta',
+  'INC-06': 'AWS · Kiro',
+  'INC-07': 'Amazon Q Developer',
+  'INC-08': 'Cline',
+  'INC-09': 'Salesloft Drift · Salesforce',
+  'INC-10': 'OpenAI Operator · Instacart',
+  'INC-11': 'Air Canada',
+  'INC-12': 'GitHub MCP'
+};
+
+const flagsById = {
+  'INC-03': ['Self-reported'],
+  'INC-04': ['Self-reported'],
+  'INC-06': ['Disputed']
+};
+
+const sourceLabel = (url) => new URL(url).hostname.replace(/^www\./, '');
+const sourceDate = (url) => sourceDates[url] ?? '';
+const formatDate = (value) => new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC'
+}).format(new Date(`${value}T00:00:00Z`));
+---
+
+<Layout
+  mainClass="longform-density incident-library"
+  title="AI agent incidents library — authority, evidence, recovery | BitEvo"
+  description="12 sourced cases of AI agents deleting data, leaking repos or acting without approval, mapped to OWASP Agentic Top 10 and seven evidence gates."
+>
+  <section class="section incident-hero">
+    <div class="narrow">
+      <div class="eyebrow">Public incident library · 12 sourced cases</div>
+      <h1 class="display">Agent incidents: what action-capable AI did, and what evidence would have caught it</h1>
+      <p class="lede">Public, sourced cases where an AI agent or assistant with the power to act changed something it should not have — or was shown it could. For each: what happened, which of our seven gates it touches, the OWASP Agentic risk, and the record that would have prevented or proven it.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container filter-shell panel" data-incident-filters>
+      <div class="filter-heading">
+        <div>
+          <div class="eyebrow">Filter the evidence map</div>
+          <h2 class="section-title">Gate and OWASP risk</h2>
+        </div>
+        <button type="button" class="filter-reset button" data-filter-reset aria-pressed="true">All cases</button>
+      </div>
+
+      <div class="filter-group" aria-label="Filter by BitEvo gate">
+        <strong>Gate</strong>
+        <div class="filter-options">
+          {gateOptions.map((gate) => (
+            <button type="button" data-gate-filter={gate} aria-pressed="false">{gate}</button>
+          ))}
+        </div>
+      </div>
+
+      <div class="filter-group" aria-label="Filter by OWASP Agentic risk">
+        <strong>OWASP ASI</strong>
+        <div class="filter-options filter-options-asi">
+          {asiOptions.map((asi) => (
+            <button type="button" data-asi-filter={asi} aria-pressed="false">{asi}</button>
+          ))}
+        </div>
+      </div>
+
+      <p class="filter-status" data-filter-status aria-live="polite">Showing all 12 cases.</p>
+    </div>
+  </section>
+
+  <div data-incident-library>
+    {incidents.map((incident) => (
+      <section class="section-tight section-rule" data-incident-section>
+        <article
+          class="container incident-card panel"
+          data-incident-card
+          data-incident-id={incident.id}
+          data-gates={incident.gates.join('|')}
+          data-asi={incident.owasp_asi.join('|')}
+        >
+          <div class="incident-main">
+            <div class="incident-meta">
+              <span class="incident-id">{incident.id}</span>
+              <span>{incident.date}</span>
+              <span>{organizationsById[incident.id]}</span>
+            </div>
+            <div class="incident-labels">
+              <span>{incident.type === 'demonstration' ? 'Demonstration' : 'Incident'}</span>
+              {(flagsById[incident.id] ?? []).map((flag) => <span>{flag}</span>)}
+            </div>
+            <h2>{incident.title}</h2>
+            <p class="incident-summary">{incident.what_happened}</p>
+
+            <div class="incident-tags">
+              <div>
+                <strong>Seven-gate mapping</strong>
+                <div class="tags">{incident.gates.map((gate) => <span>{gate}</span>)}</div>
+              </div>
+              <div>
+                <strong>OWASP Agentic</strong>
+                <div class="tags tags-asi">{incident.owasp_asi.map((asi) => <span>{asi}</span>)}</div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="incident-evidence">
+            <div>
+              <span class="evidence-kicker">Evidence we would check</span>
+              <p>{incident.evidence_we_check}</p>
+            </div>
+            <div class="source-list">
+              <span class="evidence-kicker">Sources</span>
+              <ul>
+                {incident.sources.map((source) => (
+                  <li>
+                    <a href={source} target="_blank" rel="noopener noreferrer">{sourceLabel(source)}</a>
+                    <time datetime={sourceDate(source)}>{formatDate(sourceDate(source))}</time>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </article>
+      </section>
+    ))}
+  </div>
+
+  <section class="section section-rule">
+    <div class="container incident-footer panel">
+      <div>
+        <div class="eyebrow">Scope and corrections</div>
+        <h2 class="section-title">Public sources, bounded claims.</h2>
+      </div>
+      <div>
+        <p>Cases are summarised from the linked public sources as of 1 October 2026. BitEvo was not involved in any of them.</p>
+        <p>Corrections: <a class="text-link" href="mailto:robert@bitevo.work">robert@bitevo.work</a>.</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline src="/agent-incidents.js" defer></script>
+
+<style>
+  .incident-hero{padding-top:clamp(78px,10vw,132px)}
+  .filter-shell{padding:28px;display:grid;gap:24px}
+  .filter-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+  .filter-heading .section-title{font-size:clamp(1.6rem,3vw,2.4rem)}
+  .filter-group{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start}
+  .filter-group>strong,.evidence-kicker{color:var(--muted);font:500 .66rem/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .filter-options{display:flex;gap:8px;flex-wrap:wrap}
+  .filter-options button{min-height:38px;padding:7px 12px;border:1px solid var(--line-strong);border-radius:999px;background:rgba(255,255,255,.018);color:var(--muted);font:600 .72rem var(--sans);cursor:pointer}
+  .filter-options button[aria-pressed="true"]{border-color:rgba(127,208,177,.58);background:rgba(127,208,177,.09);color:var(--ink)}
+  .filter-status{margin:0;color:var(--meta);font:.72rem var(--mono)}
+  .incident-card{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(32px,6vw,80px);padding:clamp(26px,4vw,44px)}
+  .incident-meta,.incident-labels,.incident-tags,.tags{display:flex;gap:8px;flex-wrap:wrap}
+  .incident-meta{color:var(--meta);font:.67rem var(--mono);letter-spacing:.03em}
+  .incident-id{color:var(--green)}
+  .incident-labels{margin:14px 0 20px}
+  .incident-labels span,.tags span{display:inline-flex;align-items:center;min-height:28px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.018);font:600 .64rem var(--mono)}
+  .incident-labels span:first-child{color:var(--gold)}
+  .incident-main h2{margin:0;font-size:clamp(1.55rem,3vw,2.6rem);line-height:1.08;letter-spacing:-.035em}
+  .incident-summary{max-width:780px;margin:18px 0 0;color:var(--ink-soft);font-size:1rem;line-height:1.75}
+  .incident-tags{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+  .incident-tags strong{display:block;margin-bottom:9px;color:var(--meta);font:500 .64rem var(--mono);text-transform:uppercase;letter-spacing:.08em}
+  .tags-asi span{color:var(--blue)}
+  .incident-evidence{display:grid;gap:28px;align-content:start;padding-left:26px;border-left:1px solid var(--line)}
+  .incident-evidence p{margin:9px 0 0;color:var(--muted)}
+  .source-list ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:10px}
+  .source-list li{display:flex;justify-content:space-between;gap:16px;padding-top:10px;border-top:1px solid var(--line)}
+  .source-list a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;color:var(--ink-soft);overflow-wrap:anywhere}
+  .source-list time{flex:none;color:var(--meta);font:.66rem var(--mono)}
+  .incident-footer{padding:32px;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,7vw,90px)}
+  .incident-footer p{margin:0 0 12px;color:var(--muted)}
+  .incident-footer .text-link{text-decoration:underline;text-underline-offset:.18em}
+  [hidden]{display:none!important}
+  @media(max-width:900px){
+    .incident-card{grid-template-columns:1fr}
+    .incident-evidence{padding-left:0;padding-top:26px;border-left:0;border-top:1px solid var(--line)}
+    .incident-footer{grid-template-columns:1fr}
+  }
+  @media(max-width:680px){
+    .filter-heading{align-items:flex-start;flex-direction:column}
+    .filter-group{grid-template-columns:1fr}
+    .incident-tags{grid-template-columns:1fr}
+    .source-list li{align-items:flex-start;flex-direction:column;gap:4px}
+  }
+</style>

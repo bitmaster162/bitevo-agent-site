@@ -16,7 +16,14 @@ const ruIndexable = new Map(
     .filter(route => route.indexable && route.locale === 'ru')
     .map(route => [route.path, route])
 );
-const localizedPairs = enIndexable.map(route => {
+const deferredEnIndexable = enIndexable.filter(route => route.localePair === 'deferred');
+const pairedEnIndexable = enIndexable.filter(route => route.localePair !== 'deferred');
+for (const route of deferredEnIndexable) {
+  const ruRoute = route.path === '/' ? '/ru' : `/ru${route.path}`;
+  if (route.localePairReason !== 'grounded_translation_pending') throw new Error(`Deferred locale pair missing grounded reason for ${route.path}`);
+  if (ruIndexable.has(ruRoute)) throw new Error(`Deferred locale pair unexpectedly exists for ${route.path}: ${ruRoute}`);
+}
+const localizedPairs = pairedEnIndexable.map(route => {
   const ruRoute = route.path === '/' ? '/ru' : `/ru${route.path}`;
   const partner = ruIndexable.get(ruRoute);
   if (!partner) throw new Error(`Missing RU parity route for ${route.path}: expected ${ruRoute}`);
@@ -42,6 +49,8 @@ const cloudflareMetaTag = `<meta http-equiv="Content-Security-Policy" content="$
 function htmlPath(route) {
   return route === '/' ? join(dist, 'index.html') : join(dist, route.replace(/^\//, ''), 'index.html');
 }
+
+const deferredLocaleFiles = new Set(deferredEnIndexable.map(route => htmlPath(route.path)));
 
 function alternates(enRoute, ruRoute) {
   const en = `${origin}${enRoute === '/' ? '/' : enRoute}`;
@@ -120,11 +129,15 @@ for (const path of await walk(dist)) {
 
   if (html.includes('</footer>') && !html.includes('data-public-build-receipt')) {
     const isRu = /<html\b[^>]*\blang="ru"/i.test(html);
+    const isDeferredLocale = deferredLocaleFiles.has(path);
     const href = locale?.href ?? (isRu ? '/' : '/ru');
     const target = locale?.target ?? (isRu ? 'en' : 'ru');
     const label = locale?.label ?? (isRu ? 'EN' : 'RU');
     const localeLink = `<a href="${href}" lang="${target}">${label}</a>`;
-    const receipt = `<div class="container footer-bottom" data-public-build-receipt="${meta.sha}"><span>Public build</span><span>${localeLink} · <a href="/version">Build ${meta.shortSha}</a></span></div>`;
+    const receiptTail = isDeferredLocale
+      ? `<a href="/version">Build ${meta.shortSha}</a>`
+      : `${localeLink} · <a href="/version">Build ${meta.shortSha}</a>`;
+    const receipt = `<div class="container footer-bottom" data-public-build-receipt="${meta.sha}"><span>Public build</span><span>${receiptTail}</span></div>`;
     html = html.replace('</footer>', `${receipt}</footer>`);
   }
   await writeFile(path, html, 'utf8');
@@ -138,4 +151,4 @@ if (meta.provider === 'cloudflare' && cloudflareCspTags !== cloudflareHtml) {
   throw new Error(`Expected Cloudflare CSP meta on ${cloudflareHtml} HTML files, found ${cloudflareCspTags}`);
 }
 
-console.log(`BITEVO_POSTPROCESS=PASS sha=${meta.sha} localized_pairs=${localizedPairs.length} locale_affordances=${localeAffordances} global_locale_switches=${injectedGlobalLocaleSwitches} ru_locale_bars=${retainedRuLocaleBars} cloudflare_csp=${meta.provider === 'cloudflare' ? `${cloudflareCspTags}/${cloudflareHtml}` : 'N/A'}`);
+console.log(`BITEVO_POSTPROCESS=PASS sha=${meta.sha} localized_pairs=${localizedPairs.length} deferred_locale=${deferredEnIndexable.length} locale_affordances=${localeAffordances} global_locale_switches=${injectedGlobalLocaleSwitches} ru_locale_bars=${retainedRuLocaleBars} cloudflare_csp=${meta.provider === 'cloudflare' ? `${cloudflareCspTags}/${cloudflareHtml}` : 'N/A'}`);
