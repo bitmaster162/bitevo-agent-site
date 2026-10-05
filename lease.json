@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "743185f5-d849-4d48-ab4e-6b3b504fc7d0",
   "nonce": "n20-glossary-r1-control-center-20261006-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "c4f3a76f981fa145c17703d21a1544f605139a67",
@@ -11,10 +11,10 @@
   "session": "bitevo-n20-glossary-r1-20261006",
   "worktree": "c:/users/coins/downloads/bitevo_n20_glossary_prep_20261006_01",
   "acquiredAt": "2026-10-05T18:30:46.719Z",
-  "updatedAt": "2026-10-05T18:30:46.719Z",
+  "updatedAt": "2026-10-05T18:45:26.200Z",
   "expiresAt": "2026-10-06T05:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "56c273bb116728f98a74080b7385f577c1d26332"
+  "sealedHead": "f63108a508a3a22199e2cd0b613bcf31366e0b19",
+  "sealedTree": "326ef5c262fe441370f7c02aa025d014dadbd235",
+  "featureRef": "refs/heads/agent/n20-glossary-r1",
+  "predecessor": "a4dd4098880b0c6b858b9b9b2b579efb5f3fdb5b"
 }
