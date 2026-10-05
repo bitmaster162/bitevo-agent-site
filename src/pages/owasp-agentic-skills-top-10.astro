@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const risks = [
+  { id:'AST01', name:'Malicious Skills', gates:['Authority Budget','Evidence Before Effect'], evidence:'Exact skill identity and version, the consequential action it can trigger, and the rule that allowed or refused that action.', scope:'We test bounded action consequences and evidence gates. Malware reverse engineering is out of scope.' },
+  { id:'AST02', name:'Supply Chain Compromise', gates:['Freshness','Evidence Before Effect'], evidence:'The source and exact artifact version or hash available at decision time, plus the re-approval or blocking rule when that artifact changes.', scope:'We test reliance on the installed artifact in the agreed workflow. Registry or platform compromise analysis is out of scope.' },
+  { id:'AST03', name:'Over-Privileged Skills', gates:['Authority Budget','Object binding'], evidence:'The actions and objects the skill is supposed to reach, compared with the permissions and effects it can actually reach.', scope:'Core authority scope: whether the granted capability exceeds the written action and object boundary.' },
+  { id:'AST04', name:'Insecure Metadata', gates:['Authority owner','Evidence Before Effect'], evidence:'Publisher or owner metadata and declared permissions used to authorize the skill, compared with the action surface observed in the workflow.', scope:'We test whether metadata is trusted beyond its evidence. We do not operate or certify a signing ecosystem.' },
+  { id:'AST05', name:'Untrusted External Instructions', gates:['Freshness','Evidence Before Effect'], evidence:'Origin, version or retrieval time for external instructions, and whether changed content can authorize an action without renewed validation.', scope:'Mutable external instructions are treated as a decision-time evidence dependency; content-security research outside the workflow is out of scope.' },
+  { id:'AST06', name:'Weak Isolation', gates:['Authority Budget','Recovery'], evidence:'The allowed filesystem, network or shell actions and the constrained state reached when an attempted action crosses that boundary.', scope:'We validate the agreed control boundary. Sandbox-escape exploit development is out of scope.' },
+  { id:'AST07', name:'Update Drift', gates:['Freshness','Evidence Before Effect'], evidence:'The skill version or hash loaded for the decision and the rule that blocks or re-approves execution after version drift.', scope:'We test freshness and change handling for the one skill or workflow in scope.' },
+  { id:'AST08', name:'Poor Scanning', gates:['Evidence Before Effect','Authority Budget'], evidence:'The scanner or review result relied on before effect and which consequential actions remain reachable after that result.', scope:'We test a scanner result as an evidence gate for the agreed workflow; this is not a universal scanner benchmark.' },
+  { id:'AST09', name:'No Governance', gates:['Authority owner','Recovery'], evidence:'Who owns inventory, approval and revocation for the skill, and the constrained state reached after authority is revoked or becomes uncertain.', scope:'We test the governance boundary for one agreed workflow or skill, not enterprise-wide governance certification.' },
+  { id:'AST10', name:'Cross-Platform Reuse', gates:['Object binding','Authority Budget','Freshness'], evidence:'The source and target platform permission semantics, the target object actually selected, and any capability drift introduced by the port.', scope:'We test one agreed portability case; we do not claim coverage of every agent platform.' }
+];
+
+const sourceUrl = 'https://owasp.org/projects/agentic-skills-top-10';
+---
+
+<Layout
+  mainClass="longform-density"
+  title="OWASP Agentic Skills Top 10 (AST01–AST10) mapped to authority tests — BitEvo"
+  description="A BitEvo scoping map from the OWASP Agentic Skills Top 10 to authority, evidence, freshness and recovery gates for one action-capable workflow."
+  alternates={{ en: '/owasp-agentic-skills-top-10', ru: '/ru/owasp-agentic-skills-top-10' }}
+>
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">OWASP / Agentic Skills Top 10</div>
+      <h1 class="display">OWASP Agentic Skills Top 10, mapped to BitEvo authority and evidence gates</h1>
+      <p class="lede">OWASP Agentic Skills Top 10 documents ten security risks for agentic skills. This BitEvo mapping is a scoping aid: it shows which of our seven gates can test the action or evidence consequence of each risk in one agreed workflow. It does not claim to cover the whole OWASP risk or certify a skill.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="narrow">
+      <div class="eyebrow">AST01–AST10 · current public-review v1 names</div>
+      <h2 class="section-title">Risk → BitEvo gates → evidence → scope boundary</h2>
+    </div>
+  </section>
+
+  {risks.map((risk) => (
+    <section class="dogfood-context section-rule">
+      <article class="container dogfood-context-card panel" data-ast={risk.id}>
+        <div>
+          <div class="eyebrow">{risk.id} · OWASP risk</div>
+          <h2>{risk.name}</h2>
+          <p><strong>BitEvo gates:</strong> {risk.gates.join(' · ')}</p>
+        </div>
+        <div class="dogfood-context-side">
+          <span>Evidence we would scope</span>
+          <p>{risk.evidence}</p>
+          <span>Scope boundary</span>
+          <p>{risk.scope}</p>
+        </div>
+      </article>
+    </section>
+  ))}
+
+  <section class="dogfood-context section-rule">
+    <div class="container dogfood-context-card panel">
+      <div>
+        <div class="eyebrow">Mapping boundary</div>
+        <h2>BitEvo mapping for scoping only.</h2>
+        <p>Not an OWASP certification or endorsement. The official AST10 project defines the risks; BitEvo is only mapping them to evidence questions for a bounded workflow.</p>
+      </div>
+      <div class="dogfood-context-side">
+        <span>Official source</span>
+        <a class="button" href={sourceUrl}>OWASP Agentic Skills Top 10 →</a>
+        <a class="button" href="/owasp-agentic-top-10">Agentic Applications Top 10 mapping →</a>
+        <a class="button" href="/agent-control-standard">Agent Control Standard mapping →</a>
+      </div>
+    </div>
+  </section>
+</Layout>

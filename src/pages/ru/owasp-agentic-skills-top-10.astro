@@ -1,0 +1,74 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const risks = [
+  { id:'AST01', name:'Malicious Skills', gates:['Authority Budget','Evidence Before Effect'], evidence:'Точная идентичность и версия skill, действие с внешним эффектом, которое он может запустить, и правило, которое разрешило или отклонило это действие.', scope:'Проверяем ограниченные последствия действий и evidence gates. Reverse engineering вредоносного кода вне scope.' },
+  { id:'AST02', name:'Supply Chain Compromise', gates:['Freshness','Evidence Before Effect'], evidence:'Источник и точная версия или hash артефакта на момент решения, а также правило повторного одобрения или блокировки при изменении артефакта.', scope:'Проверяем, как workflow полагается на установленный артефакт. Анализ компрометации registry или платформы вне scope.' },
+  { id:'AST03', name:'Over-Privileged Skills', gates:['Authority Budget','Object binding'], evidence:'Какие действия и объекты skill должен достигать по scope, сравнённые с разрешениями и эффектами, которые ему реально доступны.', scope:'Базовая граница полномочий: не превышает ли capability письменно заданные action и object boundary.' },
+  { id:'AST04', name:'Insecure Metadata', gates:['Authority owner','Evidence Before Effect'], evidence:'Metadata издателя или владельца и заявленные permissions, на которых основано разрешение skill, сравнённые с наблюдаемой поверхностью действий workflow.', scope:'Проверяем, не доверяет ли решение metadata больше, чем подтверждают доказательства. Мы не сертифицируем signing ecosystem.' },
+  { id:'AST05', name:'Untrusted External Instructions', gates:['Freshness','Evidence Before Effect'], evidence:'Origin, версия или время получения внешних инструкций и возможность изменённого контента разрешить действие без новой валидации.', scope:'Изменяемые внешние инструкции считаются decision-time evidence dependency; исследование контента вне согласованного workflow не входит в scope.' },
+  { id:'AST06', name:'Weak Isolation', gates:['Authority Budget','Recovery'], evidence:'Разрешённые filesystem, network или shell actions и constrained state, в который система переходит при попытке выйти за границу.', scope:'Проверяем согласованный control boundary. Разработка sandbox-escape exploit вне scope.' },
+  { id:'AST07', name:'Update Drift', gates:['Freshness','Evidence Before Effect'], evidence:'Версия или hash skill, загруженного для решения, и правило блокировки или повторного одобрения после version drift.', scope:'Проверяем freshness и change handling для одного skill или workflow в scope.' },
+  { id:'AST08', name:'Poor Scanning', gates:['Evidence Before Effect','Authority Budget'], evidence:'Результат scanner или review, на который система опирается до эффекта, и какие consequential actions остаются достижимыми после этого результата.', scope:'Проверяем scanner result как evidence gate согласованного workflow; это не универсальный benchmark сканеров.' },
+  { id:'AST09', name:'No Governance', gates:['Authority owner','Recovery'], evidence:'Кто владеет inventory, approval и revocation для skill, и constrained state после отзыва или неопределённости полномочий.', scope:'Проверяем governance boundary одного workflow или skill, а не enterprise-wide governance certification.' },
+  { id:'AST10', name:'Cross-Platform Reuse', gates:['Object binding','Authority Budget','Freshness'], evidence:'Permission semantics исходной и целевой платформы, реально выбранный target object и capability drift после переноса.', scope:'Проверяем один согласованный portability case; не заявляем покрытие всех agent platforms.' }
+];
+
+const sourceUrl = 'https://owasp.org/projects/agentic-skills-top-10';
+---
+
+<RuLayout
+  title="OWASP Agentic Skills Top 10 (AST01–AST10) и тесты полномочий — BitEvo"
+  description="Сопоставление OWASP Agentic Skills Top 10 с воротами полномочий, доказательств, freshness и recovery BitEvo для одного action-capable workflow."
+  enPath="/owasp-agentic-skills-top-10"
+  ruPath="/ru/owasp-agentic-skills-top-10"
+>
+  <section class="section">
+    <div class="narrow">
+      <div class="eyebrow">OWASP / AGENTIC SKILLS TOP 10</div>
+      <h1 class="display">OWASP Agentic Skills Top 10 — сопоставление с воротами полномочий и доказательств BitEvo</h1>
+      <p class="lede">OWASP Agentic Skills Top 10 описывает десять рисков безопасности agentic skills. Это сопоставление BitEvo нужно только для подготовки scope: оно показывает, какие из семи ворот относятся к последствиям действия или доказательствам в одном согласованном workflow. Оно не означает полное покрытие риска OWASP и не сертифицирует skill.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="narrow">
+      <div class="eyebrow">AST01–AST10 · актуальные названия public-review v1</div>
+      <h2 class="section-title">Риск → ворота BitEvo → доказательства → граница scope</h2>
+    </div>
+  </section>
+
+  {risks.map((risk) => (
+    <section class="dogfood-context section-rule">
+      <article class="container dogfood-context-card panel" data-ast={risk.id}>
+        <div>
+          <div class="eyebrow">{risk.id} · OWASP risk</div>
+          <h2 lang="en">{risk.name}</h2>
+          <p><strong>BitEvo gates:</strong> {risk.gates.join(' · ')}</p>
+        </div>
+        <div class="dogfood-context-side">
+          <span>Какие доказательства готовим к проверке</span>
+          <p>{risk.evidence}</p>
+          <span>Граница scope</span>
+          <p>{risk.scope}</p>
+        </div>
+      </article>
+    </section>
+  ))}
+
+  <section class="dogfood-context section-rule">
+    <div class="container dogfood-context-card panel">
+      <div>
+        <div class="eyebrow">Граница сопоставления</div>
+        <h2>Сопоставление BitEvo предназначено только для подготовки scope.</h2>
+        <p>Это не сертификация и не одобрение OWASP. Риски определяет официальный проект AST10; BitEvo лишь сопоставляет их с вопросами о доказательствах для ограниченного workflow.</p>
+      </div>
+      <div class="dogfood-context-side">
+        <span>Официальный источник</span>
+        <a class="button" href={sourceUrl} lang="en">OWASP Agentic Skills Top 10 →</a>
+        <a class="button" href="/ru/owasp-agentic-top-10">Agentic Applications Top 10 →</a>
+        <a class="button" href="/ru/agent-control-standard">Agent Control Standard →</a>
+      </div>
+    </div>
+  </section>
+</RuLayout>

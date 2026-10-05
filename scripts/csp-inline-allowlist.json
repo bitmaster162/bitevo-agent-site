@@ -90,7 +90,9 @@
     "zv1z3czbyvOLaGOF4w4xVLKpOceV2hcrLLBRQlAwMJc=",
     "1ByaKSE26AWukXGd+pDTgPP1YEvWDdE1VbyL77tmMRQ=",
     "EI+n19aNoWrzpc5TB3O/F/Btwxyo+4Hufs+zFkVlhrk=",
-    "QFQQQMK/q02qGx8G79C8oIMW0kXgjxS4uCByMaFwuEg="
+    "QFQQQMK/q02qGx8G79C8oIMW0kXgjxS4uCByMaFwuEg=",
+    "1hz+qY+q50cZAO2+exBc6668JoPM0FdStNuYGYGXI3g=",
+    "RuzUBJTVMtgt1S98x8KSy/yQX+9UcRN0zxW2lq7jAoU="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -139,6 +141,18 @@
     "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8="
   ],
   "reviews": [
+    {
+      "sourceSha": "LOCAL_N9_PRECOMMIT",
+      "note": "N9 adds two explicit RU research routes. Their only new inline script hashes are inert application/ld+json identity payloads emitted by RuLayout; no executable inline JavaScript, inline style attribute, wildcard, unsafe-inline directive, or CSP relaxation is introduced.",
+      "scripts": [
+        "1hz+qY+q50cZAO2+exBc6668JoPM0FdStNuYGYGXI3g=",
+        "RuzUBJTVMtgt1S98x8KSy/yQX+9UcRN0zxW2lq7jAoU="
+      ],
+      "routes": [
+        "/ru/agent-control-standard",
+        "/ru/owasp-agentic-skills-top-10"
+      ]
+    },
     {
       "deployment": "dpl_DLATx7eN3fD5wtsY7LaZxv4unhwc",
       "sourceSha": "86cefb9fdd5cf1ae437aef3626daa7c5af66786d",

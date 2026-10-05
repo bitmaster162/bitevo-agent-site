@@ -55,7 +55,7 @@ for (const [route, expected] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.fingerprint === expected.fingerprint && row?.lastmod === expected.lastmod, 'currentness exact for ' + route);
 }
-equal(currentness.routes.length, 113, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 117, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-definition-r1.mjs'), 'P28.1 verifier is wired into verify:core');
 
 console.log('P28_DEFINITION_R1_GATE=PASS checks=' + checks + ' locales=2 pages=4 definition_first=PASS static_html=PASS js_required=0');

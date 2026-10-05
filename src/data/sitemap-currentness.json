@@ -213,6 +213,16 @@
       "fingerprint": "sha256:3f39520a63f7bdf856e74f83d013c6e3e341d31735d089923d9bb0c7166775b6"
     },
     {
+      "path": "/owasp-agentic-skills-top-10",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:2066ab82db604ee8d49e28dc0941e8899f75849c0a753b91974144faa080fe6e"
+    },
+    {
+      "path": "/agent-control-standard",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:dee970e90bd4936232c63a4dace5c6541f7c569b5369f2ed5e48c70e366852a0"
+    },
+    {
       "path": "/agent-incidents",
       "lastmod": "2026-10-05",
       "fingerprint": "sha256:3b52550c8d3f0b3452e4bb2bdd4ff0dff3eea952a1fdba133b3c7b809a5f86e1"
@@ -379,8 +389,8 @@
     },
     {
       "path": "/ru/universe",
-      "lastmod": "2026-10-04",
-      "fingerprint": "sha256:e69846624cfd3e0a30ed15a044e76ed73ec79773f8f0c2985e1504f91d91c4d8"
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:ebfc94a7f59204eef3d0a002282ab2447ae42f4fbbd6404dbf74e0a5c108e62d"
     },
     {
       "path": "/ru/vision",
@@ -516,6 +526,16 @@
       "path": "/ru/owasp-agentic-top-10",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:1576e1aa39d8313d8a85c2b759324002912a496198b5fa10cb1988f99ee9b3a3"
+    },
+    {
+      "path": "/ru/owasp-agentic-skills-top-10",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:324d9f33ba3c59bfe47aefb167a5cb1656add944aafa1f9b7c32d7bbcf132a26"
+    },
+    {
+      "path": "/ru/agent-control-standard",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:bac48773ebb9ad393ab965b7fef80536847890b585eed5ee6b8e829ef08d8b0b"
     },
     {
       "path": "/ru/guides/security-sandboxing",
