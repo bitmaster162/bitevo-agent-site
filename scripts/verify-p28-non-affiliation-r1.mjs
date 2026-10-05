@@ -54,8 +54,8 @@ for (const file of htmlFiles) {
   check(!footer.includes(wrong), `${file.pathname}: no wrong-locale disclosure in footer`);
 }
 
-equal(htmlFiles.length, 127, 'all rendered HTML pages checked on N2 baseline');
-equal(enPages, 70, 'EN footer coverage exact on N2 baseline');
+equal(htmlFiles.length, 128, 'all rendered HTML pages checked with F1.1 noindex source route');
+equal(enPages, 71, 'EN footer coverage exact with F1.1 noindex source route');
 equal(ruPages, 57, 'RU footer coverage remains exact');
 equal(currentness.routes.length, 113, 'currentness route count exact on N2 baseline');
 check(currentness.routes.every(row => /^\d{4}-\d{2}-\d{2}$/.test(String(row.lastmod || '')) && /^sha256:[0-9a-f]{64}$/.test(row.fingerprint)), 'all 113 currentness rows retain valid dates and fingerprints');

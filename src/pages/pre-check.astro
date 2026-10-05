@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
+
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+---
+
+<Layout
+  title="Authority Pre-Check — map agent authority before testing | BitEvo"
+  description="Paste an AI-agent tool list, MCP manifest or description to map stated actions, authority unknowns and three testable hypotheses before audit scoping."
+  robots="noindex, follow"
+  canonical="/pre-check"
+>
+  <main data-precheck-root>
+    <section class="section precheck-hero">
+      <div class="container precheck-hero-grid">
+        <div>
+          <div class="eyebrow">Authority Pre-Check</div>
+          <h1 class="display">Map your agent's authority before you test it.</h1>
+          <p class="lede">Paste a tool list, an MCP server manifest or a plain description. You get an authority map, three testable hypotheses and the evidence each one needs.</p>
+          <p class="precheck-boundary">Automated draft — not an audit finding.</p>
+        </div>
+        <aside class="panel precheck-sample" aria-label="Synthetic example">
+          <div class="eyebrow">Example result · SAMPLE</div>
+          <p class="copy">Synthetic support-agent input used only to show the output shape.</p>
+          <div class="precheck-sample-grid">
+            <div class="precheck-sample-row"><span>Action</span><strong>issue_refund</strong></div>
+            <div class="precheck-sample-row"><span>Effect</span><strong>money</strong></div>
+            <div class="precheck-sample-row"><span>Object</span><strong>unknown</strong></div>
+            <div class="precheck-sample-row"><span>Owner</span><strong>unknown</strong></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section-rule">
+      <div class="narrow">
+        <form class="panel precheck-form-panel" data-precheck-form>
+          <label for="precheckInput">Tools, manifest or description (no secrets)</label>
+          <textarea
+            id="precheckInput"
+            class="precheck-input"
+            data-precheck-input
+            maxlength="8000"
+            required
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="Example: support agent with tool issue_refund; the action may only target the current staging ticket..."
+          ></textarea>
+          <div class="precheck-input-meta">
+            <span>Up to 8,000 characters. Keys, tokens and credentials are rejected.</span>
+            <span data-precheck-count>0 / 8,000</span>
+          </div>
+          <div class="precheck-form-actions">
+            <button class="button button-primary" type="submit" data-precheck-run>Run pre-check</button>
+            <a class="button button-ghost" href="/sample-audit">Open sample audit</a>
+          </div>
+          <p class="precheck-status" data-precheck-status role="status" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section-rule precheck-result" data-precheck-result hidden>
+      <div class="container">
+        <div class="precheck-result-head">
+          <div>
+            <div class="eyebrow">Automated draft</div>
+            <h2 class="section-title">Authority map and testable hypotheses</h2>
+            <p>Generated from the text you pasted. Not a finding, not a safety verdict, and not testing authorization.</p>
+          </div>
+        </div>
+
+        <div class="precheck-columns">
+          <section class="panel precheck-block precheck-block-wide">
+            <h2>Authority map</h2>
+            <div class="precheck-cards" data-precheck-actions></div>
+          </section>
+
+          <section class="panel precheck-block">
+            <h2>Testable hypotheses</h2>
+            <div class="precheck-cards" data-precheck-hypotheses></div>
+          </section>
+
+          <section class="panel precheck-block">
+            <h2>Unknowns</h2>
+            <ul class="precheck-unknowns" data-precheck-unknowns></ul>
+          </section>
+
+          <section class="panel precheck-block precheck-block-wide">
+            <h2>Suggested next step</h2>
+            <div class="precheck-next">
+              <strong data-precheck-next-name></strong>
+              <p data-precheck-next-why></p>
+            </div>
+            <div class="precheck-result-actions">
+              <button class="button button-primary" type="button" data-precheck-send>Send to Robert</button>
+              <a class="button button-ghost" href={TRIAGE_URL} target="_blank" rel="noopener noreferrer">Book a free triage</a>
+              <button class="button button-ghost" type="button" data-precheck-copy>Copy result</button>
+            </div>
+            <p class="precheck-note">“Send to Robert” places only a bounded JSON summary of the generated result into the existing Scope Handoff form. The text you pasted is not copied there, and the form still requires explicit consent before submission.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <ScopeHandoffShort locale="en" offer="scope_review" id="precheck-send-scope" />
+  </main>
+  <link rel="stylesheet" href="/pre-check-r1.css" />
+  <script is:inline src="/pre-check-r1.js" defer></script>
+</Layout>
