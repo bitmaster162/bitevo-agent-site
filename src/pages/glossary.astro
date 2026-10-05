@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { glossaryTerms } from '../data/glossary';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  '@id': 'https://bitevo.work/glossary#term-set',
+  name: 'BitEvo glossary',
+  description: 'Working definitions for the authority, evidence, confirmation and recovery vocabulary used across bitevo.work.',
+  url: 'https://bitevo.work/glossary',
+  hasDefinedTerm: glossaryTerms.map(item => ({
+    '@type': 'DefinedTerm',
+    '@id': `https://bitevo.work/glossary#${item.slug}`,
+    name: item.term,
+    description: item.en,
+    inDefinedTermSet: 'https://bitevo.work/glossary#term-set'
+  }))
+};
+---
+<Layout
+  title="BitEvo Glossary — Authority, Evidence and Recovery"
+  description="Working definitions for Authority Budget, Evidence Before Effect, False Green, object binding, confused deputy and other BitEvo audit vocabulary."
+  alternates={{ en: '/glossary', ru: '/ru/glossary' }}
+>
+  <script type="application/ld+json" data-defined-term-set set:html={JSON.stringify(structuredData)} />
+  <section class="section glossary-hero">
+    <div class="container hero-grid">
+      <div><div class="eyebrow">N20 · working vocabulary</div><h1 class="display">The terms behind the authority decision.</h1></div>
+      <div><p class="lede">This glossary records how BitEvo uses recurring authority, evidence, confirmation and recovery terms in audit scope. It does not claim ownership of industry terms or redefine external standards.</p><a class="button button-primary" href="/doctrine">Read the doctrine →</a></div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container glossary-index panel" aria-label="Glossary index">
+      {glossaryTerms.map(item => <a href={`#${item.slug}`}>{item.term}</a>)}
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="container glossary-list">
+      {glossaryTerms.map((item, index) => (
+        <article id={item.slug} class="term panel">
+          <div class="term-no">{String(index + 1).padStart(2, '0')}</div>
+          <div><div class="eyebrow">Defined term</div><h2>{item.term}</h2></div>
+          <div class="term-copy"><p>{item.en}</p><a href={item.related}>See the related BitEvo surface →</a></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Boundary</div><h2 class="section-title">Definitions support scope; evidence decides the claim.</h2><p class="lede">A shared vocabulary makes a workflow easier to describe. It does not establish that a control exists, that a system is safe, or that testing is authorized.</p><div class="actions"><a class="button button-primary" href="/diagnostic">Run the 7-gate diagnostic</a><a class="button" href="/artifacts">Inspect the work products</a></div></div></section>
+</Layout>
+
+<style>
+  .glossary-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(42px,8vw,110px);align-items:end}.hero-grid .lede{margin:0 0 24px}.glossary-index{padding:20px;display:flex;gap:8px;flex-wrap:wrap}.glossary-index a{padding:8px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:600 .6rem var(--mono)}.glossary-index a:hover{color:var(--ink);border-color:rgba(127,208,177,.45)}.glossary-list{display:grid;gap:12px}.term{display:grid;grid-template-columns:48px .65fr 1.35fr;gap:24px;padding:28px;scroll-margin-top:96px}.term-no{color:var(--meta);font:600 .62rem var(--mono)}.term h2{font-size:clamp(1.25rem,2.4vw,2rem);margin:5px 0 0;letter-spacing:-.03em}.term-copy p{margin:0;color:var(--muted);font-size:.88rem}.term-copy a{display:inline-block;margin-top:12px;font-size:.75rem;font-weight:700}.final{text-align:center}.final .section-title{margin-inline:auto}.final .lede{margin:18px auto 26px}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.term{grid-template-columns:36px 1fr}.term-copy{grid-column:2}}@media(max-width:620px){.term{grid-template-columns:1fr;padding:22px}.term-no{display:none}.term-copy{grid-column:auto}.actions .button{width:100%}}
+</style>

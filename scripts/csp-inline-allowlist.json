@@ -94,7 +94,10 @@
     "1hz+qY+q50cZAO2+exBc6668JoPM0FdStNuYGYGXI3g=",
     "RuzUBJTVMtgt1S98x8KSy/yQX+9UcRN0zxW2lq7jAoU=",
     "A4p/3wGO9UX7APQjqHDslskGASj2shtjjhx0w/g7O/4=",
-    "1QZ12tnOOwfT9AeBcFPNWZkDcbRP689MrPct6/WLJ7c="
+    "1QZ12tnOOwfT9AeBcFPNWZkDcbRP689MrPct6/WLJ7c=",
+    "0OpxJVOCo8+4HCp0UMLkw7j2YRHVcZ60nDtPULcalo0=",
+    "Y8rCbPn01RUVhmSauKxpKO4/qn3Ekz1AACa+UKkcwtE=",
+    "6VA0DCYzkFXJhU764X+OW5x2RE61lVFMPA9Fx/CazKA="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -143,9 +146,28 @@
     "H8BC3gjx/S7V16HudeDqVG/tnuV7U7mvYMoAKEaWJb8=",
     "qvyZOXzeICnbGoTSDCoQLsKTeeI8OQVtpBptOX/TKPc=",
     "iRmPnDwWusLHHdpZ4RQZ3SPovA0dPXHHNL+SlFD8bUQ=",
-    "Q9jePoPyiSkBkHIchh2aDSFuvYYrAZo39YF+EFFGpzE="
+    "Q9jePoPyiSkBkHIchh2aDSFuvYYrAZo39YF+EFFGpzE=",
+    "M+blMu0n9fd7pgq9Uyjgelwul1CKHeDFsbQ8+LZKAG4=",
+    "ONpn6yoUTTf+NPGGb3zQbncwCqjJC8H5hZ6570MULLM="
   ],
   "reviews": [
+    {
+      "sourceSha": "LOCAL_N20_PRECOMMIT",
+      "note": "N20 adds an explicit EN/RU glossary pair with Schema.org DefinedTermSet markup. The two new style hashes are the exact Astro-emitted page styles. Two new script hashes are the inert DefinedTermSet application/ld+json payloads and one is the inert RU identity application/ld+json payload emitted by RuLayout. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",
+      "scripts": [
+        "0OpxJVOCo8+4HCp0UMLkw7j2YRHVcZ60nDtPULcalo0=",
+        "Y8rCbPn01RUVhmSauKxpKO4/qn3Ekz1AACa+UKkcwtE=",
+        "6VA0DCYzkFXJhU764X+OW5x2RE61lVFMPA9Fx/CazKA="
+      ],
+      "styles": [
+        "M+blMu0n9fd7pgq9Uyjgelwul1CKHeDFsbQ8+LZKAG4=",
+        "ONpn6yoUTTf+NPGGb3zQbncwCqjJC8H5hZ6570MULLM="
+      ],
+      "routes": [
+        "/glossary",
+        "/ru/glossary"
+      ]
+    },
     {
       "sourceSha": "LOCAL_N12_PRECOMMIT",
       "note": "N12 adds one explicit EN/RU browser-local calculator pair. Its calculator JavaScript is a first-party external asset; one shared hash-bound inline style avoids adding a new CSS bundle. The only new inline script hash is the inert application/ld+json identity payload emitted by RuLayout. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",

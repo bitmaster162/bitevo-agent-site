@@ -62,7 +62,7 @@ for (const [path, pair] of Object.entries(expected)) {
   equal(row?.lastmod, lastmod, path + ' currentness date exact');
   equal(row?.fingerprint, fingerprint, path + ' currentness fingerprint exact');
 }
-equal(currentness.routes.length, 121, 'currentness route count remains 112');
+equal(currentness.routes.length, 123, 'currentness route count remains 112');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5b-owner-facts-r1.mjs'), 'P29.5B verifier wired into verify:core');
 
 console.log('P29_5B_OWNER_FACTS_R1_GATE=PASS checks=' + checks + ' copy_hash=29d99a82ad959778923c888c56304258d88867766afd238d1fb513f4b7090f0e surfaces=2 q1=CONFIRMED_CLIENT_CHOICE_WRITTEN_SCOPE q2=CONFIRMED_NDA_YES q3=OMITTED access_mode_list=OMITTED nda_variant=OMITTED js_added=0 network_added=0');

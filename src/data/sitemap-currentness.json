@@ -263,6 +263,11 @@
       "fingerprint": "sha256:a7bf6b7a8b442d4573c0dd8663cfc796685c4472f9448b305d1280cbdfac20c9"
     },
     {
+      "path": "/glossary",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:63f18f2a82c7aa947e27e77b706b9f29a8effd7ab9d1ca79bb2a50046c17e439"
+    },
+    {
       "path": "/continuityos",
       "lastmod": "2026-10-05",
       "fingerprint": "sha256:0891f788e1d85a27aa78692dd28f1e949241711986c6fb5428a4c138e010ca76"
@@ -393,6 +398,11 @@
       "fingerprint": "sha256:b095273602050953d8ef9b7c571632d9dcc0ddac1d88043fa92b00c25ef8f56b"
     },
     {
+      "path": "/ru/glossary",
+      "lastmod": "2026-10-05",
+      "fingerprint": "sha256:31a4cdd444f6c970a9e97b0e1bc48b7e79485fd46f2d0b205aaec68e1c050e0b"
+    },
+    {
       "path": "/ru/continuityos",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:5dc3b1e358ca38cc2d7ae85f4d5e894e34e9f95730933cdd116b34b3eb38e65b"
@@ -400,7 +410,7 @@
     {
       "path": "/ru/universe",
       "lastmod": "2026-10-05",
-      "fingerprint": "sha256:622e32256dd64c5a6a3a82a07a7d9447a9379fc76c12a0ea1e2c092dc02d3d90"
+      "fingerprint": "sha256:9b20f28b1c88b6b737f7433b07003064595bc704d3e7f5a4f6e57463d15ee6b6"
     },
     {
       "path": "/ru/vision",
