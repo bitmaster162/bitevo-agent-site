@@ -49,14 +49,14 @@ check(enSource.includes('$4,900'), 'existing EN price remains present');
 check(ruSource.includes('$4,900'), 'existing RU price remains present');
 
 const expected = {
-  '/': { lastmod: '2026-10-03', fingerprint: 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429' },
+  '/': { lastmod: '2026-10-05', fingerprint: 'sha256:858879ec74e74b17b3476ed23103b6f6cb213bce5429bb15df3a60e679776203' },
   '/ru': { lastmod: '2026-10-04', fingerprint: 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 113, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-2-home-failure-examples-r1.mjs'), 'P29.2 verifier wired into verify:core');
 
 console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_LEAD_BEFORE_ACTIONS p29_1_calcom=PUBLISHED`);

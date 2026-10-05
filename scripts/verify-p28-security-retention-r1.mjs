@@ -39,13 +39,13 @@ for (const [label, html, facts] of [['EN', enHtml, [HEADING, EN_SCOPE, EN_EVIDEN
   check(!html.includes('ваши данные не используются для обучения AI-моделей'), `${label}: unconfirmed RU model-training claim omitted`);
 }
 const expected = {
-  '/security': { fingerprint:'sha256:dd99b4245ad155b3db9d627696ff2260506271b6ca55bae48ffccf82ea25b717', lastmod:'2026-10-04' },
+  '/security': { fingerprint:'sha256:931fc48d39f0ac06a069b3c7147e2a28897d482c8dd75c55f0f7b5fa2e98903e', lastmod:'2026-10-05' },
   '/ru/security': { fingerprint:'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', lastmod:'2026-10-03' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 113, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-security-retention-r1.mjs'), 'P28.5 verifier is wired into verify:core');
 console.log(`P28_SECURITY_RETENTION_R1_GATE=PASS checks=${checks} routes=2 static_html=PASS nda_unconfirmed=OMITTED model_training_unconfirmed=OMITTED js_required=0`);

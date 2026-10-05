@@ -6,7 +6,7 @@ const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const siteOrigin = 'https://bitevo.work';
 const registry = JSON.parse(await readFile(`${root}/src/data/public-route-registry.json`, 'utf8'));
 const routes = registry.routes
-  .filter(route => route.indexable && route.locale === 'en')
+  .filter(route => route.indexable && route.locale === 'en' && route.localePair !== 'deferred')
   .map(route => [route.path === '/' ? '/ru' : `/ru${route.path}`, route.path]);
 const navRequired = ['/ru/start','/ru/doctrine','/ru/proof','/ru/mapper','/ru/workspace','/ru/diagnostic','/ru/agent-authority-audit','/ru/audit-intake','/ru/pricing','/ru/build','/ru/universe'];
 const requiredCyrillic = /[А-Яа-яЁё]/;

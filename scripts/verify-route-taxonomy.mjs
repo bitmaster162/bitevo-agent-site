@@ -137,7 +137,10 @@ for (const marker of ['Free', '$1,500', '$4,900']) {
 }
 
 const ruIndexable = registry.routes.filter(route => route.indexable && route.locale === 'ru').length;
-if (ruIndexable !== englishIndexable.length) failures.push(`RU registry parity drift: expected ${englishIndexable.length} indexable routes, found ${ruIndexable}`);
+const deferredEnglish = englishIndexable.filter(route => route.localePair === 'deferred');
+const pairedEnglish = englishIndexable.filter(route => route.localePair !== 'deferred');
+if (ruIndexable !== pairedEnglish.length) failures.push(`RU registry parity drift: expected ${pairedEnglish.length} paired indexable routes, found ${ruIndexable}`);
+if (deferredEnglish.length !== 1 || deferredEnglish[0]?.localePairReason !== 'grounded_translation_pending') failures.push(`deferred locale contract drift: expected one grounded_translation_pending route, found ${deferredEnglish.length}`);
 
 if (failures.length) {
   console.error(`ROUTE_TAXONOMY_GATE=FAIL registry=${registry.routes.length} indexable=${expectedIndexable.length} sitemap=${sitemapRoutes.length} english=${englishIndexable.length} ru=${ruIndexable} failures=${failures.length}`);

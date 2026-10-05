@@ -41,13 +41,17 @@ if (registry.schema !== 'bitevo.public-route-registry/v1') failures.push(`unexpe
 if (parity.schema !== 'bitevo.ru-semantic-parity/v1') failures.push(`unexpected parity schema: ${parity.schema}`);
 
 const generatedResearchEn = enRoutes.filter(route => route.generatedBy === 'research-notes').length;
-checks += 2;
-if (enRoutes.length !== ruRoutes.length) failures.push(`indexable locale count mismatch: en=${enRoutes.length} ru=${ruRoutes.length}`);
-if (enRoutes.length !== 55 + generatedResearchEn) failures.push(`unexpected canonical EN route count: ${enRoutes.length}`);
+const deferredEnRoutes = enRoutes.filter(route => route.localePair === 'deferred');
+const pairedEnRoutes = enRoutes.filter(route => route.localePair !== 'deferred');
+checks += 4;
+if (pairedEnRoutes.length !== ruRoutes.length) failures.push(`paired locale count mismatch: paired_en=${pairedEnRoutes.length} ru=${ruRoutes.length}`);
+if (pairedEnRoutes.length !== 55 + generatedResearchEn) failures.push(`unexpected canonical paired EN route count: ${pairedEnRoutes.length}`);
+if (deferredEnRoutes.length !== 1) failures.push(`unexpected deferred locale route count: ${deferredEnRoutes.length}`);
+if (deferredEnRoutes.some(route => route.localePairReason !== 'grounded_translation_pending')) failures.push('deferred locale route missing grounded_translation_pending reason');
 
 const expectedGenerated = new Set();
 const explicitParityReuse = new Set(['/ru/start','/ru/entry-audit']);
-for (const en of enRoutes) {
+for (const en of pairedEnRoutes) {
   const ruPath = en.path === '/' ? '/ru' : `/ru${en.path}`;
   const ru = ruMap.get(ruPath);
   checks += 2;
@@ -90,6 +94,17 @@ for (const en of enRoutes) {
   ];
   checks += pairChecks.length;
   for (const [label, ok] of pairChecks) if (!ok) failures.push(label);
+}
+
+for (const en of deferredEnRoutes) {
+  const ruPath = en.path === '/' ? '/ru' : `/ru${en.path}`;
+  const enHtml = await readFile(builtFile(en.path), 'utf8');
+  checks += 5;
+  if (ruMap.has(ruPath)) failures.push(`${en.path}: deferred RU pair unexpectedly registered at ${ruPath}`);
+  if (await exists(explicitSourceFile(ruPath))) failures.push(`${en.path}: deferred RU source unexpectedly exists at ${ruPath}`);
+  if (enHtml.includes(`hreflang="ru"`)) failures.push(`${en.path}: deferred locale route must not emit RU hreflang`);
+  if (enHtml.includes('data-global-locale-switch="en-to-ru"')) failures.push(`${en.path}: deferred locale route must not emit EN→RU switch`);
+  if (!enHtml.includes('data-public-build-receipt=')) failures.push(`${en.path}: deferred locale route missing build receipt`);
 }
 
 const actualGenerated = new Set(parityMap.keys());
@@ -144,9 +159,9 @@ if (!ruStart.includes('разрешение на тестирование')) fai
 if (!ruStart.includes('href="/ru/pricing"')) failures.push('/ru/start: missing pricing decision path');
 
 if (failures.length) {
-  console.error(`RU_SEMANTIC_PARITY_GATE=FAIL en=${enRoutes.length} ru=${ruRoutes.length} generated=${expectedGenerated.size} checks=${checks} failures=${failures.length}`);
+  console.error(`RU_SEMANTIC_PARITY_GATE=FAIL en=${enRoutes.length} ru=${ruRoutes.length} paired=${pairedEnRoutes.length} deferred=${deferredEnRoutes.length} generated=${expectedGenerated.size} checks=${checks} failures=${failures.length}`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log(`RU_SEMANTIC_PARITY_GATE=PASS en=${enRoutes.length} ru=${ruRoutes.length} pairs=${enRoutes.length} generated=${expectedGenerated.size} explicit=${ruRoutes.length - expectedGenerated.size} checks=${checks} commercial_front_door=RU_START claim_boundary=PASS failures=0`);
+console.log(`RU_SEMANTIC_PARITY_GATE=PASS en=${enRoutes.length} ru=${ruRoutes.length} pairs=${pairedEnRoutes.length} deferred=${deferredEnRoutes.length} generated=${expectedGenerated.size} explicit=${ruRoutes.length - expectedGenerated.size} checks=${checks} commercial_front_door=RU_START claim_boundary=PASS failures=0`);

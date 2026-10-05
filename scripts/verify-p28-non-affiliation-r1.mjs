@@ -54,10 +54,10 @@ for (const file of htmlFiles) {
   check(!footer.includes(wrong), `${file.pathname}: no wrong-locale disclosure in footer`);
 }
 
-equal(htmlFiles.length, 126, 'all rendered HTML pages checked on P30 baseline');
-equal(enPages, 69, 'EN footer coverage exact on P30 baseline');
-equal(ruPages, 57, 'RU footer coverage exact on P30 baseline');
-equal(currentness.routes.length, 112, 'currentness route count exact on P30 baseline');
-check(currentness.routes.every(row => /^\d{4}-\d{2}-\d{2}$/.test(String(row.lastmod || '')) && /^sha256:[0-9a-f]{64}$/.test(row.fingerprint)), 'all 112 currentness rows retain valid dates and fingerprints');
+equal(htmlFiles.length, 127, 'all rendered HTML pages checked on N2 baseline');
+equal(enPages, 70, 'EN footer coverage exact on N2 baseline');
+equal(ruPages, 57, 'RU footer coverage remains exact');
+equal(currentness.routes.length, 113, 'currentness route count exact on N2 baseline');
+check(currentness.routes.every(row => /^\d{4}-\d{2}-\d{2}$/.test(String(row.lastmod || '')) && /^sha256:[0-9a-f]{64}$/.test(row.fingerprint)), 'all 113 currentness rows retain valid dates and fingerprints');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-non-affiliation-r1.mjs'), 'P28.4 verifier is wired into verify:core');
 console.log(`P28_NON_AFFILIATION_R1_GATE=PASS checks=${checks} html=${htmlFiles.length} en=${enPages} ru=${ruPages} currentness=${currentness.routes.length} static_html=PASS js_required=0`);

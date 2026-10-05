@@ -297,6 +297,15 @@
       "parent": "/agent-authority-audit"
     },
     {
+      "path": "/agent-incidents",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/owasp-agentic-top-10",
+      "localePair": "deferred",
+      "localePairReason": "grounded_translation_pending"
+    },
+    {
       "path": "/guides",
       "category": "RESEARCH",
       "indexable": true,

@@ -82,10 +82,10 @@ check(llms.includes(TRIAGE) && llms.includes('verified Cal.com booking page'), '
 const currentness = JSON.parse(await read('src/data/sitemap-currentness.json'));
 const packageJson = JSON.parse(await read('package.json'));
 const expected = {
-  '/': ['2026-10-03', 'sha256:356ee26fba6cdb4913e8257a31eb06fe13b23468f03f9f7baaffb89c27709429'],
+  '/': ['2026-10-05', 'sha256:858879ec74e74b17b3476ed23103b6f6cb213bce5429bb15df3a60e679776203'],
   '/ru': ['2026-10-04', 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436'],
-  '/pricing': ['2026-10-04', 'sha256:e992e70a98980de3247276d21da17f68c9d69791cf92f01ef0b4cfe2fb6e36ef'],
-  '/entry-audit': ['2026-10-03', 'sha256:5f57214e401a52d73a03ae85ebd399087f26c675593d7e01f2bfde10a03e9bfe']
+  '/pricing': ['2026-10-05', 'sha256:d4a8fe52df7aee055bf542d14a591612499e8adcaaa024508a59fc001053489b'],
+  '/entry-audit': ['2026-10-05', 'sha256:b8d48c7f624af9fcfd977ca17011b2d2ffe6263fae56bd316fb041bb77343167']
 };
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
@@ -93,7 +93,7 @@ for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   equal(row?.lastmod, lastmod, `${route}: currentness date exact`);
   equal(row?.fingerprint, fingerprint, `${route}: currentness fingerprint exact`);
 }
-equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 113, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-1-calcom-triage-r1.mjs'), 'P29.1 verifier is wired into verify:core');
 
 check(homeSource.includes('Typical failures we test for:'), 'P29.2 EN failure examples remain present');

@@ -98,14 +98,14 @@ check(!enSource.includes('Book a free 20-minute triage') && !ruSource.includes('
 check(!enSource.includes('cal.com') && !ruSource.includes('cal.com'), 'no Cal.com URL published by P29.3');
 
 const expectedCurrentness = {
-  '/diagnostic': { lastmod: '2026-10-04', fingerprint: 'sha256:f1f486289fda486e3e851e175651c5b35d410d2a36fc5630e0fcdf64ef8a0718' },
+  '/diagnostic': { lastmod: '2026-10-05', fingerprint: 'sha256:6a3365a00e676720709a69af93f6cb08e25baa8a1ae4589d9d97b045c7c0653c' },
   '/ru/diagnostic': { lastmod: '2026-10-04', fingerprint: 'sha256:ddc94d00f5d0b8d33b7e96da5e822ce3166d51e20a83df689b674f94c51a0358' }
 };
 for (const [path, value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 112, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 113, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-3-diagnostic-example-result-r1.mjs'), 'P29.3 verifier wired into verify:core');
 
 console.log(`P29_3_DIAGNOSTIC_EXAMPLE_RESULT_R1_GATE=PASS checks=${checks} locales=2 gates=7 yes=3 no=1 unknown=3 unresolved=4 static_html=PASS native_details=COLLAPSED dynamic_logic=UNCHANGED js_added=0 network_added=0 p29_1_calcom=OMITTED`);

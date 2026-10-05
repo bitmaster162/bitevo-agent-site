@@ -51,8 +51,8 @@ check(!securityHtml.includes('Which stacks do you work with?'), '/security keeps
 check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b)/i.test(component), 'P29.5B adds no JS, network, forms, buttons or links');
 
 const expected = {
-  '/pricing': ['2026-10-04', 'sha256:e992e70a98980de3247276d21da17f68c9d69791cf92f01ef0b4cfe2fb6e36ef'],
-  '/security': ['2026-10-04', 'sha256:dd99b4245ad155b3db9d627696ff2260506271b6ca55bae48ffccf82ea25b717']
+  '/pricing': ['2026-10-05', 'sha256:d4a8fe52df7aee055bf542d14a591612499e8adcaaa024508a59fc001053489b'],
+  '/security': ['2026-10-05', 'sha256:931fc48d39f0ac06a069b3c7147e2a28897d482c8dd75c55f0f7b5fa2e98903e']
 };
 for (const [path, pair] of Object.entries(expected)) {
   const lastmod = pair[0];
@@ -62,7 +62,7 @@ for (const [path, pair] of Object.entries(expected)) {
   equal(row?.lastmod, lastmod, path + ' currentness date exact');
   equal(row?.fingerprint, fingerprint, path + ' currentness fingerprint exact');
 }
-equal(currentness.routes.length, 112, 'currentness route count remains 112');
+equal(currentness.routes.length, 113, 'currentness route count remains 112');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5b-owner-facts-r1.mjs'), 'P29.5B verifier wired into verify:core');
 
 console.log('P29_5B_OWNER_FACTS_R1_GATE=PASS checks=' + checks + ' copy_hash=29d99a82ad959778923c888c56304258d88867766afd238d1fb513f4b7090f0e surfaces=2 q1=CONFIRMED_CLIENT_CHOICE_WRITTEN_SCOPE q2=CONFIRMED_NDA_YES q3=OMITTED access_mode_list=OMITTED nda_variant=OMITTED js_added=0 network_added=0');
