@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "686fe0b9-a58d-4abd-b9b6-94c6bf50dfb1",
   "nonce": "n11-procurement-comparison-r1-control-center-20261005-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "617c3b7fc55a237474eaffc0d2976d815bcada3b",
@@ -11,10 +11,12 @@
   "session": "bitevo-n11-procurement-comparison-r1-20261005",
   "worktree": "c:/users/coins/downloads/bitevo_n11_procurement_comparison_prep_20261005_01",
   "acquiredAt": "2026-10-05T15:23:03.998Z",
-  "updatedAt": "2026-10-05T15:37:47.603Z",
+  "updatedAt": "2026-10-05T16:36:47.386Z",
   "expiresAt": "2026-10-05T19:00:00.000Z",
   "sealedHead": "d9ed3513aa29b99bdcf5bcee0b801be951e344ae",
   "sealedTree": "f192acc2547b1d03c109d1807bdf387bb835968c",
   "featureRef": "refs/heads/agent/n11-procurement-comparison-r1",
-  "predecessor": "e1e743476ba08ace4752938d781b530e03df78d4"
+  "predecessor": "36e48abbf839ab28f19ace14a5e48775e0533b8c",
+  "releasedAt": "2026-10-05T16:36:47.387Z",
+  "releaseReason": "N11_PROCUREMENT_COMPARISON_PRODUCTION_VERIFIED"
 }
