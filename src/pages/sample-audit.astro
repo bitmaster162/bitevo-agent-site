@@ -65,6 +65,30 @@ const trace = [
   ['05', 'AMBIGUITY', 'Internal acknowledgement alone is insufficient', 'DOCTRINE'],
   ['06', 'DECISION', 'CONSTRAIN until external effect is reconciled', 'WORKED EXAMPLE']
 ];
+
+const reportStatuses = ['PASS', 'FAIL', 'PARTIAL', 'REJECTED HYPOTHESIS', 'BLOCKED'];
+
+const reportMatrix = [
+  ['T1', 'Object binding', '[Expected]', '[Observed]', '[Status]', '[Ref]'],
+  ['T2', 'Approval binding', '[Expected]', '[Observed]', '[Status]', '[Ref]'],
+  ['T3', 'External effect', '[Expected]', '[Observed]', '[Status]', '[Ref]'],
+  ['T4', 'Retry / replay', '[Expected]', '[Observed]', '[Status]', '[Ref]'],
+  ['T5', 'Identity / scope', '[Expected]', '[Observed]', '[Status]', '[Ref]']
+];
+
+const reportFindingCard = [
+  ['Impact', '[Impact]'],
+  ['Evidence', '[Evidence]'],
+  ['Limitations', '[Limitations]'],
+  ['Confidence', '[Confidence]']
+];
+
+const reportOwnerDecision = [
+  ['Owner question', '[Owner question]'],
+  ['Result', '[PASS / FAIL / PARTIAL / REJECTED HYPOTHESIS / BLOCKED]'],
+  ['Decision', '[Owner decision]'],
+  ['Supported by', '[Evidence references]']
+];
 ---
 
 <Layout title="SAMPLE-001 — Synthetic Agent Authority Audit Pack | BitEvo" description="A synthetic worked example of the BitEvo Authority Ledger, Evidence Contract, Failure Plan and Decision Memo. Not customer evidence, not an executed audit.">
@@ -92,6 +116,32 @@ const trace = [
         <div><span>PROPOSED EFFECT</span><strong>update 2 fields on 1 staging lead</strong></div>
         <div><span>PRIMARY RISK</span><strong>wrong / stale / unconfirmed external state</strong></div>
         <div><span>OWNER DECISION</span><strong>how much write authority is justified?</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule" data-f1-3-report-template>
+    <div class="container split-head">
+      <div><div class="eyebrow">Entry Audit report template · TEMPLATE</div><h2 class="section-title">Expected, observed, status and evidence stay separate.</h2></div>
+      <p class="lede">This block mirrors the public Entry Audit Report Template. It is structure only: placeholders are not observations, test results or customer evidence.</p>
+    </div>
+    <div class="container boundary panel" aria-label="Allowed Entry Audit result statuses">
+      <div class="boundary-top"><span>RESULT STATUS VOCABULARY</span><strong>TEMPLATE ONLY</strong></div>
+      <div class="legend">{reportStatuses.map((status, index) => <span><i>{index + 1}</i> {status}</span>)}</div>
+    </div>
+    <div class="container record panel" aria-label="Expected versus observed report template">
+      {reportMatrix.map(([id,question,expected,observed,status,evidence]) => (
+        <div><span>{id} · {question}</span><p><strong>Expected:</strong> {expected} · <strong>Observed:</strong> {observed} · <strong>Status:</strong> {status} · <strong>Evidence:</strong> {evidence}</p></div>
+      ))}
+    </div>
+    <div class="container split-head">
+      <div>
+        <div class="eyebrow">Finding card fields</div>
+        <div class="record panel">{reportFindingCard.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
+      </div>
+      <div>
+        <div class="eyebrow">Owner decision fields</div>
+        <div class="record panel">{reportOwnerDecision.map(([k,v]) => <div><span>{k}</span><p>{v}</p></div>)}</div>
       </div>
     </div>
   </section>

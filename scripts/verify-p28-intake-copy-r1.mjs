@@ -37,7 +37,7 @@ check(!llms.includes('prepare a local scope brief only; they do not book or subm
 check(short.includes('explicit consent') && short.includes('up to 30 days'), 'shared P27.1 component keeps consent and retention disclosure');
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
 const expected = {
-  "/pricing": { fingerprint: "sha256:d4a8fe52df7aee055bf542d14a591612499e8adcaaa024508a59fc001053489b", lastmod: "2026-10-05" },
+  "/pricing": { fingerprint: "sha256:26c47dbf02c967df21873b50604623a058c1e15b60063c68918af7523f29bea6", lastmod: "2026-10-05" },
   "/ru/pricing": { fingerprint: "sha256:586bdae1520076200a2cdbbd6e2ca1faa08076e6db4f011ebda06b51f3bd6bcd", lastmod: "2026-10-03" },
   "/agent-authority-audit": { fingerprint: "sha256:6df48cbb322e67243498d9d2632465d3a132340a645b6a6857d77e682dffea55", lastmod: "2026-10-05" }
 };
