@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "c5bb19cc-8752-46af-9270-861609e9b571",
   "nonce": "n21-cloudflare-en-route-recovery-r1-control-center-20261006-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "0c794dca1a9f9ef447f29253093cdb1be0c0bc75",
@@ -11,10 +11,10 @@
   "session": "bitevo-n21-cloudflare-en-route-recovery-r1-20261006",
   "worktree": "c:/users/coins/downloads/bitevo_n21_cf_en_route_recovery_r1_20261006_01",
   "acquiredAt": "2026-10-06T17:19:26.239Z",
-  "updatedAt": "2026-10-06T17:19:26.239Z",
+  "updatedAt": "2026-10-06T17:42:56.610Z",
   "expiresAt": "2026-10-07T05:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "5ea1ffbe034c39379a0d903c430cc6854e00a6e3"
+  "sealedHead": "26be72eb9c012a0e3b1a2aff92a76db5b7939c4d",
+  "sealedTree": "9b7acf6f591b5dfa46594793fab60a49c2c66ccc",
+  "featureRef": "refs/heads/agent/n21-cloudflare-en-route-recovery-r1",
+  "predecessor": "c5a3c16cb6cf1cb5fb10e77817edae33299b1728"
 }
