@@ -100,7 +100,8 @@
     "6VA0DCYzkFXJhU764X+OW5x2RE61lVFMPA9Fx/CazKA=",
     "2/BJkl1q7uUBZQWihQ8czyQLoGPRzR01pf45m1xj70Q=",
     "EOjBDgBUBATcg2F+52tMrl3V6zR6+U0IonnDow48kng=",
-    "Do2BCWLHw8WmrGj2jNWm4iHjgsh9LES+v5PMwzXEnWI="
+    "Do2BCWLHw8WmrGj2jNWm4iHjgsh9LES+v5PMwzXEnWI=",
+    "JWngGCeSqBWt87fL7YCIIsBJOne4B2v+i5gz0llj/po="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -151,7 +152,9 @@
     "iRmPnDwWusLHHdpZ4RQZ3SPovA0dPXHHNL+SlFD8bUQ=",
     "Q9jePoPyiSkBkHIchh2aDSFuvYYrAZo39YF+EFFGpzE=",
     "M+blMu0n9fd7pgq9Uyjgelwul1CKHeDFsbQ8+LZKAG4=",
-    "ONpn6yoUTTf+NPGGb3zQbncwCqjJC8H5hZ6570MULLM="
+    "ONpn6yoUTTf+NPGGb3zQbncwCqjJC8H5hZ6570MULLM=",
+    "HklN8dG1EP6P8wbD8hrfYB7EXorMmKci1tfk0w8A6Ws=",
+    "XNK58dcGaryObFQQyYiQYqpINVTcjPPhxfgT8SdU2/s="
   ],
   "reviews": [
     {
@@ -361,6 +364,21 @@
         "/guides/before-write-access",
         "/ru/guides/before-write-access",
         "/ru/guides"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_C6_TRADING_BOT_AUTHORITY_AUDIT_R1_PRECOMMIT",
+      "note": "C6 adds one explicit EN/RU trading-bot authority audit pair. Two new style hashes are the exact Astro-emitted page styles; one new script hash is the inert application/ld+json identity payload emitted by RuLayout. No executable inline JavaScript, inline style attribute, wildcard, unsafe-inline, unsafe-eval, new external origin, credential authority, or trading authority is introduced.",
+      "scripts": [
+        "JWngGCeSqBWt87fL7YCIIsBJOne4B2v+i5gz0llj/po="
+      ],
+      "styles": [
+        "HklN8dG1EP6P8wbD8hrfYB7EXorMmKci1tfk0w8A6Ws=",
+        "XNK58dcGaryObFQQyYiQYqpINVTcjPPhxfgT8SdU2/s="
+      ],
+      "routes": [
+        "/trading-bot-authority-audit",
+        "/ru/trading-bot-authority-audit"
       ]
     }
   ]

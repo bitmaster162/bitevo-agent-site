@@ -37,6 +37,13 @@
       "parent": "/pricing"
     },
     {
+      "path": "/trading-bot-authority-audit",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/agent-authority-audit"
+    },
+    {
       "path": "/entry-audit",
       "category": "ENTRY",
       "indexable": true,
@@ -474,6 +481,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/pricing"
+    },
+    {
+      "path": "/ru/trading-bot-authority-audit",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/agent-authority-audit"
     },
     {
       "path": "/ru/mapper",

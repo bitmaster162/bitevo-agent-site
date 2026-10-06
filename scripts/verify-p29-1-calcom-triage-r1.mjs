@@ -93,7 +93,7 @@ for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   equal(row?.lastmod, lastmod, `${route}: currentness date exact`);
   equal(row?.fingerprint, fingerprint, `${route}: currentness fingerprint exact`);
 }
-equal(currentness.routes.length, 125, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 127, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-1-calcom-triage-r1.mjs'), 'P29.1 verifier is wired into verify:core');
 
 check(homeSource.includes('Typical failures we test for:'), 'P29.2 EN failure examples remain present');
