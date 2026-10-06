@@ -942,6 +942,15 @@
       "reviewed": "2026-10-01"
     },
     {
+      "path": "/guides/mcp-server-authority-review",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-06"
+    },
+    {
       "path": "/ru/guides/before-write-access",
       "category": "RESEARCH",
       "indexable": true,
@@ -949,6 +958,15 @@
       "parent": "/ru/guides",
       "generatedBy": "research-notes",
       "reviewed": "2026-10-01"
+    },
+    {
+      "path": "/ru/guides/mcp-server-authority-review",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-06"
     }
   ],
   "redirects": [

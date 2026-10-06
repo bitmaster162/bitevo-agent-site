@@ -239,8 +239,8 @@
     },
     {
       "path": "/guides",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:5441bd5d215d44be7d39e0c147a17ca1b89e1462c5dc38046ca906da1cdcbc7d"
+      "lastmod": "2026-10-06",
+      "fingerprint": "sha256:2c538684dfa3eb4a29f94c37be83731b438a9d58ca706abf937b3fd2e8d53054"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -389,8 +389,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-10-04",
-      "fingerprint": "sha256:69c64acb0993bb0ee2caad9a6007af3de3001e35cc5e3644544113eb71a81418"
+      "lastmod": "2026-10-06",
+      "fingerprint": "sha256:79f752559e3d0049ed2d0a068209c87f92ce3d79ed7e1e601aa59fdf62888880"
     },
     {
       "path": "/ru/doctrine",
@@ -409,8 +409,8 @@
     },
     {
       "path": "/ru/universe",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:9b20f28b1c88b6b737f7433b07003064595bc704d3e7f5a4f6e57463d15ee6b6"
+      "lastmod": "2026-10-06",
+      "fingerprint": "sha256:4fc997b9705d120d431118d9cbaca79a0b168d11bc572a03167071c0db771f5e"
     },
     {
       "path": "/ru/vision",
@@ -613,9 +613,19 @@
       "fingerprint": "sha256:60598c2b7c63f423355ed560adbc61ef56c15bbd165c4f1c10b38a5aebb99488"
     },
     {
+      "path": "/guides/mcp-server-authority-review",
+      "lastmod": "2026-10-06",
+      "fingerprint": "sha256:961a6e98accb72f4ab27234986f082d2d3b6d11190e66067409ff922680a80ed"
+    },
+    {
       "path": "/ru/guides/before-write-access",
       "lastmod": "2026-10-01",
       "fingerprint": "sha256:5320d90031411630d478bfb9a3930961d73e91f2caf6cd05b4a198bcd3880639"
+    },
+    {
+      "path": "/ru/guides/mcp-server-authority-review",
+      "lastmod": "2026-10-06",
+      "fingerprint": "sha256:3398c5de67b4aa0657d53977f04476045b4173b67d3cb50ca4c57dae1733dbbe"
     }
   ]
 }
