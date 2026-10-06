@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "f19f2692-0ec0-4d78-ada1-4369d81ff36d",
   "nonce": "n21-mcp-server-authority-review-r1-control-center-20261006-r2",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "314f75a8bfd373ee5f0fa378d0ad2afad518a3e9",
@@ -11,11 +11,13 @@
   "session": "bitevo-n21-mcp-server-authority-review-r1-clean-r2-20261006",
   "worktree": "c:/users/coins/downloads/bitevo_n21_mcp_authority_review_r1_clean_20261006_02",
   "acquiredAt": "2026-10-06T13:56:06.809Z",
-  "updatedAt": "2026-10-06T16:33:41.293Z",
+  "updatedAt": "2026-10-06T17:15:48.091Z",
   "expiresAt": "2026-10-07T05:00:00.000Z",
   "sealedHead": "2298fa935e23b235596bc1d32ebecb13ab032b63",
   "sealedTree": "821e7abbf8a8ef8af273cbb4f4ee4046dd56c778",
   "featureRef": "refs/heads/agent/n21-mcp-server-authority-review-r1",
-  "predecessor": "7f6171a40ab08f9007c481559051a8bb14d9771d",
-  "transferredFrom": "chatgpt-control-center"
+  "predecessor": "f416a45622b26c16a759d204b4fffd9721d17852",
+  "transferredFrom": "chatgpt-control-center",
+  "releasedAt": "2026-10-06T17:15:48.091Z",
+  "releaseReason": "N21_CLOUDFLARE_EN_ROUTE_REGRESSION_RECOVERY"
 }
