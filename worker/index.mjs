@@ -1,7 +1,8 @@
 const canonicalGuides = new Set([
   '/guides/security-sandboxing',
   '/guides/fleet-coordinator-drift-monitoring',
-  '/guides/d3-tool-io-bridge-contract'
+  '/guides/d3-tool-io-bridge-contract',
+  '/guides/mcp-server-authority-review'
 ]);
 
 export default {
