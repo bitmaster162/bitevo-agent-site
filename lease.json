@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "8eb77875-1e80-40b1-a932-d6be15955891",
   "nonce": "c6-trading-bot-authority-audit-r1-control-center-20261007-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "c1dd93682113089aefcc64b309267471173662ee",
@@ -11,10 +11,10 @@
   "session": "bitevo-c6-trading-bot-authority-audit-r1-20261007",
   "worktree": "c:/users/coins/downloads/bitevo_c6_trading_bot_authority_audit_r1_20261007_01",
   "acquiredAt": "2026-10-06T18:08:41.228Z",
-  "updatedAt": "2026-10-06T18:08:41.228Z",
+  "updatedAt": "2026-10-06T19:18:50.871Z",
   "expiresAt": "2026-10-07T06:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "a46128bb8a35f229655a800f8a1bfb62b919c997"
+  "sealedHead": "efa72119aa49b225c988c14210d80fea53301639",
+  "sealedTree": "ceb06724f40989d28d827f8bf38ff11a393a847a",
+  "featureRef": "refs/heads/agent/c6-trading-bot-authority-audit-r1",
+  "predecessor": "c238f0cec6f61ea8a7321bb6f188b60d2266ca69"
 }
