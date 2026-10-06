@@ -78,14 +78,14 @@ for (const [path,locale,parent] of expectedRoutes) {
   check(/^\d{4}-\d{2}-\d{2}$/.test(String(current?.lastmod || '')), path + ' currentness date valid');
   check(/^sha256:[0-9a-f]{64}$/.test(String(current?.fingerprint || '')), path + ' currentness fingerprint valid');
 }
-equal(registry.routes.filter(row => row.indexable).length, 123, 'indexable route count N9 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 62, 'EN indexable route count N9 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 61, 'RU indexable route count N9 baseline');
-equal(currentness.routes.length, 123, 'currentness route count N9 baseline');
+equal(registry.routes.filter(row => row.indexable).length, 125, 'indexable route count N9 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 63, 'EN indexable route count N9 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 62, 'RU indexable route count N9 baseline');
+equal(currentness.routes.length, 125, 'currentness route count N9 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-n9-agentic-skills-acs-r1.mjs'), 'N9 verifier wired into verify:core');
 
 console.log(
   'N9_AGENTIC_SKILLS_ACS_R1_GATE=PASS checks=' + checks +
-  ' ast_rows=10 acs_profiles=7 routes=4 indexable=123 en=62 ru=61' +
+  ' ast_rows=10 acs_profiles=7 routes=4 indexable=125 en=63 ru=62' +
   ' ast05=CURRENT acs_v=0.1.0 owaps_sources=BOUND certification_claim=0 implementation_claim=0'
 );

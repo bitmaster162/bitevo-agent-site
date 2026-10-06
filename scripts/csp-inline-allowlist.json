@@ -97,7 +97,10 @@
     "1QZ12tnOOwfT9AeBcFPNWZkDcbRP689MrPct6/WLJ7c=",
     "0OpxJVOCo8+4HCp0UMLkw7j2YRHVcZ60nDtPULcalo0=",
     "Y8rCbPn01RUVhmSauKxpKO4/qn3Ekz1AACa+UKkcwtE=",
-    "6VA0DCYzkFXJhU764X+OW5x2RE61lVFMPA9Fx/CazKA="
+    "6VA0DCYzkFXJhU764X+OW5x2RE61lVFMPA9Fx/CazKA=",
+    "2/BJkl1q7uUBZQWihQ8czyQLoGPRzR01pf45m1xj70Q=",
+    "EOjBDgBUBATcg2F+52tMrl3V6zR6+U0IonnDow48kng=",
+    "Do2BCWLHw8WmrGj2jNWm4iHjgsh9LES+v5PMwzXEnWI="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -151,6 +154,19 @@
     "ONpn6yoUTTf+NPGGb3zQbncwCqjJC8H5hZ6570MULLM="
   ],
   "reviews": [
+    {
+      "sourceSha": "LOCAL_N21_PRECOMMIT",
+      "note": "N21 adds one EN/RU research-note pair. The three new script hashes are inert application/ld+json payloads emitted for the new research routes. No executable inline JavaScript, inline style attribute, new style hash, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",
+      "scripts": [
+        "2/BJkl1q7uUBZQWihQ8czyQLoGPRzR01pf45m1xj70Q=",
+        "EOjBDgBUBATcg2F+52tMrl3V6zR6+U0IonnDow48kng=",
+        "Do2BCWLHw8WmrGj2jNWm4iHjgsh9LES+v5PMwzXEnWI="
+      ],
+      "routes": [
+        "/guides/mcp-server-authority-review",
+        "/ru/guides/mcp-server-authority-review"
+      ]
+    },
     {
       "sourceSha": "LOCAL_N20_PRECOMMIT",
       "note": "N20 adds an explicit EN/RU glossary pair with Schema.org DefinedTermSet markup. The two new style hashes are the exact Astro-emitted page styles. Two new script hashes are the inert DefinedTermSet application/ld+json payloads and one is the inert RU identity application/ld+json payload emitted by RuLayout. No executable inline JavaScript, style attribute, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",

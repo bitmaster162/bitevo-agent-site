@@ -30,6 +30,33 @@
       "research_source": "БИБЛИОТЕКА-ИНЦИДЕНТОВ-N2 (12 cases, verified 01.10.2026); BitEvo doctrine; R057 TL;DR"
     },
     {
+      "source": "src/content/research-notes/mcp-server-authority-review.en.md",
+      "filename": "mcp-server-authority-review.en.md",
+      "slug": "mcp-server-authority-review",
+      "path": "/guides/mcp-server-authority-review",
+      "alternate": "/ru/guides/mcp-server-authority-review",
+      "lang": "en",
+      "card": "05 · Research · MCP server authority review — Source-backed review of 20 open-source MCP servers through BitEvo's seven authority gates.",
+      "card_number": "05",
+      "card_type": "Research",
+      "card_text": "MCP server authority review — Source-backed review of 20 open-source MCP servers through BitEvo's seven authority gates.",
+      "title": "Authority review of 20 open-source MCP servers",
+      "seo_title": "20 open-source MCP servers: authority controls | BitEvo",
+      "description": "Source-backed review of authority controls in 20 open-source MCP servers: scope, object binding, confirmation, freshness and recovery.",
+      "reviewed": "2026-10-06",
+      "next_review": "2027-01-06",
+      "related": [
+        "/agent-authority-audit",
+        "/diagnostic",
+        "/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "20 first-party/repository sources rechecked 2026-10-06; BitEvo N21 R1"
+    },
+    {
       "source": "src/content/research-notes/before-write-access.ru.md",
       "filename": "before-write-access.ru.md",
       "slug": "before-write-access",
@@ -55,6 +82,33 @@
         "BreadcrumbList"
       ],
       "research_source": "БИБЛИОТЕКА-ИНЦИДЕНТОВ-N2 (12 случаев, сверено 01.10.2026); доктрина BitEvo; R057 TL;DR"
+    },
+    {
+      "source": "src/content/research-notes/mcp-server-authority-review.ru.md",
+      "filename": "mcp-server-authority-review.ru.md",
+      "slug": "mcp-server-authority-review",
+      "path": "/ru/guides/mcp-server-authority-review",
+      "alternate": "/guides/mcp-server-authority-review",
+      "lang": "ru",
+      "card": "05 · Исследование · Обзор полномочий MCP-серверов — Проверка 20 open-source MCP-серверов через семь ворот полномочий BitEvo.",
+      "card_number": "05",
+      "card_type": "Исследование",
+      "card_text": "Обзор полномочий MCP-серверов — Проверка 20 open-source MCP-серверов через семь ворот полномочий BitEvo.",
+      "title": "Обзор полномочий 20 open-source MCP-серверов",
+      "seo_title": "Полномочия 20 open-source MCP-серверов | BitEvo",
+      "description": "Проверка полномочий в 20 open-source MCP-серверах: scope, привязка объекта, подтверждение, свежесть доказательств и восстановление.",
+      "reviewed": "2026-10-06",
+      "next_review": "2027-01-06",
+      "related": [
+        "/ru/agent-authority-audit",
+        "/ru/diagnostic",
+        "/ru/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "20 первичных/repository источников перепроверены 2026-10-06; BitEvo N21 R1"
     }
   ]
 }
