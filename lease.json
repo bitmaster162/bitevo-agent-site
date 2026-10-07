@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "3b13f8ec-bb56-421c-9249-ead691f0d019",
   "nonce": "n23-github-action-bitevo-precheck-r1-control-center-20261007-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "efea670ec132a507e7e9106948ca2bc84c0f83df",
@@ -11,10 +11,10 @@
   "session": "bitevo-n23-github-action-bitevo-precheck-r1-20261007",
   "worktree": "c:/users/coins/downloads/bitevo_n23_github_action_bitevo_precheck_r1_20261007_01",
   "acquiredAt": "2026-10-07T07:23:54.923Z",
-  "updatedAt": "2026-10-07T07:23:54.923Z",
+  "updatedAt": "2026-10-07T07:55:21.868Z",
   "expiresAt": "2026-10-08T06:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "6171dc5ce57f4b21909fed5c94cc437de6c7cedc"
+  "sealedHead": "d87b41805a2a0a97b43b9f0af1cf002b42145c86",
+  "sealedTree": "dfb612c15127f8bc064996330074c9f0ddeae4a4",
+  "featureRef": "refs/heads/agent/n23-github-action-bitevo-precheck-r1",
+  "predecessor": "9196f109066f69d28f6427d7764a905454457f51"
 }
