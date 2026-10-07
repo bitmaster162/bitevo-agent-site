@@ -1,0 +1,122 @@
+---
+const { locale = 'en' } = Astro.props;
+const ru = locale === 'ru';
+
+const t = ru ? {
+  eyebrow: 'C7 · Seaport decoder · LOCAL ONLY',
+  title: 'Разберите Seaport OrderComponents без кошелька, подписи и RPC.',
+  intro: 'Вставьте JSON OrderComponents или OpenSea-style protocol_data.parameters. Декодер работает только в браузере: не отправляет данные, не подключает wallet и не запрашивает chain state.',
+  orderLabel: 'OrderComponents / protocol data JSON',
+  duneLabel: 'Публичные Dune query/dashboard URL — по одному на строку, опционально',
+  decode: 'Декодировать локально',
+  reset: 'Сбросить',
+  empty: 'Результат появится здесь после локального разбора JSON.',
+  error: 'Не удалось декодировать входные данные.',
+  report: 'Нормализованный локальный отчёт',
+  dune: 'Dune evidence references',
+  duneEmpty: 'Dune URL не добавлены.',
+  boundary: 'URL классифицируется только по форме. Этот инструмент не открывает Dune, не проверяет public visibility и не превращает dashboard/query в доказательство транзакции.',
+  local: 'LOCAL ONLY · can_trade=false · 0 network requests',
+  noHash: 'ORDER HASH: NOT COMPUTED · no RPC read',
+  c4: 'C4 / N14: BLOCKED — без реального проверяемого transaction evidence.',
+  inputHint: 'Для полного OrderComponents нужны offerer, zone, offer, consideration, orderType, startTime, endTime, zoneHash, salt, conduitKey и counter.',
+  duneHint: 'Допускаются только HTTPS URL на dune.com. Query/dashboard остаётся внешней ссылкой на evidence, а не автоматически подтверждённым фактом.'
+} : {
+  eyebrow: 'C7 · Seaport decoder · LOCAL ONLY',
+  title: 'Decode Seaport OrderComponents without a wallet, signature or RPC.',
+  intro: 'Paste OrderComponents JSON or OpenSea-style protocol_data.parameters. The decoder runs only in your browser: it sends nothing, connects no wallet and queries no chain state.',
+  orderLabel: 'OrderComponents / protocol data JSON',
+  duneLabel: 'Public Dune query/dashboard URLs — one per line, optional',
+  decode: 'Decode locally',
+  reset: 'Reset',
+  empty: 'The normalized report will appear here after local JSON parsing.',
+  error: 'The input could not be decoded.',
+  report: 'Normalized local report',
+  dune: 'Dune evidence references',
+  duneEmpty: 'No Dune URLs supplied.',
+  boundary: 'URLs are classified by shape only. This tool does not open Dune, verify public visibility, or turn a dashboard/query into transaction evidence.',
+  local: 'LOCAL ONLY · can_trade=false · 0 network requests',
+  noHash: 'ORDER HASH: NOT COMPUTED · no RPC read',
+  c4: 'C4 / N14: BLOCKED — no real auditable transaction evidence is represented.',
+  inputHint: 'A complete OrderComponents object needs offerer, zone, offer, consideration, orderType, startTime, endTime, zoneHash, salt, conduitKey and counter.',
+  duneHint: 'Only HTTPS dune.com URLs are accepted. A query/dashboard remains an external evidence reference, not an automatically verified fact.'
+};
+---
+
+<section
+  class="section-tight section-rule"
+  data-seaport-decoder
+  data-c7-dune-seaport-decoder-r1
+  data-can-trade="false"
+  data-network-requests="0"
+  data-wallet-connect="false"
+  data-rpc-read="false"
+  data-rpc-write="false"
+  data-locale={locale}
+  data-error-label={t.error}
+  data-dune-empty={t.duneEmpty}
+>
+  <div class="container decoder-grid">
+    <form class="panel decoder-form" data-decoder-form>
+      <div class="eyebrow">{t.eyebrow}</div>
+      <h2>{t.title}</h2>
+      <p>{t.intro}</p>
+      <div class="boundary-strip"><strong>{t.local}</strong><span>{t.noHash}</span><span>{t.c4}</span></div>
+
+      <label class="field">
+        <span>{t.orderLabel}</span>
+        <textarea
+          data-order-input
+          name="order-json"
+          rows="18"
+          spellcheck="false"
+          autocomplete="off"
+          placeholder='{"offerer":"0x...","zone":"0x...","offer":[],"consideration":[],"orderType":0,"startTime":"0","endTime":"0","zoneHash":"0x...","salt":"0","conduitKey":"0x...","counter":"0"}'
+          required
+        ></textarea>
+        <small>{t.inputHint}</small>
+      </label>
+
+      <label class="field">
+        <span>{t.duneLabel}</span>
+        <textarea data-dune-input name="dune-urls" rows="4" spellcheck="false" autocomplete="off" placeholder="Paste public Dune query/dashboard references here"></textarea>
+        <small>{t.duneHint}</small>
+      </label>
+
+      <div class="actions">
+        <button class="button button-primary" type="submit">{t.decode}</button>
+        <button class="button button-ghost" type="reset">{t.reset}</button>
+      </div>
+    </form>
+
+    <aside class="panel decoder-result" aria-live="polite">
+      <div data-decoder-empty>{t.empty}</div>
+      <div data-decoder-error hidden></div>
+      <div data-decoder-output hidden>
+        <div class="eyebrow">{t.report}</div>
+        <dl class="facts">
+          <div><dt>offerer</dt><dd data-out-offerer>—</dd></div>
+          <div><dt>zone</dt><dd data-out-zone>—</dd></div>
+          <div><dt>orderType</dt><dd data-out-order-type>—</dd></div>
+          <div><dt>counter</dt><dd data-out-counter>—</dd></div>
+          <div><dt>offer items</dt><dd data-out-offer-count>—</dd></div>
+          <div><dt>consideration items</dt><dd data-out-consideration-count>—</dd></div>
+          <div><dt>start</dt><dd data-out-start>—</dd></div>
+          <div><dt>end</dt><dd data-out-end>—</dd></div>
+          <div><dt>conduit</dt><dd data-out-conduit>—</dd></div>
+          <div><dt>authority</dt><dd>can_trade=false</dd></div>
+        </dl>
+        <pre data-decoder-json></pre>
+        <section class="dune-evidence">
+          <div class="eyebrow">{t.dune}</div>
+          <ul data-dune-results></ul>
+          <p>{t.boundary}</p>
+        </section>
+      </div>
+    </aside>
+  </div>
+</section>
+<script src="/seaport-order-components-decoder.js" defer></script>
+<style is:inline>
+.decoder-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.decoder-form,.decoder-result{padding:28px}.decoder-form h2{margin:7px 0 10px;font-size:1.5rem}.decoder-form>p,.field small,.dune-evidence p{color:var(--muted)}.boundary-strip{display:grid;gap:6px;margin:20px 0;padding:14px;border:1px solid var(--line);border-radius:12px;font:600 .63rem var(--mono)}.boundary-strip strong{color:var(--green)}.field{display:flex;flex-direction:column;gap:7px;margin-top:18px}.field>span{font:600 .58rem var(--mono);color:var(--ink-soft);text-transform:uppercase}.field textarea{width:100%;resize:vertical;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#050b0db8;color:var(--ink);font:500 .78rem/1.5 var(--mono)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.decoder-result{min-height:650px}.decoder-result>[data-decoder-empty]{min-height:590px;display:grid;place-items:center;text-align:center;color:var(--muted)}[data-decoder-error]{padding:16px;border:1px solid var(--line);border-radius:10px;color:var(--ink)}.facts{margin:14px 0 20px}.facts>div{display:grid;grid-template-columns:160px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}.facts dt{color:var(--muted);font:600 .55rem var(--mono);text-transform:uppercase}.facts dd{margin:0;overflow-wrap:anywhere;font:600 .72rem var(--mono)}pre[data-decoder-json]{max-height:440px;overflow:auto;padding:16px;border:1px solid var(--line);border-radius:10px;background:#050b0db8;color:var(--ink-soft);font:.7rem/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}.dune-evidence{margin-top:22px}.dune-evidence ul{padding-left:18px}.dune-evidence li{margin:8px 0;overflow-wrap:anywhere}@media(max-width:900px){.decoder-grid{grid-template-columns:1fr}.decoder-result{min-height:0}.decoder-result>[data-decoder-empty]{min-height:220px}}@media(max-width:620px){.facts>div{grid-template-columns:1fr}.actions .button{width:100%}}
+</style>

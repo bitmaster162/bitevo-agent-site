@@ -104,7 +104,8 @@
     "JWngGCeSqBWt87fL7YCIIsBJOne4B2v+i5gz0llj/po=",
     "SbyJYuQGc2i73mva6EGQeK6zeIPYCO5Rtxqd/wbNVEY=",
     "6pqfoDlTHdK7P4KAXBIYfsE9VCzL2tko/AR63TnYwBE=",
-    "va0yV16S9QAac5avQ6U+YAmkjXS6bju0lvY3TmQCxY0="
+    "va0yV16S9QAac5avQ6U+YAmkjXS6bju0lvY3TmQCxY0=",
+    "QXl5Xe2/tFNhHkagZzhdErBDmgrZYv0VO5S4raXCpEs="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -157,7 +158,8 @@
     "M+blMu0n9fd7pgq9Uyjgelwul1CKHeDFsbQ8+LZKAG4=",
     "ONpn6yoUTTf+NPGGb3zQbncwCqjJC8H5hZ6570MULLM=",
     "HklN8dG1EP6P8wbD8hrfYB7EXorMmKci1tfk0w8A6Ws=",
-    "XNK58dcGaryObFQQyYiQYqpINVTcjPPhxfgT8SdU2/s="
+    "XNK58dcGaryObFQQyYiQYqpINVTcjPPhxfgT8SdU2/s=",
+    "vrqjeiry/GNPiS/P0b1GcUfImk4uL+ZuSCHEvAg05sw="
   ],
   "reviews": [
     {
@@ -395,6 +397,20 @@
       "routes": [
         "/trading-bot-authority-audit",
         "/ru/trading-bot-authority-audit"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_C7_DUNE_SEAPORT_DECODER_R1_PRECOMMIT",
+      "note": "C7 adds one EN/RU local Seaport OrderComponents decoder pair. One shared inline style hash is the exact Astro-emitted component style; one new script hash is inert application/ld+json identity payload emitted by RuLayout. The decoder executable code is external first-party JavaScript and performs zero network, wallet, signing, RPC, order, allowance or API-write effects. No wildcard, unsafe-inline, unsafe-eval, fabricated Dune dashboard/query, or CSP relaxation is introduced.",
+      "scripts": [
+        "QXl5Xe2/tFNhHkagZzhdErBDmgrZYv0VO5S4raXCpEs="
+      ],
+      "styles": [
+        "vrqjeiry/GNPiS/P0b1GcUfImk4uL+ZuSCHEvAg05sw="
+      ],
+      "routes": [
+        "/seaport-order-components-decoder",
+        "/ru/seaport-order-components-decoder"
       ]
     }
   ]

@@ -1,0 +1,49 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+import SeaportOrderComponentsDecoder from '../../components/SeaportOrderComponentsDecoder.astro';
+---
+
+<RuLayout
+  title="Декодер Seaport OrderComponents — BitEvo"
+  description="Локальный браузерный декодер Seaport OrderComponents с bounded Dune evidence. Без wallet, signing, RPC, отправки ордеров, API write и live trading."
+  enPath="/seaport-order-components-decoder"
+  ruPath="/ru/seaport-order-components-decoder"
+>
+  <main data-c7-dune-seaport-decoder-r1 data-can-trade="false" data-c4-n14="blocked">
+    <section class="section">
+      <div class="narrow">
+        <div class="eyebrow">C7 · protocol evidence tool</div>
+        <h1 class="display">Разберите объект ордера, не создавая рыночных полномочий.</h1>
+        <p class="lede">Декодируйте точные поля Seaport <code>OrderComponents</code>, подпишите enum-типы, проверьте time/conduit boundaries и приложите публичные Dune references без подключения кошелька или вызова API.</p>
+        <div class="actions"><a class="button button-primary" href="#decoder">Открыть локальный декодер ↓</a><a class="button" href="/ru/trading-bot-authority-audit">Аудит полномочий торгового бота</a></div>
+      </div>
+    </section>
+
+    <div id="decoder"><SeaportOrderComponentsDecoder locale="ru" /></div>
+
+    <section class="section section-rule">
+      <div class="container boundary">
+        <article class="panel">
+          <div class="eyebrow">Граница protocol source</div>
+          <h2>OrderComponents — структура, а не исполнение.</h2>
+          <p>Модель Seaport определяет <code>offerer</code>, <code>zone</code>, <code>offer</code>, <code>consideration</code>, <code>orderType</code>, <code>startTime</code>, <code>endTime</code>, <code>zoneHash</code>, <code>salt</code>, <code>conduitKey</code> и <code>counter</code>. Seaport предоставляет <code>getOrderHash</code>, <code>getOrderStatus</code> и <code>getCounter</code> как view methods; инструмент R1 их не вызывает.</p>
+          <p><a href="https://docs.opensea.io/docs/seaport-models">OpenSea Seaport models ↗</a> · <a href="https://docs.opensea.io/docs/seaport-enums">Enums ↗</a> · <a href="https://docs.opensea.io/docs/seaport-interface">Interface ↗</a></p>
+        </article>
+        <article class="panel">
+          <div class="eyebrow">Граница Dune evidence</div>
+          <h2>Публичная ссылка ≠ подтверждённое transaction evidence.</h2>
+          <p>Контент Dune Application Service публичен по умолчанию, если пользователь не сделал его private. Programmatic access — отдельный API service с credentials. Поэтому C7 принимает Dune query/dashboard URL только как внешние references и делает ноль Dune API requests.</p>
+          <p><a href="https://dune.com/application-terms">Dune Application Service Addendum ↗</a> · <a href="https://dune.com/sql-api-terms">Dune SQL API Addendum ↗</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-rule">
+      <div class="narrow panel">
+        <div class="eyebrow">Authority lock</div>
+        <h2>C4 / N14 остаётся BLOCKED.</h2>
+        <p><strong>can_trade=false.</strong> Local decoding, синтаксически корректная Dune-ссылка или разобранный Seaport object не являются real auditable transaction evidence. Эта поверхность не подключает wallets, не подписывает payloads, не читает и не пишет RPC state, не submit/cancel ордера, не вызывает <code>incrementCounter</code>, не меняет allowances, не принимает private keys, не вызывает private APIs и не исполняет live trades.</p>
+      </div>
+    </section>
+  </main>
+</RuLayout>
