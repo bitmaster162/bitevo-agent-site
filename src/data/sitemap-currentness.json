@@ -28,6 +28,11 @@
       "fingerprint": "sha256:6df48cbb322e67243498d9d2632465d3a132340a645b6a6857d77e682dffea55"
     },
     {
+      "path": "/trading-bot-authority-audit",
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:adcb9c6633027f284d69245aba7d180aa67bdf1bc5a76c19590d0fe3f08194a2"
+    },
+    {
       "path": "/entry-audit",
       "lastmod": "2026-10-05",
       "fingerprint": "sha256:4bb6364cb8edf10326380828228a8fa03ea9920a50fcfa4f3a8f40daf240f5e7"
@@ -328,6 +333,11 @@
       "fingerprint": "sha256:100a245555b9348d9a641ddbe66c91bb0e4305131d95a88ef1b8b2bdb45a5b36"
     },
     {
+      "path": "/ru/trading-bot-authority-audit",
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:df7cbab4f73be9f7fa314d650e5b6606be04f51b082c71f5177303d308e32928"
+    },
+    {
       "path": "/ru/mapper",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:101a41e0f70ac2f7ada1cec19dbe19c354880b1dbf9b94b549fde5f08e08d2ec"
@@ -409,8 +419,8 @@
     },
     {
       "path": "/ru/universe",
-      "lastmod": "2026-10-06",
-      "fingerprint": "sha256:4fc997b9705d120d431118d9cbaca79a0b168d11bc572a03167071c0db771f5e"
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:1e65c239c10ba6aa97612a7fefa8748cfdd10a37644bc5a87e8abd01289a04fc"
     },
     {
       "path": "/ru/vision",

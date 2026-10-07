@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const surfaces = [
+  ['Exchange API authority', 'Inventory read/trade permissions, prove withdrawals are disabled for the scoped bot key, bind access to approved network origins where supported, separate bot capital from the master account, and define key rotation/revocation ownership.'],
+  ['Secret & runtime boundary', 'Check how API credentials are provisioned, isolated and redacted. Public scope preparation never accepts API keys, secrets, private keys or wallet seeds.'],
+  ['Pre-trade decision gates', 'Map which evidence must be fresh before an order may be proposed: instrument, account, size, market state, liquidity/slippage controls, pair age where relevant, frequency limits and loss/drawdown controls. Thresholds are system-specific, not universal BitEvo defaults.'],
+  ['Order & effect confirmation', 'Separate intent, exchange acknowledgement, open order, partial fill, fill, cancel and resulting position. A successful API response is not treated as proof that the intended market effect occurred.'],
+  ['Retry, interruption & recovery', 'Test duplicate prevention, stale-state handling, cancel/reconcile paths, kill/hold behavior and restart from a known state. Flattening or key revocation is tested only when separately authorized in a safe environment.'],
+  ['Authority change control', 'Identify who may expand symbols, accounts, order types, leverage, sizing, execution venues or credential permissions, and require evidence-bound owner approval before authority expands.']
+];
+
+const scenarios = [
+  'Withdrawal permission unexpectedly enabled',
+  'Request originates outside the approved network boundary',
+  'Wrong account or sub-account binding',
+  'Stale market or risk evidence at decision time',
+  'Duplicate order after timeout / retry',
+  'Exchange ACK without matching fill or position state',
+  'Partial fill followed by restart',
+  'Symbol / venue / account scope drift',
+  'Secret appears in logs or build artifacts',
+  'Kill / hold control unavailable or ambiguous'
+];
+---
+
+<Layout title="Trading Bot Authority Audit — BitEvo" description="A bounded B2B authority and evidence audit for one trading-bot workflow. No live trading, no credential collection and no profit promise.">
+  <main data-c6-trading-bot-authority-audit-r1 data-can-trade="false">
+    <section class="section hero"><div class="container hero-grid"><div><div class="eyebrow">C6 · Trading-bot authority · B2B</div><h1 class="display">Audit what a trading bot is allowed to do before trusting what it can do.</h1><p class="lede">BitEvo applies the existing Agent Authority & Evidence Audit method to one trading-bot workflow: exchange permissions, pre-trade evidence, exact order/effect confirmation and recovery. The object is the authority chain around execution — not strategy profitability.</p><div class="actions"><a href="/audit-intake?offer=primary-agent-authority-audit" class="button button-primary">Prepare Primary Audit scope <span aria-hidden="true">↗</span></a><a href="/agent-authority-audit" class="button button-ghost">Core audit method</a></div></div><aside class="panel commercial"><div class="eyebrow">Existing Primary Audit · specialist scope</div><strong>$4,900</strong><p>Same Primary Audit contract: one bounded staging/test workflow, up to 3 integrations, written scope first.</p><div class="metric"><span>TRADING AUTHORITY</span><b>can_trade=false</b></div><div class="metric"><span>DEFAULT</span><b>NO LIVE FUNDS BY DEFAULT</b></div><div class="metric"><span>SECRETS</span><b>NO CREDENTIAL COLLECTION</b></div></aside></div></section>
+
+    <section class="section section-rule"><div class="container head"><div><div class="eyebrow">Audit surface</div><h2 class="section-title">Six boundaries between a decision and a market effect.</h2></div><p class="lede">The review asks whether capability has moved ahead of evidence, object binding or recovery control. It does not grant exchange access or execution authority.</p></div><div class="container grid">{surfaces.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+
+    <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Reference failure plan</div><h2 class="section-title">Test authority drift and false-green execution states.</h2><p class="lede">The final 10–20 scenarios are agreed in written Rules of Engagement. These reference cases are scope prompts, not evidence that a customer system has been tested.</p></div><ol class="tests">{scenarios.map((item,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></li>)}</ol></div></section>
+
+    <section class="section section-rule"><div class="container boundary"><article class="panel"><div class="eyebrow">Default safety boundary</div><h2>Read / trade authority is reviewed without collecting the key.</h2><p>Expected evidence can include redacted exchange permission screenshots/exports, policy/configuration, logs with secrets removed, sandbox/testnet results and independent state read-back. Withdrawal execution, live-funds trading and production penetration are outside the default scope.</p></article><article class="panel"><div class="eyebrow">Decision package</div><h2>Reuse the Primary Audit output, specialized for trading.</h2><p>Authority/effect map, evidence contract, scenario results, finding cards, repair backlog and one retest. A key control is <strong>Withdraw disabled</strong>; other controls include IP allowlisting where supported, isolated sub-accounts, secret isolation/redaction and exact order/fill reconciliation.</p></article></div></section>
+
+    <section class="section section-rule"><div class="container exclusions panel"><div><div class="eyebrow">Explicit exclusions</div><h2>No execution authority is created by this page or intake.</h2></div><p><strong>can_trade=false.</strong> BitEvo does not place orders, connect exchange keys through the public form, execute withdrawals, manage customer capital, promise profit, certify a bot as universally safe, or treat API acknowledgement as proof of a fill. Strategy discovery, backtesting and profitability review are different work.</p></div></section>
+
+    <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Start with one bot workflow</div><h2 class="section-title">Prepare the authority boundary without sending credentials.</h2><p class="lede">Use the existing Primary Audit intake. Describe permissions and evidence in redacted form; do not submit API keys, secrets, private keys, wallet seeds or production credentials.</p><a href="/audit-intake?offer=primary-agent-authority-audit" class="button button-primary">Prepare trading-bot audit scope <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+</Layout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.head,.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(38px,7vw,90px);align-items:center}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.commercial{padding:28px}.commercial>strong{display:block;font-size:clamp(2.6rem,5vw,4.6rem);letter-spacing:-.055em;margin:15px 0}.commercial p,.grid p,.boundary p,.exclusions p{color:var(--muted)}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span,.grid article>span,.tests span{color:var(--green);font:600 .62rem var(--mono)}.metric b{text-align:right;font-size:.74rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}.grid article{padding:26px;min-height:245px}.grid h3{margin:34px 0 9px}.tests{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.tests li{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary article{padding:32px}.boundary h2{margin:7px 0 12px}.exclusions{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,70px);padding:clamp(28px,5vw,48px)}.final{text-align:center}.final .lede{margin:18px auto 28px}@media(max-width:900px){.hero-grid,.head,.split,.boundary,.exclusions{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>

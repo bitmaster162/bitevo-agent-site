@@ -1,0 +1,45 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+
+const surfaces = [
+  ['Полномочия API биржи', 'Инвентаризировать read/trade права, доказать отключённый вывод для ключа бота, привязать доступ к разрешённым сетевым источникам где это поддерживается, отделить капитал бота от master account и определить владельца ротации/отзыва ключа.'],
+  ['Граница секретов и runtime', 'Проверить выдачу, изоляцию и маскирование API-данных. Публичная подготовка scope никогда не принимает API keys, secrets, private keys или wallet seeds.'],
+  ['Pre-trade decision gates', 'Зафиксировать evidence, которое должно быть свежим до предложения ордера: инструмент, аккаунт, размер, market state, liquidity/slippage controls, возраст пары где релевантно, лимиты частоты и loss/drawdown controls. Пороговые значения зависят от системы и не являются универсальными defaults BitEvo.'],
+  ['Подтверждение ордера и эффекта', 'Разделить intent, ACK биржи, open order, partial fill, fill, cancel и итоговую позицию. Успешный API response не считается доказательством нужного рыночного эффекта.'],
+  ['Retry, interruption и recovery', 'Проверить защиту от дублей, stale-state handling, cancel/reconcile paths, kill/hold behavior и restart из известного состояния. Flattening или отзыв ключа тестируется только при отдельном разрешении в безопасной среде.'],
+  ['Контроль расширения authority', 'Определить, кто может расширять symbols, accounts, order types, leverage, sizing, venues или credential permissions, и требовать owner approval с evidence до расширения полномочий.']
+];
+
+const scenarios = [
+  'Неожиданно включено право вывода',
+  'Запрос идёт вне разрешённой сетевой границы',
+  'Неверная привязка account / sub-account',
+  'Stale market или risk evidence в момент решения',
+  'Дублирующий ордер после timeout / retry',
+  'ACK биржи без совпадающего fill или position state',
+  'Partial fill и последующий restart',
+  'Drift symbol / venue / account scope',
+  'Secret попал в logs или build artifacts',
+  'Kill / hold control недоступен или неоднозначен'
+];
+---
+
+<RuLayout title="Аудит полномочий торгового бота — BitEvo" description="Ограниченный B2B-аудит authority и evidence для одного workflow торгового бота. Без live trading, без сбора credentials и без обещаний прибыли." enPath="/trading-bot-authority-audit" ruPath="/ru/trading-bot-authority-audit">
+  <main data-c6-trading-bot-authority-audit-r1 data-can-trade="false">
+    <section class="section hero"><div class="container hero-grid"><div><div class="eyebrow">C6 · Полномочия торгового бота · B2B</div><h1 class="display">Проверьте, что торговому боту разрешено делать, прежде чем доверять тому, что он умеет.</h1><p class="lede">BitEvo применяет существующий Agent Authority & Evidence Audit к одному workflow торгового бота: права биржи, pre-trade evidence, точное подтверждение order/effect и recovery. Объект аудита — цепочка полномочий вокруг исполнения, а не прибыльность стратегии.</p><div class="actions"><a href="/ru/audit-intake?offer=primary-agent-authority-audit" class="button button-primary">Подготовить scope Primary Audit <span aria-hidden="true">↗</span></a><a href="/ru/agent-authority-audit" class="button button-ghost">Основной метод аудита</a></div></div><aside class="panel commercial"><div class="eyebrow">Существующий Primary Audit · specialist scope</div><strong>$4,900</strong><p>Тот же контракт Primary Audit: один bounded staging/test workflow, до 3 integrations, сначала письменный scope.</p><div class="metric"><span>TRADING AUTHORITY</span><b>can_trade=false</b></div><div class="metric"><span>DEFAULT</span><b>NO LIVE FUNDS BY DEFAULT</b></div><div class="metric"><span>SECRETS</span><b>NO CREDENTIAL COLLECTION</b></div></aside></div></section>
+
+    <section class="section section-rule"><div class="container head"><div><div class="eyebrow">Поверхность аудита</div><h2 class="section-title">Шесть границ между решением и рыночным эффектом.</h2></div><p class="lede">Проверка ищет места, где capability опередила evidence, object binding или recovery control. Она не выдаёт доступ к бирже и не создаёт execution authority.</p></div><div class="container grid">{surfaces.map(([title,text],i) => <article class="panel"><span>{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+
+    <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Reference failure plan</div><h2 class="section-title">Проверить authority drift и false-green состояния исполнения.</h2><p class="lede">Финальные 10–20 сценариев согласуются в письменных Rules of Engagement. Эти reference cases нужны для подготовки scope и не являются evidence, что система клиента уже тестировалась.</p></div><ol class="tests">{scenarios.map((item,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></li>)}</ol></div></section>
+
+    <section class="section section-rule"><div class="container boundary"><article class="panel"><div class="eyebrow">Граница безопасности по умолчанию</div><h2>Read / trade authority проверяется без передачи самого ключа.</h2><p>Evidence может включать редактированные screenshots/exports разрешений биржи, policy/configuration, logs без секретов, sandbox/testnet результаты и независимый state read-back. Withdrawal execution, торговля на live funds и production penetration не входят в scope по умолчанию.</p></article><article class="panel"><div class="eyebrow">Decision package</div><h2>Используется output Primary Audit, специализированный под trading.</h2><p>Authority/effect map, evidence contract, результаты сценариев, finding cards, repair backlog и один retest. Ключевой control — <strong>Withdraw disabled</strong>; также проверяются IP allowlisting где поддерживается, изолированный sub-account, secret isolation/redaction и точная order/fill reconciliation.</p></article></div></section>
+
+    <section class="section section-rule"><div class="container exclusions panel"><div><div class="eyebrow">Явные исключения</div><h2>Эта страница и intake не создают execution authority.</h2></div><p><strong>can_trade=false.</strong> BitEvo не размещает ордера, не подключает exchange keys через публичную форму, не выполняет withdrawals, не управляет капиталом клиента, не обещает прибыль, не сертифицирует бота как «универсально безопасного» и не считает API acknowledgement доказательством fill. Поиск стратегий, backtesting и profitability review — отдельная работа.</p></div></section>
+
+    <section class="section section-rule"><div class="narrow final"><div class="eyebrow">Начните с одного bot workflow</div><h2 class="section-title">Подготовьте authority boundary без отправки credentials.</h2><p class="lede">Используйте существующий intake Primary Audit. Описывайте permissions и evidence в редактированном виде; не отправляйте API keys, secrets, private keys, wallet seeds или production credentials.</p><a href="/ru/audit-intake?offer=primary-agent-authority-audit" class="button button-primary">Подготовить scope аудита торгового бота <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+</RuLayout>
+
+<style>
+.hero{padding-top:clamp(78px,10vw,132px)}.hero-grid,.head,.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(38px,7vw,90px);align-items:center}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.commercial{padding:28px}.commercial>strong{display:block;font-size:clamp(2.6rem,5vw,4.6rem);letter-spacing:-.055em;margin:15px 0}.commercial p,.grid p,.boundary p,.exclusions p{color:var(--muted)}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span,.grid article>span,.tests span{color:var(--green);font:600 .62rem var(--mono)}.metric b{text-align:right;font-size:.74rem}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}.grid article{padding:26px;min-height:245px}.grid h3{margin:34px 0 9px}.tests{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.tests li{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary article{padding:32px}.boundary h2{margin:7px 0 12px}.exclusions{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,70px);padding:clamp(28px,5vw,48px)}.final{text-align:center}.final .lede{margin:18px auto 28px}@media(max-width:900px){.hero-grid,.head,.split,.boundary,.exclusions{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>

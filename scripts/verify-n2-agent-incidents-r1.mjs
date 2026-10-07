@@ -96,9 +96,9 @@ check(layoutSource.includes("['Agent incidents', '/agent-incidents']"), 'EN foot
 
 const route = registry.routes.find(item => item.path === '/agent-incidents');
 check(route?.category === 'RESEARCH' && route?.indexable === true && route?.locale === 'en' && route?.parent === '/owasp-agentic-top-10' && route?.localePair === 'deferred' && route?.localePairReason === 'grounded_translation_pending', 'registry route exact with grounded deferred locale contract');
-equal(registry.routes.filter(item => item.indexable).length, 125, 'indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, 63, 'EN indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, 62, 'RU indexable route count unchanged');
+equal(registry.routes.filter(item => item.indexable).length, 127, 'indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, 64, 'EN indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, 63, 'RU indexable route count unchanged');
 check(!registry.routes.some(item => item.path === '/ru/agent-incidents'), 'RU route deferred pending grounded translation');
 check(!html.includes('hreflang="ru"') && !html.includes('data-global-locale-switch="en-to-ru"'), 'deferred EN route emits no false RU alternate or switch');
 let ruPageExists = true;
@@ -109,7 +109,7 @@ const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
 equal(row?.lastmod, '2026-10-05', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
-equal(currentness.routes.length, 125, 'currentness route count is N2 baseline');
+equal(currentness.routes.length, 127, 'currentness route count is N2 baseline');
 check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-05</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');
@@ -119,4 +119,4 @@ check(llms.slice(researchStart, contextStart).includes('- /agent-incidents'), 'l
 
 check(packageJson.scripts?.['verify:core']?.includes('verify-n2-agent-incidents-r1.mjs'), 'N2 verifier wired into verify:core');
 
-console.log(`N2_AGENT_INCIDENTS_R1_GATE=PASS checks=${checks} cases=12 incidents=11 demonstrations=1 sources=21 source_dates=21 filters=7x10 indexable=125 en=63 ru=62 ru_route=DEFERRED no_search=PASS network_added=0`);
+console.log(`N2_AGENT_INCIDENTS_R1_GATE=PASS checks=${checks} cases=12 incidents=11 demonstrations=1 sources=21 source_dates=21 filters=7x10 indexable=127 en=64 ru=63 ru_route=DEFERRED no_search=PASS network_added=0`);
