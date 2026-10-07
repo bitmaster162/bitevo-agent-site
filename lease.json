@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "78ceb811-ac3e-4f79-a524-f2a8413e2d80",
   "nonce": "b9-public-seven-gates-r1-control-center-20261007-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "765c7bff2b372f10a9b570a404f1b5e5bbec2684",
@@ -11,10 +11,12 @@
   "session": "bitevo-b9-public-seven-gates-r1-20261007",
   "worktree": "c:/users/coins/downloads/bitevo_b9_public_seven_gates_r1_20261007_01",
   "acquiredAt": "2026-10-07T11:05:59.754Z",
-  "updatedAt": "2026-10-07T11:20:55.870Z",
+  "updatedAt": "2026-10-07T11:33:16.413Z",
   "expiresAt": "2026-10-08T06:00:00.000Z",
   "sealedHead": "e288c413403d0ff90d7d5816ce0858d802dd413a",
   "sealedTree": "ae6e66e04fb3823ebe93378e1fb3fcd2b1bb1c2d",
   "featureRef": "refs/heads/agent/b9-public-seven-gates-r1",
-  "predecessor": "5e458441e5cadba005899ddff5004260e2ed85f5"
+  "predecessor": "d59eaaafab5c9440ba382496f5bcc91a00587e33",
+  "releasedAt": "2026-10-07T11:33:16.415Z",
+  "releaseReason": "owner_release"
 }
