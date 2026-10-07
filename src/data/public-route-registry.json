@@ -956,6 +956,15 @@
       "reviewed": "2026-10-01"
     },
     {
+      "path": "/guides/bitget-authority-after-orchestration-compromise",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-07"
+    },
+    {
       "path": "/guides/mcp-server-authority-review",
       "category": "RESEARCH",
       "indexable": true,
@@ -972,6 +981,15 @@
       "parent": "/ru/guides",
       "generatedBy": "research-notes",
       "reviewed": "2026-10-01"
+    },
+    {
+      "path": "/ru/guides/bitget-authority-after-orchestration-compromise",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-07"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",

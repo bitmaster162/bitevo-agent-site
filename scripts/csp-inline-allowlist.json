@@ -101,7 +101,10 @@
     "2/BJkl1q7uUBZQWihQ8czyQLoGPRzR01pf45m1xj70Q=",
     "EOjBDgBUBATcg2F+52tMrl3V6zR6+U0IonnDow48kng=",
     "Do2BCWLHw8WmrGj2jNWm4iHjgsh9LES+v5PMwzXEnWI=",
-    "JWngGCeSqBWt87fL7YCIIsBJOne4B2v+i5gz0llj/po="
+    "JWngGCeSqBWt87fL7YCIIsBJOne4B2v+i5gz0llj/po=",
+    "SbyJYuQGc2i73mva6EGQeK6zeIPYCO5Rtxqd/wbNVEY=",
+    "6pqfoDlTHdK7P4KAXBIYfsE9VCzL2tko/AR63TnYwBE=",
+    "va0yV16S9QAac5avQ6U+YAmkjXS6bju0lvY3TmQCxY0="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -157,6 +160,19 @@
     "XNK58dcGaryObFQQyYiQYqpINVTcjPPhxfgT8SdU2/s="
   ],
   "reviews": [
+    {
+      "sourceSha": "LOCAL_N1_POST_C6_SPEC_PRECOMMIT",
+      "note": "N1 adds one EN/RU Markdown-generated research-note pair on top of C6. The three new script hashes are inert application/ld+json payloads emitted for the new research routes. C6 reviewed hashes remain unchanged. No executable inline JavaScript, inline style attribute, new style hash, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",
+      "scripts": [
+        "SbyJYuQGc2i73mva6EGQeK6zeIPYCO5Rtxqd/wbNVEY=",
+        "6pqfoDlTHdK7P4KAXBIYfsE9VCzL2tko/AR63TnYwBE=",
+        "va0yV16S9QAac5avQ6U+YAmkjXS6bju0lvY3TmQCxY0="
+      ],
+      "routes": [
+        "/guides/bitget-authority-after-orchestration-compromise",
+        "/ru/guides/bitget-authority-after-orchestration-compromise"
+      ]
+    },
     {
       "sourceSha": "LOCAL_N21_PRECOMMIT",
       "note": "N21 adds one EN/RU research-note pair. The three new script hashes are inert application/ld+json payloads emitted for the new research routes. No executable inline JavaScript, inline style attribute, new style hash, wildcard, unsafe-inline, unsafe-eval, storage write, network origin, or CSP relaxation is introduced.",
