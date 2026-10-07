@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "cdbc637f-770b-478f-9dc6-9709ed75944d",
   "nonce": "c7-dune-seaport-decoder-r1-control-center-20261007-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "ff78c47fda55abf56fa8d7d0bccb42e62f50497b",
@@ -11,10 +11,12 @@
   "session": "bitevo-c7-dune-seaport-decoder-r1-20261007",
   "worktree": "c:/users/coins/downloads/bitevo_c7_dune_seaport_decoder_r1_20261007_01",
   "acquiredAt": "2026-10-07T06:10:55.196Z",
-  "updatedAt": "2026-10-07T06:54:54.824Z",
+  "updatedAt": "2026-10-07T07:14:17.901Z",
   "expiresAt": "2026-10-08T06:00:00.000Z",
   "sealedHead": "772740be0dd2adc90fa3f41bf085c90ec19c7f81",
   "sealedTree": "4718d1f6f5154de4f93b9cd4070fcf9709babcfe",
   "featureRef": "refs/heads/agent/c7-dune-seaport-decoder-r1",
-  "predecessor": "e096e23f9ca46ca1cca27898b7ef79404cfcecaf"
+  "predecessor": "ed3e049c6a1622d135d7d6a9f0bf16a6652006a7",
+  "releasedAt": "2026-10-07T07:14:17.902Z",
+  "releaseReason": "owner_release"
 }
