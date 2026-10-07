@@ -30,6 +30,33 @@
       "research_source": "БИБЛИОТЕКА-ИНЦИДЕНТОВ-N2 (12 cases, verified 01.10.2026); BitEvo doctrine; R057 TL;DR"
     },
     {
+      "source": "src/content/research-notes/bitget-authority-after-orchestration-compromise.en.md",
+      "filename": "bitget-authority-after-orchestration-compromise.en.md",
+      "slug": "bitget-authority-after-orchestration-compromise",
+      "path": "/guides/bitget-authority-after-orchestration-compromise",
+      "alternate": "/ru/guides/bitget-authority-after-orchestration-compromise",
+      "lang": "en",
+      "card": "06 · Incident · Bitget authority after orchestration compromise — What source-bound evidence shows about detection, effect authority and external confirmation.",
+      "card_number": "06",
+      "card_type": "Incident",
+      "card_text": "Bitget authority after orchestration compromise — What source-bound evidence shows about detection, effect authority and external confirmation.",
+      "title": "Bitget: authority after orchestration compromise",
+      "seo_title": "Bitget incident: authority after orchestration compromise | BitEvo",
+      "description": "Source-bound Bitget case study on why detecting effects and blocking withdrawal requests do not alone prove revocation of downstream execution authority.",
+      "reviewed": "2026-10-07",
+      "next_review": "2027-01-07",
+      "related": [
+        "/agent-authority-audit",
+        "/diagnostic",
+        "/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "Bitget official updates through 2026-10-04; Mandiant status report 2026-09-28; SlowMist progress report through 2026-09-29; XRPL protocol docs; BitEvo MatrixOut XRPL evidence"
+    },
+    {
       "source": "src/content/research-notes/mcp-server-authority-review.en.md",
       "filename": "mcp-server-authority-review.en.md",
       "slug": "mcp-server-authority-review",
@@ -82,6 +109,33 @@
         "BreadcrumbList"
       ],
       "research_source": "БИБЛИОТЕКА-ИНЦИДЕНТОВ-N2 (12 случаев, сверено 01.10.2026); доктрина BitEvo; R057 TL;DR"
+    },
+    {
+      "source": "src/content/research-notes/bitget-authority-after-orchestration-compromise.ru.md",
+      "filename": "bitget-authority-after-orchestration-compromise.ru.md",
+      "slug": "bitget-authority-after-orchestration-compromise",
+      "path": "/ru/guides/bitget-authority-after-orchestration-compromise",
+      "alternate": "/guides/bitget-authority-after-orchestration-compromise",
+      "lang": "ru",
+      "card": "06 · Инцидент · Полномочия после компрометации оркестрации Bitget — Что подтверждённые источники показывают о детектировании, effect authority и внешнем подтверждении.",
+      "card_number": "06",
+      "card_type": "Инцидент",
+      "card_text": "Полномочия после компрометации оркестрации Bitget — Что подтверждённые источники показывают о детектировании, effect authority и внешнем подтверждении.",
+      "title": "Bitget: полномочия после компрометации оркестрации",
+      "seo_title": "Инцидент Bitget: полномочия после компрометации | BitEvo",
+      "description": "Разбор Bitget по первичным источникам: почему обнаружение и блокировка заявок на вывод сами по себе не доказывают отзыв downstream-полномочий.",
+      "reviewed": "2026-10-07",
+      "next_review": "2027-01-07",
+      "related": [
+        "/ru/agent-authority-audit",
+        "/ru/diagnostic",
+        "/ru/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "Официальные обновления Bitget по 2026-10-04; отчёт Mandiant от 2026-09-28; отчёт SlowMist по 2026-09-29; документация XRPL; evidence pack BitEvo MatrixOut по XRP"
     },
     {
       "source": "src/content/research-notes/mcp-server-authority-review.ru.md",

@@ -244,8 +244,8 @@
     },
     {
       "path": "/guides",
-      "lastmod": "2026-10-06",
-      "fingerprint": "sha256:2c538684dfa3eb4a29f94c37be83731b438a9d58ca706abf937b3fd2e8d53054"
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:a72aeb4de84d0051a0337eea0f957960675c0895b96855b22887d8f8b603673f"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -399,8 +399,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-10-06",
-      "fingerprint": "sha256:79f752559e3d0049ed2d0a068209c87f92ce3d79ed7e1e601aa59fdf62888880"
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:f65514dcb87b974ce9b8b838acc6ad79fc3a9b0361e51c04b17caf5b25faa571"
     },
     {
       "path": "/ru/doctrine",
@@ -420,7 +420,7 @@
     {
       "path": "/ru/universe",
       "lastmod": "2026-10-07",
-      "fingerprint": "sha256:1e65c239c10ba6aa97612a7fefa8748cfdd10a37644bc5a87e8abd01289a04fc"
+      "fingerprint": "sha256:036cd20afe0d2b8a96a23df0af7e306c223246c014f5bbd353a0434c71dc29ad"
     },
     {
       "path": "/ru/vision",
@@ -623,6 +623,11 @@
       "fingerprint": "sha256:60598c2b7c63f423355ed560adbc61ef56c15bbd165c4f1c10b38a5aebb99488"
     },
     {
+      "path": "/guides/bitget-authority-after-orchestration-compromise",
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:4d6959c5bf74f1db5b8f2b959a907570b7816a0b0b125cd2baa31d38ede50678"
+    },
+    {
       "path": "/guides/mcp-server-authority-review",
       "lastmod": "2026-10-06",
       "fingerprint": "sha256:961a6e98accb72f4ab27234986f082d2d3b6d11190e66067409ff922680a80ed"
@@ -631,6 +636,11 @@
       "path": "/ru/guides/before-write-access",
       "lastmod": "2026-10-01",
       "fingerprint": "sha256:5320d90031411630d478bfb9a3930961d73e91f2caf6cd05b4a198bcd3880639"
+    },
+    {
+      "path": "/ru/guides/bitget-authority-after-orchestration-compromise",
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:d07a549fc740f43ae76aba6cc8beb00d58e19b1e251280669948e536672a2e79"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",
