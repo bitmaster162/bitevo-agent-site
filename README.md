@@ -4,6 +4,12 @@ BitEvo is the public product and evidence surface for authority-first AI-agent e
 
 `SOURCE != BUILD != DEPLOYMENT != READBACK != EXTERNAL EFFECT`
 
+## Seven authority gates
+
+The inspectable documentation projection is [`docs/BITEVO_SEVEN_AUTHORITY_GATES_R1.md`](docs/BITEVO_SEVEN_AUTHORITY_GATES_R1.md). The canonical source remains [`mcp/bitevo-authority/src/diagnostic.mjs`](mcp/bitevo-authority/src/diagnostic.mjs) → `DIAGNOSTIC_QUESTIONS`.
+
+The seven gates are: **Authority Budget**, **Object binding**, **Authority owner**, **Evidence Before Effect**, **Freshness**, **External confirmation**, and **Recovery**. The documentation projection is not a safety verdict, certification, or proof of implementation correctness, and it does not authorize testing.
+
 ## Public surfaces
 
 - `/` — product overview and trust boundary.
