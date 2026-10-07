@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "90657349-b7d6-4b2e-953a-f8b424b3c9e4",
   "nonce": "p28-3-ru-pricing-scope-form-copy-r1-control-center-20261007-r1",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "103ab7d4710382e2b0828d2a16860737c4d56ef6",
@@ -11,10 +11,12 @@
   "session": "bitevo-p28-3-ru-pricing-scope-form-copy-r1-20261007",
   "worktree": "c:/users/coins/downloads/bitevo_p28_3_ru_pricing_scope_form_copy_r1_20261007_01",
   "acquiredAt": "2026-10-07T12:08:21.449Z",
-  "updatedAt": "2026-10-07T12:41:04.758Z",
+  "updatedAt": "2026-10-07T12:56:45.020Z",
   "expiresAt": "2026-10-08T06:00:00.000Z",
   "sealedHead": "b2c7afa83e3ad8da620c2ee63d4def6d18e4dfd5",
   "sealedTree": "60fefcce52efbb20690ade313c545436355ced59",
   "featureRef": "refs/heads/agent/p28-3-ru-pricing-scope-form-copy-r1",
-  "predecessor": "2a7e7af0e4c701c0f5c7097605776447abbd07d8"
+  "predecessor": "6991acab51a456dd61e0899e78568b456c6cc33b",
+  "releasedAt": "2026-10-07T12:56:45.023Z",
+  "releaseReason": "owner_release"
 }
