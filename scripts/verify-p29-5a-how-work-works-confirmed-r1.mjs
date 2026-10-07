@@ -68,7 +68,7 @@ for (const path of ['/pricing', '/security']) {
 }
 equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:26c47dbf02c967df21873b50604623a058c1e15b60063c68918af7523f29bea6', '/pricing currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:931fc48d39f0ac06a069b3c7147e2a28897d482c8dd75c55f0f7b5fa2e98903e', '/security currentness fingerprint exact');
-equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:586bdae1520076200a2cdbbd6e2ca1faa08076e6db4f011ebda06b51f3bd6bcd', '/ru/pricing currentness exact');
+equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:c569f39abd9bb9da78e7c88e04fd80e4ef9f00d0c213471682c29d0c3db65b10', '/ru/pricing currentness exact');
 equal(currentness.routes.find(item => item.path === '/ru/security')?.fingerprint, 'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', '/ru/security currentness exact');
 equal(currentness.routes.length, 131, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');
