@@ -33,6 +33,11 @@
       "fingerprint": "sha256:adcb9c6633027f284d69245aba7d180aa67bdf1bc5a76c19590d0fe3f08194a2"
     },
     {
+      "path": "/seaport-order-components-decoder",
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:fd0baff0cc96315fff6cd667157d279a302868c3f0679cccb1e486b7022843e4"
+    },
+    {
       "path": "/entry-audit",
       "lastmod": "2026-10-05",
       "fingerprint": "sha256:4bb6364cb8edf10326380828228a8fa03ea9920a50fcfa4f3a8f40daf240f5e7"
@@ -338,6 +343,11 @@
       "fingerprint": "sha256:df7cbab4f73be9f7fa314d650e5b6606be04f51b082c71f5177303d308e32928"
     },
     {
+      "path": "/ru/seaport-order-components-decoder",
+      "lastmod": "2026-10-07",
+      "fingerprint": "sha256:a1cad76d6f5856b0eb3236dec224b62b4e8950fbbc842687a23f2f3cbc7292d8"
+    },
+    {
       "path": "/ru/mapper",
       "lastmod": "2026-10-03",
       "fingerprint": "sha256:101a41e0f70ac2f7ada1cec19dbe19c354880b1dbf9b94b549fde5f08e08d2ec"
@@ -420,7 +430,7 @@
     {
       "path": "/ru/universe",
       "lastmod": "2026-10-07",
-      "fingerprint": "sha256:036cd20afe0d2b8a96a23df0af7e306c223246c014f5bbd353a0434c71dc29ad"
+      "fingerprint": "sha256:1244a5fa8a5121411b480fd84757daac9c99e0c8172bfee37f567554d7fd2a6a"
     },
     {
       "path": "/ru/vision",

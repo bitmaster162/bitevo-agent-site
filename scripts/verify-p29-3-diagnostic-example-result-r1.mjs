@@ -105,7 +105,7 @@ for (const [path, value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 129, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 131, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-3-diagnostic-example-result-r1.mjs'), 'P29.3 verifier wired into verify:core');
 
 console.log(`P29_3_DIAGNOSTIC_EXAMPLE_RESULT_R1_GATE=PASS checks=${checks} locales=2 gates=7 yes=3 no=1 unknown=3 unresolved=4 static_html=PASS native_details=COLLAPSED dynamic_logic=UNCHANGED js_added=0 network_added=0 p29_1_calcom=OMITTED`);

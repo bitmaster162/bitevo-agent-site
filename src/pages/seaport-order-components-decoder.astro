@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeaportOrderComponentsDecoder from '../components/SeaportOrderComponentsDecoder.astro';
+---
+
+<Layout
+  title="Seaport OrderComponents Decoder — BitEvo"
+  description="Browser-local Seaport OrderComponents decoder with bounded Dune public evidence references. No wallet, signing, RPC, order submission or live trading."
+  alternates={{ en: '/seaport-order-components-decoder', ru: '/ru/seaport-order-components-decoder' }}
+>
+  <main data-c7-dune-seaport-decoder-r1 data-can-trade="false" data-c4-n14="blocked">
+    <section class="section">
+      <div class="narrow">
+        <div class="eyebrow">C7 · protocol evidence tool</div>
+        <h1 class="display">Read the order object without creating market authority.</h1>
+        <p class="lede">Decode the exact fields that make up Seaport <code>OrderComponents</code>, label item/order enums, inspect time and conduit boundaries, and attach public Dune references without connecting a wallet or calling an API.</p>
+        <div class="actions"><a class="button button-primary" href="#decoder">Open local decoder ↓</a><a class="button" href="/trading-bot-authority-audit">Trading-bot authority audit</a></div>
+      </div>
+    </section>
+
+    <div id="decoder"><SeaportOrderComponentsDecoder locale="en" /></div>
+
+    <section class="section section-rule">
+      <div class="container boundary">
+        <article class="panel">
+          <div class="eyebrow">Protocol source boundary</div>
+          <h2>OrderComponents is structure, not execution.</h2>
+          <p>OpenSea's Seaport model defines <code>offerer</code>, <code>zone</code>, <code>offer</code>, <code>consideration</code>, <code>orderType</code>, <code>startTime</code>, <code>endTime</code>, <code>zoneHash</code>, <code>salt</code>, <code>conduitKey</code> and <code>counter</code>. Seaport exposes <code>getOrderHash</code>, <code>getOrderStatus</code> and <code>getCounter</code> as view methods; this R1 tool does not call them.</p>
+          <p><a href="https://docs.opensea.io/docs/seaport-models">OpenSea Seaport models ↗</a> · <a href="https://docs.opensea.io/docs/seaport-enums">Enums ↗</a> · <a href="https://docs.opensea.io/docs/seaport-interface">Interface ↗</a></p>
+        </article>
+        <article class="panel">
+          <div class="eyebrow">Dune evidence boundary</div>
+          <h2>Public link ≠ verified transaction evidence.</h2>
+          <p>Dune application content is public by default unless a user makes it private. Programmatic access is a separate API service with credentials. C7 therefore accepts Dune query/dashboard URLs only as external references and performs zero Dune API requests.</p>
+          <p><a href="https://dune.com/application-terms">Dune Application Service Addendum ↗</a> · <a href="https://dune.com/sql-api-terms">Dune SQL API Addendum ↗</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-rule">
+      <div class="narrow panel">
+        <div class="eyebrow">Authority lock</div>
+        <h2>C4 / N14 remains BLOCKED.</h2>
+        <p><strong>can_trade=false.</strong> Local decoding, a syntactically valid Dune link, or a parsed Seaport object is not real auditable transaction evidence. This surface does not connect wallets, sign payloads, read or write RPC state, submit/cancel orders, call <code>incrementCounter</code>, mutate allowances, accept private keys, call private APIs, or execute live trades.</p>
+      </div>
+    </section>
+  </main>
+</Layout>

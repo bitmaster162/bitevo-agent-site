@@ -82,14 +82,14 @@ for (const [path, locale, parent] of routes) {
   check(/^\d{4}-\d{2}-\d{2}$/.test(String(current?.lastmod || '')), path + ' currentness date valid');
   check(/^sha256:[0-9a-f]{64}$/.test(String(current?.fingerprint || '')), path + ' currentness fingerprint valid');
 }
-equal(registry.routes.filter(row => row.indexable).length, 129, 'indexable route count N20 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 65, 'EN indexable route count N20 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 64, 'RU indexable route count N20 baseline');
-equal(currentness.routes.length, 129, 'currentness route count N20 baseline');
+equal(registry.routes.filter(row => row.indexable).length, 131, 'indexable route count N20 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 66, 'EN indexable route count N20 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 65, 'RU indexable route count N20 baseline');
+equal(currentness.routes.length, 131, 'currentness route count N20 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-n20-glossary-r1.mjs'), 'N20 verifier wired into verify:core');
 
 console.log(
   'N20_GLOSSARY_R1_GATE=PASS checks=' + checks +
   ' routes=2 terms=15 schema=DefinedTermSet defined_terms=30 shared_data=1 client_js_added=0' +
-  ' working_definition_boundary=PASS indexable=129 en=65 ru=64'
+  ' working_definition_boundary=PASS indexable=131 en=66 ru=65'
 );
