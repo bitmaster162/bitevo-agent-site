@@ -1,0 +1,53 @@
+name: BitEvo Pre-Check
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bitevo-precheck-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bitevo-precheck:
+    name: bitevo-precheck
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Checkout repository without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.19.0
+
+      - name: Run deterministic BitEvo Pre-Check
+        run: node scripts/bitevo-precheck-action-r1.mjs --root . --output bitevo-precheck-output
+
+      - name: Publish bounded step summary
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          if [ -f bitevo-precheck-output/summary.md ]; then
+            cat bitevo-precheck-output/summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '# BitEvo Pre-Check\n\n**Outcome:** `UNSUPPORTED_INPUT`\n\nRunner did not produce a bounded summary.\n' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload bounded Pre-Check artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: bitevo-precheck-${{ github.run_id }}-${{ github.run_attempt }}
+          path: bitevo-precheck-output/
+          if-no-files-found: error
+          retention-days: 7
