@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "68a69c05-f9cd-42ff-a4f6-70f1063041e1",
   "nonce": "n1-bitget-authority-r1-control-center-20261007-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "f60ab351548668b8fa2e4d76315779ab0a3870ab",
@@ -11,10 +11,10 @@
   "session": "bitevo-n1-bitget-authority-r1-20261007",
   "worktree": "c:/users/coins/downloads/bitevo_n1_bitget_authority_r1_20261007_01",
   "acquiredAt": "2026-10-07T05:17:40.959Z",
-  "updatedAt": "2026-10-07T05:17:40.959Z",
+  "updatedAt": "2026-10-07T05:44:48.192Z",
   "expiresAt": "2026-10-07T14:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "0962d8912a68c1d2abe50535735df3d8c4fdfd0a"
+  "sealedHead": "d85e17e230debe16b39039aa1fb7625c843122fe",
+  "sealedTree": "b54dfe6d586335e8d6e2b32a27f1eecf16aaeed2",
+  "featureRef": "refs/heads/agent/n1-bitget-authority-r1",
+  "predecessor": "5f5ad48090bbb076a91e791a8523977082bb0dfb"
 }
