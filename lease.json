@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "08eb7fd7-d50c-4f51-8921-2e023c1e8203",
   "nonce": "bitevo-t1-4-research-translation-contract-r1-control-center-20261008-r1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "f3af66650a3655b27861a864e6567698dabb2ee1",
@@ -11,10 +11,10 @@
   "session": "bitevo-t1-4-research-translation-contract-r1-20261008",
   "worktree": "c:/users/coins/downloads/bitevo_t1_4_research_translation_contract_20261008_01",
   "acquiredAt": "2026-10-08T10:45:12.514Z",
-  "updatedAt": "2026-10-08T10:45:12.514Z",
+  "updatedAt": "2026-10-08T11:37:38.272Z",
   "expiresAt": "2026-10-09T06:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "09ebc3494a75eb30599e1222069330bdbd8e0a27"
+  "sealedHead": "b5010534a48e7b28b1d6533194cf652c3542b670",
+  "sealedTree": "5014fde5026b6fdccf26ca3578fdf80e142e44de",
+  "featureRef": "refs/heads/agent/t1-4-bitevo-research-translation-contract-r1",
+  "predecessor": "775b49935646f05028c7fb1296e7deccda8da53c"
 }
