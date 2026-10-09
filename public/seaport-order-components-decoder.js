@@ -184,6 +184,9 @@
     const output = root.querySelector('[data-decoder-output]');
     const jsonOut = root.querySelector('[data-decoder-json]');
     const duneList = root.querySelector('[data-dune-results]');
+    const submit = form?.querySelector('[data-js-local-submit]');
+    const fallback = form?.querySelector('[data-js-local-fallback]');
+    if (!form || !submit || !fallback || !orderInput || !duneInput || !empty || !error || !output || !jsonOut || !duneList || form.getAttribute('method') !== 'post' || form.hasAttribute('action')) return;
 
     form.addEventListener('submit', event => {
       event.preventDefault();
@@ -235,6 +238,9 @@
         duneList.replaceChildren();
       }, 0);
     });
+
+    fallback.hidden = true;
+    submit.disabled = false;
   }
 
   document.querySelectorAll('[data-seaport-decoder]').forEach(init);

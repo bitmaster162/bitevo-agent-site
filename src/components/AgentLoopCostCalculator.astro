@@ -24,7 +24,8 @@ const t = ru ? {
   retry: 'Retry cap на одну задачу',
   retryText: 'Нужен отдельный owner-defined лимит. Из стоимости его честно вывести нельзя.',
   boundary: 'Это cost model, а не safety score. Он не учитывает неизвестные внешние эффекты, скрытые тарифы или последствия, которых нет во входных данных.',
-  local: 'LOCAL ONLY · 0 network requests'
+  local: 'LOCAL ONLY · 0 network requests',
+  jsRequired: 'Для локального расчёта нужен JavaScript. Кнопка выключена; значения формы не отправлены.'
 } : {
   title: 'How much can a looping agent burn?',
   intro: 'Enter your own assumptions. The calculator runs only in your browser, sends nothing, and does not invent market prices or “safe” limits.',
@@ -48,12 +49,13 @@ const t = ru ? {
   retry: 'Retry cap per task',
   retryText: 'Needs a separate owner-defined limit. Cost math cannot infer it honestly.',
   boundary: 'This is a cost model, not a safety score. It cannot include unknown external effects, hidden pricing, or consequences absent from the inputs.',
-  local: 'LOCAL ONLY · 0 network requests'
+  local: 'LOCAL ONLY · 0 network requests',
+  jsRequired: 'JavaScript is required for local calculation. Submit is disabled; the form values have not been sent.'
 };
 ---
 <section class="section-tight section-rule" data-loop-cost-calculator data-locale={locale}>
   <div class="container calc-grid">
-    <form class="panel calc-form" data-calc-form>
+    <form class="panel calc-form" method="post" data-calc-form>
       <div class="eyebrow">{t.local}</div>
       <h2>{t.title}</h2>
       <p>{t.intro}</p>
@@ -65,9 +67,10 @@ const t = ru ? {
         <label><span>{t.budget}</span><input name="budget" inputmode="decimal" type="number" min="0.000001" step="0.000001" placeholder="100" required /></label>
       </div>
       <div class="actions">
-        <button class="button button-primary" type="submit">{t.calculate}</button>
+        <button class="button button-primary" type="submit" data-js-local-submit disabled>{t.calculate}</button>
         <button class="button button-ghost" type="reset">{t.reset}</button>
       </div>
+      <p role="status" data-js-local-fallback>{t.jsRequired}</p>
     </form>
 
     <aside class="panel calc-result" aria-live="polite">

@@ -34,8 +34,8 @@
     },
     {
       "path": "/seaport-order-components-decoder",
-      "lastmod": "2026-10-07",
-      "fingerprint": "sha256:fd0baff0cc96315fff6cd667157d279a302868c3f0679cccb1e486b7022843e4"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:1c6fb82ccd0698442c6b18b4f8198e797882edf4f0e892c35e17cbc518a264dd"
     },
     {
       "path": "/entry-audit",
@@ -114,8 +114,8 @@
     },
     {
       "path": "/agent-loop-cost-calculator",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:8d8dba1cbca08d5345d67018e6b8731dbe23056a21082642cf6e5f32c0db3826"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:60b2d3f44f82ba0fdc1c040c8157978f490748a68086fc6e555af0a1d3c315ae"
     },
     {
       "path": "/phuket-ai-workflow",
@@ -344,8 +344,8 @@
     },
     {
       "path": "/ru/seaport-order-components-decoder",
-      "lastmod": "2026-10-07",
-      "fingerprint": "sha256:a1cad76d6f5856b0eb3236dec224b62b4e8950fbbc842687a23f2f3cbc7292d8"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:ae39be5a707bbfbf468c3d68953be795fcd111aa8d80963540c419808b0cbeb6"
     },
     {
       "path": "/ru/mapper",
@@ -519,8 +519,8 @@
     },
     {
       "path": "/ru/agent-loop-cost-calculator",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:fa4905917e58ab4c869d706dbddc844d9095281b10f4c2bd2d5a139095893945"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:60e6e1df0efd4bd4fa6cc203b2d536d79600f920dd2161c0339818e2c5fb3a0c"
     },
     {
       "path": "/ru/phuket-ai-workflow",
