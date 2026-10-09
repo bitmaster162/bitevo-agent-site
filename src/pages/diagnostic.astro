@@ -58,7 +58,7 @@ const sampleResult = [
 
   <section class="section-tight section-rule">
     <div class="container diag-grid">
-      <form id="diagnostic" class="questions panel">
+      <form id="diagnostic" class="questions panel" method="post">
         {questions.map((item, i) => (
           <fieldset data-id={item.id} data-gate={item.gate} data-why={item.why}>
             <legend><span>{String(i + 1).padStart(2,'0')}</span><div><small>{item.gate}</small><strong>{item.q}</strong></div></legend>
@@ -69,7 +69,8 @@ const sampleResult = [
             </div>
           </fieldset>
         ))}
-        <div class="actions"><button type="submit" class="button button-primary">Build decision-gap brief <span aria-hidden="true">→</span></button><button type="reset" class="button button-ghost">Reset</button></div>
+        <div class="actions"><button type="submit" class="button button-primary" disabled data-js-local-submit>Build decision-gap brief <span aria-hidden="true">→</span></button><button type="reset" class="button button-ghost">Reset</button></div>
+        <p role="status" data-js-local-fallback>The local form is inactive until its JavaScript handler loads. No form data has been submitted. Contact <a href="mailto:robert@bitevo.work">robert@bitevo.work</a> directly.</p>
       </form>
 
       <aside class="result panel">
@@ -195,6 +196,7 @@ const sampleResult = [
     setTimeout(() => copy.textContent = old, 1200);
   });
 </script>
+<script src="/local-form-nojs-r1.js" defer></script>
 <link rel="stylesheet" href="/hypothesis-builder-p27-8.css" />
 <script src="/hypothesis-builder-p27-8.js" defer></script>
 

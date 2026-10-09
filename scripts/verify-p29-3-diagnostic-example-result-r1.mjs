@@ -97,10 +97,23 @@ equal((ruSource.match(/name=\{item\.id\}/g) || []).length, 3, 'RU questionnaire 
 check(!enSource.includes('Book a free 20-minute triage') && !ruSource.includes('Записаться на бесплатный разбор, 20 минут'), 'P29.1 Cal.com CTA remains unpublished');
 check(!enSource.includes('cal.com') && !ruSource.includes('cal.com'), 'no Cal.com URL published by P29.3');
 
-const expectedCurrentness = {
+// P29.3's original dynamic scripts and sample fixture remain pinned above.
+// The successor may change the form wrappers and matching exact route fingerprints.
+const legacyCurrentness = {
   '/diagnostic': { lastmod: '2026-10-05', fingerprint: 'sha256:6a3365a00e676720709a69af93f6cb08e25baa8a1ae4589d9d97b045c7c0653c' },
   '/ru/diagnostic': { lastmod: '2026-10-04', fingerprint: 'sha256:ddc94d00f5d0b8d33b7e96da5e822ce3166d51e20a83df689b674f94c51a0358' }
 };
+const noJsGuardCurrentness = {
+  '/diagnostic': { lastmod: '2026-10-09', fingerprint: 'sha256:b4ab15cf0d692c514f636845d609407a2a001fed93146112c6623ef1591ce7ac' },
+  '/ru/diagnostic': { lastmod: '2026-10-09', fingerprint: 'sha256:d17a50344564486cd4691e25d07a9429110322659a73cb738937f33f2c3d5d8b' }
+};
+const hasENGuard = enSource.includes('<form id="diagnostic" class="questions panel" method="post">') &&
+  enSource.includes('disabled data-js-local-submit');
+const hasRUGuard = ruSource.includes('<form id="ruDiagnostic" class="questions panel" method="post">') &&
+  ruSource.includes('disabled data-js-local-submit');
+check(hasENGuard === hasRUGuard, 'no-JS guard successor must cover both diagnostic locales');
+const noJsGuardSuccessor = hasENGuard && hasRUGuard;
+const expectedCurrentness = noJsGuardSuccessor ? noJsGuardCurrentness : legacyCurrentness;
 for (const [path, value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
@@ -108,4 +121,4 @@ for (const [path, value] of Object.entries(expectedCurrentness)) {
 equal(currentness.routes.length, 131, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-3-diagnostic-example-result-r1.mjs'), 'P29.3 verifier wired into verify:core');
 
-console.log(`P29_3_DIAGNOSTIC_EXAMPLE_RESULT_R1_GATE=PASS checks=${checks} locales=2 gates=7 yes=3 no=1 unknown=3 unresolved=4 static_html=PASS native_details=COLLAPSED dynamic_logic=UNCHANGED js_added=0 network_added=0 p29_1_calcom=OMITTED`);
+console.log(`P29_3_DIAGNOSTIC_EXAMPLE_RESULT_R1_GATE=PASS checks=${checks} locales=2 gates=7 yes=3 no=1 unknown=3 unresolved=4 static_html=PASS native_details=COLLAPSED legacy_dynamic_logic=UNCHANGED nojs_guard_successor=${Number(noJsGuardSuccessor)} p29_1_calcom=OMITTED`);
