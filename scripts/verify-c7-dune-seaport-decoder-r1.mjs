@@ -25,6 +25,14 @@ const both = (needle, label = needle) => {
 };
 
 both('data-c7-dune-seaport-decoder-r1', 'C7 marker');
+both('method="post" data-decoder-form', 'native fail-closed POST method');
+both('type="submit" data-js-local-submit disabled', 'SSR submit disabled');
+both('role="status" data-js-local-fallback', 'visible fallback for unavailable JS');
+check(!/<form\b[^>]*\baction=/.test(en) && !/<form\b[^>]*\baction=/.test(ru), 'no native form action target');
+check(js.includes("form.getAttribute('method') !== 'post'") && js.includes("form.hasAttribute('action')"), 'JS validates form method and no action');
+check(js.includes('event.preventDefault()'), 'native submit prevented on JS-ready path');
+check(js.indexOf("form.addEventListener('submit'") < js.indexOf('fallback.hidden = true;') && js.indexOf("form.addEventListener('reset'") < js.indexOf('submit.disabled = false;'), 'JS enables submit after both listeners');
+check(js.includes('fallback.hidden = true;') && js.includes('submit.disabled = false;'), 'ready state hides warning and enables submit');
 both('data-can-trade="false"', 'can_trade machine boundary');
 both('can_trade=false', 'visible can_trade=false');
 both('data-c4-n14="blocked"', 'C4/N14 machine boundary');
@@ -63,7 +71,7 @@ for (const [path, locale, parent] of [
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ': missing currentness row');
   if (row) {
-    equal(row.lastmod, '2026-10-07', path + ': lastmod');
+    equal(row.lastmod, '2026-10-10', path + ': lastmod');
     check(/^sha256:[0-9a-f]{64}$/.test(row.fingerprint || ''), path + ': fingerprint');
   }
 }

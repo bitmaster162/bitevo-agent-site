@@ -8,11 +8,14 @@
     const output = root.querySelector('[data-calc-output]');
     const empty = root.querySelector('[data-calc-empty]');
     const ru = root.dataset.locale === 'ru';
+    const submit = form?.querySelector('[data-js-local-submit]');
+    const fallback = form?.querySelector('[data-js-local-fallback]');
+    if (!form || !submit || !fallback || !output || !empty || form.getAttribute('method') !== 'post' || form.hasAttribute('action')) return;
 
     const read = name => Number(form.elements.namedItem(name)?.value);
     const set = (sel, value) => { const el = root.querySelector(sel); if (el) el.textContent = value; };
 
-    form?.addEventListener('submit', event => {
+    form.addEventListener('submit', event => {
       event.preventDefault();
       const cost = read('cost');
       const rate = read('rate');
@@ -50,11 +53,14 @@
       output.hidden = false;
     });
 
-    form?.addEventListener('reset', () => {
+    form.addEventListener('reset', () => {
       requestAnimationFrame(() => {
         output.hidden = true;
         empty.hidden = false;
       });
     });
+
+    fallback.hidden = true;
+    submit.disabled = false;
   });
 })();

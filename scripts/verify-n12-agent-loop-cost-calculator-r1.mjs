@@ -28,7 +28,17 @@ for (const html of [enHtml, ruHtml]) {
   check(html.includes('/agent-loop-cost-calculator.js'), 'first-party calculator JS linked');
   check(!html.includes('/agent-loop-cost-calculator.css'), 'no extra calculator CSS asset');
   check(html.includes('LOCAL ONLY'), 'local-only boundary rendered');
+  check(/<form\b[^>]*\bmethod="post"[^>]*\bdata-calc-form\b/.test(html), 'native calculator form must be POST');
+  check(/<button\b(?=[^>]*\btype="submit")(?=[^>]*\bdata-js-local-submit\b)(?=[^>]*\bdisabled\b)[^>]*>/.test(html), 'SSR calculator submit disabled');
+  check(/<p\b[^>]*\brole="status"[^>]*\bdata-js-local-fallback\b/.test(html), 'SSR local-only failure status visible');
+  check(!/<form\b[^>]*\baction=/.test(html), 'calculator form has no action attribute');
 }
+check(component.includes('JavaScript is required for local calculation') && component.includes('Для локального расчёта нужен JavaScript'), 'EN and RU fail-closed notices');
+check(js.includes("form.addEventListener('submit', event => {") && js.includes('event.preventDefault();'), 'native submit guarded when JS loads');
+check(js.includes("form.getAttribute('method') !== 'post'") && js.includes("form.hasAttribute('action')"), 'guard checks exact method and lack of action');
+check(js.includes("const fallback = form?.querySelector('[data-js-local-fallback]')"), 'guard requires SSR warning');
+check(js.indexOf("form.addEventListener('submit'") < js.indexOf('fallback.hidden = true;') && js.indexOf("form.addEventListener('reset'") < js.indexOf('submit.disabled = false;'), 'JS enables submit only after handlers registered');
+check(js.includes('fallback.hidden = true;') && js.includes('submit.disabled = false;'), 'warning cleared only when calculator ready');
 for (const token of [
   'burnPerMinute = cost * rate * parallel',
   'attemptsBeforeDetection = rate * parallel * detection',

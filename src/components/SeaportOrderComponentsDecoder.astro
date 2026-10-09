@@ -17,6 +17,7 @@ const t = ru ? {
   duneEmpty: 'Dune URL не добавлены.',
   boundary: 'URL классифицируется только по форме. Этот инструмент не открывает Dune, не проверяет public visibility и не превращает dashboard/query в доказательство транзакции.',
   local: 'LOCAL ONLY · can_trade=false · 0 network requests',
+  jsRequired: 'Для локального разбора нужен JavaScript. Кнопка выключена; JSON и ссылки не отправлены.',
   noHash: 'ORDER HASH: NOT COMPUTED · no RPC read',
   c4: 'C4 / N14: BLOCKED — без реального проверяемого transaction evidence.',
   inputHint: 'Для полного OrderComponents нужны offerer, zone, offer, consideration, orderType, startTime, endTime, zoneHash, salt, conduitKey и counter.',
@@ -36,6 +37,7 @@ const t = ru ? {
   duneEmpty: 'No Dune URLs supplied.',
   boundary: 'URLs are classified by shape only. This tool does not open Dune, verify public visibility, or turn a dashboard/query into transaction evidence.',
   local: 'LOCAL ONLY · can_trade=false · 0 network requests',
+  jsRequired: 'JavaScript is required for local decoding. Submit is disabled; JSON and links have not been sent.',
   noHash: 'ORDER HASH: NOT COMPUTED · no RPC read',
   c4: 'C4 / N14: BLOCKED — no real auditable transaction evidence is represented.',
   inputHint: 'A complete OrderComponents object needs offerer, zone, offer, consideration, orderType, startTime, endTime, zoneHash, salt, conduitKey and counter.',
@@ -57,7 +59,7 @@ const t = ru ? {
   data-dune-empty={t.duneEmpty}
 >
   <div class="container decoder-grid">
-    <form class="panel decoder-form" data-decoder-form>
+    <form class="panel decoder-form" method="post" data-decoder-form>
       <div class="eyebrow">{t.eyebrow}</div>
       <h2>{t.title}</h2>
       <p>{t.intro}</p>
@@ -84,9 +86,10 @@ const t = ru ? {
       </label>
 
       <div class="actions">
-        <button class="button button-primary" type="submit">{t.decode}</button>
+        <button class="button button-primary" type="submit" data-js-local-submit disabled>{t.decode}</button>
         <button class="button button-ghost" type="reset">{t.reset}</button>
       </div>
+      <p role="status" data-js-local-fallback>{t.jsRequired}</p>
     </form>
 
     <aside class="panel decoder-result" aria-live="polite">
