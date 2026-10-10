@@ -42,7 +42,7 @@
       "category": "SPECIALIST",
       "eyebrow": "SECURITY CONTROL VALIDATION · $1,500",
       "title": "Проверьте один control там, где software реально может что-то изменить.",
-      "metaTitle": "Security Control Validation, $1,500 — BitEvo",
+      "metaTitle": "Проверка контроля безопасности, $1,500 — BitEvo",
       "description": "Фиксированная $1,500 проверка одной consequential control boundary в staging/test с expected decision, downstream readback и воспроизводимым evidence.",
       "points": [
         "До теста фиксируется ожидаемое ALLOW / DENY / HOLD / ESCALATE поведение.",
@@ -58,7 +58,7 @@
       "category": "SPECIALIST",
       "eyebrow": "AI EVIDENCE READINESS · $1,500",
       "title": "Соберите повторяющиеся buyer-review ответы в один защищаемый evidence pack.",
-      "metaTitle": "Evidence readiness sprint, $1,500 — BitEvo",
+      "metaTitle": "Спринт подготовки доказательств, $1,500 — BitEvo",
       "description": "Пятидневный $1,500 sprint для одного AI product/workflow: buyer-question map, claims-to-evidence ledger, reusable evidence pack и gap list.",
       "points": [
         "Подходит, когда security/procurement review уже происходит, а доказательства собираются вручную.",
@@ -122,7 +122,7 @@
       "category": "SPECIALIST",
       "eyebrow": "MCP / TOOL GOVERNANCE",
       "title": "Привяжите tool authority к точному действию, объекту и evidence gate.",
-      "metaTitle": "MCP / tool governance — BitEvo",
+      "metaTitle": "Управление MCP и полномочиями инструментов — BitEvo",
       "description": "MCP / tool governance: capability boundary, object binding, approval и evidence внешнего эффекта. Отдельная поверхность, не новый ценовой tier.",
       "points": [
         "MCP/tool availability не равна разрешению выполнять consequential action.",
@@ -154,7 +154,7 @@
       "category": "SPECIALIST",
       "eyebrow": "FAILURE / RETRY / RECOVERY",
       "title": "Не разрешайте retry превращать неопределённость в повторный внешний эффект.",
-      "metaTitle": "Failure recovery: retry, replay, compensation — BitEvo",
+      "metaTitle": "Восстановление после сбоев: повторы и компенсация — BitEvo",
       "description": "Специализированная BitEvo поверхность про stale state, partial effects, replay, retry, compensation и recovery ownership для consequential workflows.",
       "points": [
         "Retry допустим только когда система знает, какой внешний эффект уже произошёл и к какому объекту он относится.",
@@ -170,7 +170,7 @@
       "category": "SPECIALIST",
       "eyebrow": "PHUKET · LOCAL IMPLEMENTATION",
       "title": "Локальный AI workflow pilot — отдельный implementation path, не новый audit tier.",
-      "metaTitle": "Phuket AI Workflow pilot — BitEvo",
+      "metaTitle": "Пилотный AI-воркфлоу на Пхукете — BitEvo",
       "description": "Русская parity-поверхность Phuket AI Workflow как отдельного local specialist implementation path, подчинённого общей BitEvo commercial hierarchy.",
       "points": [
         "Это локальный implementation pilot, а не замена global Free → Entry → Primary audit ladder.",
@@ -303,7 +303,7 @@
       "category": "PROOF",
       "eyebrow": "OPERATOR / ENTITY BOUNDARY",
       "title": "BitEvo на bitevo.work — конкретная независимая B2B engineering practice.",
-      "metaTitle": "BitEvo operator boundary — B2B engineering practice",
+      "metaTitle": "О BitEvo: независимая B2B-инженерная практика",
       "description": "Русская operator/trust поверхность с canonical entity boundary и разграничением от несвязанных crypto/Web3 проектов с похожим названием.",
       "points": [
         "Canonical public identity привязана к BitEvo на bitevo.work.",
@@ -383,7 +383,7 @@
       "category": "CONTEXT",
       "eyebrow": "PRIVATE PRODUCT · PORTABLE CONTEXT",
       "title": "RUAP переносит проверенный контекст. Полномочия не переносит.",
-      "metaTitle": "RUAP: portable AI continuity — BitEvo",
+      "metaTitle": "RUAP: перенос AI-контекста без передачи полномочий — BitEvo",
       "description": "RUAP: provenance-aware cold-start packs между моделями, агентами и сессиями. Перенесённый контекст не становится разрешением действовать.",
       "points": [
         "Selected evidence, source locators и currentness metadata упаковываются в deterministic portable context.",
