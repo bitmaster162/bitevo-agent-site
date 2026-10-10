@@ -82,7 +82,7 @@ check(llms.includes(TRIAGE) && llms.includes('verified Cal.com booking page'), '
 const currentness = JSON.parse(await read('src/data/sitemap-currentness.json'));
 const packageJson = JSON.parse(await read('package.json'));
 const expected = {
-  '/': ['2026-10-05', 'sha256:858879ec74e74b17b3476ed23103b6f6cb213bce5429bb15df3a60e679776203'],
+  '/': ['2026-10-10', 'sha256:1313fe3b91e01982c99adeb8f13e642c595b557cdb94550c3888f8f0f3b63c53'],
   '/ru': ['2026-10-04', 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436'],
   '/pricing': ['2026-10-05', 'sha256:26c47dbf02c967df21873b50604623a058c1e15b60063c68918af7523f29bea6'],
   '/entry-audit': ['2026-10-05', 'sha256:4bb6364cb8edf10326380828228a8fa03ea9920a50fcfa4f3a8f40daf240f5e7']

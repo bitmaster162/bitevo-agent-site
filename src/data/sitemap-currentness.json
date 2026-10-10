@@ -4,8 +4,8 @@
   "routes": [
     {
       "path": "/",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:858879ec74e74b17b3476ed23103b6f6cb213bce5429bb15df3a60e679776203"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:1313fe3b91e01982c99adeb8f13e642c595b557cdb94550c3888f8f0f3b63c53"
     },
     {
       "path": "/start",
@@ -219,8 +219,8 @@
     },
     {
       "path": "/operator",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:7a16d18e489f2bc9af94c4107ea0dd1a1184086da1882f4aeab099c1765368f4"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:d53d2485a6cd5390234b759187cd02c52fde9b47cb1956e032002154f41aff87"
     },
     {
       "path": "/ai-skill-lab-sample",

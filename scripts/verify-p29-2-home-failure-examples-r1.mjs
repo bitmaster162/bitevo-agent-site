@@ -49,7 +49,7 @@ check(enSource.includes('$4,900'), 'existing EN price remains present');
 check(ruSource.includes('$4,900'), 'existing RU price remains present');
 
 const expected = {
-  '/': { lastmod: '2026-10-05', fingerprint: 'sha256:858879ec74e74b17b3476ed23103b6f6cb213bce5429bb15df3a60e679776203' },
+  '/': { lastmod: '2026-10-10', fingerprint: 'sha256:1313fe3b91e01982c99adeb8f13e642c595b557cdb94550c3888f8f0f3b63c53' },
   '/ru': { lastmod: '2026-10-04', fingerprint: 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436' }
 };
 for (const [path, value] of Object.entries(expected)) {
