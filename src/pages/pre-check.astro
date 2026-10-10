@@ -46,7 +46,7 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
 
     <section class="section section-rule" data-precheck-authority-form-panel>
       <div class="narrow">
-        <form class="panel precheck-form-panel" data-precheck-form>
+        <form class="panel precheck-form-panel" method="post" data-precheck-form>
           <label for="precheckInput">Tools, manifest or description (no secrets)</label>
           <textarea
             id="precheckInput"
@@ -63,8 +63,9 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
             <span data-precheck-count>0 / 8,000</span>
           </div>
           <div class="precheck-form-actions">
-            <button class="button button-primary" type="submit" data-precheck-run>Run pre-check</button>
+            <button class="button button-primary" type="submit" data-precheck-run data-js-local-submit disabled>Run pre-check</button>
           </div>
+          <p class="precheck-status" role="status" data-js-local-fallback>JavaScript is required to run Pre-Check. Submit is disabled; no input was sent.</p>
           <p class="precheck-status" data-precheck-status role="status" aria-live="polite" aria-atomic="true"></p>
         </form>
       </div>
@@ -72,7 +73,7 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
 
     <section class="section section-rule" data-config-scan-form-panel hidden>
       <div class="narrow">
-        <form class="panel precheck-form-panel" data-config-scan-form>
+        <form class="panel precheck-form-panel" method="post" data-config-scan-form>
           <label for="configScanInput">SKILL.md, CLAUDE.md, .cursorrules or mcp.json</label>
           <textarea
             id="configScanInput"
@@ -88,9 +89,10 @@ const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage
             <span data-config-scan-count>0 characters</span>
           </div>
           <div class="precheck-form-actions">
-            <button class="button button-primary" type="submit">Scan locally</button>
+            <button class="button button-primary" type="submit" data-js-local-submit disabled>Scan locally</button>
             <button class="button button-ghost" type="reset">Reset</button>
           </div>
+          <p class="precheck-status" role="status" data-js-local-fallback>JavaScript is required for the local config scan. Submit is disabled; input was not sent.</p>
           <p class="precheck-status" data-config-scan-status role="status" aria-live="polite" aria-atomic="true"></p>
         </form>
       </div>

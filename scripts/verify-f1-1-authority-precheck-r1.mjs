@@ -199,6 +199,15 @@ const sitemap = await readFile(new URL('dist/sitemap.xml', root), 'utf8');
 check(pageSource.includes("Map your agent's authority before you test it."), 'design H1 exact');
 check(pageSource.includes('Paste a tool list, an MCP server manifest or a plain description.'), 'design lead retained');
 check(pageSource.includes('maxlength="8000"') && pageSource.includes('Keys, tokens and credentials are rejected.'), '8k and secret boundaries visible');
+const precheckForm = (html.match(/<form\b[^>]*\bdata-precheck-form\b[^>]*>/i) || [])[0] || '';
+check(/\bmethod="post"/.test(precheckForm) && !/\baction\s*=/.test(precheckForm), 'pre-check SSR uses POST without action');
+const precheckSubmit = (html.match(/<button\b[^>]*\bdata-precheck-run\b[^>]*>/i) || [])[0] || '';
+check(/\bdisabled\b/.test(precheckSubmit) && /\bdata-js-local-submit\b/.test(precheckSubmit), 'SSR authority button disabled');
+check(/<p\b[^>]*\bdata-js-local-fallback\b/.test(html), 'SSR visible no-JS status');
+check(client.includes("form.getAttribute('method') !== 'post'") && client.includes("form.hasAttribute('action')"), 'authority readiness checks form boundary');
+check(client.indexOf("form.addEventListener('submit'") >= 0 &&
+      client.indexOf("form.addEventListener('submit'") < client.lastIndexOf('noJsFallback.hidden = true;') &&
+      client.indexOf("send.addEventListener('click'") < client.lastIndexOf('run.disabled = false;'), 'JS enables after handlers');
 check(pageSource.includes('Send to Robert') && pageSource.includes('Book a free triage') && pageSource.includes('Copy result'), 'three result actions present');
 check(pageSource.includes('https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage'), 'verified Cal.com URL reused');
 check(pageSource.includes('robots="noindex, follow"'), 'page noindex before activation');
