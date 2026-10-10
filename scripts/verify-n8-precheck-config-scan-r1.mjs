@@ -27,6 +27,15 @@ check(pageSource.includes('data-precheck-authority-form-panel'), 'authority form
 check(pageSource.includes('data-precheck-authority-result-panel'), 'authority result has independent mode panel');
 check(pageSource.includes('data-config-scan-form-panel'), 'config scan form panel present');
 check(pageSource.includes('data-config-scan-result-panel'), 'config scan result panel present');
+const localForm = (html.match(/<form\b[^>]*\bdata-config-scan-form\b[^>]*>/i) || [])[0] || '';
+check(/\bmethod="post"/.test(localForm) && !/\baction\s*=/.test(localForm), 'config scanner SSR uses POST without action');
+const localSubmit = (html.match(/<button\b(?=[^>]*\btype="submit")(?=[^>]*\bdata-js-local-submit\b)[^>]*>/i) || [])[0] || '';
+check(/\bdisabled\b/.test(localSubmit), 'config scanner SSR disabled');
+check(/<p\b[^>]*\bdata-js-local-fallback\b/.test(html), 'config scanner no-JS status');
+check(scanClient.includes("form.getAttribute('method') !== 'post'") && scanClient.includes("form.hasAttribute('action')"), 'config readiness verifies form boundary');
+check(scanClient.indexOf("form.addEventListener('submit'") >= 0 &&
+      scanClient.indexOf("form.addEventListener('submit'") < scanClient.indexOf('noJsFallback.hidden = true;') &&
+      scanClient.indexOf("form.addEventListener('reset'") < scanClient.indexOf('submit.disabled = false;'), 'config JS ready after handlers');
 check(pageSource.includes('src="/pre-check-config-scan-r1.js"'), 'N8 first-party script bound');
 check(!pageSource.includes('pre-check-config-scan-r1.css'), 'N8 adds no dedicated CSS');
 check(pageSource.includes('robots="noindex, follow"'), 'Pre-Check remains noindex');

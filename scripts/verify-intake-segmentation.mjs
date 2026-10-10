@@ -29,10 +29,23 @@ for (const [locale, rel] of pages) {
   const readinessBase = locale === 'RU' ? '/ru/audit/proposal-readiness' : '/audit/proposal-readiness';
   check(html.includes('data-proposal-readiness'), `${locale}: proposal-readiness handoff missing`);
   check(html.includes(`href="${readinessBase}"`), `${locale}: generic proposal-readiness fallback missing`);
-  check(!/<form[^>]+(?:action|method)=/i.test(html), `${locale}: form must remain browser-local without action/method`);
+  const intakeId = locale === 'RU' ? 'ruIntake' : 'audit-intake';
+  const form = [...html.matchAll(/<form\b[^>]*>/gi)].map(match => match[0]).find(tag => tag.includes('id="' + intakeId + '"')) || '';
+  check(/\bmethod="post"/i.test(form) && !/\baction\s*=/i.test(form), locale + ': method post and no action');
+  const submit = (html.match(/<button\b[^>]*\bdata-js-local-submit\b[^>]*>/i) || [])[0] || '';
+  check(/\bdisabled\b/.test(submit) && /\btype="submit"/.test(submit), locale + ': SSR submit disabled');
+  const fallback = (html.match(/<p\b[^>]*\bdata-js-local-fallback\b[^>]*>/i) || [])[0] || '';
+  check(/\brole="status"/.test(fallback) && !/\bhidden\b/.test(fallback), locale + ': SSR JS warning visible');
   check(!/api\.telegram\.org|t\.me\//i.test(html), `${locale}: Telegram transfer must not exist`);
 }
 
+for (const [locale, sourcePath] of [['EN', 'src/pages/audit-intake.astro'], ['RU', 'src/pages/ru/audit-intake.astro']]) {
+  const source = fs.readFileSync(path.resolve(sourcePath), 'utf8');
+  check(source.includes("form.getAttribute('method')") && source.includes("!form.hasAttribute('action')"), locale + ': activation checks POST and no action');
+  check(source.indexOf("addEventListener('submit'") >= 0 && source.indexOf("addEventListener('submit'") < source.indexOf('localSubmit.disabled'), locale + ': listener before enable');
+  check(source.indexOf("addEventListener('reset'") >= 0 && source.indexOf("addEventListener('reset'") < source.indexOf('localSubmit.disabled'), locale + ': reset before enable');
+  check(source.includes('localFallback.hidden') && source.includes('localSubmit.disabled'), locale + ': disabled SSR, enabled JS');
+}
 const controller = fs.readFileSync(path.resolve('public/intake-segmentation.js'), 'utf8');
 for (const forbidden of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'FormData(']) {
   check(!controller.includes(forbidden), `controller must not contain network primitive ${forbidden}`);

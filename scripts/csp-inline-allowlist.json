@@ -70,7 +70,7 @@
     "jMMMhz8rH16oe3ed8hSNbJZ8VPD5JHSBOv2WF2ZY4t4=",
     "jlN2q9JMtLFwUtZ0W8btTN9WHtn8IQD2GA0MroS7dic=",
     "jxlL/1hzcpCdetQ52SfuKvzU4IEloYfTvuCviChbCPU=",
-    "kqvxXAPEvYRISqFdm6nBES/PVCUnfE5PrzYRpUFQmFg=",
+    "FpNsujjc6zq6xjnHBMpdVsGPAx3gbjmQ/D8Be+xngDM=",
     "l7YqUXuP0hlmmb37EZjPFPqj5am8ohHO4G8UrGHRhH4=",
     "pxQkBqnYg6khk/Fvl9xkzCd3fcf2LVrMUKtzPvnOkZQ=",
     "rJttwfZ5sfW8jAYAZyC6zzEb6CW8fAldRXp6khyrBWY=",
@@ -82,7 +82,7 @@
     "wcHEHel7j9JTfrI7d8PB04ufrYLiRWj6H7T85gBRcSs=",
     "wcc417XTRklCkuAgTOXFnZ+YBPGx0/qdnZbwZk8Vi0c=",
     "wnJf9vl+ChdpJeWtnPKCvoW4ggoYa2JCJnJ4jBjyQhQ=",
-    "xb4NjaKSfqUt9+ZoQ87f6SehwUZntY8ht6aS6TsDPrA=",
+    "D59FrFZe9AldSscODxxqsagI9Q94LSWAdS0PeYz2VEk=",
     "xmetWLgVzOjhJeSIV4LFXBqrTNsr+XbHfDVZ/MOWDZ4=",
     "yVv4vY1VsxS4Pj3Wz8pW7g2oGr0Ngz7gPb7NIyY+xRI=",
     "yhzomOw3aC8/hk6AsXgKaolK8Ah3VHD0bEMShuYQLzQ=",
@@ -411,6 +411,30 @@
       "routes": [
         "/seaport-order-components-decoder",
         "/ru/seaport-order-components-decoder"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_R6_NOJS_INTAKE_PRECOMMIT",
+      "note": "R6 changes only the two exact executable inline intake brief generator bodies, enabling their SSR-disabled submit buttons after submit/reset handlers exist and form method POST/no action checks pass. The two old reviewed hashes became stale and are replaced by the two rendered candidate hashes. Source scripts perform browser-local brief generation only; this review does not authorize credential use, network submission, external side effects, unsafe-inline, unsafe-eval, wildcard origins or provider mutation.",
+      "scripts": [
+        "FpNsujjc6zq6xjnHBMpdVsGPAx3gbjmQ/D8Be+xngDM=",
+        "D59FrFZe9AldSscODxxqsagI9Q94LSWAdS0PeYz2VEk="
+      ],
+      "replaces": [
+        {
+          "route": "/audit-intake",
+          "old": "kqvxXAPEvYRISqFdm6nBES/PVCUnfE5PrzYRpUFQmFg=",
+          "new": "FpNsujjc6zq6xjnHBMpdVsGPAx3gbjmQ/D8Be+xngDM="
+        },
+        {
+          "route": "/ru/audit-intake",
+          "old": "xb4NjaKSfqUt9+ZoQ87f6SehwUZntY8ht6aS6TsDPrA=",
+          "new": "D59FrFZe9AldSscODxxqsagI9Q94LSWAdS0PeYz2VEk="
+        }
+      ],
+      "routes": [
+        "/audit-intake",
+        "/ru/audit-intake"
       ]
     }
   ]

@@ -197,9 +197,12 @@
     const warningsHost = root.querySelector('[data-config-scan-warnings]');
     const resultCount = root.querySelector('[data-config-scan-result-count]');
     const copy = root.querySelector('[data-config-scan-copy]');
+    const submit = form?.querySelector('[data-js-local-submit]');
+    const noJsFallback = form?.querySelector('[data-js-local-fallback]');
     if (!authorityFormPanel || !authorityResultPanel || !authorityScopePanel ||
         !localFormPanel || !localResultPanel || !modeButtons.length ||
-        !form || !input || !status || !count || !warningsHost || !resultCount || !copy) return;
+        !form || !input || !status || !count || !warningsHost || !resultCount || !copy || !submit || !noJsFallback ||
+        form.getAttribute('method') !== 'post' || form.hasAttribute('action')) return;
 
     let mode = 'authority';
     let report = null;
@@ -271,6 +274,8 @@
     });
 
     setMode('authority');
+    noJsFallback.hidden = true;
+    submit.disabled = false;
   }
 
   const TEST_API = Object.freeze({ analyzeConfigText, RULES, SECRET_PATTERNS, SCHEMA });

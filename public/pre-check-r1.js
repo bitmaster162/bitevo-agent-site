@@ -114,8 +114,11 @@
     const copy = root.querySelector('[data-precheck-copy]');
     const send = root.querySelector('[data-precheck-send]');
     const run = root.querySelector('[data-precheck-run]');
+    const noJsFallback = form?.querySelector('[data-js-local-fallback]');
     if (!form || !input || !count || !status || !resultRoot || !actionsHost || !hypothesesHost ||
-        !unknownsHost || !nextName || !nextWhy || !copy || !send || !run) return;
+        !unknownsHost || !nextName || !nextWhy || !copy || !send || !run || !noJsFallback ||
+        form.getAttribute('method') !== 'post' || form.hasAttribute('action') ||
+        !run.hasAttribute('data-js-local-submit')) return;
 
     let currentResult = null;
     let busy = false;
@@ -199,6 +202,9 @@
       if (field.focus) field.focus({ preventScroll:true });
       setStatus('A compact JSON summary of this result was placed in Scope Handoff. The original text was not copied. Review it and explicitly consent before submitting.');
     });
+
+    noJsFallback.hidden = true;
+    run.disabled = false;
   }
 
   const TEST_API = Object.freeze({ detectSecret, buildScopeSummary, MAX_INPUT });

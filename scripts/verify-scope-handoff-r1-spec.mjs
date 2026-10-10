@@ -105,7 +105,18 @@ for (const [name, definition] of Object.entries(schema.properties || {})) {
 }
 
 for (const [locale, source] of [['EN', en], ['RU', ru]]) {
-  check(!/<form[^>]+(?:action|method)=/i.test(source), `${locale}: form action/method must remain absent`);
+  const intakeId = locale === 'EN' ? 'audit-intake' : 'ruIntake';
+  const formTags = [...source.matchAll(/<form\b[^>]*>/gi)].map(match => match[0]);
+  const intakeForms = formTags.filter(tag => tag.includes('id="' + intakeId + '"'));
+  check(intakeForms.length === 1, `${locale}: exactly one local intake form required`);
+  const formTag = intakeForms[0] || '';
+  check(/\bmethod="post"/i.test(formTag) && !/\baction\s*=/i.test(formTag), `${locale}: local intake form must be native POST with no action`);
+  const submitTags = [...source.matchAll(/<button\b[^>]*>/gi)].map(match => match[0]);
+  const localSubmits = submitTags.filter(tag => /\bdata-js-local-submit\b/i.test(tag));
+  check(localSubmits.length === 1, `${locale}: exactly one JS-readiness submit control required`);
+  check(/\btype="submit"/i.test(localSubmits[0] || '') && /\bdisabled\b/i.test(localSubmits[0] || ''), `${locale}: local submit must be SSR-disabled until JS readiness`);
+  const fallbackTags = [...source.matchAll(/<p\b[^>]*>/gi)].map(match => match[0]);
+  check(fallbackTags.some(tag => /\bdata-js-local-fallback\b/i.test(tag) && /\brole="status"/i.test(tag) && !/\bhidden\b/i.test(tag)), `${locale}: visible accessible no-JS fallback required`);
   for (const primitive of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'FormData(']) {
     check(!source.includes(primitive), `${locale}: page source must not embed network primitive ${primitive}`);
   }
