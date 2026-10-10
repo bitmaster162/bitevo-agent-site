@@ -46,6 +46,43 @@ const operator = await readFile(join(dist, 'operator', 'index.html'), 'utf8');
 if (!operator.includes('data-identity-boundary')) failures.push('operator: missing human-visible entity note');
 if (!operator.includes('not affiliated with unrelated cryptocurrency, wallet, token or Web3 projects')) failures.push('operator: restrained non-affiliation wording missing');
 
+const operatorH1 = /<h1\b[^>]*\bclass="[^"]*\bdisplay\b[^"]*"[^>]*>\s*Robert Dumanyan runs BitEvo\.\s*<\/h1>/i;
+if (!operatorH1.test(operator)) failures.push('operator: visible full-name heading missing');
+if (!/<strong\b[^>]*>\s*Robert Dumanyan\s*<\/strong>/i.test(operator)) failures.push('operator: visible full-name operator card missing');
+
+const anchors = html => [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)]
+  .map(match => ({ attrs: match[1], readable: match[2].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() }));
+
+for (const [marker, href, label] of [
+  ['github', 'https://github.com/bitmaster162', 'GitHub'],
+  ['linkedin', 'https://linkedin.com/in/robert-dumanyan-984171335', 'LinkedIn']
+]) {
+  const visible = anchors(operator).filter(a => a.attrs.includes('data-r9a-operator-source="' + marker + '"'));
+  if (visible.length !== 1 ||
+      !visible[0].attrs.includes('href="' + href + '"') ||
+      !/\brel="me"/.test(visible[0].attrs) ||
+      !visible[0].readable.includes(label)) {
+    failures.push('operator: visible verified ' + marker + ' link missing or mismatched');
+  }
+}
+if (!operator.includes('"name":"Robert Dumanyan"') ||
+    !operator.includes('"https://github.com/bitmaster162"') ||
+    !operator.includes('"https://linkedin.com/in/robert-dumanyan-984171335"')) {
+  failures.push('operator: existing canonical Person binding or sameAs evidence changed');
+}
+
+const trustLines = [...rootHtml.matchAll(/<p\b[^>]*\bdata-r9a-operator-trust="home-en"[^>]*>([\s\S]*?)<\/p>/gi)];
+if (trustLines.length !== 1) failures.push('home: exactly one operator trust line required');
+else {
+  const visible = anchors(trustLines[0][0]);
+  if (visible.length !== 1 ||
+      !visible[0].attrs.includes('href="/operator"') ||
+      !visible[0].readable.includes('Robert Dumanyan') ||
+      !visible[0].readable.includes('identity and evidence boundaries')) {
+    failures.push('home: operator link must be visible, named and bound to /operator');
+  }
+}
+
 const llms = await readFile(join(dist, 'llms.txt'), 'utf8');
 for (const marker of [
   '## Identity boundary',
