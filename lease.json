@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "0e2824e3-00ba-40aa-954f-458c1b7569cd",
   "nonce": "84efffd2-59ee-4deb-a95a-265a7868217f",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "7138edc1ffcc51e50c7d3306a6b6b5eeeaee8d02",
@@ -11,10 +11,12 @@
   "session": "bitevo-r6-nojs-forms-20261010-r1",
   "worktree": "c:/temp/bitevo_r6_nojs_forms_local_qa_7138ed_20261010",
   "acquiredAt": "2026-10-10T04:30:23.124Z",
-  "updatedAt": "2026-10-10T04:51:09.222Z",
+  "updatedAt": "2026-10-10T05:15:48.536Z",
   "expiresAt": "2026-10-11T16:00:00.000Z",
   "sealedHead": "5f70fe1c4d2d1985e154e5fcc11b10171cbe14cc",
   "sealedTree": "747f64578a87c78611398d325e9639f855cb3af8",
   "featureRef": "refs/heads/agent/site-r6-nojs-forms-7138ed-r1",
-  "predecessor": "e650314669338be4575bdd1b6f63460a5619f2af"
+  "predecessor": "498862f9cea25be9ba93271ef29e6341f7509387",
+  "releasedAt": "2026-10-10T05:15:48.536Z",
+  "releaseReason": "BITEVO_R6_PR221_TERMINAL_VERIFIED_CF_AND_VERCEL_PROD"
 }
