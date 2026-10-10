@@ -57,7 +57,7 @@ check(security.includes('Prepare scope brief') && security.includes('Review publ
 check(entryAudit.includes('Expected-vs-observed test matrix'), 'Q4 expected-vs-observed matrix is supported by existing Entry Audit source');
 check(pricing.includes('Reproducible evidence pack') && pricing.toLowerCase().includes('finding memo'), 'Q4 finding memo and reproducible evidence pack are supported by existing pricing source');
 check(sampleAudit.includes('Open machine-readable pack') && sampleAudit.includes('Download JSON'), 'Q4 machine-readable pack and JSON download are supported by existing sample audit source');
-check(operator.includes('<h1 class="display">Robert runs BitEvo.</h1>'), 'Q5 Robert operator fact is supported by existing operator source');
+check(operator.includes('<h1 class="display">Robert Dumanyan runs BitEvo.</h1>'), 'Q5 Robert operator fact is supported by existing operator source');
 
 check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b)/i.test(component), 'shared component adds no JS, network, forms, buttons or links');
 
