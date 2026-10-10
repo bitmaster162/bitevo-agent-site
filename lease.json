@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "8376f1d7-ca9a-4f25-897c-ca7dde33af5a",
   "nonce": "4a767de2-ae94-4dc7-8178-57b617296e30",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "6b8ed89c4782f8a3e741edcd00db26449c752251",
@@ -11,10 +11,10 @@
   "session": "bitevo-r8-ru-seo-titles-20261010-r1",
   "worktree": "c:/temp/bitevo_r8_ru_seo_titles_lf_local_6b8ed89_20261010_r1",
   "acquiredAt": "2026-10-10T11:25:54.009Z",
-  "updatedAt": "2026-10-10T11:25:54.009Z",
+  "updatedAt": "2026-10-10T11:26:14.270Z",
   "expiresAt": "2026-10-10T17:25:46.594Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "8333f58c11171070589fd872424833f1abec18ec"
+  "sealedHead": "4f7b8539e4ae9c9a38247e5f098d599e0fa7050a",
+  "sealedTree": "6f3be8d6c881c85dc0e187bd58b57bcac27bcd21",
+  "featureRef": "refs/heads/agent/site-r8-ru-seo-titles-6b8ed89-r1",
+  "predecessor": "5a6a7383b146b97c60d2d5738f1772441e8ea79b"
 }
