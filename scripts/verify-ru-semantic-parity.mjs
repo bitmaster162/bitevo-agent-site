@@ -11,6 +11,15 @@ const failures = [];
 let checks = 0;
 
 const cyrillic = /[А-Яа-яЁё]/;
+const ruSeoTitleRoutes = new Set([
+  '/ru/control-validation',
+  '/ru/evidence-readiness',
+  '/ru/mcp-governance',
+  '/ru/failure-recovery',
+  '/ru/phuket-ai-workflow',
+  '/ru/operator',
+  '/ru/ruap',
+]);
 const enRoutes = registry.routes.filter(route => route.indexable && route.locale === 'en');
 const ruRoutes = registry.routes.filter(route => route.indexable && route.locale === 'ru');
 const ruMap = new Map(ruRoutes.map(route => [route.path, route]));
@@ -138,6 +147,14 @@ for (const [ruPath, page] of parityMap) {
   } catch {
     failures.push(`${ruPath}: generated page missing from build`);
     continue;
+  }
+  if (ruSeoTitleRoutes.has(ruPath)) {
+    checks += 4;
+    if (!cyrillic.test(page.metaTitle || '')) failures.push(ruPath + ': RU SEO metaTitle must contain Cyrillic');
+    if (!html.includes('<title>' + page.metaTitle + '</title>')) failures.push(ruPath + ': rendered title differs from RU metaTitle');
+    const metaTags = html.match(/<meta\b[^>]*>/gi) || [];
+    if (!metaTags.some(tag => tag.includes('property="og:title"') && tag.includes('content="' + page.metaTitle + '"'))) failures.push(ruPath + ': OG title differs from RU metaTitle');
+    if (!metaTags.some(tag => tag.includes('name="twitter:title"') && tag.includes('content="' + page.metaTitle + '"'))) failures.push(ruPath + ': Twitter title differs from RU metaTitle');
   }
   if (html.includes('Смысловое соответствие RU')) failures.push(`${ruPath}: internal semantic parity service marker must not be public`);
   if (!cyrillic.test(page.eyebrow || '') && !html.includes('lang="en"')) failures.push(`${ruPath}: English-only eyebrow fragment must declare lang=en`);

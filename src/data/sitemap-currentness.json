@@ -454,13 +454,13 @@
     },
     {
       "path": "/ru/control-validation",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:52b175b9b5d5b20c03537c2199bac0692cb40a707f27e1fd52926e09c59e1c37"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:4aee7f54c1edc0c9876f37025d8664b7f0dd9cdb16e2a8ce1f1e17e95aa1ab03"
     },
     {
       "path": "/ru/evidence-readiness",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:cc1345e5ee73701e310ba4d03d7acbb6e51d54cfb7528e2fd5f09b391bcf585c"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:5549f03ceb1038af0c83f385327ec91f1abe827c16e9d2f81f0a03d91366d661"
     },
     {
       "path": "/ru/build/exception-workflow-diagnostic",
@@ -504,8 +504,8 @@
     },
     {
       "path": "/ru/mcp-governance",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:b6321ba677e6b7a4b185e1944dfecc362d62db033b4ebd5e24e9359a66e47378"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:837e68a7b233f4d365e87db34ca8bb504339b256c82edf9c527613e2d541330e"
     },
     {
       "path": "/ru/coding-agent-governance",
@@ -514,8 +514,8 @@
     },
     {
       "path": "/ru/failure-recovery",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:7e8fecfb3ca3829c67baadf31e874a346127d3883488a20c643ee6eb593978ed"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:157fbffacf426503a1686fa6cd07652a814c6eddc4dd1d2454045227348fbb62"
     },
     {
       "path": "/ru/agent-loop-cost-calculator",
@@ -524,8 +524,8 @@
     },
     {
       "path": "/ru/phuket-ai-workflow",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:f3cfa1f8a93541d1eb9853cacf204fe848ce9281d79d892c273e2617459ac2af"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:0b3f5d19ceb2335538025963500920c74b6623c623af07069f525780b1786b05"
     },
     {
       "path": "/ru/mcp-governance-checklist",
@@ -564,8 +564,8 @@
     },
     {
       "path": "/ru/operator",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:0fea677aafd7c430fef241fb473e63dc8fb6291d50ad1ebc501b8d433ca39ee1"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:33d6c9798c5eb5943cc0dbab0db68da498a0b5a4e4b15d073e6fe6b245c0222b"
     },
     {
       "path": "/ru/ai-skill-lab-sample",
@@ -604,8 +604,8 @@
     },
     {
       "path": "/ru/ruap",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:0b6d26de2cbd74565a21b1803613ca371d8cbc96ef3ab36ffd603c1b726c6866"
+      "lastmod": "2026-10-10",
+      "fingerprint": "sha256:e7860d9bc1d469a67f2a7d5449a94272c1098a4f85e9646fc47cd2b2064ad6eb"
     },
     {
       "path": "/ru/consequential-actions",
