@@ -93,6 +93,7 @@ const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
     const localSubmit = form?.querySelector('[data-js-local-submit]');
     const localFallback = form?.querySelector('[data-js-local-fallback]');
     if (form && localSubmit && localFallback && brief && copy && download && briefState &&
+        form.dataset.segReady === '1' &&
         form.getAttribute('method') === 'post' && !form.hasAttribute('action')) {
       localFallback.hidden = true;
       localSubmit.disabled = false;

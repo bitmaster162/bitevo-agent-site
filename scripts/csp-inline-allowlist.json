@@ -70,7 +70,7 @@
     "jMMMhz8rH16oe3ed8hSNbJZ8VPD5JHSBOv2WF2ZY4t4=",
     "jlN2q9JMtLFwUtZ0W8btTN9WHtn8IQD2GA0MroS7dic=",
     "jxlL/1hzcpCdetQ52SfuKvzU4IEloYfTvuCviChbCPU=",
-    "FpNsujjc6zq6xjnHBMpdVsGPAx3gbjmQ/D8Be+xngDM=",
+    "SzaQJM8RIxVIw15mkUBovkbUgyKdYkVu0z4g0ZJJYFA=",
     "l7YqUXuP0hlmmb37EZjPFPqj5am8ohHO4G8UrGHRhH4=",
     "pxQkBqnYg6khk/Fvl9xkzCd3fcf2LVrMUKtzPvnOkZQ=",
     "rJttwfZ5sfW8jAYAZyC6zzEb6CW8fAldRXp6khyrBWY=",
@@ -82,7 +82,7 @@
     "wcHEHel7j9JTfrI7d8PB04ufrYLiRWj6H7T85gBRcSs=",
     "wcc417XTRklCkuAgTOXFnZ+YBPGx0/qdnZbwZk8Vi0c=",
     "wnJf9vl+ChdpJeWtnPKCvoW4ggoYa2JCJnJ4jBjyQhQ=",
-    "D59FrFZe9AldSscODxxqsagI9Q94LSWAdS0PeYz2VEk=",
+    "JJsWZS2S0anUBdh//7uWYJP3G2oXCKK/zoWLB2qX8FU=",
     "xmetWLgVzOjhJeSIV4LFXBqrTNsr+XbHfDVZ/MOWDZ4=",
     "yVv4vY1VsxS4Pj3Wz8pW7g2oGr0Ngz7gPb7NIyY+xRI=",
     "yhzomOw3aC8/hk6AsXgKaolK8Ah3VHD0bEMShuYQLzQ=",
@@ -430,6 +430,30 @@
           "route": "/ru/audit-intake",
           "old": "xb4NjaKSfqUt9+ZoQ87f6SehwUZntY8ht6aS6TsDPrA=",
           "new": "D59FrFZe9AldSscODxxqsagI9Q94LSWAdS0PeYz2VEk="
+        }
+      ],
+      "routes": [
+        "/audit-intake",
+        "/ru/audit-intake"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_R7_BLOCKED_SEGMENTATION_FAIL_CLOSED_PRECOMMIT",
+      "note": "R7 fail-closes EN/RU intake submit when the first-party external segmentation controller has not positively completed registering its listeners. The controller sets a one-bit form readiness marker only after mode and submit/reset setup. The two hash-bound inline brief generators verify that marker together with existing method POST/no action and local node guards before enabling SSR-disabled submit. The original DOMContentLoaded sequencing fix for brief annotations is preserved. This is a byte-bound review of two new executable inline module script bodies. No CSP relaxation, additional origin, credential collection, network submission, new runtime permission, auto-handoff, or provider write is introduced.",
+      "scripts": [
+        "SzaQJM8RIxVIw15mkUBovkbUgyKdYkVu0z4g0ZJJYFA=",
+        "JJsWZS2S0anUBdh//7uWYJP3G2oXCKK/zoWLB2qX8FU="
+      ],
+      "replaces": [
+        {
+          "route": "/audit-intake",
+          "old": "FpNsujjc6zq6xjnHBMpdVsGPAx3gbjmQ/D8Be+xngDM=",
+          "new": "SzaQJM8RIxVIw15mkUBovkbUgyKdYkVu0z4g0ZJJYFA="
+        },
+        {
+          "route": "/ru/audit-intake",
+          "old": "D59FrFZe9AldSscODxxqsagI9Q94LSWAdS0PeYz2VEk=",
+          "new": "JJsWZS2S0anUBdh//7uWYJP3G2oXCKK/zoWLB2qX8FU="
         }
       ],
       "routes": [

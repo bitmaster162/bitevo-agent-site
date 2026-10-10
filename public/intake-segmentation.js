@@ -72,7 +72,7 @@
   for (const button of buttons) button.addEventListener('click', () => apply(button.dataset.intakeMode));
   apply(offer?.depth ?? 'entry');
 
-  form?.addEventListener('submit', () => {
+  const registerSubmissionMarkers = () => form?.addEventListener('submit', () => {
     if (!form.checkValidity() || !brief?.value) return;
     const marker = locale === 'ru'
       ? `INTAKE DEPTH: ${mode.toUpperCase()} — ${mode === 'entry' ? 'Primary-only поля намеренно отложены; brief предназначен только для scope review.' : 'полная глубина scope preparation.'}`
@@ -89,6 +89,14 @@
     }
     brief.value = lines.join('\n');
   });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', registerSubmissionMarkers, { once: true });
+  else registerSubmissionMarkers();
 
   form?.addEventListener('reset', () => requestAnimationFrame(() => apply(mode)));
+  // A separate module generates the brief. Declare segmentation ready only
+  // after the mode controls and both form event handlers are registered.
+  if (form && submit && brief && modeState &&
+      buttons.length === 2 && primaryOnly.length >= 3 && primaryRequired.length >= 6) {
+    form.dataset.segReady = '1';
+  }
 })();
