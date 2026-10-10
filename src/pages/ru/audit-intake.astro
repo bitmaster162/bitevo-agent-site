@@ -29,7 +29,7 @@ form?.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity()
 form?.addEventListener('reset',()=>requestAnimationFrame(()=>{brief.value='';ready(false);}));copy?.addEventListener('click',async()=>{if(!brief.value)return;await navigator.clipboard.writeText(brief.value);const old=copy.textContent;copy.textContent='Copied';setTimeout(()=>copy.textContent=old,1000);});download?.addEventListener('click',()=>{if(!brief.value)return;const blob=new Blob([brief.value],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='bitevo-ru-agent-decision-scope.txt';a.click();URL.revokeObjectURL(url);});
 const localSubmit=form?.querySelector('[data-js-local-submit]');
 const localFallback=form?.querySelector('[data-js-local-fallback]');
-if(form&&localSubmit&&localFallback&&brief&&copy&&download&&state&&form.getAttribute('method')==='post'&&!form.hasAttribute('action')){
+if(form&&localSubmit&&localFallback&&brief&&copy&&download&&state&&form.dataset.segReady==='1'&&form.getAttribute('method')==='post'&&!form.hasAttribute('action')){
   localFallback.hidden=true;
   localSubmit.disabled=false;
 }

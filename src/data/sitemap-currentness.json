@@ -140,7 +140,7 @@
     {
       "path": "/audit-intake",
       "lastmod": "2026-10-10",
-      "fingerprint": "sha256:5b23010f63d6f6f25ea45b63c2f6b07db5164575ab8de96e9f147c6197904906"
+      "fingerprint": "sha256:38cdcf73f872f3b1eca1be56041a538f8a4c137f5f1a6a6e1042f1a0726a3431"
     },
     {
       "path": "/audit/proposal-readiness",
@@ -365,7 +365,7 @@
     {
       "path": "/ru/audit-intake",
       "lastmod": "2026-10-10",
-      "fingerprint": "sha256:782683d3adbdde8e091abadbd768590dce0eee9134d116f5674fe56c6b85e6b8"
+      "fingerprint": "sha256:3a58992eee304cc440179016746c817777fff20f6ba9cb30853a816a2eeca8a7"
     },
     {
       "path": "/ru/audit/proposal-readiness",
