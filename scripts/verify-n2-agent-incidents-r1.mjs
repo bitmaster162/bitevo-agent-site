@@ -24,8 +24,8 @@ const sitemap = await readFile(new URL('dist/sitemap.xml', root), 'utf8');
 const llms = await readFile(new URL('dist/llms.txt', root), 'utf8');
 
 const sha = (value) => createHash('sha256').update(value, 'utf8').digest('hex');
-equal(sha(rawData), '9e40080b847d283cd3f841d2b011d6c2e7c67abdb3f799d37e615ac9e43f3702', 'canonical N2 incident JSON hash');
-equal(sha(rawDates), '4e9f32300b54436c4273c5e093737bf23139cbe8b512b86ef2b7157230b19552', 'verified source-date registry hash');
+equal(sha(rawData.replace(/\r\n/g, '\n')), '9e40080b847d283cd3f841d2b011d6c2e7c67abdb3f799d37e615ac9e43f3702', 'canonical N2 incident JSON hash');
+equal(sha(rawDates.replace(/\r\n/g, '\n')), '4e9f32300b54436c4273c5e093737bf23139cbe8b512b86ef2b7157230b19552', 'verified source-date registry hash');
 
 const ids = Array.from({ length: 12 }, (_, i) => `INC-${String(i + 1).padStart(2, '0')}`);
 equal(incidents.length, 12, 'exact incident count');

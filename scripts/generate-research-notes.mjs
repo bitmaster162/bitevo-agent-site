@@ -29,7 +29,7 @@ function parseValue(raw) {
 }
 
 export function parseFrontmatter(text, source = '<memory>') {
-  const normalized = text.replace(/^\uFEFF/, '');
+  const normalized = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
   if (!normalized.startsWith('---\n')) throw new Error(`${source}: frontmatter start missing`);
   const end = normalized.indexOf('\n---\n', 4);
   if (end < 0) throw new Error(`${source}: frontmatter end missing`);

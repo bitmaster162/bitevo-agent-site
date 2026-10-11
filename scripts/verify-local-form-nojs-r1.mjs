@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
 const root = new URL('../', import.meta.url);
-const sha256 = data => createHash('sha256').update(data).digest('hex');
+const sha256 = data => createHash('sha256').update(data.replace(/\r\n/g, '\n')).digest('hex');
 const routes = [
   { path:'/diagnostic', id:'diagnostic', locale:'en', file:'src/pages/diagnostic.astro',
     sourceSha:'fe6a522079a53fcac5309184026b408d6e0c5310b1463717cfc4ec1258247a4d',

@@ -81,10 +81,14 @@ const generated = JSON.parse(execFileSync(process.execPath, [
 ], { cwd: root, encoding: 'utf8' }));
 const parentIndexNow = gitShow('HEAD^', 'src/data/indexnow.json');
 const parentManifestRaw = gitShow('HEAD^', 'src/data/sitemap-currentness.json');
+const headManifestRaw = gitShow('HEAD', 'src/data/sitemap-currentness.json');
 const parentManifest = parentManifestRaw ? JSON.parse(parentManifestRaw) : null;
+check(Boolean(headManifestRaw), 'committed HEAD sitemap-currentness manifest exists');
+const headManifest = JSON.parse(headManifestRaw);
+check(manifest.schema === headManifest.schema && Array.isArray(manifest.routes), 'worktree sitemap-currentness schema remains valid');
 const expectedPaths = parentIndexNow && parentManifest
-  ? changedRoutePaths(parentManifest, manifest)
-  : changedRoutePaths(null, manifest, { bootstrap: true });
+  ? changedRoutePaths(parentManifest, headManifest)
+  : changedRoutePaths(null, headManifest, { bootstrap: true });
 const expectedPayload = buildIndexNowPayload(config, expectedPaths);
 
 deepEqual(generated.urlList, expectedPayload.urlList, parentIndexNow ? 'post-bootstrap history emits exact semantic delta' : 'pre-IndexNow history emits exact one-time bootstrap');
