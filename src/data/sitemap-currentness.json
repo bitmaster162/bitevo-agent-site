@@ -119,8 +119,8 @@
     },
     {
       "path": "/phuket-ai-workflow",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:cf42ab7db09b0b4fcf9e02864b15ca88e11102afaeded37d46f42d62bf45509d"
+      "lastmod": "2026-10-11",
+      "fingerprint": "sha256:45dda25e870f0cd12e2d1d40329132733502a86638b19ce0f1443e111294389f"
     },
     {
       "path": "/mapper",
@@ -139,8 +139,8 @@
     },
     {
       "path": "/audit-intake",
-      "lastmod": "2026-10-10",
-      "fingerprint": "sha256:38cdcf73f872f3b1eca1be56041a538f8a4c137f5f1a6a6e1042f1a0726a3431"
+      "lastmod": "2026-10-11",
+      "fingerprint": "sha256:2f148c9a53bc2994b07b40821b67a1078ded40f530b5d72c8778de360b76492e"
     },
     {
       "path": "/audit/proposal-readiness",
@@ -364,8 +364,8 @@
     },
     {
       "path": "/ru/audit-intake",
-      "lastmod": "2026-10-10",
-      "fingerprint": "sha256:3a58992eee304cc440179016746c817777fff20f6ba9cb30853a816a2eeca8a7"
+      "lastmod": "2026-10-11",
+      "fingerprint": "sha256:4b3dd1edd032d02df5ecdb5ef19f5a1c4a413d49c1cff9c89f1cb38eb3097d3a"
     },
     {
       "path": "/ru/audit/proposal-readiness",
