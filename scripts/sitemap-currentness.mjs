@@ -18,7 +18,8 @@ function normalizeRenderedHtml(html) {
     .replace(/data-build-sha="[0-9a-f]{40}"/gi, 'data-build-sha="__BUILD_SHA__"')
     .replace(/<meta name="bitevo-build-sha" content="[0-9a-f]{40}">/gi, '<meta name="bitevo-build-sha" content="__BUILD_SHA__">')
     .replace(/data-public-build-receipt="[0-9a-f]{40}"/gi, 'data-public-build-receipt="__BUILD_SHA__"')
-    .replace(/>Build [0-9a-f]{9}</gi, '>Build __BUILD_SHORT__<');
+    .replace(/>Build [0-9a-f]{9}</gi, '>Build __BUILD_SHORT__<')
+    .replace(/\r\n/g, '\n');
 }
 
 function fingerprint(html) {

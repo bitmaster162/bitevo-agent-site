@@ -78,10 +78,37 @@ for (const [path, current] of [
 
 const insertionAnchor = '    <script defer src="/_vercel/insights/script.js"></script>';
 const disabledMount = '    {["/audit-intake", "/ru/audit-intake", "/phuket-ai-workflow"].includes(selfCanonicalPath) && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled"></script>}';
+const sourceBoundLayout = (candidate, sourceBaseline) => {
+  const baseline = normalizeEol(sourceBaseline);
+  const actual = normalizeEol(candidate);
+  const inBaseline = baseline.split(disabledMount).length - 1;
+  if (baseline.split(insertionAnchor).length !== 2 || inBaseline > 1) return false;
+  const reviewed = inBaseline === 1
+    ? baseline
+    : baseline.replace(insertionAnchor, insertionAnchor + '\n' + disabledMount);
+  const scripts = [...reviewed.matchAll(/<script\b[^>]*\bsrc="\/bitevo-event-counter\.js"[^>]*><\/script>/gi)];
+  return reviewed.includes(insertionAnchor + '\n' + disabledMount)
+    && reviewed.split(disabledMount).length === 2
+    && scripts.length === 1
+    && actual === reviewed
+    && !actual.includes('data-bitevo-events="enabled"');
+};
 const baselineLayout = normalizeEol(gitBase('src/layouts/Layout.astro'));
 expect(baselineLayout.includes(insertionAnchor), 'source Layout mount anchor remains present');
-expect(normalizeEol(layout) === baselineLayout.replace(insertionAnchor, insertionAnchor + '\n' + disabledMount),
-  'Layout differs from reviewed base only by route-bound disabled counter script');
+expect(sourceBoundLayout(layout, baselineLayout),
+  'Layout differs from reviewed base only by exact single route-bound disabled counter script');
+expect(sourceBoundLayout(layout, baselineLayout.replace(insertionAnchor + '\n' + disabledMount, insertionAnchor)),
+  'pre-commit source baseline must resolve to exact single disabled mount');
+expect(!sourceBoundLayout(layout + '\n' + disabledMount, baselineLayout),
+  'duplicate disabled counter mount must be rejected');
+expect(!sourceBoundLayout(layout.replace('data-bitevo-events="disabled"', 'data-bitevo-events="enabled"'), baselineLayout),
+  'enabled counter mount must be rejected');
+expect(!sourceBoundLayout(layout.replace('"/phuket-ai-workflow"', '"/unreviewed-path"'), baselineLayout),
+  'unreviewed counter route must be rejected');
+expect(!sourceBoundLayout(layout.replace(insertionAnchor, '    <script defer src="/_vercel/insights/altered.js"></script>'), baselineLayout),
+  'modified insertion anchor must be rejected');
+expect(!sourceBoundLayout(layout + '\n<!-- unrelated Layout change -->', baselineLayout),
+  'unrelated Layout change must be rejected');
 expect(!layout.includes('data-bitevo-events="enabled"'), 'Layout must never enable telemetry');
 
 for (const [route, mounted] of [
