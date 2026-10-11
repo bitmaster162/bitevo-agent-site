@@ -4,6 +4,9 @@ Disallow: /guides/
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
+Allow: /guides/before-write-access
+Allow: /guides/bitget-authority-after-orchestration-compromise
+Allow: /guides/mcp-server-authority-review
 
 User-agent: Google-Extended
 Allow: /
@@ -11,6 +14,9 @@ Disallow: /guides/
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
+Allow: /guides/before-write-access
+Allow: /guides/bitget-authority-after-orchestration-compromise
+Allow: /guides/mcp-server-authority-review
 
 User-agent: GPTBot
 Allow: /
@@ -18,6 +24,9 @@ Disallow: /guides/
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
+Allow: /guides/before-write-access
+Allow: /guides/bitget-authority-after-orchestration-compromise
+Allow: /guides/mcp-server-authority-review
 
 User-agent: ClaudeBot
 Allow: /
@@ -25,5 +34,8 @@ Disallow: /guides/
 Allow: /guides/security-sandboxing
 Allow: /guides/fleet-coordinator-drift-monitoring
 Allow: /guides/d3-tool-io-bridge-contract
+Allow: /guides/before-write-access
+Allow: /guides/bitget-authority-after-orchestration-compromise
+Allow: /guides/mcp-server-authority-review
 
 Sitemap: https://bitevo.work/sitemap.xml
