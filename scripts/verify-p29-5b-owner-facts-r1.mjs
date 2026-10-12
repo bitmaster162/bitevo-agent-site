@@ -51,7 +51,7 @@ check(!securityHtml.includes('Which stacks do you work with?'), '/security keeps
 check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b)/i.test(component), 'P29.5B adds no JS, network, forms, buttons or links');
 
 const expected = {
-  '/pricing': ['2026-10-05', 'sha256:26c47dbf02c967df21873b50604623a058c1e15b60063c68918af7523f29bea6'],
+  '/pricing': ['2026-10-12', 'sha256:e3616e7193a8940a5d69782e0af7bde803bec828180e6ee6f31d8938bdac99b0'],
   '/security': ['2026-10-05', 'sha256:931fc48d39f0ac06a069b3c7147e2a28897d482c8dd75c55f0f7b5fa2e98903e']
 };
 for (const [path, pair] of Object.entries(expected)) {
