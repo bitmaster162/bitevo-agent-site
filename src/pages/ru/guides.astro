@@ -13,7 +13,7 @@ const notes = [
 ].sort((a,b) => a[0].localeCompare(b[0]));
 ---
 
-<RuLayout title="Исследовательская библиотека BitEvo — русский индекс проверенных заметок" description="Русский индекс проверенных публичных заметок BitEvo: метод полномочий, изоляция, мониторинг дрейфа и контракты ввода-вывода инструментов." enPath="/guides" ruPath="/ru/guides">
+<RuLayout title="Исследования BitEvo — библиотека на русском" description="Русский индекс проверенных публичных заметок BitEvo: метод полномочий, изоляция, мониторинг дрейфа и контракты ввода-вывода инструментов." enPath="/guides" ruPath="/ru/guides">
 <section class="section hero"><div class="container split"><div><div class="eyebrow">Проверенные публичные заметки</div><h1 class="display">Публиковать меньше. Отвечать за большее.</h1></div><p class="lede">Здесь остаются только заметки, проверенные для текущей публичной границы доказательств. Исторические материалы возвращаются в публичную библиотеку только после повторной проверки фактов, которые могут устареть.</p></div></section>
 <section class="section-tight section-rule"><div class="container boundary panel"><div><span>ПОЛИТИКА ПУБЛИКАЦИИ</span><strong>Проверено перед индексацией</strong></div><p>Проверено перед индексацией. Исследование — не доказательство для клиента, не сертификация, не юридическая консультация и не описание текущей среды выполнения. Факты, которые зависят от времени, перед использованием сверяйте с первоисточниками.</p></div></section>
 <section class="section section-rule"><div class="container notes">{notes.map(([number,type,title,href,text])=><a class="panel" href={href}><div class="top"><span>{number}</span><small>{type}</small></div><div><h2>{title}</h2><p>{text}</p></div><strong>Открыть заметку →</strong></a>)}</div></section>

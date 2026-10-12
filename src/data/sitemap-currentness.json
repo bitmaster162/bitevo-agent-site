@@ -229,18 +229,18 @@
     },
     {
       "path": "/owasp-agentic-top-10",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:3f39520a63f7bdf856e74f83d013c6e3e341d31735d089923d9bb0c7166775b6"
+      "lastmod": "2026-10-13",
+      "fingerprint": "sha256:81f4cf28011e6f9e4ce2dfdc40f8bc5dcc8c7677d340bb89a384493b62758e97"
     },
     {
       "path": "/owasp-agentic-skills-top-10",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:2066ab82db604ee8d49e28dc0941e8899f75849c0a753b91974144faa080fe6e"
+      "lastmod": "2026-10-13",
+      "fingerprint": "sha256:78687d2e4c5c6c4e8b89a92680c6ab092f7f6baf7c7338840278b33aabb332fc"
     },
     {
       "path": "/agent-control-standard",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:dee970e90bd4936232c63a4dace5c6541f7c569b5369f2ed5e48c70e366852a0"
+      "lastmod": "2026-10-13",
+      "fingerprint": "sha256:16f4ba228ada367fd75624c92bd40a93338397eac62f3d4b508aaf3ed1e547ce"
     },
     {
       "path": "/agent-incidents",
@@ -409,8 +409,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-10-07",
-      "fingerprint": "sha256:f65514dcb87b974ce9b8b838acc6ad79fc3a9b0361e51c04b17caf5b25faa571"
+      "lastmod": "2026-10-13",
+      "fingerprint": "sha256:b15d91a24288d6f19de829af9c0f83b2f49ec11ab05968f27c9bd233e955f775"
     },
     {
       "path": "/ru/doctrine",
@@ -574,8 +574,8 @@
     },
     {
       "path": "/ru/owasp-agentic-top-10",
-      "lastmod": "2026-10-03",
-      "fingerprint": "sha256:1576e1aa39d8313d8a85c2b759324002912a496198b5fa10cb1988f99ee9b3a3"
+      "lastmod": "2026-10-13",
+      "fingerprint": "sha256:c63d0a9bb163a9fc2fb7e041a6b22968b7f4fe8534002ca6eb1a91df629c5d3c"
     },
     {
       "path": "/ru/owasp-agentic-skills-top-10",
