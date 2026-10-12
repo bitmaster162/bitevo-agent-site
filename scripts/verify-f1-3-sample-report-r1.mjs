@@ -88,7 +88,7 @@ check(!sitemap.includes('<loc>https://bitevo.work/pre-check</loc>'), 'Pre-Check 
 for (const path of ['/sample-audit', '/pricing', '/entry-audit']) {
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ' currentness row exists');
-  equal(row?.lastmod, '2026-10-05', path + ' lastmod remains current date');
+  equal(row?.lastmod, path === '/pricing' ? '2026-10-12' : '2026-10-05', path + ' lastmod remains current date');
   check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint || ''), path + ' currentness fingerprint valid');
 }
 equal(currentness.routes.length, 131, 'indexable currentness route count unchanged');

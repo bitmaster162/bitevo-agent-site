@@ -9,13 +9,13 @@
     },
     {
       "path": "/start",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:0cac89439a0aa70a79af897d844f36480cfcbce333c18dac7d6033813191429e"
+      "lastmod": "2026-10-12",
+      "fingerprint": "sha256:318314c454acfa43d9abf06fccc356b93562c88712028b89863a317cd4eb7971"
     },
     {
       "path": "/pricing",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:26c47dbf02c967df21873b50604623a058c1e15b60063c68918af7523f29bea6"
+      "lastmod": "2026-10-12",
+      "fingerprint": "sha256:e3616e7193a8940a5d69782e0af7bde803bec828180e6ee6f31d8938bdac99b0"
     },
     {
       "path": "/consulting",
@@ -289,8 +289,8 @@
     },
     {
       "path": "/universe",
-      "lastmod": "2026-10-05",
-      "fingerprint": "sha256:a0775ea6378d12e60480cb1f5bf8f27d2cfa381f991cab74304be66849e14a15"
+      "lastmod": "2026-10-12",
+      "fingerprint": "sha256:d86bff9d8fcbe94d2d4ad0afa1f04d51c45470d43147a2394be1b85fcb411cf4"
     },
     {
       "path": "/vision",
