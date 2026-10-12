@@ -46,10 +46,10 @@ check(RU.includes('в staging или test') && RU.includes('а не модель
 check(RU_AUDIT.includes('staging или test') && RU_AUDIT.includes('а не модель в отрыве от неё.'), 'RU audit definition preserves staging/test and model-isolation boundary');
 
 const expectedCurrentness = {
-  '/': { fingerprint: 'sha256:1313fe3b91e01982c99adeb8f13e642c595b557cdb94550c3888f8f0f3b63c53', lastmod: '2026-10-10' },
-  '/ru': { fingerprint: 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436', lastmod: '2026-10-04' },
-  '/agent-authority-audit': { fingerprint: 'sha256:6df48cbb322e67243498d9d2632465d3a132340a645b6a6857d77e682dffea55', lastmod: '2026-10-05' },
-  '/ru/agent-authority-audit': { fingerprint: 'sha256:100a245555b9348d9a641ddbe66c91bb0e4305131d95a88ef1b8b2bdb45a5b36', lastmod: '2026-10-04' }
+  '/': { fingerprint: 'sha256:6eed961fe5afa4a9641dffb59b01d14f5cb563a27b11c973125d508619c21acc', lastmod: '2026-10-13' },
+  '/ru': { fingerprint: 'sha256:5c5debe50e90030e10f2c5e58a34c65c78ff8fe0e2c5fa11efe7214aca7de4bc', lastmod: '2026-10-13' },
+  '/agent-authority-audit': { fingerprint: 'sha256:de1ff75ba0713561bcc20308c0aef1137886e4813f1be10b5fa28fa708bee89f', lastmod: '2026-10-13' },
+  '/ru/agent-authority-audit': { fingerprint: 'sha256:2e943b1614311d41b44e5c7355f6f8cbcebd892dc5dd08cf2e157bbf6cfa9b92', lastmod: '2026-10-13' }
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);

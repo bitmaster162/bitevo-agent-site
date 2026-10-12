@@ -64,11 +64,11 @@ check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b
 for (const path of ['/pricing', '/security']) {
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ' currentness row exists');
-  equal(row?.lastmod, path === '/pricing' ? '2026-10-12' : '2026-10-05', path + ' currentness date exact');
+  equal(row?.lastmod, path === '/pricing' ? '2026-10-13' : '2026-10-05', path + ' currentness date exact');
 }
-equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:e3616e7193a8940a5d69782e0af7bde803bec828180e6ee6f31d8938bdac99b0', '/pricing currentness fingerprint exact');
+equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 'sha256:081d18f6986f3d8d7abd2f283114f69d4eaf1398b2d766521c79443ba81e0e1d', '/pricing currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:931fc48d39f0ac06a069b3c7147e2a28897d482c8dd75c55f0f7b5fa2e98903e', '/security currentness fingerprint exact');
-equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:c569f39abd9bb9da78e7c88e04fd80e4ef9f00d0c213471682c29d0c3db65b10', '/ru/pricing currentness exact');
+equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:698f4e71ea20a04dd7c284d2df98cdc98a64ae5df949aa847fa036c78e564af9', '/ru/pricing currentness exact');
 equal(currentness.routes.find(item => item.path === '/ru/security')?.fingerprint, 'sha256:77ccacea4e9cf856583f03ac7446a93a7776d1d9b12899749be21eeb3d9d77e5', '/ru/security currentness exact');
 equal(currentness.routes.length, 131, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');

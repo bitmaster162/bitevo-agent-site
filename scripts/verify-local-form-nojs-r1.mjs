@@ -8,19 +8,19 @@ const routes = [
   { path:'/diagnostic', id:'diagnostic', locale:'en', file:'src/pages/diagnostic.astro',
     sourceSha:'fe6a522079a53fcac5309184026b408d6e0c5310b1463717cfc4ec1258247a4d',
     dynamicSha:'cc50f9c26f6615132719e58765d9c0fcdd05055bcbbf9ba4270bc50b3a66c03c',
-    fingerprint:'sha256:b4ab15cf0d692c514f636845d609407a2a001fed93146112c6623ef1591ce7ac' },
+    fingerprint:'sha256:859e9d69722b601841e8d68169cf727855d621392054ddf40643d7b2628bc63a' },
   { path:'/ru/diagnostic', id:'ruDiagnostic', locale:'ru', file:'src/pages/ru/diagnostic.astro',
     sourceSha:'6582f479690c7de18801980814791267b9cc207dcbbc3ca391ca1db940944820',
     dynamicSha:'82460d8bc67ff290e5da190bad2288e252fd544ee08e4cd304aec3f09701e55c',
-    fingerprint:'sha256:d17a50344564486cd4691e25d07a9429110322659a73cb738937f33f2c3d5d8b' },
+    fingerprint:'sha256:90a907e76fca773d1458a5f546644d2e10a2879a94c8d754845bf4c473618a09' },
   { path:'/mapper', id:'mapper', locale:'en', file:'src/pages/mapper.astro',
     sourceSha:'839b757c4b799801b8b87d3e4cc6c95eb08a1bea51194bee65fba25d38868022',
     dynamicSha:'c79cbf5c5a5f0ee7783113f9c512f6110c52209a8d2b635d8728edd7981d0e2c',
-    fingerprint:'sha256:ea9853267d131df46054ec5e33389fb97d2059958d8628be3f59aa3eb07ba63e' },
+    fingerprint:'sha256:4a011189f24bb0b9e5c6c80f22cd756508c12dae39340bce28f1bc50fbce986e' },
   { path:'/ru/mapper', id:'ruMapper', locale:'ru', file:'src/pages/ru/mapper.astro',
     sourceSha:'a94e5d9b8e312f9a467cc86d541428897485cbd8a726ebc4f130b4eeae9a7d94',
     dynamicSha:'2e1658150b537abd56e341579536bef8eac8ecc3903d13149779d19201c62c6a',
-    fingerprint:'sha256:2d9aa458515e7ae55830aeda1c29c02654c1464b21513b5d35b7677b8e558ddf' }
+    fingerprint:'sha256:d66483754b2a3720beb559a4c92931ae8881be2e1a8e7a942e46d88ddc24a8a9' }
 ];
 let checks = 0;
 const need = (ok, message) => { assert.ok(ok, message); checks++; };
@@ -94,7 +94,7 @@ for (const entry of routes) {
   need(html.includes('src="/local-form-nojs-r1.js"') && html.includes('defer'), 'static guard link absent');
   need(staticArea.includes(noJsMessage[entry.locale]) && staticArea.includes('mailto:robert@bitevo.work'),
        'static no-JS note missing');
-  need(byPath.get(entry.path)?.lastmod === '2026-10-09' &&
+  need(byPath.get(entry.path)?.lastmod === '2026-10-13' &&
        byPath.get(entry.path)?.fingerprint === entry.fingerprint, 'exact successor currentness drift');
   // Negative tests prove independent semantic fail-closed behavior, not only SHA equality.
   const perturbations = [

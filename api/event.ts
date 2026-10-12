@@ -1,6 +1,7 @@
 import { createHmac, randomUUID } from 'node:crypto';
 import { isIP } from 'node:net';
 import routeRegistry from '../src/data/public-route-registry.json' with { type: 'json' };
+import eventCoverage from '../src/data/bitevo-event-coverage.json' with { type: 'json' };
 
 type RuntimeEnv = Record<string, string | undefined>;
 type Dependencies = {
@@ -22,6 +23,12 @@ const PUBLIC_PATHS = new Map(
   (routeRegistry.routes || [])
     .filter((route: { path: string; locale: string; indexable: boolean }) => route.indexable)
     .map((route: { path: string; locale: string }) => [route.path, route.locale])
+);
+
+const COVERAGE_PATHS = new Map(
+  (eventCoverage.schema === 'bitevo.event-coverage/v1' && eventCoverage.defaultMode === 'disabled'
+    ? eventCoverage.routes : [])
+    .map((row: { path: string; locale: string; events: string[] }) => [row.path, row] as const)
 );
 
 function respond(status: number, body: Record<string, unknown>) {
@@ -76,6 +83,8 @@ function validatedPayload(data: unknown) {
   if (typeof row.page !== 'string' || row.page.length > 180
     || !/^\/(?:[a-z0-9-]+(?:\/[a-z0-9-]+)*)?$/.test(row.page)) return null;
   if (PUBLIC_PATHS.get(row.page) !== row.locale) return null;
+  const coverage = COVERAGE_PATHS.get(row.page);
+  if (!coverage || coverage.locale !== row.locale || !coverage.events.includes(row.event)) return null;
   return { event: row.event, locale: row.locale, page: row.page };
 }
 
