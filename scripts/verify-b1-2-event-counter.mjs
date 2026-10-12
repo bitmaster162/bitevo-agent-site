@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
+import coverage from '../src/data/bitevo-event-coverage.json' with { type: 'json' };
+import registry from '../src/data/public-route-registry.json' with { type: 'json' };
 
 const root = new URL('../', import.meta.url);
 const read = path => readFile(new URL(path, root), 'utf8');
@@ -77,54 +79,67 @@ for (const [path, current] of [
 }
 
 const insertionAnchor = '    <script defer src="/_vercel/insights/script.js"></script>';
-const disabledMount = '    {["/audit-intake", "/ru/audit-intake", "/phuket-ai-workflow"].includes(selfCanonicalPath) && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled"></script>}';
-const sourceBoundLayout = (candidate, sourceBaseline) => {
-  const baseline = normalizeEol(sourceBaseline);
-  const actual = normalizeEol(candidate);
-  const inBaseline = baseline.split(disabledMount).length - 1;
-  if (baseline.split(insertionAnchor).length !== 2 || inBaseline > 1) return false;
-  const reviewed = inBaseline === 1
-    ? baseline
-    : baseline.replace(insertionAnchor, insertionAnchor + '\n' + disabledMount);
-  const scripts = [...reviewed.matchAll(/<script\b[^>]*\bsrc="\/bitevo-event-counter\.js"[^>]*><\/script>/gi)];
-  return reviewed.includes(insertionAnchor + '\n' + disabledMount)
-    && reviewed.split(disabledMount).length === 2
-    && scripts.length === 1
-    && actual === reviewed
-    && !actual.includes('data-bitevo-events="enabled"');
-};
-const baselineLayout = normalizeEol(gitBase('src/layouts/Layout.astro'));
-expect(baselineLayout.includes(insertionAnchor), 'source Layout mount anchor remains present');
-expect(sourceBoundLayout(layout, baselineLayout),
-  'Layout differs from reviewed base only by exact single route-bound disabled counter script');
-expect(sourceBoundLayout(layout, baselineLayout.replace(insertionAnchor + '\n' + disabledMount, insertionAnchor)),
-  'pre-commit source baseline must resolve to exact single disabled mount');
-expect(!sourceBoundLayout(layout + '\n' + disabledMount, baselineLayout),
-  'duplicate disabled counter mount must be rejected');
-expect(!sourceBoundLayout(layout.replace('data-bitevo-events="disabled"', 'data-bitevo-events="enabled"'), baselineLayout),
-  'enabled counter mount must be rejected');
-expect(!sourceBoundLayout(layout.replace('"/phuket-ai-workflow"', '"/unreviewed-path"'), baselineLayout),
-  'unreviewed counter route must be rejected');
-expect(!sourceBoundLayout(layout.replace(insertionAnchor, '    <script defer src="/_vercel/insights/altered.js"></script>'), baselineLayout),
-  'modified insertion anchor must be rejected');
-expect(!sourceBoundLayout(layout + '\n<!-- unrelated Layout change -->', baselineLayout),
-  'unrelated Layout change must be rejected');
-expect(!layout.includes('data-bitevo-events="enabled"'), 'Layout must never enable telemetry');
-
-for (const [route, mounted] of [
-  ['/audit-intake', true], ['/ru/audit-intake', true], ['/phuket-ai-workflow', true],
-  ['/', false], ['/ru', false], ['/pricing', false], ['/ru/pricing', false],
-  ['/entry-audit', false], ['/security', false]
-]) {
-  const html = await read(route === '/' ? 'dist/index.html' : 'dist' + route + '/index.html');
-  const tags = [...html.matchAll(/<script\b[^>]*\bsrc="\/bitevo-event-counter\.js"[^>]*><\/script>/gi)];
-  expect(tags.length === (mounted ? 1 : 0), route + ': exact reviewed counter mount count');
-  if (mounted) expect(tags[0][0].includes('data-bitevo-events="disabled"'),
-    route + ': script must be disabled in HTML');
+const registryImport = "import routeRegistry from '../data/public-route-registry.json';";
+const coverageImport = "import eventCoverage from '../data/bitevo-event-coverage.json';";
+const pathAnchor = "const selfCanonicalPath = path === '/' ? '/' : path.replace(/\\/+$/, '');";
+const coverageLookup = 'const counterCoverage = eventCoverage.routes.find(route => route.path === selfCanonicalPath && route.locale === lang);';
+const originalMount = '    {["/audit-intake", "/ru/audit-intake", "/phuket-ai-workflow"].includes(selfCanonicalPath) && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled"></script>}';
+const disabledMount = '    {counterCoverage && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled" data-bitevo-event-schema={eventCoverage.schema} data-bitevo-event-coverage={JSON.stringify(counterCoverage)}></script>}';
+function sourceBoundLayout(candidate, sourceBaseline) {
+  let reviewed = normalizeEol(sourceBaseline);
+  const count = (source, value) => source.split(value).length - 1;
+  if (count(reviewed, registryImport) !== 1 || count(reviewed, pathAnchor) !== 1 || count(reviewed, insertionAnchor) !== 1) return false;
+  if (!reviewed.includes(coverageImport)) reviewed = reviewed.replace(registryImport, registryImport + '\n' + coverageImport);
+  if (!reviewed.includes(coverageLookup)) reviewed = reviewed.replace(pathAnchor, pathAnchor + '\n' + coverageLookup);
+  if (count(reviewed, originalMount) === 1) reviewed = reviewed.replace(originalMount, disabledMount);
+  if (count(reviewed, coverageImport) !== 1 || count(reviewed, coverageLookup) !== 1
+    || count(reviewed, disabledMount) !== 1 || count(reviewed, originalMount) !== 0) return false;
+  const tags = [...reviewed.matchAll(/<script\b[^>]*\bsrc="\/bitevo-event-counter\.js"[^>]*><\/script>/gi)];
+  return tags.length === 1 && !reviewed.includes('data-bitevo-events="enabled"')
+    && normalizeEol(candidate) === reviewed;
 }
+const baselineLayout = gitBase('src/layouts/Layout.astro');
+expect(sourceBoundLayout(layout, baselineLayout), 'Layout is only the exact coverage import, lookup and OFF mount change');
+expect(sourceBoundLayout(layout, layout), 'post-commit reviewed baseline remains accepted');
+expect(!sourceBoundLayout(layout + '\n' + disabledMount, baselineLayout), 'duplicate counter mount rejected');
+expect(!sourceBoundLayout(layout.replace('data-bitevo-events="disabled"', 'data-bitevo-events="enabled"'), baselineLayout), 'enabled counter mount rejected');
+expect(!sourceBoundLayout(layout.replace('JSON.stringify(counterCoverage)', 'JSON.stringify({})'), baselineLayout), 'unreviewed policy substitution rejected');
+expect(!sourceBoundLayout(layout.replace(insertionAnchor, '    <script defer src="/_vercel/insights/altered.js"></script>'), baselineLayout), 'changed analytics anchor rejected');
+expect(!sourceBoundLayout(layout + '\n<!-- unrelated Layout change -->', baselineLayout), 'unrelated Layout edit rejected');
+expect(!layout.includes('data-bitevo-events="enabled"'), 'telemetry must stay OFF');
+expect(coverage.schema === 'bitevo.event-coverage/v1' && coverage.defaultMode === 'disabled', 'coverage mode and schema exact');
+const expectedRows = [{"path":"/","locale":"en","events":["triage_click"]},{"path":"/start","locale":"en","events":["pilot_click"]},{"path":"/pricing","locale":"en","events":["triage_click","mailto_click","pilot_click"]},{"path":"/agent-authority-audit","locale":"en","events":["mailto_click"]},{"path":"/entry-audit","locale":"en","events":["triage_click","mailto_click"]},{"path":"/control-validation","locale":"en","events":["mailto_click"]},{"path":"/build/exception-workflow-diagnostic","locale":"en","events":["mailto_click"]},{"path":"/build/hr-workflow-diagnostic","locale":"en","events":["mailto_click"]},{"path":"/build/workflow-value-example","locale":"en","events":["mailto_click"]},{"path":"/phuket-ai-workflow","locale":"en","events":["mailto_click","pilot_click"]},{"path":"/mapper","locale":"en","events":["mailto_click"]},{"path":"/diagnostic","locale":"en","events":["mailto_click"]},{"path":"/audit-intake","locale":"en","events":["mailto_click","scope_generated"]},{"path":"/agent-incidents","locale":"en","events":["mailto_click"]},{"path":"/ru","locale":"ru","events":["triage_click"]},{"path":"/ru/pricing","locale":"ru","events":["mailto_click"]},{"path":"/ru/agent-authority-audit","locale":"ru","events":["mailto_click"]},{"path":"/ru/mapper","locale":"ru","events":["mailto_click"]},{"path":"/ru/diagnostic","locale":"ru","events":["mailto_click"]},{"path":"/ru/audit-intake","locale":"ru","events":["mailto_click","scope_generated"]},{"path":"/ru/universe","locale":"ru","events":["pilot_click"]},{"path":"/ru/entry-audit","locale":"ru","events":["mailto_click"]},{"path":"/ru/control-validation","locale":"ru","events":["mailto_click"]},{"path":"/ru/build/exception-workflow-diagnostic","locale":"ru","events":["mailto_click"]}];
+expect(JSON.stringify(coverage.routes) === JSON.stringify(expectedRows), 'exact approved 24-page event matrix');
+expect(coverage.routes.length === 24 && new Set(coverage.routes.map(row => row.path)).size === 24, '24 unique covered pages');
+const byPath = new Map(coverage.routes.map(row => [row.path, row]));
+const publicRows = registry.routes.filter(row => row.indexable);
+expect(publicRows.length === 131, '131 indexable routes preserved');
+expect(coverage.routes.every(row => publicRows.some(p => p.path === row.path && p.locale === row.locale)), 'coverage registry and locale parity');
+expect(ingress.includes('COVERAGE_PATHS.get(row.page)') && ingress.includes('coverage.events.includes(row.event)'), 'ingress enforces approved event per page');
+expect(tracker.includes('pageEvents.has(event)') && tracker.includes("'events,locale,path'"), 'client enforces exact per-page metadata');
+function attribute(tag, name) {
+  const value = new RegExp('\\b' + name + '="([^"]*)"').exec(tag)?.[1];
+  return value?.replace(/&quot;|&#34;/g, '"').replace(/&#39;|&#x27;/g, "'").replace(/&amp;/g, '&');
+}
+for (const route of publicRows) {
+  const html = await read(route.path === '/' ? 'dist/index.html' : 'dist' + route.path + '/index.html');
+  const tags = [...html.matchAll(/<script\b[^>]*\bsrc="\/bitevo-event-counter\.js"[^>]*><\/script>/gi)];
+  const row = byPath.get(route.path);
+  expect(tags.length === (row ? 1 : 0), route.path + ': exact counter mount count');
+  if (row) {
+    const tag = tags[0][0];
+    expect(attribute(tag, 'data-bitevo-events') === 'disabled', route.path + ': OFF');
+    expect(attribute(tag, 'data-bitevo-event-schema') === coverage.schema, route.path + ': schema');
+    expect(JSON.stringify(JSON.parse(attribute(tag, 'data-bitevo-event-coverage'))) === JSON.stringify(row), route.path + ': exact row embedded');
+  }
+}
+for (const [path, current] of [['worker/index.mjs',worker],['schema/bitevo_public_event_daily.sql',sql]]) {
+  expect(normalizeEol(current) === normalizeEol(gitBase(path)), path + ': receiver/storage not changed');
+}
+
 expect(!wrangler.includes('BITEVO_EVENT_DB'), 'no provider D1 binding without approval');
 expect(!vercel.includes('BITEVO_EVENT_COUNTER_ENABLED'), 'no Vercel provider activation without approval');
 
 console.log('B1_2_LOCAL_STATIC_GATE_PASS checks=' + checks
   + ' events=4 D1_columns=5 personal_columns=0'
-  + ' client_wired=PASSIVE_THREE_ROUTES events_enabled=NO provider_activation=NO production_writes=0');
+  + ' client_wired=PASSIVE_24_REVIEWED_ROUTES events_enabled=NO provider_activation=NO production_writes=0');

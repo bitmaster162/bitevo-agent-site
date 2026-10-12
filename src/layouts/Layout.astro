@@ -1,6 +1,7 @@
 ---
 import { SITE_ORIGIN, absoluteSiteUrl, localeMeta, type SiteLocale } from '../lib/i18n';
 import routeRegistry from '../data/public-route-registry.json';
+import eventCoverage from '../data/bitevo-event-coverage.json';
 import '../styles/locale-switch.css';
 import '../styles/p27-seo.css';
 
@@ -30,6 +31,7 @@ const {
 
 const path = Astro.url.pathname;
 const selfCanonicalPath = path === '/' ? '/' : path.replace(/\/+$/, '');
+const counterCoverage = eventCoverage.routes.find(route => route.path === selfCanonicalPath && route.locale === lang);
 const canonicalPath = canonical ?? selfCanonicalPath;
 const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).toString();
 const socialImageUrl = absoluteSiteUrl(socialImage);
@@ -220,7 +222,7 @@ const globalStructuredData = [
     <meta name="twitter:image:alt" content={isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence'} />
     <script type="application/ld+json" data-bitevo-identity-boundary set:html={JSON.stringify(globalStructuredData)} />
     <script defer src="/_vercel/insights/script.js"></script>
-    {["/audit-intake", "/ru/audit-intake", "/phuket-ai-workflow"].includes(selfCanonicalPath) && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled"></script>}
+    {counterCoverage && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled" data-bitevo-event-schema={eventCoverage.schema} data-bitevo-event-coverage={JSON.stringify(counterCoverage)}></script>}
     <title>{title}</title>
   </head>
   <body>

@@ -49,8 +49,8 @@ check(enSource.includes('$4,900'), 'existing EN price remains present');
 check(ruSource.includes('$4,900'), 'existing RU price remains present');
 
 const expected = {
-  '/': { lastmod: '2026-10-10', fingerprint: 'sha256:1313fe3b91e01982c99adeb8f13e642c595b557cdb94550c3888f8f0f3b63c53' },
-  '/ru': { lastmod: '2026-10-04', fingerprint: 'sha256:6102a5be4c927d0dfc247d1c947522c6ca9e1e4b94fdac625b7b2a1868285436' }
+  '/': { lastmod: '2026-10-13', fingerprint: 'sha256:6eed961fe5afa4a9641dffb59b01d14f5cb563a27b11c973125d508619c21acc' },
+  '/ru': { lastmod: '2026-10-13', fingerprint: 'sha256:5c5debe50e90030e10f2c5e58a34c65c78ff8fe0e2c5fa11efe7214aca7de4bc' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

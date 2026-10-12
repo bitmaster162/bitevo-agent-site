@@ -39,9 +39,9 @@ check(!llms.includes('prepare a local scope brief only; they do not book or subm
 check(short.includes('explicit consent') && short.includes('up to 30 days'), 'shared P27.1 component keeps consent and retention disclosure');
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
 const expected = {
-  "/pricing": { fingerprint: "sha256:e3616e7193a8940a5d69782e0af7bde803bec828180e6ee6f31d8938bdac99b0", lastmod: "2026-10-12" },
-  "/ru/pricing": { fingerprint: "sha256:c569f39abd9bb9da78e7c88e04fd80e4ef9f00d0c213471682c29d0c3db65b10", lastmod: "2026-10-07" },
-  "/agent-authority-audit": { fingerprint: "sha256:6df48cbb322e67243498d9d2632465d3a132340a645b6a6857d77e682dffea55", lastmod: "2026-10-05" }
+  "/pricing": { fingerprint: "sha256:081d18f6986f3d8d7abd2f283114f69d4eaf1398b2d766521c79443ba81e0e1d", lastmod: "2026-10-13" },
+  "/ru/pricing": { fingerprint: "sha256:698f4e71ea20a04dd7c284d2df98cdc98a64ae5df949aa847fa036c78e564af9", lastmod: "2026-10-13" },
+  "/agent-authority-audit": { fingerprint: "sha256:de1ff75ba0713561bcc20308c0aef1137886e4813f1be10b5fa28fa708bee89f", lastmod: "2026-10-13" }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

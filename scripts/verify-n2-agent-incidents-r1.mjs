@@ -107,10 +107,10 @@ equal(ruPageExists, false, 'RU page is not created without grounded translation'
 
 const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
-equal(row?.lastmod, '2026-10-05', 'N2 sitemap currentness date exact');
+equal(row?.lastmod, '2026-10-13', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
 equal(currentness.routes.length, 131, 'currentness route count is N2 baseline');
-check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-05</lastmod>'), 'sitemap includes N2 exact route/date');
+check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-13</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');
 const contextStart = llms.indexOf('### Context', researchStart);

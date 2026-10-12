@@ -1,0 +1,181 @@
+{
+  "schema": "bitevo.event-coverage/v1",
+  "defaultMode": "disabled",
+  "metric": "accepted event requests; not unique people, sent mail or confirmed leads",
+  "routes": [
+    {
+      "path": "/",
+      "locale": "en",
+      "events": [
+        "triage_click"
+      ]
+    },
+    {
+      "path": "/start",
+      "locale": "en",
+      "events": [
+        "pilot_click"
+      ]
+    },
+    {
+      "path": "/pricing",
+      "locale": "en",
+      "events": [
+        "triage_click",
+        "mailto_click",
+        "pilot_click"
+      ]
+    },
+    {
+      "path": "/agent-authority-audit",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/entry-audit",
+      "locale": "en",
+      "events": [
+        "triage_click",
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/control-validation",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/build/exception-workflow-diagnostic",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/build/hr-workflow-diagnostic",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/build/workflow-value-example",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/phuket-ai-workflow",
+      "locale": "en",
+      "events": [
+        "mailto_click",
+        "pilot_click"
+      ]
+    },
+    {
+      "path": "/mapper",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/diagnostic",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/audit-intake",
+      "locale": "en",
+      "events": [
+        "mailto_click",
+        "scope_generated"
+      ]
+    },
+    {
+      "path": "/agent-incidents",
+      "locale": "en",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru",
+      "locale": "ru",
+      "events": [
+        "triage_click"
+      ]
+    },
+    {
+      "path": "/ru/pricing",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru/agent-authority-audit",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru/mapper",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru/diagnostic",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru/audit-intake",
+      "locale": "ru",
+      "events": [
+        "mailto_click",
+        "scope_generated"
+      ]
+    },
+    {
+      "path": "/ru/universe",
+      "locale": "ru",
+      "events": [
+        "pilot_click"
+      ]
+    },
+    {
+      "path": "/ru/entry-audit",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru/control-validation",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    },
+    {
+      "path": "/ru/build/exception-workflow-diagnostic",
+      "locale": "ru",
+      "events": [
+        "mailto_click"
+      ]
+    }
+  ]
+}
