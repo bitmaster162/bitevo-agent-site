@@ -452,3 +452,143 @@ test('R44 policy cannot be reused after path or locale changes', async () => {
   state.fake.location.pathname = '/pricing'; state.document.documentElement.lang = 'ru';
   state.globalHandlers.get('triage_click')({}); assert.equal(state.messages.length, 0);
 });
+
+
+// R45 synthetic receipt cases: no real Worker, provider binding or D1 writes.
+function r45SignedEvent(nowMs = dateNow) {
+  const timestamp = String(Math.floor(nowMs / 1_000));
+  const body = JSON.stringify({
+    schema: 'bitevo.public-event.v1', requestId,
+    occurredAt: new Date(nowMs).toISOString(), ...sendData,
+    ipToken: 'a'.repeat(64)
+  });
+  const signature = createHmac('sha256', secret)
+    .update('bitevo-public-event-v1.' + timestamp + '.' + requestId + '.' + body).digest('hex');
+  return new Request('https://bitevo-event-receiver.workers.dev/b1-2/event', {
+    method: 'POST', body,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-BitEvo-Event-Timestamp': timestamp,
+      'X-BitEvo-Event-Request-Id': requestId,
+      'X-BitEvo-Event-Signature': 'v1=' + signature
+    }
+  });
+}
+function r45ReceiptDb(receipt, failAt = '') {
+  const state = { sql: [], bound: [], runCalls: 0 };
+  state.prepare = sql => {
+    state.sql.push(sql);
+    if (failAt === 'prepare') throw new Error('synthetic prepare failure');
+    return {
+      bind(...values) {
+        state.bound.push(values);
+        if (failAt === 'bind') throw new Error('synthetic bind failure');
+        return { async run() {
+          state.runCalls++;
+          if (failAt === 'run') throw new Error('synthetic run failure');
+          return receipt;
+        } };
+      }
+    };
+  };
+  return state;
+}
+function r45AssertSingleAttempt(db) {
+  assert.equal(db.sql.length, 1);
+  assert.equal(db.sql[0], 'INSERT INTO bitevo_public_event_daily (day, event_name, page, locale, count) '
+    + 'VALUES (?, ?, ?, ?, 1) ON CONFLICT(day, event_name, page, locale) DO UPDATE SET count = count + 1');
+  assert.deepEqual(db.bound, [[new Date(dateNow).toISOString().slice(0, 10), 'triage_click', '/pricing', 'en']]);
+  assert.equal(db.runCalls, 1, 'unconfirmed receipt must not trigger an implicit retry');
+}
+const r45InvalidReceipts = [
+  ['undefined', undefined], ['null', null], ['false', false], ['true', true],
+  ['number', 1], ['string', 'ok'], ['array', []], ['empty object', {}],
+  ['missing success', { meta: { changes: 1 } }],
+  ['false success', { success: false, meta: { changes: 1 } }],
+  ['numeric success', { success: 1, meta: { changes: 1 } }],
+  ['string success', { success: 'true', meta: { changes: 1 } }],
+  ['missing meta', { success: true }], ['null meta', { success: true, meta: null }],
+  ['missing changes', { success: true, meta: {} }],
+  ['zero changes', { success: true, meta: { changes: 0 } }],
+  ['two changes', { success: true, meta: { changes: 2 } }],
+  ['negative changes', { success: true, meta: { changes: -1 } }],
+  ['fractional changes', { success: true, meta: { changes: 1.5 } }],
+  ['string changes', { success: true, meta: { changes: '1' } }],
+  ['boolean changes', { success: true, meta: { changes: true } }],
+  ['NaN changes', { success: true, meta: { changes: NaN } }],
+  ['infinite changes', { success: true, meta: { changes: Infinity } }],
+  ['bigint changes', { success: true, meta: { changes: 1n } }]
+];
+for (const [label, receipt] of r45InvalidReceipts) {
+  test('R45 receipt rejects ' + label + ' without counted acknowledgement or retry', async () => {
+    const db = r45ReceiptDb(receipt);
+    const env = workerEnv(db);
+    const response = await handleBitEvoWorkerEvent(r45SignedEvent(), env, dateNow);
+    assert.equal(response.status, 503);
+    assert.deepEqual(await response.json(), { ok: false, error: 'COUNTER_WRITE_UNCONFIRMED' });
+    r45AssertSingleAttempt(db);
+    assert.equal(env.BITEVO_EVENT_RATE_LIMITER.calls.length, 1);
+  });
+}
+for (const phase of ['prepare', 'bind', 'run']) {
+  test('R45 D1 ' + phase + ' exception remains unconfirmed and is never retried', async () => {
+    const db = r45ReceiptDb({ success: true, meta: { changes: 1 } }, phase);
+    const response = await handleBitEvoWorkerEvent(r45SignedEvent(), workerEnv(db), dateNow);
+    assert.equal(response.status, 503);
+    assert.deepEqual(await response.json(), { ok: false, error: 'COUNTER_WRITE_UNCONFIRMED' });
+    assert.equal(db.sql.length, 1);
+    assert.equal(db.bound.length, phase === 'prepare' ? 0 : 1);
+    assert.equal(db.runCalls, phase === 'run' ? 1 : 0);
+  });
+}
+test('R45 explicit single-change receipt is acknowledged, with optional provider metadata', async () => {
+  for (const receipt of [
+    { success: true, meta: { changes: 1 } },
+    { success: true, meta: { changes: 1, duration: 0.5, rows_written: 2 }, results: [] }
+  ]) {
+    const db = r45ReceiptDb(receipt);
+    const response = await handleBitEvoWorkerEvent(r45SignedEvent(), workerEnv(db), dateNow);
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), { ok: true, counted: true });
+    r45AssertSingleAttempt(db);
+  }
+});
+test('R45 receipt metadata exception fails closed', async () => {
+  const receipt = { success: true, get meta() { throw new Error('synthetic metadata failure'); } };
+  const db = r45ReceiptDb(receipt);
+  const response = await handleBitEvoWorkerEvent(r45SignedEvent(), workerEnv(db), dateNow);
+  assert.equal(response.status, 503);
+  assert.deepEqual(await response.json(), { ok: false, error: 'COUNTER_WRITE_UNCONFIRMED' });
+  r45AssertSingleAttempt(db);
+});
+test('R45 unconfirmed Worker receipt propagates through signed ingress without false success', async () => {
+  for (const receipt of [undefined, {}, { success: true, meta: { changes: 0 } }]) {
+    const db = r45ReceiptDb(receipt);
+    let forwards = 0;
+    const response = await handleBitEvoPublicEvent(eventRequest(), ingressEnv, {
+      ...hooks, send: async (url, options) => {
+        forwards++;
+        return handleBitEvoWorkerEvent(new Request(url, options), workerEnv(db), dateNow);
+      }
+    });
+    assert.equal(response.status, 502);
+    assert.deepEqual(await response.json(), { ok: false, error: 'COUNTER_UNAVAILABLE' });
+    assert.equal(forwards, 1);
+    r45AssertSingleAttempt(db);
+  }
+});
+test('R45 disabled receiver and invalid signature never attempt a receipt write', async () => {
+  const db = r45ReceiptDb({ success: true, meta: { changes: 1 } });
+  const env = workerEnv(db);
+  const off = await handleBitEvoWorkerEvent(r45SignedEvent(), {
+    ...env, BITEVO_EVENT_COUNTER_RECEIVER_ENABLED: 'false'
+  }, dateNow);
+  assert.equal(off.status, 404);
+  const bad = r45SignedEvent();
+  bad.headers.set('x-bitevo-event-signature', 'v1=' + '0'.repeat(64));
+  const rejected = await handleBitEvoWorkerEvent(bad, env, dateNow);
+  assert.equal(rejected.status, 401);
+  assert.equal(db.sql.length, 0);
+  assert.equal(db.runCalls, 0);
+  assert.equal(env.BITEVO_EVENT_RATE_LIMITER.calls.length, 0);
+});
