@@ -148,7 +148,7 @@ export async function handleBitEvoWorkerEvent(request, env = {}, nowMs = Date.no
   try {
     const result = await env.BITEVO_EVENT_DB.prepare(UPSERT)
       .bind(row.day, row.event, row.page, row.locale).run();
-    if (!result || result.success === false) {
+    if (result?.success !== true || result?.meta?.changes !== 1) {
       return json(503, { ok: false, error: 'COUNTER_WRITE_UNCONFIRMED' });
     }
   } catch {

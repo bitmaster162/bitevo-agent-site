@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import coverage from '../src/data/bitevo-event-coverage.json' with { type: 'json' };
@@ -133,9 +134,45 @@ for (const route of publicRows) {
     expect(JSON.stringify(JSON.parse(attribute(tag, 'data-bitevo-event-coverage'))) === JSON.stringify(row), route.path + ': exact row embedded');
   }
 }
-for (const [path, current] of [['worker/index.mjs',worker],['schema/bitevo_public_event_daily.sql',sql]]) {
-  expect(normalizeEol(current) === normalizeEol(gitBase(path)), path + ': receiver/storage not changed');
+// R45: accept only the exact receipt guard change on the reviewed Worker.
+// Pin the LF-normalized legacy source so an unrelated post-commit baseline
+// cannot silently authorize a changed receiver, signature, SQL or route.
+const receiptLegacyGuard = '    if (!result || result.success === false) {';
+const receiptStrictGuard = '    if (result?.success !== true || result?.meta?.changes !== 1) {';
+const receiptWorkerBaselineSha256 = '522a3476c8a3aa76d0bcd6d60c19c036ae83bc7ab27e8ded9c66bc227571993f';
+function sourceBoundWriteReceipt(candidate, sourceBaseline) {
+  let original = normalizeEol(sourceBaseline);
+  const count = (source, value) => source.split(value).length - 1;
+  if (count(original, receiptStrictGuard) === 1 && count(original, receiptLegacyGuard) === 0) {
+    original = original.replace(receiptStrictGuard, receiptLegacyGuard);
+  }
+  if (count(original, receiptLegacyGuard) !== 1 || count(original, receiptStrictGuard) !== 0
+    || createHash('sha256').update(original, 'utf8').digest('hex') !== receiptWorkerBaselineSha256) return false;
+  return normalizeEol(candidate) === original.replace(receiptLegacyGuard, receiptStrictGuard);
 }
+const receiptWorkerBaseline = gitBase('worker/index.mjs');
+expect(sourceBoundWriteReceipt(worker, receiptWorkerBaseline), 'R45 exact strict single-write receipt change only');
+expect(sourceBoundWriteReceipt(worker, worker), 'R45 reviewed post-commit Worker baseline remains accepted');
+expect(!sourceBoundWriteReceipt(worker.replace(receiptStrictGuard, receiptLegacyGuard), receiptWorkerBaseline),
+  'R45 weak legacy receipt must not be accepted');
+for (const [label, from, to] of [
+  ['success coercion', 'result?.success !== true', 'result?.success === false'],
+  ['changes coercion', 'result?.meta?.changes !== 1', 'result?.meta?.changes != 1'],
+  ['unexpected write count', 'result?.meta?.changes !== 1', 'result?.meta?.changes !== 2'],
+  ['signature bypass', 'if (!verified)', 'if (false)'],
+  ['SQL change', 'DO UPDATE SET count = count + 1', 'DO UPDATE SET count = count + 2'],
+  ['routing change', "return Response.redirect(new URL('/guides', url), 302);", "return Response.redirect(new URL('/guides', url), 301);"],
+  ['receiver activation', "env?.BITEVO_EVENT_COUNTER_RECEIVER_ENABLED !== 'true'", 'false']
+]) {
+  expect(worker.includes(from), 'R45 negative mutation anchor exists: ' + label);
+  const mutated = worker.replace(from, to);
+  expect(!sourceBoundWriteReceipt(mutated, receiptWorkerBaseline), 'R45 rejects unrelated Worker change: ' + label);
+  expect(!sourceBoundWriteReceipt(mutated, mutated), 'R45 rejects changed post-commit baseline: ' + label);
+}
+expect(!sourceBoundWriteReceipt(worker + '\n// unrelated change', receiptWorkerBaseline), 'R45 rejects appended Worker content');
+expect(!sourceBoundWriteReceipt(worker + '\n' + receiptStrictGuard, receiptWorkerBaseline), 'R45 rejects duplicate receipt guard');
+expect(normalizeEol(sql) === normalizeEol(gitBase('schema/bitevo_public_event_daily.sql')),
+  'schema/bitevo_public_event_daily.sql: receiver/storage not changed');
 
 expect(!wrangler.includes('BITEVO_EVENT_DB'), 'no provider D1 binding without approval');
 expect(!vercel.includes('BITEVO_EVENT_COUNTER_ENABLED'), 'no Vercel provider activation without approval');
