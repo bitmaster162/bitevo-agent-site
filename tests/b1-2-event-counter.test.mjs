@@ -592,3 +592,90 @@ test('R45 disabled receiver and invalid signature never attempt a receipt write'
   assert.equal(db.runCalls, 0);
   assert.equal(env.BITEVO_EVENT_RATE_LIMITER.calls.length, 0);
 });
+
+// R46: Worker-first routing must be two explicit paths, never a B1.2 wildcard.
+const r46Wrangler = JSON.parse(await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8'));
+const r46ExpectedRunFirst = [
+  '/b1-2/event',
+  '/b1-2/event-report',
+  '/guides/*',
+  '/ru/guides/ai-agent-reliability-audit',
+  '!/guides/security-sandboxing',
+  '!/guides/fleet-coordinator-drift-monitoring',
+  '!/guides/d3-tool-io-bridge-contract'
+];
+const r46RoutingMatches = routes => Array.isArray(routes)
+  && JSON.stringify(routes) === JSON.stringify(r46ExpectedRunFirst);
+test('R46 exact Worker-first API and guide routes, with no wildcard or global override', () => {
+  assert.equal(r46Wrangler.assets.not_found_handling, '404-page');
+  assert.equal(r46Wrangler.assets.html_handling, 'drop-trailing-slash');
+  assert.equal(r46RoutingMatches(r46Wrangler.assets.run_worker_first), true);
+  assert.equal(r46Wrangler.assets.run_worker_first.includes('/b1-2/*'), false);
+  assert.equal(r46Wrangler.assets.run_worker_first.includes('/*'), false);
+});
+test('R46 configuration gate rejects missing, extra, wildcard and weakened guide exceptions', () => {
+  for (const routes of [
+    true,
+    [...r46ExpectedRunFirst.slice(1)],
+    r46ExpectedRunFirst.filter(route => route !== '/b1-2/event-report'),
+    [...r46ExpectedRunFirst, '/b1-2/*'],
+    [...r46ExpectedRunFirst, '/b1-2/other'],
+    r46ExpectedRunFirst.map(route => route === '/b1-2/event' ? '/b1-2/*' : route),
+    r46ExpectedRunFirst.filter(route => route !== '!/guides/security-sandboxing'),
+    [...r46ExpectedRunFirst].reverse()
+  ]) assert.equal(r46RoutingMatches(routes), false);
+});
+test('R46 disabled Worker event route returns 404 JSON without D1, rate limit or asset fallback', async () => {
+  const calls = { assets: 0, db: 0, limiter: 0 };
+  const env = {
+    ASSETS: { fetch: async () => { calls.assets++; throw Error('unexpected asset fallback'); } },
+    BITEVO_EVENT_DB: { prepare: () => { calls.db++; throw Error('unexpected DB'); } },
+    BITEVO_EVENT_RATE_LIMITER: { limit: async () => { calls.limiter++; throw Error('unexpected limiter'); } }
+  };
+  const response = await worker.fetch(new Request('https://bitevo.work/b1-2/event'), env);
+  assert.equal(response.status, 404);
+  assert.deepEqual(await response.json(), { ok: false, error: 'NOT_FOUND' });
+  assert.equal(response.headers.get('content-type'), 'application/json; charset=utf-8');
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  assert.deepEqual(calls, { assets: 0, db: 0, limiter: 0 });
+});
+test('R46 disabled Worker report route returns 404 JSON without D1 or asset fallback', async () => {
+  let assets = 0, db = 0;
+  const env = {
+    ASSETS: { fetch: async () => { assets++; throw Error('unexpected asset fallback'); } },
+    BITEVO_EVENT_DB: { prepare: () => { db++; throw Error('unexpected DB'); } }
+  };
+  const response = await worker.fetch(new Request('https://bitevo.work/b1-2/event-report'), env);
+  assert.equal(response.status, 404);
+  assert.deepEqual(await response.json(), { ok: false, error: 'NOT_FOUND' });
+  assert.equal(response.headers.get('content-type'), 'application/json; charset=utf-8');
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  assert.equal(assets, 0);
+  assert.equal(db, 0);
+});
+test('R46 unrelated paths retain the unchanged static asset fallback', async () => {
+  const paths = ['/pricing', '/b1-2/other', '/b1-2/event-extra', '/api/event'];
+  const calls = [];
+  const env = { ASSETS: { fetch: async request => {
+    calls.push(new URL(request.url).pathname);
+    return new Response('STATIC_ONLY', { status: 202 });
+  } } };
+  for (const path of paths) {
+    const response = await worker.fetch(new Request('https://bitevo.work' + path), env);
+    assert.equal(response.status, 202);
+    assert.equal(await response.text(), 'STATIC_ONLY');
+  }
+  assert.deepEqual(calls, paths);
+});
+test('R46 legacy guide redirects remain distinct from new API routing', async () => {
+  const cases = [
+    ['/guides/ai-agent-reliability-audit', 301, '/agent-authority-audit'],
+    ['/ru/guides/ai-agent-reliability-audit', 301, '/ru/agent-authority-audit'],
+    ['/guides/unreviewed', 302, '/guides']
+  ];
+  for (const [path, status, target] of cases) {
+    const response = await worker.fetch(new Request('https://bitevo.work' + path), {});
+    assert.equal(response.status, status);
+    assert.equal(new URL(response.headers.get('location')).pathname, target);
+  }
+});
