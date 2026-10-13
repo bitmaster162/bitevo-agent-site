@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "5e7a5e05-50c9-447b-8883-117c0cea3fed",
   "nonce": "11fb6fdc-f725-4d40-872c-c543d6812040",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "7492e25d106e0e48873693bd5c73a7b9fa57df53",
@@ -11,10 +11,12 @@
   "session": "R46-B12-CF-ROUTING-LOCAL-20261013",
   "worktree": "c:/temp/bitevo_r46_b12_cloudflare_routing_7492e25_local_r1",
   "acquiredAt": "2026-10-13T15:51:37.032Z",
-  "updatedAt": "2026-10-13T16:24:37.489Z",
+  "updatedAt": "2026-10-13T16:35:53.676Z",
   "expiresAt": "2026-10-13T20:00:00.000Z",
   "sealedHead": "923a10816e2347dd22d2bc4540089acfac971290",
   "sealedTree": "d3a7a15e6b1686718ddc82f16a99ec3b0a6028e8",
   "featureRef": "refs/heads/agent/site-r46-b1-2-cloudflare-routing-7492e25-local-r1",
-  "predecessor": "ff621063a49f1cf90e229983bc56d79bae8d3c41"
+  "predecessor": "c84abe9bc845d09ef014549c865d4b366bca632d",
+  "releasedAt": "2026-10-13T16:35:53.677Z",
+  "releaseReason": "r46_pr231_merged_live_verified_owner_release"
 }
