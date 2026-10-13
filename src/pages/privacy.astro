@@ -17,7 +17,7 @@ const eventMeanings = [
         <h1 class="display">What an event would mean, and what it would not prove.</h1>
       </div>
       <div>
-        <p class="lede">As of 13 October 2026, the BitEvo first-party event counter is OFF. This page describes the reviewed but inactive event model. It does not claim live analytics collection, a verified production database, or a complete legal privacy policy.</p>
+        <p class="lede">As of 13 October 2026, the BitEvo first-party event counter is OFF. This page describes the reviewed but inactive event model. It does not claim live B1.2 event collection, a verified production B1.2 database, or a complete legal privacy policy.</p>
         <p>Any future activation requires separate review of the disclosure, provider configuration, retention and evidence of correct counting.</p>
       </div>
     </div>
@@ -27,8 +27,9 @@ const eventMeanings = [
     <div class="container boundary-grid">
       <article class="panel">
         <div class="eyebrow">Current state</div>
-        <h2>Counting disabled</h2>
+        <h2>B1.2 event counting is OFF</h2>
         <p>The public event-counter bootstrap is disabled, and the event receiver and report endpoints fail closed. A listed event is not evidence that it was recorded in a live database.</p>
+        <p>The OFF status described here applies to the BitEvo B1.2 event counter. The site separately includes Vercel Web Analytics for page-view statistics. That integration and provider infrastructure logs are outside the five-column B1.2 aggregate table and are not disabled by the B1.2 switch. This notice does not claim that all website analytics or infrastructure logging is disabled.</p>
       </article>
       <article class="panel">
         <div class="eyebrow">Scope of this notice</div>
@@ -43,7 +44,8 @@ const eventMeanings = [
       <div class="eyebrow">Proposed event model · currently OFF</div>
       <h2 class="section-title">What the counter table is designed to contain</h2>
       <p>When the BitEvo first-party event counter is activated, it counts clicks on triage booking links, email links and pilot links, as well as local scope-brief generation. Only the date, event type, page, language and aggregate count are stored in the counter table. Contact details, form or scope-brief contents, cookies and IP addresses are not stored in that table. A recorded event does not confirm that an email was sent, an appointment was booked or a service was purchased.</p>
-      <p>The browser counter payload is limited to <code>event</code>, <code>page</code> and <code>locale</code>. The server may transiently derive a keyed IP token for rate limiting, but the counter's aggregate table has no token or request-ID column. This does not rule out infrastructure-level processing by hosting or security providers.</p>
+      <p>The browser counter payload is limited to <code>event</code>, <code>page</code> and <code>locale</code>.</p>
+      <p>Under the described design, only after B1.2 is separately activated, the Vercel handler reads the request IP address, derives an HMAC token and sends that token to the Cloudflare Worker together with a request ID, event time and event fields. The Worker uses the token as a rate-limit key. Only the day, event type, page, language and count are written to the B1.2 aggregate table; the token and request ID are not written to that table. This table boundary is not a claim that providers perform no other processing or immediately delete all related data.</p>
     </div>
   </section>
 

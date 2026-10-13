@@ -102,6 +102,70 @@ for (const file of htmlFiles) {
 }
 check(standalone === 4 && footerEn + footerRu === 144,
   'exact four reviewed standalone exceptions and 144 shared footers');
+
+// R47A-F3: distinguish B1.2 OFF from separate analytics and describe processing
+// before aggregation. These checks add to the prior 487 checks, not replace them.
+const f3ChecksStart = checks;
+let f3NegativeCases = 0;
+const f3Disclosure = {
+  "en": {
+    "heading": "B1.2 event counting is OFF",
+    "intro": "It does not claim live B1.2 event collection, a verified production B1.2 database, or a complete legal privacy policy.",
+    "analytics": "The OFF status described here applies to the BitEvo B1.2 event counter. The site separately includes Vercel Web Analytics for page-view statistics. That integration and provider infrastructure logs are outside the five-column B1.2 aggregate table and are not disabled by the B1.2 switch. This notice does not claim that all website analytics or infrastructure logging is disabled.",
+    "processing": "Under the described design, only after B1.2 is separately activated, the Vercel handler reads the request IP address, derives an HMAC token and sends that token to the Cloudflare Worker together with a request ID, event time and event fields. The Worker uses the token as a rate-limit key. Only the day, event type, page, language and count are written to the B1.2 aggregate table; the token and request ID are not written to that table. This table boundary is not a claim that providers perform no other processing or immediately delete all related data."
+  },
+  "ru": {
+    "heading": "Счётчик событий B1.2 выключен",
+    "intro": "Здесь описана проверенная схема счётчика, а не работающий сбор событий B1.2, подтверждённая production-база B1.2 или полная юридическая политика обработки данных.",
+    "analytics": "Указанный здесь статус OFF относится к счётчику событий BitEvo B1.2. Сайт отдельно подключает Vercel Web Analytics для статистики просмотров страниц. Эта интеграция и инфраструктурные логи провайдеров не ограничиваются пятью колонками агрегированной таблицы B1.2 и не отключаются переключателем B1.2. Эта страница не утверждает, что вся аналитика сайта или инфраструктурное журналирование отключены.",
+    "processing": "В описанной схеме, только после отдельного включения B1.2, обработчик на Vercel получает IP-адрес запроса, вычисляет HMAC-токен и передаёт его Cloudflare Worker вместе с идентификатором запроса, временем и полями события. Worker использует токен как ключ ограничения частоты запросов. В агрегированную таблицу B1.2 записываются только день, тип события, страница, язык и счётчик; токен и идентификатор запроса в эту таблицу не записываются. Эта граница таблицы не означает, что провайдеры не выполняют другую обработку или немедленно удаляют все связанные данные."
+  }
+};
+const f3Text = value => value.replace(/\s+/g, ' ').trim();
+function hasF3Disclosure(value, locale) {
+  const expected = f3Disclosure[locale];
+  const normalized = f3Text(value);
+  return Object.entries(expected).every(([key, text]) => normalized.includes(
+    f3Text(key === 'heading' ? '<h2>' + text + '</h2>' : text)
+  ));
+}
+for (const [locale, source, built] of [['en', enSource, enHtml], ['ru', ruSource, ruHtml]]) {
+  check(hasF3Disclosure(source, locale), locale + ': F3 source disclosure complete');
+  check(hasF3Disclosure(built, locale), locale + ': F3 rendered disclosure complete');
+  for (const [key, text] of Object.entries(f3Disclosure[locale])) {
+    const anchor = key === 'heading' ? '<h2>' + text + '</h2>' : text;
+    const changed = source.replace(anchor, '');
+    check(changed !== source, locale + ': F3 negative anchor exists: ' + key);
+    check(!hasF3Disclosure(changed, locale), locale + ': F3 rejects removed ' + key);
+    f3NegativeCases++;
+  }
+  const boundaries = locale === 'en' ? [
+    ['separate analytics', 'Vercel Web Analytics', 'unidentified analytics'],
+    ['activation gate', 'only after B1.2 is separately activated, ', ''],
+    ['provider transfer', 'sends that token to the Cloudflare Worker', 'does not send the token to another provider'],
+    ['request metadata', 'a request ID, event time and event fields', 'event fields only'],
+    ['limiter processing', 'The Worker uses the token as a rate-limit key.', ''],
+    ['no deletion guarantee', 'This table boundary is not a claim that providers perform no other processing or immediately delete all related data.', 'Providers immediately delete all related data.']
+  ] : [
+    ['separate analytics', 'Vercel Web Analytics', 'неназванную аналитику'],
+    ['activation gate', 'только после отдельного включения B1.2, ', ''],
+    ['provider transfer', 'передаёт его Cloudflare Worker', 'не передаёт его другому провайдеру'],
+    ['request metadata', 'с идентификатором запроса, временем и полями события', 'только с полями события'],
+    ['limiter processing', 'Worker использует токен как ключ ограничения частоты запросов.', ''],
+    ['no deletion guarantee', 'Эта граница таблицы не означает, что провайдеры не выполняют другую обработку или немедленно удаляют все связанные данные.', 'Провайдеры немедленно удаляют все связанные данные.']
+  ];
+  for (const [label, before, after] of boundaries) {
+    const changed = source.replace(before, after);
+    check(changed !== source, locale + ': F3 mutation anchor exists: ' + label);
+    check(!hasF3Disclosure(changed, locale), locale + ': F3 rejects weakening: ' + label);
+    f3NegativeCases++;
+  }
+}
+check(layout.includes('<script defer src="/_vercel/insights/script.js"></script>'),
+  'F3 separately configured Vercel integration stays distinct from B1.2 OFF');
+console.log('R47A_F3_CONTENT_GATE=PASS locales=2 added_checks=' + (checks - f3ChecksStart)
+  + ' negative_cases=' + f3NegativeCases + ' runtime_changes=0');
+
 console.log('R47A_PRIVACY_LOCAL_GATE=PASS checks=' + checks + ' html=' + htmlFiles.length
   + ' noindex=2 sitemap=131 drafts=EN_RU_APPROVAL_PENDING telemetry=OFF'
   + ' footer_en=' + footerEn + ' footer_ru=' + footerRu + ' provider_writes=0');
