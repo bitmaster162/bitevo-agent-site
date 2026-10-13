@@ -10,6 +10,8 @@
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page",
     "run_worker_first": [
+      "/b1-2/event",
+      "/b1-2/event-report",
       "/guides/*",
       "/ru/guides/ai-agent-reliability-audit",
       "!/guides/security-sandboxing",

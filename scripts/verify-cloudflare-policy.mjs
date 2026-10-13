@@ -29,7 +29,23 @@ check('config', wrangler.assets?.directory === './dist', 'wrangler: assets.direc
 check('config', wrangler.assets?.binding === 'ASSETS', 'wrangler: assets binding must be ASSETS');
 check('config', wrangler.assets?.not_found_handling === '404-page', 'wrangler: custom 404 handling must remain 404-page');
 check('routing', wrangler.assets?.html_handling === 'drop-trailing-slash', 'wrangler: HTML handling must canonicalize to no trailing slash');
-const runFirst = wrangler.assets?.run_worker_first || [];
+const runFirst = Array.isArray(wrangler.assets?.run_worker_first) ? wrangler.assets.run_worker_first : [];
+const r46ExactWorkerFirst = [
+  '/b1-2/event',
+  '/b1-2/event-report',
+  '/guides/*',
+  '/ru/guides/ai-agent-reliability-audit',
+  '!/guides/security-sandboxing',
+  '!/guides/fleet-coordinator-drift-monitoring',
+  '!/guides/d3-tool-io-bridge-contract'
+];
+check('routing', Array.isArray(wrangler.assets?.run_worker_first), 'wrangler: Worker-first must be a bounded array, not true');
+for (const apiPath of ['/b1-2/event', '/b1-2/event-report']) {
+  check('routing', runFirst.includes(apiPath), `wrangler: missing exact B1.2 Worker-first route ${apiPath}`);
+}
+check('routing', !runFirst.includes('/b1-2/*') && !runFirst.includes('/*'), 'wrangler: no broad B1.2/global Worker-first wildcard');
+check('routing', JSON.stringify(runFirst) === JSON.stringify(r46ExactWorkerFirst),
+  'wrangler: only the two exact B1.2 routes and five unchanged guide patterns are allowed');
 for (const pattern of ['/guides/*','/ru/guides/ai-agent-reliability-audit','!/guides/security-sandboxing','!/guides/fleet-coordinator-drift-monitoring','!/guides/d3-tool-io-bridge-contract']) check('routing', runFirst.includes(pattern), `wrangler: missing bounded guide routing pattern ${pattern}`);
 check('routing', !runFirst.includes('!/guides/ai-agent-reliability-audit'), 'wrangler: retired reliability guide must no longer bypass Worker routing');
 check('routing', worker.includes("path === '/guides/ai-agent-reliability-audit'") && worker.includes("new URL('/agent-authority-audit', url), 301"), 'worker: retired EN reliability guide must 301 -> /agent-authority-audit');

@@ -72,13 +72,44 @@ for (const [path, current] of [
   ['public/triage-click.js', legacyTriage],
   ['src/pages/audit-intake.astro', enIntake],
   ['src/pages/ru/audit-intake.astro', ruIntake],
-  ['wrangler.jsonc', wrangler],
   ['vercel.json', vercel]
 ]) {
   expect(normalizeEol(current) === normalizeEol(gitBase(path)),
     path + ' must remain unchanged in this local-only candidate');
 }
 
+// R46: permit only the two exact Worker-first paths against the pinned R45
+// Wrangler preimage. Supports both pre-commit and post-commit HEAD baselines.
+const r46LegacyRunFirst = "    \"run_worker_first\": [\n      \"/guides/*\",";
+const r46ExactRunFirst = "    \"run_worker_first\": [\n      \"/b1-2/event\",\n      \"/b1-2/event-report\",\n      \"/guides/*\",";
+const r46WranglerBaselineSha256 = 'c007f33f3d8e1826cab703998fb5117c0a571ad3f4a86e96364b53dc3054d677';
+function sourceBoundR46WorkerFirst(candidate, sourceBaseline) {
+  let original = normalizeEol(sourceBaseline);
+  const count = (source, value) => source.split(value).length - 1;
+  if (count(original, r46ExactRunFirst) === 1 && count(original, r46LegacyRunFirst) === 0) {
+    original = original.replace(r46ExactRunFirst, r46LegacyRunFirst);
+  }
+  if (count(original, r46LegacyRunFirst) !== 1 || count(original, r46ExactRunFirst) !== 0
+    || createHash('sha256').update(original, 'utf8').digest('hex') !== r46WranglerBaselineSha256) return false;
+  return normalizeEol(candidate) === original.replace(r46LegacyRunFirst, r46ExactRunFirst);
+}
+const r46WranglerBase = gitBase('wrangler.jsonc');
+expect(sourceBoundR46WorkerFirst(wrangler, r46WranglerBase), 'R46 Wrangler exact two-route change only');
+expect(sourceBoundR46WorkerFirst(wrangler, wrangler), 'R46 post-commit pinned Wrangler baseline accepted');
+const r46WranglerLF = normalizeEol(wrangler);
+for (const [label, altered] of [
+  ['missing event route', r46WranglerLF.replace('      "/b1-2/event",\n', '')],
+  ['missing report route', r46WranglerLF.replace('      "/b1-2/event-report",\n', '')],
+  ['wildcard route', r46WranglerLF.replace('"/b1-2/event",', '"/b1-2/*",')],
+  ['extra route', r46WranglerLF.replace('"/b1-2/event-report",', '"/b1-2/event-report",\n      "/b1-2/other",')],
+  ['guide deny removed', r46WranglerLF.replace('"!/guides/security-sandboxing"', '"/guides/security-sandboxing"')],
+  ['404 handling changed', r46WranglerLF.replace('"not_found_handling": "404-page"', '"not_found_handling": "none"')],
+  ['unrelated source change', r46WranglerLF + '\n// unexpected']
+]) {
+  expect(altered !== r46WranglerLF, 'R46 negative mutation anchor exists: ' + label);
+  expect(!sourceBoundR46WorkerFirst(altered, r46WranglerBase), 'R46 rejects unrelated Wrangler change: ' + label);
+  expect(!sourceBoundR46WorkerFirst(altered, altered), 'R46 rejects changed post-commit baseline: ' + label);
+}
 const insertionAnchor = '    <script defer src="/_vercel/insights/script.js"></script>';
 const registryImport = "import routeRegistry from '../data/public-route-registry.json';";
 const coverageImport = "import eventCoverage from '../data/bitevo-event-coverage.json';";
