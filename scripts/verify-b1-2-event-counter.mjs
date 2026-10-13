@@ -117,8 +117,24 @@ const pathAnchor = "const selfCanonicalPath = path === '/' ? '/' : path.replace(
 const coverageLookup = 'const counterCoverage = eventCoverage.routes.find(route => route.path === selfCanonicalPath && route.locale === lang);';
 const originalMount = '    {["/audit-intake", "/ru/audit-intake", "/phuket-ai-workflow"].includes(selfCanonicalPath) && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled"></script>}';
 const disabledMount = '    {counterCoverage && <script is:inline src="/bitevo-event-counter.js" data-bitevo-events="disabled" data-bitevo-event-schema={eventCoverage.schema} data-bitevo-event-coverage={JSON.stringify(counterCoverage)}></script>}';
+// R47A: allow only the exact two new privacy footer links.
+const r47aLayoutSha = '31f57341c144f9df53e6c14b45eabda678278fe13b3bf1526e5d9f671cf3668b';
+const r47aEnBase = "  ['Security', '/security'],\n";
+const r47aEnNew = r47aEnBase + "  ['Site data & events', '/privacy'],\n";
+const r47aRuBase = "  ['Безопасность', '/ru/security'],\n";
+const r47aRuNew = r47aRuBase + "  ['Данные сайта и счётчик', '/ru/privacy'],\n";
+function stripR47aFooter(value, requirePair) {
+  const s = normalizeEol(value);
+  const en = s.split(r47aEnNew).length - 1, ru = s.split(r47aRuNew).length - 1;
+  if (requirePair ? en !== 1 || ru !== 1 : !((en === 0 && ru === 0) || (en === 1 && ru === 1))) return null;
+  return s.replace(r47aEnNew, r47aEnBase).replace(r47aRuNew, r47aRuBase);
+}
+
 function sourceBoundLayout(candidate, sourceBaseline) {
-  let reviewed = normalizeEol(sourceBaseline);
+  let reviewed = stripR47aFooter(sourceBaseline, false);
+  const candidateR46 = stripR47aFooter(candidate, true);
+  if (reviewed === null || candidateR46 === null) return false;
+  if (createHash('sha256').update(candidateR46, 'utf8').digest('hex') !== r47aLayoutSha) return false;
   const count = (source, value) => source.split(value).length - 1;
   if (count(reviewed, registryImport) !== 1 || count(reviewed, pathAnchor) !== 1 || count(reviewed, insertionAnchor) !== 1) return false;
   if (!reviewed.includes(coverageImport)) reviewed = reviewed.replace(registryImport, registryImport + '\n' + coverageImport);
@@ -128,7 +144,7 @@ function sourceBoundLayout(candidate, sourceBaseline) {
     || count(reviewed, disabledMount) !== 1 || count(reviewed, originalMount) !== 0) return false;
   const tags = [...reviewed.matchAll(/<script\b[^>]*\bsrc="\/bitevo-event-counter\.js"[^>]*><\/script>/gi)];
   return tags.length === 1 && !reviewed.includes('data-bitevo-events="enabled"')
-    && normalizeEol(candidate) === reviewed;
+    && candidateR46 === reviewed;
 }
 const baselineLayout = gitBase('src/layouts/Layout.astro');
 expect(sourceBoundLayout(layout, baselineLayout), 'Layout is only the exact coverage import, lookup and OFF mount change');

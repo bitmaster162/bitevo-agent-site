@@ -105,7 +105,8 @@
     "SbyJYuQGc2i73mva6EGQeK6zeIPYCO5Rtxqd/wbNVEY=",
     "6pqfoDlTHdK7P4KAXBIYfsE9VCzL2tko/AR63TnYwBE=",
     "va0yV16S9QAac5avQ6U+YAmkjXS6bju0lvY3TmQCxY0=",
-    "QXl5Xe2/tFNhHkagZzhdErBDmgrZYv0VO5S4raXCpEs="
+    "QXl5Xe2/tFNhHkagZzhdErBDmgrZYv0VO5S4raXCpEs=",
+    "GTM7q3ak8ZccEVo8LSjoumCXk8ELmroLlDSvFeM90pM="
   ],
   "styles": [
     "13B5VOcEKwUNu8ohnu3LP1GqZ1Hj35yMjpasF0s1Sxg=",
@@ -459,6 +460,16 @@
       "routes": [
         "/audit-intake",
         "/ru/audit-intake"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_R47A_PRIVACY_B17760F_PRECOMMIT",
+      "note": "R47A adds a bounded noindex RU Privacy disclosure. The sole new script hash is inert application/ld+json produced by RuLayout (Organization, WebSite, BreadcrumbList), checked against exact built bytes. EN Privacy JSON-LD is already reviewed. No new executable script, style hash, wildcard, unsafe-inline, unsafe-eval, external network origin, production event activation or D1 writes.",
+      "scripts": [
+        "GTM7q3ak8ZccEVo8LSjoumCXk8ELmroLlDSvFeM90pM="
+      ],
+      "routes": [
+        "/ru/privacy"
       ]
     }
   ]

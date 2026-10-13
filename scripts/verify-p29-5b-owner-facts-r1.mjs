@@ -51,8 +51,8 @@ check(!securityHtml.includes('Which stacks do you work with?'), '/security keeps
 check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b)/i.test(component), 'P29.5B adds no JS, network, forms, buttons or links');
 
 const expected = {
-  '/pricing': ['2026-10-13', 'sha256:081d18f6986f3d8d7abd2f283114f69d4eaf1398b2d766521c79443ba81e0e1d'],
-  '/security': ['2026-10-05', 'sha256:931fc48d39f0ac06a069b3c7147e2a28897d482c8dd75c55f0f7b5fa2e98903e']
+  '/pricing': ['2026-10-13', 'sha256:e822115101bf60e58aeeca889e1b3c9b506e94e6702816c0820d85863b3ac9f7'],
+  '/security': ['2026-10-13', 'sha256:415b4b109f41b8cb5fe985b6a38ce2dcf3d36a912f50e3326fa9b09c87e919b6']
 };
 for (const [path, pair] of Object.entries(expected)) {
   const lastmod = pair[0];

@@ -28,7 +28,22 @@ for (const phrase of [
 if (!hasAnchor(en, '/security', 'Security')) failures.push('footer EN security label/link missing');
 if (!hasAnchor(ru, '/ru/security', 'Безопасность')) failures.push('footer RU security label/link missing');
 if (!en.includes('hreflang="ru"') || !en.includes('href="https://bitevo.work/ru/security"')) failures.push('EN RU alternate missing');
-if (await exists(`${dist}/privacy/index.html`)) failures.push('privacy route unexpectedly published');
+const enPrivacyPath = `${dist}/privacy/index.html`;
+const ruPrivacyPath = `${dist}/ru/privacy/index.html`;
+if (!(await exists(enPrivacyPath)) || !(await exists(ruPrivacyPath))) {
+  failures.push('R47A bounded EN/RU privacy disclosures missing');
+} else {
+  const enPrivacy = await read('/privacy');
+  const ruPrivacy = await read('/ru/privacy');
+  for (const [locale, html, enRoute, ruRoute] of [['EN', enPrivacy, '/privacy', '/ru/privacy'], ['RU', ruPrivacy, '/privacy', '/ru/privacy']]) {
+    if (!html.includes('name="robots" content="noindex, follow"')) failures.push(`${locale} R47A disclosure not noindex`);
+    if (!html.includes(`hreflang="en" href="https://bitevo.work${enRoute}"`) || !html.includes(`hreflang="ru" href="https://bitevo.work${ruRoute}"`)) failures.push(`${locale} R47A disclosure hreflang missing`);
+  }
+  if (!enPrivacy.includes('the BitEvo first-party event counter is OFF')) failures.push('EN R47A OFF marker missing');
+  if (!ruPrivacy.includes('счётчик событий BitEvo ВЫКЛЮЧЕН')) failures.push('RU R47A OFF marker missing');
+  if (!hasAnchor(en, '/privacy', 'Site data events')) failures.push('footer EN privacy link missing');
+  if (!hasAnchor(ru, '/ru/privacy', 'Данные сайта и счётчик')) failures.push('footer RU privacy link missing');
+}
 if (await exists(`${dist}/terms/index.html`)) failures.push('terms route unexpectedly published');
 
 if (failures.length) {
@@ -36,4 +51,4 @@ if (failures.length) {
   failures.forEach(x => console.error(x));
   process.exit(1);
 }
-console.log('SECURITY_TRUST_SURFACE=PASS locales=2 footer_links=2 hreflang=1 privacy_published=0 terms_published=0 failures=0');
+console.log('SECURITY_TRUST_SURFACE=PASS locales=2 footer_security_links=2 footer_privacy_links=2 privacy_noindex_preview=2 terms_published=0 failures=0');

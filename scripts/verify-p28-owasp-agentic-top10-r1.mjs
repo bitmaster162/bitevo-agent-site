@@ -67,10 +67,10 @@ equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length
 equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 65, 'RU indexable route count remains exact');
 
 const expectedCurrentness = {
-  '/agent-authority-audit': { fingerprint:'sha256:de1ff75ba0713561bcc20308c0aef1137886e4813f1be10b5fa28fa708bee89f', lastmod:'2026-10-13' },
-  '/owasp-agentic-top-10': { fingerprint:'sha256:81f4cf28011e6f9e4ce2dfdc40f8bc5dcc8c7677d340bb89a384493b62758e97', lastmod:'2026-10-13' },
-  '/pricing': { fingerprint:'sha256:081d18f6986f3d8d7abd2f283114f69d4eaf1398b2d766521c79443ba81e0e1d', lastmod:'2026-10-13' },
-  '/ru/owasp-agentic-top-10': { fingerprint:'sha256:c63d0a9bb163a9fc2fb7e041a6b22968b7f4fe8534002ca6eb1a91df629c5d3c', lastmod:'2026-10-13' }
+  '/agent-authority-audit': { fingerprint:'sha256:0dbb0456dfaa209a33bd3cf5b22da5135acbbe9a57d249e6d78af654eb7e1e5a', lastmod:'2026-10-13' },
+  '/owasp-agentic-top-10': { fingerprint:'sha256:077f2c908297a6803d6229a8dccf6275bd1c653762f59fdc34834baf8ea06186', lastmod:'2026-10-13' },
+  '/pricing': { fingerprint:'sha256:e822115101bf60e58aeeca889e1b3c9b506e94e6702816c0820d85863b3ac9f7', lastmod:'2026-10-13' },
+  '/ru/owasp-agentic-top-10': { fingerprint:'sha256:564ba60d42a409f90f5bf0ac3f329b778bb80106c652da74c008ef26fc0c0d04', lastmod:'2026-10-13' }
 };
 for (const [path,value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
