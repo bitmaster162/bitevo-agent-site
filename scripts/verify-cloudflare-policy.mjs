@@ -21,6 +21,23 @@ const check = (bucket, ok, message) => {
   if (!ok) failures.push(message);
 };
 
+// R48: exact owner-supplied D1/rate-limit bindings; this tests source, not live Cloudflare inventory.
+const r48ExpectedTop = '$schema,name,compatibility_date,main,workers_dev,assets,d1_databases,ratelimits,vars';
+const r48ExpectedD1 = [{ binding: 'BITEVO_EVENT_DB', database_name: 'bitevo-events-b12',
+  database_id: 'b533a76e-ddd0-406b-9449-94e878bc2c50' }];
+const r48ExpectedRate = [{ name: 'BITEVO_EVENT_RATE_LIMITER', namespace_id: '1001',
+  simple: { limit: 10, period: 60 } }];
+const r48ExpectedVars = { BITEVO_EVENT_COUNTER_RECEIVER_ENABLED: 'true' };
+check('config', Object.keys(wrangler).join(',') === r48ExpectedTop, 'R48: no unexpected Wrangler top-level keys');
+check('config', JSON.stringify(wrangler.d1_databases) === JSON.stringify(r48ExpectedD1),
+  'R48: one exact D1 binding, name and database ID');
+check('config', JSON.stringify(wrangler.ratelimits) === JSON.stringify(r48ExpectedRate),
+  'R48: one exact rate limiter namespace and 10/60 configuration');
+check('config', JSON.stringify(wrangler.vars) === JSON.stringify(r48ExpectedVars),
+  'R48: only receiver=true; report must stay OFF');
+check('config', !JSON.stringify(wrangler).includes('BITEVO_EVENT_COUNTER_SIGNING_SECRET'),
+  'R48: no signing secret in public source');
+
 check('config', wrangler.name === 'bitevo-agent-site', 'wrangler: unexpected Worker name');
 check('config', wrangler.compatibility_date === '2026-08-12', 'wrangler: compatibility_date must be pinned');
 check('config', wrangler.main === 'worker/index.mjs', 'wrangler: main must bind the bounded guide router');

@@ -61,7 +61,22 @@ check(!enHtml.includes('your data is not used to train AI models') && !ruHtml.in
 check(layout.includes("['Site data & events', '/privacy']") && layout.includes("['Данные сайта и счётчик', '/ru/privacy']"), 'both shared footer routes');
 check(coverage.schema === 'bitevo.event-coverage/v1' && coverage.defaultMode === 'disabled', 'event counter default OFF');
 check(coverage.routes.length === 24 && coverage.routes.reduce((n, row) => n + row.events.length, 0) === 30, 'reviewed OFF 24 pages / 30 pairs unchanged');
-check(!('d1_databases' in wrangler) && !('vars' in wrangler), 'no production D1 binding or activation config added');
+// R48 admits exactly the owner-reviewed configuration; this is not live activation evidence.
+check(JSON.stringify(wrangler.d1_databases) === JSON.stringify([{
+  binding: 'BITEVO_EVENT_DB',
+  database_name: 'bitevo-events-b12',
+  database_id: 'b533a76e-ddd0-406b-9449-94e878bc2c50'
+}]), 'R48: exact D1 binding only');
+check(JSON.stringify(wrangler.ratelimits) === JSON.stringify([{
+  name: 'BITEVO_EVENT_RATE_LIMITER',
+  namespace_id: '1001',
+  simple: { limit: 10, period: 60 }
+}]), 'R48: exact 10/60 limiter only');
+check(JSON.stringify(wrangler.vars) === JSON.stringify({
+  BITEVO_EVENT_COUNTER_RECEIVER_ENABLED: 'true'
+}), 'R48: receiver flag only; report and secrets absent');
+check(Object.keys(wrangler).join(',') === '$schema,name,compatibility_date,main,workers_dev,assets,d1_databases,ratelimits,vars',
+  'R48: no unrelated configuration keys');
 check(!JSON.stringify(vercel).includes('BITEVO_EVENT_COUNTER_ENABLED'), 'Vercel activation not configured');
 check(currentness.routes.length === 131, 'original 131 indexed routes preserved');
 check((sitemap.match(/<loc>/g) || []).length === 131, 'sitemap still 131 indexable routes');

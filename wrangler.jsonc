@@ -18,5 +18,25 @@
       "!/guides/fleet-coordinator-drift-monitoring",
       "!/guides/d3-tool-io-bridge-contract"
     ]
+  },
+  "d1_databases": [
+    {
+      "binding": "BITEVO_EVENT_DB",
+      "database_name": "bitevo-events-b12",
+      "database_id": "b533a76e-ddd0-406b-9449-94e878bc2c50"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "BITEVO_EVENT_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ],
+  "vars": {
+    "BITEVO_EVENT_COUNTER_RECEIVER_ENABLED": "true"
   }
 }
