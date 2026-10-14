@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const eventMeanings = [
+  ['triage_click', 'A click on a triage booking link; not proof of a booking.'],
+  ['mailto_click', 'A click on an email link; not proof that an email was sent.'],
+  ['scope_generated', 'A locally generated scope brief; the brief content is not a counter event field.'],
+  ['pilot_click', 'A click on a pilot link; not proof of a sale or payment.']
+];
+---
+
+<Layout title="Site Data & Event Counter Disclosure — BitEvo" description="A bounded disclosure of BitEvo public-site event-counter fields, disabled status, and unresolved provider retention boundaries." robots="noindex, follow" alternates={{ en: '/privacy', ru: '/ru/privacy' }}>
+  <section class="section hero">
+    <div class="container split">
+      <div>
+        <div class="eyebrow">Site data · limited disclosure</div>
+        <h1 class="display">What an event would mean, and what it would not prove.</h1>
+      </div>
+      <div>
+        <p class="lede">As of 13 October 2026, the BitEvo first-party event counter is OFF. This page describes the reviewed but inactive event model. It does not claim live B1.2 event collection, a verified production B1.2 database, or a complete legal privacy policy.</p>
+        <p>Any future activation requires separate review of the disclosure, provider configuration, retention and evidence of correct counting.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container boundary-grid">
+      <article class="panel">
+        <div class="eyebrow">Current state</div>
+        <h2>B1.2 event counting is OFF</h2>
+        <p>The public event-counter bootstrap is disabled, and the event receiver and report endpoints fail closed. A listed event is not evidence that it was recorded in a live database.</p>
+        <p>The OFF status described here applies to the BitEvo B1.2 event counter. The site separately includes Vercel Web Analytics for page-view statistics. That integration and provider infrastructure logs are outside the five-column B1.2 aggregate table and are not disabled by the B1.2 switch. This notice does not claim that all website analytics or infrastructure logging is disabled.</p>
+      </article>
+      <article class="panel">
+        <div class="eyebrow">Scope of this notice</div>
+        <h2>Aggregate events only</h2>
+        <p>This is a bounded event-counter disclosure, not a statement that hosting providers create no logs. Scope-request handling and engagement evidence have separate boundaries.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Proposed event model · currently OFF</div>
+      <h2 class="section-title">What the counter table is designed to contain</h2>
+      <p>When the BitEvo first-party event counter is activated, it counts clicks on triage booking links, email links and pilot links, as well as local scope-brief generation. Only the date, event type, page, language and aggregate count are stored in the counter table. Contact details, form or scope-brief contents, cookies and IP addresses are not stored in that table. A recorded event does not confirm that an email was sent, an appointment was booked or a service was purchased.</p>
+      <p>The browser counter payload is limited to <code>event</code>, <code>page</code> and <code>locale</code>.</p>
+      <p>Under the described design, only after B1.2 is separately activated, the Vercel handler reads the request IP address, derives an HMAC token and sends that token to the Cloudflare Worker together with a request ID, event time and event fields. The Worker uses the token as a rate-limit key. Only the day, event type, page, language and count are written to the B1.2 aggregate table; the token and request ID are not written to that table. This table boundary is not a claim that providers perform no other processing or immediately delete all related data.</p>
+    </div>
+  </section>
+
+  <section class="section-tight section-rule">
+    <div class="container">
+      <div class="eyebrow">Event meanings</div>
+      <h2 class="section-title">An interaction is not a conversion.</h2>
+      <div class="grid">
+        {eventMeanings.map(([event, meaning]) => (
+          <article class="panel"><h3><code>{event}</code></h3><p>{meaning}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Unresolved before activation</div>
+      <h2 class="section-title">Retention and provider logs need separate verification.</h2>
+      <p>No retention period for event aggregates is approved by this page. Infrastructure logs may be processed by Vercel, Cloudflare or other relevant providers; their retention, access and deletion boundaries have not been established here. Do not infer that all provider logs are absent.</p>
+      <p>For the separately stated 30-day scope-request retention boundary and engagement-specific evidence rules, see <a href="/security">Security & Data Handling</a>. That period is not an event-counter retention rule.</p>
+      <p>Questions about BitEvo's public-site handling can be addressed to <a href="mailto:robert@bitevo.work">robert@bitevo.work</a>. The public intake must not be used to submit credentials or production secrets.</p>
+    </div>
+  </section>
+</Layout>

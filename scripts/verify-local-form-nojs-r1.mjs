@@ -8,19 +8,19 @@ const routes = [
   { path:'/diagnostic', id:'diagnostic', locale:'en', file:'src/pages/diagnostic.astro',
     sourceSha:'fe6a522079a53fcac5309184026b408d6e0c5310b1463717cfc4ec1258247a4d',
     dynamicSha:'cc50f9c26f6615132719e58765d9c0fcdd05055bcbbf9ba4270bc50b3a66c03c',
-    fingerprint:'sha256:859e9d69722b601841e8d68169cf727855d621392054ddf40643d7b2628bc63a' },
+    fingerprint:'sha256:f1ff056d792829e4b5eb6e6cf0b60e08a4f8e60a2431c56957e7785f2c2008dd' },
   { path:'/ru/diagnostic', id:'ruDiagnostic', locale:'ru', file:'src/pages/ru/diagnostic.astro',
     sourceSha:'6582f479690c7de18801980814791267b9cc207dcbbc3ca391ca1db940944820',
     dynamicSha:'82460d8bc67ff290e5da190bad2288e252fd544ee08e4cd304aec3f09701e55c',
-    fingerprint:'sha256:90a907e76fca773d1458a5f546644d2e10a2879a94c8d754845bf4c473618a09' },
+    fingerprint:'sha256:1b466696e482dffafbc9f35198912fa14df40a9243b3be2e012e453a02bd3209' },
   { path:'/mapper', id:'mapper', locale:'en', file:'src/pages/mapper.astro',
     sourceSha:'839b757c4b799801b8b87d3e4cc6c95eb08a1bea51194bee65fba25d38868022',
     dynamicSha:'c79cbf5c5a5f0ee7783113f9c512f6110c52209a8d2b635d8728edd7981d0e2c',
-    fingerprint:'sha256:4a011189f24bb0b9e5c6c80f22cd756508c12dae39340bce28f1bc50fbce986e' },
+    fingerprint:'sha256:639416424ede243d516ccfa2983e0ae163e4ada6bf88b8fe80406574c9fcb1d2' },
   { path:'/ru/mapper', id:'ruMapper', locale:'ru', file:'src/pages/ru/mapper.astro',
     sourceSha:'a94e5d9b8e312f9a467cc86d541428897485cbd8a726ebc4f130b4eeae9a7d94',
     dynamicSha:'2e1658150b537abd56e341579536bef8eac8ecc3903d13149779d19201c62c6a',
-    fingerprint:'sha256:d66483754b2a3720beb559a4c92931ae8881be2e1a8e7a942e46d88ddc24a8a9' }
+    fingerprint:'sha256:996694e72f85365a3d56d0a2fa74fc77845b39efd3e45f9f80d309c7df1f676c' }
 ];
 let checks = 0;
 const need = (ok, message) => { assert.ok(ok, message); checks++; };

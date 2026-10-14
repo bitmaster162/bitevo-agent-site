@@ -71,7 +71,7 @@ for (const [path, locale, parent] of [
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ': missing currentness row');
   if (row) {
-    equal(row.lastmod, '2026-10-10', path + ': lastmod');
+    equal(row.lastmod, '2026-10-13', path + ': lastmod');
     check(/^sha256:[0-9a-f]{64}$/.test(row.fingerprint || ''), path + ': fingerprint');
   }
 }

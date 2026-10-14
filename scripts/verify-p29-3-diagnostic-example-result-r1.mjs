@@ -104,8 +104,8 @@ const legacyCurrentness = {
   '/ru/diagnostic': { lastmod: '2026-10-04', fingerprint: 'sha256:ddc94d00f5d0b8d33b7e96da5e822ce3166d51e20a83df689b674f94c51a0358' }
 };
 const noJsGuardCurrentness = {
-  '/diagnostic': { lastmod: '2026-10-13', fingerprint: 'sha256:859e9d69722b601841e8d68169cf727855d621392054ddf40643d7b2628bc63a' },
-  '/ru/diagnostic': { lastmod: '2026-10-13', fingerprint: 'sha256:90a907e76fca773d1458a5f546644d2e10a2879a94c8d754845bf4c473618a09' }
+  '/diagnostic': { lastmod: '2026-10-13', fingerprint: 'sha256:f1ff056d792829e4b5eb6e6cf0b60e08a4f8e60a2431c56957e7785f2c2008dd' },
+  '/ru/diagnostic': { lastmod: '2026-10-13', fingerprint: 'sha256:1b466696e482dffafbc9f35198912fa14df40a9243b3be2e012e453a02bd3209' }
 };
 const hasENGuard = enSource.includes('<form id="diagnostic" class="questions panel" method="post">') &&
   enSource.includes('disabled data-js-local-submit');

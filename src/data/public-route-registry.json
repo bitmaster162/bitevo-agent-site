@@ -312,6 +312,14 @@
       "parent": "/operator"
     },
     {
+      "path": "/privacy",
+      "category": "INTERNAL_NO_INDEX",
+      "indexable": false,
+      "locale": "en",
+      "parent": "/security",
+      "state": "disclosure_review"
+    },
+    {
       "path": "/operator",
       "category": "PROOF",
       "indexable": true,
@@ -804,6 +812,14 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru/operator"
+    },
+    {
+      "path": "/ru/privacy",
+      "category": "INTERNAL_NO_INDEX",
+      "indexable": false,
+      "locale": "ru",
+      "parent": "/ru/security",
+      "state": "disclosure_review"
     },
     {
       "path": "/ru/operator",

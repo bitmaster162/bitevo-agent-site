@@ -46,7 +46,7 @@ function createConfiguredNotifier(env: Record<string, string | undefined> | unde
   if (!parsed.ok) return null;
   return createTelegramScopeHandoffNotifier({
     config:parsed.config,
-    schedule:promise => waitUntil(promise)
+    schedule:(promise: Promise<unknown>) => waitUntil(promise)
   });
 }
 
