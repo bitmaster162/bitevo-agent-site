@@ -318,15 +318,15 @@ test('scope_generated only after successful fresh local brief; no form content t
 });
 
 
-const REVIEWED_ROWS = [{"path":"/","locale":"en","events":["triage_click"]},{"path":"/start","locale":"en","events":["pilot_click"]},{"path":"/pricing","locale":"en","events":["triage_click","mailto_click","pilot_click"]},{"path":"/agent-authority-audit","locale":"en","events":["mailto_click"]},{"path":"/entry-audit","locale":"en","events":["triage_click","mailto_click"]},{"path":"/control-validation","locale":"en","events":["mailto_click"]},{"path":"/build/exception-workflow-diagnostic","locale":"en","events":["mailto_click"]},{"path":"/build/hr-workflow-diagnostic","locale":"en","events":["mailto_click"]},{"path":"/build/workflow-value-example","locale":"en","events":["mailto_click"]},{"path":"/phuket-ai-workflow","locale":"en","events":["mailto_click","pilot_click"]},{"path":"/mapper","locale":"en","events":["mailto_click"]},{"path":"/diagnostic","locale":"en","events":["mailto_click"]},{"path":"/audit-intake","locale":"en","events":["mailto_click","scope_generated"]},{"path":"/agent-incidents","locale":"en","events":["mailto_click"]},{"path":"/ru","locale":"ru","events":["triage_click"]},{"path":"/ru/pricing","locale":"ru","events":["mailto_click"]},{"path":"/ru/agent-authority-audit","locale":"ru","events":["mailto_click"]},{"path":"/ru/mapper","locale":"ru","events":["mailto_click"]},{"path":"/ru/diagnostic","locale":"ru","events":["mailto_click"]},{"path":"/ru/audit-intake","locale":"ru","events":["mailto_click","scope_generated"]},{"path":"/ru/universe","locale":"ru","events":["pilot_click"]},{"path":"/ru/entry-audit","locale":"ru","events":["mailto_click"]},{"path":"/ru/control-validation","locale":"ru","events":["mailto_click"]},{"path":"/ru/build/exception-workflow-diagnostic","locale":"ru","events":["mailto_click"]}];
+const REVIEWED_ROWS = [{"path":"/","locale":"en","events":["triage_click"]},{"path":"/start","locale":"en","events":["pilot_click"]},{"path":"/pricing","locale":"en","events":["triage_click","mailto_click","pilot_click"]},{"path":"/agent-authority-audit","locale":"en","events":["triage_click","mailto_click"]},{"path":"/entry-audit","locale":"en","events":["triage_click","mailto_click"]},{"path":"/control-validation","locale":"en","events":["mailto_click"]},{"path":"/build/exception-workflow-diagnostic","locale":"en","events":["mailto_click"]},{"path":"/build/hr-workflow-diagnostic","locale":"en","events":["mailto_click"]},{"path":"/build/workflow-value-example","locale":"en","events":["mailto_click"]},{"path":"/phuket-ai-workflow","locale":"en","events":["mailto_click","pilot_click"]},{"path":"/mapper","locale":"en","events":["mailto_click"]},{"path":"/diagnostic","locale":"en","events":["mailto_click"]},{"path":"/audit-intake","locale":"en","events":["mailto_click","scope_generated"]},{"path":"/agent-incidents","locale":"en","events":["mailto_click"]},{"path":"/ru","locale":"ru","events":["triage_click"]},{"path":"/ru/pricing","locale":"ru","events":["mailto_click"]},{"path":"/ru/agent-authority-audit","locale":"ru","events":["mailto_click"]},{"path":"/ru/mapper","locale":"ru","events":["mailto_click"]},{"path":"/ru/diagnostic","locale":"ru","events":["mailto_click"]},{"path":"/ru/audit-intake","locale":"ru","events":["mailto_click","scope_generated"]},{"path":"/ru/universe","locale":"ru","events":["pilot_click"]},{"path":"/ru/entry-audit","locale":"ru","events":["mailto_click"]},{"path":"/ru/control-validation","locale":"ru","events":["mailto_click"]},{"path":"/ru/build/exception-workflow-diagnostic","locale":"ru","events":["mailto_click"]}];
 
-test('R44 exact 24-page coverage, 30 page-event pairs, OFF and registry parity', () => {
+test('R49 exact 24-page coverage, 31 page-event pairs, OFF and registry parity', () => {
   assert.equal(coverage.schema, 'bitevo.event-coverage/v1');
   assert.equal(coverage.defaultMode, 'disabled');
   assert.deepEqual(coverage.routes, REVIEWED_ROWS);
   assert.equal(coverage.routes.length, 24);
   assert.equal(new Set(coverage.routes.map(row => row.path)).size, 24);
-  assert.equal(coverage.routes.reduce((n, row) => n + row.events.length, 0), 30);
+  assert.equal(coverage.routes.reduce((n, row) => n + row.events.length, 0), 31);
   for (const row of coverage.routes) {
     const known = registry.routes.find(item => item.path === row.path);
     assert.ok(known?.indexable); assert.equal(known.locale, row.locale);
@@ -740,4 +740,43 @@ test('R49 unreviewed default mode rejects even reviewed event pairs', async () =
     coverage.defaultMode = originalMode;
   }
   assert.equal(coverage.defaultMode, 'disabled');
+});
+
+test('R49 agent audit triage CTA is real but remains OFF on production source', async () => {
+  const page = await readFile(new URL('../src/pages/agent-authority-audit.astro', import.meta.url), 'utf8');
+  assert.match(page, /data-triage-click="true" data-triage-source="agent-authority-audit"/);
+  assert.match(page, /Book a free triage/);
+  assert.match(page, /free-20-minute-triage/);
+  assert.match(page, /src="\/triage-click.js"/);
+  assert.equal(coverage.defaultMode, 'disabled');
+  const row = coverage.routes.find(x => x.path === '/agent-authority-audit');
+  assert.deepEqual(row?.events, ['triage_click', 'mailto_click']);
+  const state = await mockBrowser(false, '/agent-authority-audit');
+  assert.equal(state.globalHandlers.size, 0);
+  assert.equal(state.documentHandlers.size, 0);
+  assert.equal(state.messages.length, 0);
+});
+
+test('R49 audit triage event allowlisted with negatives', async () => {
+  let calls = 0;
+  const accepted = await handleBitEvoPublicEvent(eventRequest({
+    event: 'triage_click', page: '/agent-authority-audit', locale: 'en'
+  }), ingressEnv, {
+    ...hooks, send: async () => {
+      calls++;
+      return Response.json({ ok: true, counted: true });
+    }
+  });
+  assert.equal(accepted.status, 200);
+  assert.equal(calls, 1);
+  for (const invalid of [
+    { event: 'triage_click', page: '/agent-authority-audit', locale: 'ru' },
+    { event: 'scope_generated', page: '/agent-authority-audit', locale: 'en' },
+    { event: 'triage_click', page: '/ru/agent-authority-audit', locale: 'ru' }
+  ]) {
+    const rejected = await handleBitEvoPublicEvent(eventRequest(invalid), ingressEnv, {
+      ...hooks, send: async () => { throw Error('unexpected provider IO'); }
+    });
+    assert.equal(rejected.status, 400, JSON.stringify(invalid));
+  }
 });

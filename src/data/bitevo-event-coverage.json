@@ -30,6 +30,7 @@
       "path": "/agent-authority-audit",
       "locale": "en",
       "events": [
+        "triage_click",
         "mailto_click"
       ]
     },
