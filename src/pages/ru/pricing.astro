@@ -37,7 +37,11 @@ const offerCatalog = {
     { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Entry Audit', url: 'https://bitevo.work/ru/entry-audit' } },
     { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Security Control Validation', url: 'https://bitevo.work/ru/control-validation' } },
     { '@type': 'Offer', price: '3000', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'BUILD Workflow Exception Diagnostic', url: 'https://bitevo.work/ru/build/exception-workflow-diagnostic' } },
-    { '@type': 'Offer', price: '4900', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/ru/agent-authority-audit' } }
+    { '@type': 'Offer', price: '4900', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/ru/agent-authority-audit' } },
+    { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Company Twin: бесплатное знакомство 30 минут, заявка не бронирует слот', itemOffered: { '@type': 'Service', name: 'Company Twin — знакомство 30 минут', url: 'https://bitevo.work/ru/company-twin' } },
+    { '@type': 'Offer', price: '3000', priceCurrency: 'USD', description: 'Team Twin: фиксированный пилот 3 недели, одна команда, 1–2 источника, 3 месяца истории', itemOffered: { '@type': 'Service', name: 'Team Twin — пилот 3 недели', url: 'https://bitevo.work/ru/company-twin' } },
+    { '@type': 'Offer', price: '9000', priceCurrency: 'USD', description: 'Company Twin: 12 месяцев, от USD 9,000, вся компания, до пяти источников и год истории', itemOffered: { '@type': 'Service', name: 'Company Twin — 12 месяцев, от USD 9,000', url: 'https://bitevo.work/ru/company-twin' } },
+    { '@type': 'Offer', price: '500', priceCurrency: 'USD', description: 'Поддержка Company Twin от USD 500 в месяц, отдельный согласованный объём', itemOffered: { '@type': 'Service', name: 'Поддержка Company Twin — от USD 500 в месяц', url: 'https://bitevo.work/ru/company-twin' } }
   ]
 };
 ---
@@ -54,6 +58,21 @@ const offerCatalog = {
 
   <section class="section section-rule"><div class="narrow"><div class="eyebrow">Ручной business handoff</div><h2 class="section-title">Готовы обсудить bounded scope?</h2><p class="lede">Диагностика и mapper работают в браузере и ничего не отправляют. Форма scope отправляет только заполненные поля и только после согласия; заявки хранятся 30 дней, затем удаляются.</p><div class="actions"><a class="button" data-scope-handoff href="mailto:robert@bitevo.work?subject=BitEvo%20scope%20review">Связаться с Робертом →</a></div></div></section>
 
+  <section class="section section-rule" data-company-twin-offers>
+    <div class="container">
+      <div class="eyebrow">Company Twin · пилот для первых партнёров</div>
+      <h2 class="section-title">Память компании для людей и AI-агентов.</h2>
+      <p class="lede">Директор → сотрудники и команды → память компании → агенты. Агенты только читают и предлагают; человек решает. Демо — на выдуманной компании, реальные данные — только с письменного согласия, только для чтения.</p>
+      <div class="tier-grid">
+        <article class="panel"><strong>Знакомство бесплатно · 30 минут</strong><p>Обсудить пилот и границы доступа.</p></article>
+        <article class="panel"><strong>Team Twin · $3,000 фикс · 3 недели</strong><p>Одна команда, 1–2 источника, 3 месяца истории.</p></article>
+        <article class="panel"><strong>Company Twin · 12 месяцев · от $9,000</strong><p>Вся компания, до 5 источников, год истории. Поддержка от $500 в месяц.</p></article>
+      </div>
+      <div class="actions"><a class="button button-primary" href="/ru/company-twin">Открыть Company Twin</a><a class="button" href="/ru/audit-intake">Заявка на бесплатные 30 минут</a></div>
+      <p class="lede">Заявка не бронирует встречу автоматически. Без придуманных кейсов, показателей эффекта и гарантий.</p>
+    </div>
+  </section>
+
   <ScopeHandoffShort locale="ru" offer="pricing" />
 
   <section class="section section-rule"><div class="narrow"><div class="eyebrow">Primary delivery package</div><h2 class="section-title">$4,900 — это не четыре внутренних артефакта, а полный пакет из восьми deliverable classes.</h2><p class="lede">Executive report; authority/effect map; test inventory + scenario results; reproducible evidence pack; finding cards; repair backlog; one retest; evidence manifest/hashes where applicable.</p><div class="actions"><a class="button button-primary" href="/ru/agent-authority-audit">Метод Primary Audit →</a><a class="button" href="/mapper">Authority Mapper (EN)</a></div></div></section>
@@ -61,4 +80,5 @@ const offerCatalog = {
 
 <style>
   .pricing-hero{padding-top:clamp(68px,9vw,118px)}.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(38px,7vw,96px);align-items:end}.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tier{padding:26px;min-height:590px;display:flex;flex-direction:column}.tier.featured{border-color:rgba(127,208,177,.34);box-shadow:var(--glow-green)}.top{display:flex;justify-content:space-between;color:var(--muted);font:500 .58rem var(--mono)}.top span{color:var(--green)}.tier h2{margin:58px 0 4px;font-size:1.25rem}.price{font-size:2.25rem;font-weight:760;letter-spacing:-.04em}.tier p{color:var(--muted)}.groups{margin:18px 0 24px;border-top:1px solid var(--line)}.groups>div{padding:15px 0;border-bottom:1px solid var(--line)}.groups strong{font-size:.75rem}.groups ul{margin:8px 0 0;padding-left:18px;color:var(--ink-soft);font-size:.76rem}.groups .muted{color:var(--muted)}.tier .button{margin-top:auto}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}@media(max-width:900px){.split,.tier-grid{grid-template-columns:1fr}.tier{min-height:auto}.tier h2{margin-top:32px}}
+
 </style>

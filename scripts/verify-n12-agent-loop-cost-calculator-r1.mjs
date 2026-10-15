@@ -67,14 +67,14 @@ for (const [path,locale,parent] of routes) {
   check(/^\d{4}-\d{2}-\d{2}$/.test(String(current?.lastmod || '')), path + ' currentness date valid');
   check(/^sha256:[0-9a-f]{64}$/.test(String(current?.fingerprint || '')), path + ' currentness fingerprint valid');
 }
-equal(registry.routes.filter(row => row.indexable).length, 131, 'indexable route count N12 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 66, 'EN indexable route count N12 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 65, 'RU indexable route count N12 baseline');
-equal(currentness.routes.length, 131, 'currentness route count N12 baseline');
+equal(registry.routes.filter(row => row.indexable).length, 133, 'indexable route count N12 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 67, 'EN indexable route count N12 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 66, 'RU indexable route count N12 baseline');
+equal(currentness.routes.length, 133, 'currentness route count N12 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-n12-agent-loop-cost-calculator-r1.mjs'), 'N12 verifier wired into verify:core');
 
 console.log(
   'N12_AGENT_LOOP_COST_CALCULATOR_R1_GATE=PASS checks=' + checks +
   ' routes=2 inputs=5 formulas=5 local_only=1 network_requests=0 storage_writes=0 llm_calls=0' +
-  ' hard_limits=OWNER_BUDGET_DERIVED retry_cap=OWNER_DEFINED indexable=131 en=66 ru=65'
+  ' hard_limits=OWNER_BUDGET_DERIVED retry_cap=OWNER_DEFINED indexable=133 en=67 ru=66'
 );

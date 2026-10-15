@@ -39,15 +39,15 @@ check(!llms.includes('prepare a local scope brief only; they do not book or subm
 check(short.includes('explicit consent') && short.includes('up to 30 days'), 'shared P27.1 component keeps consent and retention disclosure');
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
 const expected = {
-  "/pricing": { fingerprint: "sha256:e822115101bf60e58aeeca889e1b3c9b506e94e6702816c0820d85863b3ac9f7", lastmod: "2026-10-13" },
-  "/ru/pricing": { fingerprint: "sha256:ce20938fd166d55baafb9f77aaf2fed5d5b4ffea3ffef1a0c0f46469213b2c72", lastmod: "2026-10-13" },
+  "/pricing": { fingerprint: "sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2", lastmod: "2026-10-16" },
+  "/ru/pricing": { fingerprint: "sha256:1cca42fc4d49d429b56530a461804f15157c642a0c71c57c2e23b435ff5663b4", lastmod: "2026-10-16" },
   "/agent-authority-audit": { fingerprint: "sha256:0dbb0456dfaa209a33bd3cf5b22da5135acbbe9a57d249e6d78af654eb7e1e5a", lastmod: "2026-10-13" }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.fingerprint === value.fingerprint && row?.lastmod === value.lastmod, 'currentness exact for ' + path);
 }
-check(currentness.routes.length === 131, 'currentness route count is exact post-C6+N1 baseline');
+check(currentness.routes.length === 133, 'currentness route count is exact post-C6+N1 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-intake-copy-r1.mjs'), 'P28 intake copy verifier is wired into verify:core');
 
 console.log('P28_INTAKE_COPY_R1_GATE=PASS checks=' + checks + ' scope=UP_TO_3_TOOLS_APIS_MCP consent=EXPLICIT retention=UP_TO_30D triage_booking_link=1 scope_form_booking=0 testing_authorization=0 stale_local_only_claims=0 locales=2');

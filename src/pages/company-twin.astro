@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/company-twin.css';
+
+const hierarchy = [
+  ['Director', 'Sets access rights and remains responsible for company decisions.'],
+  ['Employees and teams', 'Provide context and review the history relevant to their roles.'],
+  ['Company memory', 'Organizes dated facts, decisions and the state visible at a given date.'],
+  ['AI agents', 'May read permitted context and propose actions; people review and control the next step.']
+];
+const records = [
+  ['Chronology', 'A dated history of the company and its selected sources.'],
+  ['Decision ledger', 'Who decided what, when, and why — with the available supporting context.'],
+  ['State on a date', 'Reconstruct the company picture for a selected day within the agreed history.'],
+  ['Rights', 'Distinct access for the director, staff and AI agents under human control.']
+];
+---
+<Layout title="Company Twin — Company Memory | BitEvo" description="Company Twin is a proposed read-only company memory pilot: chronology, decision ledger, dated state and human-controlled agent access." alternates={{ en: '/company-twin', ru: '/ru/company-twin' }}>
+  <section class="section twin-hero">
+    <div class="container twin-grid">
+      <div>
+        <div class="eyebrow">Company Twin · pilot for first partners</div>
+        <h1 class="display">Company memory with people in control.</h1>
+        <p class="lede">Company Twin organizes company history for people and AI agents. The director keeps authority; employees and teams contribute context; the company memory preserves the decision trail; agents only read permitted material and make proposals for human review.</p>
+        <div class="twin-actions">
+          <a class="button button-primary" href="/audit-intake">Book a free 30-min call</a>
+          <a class="button" href="/pricing">See approved prices</a>
+        </div>
+        <p class="twin-note">This opens the triage request path. The request does not itself book a time; the 30-minute conversation is agreed separately.</p>
+      </div>
+      <aside class="panel twin-summary">
+        <div class="eyebrow">Human authority boundary</div>
+        <ol>
+          <li>Director</li>
+          <li>Employees and teams</li>
+          <li>Company memory</li>
+          <li>Agents — read and propose only</li>
+        </ol>
+        <p>The agent does not make binding decisions or independently change company records.</p>
+      </aside>
+    </div>
+  </section>
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">What the company can inspect</div>
+      <h2 class="section-title">A timeline, not an invented success story.</h2>
+      <div class="twin-cards">
+        {records.map(([name, detail]) => <article class="panel twin-card"><h3>{name}</h3><p>{detail}</p></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Decision and access hierarchy</div>
+      <h2 class="section-title">People authorize. Agents suggest.</h2>
+      <div class="twin-cards">
+        {hierarchy.map(([name, detail], i) => <article class="panel twin-card"><span class="eyebrow">{String(i + 1).padStart(2, '0')}</span><h3>{name}</h3><p>{detail}</p></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="section section-rule" aria-labelledby="twin-prices">
+    <div class="container">
+      <div class="eyebrow">Approved scope and prices</div>
+      <h2 class="section-title" id="twin-prices">Start with the agreed boundary.</h2>
+      <div class="twin-offers">
+        <article class="panel twin-offer">
+          <span class="eyebrow">Introduction</span>
+          <h3>Free 30-minute call</h3>
+          <p class="twin-price">Free</p>
+          <p>Discuss the intended memory boundary, access and whether the proposed pilot fits.</p>
+        </article>
+        <article class="panel twin-offer">
+          <span class="eyebrow">Team Twin · pilot</span>
+          <h3>One team</h3>
+          <p class="twin-price">$3,000 <small>fixed · 3 weeks</small></p>
+          <p>One team, 1–2 sources and 3 months of history.</p>
+        </article>
+        <article class="panel twin-offer">
+          <span class="eyebrow">Company Twin · 12 months</span>
+          <h3>Company-wide scope</h3>
+          <p class="twin-price">From $9,000</p>
+          <p>Entire company, up to 5 sources and 12 months of history.</p>
+          <p>Support from $500 per month, separately scoped.</p>
+        </article>
+      </div>
+      <div class="twin-actions"><a class="button button-primary" href="/audit-intake">Book a free 30-min call</a><a class="button" href="/pricing">Full pricing</a></div>
+    </div>
+  </section>
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Evidence and data boundary</div>
+      <h2 class="section-title">A pilot proposal, not a production deployment.</h2>
+      <p class="lede">The demonstration uses a fictional company, not customer data or a claimed customer case. Actual company data is considered only with written consent and for read-only access. Sources, rights, retention and scope must be agreed with the owner before any real-data use.</p>
+      <p>No customer logos, effect metrics, guaranteed results or autonomous agent write authority are claimed here.</p>
+    </div>
+  </section>
+</Layout>
