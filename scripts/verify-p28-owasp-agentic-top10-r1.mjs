@@ -67,7 +67,7 @@ equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length
 equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 65, 'RU indexable route count remains exact');
 
 const expectedCurrentness = {
-  '/agent-authority-audit': { fingerprint:'sha256:0dbb0456dfaa209a33bd3cf5b22da5135acbbe9a57d249e6d78af654eb7e1e5a', lastmod:'2026-10-13' },
+  '/agent-authority-audit': { fingerprint:'sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9', lastmod:'2026-10-16' },
   '/owasp-agentic-top-10': { fingerprint:'sha256:077f2c908297a6803d6229a8dccf6275bd1c653762f59fdc34834baf8ea06186', lastmod:'2026-10-13' },
   '/pricing': { fingerprint:'sha256:e822115101bf60e58aeeca889e1b3c9b506e94e6702816c0820d85863b3ac9f7', lastmod:'2026-10-13' },
   '/ru/owasp-agentic-top-10': { fingerprint:'sha256:564ba60d42a409f90f5bf0ac3f329b778bb80106c652da74c008ef26fc0c0d04', lastmod:'2026-10-13' }
