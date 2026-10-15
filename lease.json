@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "1b290d68-1e42-4e82-ad2e-d0fd4566356a",
   "nonce": "a8f82fbe-bdfe-43f3-b0cc-44f9d8983b43",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "622d4580c8953688e26cb4ab9fc67825087b8428",
@@ -11,10 +11,10 @@
   "session": "R48-PR234-RELEASE-20261015-RETRY-R2",
   "worktree": "c:/temp/bitevo_r48_cf_bindings_622d458_local_r1",
   "acquiredAt": "2026-10-15T15:42:37.595Z",
-  "updatedAt": "2026-10-15T15:42:37.595Z",
+  "updatedAt": "2026-10-15T15:45:14.599Z",
   "expiresAt": "2026-10-15T17:42:21.183Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "8a2106fac3c539cfc9a77d1241464dec0fdb6654"
+  "sealedHead": "1976563ff817a786e87b0638eef2f8a0d5efa020",
+  "sealedTree": "6fe6e43e125221c4d9bb608d471d90611e68c263",
+  "featureRef": "refs/heads/agent/site-r48-cf-bindings-622d458-local-r1",
+  "predecessor": "ee1701012621807fc90fa52bc217fb9ffdc105a6"
 }
