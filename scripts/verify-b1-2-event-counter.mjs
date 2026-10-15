@@ -93,9 +93,38 @@ function sourceBoundR46WorkerFirst(candidate, sourceBaseline) {
     || createHash('sha256').update(original, 'utf8').digest('hex') !== r46WranglerBaselineSha256) return false;
   return normalizeEol(candidate) === original.replace(r46LegacyRunFirst, r46ExactRunFirst);
 }
+// R48: preserve R45/R46 source pin while allowing only the exact reviewed bindings.
+const r48D1 = [{ binding: 'BITEVO_EVENT_DB', database_name: 'bitevo-events-b12',
+  database_id: 'b533a76e-ddd0-406b-9449-94e878bc2c50' }];
+const r48Limits = [{ name: 'BITEVO_EVENT_RATE_LIMITER', namespace_id: '1001',
+  simple: { limit: 10, period: 60 } }];
+const r48Vars = { BITEVO_EVENT_COUNTER_RECEIVER_ENABLED: 'true' };
+const r48TopKeys = '$schema,name,compatibility_date,main,workers_dev,assets,d1_databases,ratelimits,vars';
+const r48Canonical = value => JSON.stringify(value, null, 2) + '\n';
+function sourceBoundR48Config(candidate, baseline) {
+  let conf, prior;
+  try {
+    conf = JSON.parse(normalizeEol(candidate));
+    prior = JSON.parse(normalizeEol(baseline));
+  } catch { return false; }
+  if (normalizeEol(candidate) !== r48Canonical(conf)) return false;
+  if (Object.keys(conf).join(',') !== r48TopKeys) return false;
+  if (JSON.stringify(conf.d1_databases) !== JSON.stringify(r48D1)
+    || JSON.stringify(conf.ratelimits) !== JSON.stringify(r48Limits)
+    || JSON.stringify(conf.vars) !== JSON.stringify(r48Vars)) return false;
+  const withoutR48 = value => {
+    const stripped = { ...value };
+    delete stripped.d1_databases;
+    delete stripped.ratelimits;
+    delete stripped.vars;
+    return r48Canonical(stripped);
+  };
+  return sourceBoundR46WorkerFirst(withoutR48(conf), withoutR48(prior));
+}
+
 const r46WranglerBase = gitBase('wrangler.jsonc');
-expect(sourceBoundR46WorkerFirst(wrangler, r46WranglerBase), 'R46 Wrangler exact two-route change only');
-expect(sourceBoundR46WorkerFirst(wrangler, wrangler), 'R46 post-commit pinned Wrangler baseline accepted');
+expect(sourceBoundR48Config(wrangler, r46WranglerBase), 'R46 Wrangler exact two-route change only');
+expect(sourceBoundR48Config(wrangler, wrangler), 'R46 post-commit pinned Wrangler baseline accepted');
 const r46WranglerLF = normalizeEol(wrangler);
 for (const [label, altered] of [
   ['missing event route', r46WranglerLF.replace('      "/b1-2/event",\n', '')],
@@ -107,9 +136,39 @@ for (const [label, altered] of [
   ['unrelated source change', r46WranglerLF + '\n// unexpected']
 ]) {
   expect(altered !== r46WranglerLF, 'R46 negative mutation anchor exists: ' + label);
-  expect(!sourceBoundR46WorkerFirst(altered, r46WranglerBase), 'R46 rejects unrelated Wrangler change: ' + label);
-  expect(!sourceBoundR46WorkerFirst(altered, altered), 'R46 rejects changed post-commit baseline: ' + label);
+  expect(!sourceBoundR48Config(altered, r46WranglerBase), 'R46 rejects unrelated Wrangler change: ' + label);
+  expect(!sourceBoundR48Config(altered, altered), 'R46 rejects changed post-commit baseline: ' + label);
 }
+const r48Reviewed = JSON.parse(r46WranglerLF);
+for (const [label, mutate] of [
+  ['missing D1', x => { delete x.d1_databases; }],
+  ['wrong D1 binding', x => { x.d1_databases[0].binding = 'OTHER_DB'; }],
+  ['wrong D1 name', x => { x.d1_databases[0].database_name = 'other-db'; }],
+  ['wrong D1 ID', x => { x.d1_databases[0].database_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'; }],
+  ['second D1', x => { x.d1_databases.push({ ...x.d1_databases[0] }); }],
+  ['missing limiter', x => { delete x.ratelimits; }],
+  ['wrong limiter name', x => { x.ratelimits[0].name = 'WRONG'; }],
+  ['namespace collision', x => { x.ratelimits[0].namespace_id = '1535251417'; }],
+  ['wrong limit', x => { x.ratelimits[0].simple.limit = 11; }],
+  ['wrong period', x => { x.ratelimits[0].simple.period = 10; }],
+  ['second limiter', x => { x.ratelimits.push({ ...x.ratelimits[0] }); }],
+  ['missing vars', x => { delete x.vars; }],
+  ['receiver OFF', x => { x.vars.BITEVO_EVENT_COUNTER_RECEIVER_ENABLED = 'false'; }],
+  ['report ON', x => { x.vars.BITEVO_EVENT_COUNTER_REPORT_ENABLED = 'true'; }],
+  ['secret inserted', x => { x.vars.BITEVO_EVENT_COUNTER_SIGNING_SECRET = 'not-allowed'; }],
+  ['unexpected key', x => { x.extra_feature = true; }]
+]) {
+  const altered = structuredClone(r48Reviewed);
+  mutate(altered);
+  const changed = r48Canonical(altered);
+  expect(changed !== r46WranglerLF, 'R48 mutation anchor: ' + label);
+  expect(!sourceBoundR48Config(changed, r46WranglerBase), 'R48 rejects: ' + label);
+  expect(!sourceBoundR48Config(changed, changed), 'R48 post-commit rejects: ' + label);
+}
+const r48Duplicate = r46WranglerLF.replace('  "vars": {', '  "vars": {},\\n  "vars": {');
+expect(r48Duplicate !== r46WranglerLF && !sourceBoundR48Config(r48Duplicate, r46WranglerBase),
+  'R48 duplicate-key source must fail closed');
+
 const insertionAnchor = '    <script defer src="/_vercel/insights/script.js"></script>';
 const registryImport = "import routeRegistry from '../data/public-route-registry.json';";
 const coverageImport = "import eventCoverage from '../data/bitevo-event-coverage.json';";
@@ -221,9 +280,11 @@ expect(!sourceBoundWriteReceipt(worker + '\n' + receiptStrictGuard, receiptWorke
 expect(normalizeEol(sql) === normalizeEol(gitBase('schema/bitevo_public_event_daily.sql')),
   'schema/bitevo_public_event_daily.sql: receiver/storage not changed');
 
-expect(!wrangler.includes('BITEVO_EVENT_DB'), 'no provider D1 binding without approval');
+expect(sourceBoundR48Config(wrangler, r46WranglerBase), 'R48 exact bounded binding only');
+expect(!wrangler.includes('BITEVO_EVENT_COUNTER_SIGNING_SECRET'), 'R48 secret not written in source');
+expect(!wrangler.includes('BITEVO_EVENT_COUNTER_REPORT_ENABLED'), 'R48 report remains OFF');
 expect(!vercel.includes('BITEVO_EVENT_COUNTER_ENABLED'), 'no Vercel provider activation without approval');
 
 console.log('B1_2_LOCAL_STATIC_GATE_PASS checks=' + checks
   + ' events=4 D1_columns=5 personal_columns=0'
-  + ' client_wired=PASSIVE_24_REVIEWED_ROUTES events_enabled=NO provider_activation=NO production_writes=0');
+  + ' client_wired=PASSIVE_24_REVIEWED_ROUTES events_enabled=NO receiver_flag=TRUE secret_provisioning=NOT_IN_SOURCE production_writes=0');
