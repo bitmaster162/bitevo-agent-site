@@ -679,3 +679,65 @@ test('R46 legacy guide redirects remain distinct from new API routing', async ()
     assert.equal(new URL(response.headers.get('location')).pathname, target);
   }
 });
+
+
+// R49 Draft: prove future mode admission without activating the live browser client.
+test('R49 synthetic enabled-mode coverage admits reviewed pairs without production IO', async () => {
+  const originalMode = coverage.defaultMode;
+  let forwarded = 0;
+  try {
+    coverage.defaultMode = 'enabled';
+    const { handleBitEvoPublicEvent: futureIngress } =
+      await import('../api/event.ts?r49-future-enabled-mode-v1');
+    const safeHooks = {
+      ...hooks,
+      send: async () => {
+        forwarded++;
+        return Response.json({ ok: true, counted: true });
+      }
+    };
+    const valid = await futureIngress(eventRequest({
+      event: 'triage_click', page: '/pricing', locale: 'en'
+    }), ingressEnv, safeHooks);
+    assert.equal(valid.status, 200, 'future mode must retain the existing reviewed event');
+    assert.deepEqual(await valid.json(), { ok: true, counted: true });
+
+    for (const invalid of [
+      { event: 'pilot_click', page: '/agent-authority-audit', locale: 'en' },
+      { event: 'triage_click', page: '/ru/pricing', locale: 'ru' },
+      { event: 'mailto_click', page: '/private', locale: 'en' },
+      { event: 'triage_click', page: '/pricing', locale: 'ru' }
+    ]) {
+      const rejected = await futureIngress(eventRequest(invalid), ingressEnv, safeHooks);
+      assert.equal(rejected.status, 400, JSON.stringify(invalid));
+      assert.deepEqual(await rejected.json(), { ok: false, error: 'INVALID_EVENT' });
+    }
+    assert.equal(forwarded, 1, 'only reviewed event may reach the synthetic receiver');
+  } finally {
+    coverage.defaultMode = originalMode;
+  }
+  assert.equal(coverage.defaultMode, 'disabled', 'shipped mode remains OFF');
+});
+
+test('R49 unreviewed default mode rejects even reviewed event pairs', async () => {
+  const originalMode = coverage.defaultMode;
+  let forwarded = 0;
+  try {
+    coverage.defaultMode = 'unreviewed-mode';
+    const { handleBitEvoPublicEvent: invalidModeIngress } =
+      await import('../api/event.ts?r49-invalid-mode-v1');
+    const denied = await invalidModeIngress(eventRequest(), ingressEnv, {
+      ...hooks,
+      send: async () => {
+        forwarded++;
+        return Response.json({ ok: true, counted: true });
+      }
+    });
+    assert.equal(denied.status, 400);
+    assert.deepEqual(await denied.json(), { ok: false, error: 'INVALID_EVENT' });
+    assert.equal(forwarded, 0, 'invalid mode must not forward events');
+  } finally {
+    coverage.defaultMode = originalMode;
+  }
+  assert.equal(coverage.defaultMode, 'disabled');
+});
