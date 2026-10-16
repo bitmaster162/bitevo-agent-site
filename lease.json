@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "414571cf-1ac3-42c1-b583-6c08b97ec134",
   "nonce": "c193cd33-94a0-4463-a179-d2aba1cf6669",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "22106ec3ab7dfb8c3362e1a78bc57f43849d7a92",
@@ -11,10 +11,10 @@
   "session": "B2-PR236-READY-MERGE-20261016-R1",
   "worktree": "d:/bitevo_b2_company_twin_22106ec_local_r1",
   "acquiredAt": "2026-10-16T01:40:14.463Z",
-  "updatedAt": "2026-10-16T01:40:14.463Z",
+  "updatedAt": "2026-10-16T01:40:39.888Z",
   "expiresAt": "2026-10-16T03:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "fde98c68682f449317e3a345e71ca42cf3b3dcce"
+  "sealedHead": "fea4b6093fb26ebf24e29418a8328e7420125ceb",
+  "sealedTree": "1e2b8cb22a67f6da122a55804ed2f8a9076b44c9",
+  "featureRef": "refs/heads/agent/site-b2-company-twin-22106ec-local-r1",
+  "predecessor": "a80ff2fa6b6f456348ddad463b6c4f928a72803e"
 }
