@@ -41,7 +41,7 @@
       "card_type": "Incident",
       "card_text": "Bitget authority after orchestration compromise — What source-bound evidence shows about detection, effect authority and external confirmation.",
       "title": "Bitget: authority after orchestration compromise",
-      "seo_title": "Bitget incident: authority after orchestration compromise | BitEvo",
+      "seo_title": "Bitget: authority after orchestration compromise | BitEvo",
       "description": "Source-bound Bitget case study on why detecting effects and blocking withdrawal requests do not alone prove revocation of downstream execution authority.",
       "reviewed": "2026-10-07",
       "next_review": "2027-01-07",
@@ -96,7 +96,7 @@
       "card_text": "Перед тем как дать AI-агенту право записи — семь вопросов, на которые нужно ответить доказательствами, прежде чем агент сможет менять записи, деньги или код.",
       "title": "Перед тем как дать AI-агенту право записи: семь проверок",
       "seo_title": "Право записи для AI-агента: семь проверок | BitEvo",
-      "description": "Семь вопросов, на которые нужно ответить доказательствами, прежде чем AI-агент сможет менять записи в CRM, тикеты, платежи, код или данные, — с публичным случаем для каждого.",
+      "description": "Семь проверок перед правом записи AI-агента: полномочия, доказательства, подтверждение эффекта и восстановление.",
       "reviewed": "2026-10-01",
       "next_review": "2027-01-01",
       "related": [

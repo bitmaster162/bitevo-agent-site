@@ -58,8 +58,8 @@ for (const lang of ['en','ru']) {
 }
 
 const ruLegacy = generated.notes.find(note => note.path === '/ru/guides/before-write-access');
-equal(ruLegacy.description, 'Семь вопросов, на которые нужно ответить доказательствами, прежде чем AI-агент сможет менять записи в CRM, тикеты, платежи, код или данные, — с публичным случаем для каждого.', 'RU legacy description exact from attached P30 frontmatter');
-equal(ruLegacy.description.length, 174, 'RU canonical description length remains an explicit P30 source exception');
+equal(ruLegacy.description, 'Семь проверок перед правом записи AI-агента: полномочия, доказательства, подтверждение эффекта и восстановление.', 'RU approved SEO description exact');
+equal(ruLegacy.description.length, 112, 'RU approved SEO description length exact');
 
 const fallback = (vercel.redirects || []).find(item => String(item.source || '').startsWith('/guides/:slug'));
 check(fallback, 'Vercel guide fallback exists');
