@@ -24,7 +24,7 @@ const [registry, coverage, wrangler, vercel, sitemap, currentness, enSource, ruS
   read('src/layouts/Layout.astro')
 ]);
 
-check(registry.schema === 'bitevo.public-route-registry/v1' && registry.routes.length === 143, 'R47A two-route registry extension only');
+check(registry.schema === 'bitevo.public-route-registry/v1' && registry.routes.length === 145, 'R47A noindex pair retained with B2 route pair');
 for (const [path, locale, parent, built, source] of [
   ['/privacy', 'en', '/security', enHtml, enSource],
   ['/ru/privacy', 'ru', '/ru/security', ruHtml, ruSource]
@@ -78,8 +78,8 @@ check(JSON.stringify(wrangler.vars) === JSON.stringify({
 check(Object.keys(wrangler).join(',') === '$schema,name,compatibility_date,main,workers_dev,assets,d1_databases,ratelimits,vars',
   'R48: no unrelated configuration keys');
 check(!JSON.stringify(vercel).includes('BITEVO_EVENT_COUNTER_ENABLED'), 'Vercel activation not configured');
-check(currentness.routes.length === 131, 'original 131 indexed routes preserved');
-check((sitemap.match(/<loc>/g) || []).length === 131, 'sitemap still 131 indexable routes');
+check(currentness.routes.length === 133, 'original 133 indexed routes preserved');
+check((sitemap.match(/<loc>/g) || []).length === 133, 'sitemap still 133 indexable routes');
 
 async function walk(dir) {
   const output = [];
@@ -91,7 +91,7 @@ async function walk(dir) {
   return output;
 }
 const htmlFiles = await walk(dist);
-check(htmlFiles.length === 148, 'R47A should add exactly two HTML pages');
+check(htmlFiles.length === 150, 'R47A should add exactly two HTML pages');
 const standaloneWithoutSharedFooter = new Set([
   'concierge/index.html',
   'site-agent-copilot-lab/index.html',
@@ -115,8 +115,8 @@ for (const file of htmlFiles) {
   }
   check(!source.includes('data-bitevo-events="enabled"'), file + ': event client remains OFF');
 }
-check(standalone === 4 && footerEn + footerRu === 144,
-  'exact four reviewed standalone exceptions and 144 shared footers');
+check(standalone === 4 && footerEn + footerRu === 146,
+  'exact four reviewed standalone exceptions and 146 shared footers');
 
 // R47A-F3: distinguish B1.2 OFF from separate analytics and describe processing
 // before aggregation. These checks add to the prior 487 checks, not replace them.
@@ -182,5 +182,5 @@ console.log('R47A_F3_CONTENT_GATE=PASS locales=2 added_checks=' + (checks - f3Ch
   + ' negative_cases=' + f3NegativeCases + ' runtime_changes=0');
 
 console.log('R47A_PRIVACY_LOCAL_GATE=PASS checks=' + checks + ' html=' + htmlFiles.length
-  + ' noindex=2 sitemap=131 drafts=EN_RU_APPROVAL_PENDING telemetry=OFF'
+  + ' noindex=2 sitemap=133 drafts=EN_RU_APPROVAL_PENDING telemetry=OFF'
   + ' footer_en=' + footerEn + ' footer_ru=' + footerRu + ' provider_writes=0');

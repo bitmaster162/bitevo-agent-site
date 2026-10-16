@@ -14,13 +14,18 @@
     },
     {
       "path": "/pricing",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:e822115101bf60e58aeeca889e1b3c9b506e94e6702816c0820d85863b3ac9f7"
+      "lastmod": "2026-10-16",
+      "fingerprint": "sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2"
     },
     {
       "path": "/consulting",
       "lastmod": "2026-10-13",
       "fingerprint": "sha256:f4c7742a5ca2ed8f253b6efe81dd978a190a5dec153aac8c30c8f65dabdbc6ca"
+    },
+    {
+      "path": "/company-twin",
+      "lastmod": "2026-10-16",
+      "fingerprint": "sha256:3d1d5dd99e3d2e3de8fe0b11a18a10a10ebd4b9af2e7870f7731792613c1eb9c"
     },
     {
       "path": "/agent-authority-audit",
@@ -324,13 +329,18 @@
     },
     {
       "path": "/ru/pricing",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:ce20938fd166d55baafb9f77aaf2fed5d5b4ffea3ffef1a0c0f46469213b2c72"
+      "lastmod": "2026-10-16",
+      "fingerprint": "sha256:1cca42fc4d49d429b56530a461804f15157c642a0c71c57c2e23b435ff5663b4"
     },
     {
       "path": "/ru/consulting",
       "lastmod": "2026-10-13",
       "fingerprint": "sha256:fd6352c3df4b8ca94f0b0bdbfec3edaaf3bcc436d634ecb9d9a61c56c4c1ecd6"
+    },
+    {
+      "path": "/ru/company-twin",
+      "lastmod": "2026-10-16",
+      "fingerprint": "sha256:bc0fd1a81c8a72591fc27d636db7219c74c18abe8298859ed4205e08650aee78"
     },
     {
       "path": "/ru/agent-authority-audit",
@@ -429,8 +439,8 @@
     },
     {
       "path": "/ru/universe",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:015b99f13425ca7ce21d789bc474bfb17ea98f4630c0c1d81037ab12427ceae1"
+      "lastmod": "2026-10-16",
+      "fingerprint": "sha256:199ba4a8839f95768c54e54870faa299f8c06d0b89ee66cc45958bea2139e198"
     },
     {
       "path": "/ru/vision",

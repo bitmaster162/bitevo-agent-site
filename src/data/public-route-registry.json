@@ -30,6 +30,13 @@
       "parent": "/start"
     },
     {
+      "path": "/company-twin",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/consulting"
+    },
+    {
       "path": "/agent-authority-audit",
       "category": "FLAGSHIP",
       "indexable": true,
@@ -489,6 +496,13 @@
       "indexable": true,
       "locale": "ru",
       "parent": "/ru"
+    },
+    {
+      "path": "/ru/company-twin",
+      "category": "SPECIALIST",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/consulting"
     },
     {
       "path": "/ru/agent-authority-audit",
