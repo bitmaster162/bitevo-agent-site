@@ -44,7 +44,7 @@ for (const url of sourceUrls) {
 
 const h1 = 'Agent incidents: what action-capable AI did, and what evidence would have caught it';
 const lead = 'Public, sourced cases where an AI agent or assistant with the power to act changed something it should not have — or was shown it could. For each: what happened, which of our seven gates it touches, the OWASP Agentic risk, and the record that would have prevented or proven it.';
-const title = 'AI agent incidents library — authority, evidence, recovery | BitEvo';
+const title = 'AI Agent Incidents: Authority &amp; Recovery | BitEvo';
 const description = '12 sourced cases of AI agents deleting data, leaking repos or acting without approval, mapped to OWASP Agentic Top 10 and seven evidence gates.';
 
 check(pageSource.includes(h1) && pageSource.includes(lead), 'N2 approved H1 and lead preserved in source');
@@ -107,10 +107,10 @@ equal(ruPageExists, false, 'RU page is not created without grounded translation'
 
 const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
-equal(row?.lastmod, '2026-10-13', 'N2 sitemap currentness date exact');
+equal(row?.lastmod, '2026-10-16', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
 equal(currentness.routes.length, 133, 'currentness route count is N2 baseline');
-check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-13</lastmod>'), 'sitemap includes N2 exact route/date');
+check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-16</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');
 const contextStart = llms.indexOf('### Context', researchStart);
