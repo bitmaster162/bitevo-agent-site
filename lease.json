@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
   "kind": "bitevo-site-mutation-lease",
-  "leaseId": "924e698f-6a0b-4ecb-a6d2-7db68684ff48",
-  "nonce": "8612b2ac-2fc7-416c-99ff-e3f26331860a",
+  "leaseId": "414571cf-1ac3-42c1-b583-6c08b97ec134",
+  "nonce": "c193cd33-94a0-4463-a179-d2aba1cf6669",
   "state": "ACTIVE",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "22106ec3ab7dfb8c3362e1a78bc57f43849d7a92",
   "owner": "chatgpt-bitevo-site",
-  "session": "SEO-TITLES-20261016-R1",
-  "worktree": "d:/bitevo_seo_22106ec_local_r1",
-  "acquiredAt": "2026-10-15T22:48:49.927Z",
-  "updatedAt": "2026-10-15T22:48:49.927Z",
-  "expiresAt": "2026-10-16T00:48:47.063Z",
+  "session": "B2-PR236-READY-MERGE-20261016-R1",
+  "worktree": "d:/bitevo_b2_company_twin_22106ec_local_r1",
+  "acquiredAt": "2026-10-16T01:40:14.463Z",
+  "updatedAt": "2026-10-16T01:40:14.463Z",
+  "expiresAt": "2026-10-16T03:00:00.000Z",
   "sealedHead": null,
   "sealedTree": null,
   "featureRef": null,
-  "predecessor": "d4b44174dd7c3c06c22dd967de749067b835fd63"
+  "predecessor": "fde98c68682f449317e3a345e71ca42cf3b3dcce"
 }
