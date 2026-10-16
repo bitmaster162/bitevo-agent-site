@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "a66fc674-29d8-49c0-9a5a-ae3d6c007ecf",
   "nonce": "f499f3dd-999f-4b8a-876d-0c9ad7b0cae5",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d2bad88c8e55bd42e0c115a6ac8d2a5164263650",
@@ -11,10 +11,10 @@
   "session": "HOTFIX-RU-UNIVERSE-AISKILLAB-20261016-R1",
   "worktree": "d:/bitevo_hotfix_ru_universe_d2bad88_local_r1",
   "acquiredAt": "2026-10-16T14:05:32.454Z",
-  "updatedAt": "2026-10-16T14:05:32.454Z",
+  "updatedAt": "2026-10-16T14:07:42.560Z",
   "expiresAt": "2026-10-16T17:00:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "d1eb5918528639944b421d6f99157002edc50e44"
+  "sealedHead": "3e01b13b730287e9f99e1d3571495d80a8c6f79e",
+  "sealedTree": "0a58e500cb7b7b87e31f1aa0daf092d94a836e83",
+  "featureRef": "refs/heads/agent/site-ru-universe-aiskillab-link-d2bad88-local-r1",
+  "predecessor": "c2302e803de6275550a3351ce5153185c7f035dd"
 }
