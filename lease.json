@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "0eed6cc1-0aac-4217-bffc-29a901dab370",
   "nonce": "d790d9b5-e941-4231-9274-99e588cb1eae",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "2dbaed7c1b87bae0793d83fcbf7a58fe85567ddf",
@@ -11,10 +11,10 @@
   "session": "VERIFIER-MANIFEST-R2-GEMINI-APPROVED-DRAFT-20261019-R1",
   "worktree": "d:/bitevo_verifier_release_manifest_425189c_local_r1",
   "acquiredAt": "2026-10-19T16:20:58.225Z",
-  "updatedAt": "2026-10-19T16:20:58.225Z",
+  "updatedAt": "2026-10-19T16:24:41.092Z",
   "expiresAt": "2026-10-19T17:50:22.797Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "44b4ecd98abfc875c16d5b9305d504ce5798a144"
+  "sealedHead": "e5d7aaf3595650b2dbbb22631ff90dea9ad280f1",
+  "sealedTree": "e25f6a030da36c5562ce4d331f473c18457dbe09",
+  "featureRef": "refs/heads/agent/verifier-release-manifest-425189c-local-r1",
+  "predecessor": "2c8e8982e115f076b6459a086e539cbfd4bca7e2"
 }
