@@ -164,8 +164,9 @@ function dualNav(source, declaration) {
 }
 
 function localeBarUniverseHref(source, className) {
-  const open = new RegExp('<div\\b[^>]*\\bclass="[^"]*\\b' + className + '\\b[^"]*"[^>]*>', 'g');
-  const bars = [...source.matchAll(open)];
+  const open = /<div\b[^>]*\bclass="([^"]*)"[^>]*>/g;
+  const bars = [...source.matchAll(open)].filter(match =>
+    match[1].split(/\s+/).includes(className));
   if (bars.length === 0) return 'ABSENT';
   if (bars.length !== 1) return 'DUPLICATE';
   const tail = source.slice(bars[0].index + bars[0][0].length);
@@ -206,7 +207,7 @@ export function inspectUniverseNavigation(layoutSource, ruLayoutSource, enPageSo
 
   // Compare only actual locale-bar surfaces. Generic body/footer links never count as locale-bar parity.
   const ruValue = localeBarUniverseHref(ruLayoutSource, 'ru-locale-bar');
-  const enValue = localeBarUniverseHref(layoutSource, 'en-locale-bar');
+  const enValue = localeBarUniverseHref(enPageSource, 'en-locale-bar');
   const localeMatched = ruValue === '/ru/universe' && enValue === '/universe';
   const localeDiagnostic = 'UNIVERSE_NAV_PARITY=' + (localeMatched ? 'PASS' : 'FAIL') +
     ' name=Universe surface=LOCALE_BAR en=' + enValue + ' ru=' + ruValue;
