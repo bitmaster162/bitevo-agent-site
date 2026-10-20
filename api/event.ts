@@ -1,5 +1,8 @@
 import { createHmac, randomUUID } from 'node:crypto';
 import { isIP } from 'node:net';
+import { inspectR50Admission, consumeR50Admission, r50ExactEvent, r50WindowOpen } from '../src/lib/b1-2/r50-operator-admission.ts';
+import type { R50GrantStore } from '../src/lib/b1-2/r50-operator-admission.ts';
+import { createR50DurableGrantStore } from '../src/lib/b1-2/r50-durable-grant-transport.ts';
 import routeRegistry from '../src/data/public-route-registry.json' with { type: 'json' };
 import eventCoverage from '../src/data/bitevo-event-coverage.json' with { type: 'json' };
 
@@ -9,6 +12,8 @@ type Dependencies = {
   send?: typeof fetch;
   now?: () => number;
   uuid?: () => string;
+  // No production grant-store adapter is installed by R50-B. Missing means deny.
+  r50GrantStore?: R50GrantStore;
 };
 
 const SCHEMA = 'bitevo.public-event.v1';
@@ -106,6 +111,13 @@ export async function handleBitEvoPublicEvent(
   if (request.headers.get('origin') !== CANONICAL_ORIGIN) {
     return respond(403, { ok: false, error: 'ORIGIN_REJECTED' });
   }
+  // R50 can use the separately configured durable claim service only when
+  // operator mode is explicitly authorized. Public event mounts stay OFF.
+  const grantStore = dependencies.r50GrantStore
+    ?? createR50DurableGrantStore(env);
+  const r50 = inspectR50Admission(request, env, eventCoverage.defaultMode,
+    dependencies.now ? dependencies.now() : Date.now(), grantStore);
+  if (r50.kind === 'denied') return respond(r50.status, { ok: false, error: r50.error });
   if (!/^application\/json(?:\s*;|$)/i.test(request.headers.get('content-type') || '')) {
     return respond(415, { ok: false, error: 'UNSUPPORTED_MEDIA' });
   }
@@ -128,6 +140,9 @@ export async function handleBitEvoPublicEvent(
   }
   const safe = validatedPayload(data);
   if (!safe) return respond(400, { ok: false, error: 'INVALID_EVENT' });
+  if (r50.kind === 'trial' && !r50ExactEvent(safe)) {
+    return respond(403, { ok: false, error: 'R50_SCOPE_REJECTED' });
+  }
 
   let ip: string | null;
   try {
@@ -141,6 +156,9 @@ export async function handleBitEvoPublicEvent(
     .update('bitevo-event-ip-v1:' + ip).digest('hex');
   const requestId = dependencies.uuid ? dependencies.uuid() : randomUUID();
   const nowMs = dependencies.now ? dependencies.now() : Date.now();
+  if (r50.kind === 'trial' && !r50WindowOpen(r50.policy, nowMs)) {
+    return respond(403, { ok: false, error: 'R50_WINDOW_CLOSED' });
+  }
   const occurredAt = new Date(nowMs).toISOString();
   const body = JSON.stringify({
     schema: SCHEMA, requestId, occurredAt,
@@ -150,6 +168,16 @@ export async function handleBitEvoPublicEvent(
   const signature = createHmac('sha256', config.secret)
     .update(SIGNING_DOMAIN + '.' + timestamp + '.' + requestId + '.' + body)
     .digest('hex');
+
+  if (r50.kind === 'trial') {
+    const consumed = await consumeR50Admission(r50.policy, grantStore, nowMs);
+    if (!consumed) return respond(503, { ok: false, error: 'R50_GRANT_UNCONFIRMED' });
+    const afterClaim = dependencies.now ? dependencies.now() : Date.now();
+    if (!r50WindowOpen(r50.policy, afterClaim)) {
+      return respond(403, { ok: false, error: 'R50_WINDOW_CLOSED' });
+    }
+    // The grant remains consumed on every downstream outcome, including timeout.
+  }
 
   try {
     const send = dependencies.send || fetch;
