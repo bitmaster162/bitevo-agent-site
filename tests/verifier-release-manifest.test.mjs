@@ -18,7 +18,7 @@ const qualifiedSource = '6a0a965e094426b1165ff7fc199e1c969d7167e4';
 const pinnedPackage = JSON.parse(git('show', qualifiedSource + ':package.json'));
 const pinnedRegistry = JSON.parse(git('show', qualifiedSource + ':src/data/verifier-release-manifest.json'));
 const baseline = registry.baselineMainSha;
-const r50RequiredSuffix = ' && node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs';
+const r50RequiredSuffix = ' && node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
 const paths = (await readdir(new URL('scripts/', root)))
   .filter(name => /^verify-.*\.mjs$/.test(name)
     && name !== 'verify-universe-locale-parity-r1.mjs')
