@@ -106,8 +106,8 @@ for (const route of ['/pricing','/ru/pricing']) {
   const catalogs = objects.filter(item => item['@type'] === 'OfferCatalog');
   equal(catalogs.length, 1, `${route}: OfferCatalog count`);
   const offers = catalogs[0]?.itemListElement || [];
-  equal(offers.length, 5, `${route}: OfferCatalog offer count`);
-  deepEqual(offers.map(offer => Number(offer.price)).sort((a,b) => a-b), [0,1500,1500,3000,4900], `${route}: canonical offer prices`);
+  equal(offers.length, 9, `${route}: OfferCatalog offer count`);
+  deepEqual(offers.map(offer => Number(offer.price)).sort((a,b) => a-b), [0,0,500,1500,1500,3000,3000,4900,9000], `${route}: canonical offer prices`);
   for (const offer of offers) {
     check(offer?.['@type'] === 'Offer', `${route}: catalog item must be Offer`);
     check(offer?.priceCurrency === 'USD', `${route}: offer currency must be USD`);
@@ -213,4 +213,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`P27_6_SEO_R1_GATE=PASS checks=${checks} html=${htmlFiles.length} organization_per_html=1 logo=${logoWidth}x${logoHeight} offer_catalogs=2 offers_each=5 breadcrumbs=${breadcrumbRoutes.length} llms_v2=PASS generated_ru=${generatedPages.length} ru_routes=${ruRoutes.length} ru_orphans=0 locale_css=BUNDLED hsts=INCLUDE_SUBDOMAINS guide_fallback=PERMANENT cache_rules=ROUTES failures=0`);
+console.log(`P27_6_SEO_R1_GATE=PASS checks=${checks} html=${htmlFiles.length} organization_per_html=1 logo=${logoWidth}x${logoHeight} offer_catalogs=2 offers_each=9 breadcrumbs=${breadcrumbRoutes.length} llms_v2=PASS generated_ru=${generatedPages.length} ru_routes=${ruRoutes.length} ru_orphans=0 locale_css=BUNDLED hsts=INCLUDE_SUBDOMAINS guide_fallback=PERMANENT cache_rules=ROUTES failures=0`);

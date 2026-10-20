@@ -5,7 +5,7 @@ alternate: /ru/guides/bitget-authority-after-orchestration-compromise
 lang: en
 card: "06 · Incident · Bitget authority after orchestration compromise — What source-bound evidence shows about detection, effect authority and external confirmation."
 title: "Bitget: authority after orchestration compromise"
-seo_title: "Bitget incident: authority after orchestration compromise | BitEvo"
+seo_title: "Bitget: authority after orchestration compromise | BitEvo"
 description: "Source-bound Bitget case study on why detecting effects and blocking withdrawal requests do not alone prove revocation of downstream execution authority."
 reviewed: 2026-10-07
 next_review: 2027-01-07

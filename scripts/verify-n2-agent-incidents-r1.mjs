@@ -44,7 +44,7 @@ for (const url of sourceUrls) {
 
 const h1 = 'Agent incidents: what action-capable AI did, and what evidence would have caught it';
 const lead = 'Public, sourced cases where an AI agent or assistant with the power to act changed something it should not have — or was shown it could. For each: what happened, which of our seven gates it touches, the OWASP Agentic risk, and the record that would have prevented or proven it.';
-const title = 'AI agent incidents library — authority, evidence, recovery | BitEvo';
+const title = 'AI Agent Incidents: Authority &amp; Recovery | BitEvo';
 const description = '12 sourced cases of AI agents deleting data, leaking repos or acting without approval, mapped to OWASP Agentic Top 10 and seven evidence gates.';
 
 check(pageSource.includes(h1) && pageSource.includes(lead), 'N2 approved H1 and lead preserved in source');
@@ -96,9 +96,9 @@ check(layoutSource.includes("['Agent incidents', '/agent-incidents']"), 'EN foot
 
 const route = registry.routes.find(item => item.path === '/agent-incidents');
 check(route?.category === 'RESEARCH' && route?.indexable === true && route?.locale === 'en' && route?.parent === '/owasp-agentic-top-10' && route?.localePair === 'deferred' && route?.localePairReason === 'grounded_translation_pending', 'registry route exact with grounded deferred locale contract');
-equal(registry.routes.filter(item => item.indexable).length, 131, 'indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, 66, 'EN indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, 65, 'RU indexable route count unchanged');
+equal(registry.routes.filter(item => item.indexable).length, 133, 'indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, 67, 'EN indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, 66, 'RU indexable route count unchanged');
 check(!registry.routes.some(item => item.path === '/ru/agent-incidents'), 'RU route deferred pending grounded translation');
 check(!html.includes('hreflang="ru"') && !html.includes('data-global-locale-switch="en-to-ru"'), 'deferred EN route emits no false RU alternate or switch');
 let ruPageExists = true;
@@ -107,10 +107,10 @@ equal(ruPageExists, false, 'RU page is not created without grounded translation'
 
 const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
-equal(row?.lastmod, '2026-10-13', 'N2 sitemap currentness date exact');
+equal(row?.lastmod, '2026-10-16', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
-equal(currentness.routes.length, 131, 'currentness route count is N2 baseline');
-check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-13</lastmod>'), 'sitemap includes N2 exact route/date');
+equal(currentness.routes.length, 133, 'currentness route count is N2 baseline');
+check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-16</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');
 const contextStart = llms.indexOf('### Context', researchStart);
@@ -119,4 +119,4 @@ check(llms.slice(researchStart, contextStart).includes('- /agent-incidents'), 'l
 
 check(packageJson.scripts?.['verify:core']?.includes('verify-n2-agent-incidents-r1.mjs'), 'N2 verifier wired into verify:core');
 
-console.log(`N2_AGENT_INCIDENTS_R1_GATE=PASS checks=${checks} cases=12 incidents=11 demonstrations=1 sources=21 source_dates=21 filters=7x10 indexable=131 en=66 ru=65 ru_route=DEFERRED no_search=PASS network_added=0`);
+console.log(`N2_AGENT_INCIDENTS_R1_GATE=PASS checks=${checks} cases=12 incidents=11 demonstrations=1 sources=21 source_dates=21 filters=7x10 indexable=133 en=67 ru=66 ru_route=DEFERRED no_search=PASS network_added=0`);

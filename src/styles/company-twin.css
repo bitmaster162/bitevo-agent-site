@@ -1,0 +1,11 @@
+.twin-hero{padding-top:clamp(72px,10vw,130px)}
+  .twin-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(28px,6vw,90px);align-items:center}
+  .twin-hero .lede{max-width:720px;margin-top:22px}
+  .twin-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .twin-note{color:var(--muted);font-size:.8rem;margin-top:16px}
+  .twin-summary{padding:30px}
+  .twin-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+  .twin-offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px}
+  .twin-price{font-size:1.5rem;font-weight:760;color:var(--ink)!important}
+  @media(max-width:900px){.twin-grid{grid-template-columns:1fr}.twin-cards{grid-template-columns:repeat(2,1fr)}.twin-offers{grid-template-columns:1fr}}
+  @media(max-width:520px){.twin-cards{grid-template-columns:1fr}.twin-actions .button{width:100%;text-align:center}}

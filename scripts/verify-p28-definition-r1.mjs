@@ -49,13 +49,13 @@ const expectedCurrentness = {
   '/': { fingerprint: 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197', lastmod: '2026-10-13' },
   '/ru': { fingerprint: 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6', lastmod: '2026-10-13' },
   '/agent-authority-audit': { fingerprint: 'sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9', lastmod: '2026-10-16' },
-  '/ru/agent-authority-audit': { fingerprint: 'sha256:f40a0795dcbd5e1c7fd4a8c4667e28d100cee30a2535c40b142ed4f03f7c9373', lastmod: '2026-10-13' }
+  '/ru/agent-authority-audit': { fingerprint: 'sha256:cbec8453e63c557ff6f1a9c174db07362b7d8a16087cd17828d0a8b1685c8ebd', lastmod: '2026-10-16' }
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.fingerprint === expected.fingerprint && row?.lastmod === expected.lastmod, 'currentness exact for ' + route);
 }
-equal(currentness.routes.length, 131, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, 133, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-definition-r1.mjs'), 'P28.1 verifier is wired into verify:core');
 
 console.log('P28_DEFINITION_R1_GATE=PASS checks=' + checks + ' locales=2 pages=4 definition_first=PASS static_html=PASS js_required=0');

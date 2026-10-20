@@ -63,7 +63,11 @@ const offerCatalog = {
     { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Entry Audit', url: 'https://bitevo.work/entry-audit' } },
     { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Security Control Validation', url: 'https://bitevo.work/control-validation' } },
     { '@type': 'Offer', price: '3000', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'BUILD Workflow Exception Diagnostic', url: 'https://bitevo.work/build/exception-workflow-diagnostic' } },
-    { '@type': 'Offer', price: '4900', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/agent-authority-audit' } }
+    { '@type': 'Offer', price: '4900', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/agent-authority-audit' } },
+    { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free 30-minute Company Twin introduction; request is not a booked slot', itemOffered: { '@type': 'Service', name: 'Company Twin introduction (30 minutes)', url: 'https://bitevo.work/company-twin' } },
+    { '@type': 'Offer', price: '3000', priceCurrency: 'USD', description: 'Fixed Team Twin pilot, 3 weeks, one team, 1–2 sources and 3 months of history', itemOffered: { '@type': 'Service', name: 'Team Twin pilot, 3 weeks', url: 'https://bitevo.work/company-twin' } },
+    { '@type': 'Offer', price: '9000', priceCurrency: 'USD', description: 'Company Twin 12-month scope starts at USD 9,000; whole company, up to 5 sources, one year of history', itemOffered: { '@type': 'Service', name: 'Company Twin, 12 months — from USD 9,000', url: 'https://bitevo.work/company-twin' } },
+    { '@type': 'Offer', price: '500', priceCurrency: 'USD', description: 'Company Twin support starting from USD 500 per month, separately scoped', itemOffered: { '@type': 'Service', name: 'Monthly Company Twin support — from USD 500', url: 'https://bitevo.work/company-twin' } }
   ]
 };
 ---
@@ -118,6 +122,21 @@ const offerCatalog = {
       <div class="eyebrow">Public-site handoff</div>
       <strong>This page does not book a triage, submit an audit request or authorize testing.</strong>
       <p>The Free triage CTA opens the verified external Cal.com booking page, where the visitor can choose a time and complete the booking. The Free, Entry and Primary scope-preparation CTAs remain separate from the external booking flow. The Scope Handoff form sends only the fields you fill after explicit consent. Accepted records are stored privately for up to 30 days. Submission through the Scope Handoff form does not create a booking and does not authorize testing. The dedicated Entry Audit CTA additionally opens the exact $1,500 bounded scope before the buyer chooses whether to submit intake. Payment and written Rules of Engagement continue only through an agreed business channel.</p>
+    </div>
+  </section>
+
+  <section class="section section-rule" data-company-twin-offers>
+    <div class="container">
+      <div class="eyebrow">Company Twin · pilot for first partners</div>
+      <h2 class="section-title">Company memory for people and AI agents.</h2>
+      <p class="lede">Director → employees and teams → company memory → agents. Agents read and propose; humans decide. Demo uses a fictional company; real data requires written consent and read-only access.</p>
+      <div class="pricing-grid">
+        <article class="panel"><strong>Free introduction · 30 minutes</strong><p>Discuss the pilot scope and access boundary.</p></article>
+        <article class="panel"><strong>Team Twin · $3,000 fixed · 3 weeks</strong><p>One team, 1–2 sources, 3 months of history.</p></article>
+        <article class="panel"><strong>Company Twin · 12 months · from $9,000</strong><p>Whole company, up to 5 sources, one year of history. Support from $500 per month.</p></article>
+      </div>
+      <div class="hero-actions"><a class="button button-primary" href="/company-twin">Open Company Twin</a><a class="button" href="/audit-intake">Request a free 30-min call</a></div>
+      <p class="lede">This is a triage request path, not an automatic booking. No client cases, effect metrics or guaranteed outcomes are claimed.</p>
     </div>
   </section>
 
@@ -184,4 +203,5 @@ const offerCatalog = {
   @media(max-width:699px){.comparison-table{min-width:900px}.table-row>*{padding:16px 18px;font-size:.78rem}.table-head strong{font-size:.62rem;letter-spacing:.09em}}
   @media(max-width:980px){.pricing-grid,.doctrine-grid{grid-template-columns:1fr}.tier{min-height:auto}.tier>.button{margin-top:28px}.hero-grid,.compare-grid,.section-head{grid-template-columns:1fr}.boundary-grid{grid-template-columns:1fr}.doctrine-grid article{min-height:auto}.table-row>*:first-child{position:sticky;left:0;z-index:2;background:rgba(11,21,23,.99);box-shadow:1px 0 0 var(--line),10px 0 18px rgba(0,0,0,.14)}.table-head>*:first-child{z-index:3}}
   @media(prefers-reduced-motion:reduce){.tier{transition:none}}
+
 </style>

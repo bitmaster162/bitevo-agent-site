@@ -1,0 +1,97 @@
+---
+import RuLayout from '../../layouts/RuLayout.astro';
+import '../../styles/company-twin.css';
+
+const hierarchy = [
+  ['Директор', 'Задаёт права доступа и остаётся владельцем решений компании.'],
+  ['Сотрудники и команды', 'Предоставляют контекст и проверяют историю в пределах своих ролей.'],
+  ['Память компании', 'Сохраняет хронологию, решения и состояние на выбранную дату.'],
+  ['AI-агенты', 'Только читают разрешённый контекст и предлагают действия человеку.']
+];
+const records = [
+  ['Хронология', 'История компании и согласованных источников с привязкой ко времени.'],
+  ['Журнал решений', 'Кто, что и почему решил — с доступным контекстом решения.'],
+  ['Состояние на дату', 'Картина компании на выбранный день в пределах согласованной истории.'],
+  ['Права доступа', 'Разные права директора, сотрудников и агентов под контролем человека.']
+];
+---
+<RuLayout title="Company Twin — память компании | BitEvo" description="Company Twin — пилот памяти компании: хронология, журнал решений, состояние на дату и права сотрудников и AI-агентов под контролем человека." enPath="/company-twin" ruPath="/ru/company-twin">
+  <section class="section twin-hero">
+    <div class="container twin-grid">
+      <div>
+        <div class="eyebrow">Company Twin · пилот для первых партнёров</div>
+        <h1 class="display">Память компании под управлением людей.</h1>
+        <p class="lede">Company Twin собирает историю компании для сотрудников и AI-агентов. Директор сохраняет полномочия; сотрудники и команды предоставляют контекст; память хранит ход решений; агентам разрешено только читать доступные сведения и предлагать следующий шаг человеку.</p>
+        <div class="twin-actions">
+          <a class="button button-primary" href="/ru/audit-intake">Записаться на бесплатные 30 минут</a>
+          <a class="button" href="/ru/pricing">Смотреть цены</a>
+        </div>
+        <p class="twin-note">Кнопка ведёт к заявке на знакомство. Сама заявка не бронирует встречу; время 30-минутного разговора согласуется отдельно.</p>
+      </div>
+      <aside class="panel twin-summary">
+        <div class="eyebrow">Границы полномочий</div>
+        <ol>
+          <li>Директор</li>
+          <li>Сотрудники и команды</li>
+          <li>Память компании</li>
+          <li>Агенты — только чтение и предложения</li>
+        </ol>
+        <p>Агент не принимает обязательных для компании решений и не изменяет записи самостоятельно.</p>
+      </aside>
+    </div>
+  </section>
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Что получает клиент</div>
+      <h2 class="section-title">История решений, а не придуманный кейс.</h2>
+      <div class="twin-cards">
+        {records.map(([name, detail]) => <article class="panel twin-card"><h3>{name}</h3><p>{detail}</p></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="section section-rule">
+    <div class="container">
+      <div class="eyebrow">Иерархия управления</div>
+      <h2 class="section-title">Люди разрешают. Агенты предлагают.</h2>
+      <div class="twin-cards">
+        {hierarchy.map(([name, detail], i) => <article class="panel twin-card"><span class="eyebrow">{String(i + 1).padStart(2, '0')}</span><h3>{name}</h3><p>{detail}</p></article>)}
+      </div>
+    </div>
+  </section>
+  <section class="section section-rule" aria-labelledby="twin-prices">
+    <div class="container">
+      <div class="eyebrow">Согласованные форматы и цены</div>
+      <h2 class="section-title" id="twin-prices">Начать с согласованного объёма.</h2>
+      <div class="twin-offers">
+        <article class="panel twin-offer">
+          <span class="eyebrow">Знакомство</span>
+          <h3>Бесплатные 30 минут</h3>
+          <p class="twin-price">Бесплатно</p>
+          <p>Обсудить границы памяти, доступ и соответствие пилоту.</p>
+        </article>
+        <article class="panel twin-offer">
+          <span class="eyebrow">Team Twin · пилот</span>
+          <h3>Одна команда</h3>
+          <p class="twin-price">$3,000 <small>фикс · 3 недели</small></p>
+          <p>Одна команда, 1–2 источника, 3 месяца истории.</p>
+        </article>
+        <article class="panel twin-offer">
+          <span class="eyebrow">Company Twin · 12 месяцев</span>
+          <h3>Вся компания</h3>
+          <p class="twin-price">От $9,000</p>
+          <p>Вся компания, до 5 источников, год истории.</p>
+          <p>Поддержка — от $500 в месяц, отдельный согласованный объём.</p>
+        </article>
+      </div>
+      <div class="twin-actions"><a class="button button-primary" href="/ru/audit-intake">Записаться на бесплатные 30 минут</a><a class="button" href="/ru/pricing">Все цены</a></div>
+    </div>
+  </section>
+  <section class="section section-rule">
+    <div class="narrow">
+      <div class="eyebrow">Данные и доказательства</div>
+      <h2 class="section-title">Предложение пилота, а не готовый production.</h2>
+      <p class="lede">Демо строится на выдуманной компании. Это не реальный клиентский кейс. Настоящие данные — только с письменного согласия и исключительно в режиме чтения. Источники, права, срок хранения и объём согласуются с владельцем до работы с реальными данными.</p>
+      <p>Здесь нет логотипов клиентов, обещанных цифр эффекта, гарантий и полномочий агентов на самостоятельную запись.</p>
+    </div>
+  </section>
+</RuLayout>
