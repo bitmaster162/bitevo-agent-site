@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "eff66495-3ae5-4401-bfe1-81658c0d12af",
   "nonce": "bb494d89-6ad8-41df-b0d8-263b76a6eabe",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d43762177fc2534db03af5864df6c7af25c01bad",
@@ -11,10 +11,10 @@
   "session": "UNIVERSE-MOBILE-LOCALE-PARITY-R21-PR240-20261020-R1",
   "worktree": "d:/bitevo_universe_locale_parity_d437621_local_r1",
   "acquiredAt": "2026-10-20T01:04:58.243Z",
-  "updatedAt": "2026-10-20T01:04:58.243Z",
+  "updatedAt": "2026-10-20T01:24:09.970Z",
   "expiresAt": "2026-10-20T03:04:53.227Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "a617a9c32e2b94fb51a6b88873e76fb878648ab9"
+  "sealedHead": "091803daa313d697a981bf4df1bfeda1c571485b",
+  "sealedTree": "fa633a122e854df2abffa02814369a16ba9b0874",
+  "featureRef": "refs/heads/agent/site-universe-en-locale-parity-d437621-local-r1",
+  "predecessor": "f9c4a8ae54b1276972c98e7bef3d3d6e27a72917"
 }
