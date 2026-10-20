@@ -48,7 +48,7 @@ check(RU_AUDIT.includes('staging или test') && RU_AUDIT.includes('а не м�
 const expectedCurrentness = {
   '/': { fingerprint: 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197', lastmod: '2026-10-13' },
   '/ru': { fingerprint: 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6', lastmod: '2026-10-13' },
-  '/agent-authority-audit': { fingerprint: 'sha256:0dbb0456dfaa209a33bd3cf5b22da5135acbbe9a57d249e6d78af654eb7e1e5a', lastmod: '2026-10-13' },
+  '/agent-authority-audit': { fingerprint: 'sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9', lastmod: '2026-10-16' },
   '/ru/agent-authority-audit': { fingerprint: 'sha256:cbec8453e63c557ff6f1a9c174db07362b7d8a16087cd17828d0a8b1685c8ebd', lastmod: '2026-10-16' }
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {

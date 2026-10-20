@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
+
 const failureScenarios = [
   'Duplicate or retry execution',
   'Stale or missing source evidence',
@@ -37,10 +39,12 @@ const findingAnatomy = [
         <p class="lede">An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.</p>
         <div class="actions">
           <a href="/mapper" class="button button-primary">Map the workflow <span aria-hidden="true">↗</span></a>
+          <a href={TRIAGE_URL} class="button button-ghost" data-triage-click="true" data-triage-source="agent-authority-audit">Book a free triage</a>
           <a href="/doctrine" class="button button-ghost">BitEvo Doctrine</a>
           <a href="/owasp-agentic-top-10" class="button button-ghost">OWASP Agentic Top 10</a>
           <a href="/agent-incidents" class="button button-ghost">Agent incidents</a>
         </div>
+        <p class="small">Free triage: a 20-minute Cal.com call. A click is not a confirmed booking.</p>
       </div>
       <aside class="commercial-card panel">
         <div class="card-kicker">Fixed primary audit</div>
@@ -168,6 +172,8 @@ const findingAnatomy = [
     </div>
   </section>
   <section class="section-tight section-rule" data-p30-research-link><div class="narrow"><a class="button" href="/guides/before-write-access">Seven checks before an agent gets write access →</a></div></section>\n</Layout>
+
+<script is:inline src="/triage-click.js"></script>
 
 <style>
   .audit-hero{padding-top:clamp(78px,10vw,132px)}.hero-grid{display:grid;grid-template-columns:1.22fr .58fr;gap:clamp(42px,8vw,100px);align-items:center}.hero-grid .lede{margin:25px 0 0}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}.commercial-card{padding:28px}.card-kicker{color:var(--green);font:500 .64rem var(--mono);letter-spacing:.12em;text-transform:uppercase}.price{font-size:clamp(3.4rem,6vw,5.6rem);line-height:1;letter-spacing:-.065em;font-weight:700;margin-top:20px}.duration{color:var(--muted);font:500 .72rem var(--mono);margin:8px 0 24px}.metric{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-top:1px solid var(--line)}.metric span{color:var(--muted);font:500 .63rem var(--mono)}.metric strong{font-size:.76rem;text-align:right}

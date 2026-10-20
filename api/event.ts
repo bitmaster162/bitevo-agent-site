@@ -26,7 +26,8 @@ const PUBLIC_PATHS = new Map(
 );
 
 const COVERAGE_PATHS = new Map(
-  (eventCoverage.schema === 'bitevo.event-coverage/v1' && eventCoverage.defaultMode === 'disabled'
+  (eventCoverage.schema === 'bitevo.event-coverage/v1'
+    && (eventCoverage.defaultMode === 'disabled' || eventCoverage.defaultMode === 'enabled')
     ? eventCoverage.routes : [])
     .map((row: { path: string; locale: string; events: string[] }) => [row.path, row] as const)
 );

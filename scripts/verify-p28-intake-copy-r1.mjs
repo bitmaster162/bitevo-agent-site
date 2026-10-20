@@ -30,7 +30,7 @@ check(!ruPricing.includes('не отправляет audit request'), 'RU stale 
 check(ruPricing.includes('ScopeHandoffShort locale="ru" offer="pricing"'), 'RU pricing keeps P27.1 receiver');
 check(!ruPricing.includes('Ссылка открывает почтовое приложение; ничего не отправляется автоматически. Сначала выберите scope или подготовьте локальный brief, затем передайте только те детали, которые намерены отправить.'), 'RU pricing P28.3 stale auto-send sentence absent');
 check(ruPricing.includes('Диагностика и mapper работают в браузере и ничего не отправляют. Форма scope отправляет только заполненные поля и только после согласия; заявки хранятся 30 дней, затем удаляются.'), 'RU pricing P28.3 exact browser/form/consent/30d deletion copy present');
-check(llms.includes('Free / 20 minutes booking CTAs on the Homepage, Pricing and Entry Audit surfaces open the verified Cal.com booking page'), 'llms exposes verified Free triage booking');
+check(llms.includes('Free / 20 minutes booking CTAs on the Homepage, Pricing, Entry Audit and Agent Authority Audit surfaces open the verified Cal.com booking page'), 'llms exposes verified Free triage booking');
 check(llms.includes('The separate Scope Handoff form sends only fields the user fills after explicit consent'), 'llms describes consent-gated filled-fields submission');
 check(llms.includes('accepted records are stored privately for up to 30 days'), 'llms states retention horizon');
 check(llms.includes('Submission through that form does not create a booking and does not authorize testing.'), 'llms preserves scope-form booking/testing boundary');
@@ -41,7 +41,7 @@ check(short.includes('does not authorize testing or execution'), 'shared P27.1 c
 const expected = {
   "/pricing": { fingerprint: "sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2", lastmod: "2026-10-16" },
   "/ru/pricing": { fingerprint: "sha256:1cca42fc4d49d429b56530a461804f15157c642a0c71c57c2e23b435ff5663b4", lastmod: "2026-10-16" },
-  "/agent-authority-audit": { fingerprint: "sha256:0dbb0456dfaa209a33bd3cf5b22da5135acbbe9a57d249e6d78af654eb7e1e5a", lastmod: "2026-10-13" }
+  "/agent-authority-audit": { fingerprint: "sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9", lastmod: "2026-10-16" }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

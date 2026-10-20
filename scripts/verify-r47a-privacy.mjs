@@ -60,7 +60,7 @@ check(enHtml.includes('That period is not an event-counter retention rule.') && 
 check(!enHtml.includes('your data is not used to train AI models') && !ruHtml.includes('ваши данные не используются для обучения AI-моделей'), 'unverified model training claims absent');
 check(layout.includes("['Site data & events', '/privacy']") && layout.includes("['Данные сайта и счётчик', '/ru/privacy']"), 'both shared footer routes');
 check(coverage.schema === 'bitevo.event-coverage/v1' && coverage.defaultMode === 'disabled', 'event counter default OFF');
-check(coverage.routes.length === 24 && coverage.routes.reduce((n, row) => n + row.events.length, 0) === 30, 'reviewed OFF 24 pages / 30 pairs unchanged');
+check(coverage.routes.length === 24 && coverage.routes.reduce((n, row) => n + row.events.length, 0) === 31, 'reviewed OFF 24 pages / 31 pairs unchanged');
 // R48 admits exactly the owner-reviewed configuration; this is not live activation evidence.
 check(JSON.stringify(wrangler.d1_databases) === JSON.stringify([{
   binding: 'BITEVO_EVENT_DB',
