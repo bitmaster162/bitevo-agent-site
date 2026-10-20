@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { test, after } from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { execFileSync } from 'node:child_process';
 import coverage from '../src/data/bitevo-event-coverage.json' with { type: 'json' };
 
 let realNetworkAttempts = 0;
@@ -241,17 +240,73 @@ test('synthetic HMAC path reaches unchanged Worker and fake aggregate exactly on
   assert.deepEqual(f.calls.fakeWrites,[['2026-10-20','triage_click','/agent-authority-audit','en']]);
   assert.equal((await handleBitEvoPublicEvent(request(),f.env,f.deps)).status,503);assert.equal(f.calls.fakeWrites.length,1);
 });
+// R50-D: pins were independently derived with git show BASE:path before edits.
+// Fixed normalized SHA-256 checks preserve the same source boundary without
+// requiring historical Git objects in a shallow CI/provider checkout.
+const r50ProtectedSources = Object.freeze({
+  "src/layouts/Layout.astro": "b8adee5a71826d31f02aeac33b12b94884f3059206a880296eecfa72255b3e29",
+  "src/layouts/RuLayout.astro": "0c9804bba6ed3b082b7c2f0abdf62bff72bdc067ac78d75439a801d33f3ebe37",
+  "public/bitevo-event-counter.js": "f9940a3c44169fbdc3bf8bee61997341bc45021831973721aabe545fba9c6a65",
+  "public/triage-click.js": "20f8b779fd4061ac05e3f326d260559323b72bc93cc07e0a2e597d11b4ddc8e3",
+  "worker/index.mjs": "79f7d73f85075ff39fb8213c993bd5b0cb553cd9d82b095e362b7800b1af9eeb",
+  "wrangler.jsonc": "033eeab43f06ba96be050fcb3731dc0b54f6f756b88c205cb5d1ecc4e6f0487b",
+  "vercel.json": "0c34591c2ae51e4901912f9f1e4c04747be3d5acdb3a6fecc08c5e18a2625797",
+  "schema/bitevo_public_event_daily.sql": "f5f5e624d661108018bc65dcc9acf9e48afd4454ad14849af01b97df6495f581",
+  "src/data/bitevo-event-coverage.json": "e1f9a32de3535afb7ccbac2aeec17e6b2d530c287c627200cf6a2784aa5aff47",
+  "src/pages/privacy.astro": "74da034a3f0688295fb82978415d2f1f83c7b9c2accf50ae9af759988a42e3f6",
+  "src/pages/ru/privacy.astro": "b48cf1a34dc5488fc2a2956142fde6f560a117ecf71986898a0d276ae8a7a439",
+  "package-lock.json": "ac271324d12cc0504e6685e08ac8bc3f75ff82cdb4900078f2e25d0dea45d3b1",
+  "src/data/verifier-release-manifest.json": "b7d324dc047937d0a27984b332936319a0ed919e74e6b163ac5cfb3360fd07d2",
+  "scripts/verify-b1-2-event-counter.mjs": "38995a0577b9bf5ea17cb634b90701f94cd8b0b0c77b9ba09e62594bf9b0c0c1",
+  "scripts/verify-r47a-privacy.mjs": "1a17201db3cd530bee7b08503a32ca18fa6dd4582441e8786265ef89314c1689"
+});
+const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs';
+const r50RequiredSuffix = ' && ' + r50RequiredCommand;
+const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e4900f7e4c81880e9a8';
+function r50PackageIsExact(candidate) {
+  try {
+    const copy = structuredClone(candidate);
+    const core = copy.scripts['verify:core'];
+    if (typeof core !== 'string' || !core.endsWith(r50RequiredSuffix)
+      || core.split(r50RequiredCommand).length !== 2) return false;
+    copy.scripts['verify:core'] = core.slice(0, -r50RequiredSuffix.length);
+    return digest(JSON.stringify(copy)) === r50PinnedPackageDigest;
+  } catch { return false; }
+}
+
 test('R50-B preserves public OFF source, five-column schema and existing release contracts',async()=>{
-  const paths=['src/layouts/Layout.astro','src/layouts/RuLayout.astro','public/bitevo-event-counter.js',
-    'public/triage-click.js','worker/index.mjs','wrangler.jsonc','vercel.json','schema/bitevo_public_event_daily.sql',
-    'src/data/bitevo-event-coverage.json','src/pages/privacy.astro','src/pages/ru/privacy.astro',
-    'package.json','package-lock.json','src/data/verifier-release-manifest.json',
-    'scripts/verify-b1-2-event-counter.mjs','scripts/verify-r47a-privacy.mjs'];
-  for(const path of paths){
-    const current=(await readFile(new URL('../'+path,import.meta.url),'utf8')).replace(/\r\n/g,'\n');
-    const pinned=execFileSync('git',['show',BASE+':'+path],{cwd:new URL('../',import.meta.url),encoding:'utf8'}).replace(/\r\n/g,'\n');
-    assert.equal(current,pinned,path+' is outside R50-B scope');
+  for (const [path, expected] of Object.entries(r50ProtectedSources)) {
+    const current = (await readFile(new URL('../'+path,import.meta.url),'utf8')).replace(/\r\n/g,'\n');
+    assert.equal(digest(current), expected, path+' is outside R50-D scope; pinned at '+BASE);
   }
+  const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
+  assert.ok(r50PackageIsExact(pkg), 'only exact R50 required-test suffix may differ from pinned package');
   assert.equal(coverage.defaultMode,'disabled');assert.equal(coverage.routes.length,24);
   assert.equal(coverage.routes.reduce((n,r)=>n+r.events.length,0),31);
+});
+test('R50-D required test pair is reached by unchanged build:core and required quality job',async()=>{
+  const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
+  const workflow = await readFile(new URL('../.github/workflows/quality-gate.yml',import.meta.url),'utf8');
+  assert.ok(r50PackageIsExact(pkg));
+  assert.equal(pkg.scripts['build:core'], 'npm run build:site && npm run verify:core');
+  assert.ok(workflow.includes('name: quality-gate'));
+  assert.ok(workflow.includes('run: npm run build:core'));
+  assert.ok(!r50RequiredCommand.includes('test-name-pattern'));
+});
+test('R50-D rejects missing, duplicated, skipped suites and unrelated package changes',async()=>{
+  const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
+  const changes = [
+    p => { p.scripts['verify:core'] = p.scripts['verify:core'].slice(0,-r50RequiredSuffix.length); },
+    p => { p.scripts['verify:core'] += r50RequiredSuffix; },
+    p => { p.scripts['verify:core'] = p.scripts['verify:core'].replace(' tests/b1-2-r50-durable-grant.test.mjs',''); },
+    p => { p.scripts['verify:core'] += ' || true'; },
+    p => { p.scripts['verify:core'] = p.scripts['verify:core'].replace('--test-reporter=tap','--test-reporter=tap --test-name-pattern=none'); },
+    p => { p.scripts['build:core'] = 'echo skipped'; },
+    p => { p.scripts['verify:core'] = p.scripts['verify:core'].replace('node scripts/verify-r47a-privacy.mjs','echo skipped-privacy'); },
+    p => { p.name = 'unexpected-package'; }
+  ];
+  for (const mutate of changes) {
+    const altered = structuredClone(pkg); mutate(altered);
+    assert.equal(r50PackageIsExact(altered), false);
+  }
 });
