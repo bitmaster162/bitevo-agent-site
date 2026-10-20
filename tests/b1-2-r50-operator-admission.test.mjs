@@ -260,7 +260,7 @@ const r50ProtectedSources = Object.freeze({
   "scripts/verify-b1-2-event-counter.mjs": "38995a0577b9bf5ea17cb634b90701f94cd8b0b0c77b9ba09e62594bf9b0c0c1",
   "scripts/verify-r47a-privacy.mjs": "1a17201db3cd530bee7b08503a32ca18fa6dd4582441e8786265ef89314c1689"
 });
-const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs';
+const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
 const r50RequiredSuffix = ' && ' + r50RequiredCommand;
 const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e4900f7e4c81880e9a8';
 function r50PackageIsExact(candidate) {
@@ -299,6 +299,7 @@ test('R50-D rejects missing, duplicated, skipped suites and unrelated package ch
     p => { p.scripts['verify:core'] = p.scripts['verify:core'].slice(0,-r50RequiredSuffix.length); },
     p => { p.scripts['verify:core'] += r50RequiredSuffix; },
     p => { p.scripts['verify:core'] = p.scripts['verify:core'].replace(' tests/b1-2-r50-durable-grant.test.mjs',''); },
+    p => { p.scripts['verify:core'] = p.scripts['verify:core'].replace(' tests/b1-2-r50-package-runtime.test.mjs',''); },
     p => { p.scripts['verify:core'] += ' || true'; },
     p => { p.scripts['verify:core'] = p.scripts['verify:core'].replace('--test-reporter=tap','--test-reporter=tap --test-name-pattern=none'); },
     p => { p.scripts['build:core'] = 'echo skipped'; },
