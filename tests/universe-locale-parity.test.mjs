@@ -150,49 +150,105 @@ test('empty status and null lane cannot pass source parsing', () => {
   expectNamedFailure(mutateCard('lane', 'null'), 'AI Skill Lab', 'lane');
 });
 
-test('current RU locale-bar asymmetry produces exactly one explicit FAIL', () => {
+test('current EN/RU locale bars match and all shared navigation surfaces remain valid', () => {
   const nav = inspectUniverseNavigation(layoutSource, ruLayoutSource, enSource);
+  assert.deepEqual(nav.failures, []);
   assert.ok(nav.observations.some(x =>
     x.includes('surface=GLOBAL_HEADER en=ABSENT ru=ABSENT')));
   assert.ok(nav.observations.some(x =>
     x.includes('surface=GLOBAL_FOOTER_BUILD en=/universe ru=/ru/universe')));
-  assert.equal(nav.failures.length, 1, nav.failures.join('\n'));
-  assert.match(nav.failures[0],
-    /UNIVERSE_NAV_PARITY=FAIL name=Universe surface=LOCALE_BAR en=ABSENT ru=\/ru\/universe/);
+  assert.ok(nav.observations.some(x =>
+    x.includes('surface=LOCALE_BAR en=/universe ru=/ru/universe')));
+  assert.ok(nav.observations.some(x =>
+    x.includes('surface=MOBILE_LOCALE_BAR en_hide_token=BOUND common_rule=PRESENT breakpoint=720px')));
+  assert.ok(enSource.includes('class="en-locale-bar ru-locale-bar" data-locale-surface="en"'));
+  assert.ok(enSource.includes('<a href="/universe" aria-current="page">Universe</a>'));
 });
 
-test('equivalent EN locale-bar in common layout would remove the asymmetry', () => {
-  const simulated = layoutSource +
-    '\n<div class="en-locale-bar"><a href="/universe">Universe</a></div>\n';
-  const nav = inspectUniverseNavigation(simulated, ruLayoutSource, enSource);
-  assert.deepEqual(nav.failures, []);
+test('removing EN locale-bar reports named Universe mismatch', () => {
+  const altered = enSource.replace('class="en-locale-bar ru-locale-bar"', 'class="missing-en-locale-bar ru-locale-bar"');
+  assert.notEqual(altered, enSource);
+  const nav = inspectUniverseNavigation(layoutSource, ruLayoutSource, altered);
+  assert.ok(nav.failures.some(x =>
+    x.includes('name=Universe surface=LOCALE_BAR en=ABSENT ru=/ru/universe')));
 });
 
-test('ordinary EN body/footer link must NOT pretend to be an EN locale-bar', () => {
+test('incorrect EN locale-bar href reports named Universe mismatch', () => {
+  const altered = enSource.replace(
+    '<a href="/universe" aria-current="page">Universe</a>',
+    '<a href="/other" aria-current="page">Universe</a>');
+  assert.notEqual(altered, enSource);
+  const nav = inspectUniverseNavigation(layoutSource, ruLayoutSource, altered);
+  assert.ok(nav.failures.some(x =>
+    x.includes('name=Universe surface=LOCALE_BAR en=/other ru=/ru/universe')));
+});
+
+test('ordinary EN body/footer link cannot hide missing EN locale-bar', () => {
+  const missing = enSource.replace('class="en-locale-bar ru-locale-bar"', 'class="missing-en-locale-bar ru-locale-bar"');
+  assert.notEqual(missing, enSource);
   const link = '\n<a href="/universe">Universe</a>\n';
-  const nav1 = inspectUniverseNavigation(layoutSource, ruLayoutSource, enSource + link);
-  const nav2 = inspectUniverseNavigation(layoutSource + link, ruLayoutSource, enSource);
-  for (const nav of [nav1, nav2]) {
+  const navInPage = inspectUniverseNavigation(layoutSource, ruLayoutSource, missing + link);
+  const navInLayout = inspectUniverseNavigation(layoutSource + link, ruLayoutSource, missing);
+  for (const nav of [navInPage, navInLayout]) {
     assert.ok(nav.failures.some(x =>
-      x.includes('surface=LOCALE_BAR en=ABSENT ru=/ru/universe')));
+      x.includes('name=Universe surface=LOCALE_BAR en=ABSENT ru=/ru/universe')));
   }
 });
 
-test('RU locale-bar extra anchor attributes cannot mask its existing link', () => {
+test('extra RU locale-bar anchor attributes keep valid parity', () => {
   const modified = ruLayoutSource.replace(
     '<a href="/ru/universe">Universe</a>',
     '<a class="nav-link" href="/ru/universe" aria-current="page"> Universe </a>');
   assert.notEqual(modified, ruLayoutSource);
   const nav = inspectUniverseNavigation(layoutSource, modified, enSource);
-  assert.ok(nav.failures.some(x =>
-    x.includes('surface=LOCALE_BAR en=ABSENT ru=/ru/universe')));
+  assert.deepEqual(nav.failures, []);
 });
 
-test('removing RU locale-bar link while EN is absent must NOT silently green', () => {
+test('incorrect RU locale-bar href fails despite correct EN link', () => {
   const modified = ruLayoutSource.replace('href="/ru/universe"', 'href="/ru/other"');
   assert.notEqual(modified, ruLayoutSource);
   const nav = inspectUniverseNavigation(layoutSource, modified, enSource);
-  assert.ok(nav.failures.some(x => x.includes('surface=LOCALE_BAR')));
+  assert.ok(nav.failures.some(x =>
+    x.includes('name=Universe surface=LOCALE_BAR en=/universe')));
+});
+
+test('duplicate EN locale-bar is rejected, not counted as valid', () => {
+  const modified = enSource.replace(
+    '<div class="en-locale-bar ru-locale-bar" data-locale-surface="en">',
+    '<div class="en-locale-bar ru-locale-bar" data-locale-surface="en">' +
+    '\n    <div class="en-locale-bar"><a href="/universe">Universe</a></div>');
+  assert.notEqual(modified, enSource);
+  const nav = inspectUniverseNavigation(layoutSource, ruLayoutSource, modified);
+  assert.ok(nav.failures.some(x =>
+    x.includes('name=Universe surface=LOCALE_BAR en=DUPLICATE')));
+});
+
+test('removing the shared mobile hide class on EN fails closed', () => {
+  const altered = enSource.replace(
+    'class="en-locale-bar ru-locale-bar"', 'class="en-locale-bar"');
+  assert.notEqual(altered, enSource);
+  const nav = inspectUniverseNavigation(layoutSource, ruLayoutSource, altered);
+  assert.ok(nav.failures.some(x =>
+    x.includes('surface=MOBILE_LOCALE_BAR en_hide_token=MISSING common_rule=PRESENT')));
+});
+
+test('near-match class does not falsely bind mobile CSS', () => {
+  const altered = enSource.replace(
+    'class="en-locale-bar ru-locale-bar"', 'class="en-locale-bar ru-locale-bar-extra"');
+  assert.notEqual(altered, enSource);
+  const nav = inspectUniverseNavigation(layoutSource, ruLayoutSource, altered);
+  assert.ok(nav.failures.some(x =>
+    x.includes('surface=MOBILE_LOCALE_BAR en_hide_token=MISSING')));
+});
+
+test('missing shared mobile CSS rule fails closed', () => {
+  const altered = layoutSource.replace(
+    '.ru-locale-bar { display: none; }',
+    '.ru-locale-bar { display: block; }');
+  assert.notEqual(altered, layoutSource);
+  const nav = inspectUniverseNavigation(altered, ruLayoutSource, enSource);
+  assert.ok(nav.failures.some(x =>
+    x.includes('surface=MOBILE_LOCALE_BAR en_hide_token=BOUND common_rule=MISSING')));
 });
 
 test('footer Universe missing from both locales fails by exact surface', () => {

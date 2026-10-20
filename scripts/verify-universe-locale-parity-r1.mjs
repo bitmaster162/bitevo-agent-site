@@ -164,8 +164,9 @@ function dualNav(source, declaration) {
 }
 
 function localeBarUniverseHref(source, className) {
-  const open = new RegExp('<div\\b[^>]*\\bclass="[^"]*\\b' + className + '\\b[^"]*"[^>]*>', 'g');
-  const bars = [...source.matchAll(open)];
+  const open = /<div\b[^>]*\bclass="([^"]*)"[^>]*>/g;
+  const bars = [...source.matchAll(open)].filter(match =>
+    match[1].split(/\s+/).includes(className));
   if (bars.length === 0) return 'ABSENT';
   if (bars.length !== 1) return 'DUPLICATE';
   const tail = source.slice(bars[0].index + bars[0][0].length);
@@ -206,12 +207,27 @@ export function inspectUniverseNavigation(layoutSource, ruLayoutSource, enPageSo
 
   // Compare only actual locale-bar surfaces. Generic body/footer links never count as locale-bar parity.
   const ruValue = localeBarUniverseHref(ruLayoutSource, 'ru-locale-bar');
-  const enValue = localeBarUniverseHref(layoutSource, 'en-locale-bar');
+  const enValue = localeBarUniverseHref(enPageSource, 'en-locale-bar');
   const localeMatched = ruValue === '/ru/universe' && enValue === '/universe';
   const localeDiagnostic = 'UNIVERSE_NAV_PARITY=' + (localeMatched ? 'PASS' : 'FAIL') +
     ' name=Universe surface=LOCALE_BAR en=' + enValue + ' ru=' + ruValue;
   observations.push(localeDiagnostic);
   if (!localeMatched) failures.push(localeDiagnostic);
+
+  // EN uses the existing shared 720px hiding rule; this verifies source binding, not computed CSS.
+  const enMobileBars = [...enPageSource.matchAll(/<div\b[^>]*\bclass="([^"]*)"[^>]*>/g)]
+    .map(match => match[1].split(/\s+/))
+    .filter(tokens => tokens.includes('en-locale-bar'));
+  const enReusesMobileHide = enMobileBars.length === 1
+    && enMobileBars[0].includes('ru-locale-bar');
+  const sharedMobileRule = /@media\s*\(\s*max-width:\s*720px\s*\)\s*\{[^\r\n]*\.ru-locale-bar\s*\{\s*display:\s*none;\s*\}/.test(layoutSource);
+  const mobileMatched = localeMatched && enReusesMobileHide && sharedMobileRule;
+  const mobileDiagnostic = 'UNIVERSE_NAV_PARITY=' + (mobileMatched ? 'PASS' : 'FAIL') +
+    ' name=Universe surface=MOBILE_LOCALE_BAR en_hide_token=' +
+    (enReusesMobileHide ? 'BOUND' : 'MISSING') + ' common_rule=' +
+    (sharedMobileRule ? 'PRESENT' : 'MISSING') + ' breakpoint=720px';
+  observations.push(mobileDiagnostic);
+  if (!mobileMatched) failures.push(mobileDiagnostic);
   return { observations, failures };
 }
 
