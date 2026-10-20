@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "bitevo-r50-grant-candidate",
+  "main": "worker/r50-grant-claim.mjs",
+  "compatibility_date": "2026-08-12",
+  "workers_dev": true,
+  "d1_databases": [{
+    "binding": "BITEVO_R50_GRANT_DB",
+    "database_name": "bitevo-events-b12",
+    "database_id": "b533a76e-ddd0-406b-9449-94e878bc2c50"
+  }]
+}

@@ -18,6 +18,7 @@ const qualifiedSource = '6a0a965e094426b1165ff7fc199e1c969d7167e4';
 const pinnedPackage = JSON.parse(git('show', qualifiedSource + ':package.json'));
 const pinnedRegistry = JSON.parse(git('show', qualifiedSource + ':src/data/verifier-release-manifest.json'));
 const baseline = registry.baselineMainSha;
+const r50RequiredSuffix = ' && node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs';
 const paths = (await readdir(new URL('scripts/', root)))
   .filter(name => /^verify-.*\.mjs$/.test(name)
     && name !== 'verify-universe-locale-parity-r1.mjs')
@@ -99,13 +100,13 @@ test('73 core verifier commands: 72 pinned baseline plus exact R3 Universe admis
   assert.ok(qualityWorkflow.includes('run: npm run build:core'));
 });
 
-test('R3 changes only verify:core in package, preserving all unrelated script contracts', () => {
+test('R3 plus R50-D change only the exact required-test suffix in verify:core', () => {
   const anchor = 'node scripts/verify-p28-crypto-disclaimer-r1.mjs && ';
   const baselineCore = pinnedPackage.scripts['verify:core'];
   assert.equal(baselineCore.split(anchor).length, 2, 'qualifier insertion anchor exact once');
   const expectedCore = baselineCore.replace(
     anchor, anchor + 'node scripts/verify-universe-locale-parity-r1.mjs && ');
-  assert.equal(pkg.scripts['verify:core'], expectedCore);
+  assert.equal(pkg.scripts['verify:core'], expectedCore + r50RequiredSuffix);
   assert.deepEqual(
     { ...pkg, scripts: { ...pkg.scripts, 'verify:core': baselineCore } },
     pinnedPackage);
