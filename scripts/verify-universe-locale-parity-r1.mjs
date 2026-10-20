@@ -213,6 +213,21 @@ export function inspectUniverseNavigation(layoutSource, ruLayoutSource, enPageSo
     ' name=Universe surface=LOCALE_BAR en=' + enValue + ' ru=' + ruValue;
   observations.push(localeDiagnostic);
   if (!localeMatched) failures.push(localeDiagnostic);
+
+  // EN uses the existing shared 720px hiding rule; this verifies source binding, not computed CSS.
+  const enMobileBars = [...enPageSource.matchAll(/<div\b[^>]*\bclass="([^"]*)"[^>]*>/g)]
+    .map(match => match[1].split(/\s+/))
+    .filter(tokens => tokens.includes('en-locale-bar'));
+  const enReusesMobileHide = enMobileBars.length === 1
+    && enMobileBars[0].includes('ru-locale-bar');
+  const sharedMobileRule = /@media\s*\(\s*max-width:\s*720px\s*\)\s*\{[^\r\n]*\.ru-locale-bar\s*\{\s*display:\s*none;\s*\}/.test(layoutSource);
+  const mobileMatched = localeMatched && enReusesMobileHide && sharedMobileRule;
+  const mobileDiagnostic = 'UNIVERSE_NAV_PARITY=' + (mobileMatched ? 'PASS' : 'FAIL') +
+    ' name=Universe surface=MOBILE_LOCALE_BAR en_hide_token=' +
+    (enReusesMobileHide ? 'BOUND' : 'MISSING') + ' common_rule=' +
+    (sharedMobileRule ? 'PRESENT' : 'MISSING') + ' breakpoint=720px';
+  observations.push(mobileDiagnostic);
+  if (!mobileMatched) failures.push(mobileDiagnostic);
   return { observations, failures };
 }
 
