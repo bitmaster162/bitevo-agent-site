@@ -8,10 +8,15 @@ const text = async relative => readFile(new URL(relative, root), 'utf8');
 const registry = JSON.parse(await text('src/data/verifier-release-manifest.json'));
 const pkg = JSON.parse(await text('package.json'));
 const workflow = await text('.github/workflows/mutation-lease-audit.yml');
+const qualityWorkflow = await text('.github/workflows/quality-gate.yml');
+const sourceBoundCheckerNormalized = (await text('scripts/verify-universe-locale-parity-r1.mjs')).replace(/\r\n/g, '\n').trim();
 const git = (...args) => execFileSync('git', args, {
   cwd: root, encoding: 'utf8', windowsHide: true,
 }).trim();
 const head = git('rev-parse', 'HEAD');
+const qualifiedSource = '6a0a965e094426b1165ff7fc199e1c969d7167e4';
+const pinnedPackage = JSON.parse(git('show', qualifiedSource + ':package.json'));
+const pinnedRegistry = JSON.parse(git('show', qualifiedSource + ':src/data/verifier-release-manifest.json'));
 const baseline = registry.baselineMainSha;
 const paths = (await readdir(new URL('scripts/', root)))
   .filter(name => /^verify-.*\.mjs$/.test(name)
@@ -35,7 +40,7 @@ test('manifest baseline is an ancestor of HEAD, not necessarily HEAD itself', ()
   assert.equal(registry.verifiers.length, 80);
   assert.deepEqual(countBy('status'), registry.statusCounts);
   assert.deepEqual(countBy('stage'), registry.stageCounts);
-  assert.deepEqual(registry.statusCounts, { CURRENT: 76, HISTORICAL: 2, UNRESOLVED: 2 });
+  assert.deepEqual(registry.statusCounts, { CURRENT: 77, HISTORICAL: 2, UNRESOLVED: 1 });
   assert.ok(registry.verifiers.every(row =>
     row.requiredForMerge === null || row.requiredForMerge === false));
 });
@@ -67,19 +72,58 @@ test('all 79 source verifiers and exactly one proposed parity verifier are repre
   }
 });
 
-test('72 core verifiers match complete command entries and pinned baseline provenance', () => {
-  const commands = new Set(pkg.scripts['verify:core'].split(/\s*&&\s*/).map(s => s.trim()));
+test('73 core verifier commands: 72 pinned baseline plus exact R3 Universe admission', () => {
+  const allCommands = pkg.scripts['verify:core'].split(/\s*&&\s*/).map(s => s.trim());
+  const commands = new Set(allCommands);
   const core = registry.verifiers.filter(row => row.stage === 'premerge_core');
-  assert.equal(core.length, 72);
+  assert.equal(core.length, 73);
+  assert.equal(allCommands.length, commands.size, 'core commands must be unique');
   for (const row of core) {
     assert.equal(row.status, 'CURRENT');
     assert.ok(commands.has(row.command), 'missing exact command ' + row.command);
     assert.equal(row.command, 'node ' + row.file);
-    assert.equal(row.sourceSha, baseline);
-    assert.equal(row.lastVerifiedSha, baseline);
-    assert.ok(row.manifestEvidence.includes('package.json:15@' + baseline));
+    if (row.id !== 'verify-universe-locale-parity-r1') {
+      assert.equal(row.sourceSha, baseline);
+      assert.equal(row.lastVerifiedSha, baseline);
+      assert.ok(row.manifestEvidence.includes('package.json:15@' + baseline));
+    }
   }
-  assert.ok(!commands.has('node scripts/verify-universe-locale-parity-r1.mjs'));
+  const universe = byId.get('verify-universe-locale-parity-r1');
+  assert.equal(allCommands.filter(s => s === universe.command).length, 1);
+  assert.equal(universe.sourceSha, qualifiedSource);
+  assert.equal(universe.lastVerifiedSha, qualifiedSource);
+  assert.equal(universe.requiredForMerge, null);
+  assert.equal(universe.qualification, 'LOCAL_PASS_PENDING_EXACT_HEAD_CI_NO_DIRECT_REQUIRED_CONTEXT');
+  assert.match(universe.lastVerifiedEvidence, /LOCAL_STANDALONE_ONLY/);
+  assert.ok(universe.manifestEvidence.includes('package.json:15 R3_LOCAL_ONLY'));
+  assert.ok(qualityWorkflow.includes('run: npm run build:core'));
+});
+
+test('R3 changes only verify:core in package, preserving all unrelated script contracts', () => {
+  const anchor = 'node scripts/verify-p28-crypto-disclaimer-r1.mjs && ';
+  const baselineCore = pinnedPackage.scripts['verify:core'];
+  assert.equal(baselineCore.split(anchor).length, 2, 'qualifier insertion anchor exact once');
+  const expectedCore = baselineCore.replace(
+    anchor, anchor + 'node scripts/verify-universe-locale-parity-r1.mjs && ');
+  assert.equal(pkg.scripts['verify:core'], expectedCore);
+  assert.deepEqual(
+    { ...pkg, scripts: { ...pkg.scripts, 'verify:core': baselineCore } },
+    pinnedPackage);
+});
+
+test('R3 changes only Universe manifest row, scope counts and resolved-gap note', () => {
+  assert.deepEqual(registry.verifiers.slice(0, 79), pinnedRegistry.verifiers.slice(0, 79));
+  assert.equal(registry.baselineMainSha, pinnedRegistry.baselineMainSha);
+  assert.equal(registry.authority, pinnedRegistry.authority);
+  assert.equal(registry.provenance, pinnedRegistry.provenance);
+  assert.equal(registry.requiredForMergeSemantics, pinnedRegistry.requiredForMergeSemantics);
+  assert.ok(registry.navigationKnownGap.startsWith('RESOLVED_SOURCE: PR #240 merge ' + qualifiedSource));
+  assert.equal(registry.stageCounts.premerge_core, 73);
+  assert.equal(registry.stageCounts.local_candidate, undefined);
+  assert.equal(registry.statusCounts.UNRESOLVED, 1);
+  const checkerFromPinned = git('show', qualifiedSource + ':scripts/verify-universe-locale-parity-r1.mjs');
+  assert.equal(checkerFromPinned, sourceBoundCheckerNormalized,
+    'verifier source must match pinned SHA');
 });
 
 test('provider/CI gates are exactly bound without inventing independent PASS', () => {
@@ -124,7 +168,7 @@ test('historical P30 snapshots preserved and B1.2 regression not qualified', () 
   assert.equal(b12.requiredForMerge, false);
 });
 
-test('live headers retains only proven post-deploy PASS, Universe stays local red candidate', () => {
+test('live header history remains untouched; Universe R3 is source-qualified, not provider-admitted', () => {
   const live = byId.get('verify-live-headers');
   assert.equal(live.status, 'CURRENT');
   assert.equal(live.stage, 'post_deploy_only');
@@ -135,12 +179,14 @@ test('live headers retains only proven post-deploy PASS, Universe stays local re
   assert.ok(live.precondition.includes('deployment SHA must equal checkout SHA'));
   assert.ok(live.lastVerifiedEvidence.includes('header_observations=798'));
   const universe = byId.get('verify-universe-locale-parity-r1');
-  assert.equal(universe.status, 'UNRESOLVED');
-  assert.equal(universe.stage, 'local_candidate');
-  assert.equal(universe.sourceSha, null);
-  assert.equal(universe.evaluatedSnapshotSha, baseline);
-  assert.equal(universe.lastVerifiedSha, null);
-  assert.equal(universe.requiredForMerge, false);
-  assert.ok(universe.knownFailure.includes('LOCALE_BAR'));
-  assert.ok(!pkg.scripts['verify:core'].includes(universe.file));
+  assert.equal(universe.status, 'CURRENT');
+  assert.equal(universe.stage, 'premerge_core');
+  assert.equal(universe.sourceSha, qualifiedSource);
+  assert.equal(universe.evaluatedSnapshotSha, qualifiedSource);
+  assert.equal(universe.lastVerifiedSha, qualifiedSource);
+  assert.equal(universe.requiredForMerge, null);
+  assert.equal(universe.knownFailure, undefined);
+  assert.match(universe.lastVerifiedEvidence, /R3 prospective CI not run/);
+  assert.ok(pkg.scripts['verify:core'].includes(universe.command));
+  assert.ok(registry.navigationKnownGap.includes('pending exact-commit CI validation'));
 });
