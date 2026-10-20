@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "f0d12859-0da2-44f3-96e7-36e67e8d1e53",
   "nonce": "fac0e27d-2460-4da8-a512-5268fa722309",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "6a0a965e094426b1165ff7fc199e1c969d7167e4",
@@ -11,10 +11,12 @@
   "session": "UNIVERSE_VERIFIER_QUAL_R3_DRAFT_20261020_R1",
   "worktree": "d:/bitevo_universe_verifier_qual_r3_6a0a965_local_r1",
   "acquiredAt": "2026-10-20T02:54:31.335Z",
-  "updatedAt": "2026-10-20T03:00:52.842Z",
+  "updatedAt": "2026-10-20T03:20:12.401Z",
   "expiresAt": "2026-10-20T04:54:28.285Z",
   "sealedHead": "bf88538e28727223e949db34b862f5cf75ad6ef4",
   "sealedTree": "759ffb28e504a5cf735af904d2c342fde5c69db0",
   "featureRef": "refs/heads/agent/site-universe-verifier-qual-6a0a965-local-r1",
-  "predecessor": "762a8ac09733c58369c254a759c799459bc9b6e8"
+  "predecessor": "cb9f29fb2130e72b2ad58267a3dc55feade498db",
+  "releasedAt": "2026-10-20T03:20:12.402Z",
+  "releaseReason": "pr241_normal_merge_prod_ready_live798_pass_cloudflare_unverified"
 }
