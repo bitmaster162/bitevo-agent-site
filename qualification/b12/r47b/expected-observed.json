@@ -1,0 +1,20 @@
+{
+  "schema": "bitevo.b12.r47b.expected-observed.v1",
+  "scope": "OFFLINE_SYNTHETIC_EXPECTATIONS",
+  "live_results_claimed": false,
+  "note": "Versioned test specification, not a run receipt. Local outcomes belong to the separate source-bound run audit. Provider observations remain null until a separately approved isolated provider trial.",
+  "cases": [
+    {"test": "Admission.test_template_valid_but_hold", "scenario": "Unknown IDs, budgets and retention", "expected": "HOLD", "provider_observed": null},
+    {"test": "Admission.test_complete_fixture_still_cannot_execute", "scenario": "Complete declared synthetic metadata", "expected": "DRY_RUN_COMPLETE; execution_authorized=false", "provider_observed": null},
+    {"test": "Admission.test_production_collision_d1_database_id", "scenario": "Production/test D1 ID collision", "expected": "REJECT", "provider_observed": null},
+    {"test": "Admission.test_reject_preview_bypass", "scenario": "Production environment spoof", "expected": "REJECT", "provider_observed": null},
+    {"test": "Admission.test_expired_inventory_hold", "scenario": "Inventory expiry passed", "expected": "HOLD", "provider_observed": null},
+    {"test": "Evidence.test_positive_delta_one", "scenario": "Complete independent synthetic +1 readback", "expected": "SIMULATION_PASS; real_provider_proven=false", "provider_observed": null},
+    {"test": "Evidence.test_200_without_delta_rejected", "scenario": "HTTP 200 without independent +1", "expected": "REJECT", "provider_observed": null},
+    {"test": "Evidence.test_incomplete_report_not_assumed_zero", "scenario": "Missing or incomplete report", "expected": "REJECT", "provider_observed": null},
+    {"test": "Evidence.test_wrong_database_readback_rejected", "scenario": "Readback from another database", "expected": "REJECT", "provider_observed": null},
+    {"test": "Evidence.test_unknown_after_increment_is_not_retry_permission", "scenario": "Unknown write outcome even with +1", "expected": "HOLD; retry_allowed=false", "provider_observed": null},
+    {"test": "Budget.test_retry_second_post_denied", "scenario": "Second event attempt beyond proposal budget", "expected": "within_declared_budget=false", "provider_observed": null},
+    {"test": "MemorySQL.test_real_schema_upsert_and_no_exactly_once_claim", "scenario": "Actual SQL, SQLite memory only", "expected": "first=1; replay=2; no D1 execution", "provider_observed": null}
+  ]
+}
