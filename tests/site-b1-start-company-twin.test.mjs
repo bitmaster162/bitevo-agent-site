@@ -21,6 +21,19 @@ test('RU Company Twin route/prices do not add new claims',()=>{
  }
  assert.ok(ru.includes('не бронирование встречи'));
 });
+
+test('Universe Crypto Guides card uses owned origin in EN and RU without status change',()=>{
+ const enUniverse=source('src/pages/universe.astro');
+ const ruUniverse=source('src/pages/ru/universe.astro');
+ for(const [locale, content] of [['EN',enUniverse],['RU',ruUniverse]]){
+  const match=content.match(/lane:\s*'CRYPTO',\s*name:\s*'Crypto Guides',\s*status:\s*'([^']+)',\s*href:\s*'([^']+)'/);
+  assert.ok(match,locale+' Crypto Guides card found');
+  assert.equal(match[1],'LIVE · REVIEW',locale+' status preserved');
+  assert.equal(match[2],'https://crypto.bitevo.work/',locale+' canonical domain');
+  assert.ok(!content.includes('https://cryptoguidessite.vercel.app/'),locale+' no old card origin');
+ }
+});
+
 test('R50/B1.2 source remains off',()=>{
  assert.equal(coverage.defaultMode,'disabled');
  assert.doesNotMatch(en+ru,/BITEVO_EVENT_COUNTER_ENABLED|BITEVO_R50_GRANT/);
