@@ -254,8 +254,8 @@
     },
     {
       "path": "/guides",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:a6c1d17ccbf8df396957ac3d04dc8e106e110b46ee769449ac4013f393b83aed"
+      "lastmod": "2026-10-26",
+      "fingerprint": "sha256:f92236a217bc3fd49ebb4186ca16ec062fbddda0b3801ceee2891c471b59fe39"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -419,8 +419,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:9a28a8018e5cbfd2c30c026e80e46146b5f5cfd50cbf909ba844dd67480fb404"
+      "lastmod": "2026-10-26",
+      "fingerprint": "sha256:ada4c5deae01afde73625fb3a03d96e2455cb03d7fb2732e7a83fbd208aa1e92"
     },
     {
       "path": "/ru/doctrine",
@@ -440,7 +440,7 @@
     {
       "path": "/ru/universe",
       "lastmod": "2026-10-26",
-      "fingerprint": "sha256:db8d874dcd126869078ed1802e5bf704224142fe2ba8f786abb4c9be48b886c0"
+      "fingerprint": "sha256:b4d3201aae6812b5298aea09a2937d502fbdb87cc6608352b0f42d949adef264"
     },
     {
       "path": "/ru/vision",
@@ -670,12 +670,12 @@
     {
       "path": "/guides/false-green-and-retry-safety",
       "lastmod": "2026-10-26",
-      "fingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      "fingerprint": "sha256:cb1217686fc77ab7024afceccd4c8969017abb5cffcf4926934fe79edc649d3e"
     },
     {
       "path": "/ru/guides/false-green-and-retry-safety",
       "lastmod": "2026-10-26",
-      "fingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      "fingerprint": "sha256:dedf0de7e8fa44cc765ed833987af0aca84e25bd66fe8d025dd44486e9842a07"
     }
   ]
 }
