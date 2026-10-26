@@ -666,6 +666,16 @@
       "path": "/ru/guides/mcp-server-authority-review",
       "lastmod": "2026-10-06",
       "fingerprint": "sha256:2e9ad60f6fb3146cd3742836d3967e4809f1d981cf01ce665216913c4a494c6e"
+    },
+    {
+      "path": "/guides/false-green-and-retry-safety",
+      "lastmod": "2026-10-26",
+      "fingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "/ru/guides/false-green-and-retry-safety",
+      "lastmod": "2026-10-26",
+      "fingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
     }
   ]
 }
