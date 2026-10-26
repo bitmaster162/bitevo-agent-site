@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "03dbba43-03f7-442f-b7f6-cddc74b9a102",
   "nonce": "cf5b7ef4-320e-4c3a-8487-1fab97c0b506",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "df2b4b9a24fd89bea45a6f999a7bdbd5232020d1",
@@ -11,10 +11,10 @@
   "session": "R50H_MAIN_SYNC_20261027_GITHUB",
   "worktree": "github-connector/r50h-main-sync-20261027",
   "acquiredAt": "2026-10-26T21:35:00.000Z",
-  "updatedAt": "2026-10-26T21:35:00.000Z",
+  "updatedAt": "2026-10-26T21:41:00.000Z",
   "expiresAt": "2026-10-28T21:35:00.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "c22ebccd3750da23ccef334b60e498aaec1f5bb8"
+  "sealedHead": "d664e51681d61ba373782e5ddbc235b2d6f4c61f",
+  "sealedTree": "9ffe38646735bfcfeb037e5e4c83a769b921c037",
+  "featureRef": "refs/heads/agent/site-r50h-staging-trial-20261026-r1",
+  "predecessor": "8bf58bc47957561d547b426b7c56f1d323a5e25c"
 }
