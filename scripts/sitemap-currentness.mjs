@@ -97,7 +97,7 @@ async function verify() {
     if (!saved) continue;
     if (!validDate(saved.lastmod)) failures.push(`invalid lastmod for ${row.path}: ${saved.lastmod || 'missing'}`);
     if (!/^sha256:[0-9a-f]{64}$/.test(String(saved.fingerprint || ''))) failures.push(`invalid fingerprint for ${row.path}`);
-    else if (saved.fingerprint !== row.fingerprint) failures.push(`rendered fingerprint drift for ${row.path}`);
+    else if (saved.fingerprint !== row.fingerprint) { failures.push(`rendered fingerprint drift for ${row.path}`); console.error(`GUIDE3_FINGERPRINT_DIAGNOSTIC ${row.path} ${row.fingerprint}`); }
   }
 
   if (failures.length) {
