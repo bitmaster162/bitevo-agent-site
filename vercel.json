@@ -3,7 +3,8 @@
   "git": {
     "deploymentEnabled": {
       "coordination/site-mutation-lease": false,
-      "agent/site-p24-scope-handoff-production-readiness-r1": false
+      "agent/site-p24-scope-handoff-production-readiness-r1": false,
+      "agent/site-r50h-staging-trial-20261026-r1": false
     }
   },
   "crons": [

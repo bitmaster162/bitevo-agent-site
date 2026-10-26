@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "bitevo-r50-staging-20261026",
+  "main": "worker/r50h-staging-entry.mjs",
+  "compatibility_date": "2026-08-12",
+  "workers_dev": true,
+  "observability": { "enabled": false },
+  "d1_databases": [{
+    "binding": "BITEVO_R50_STAGING_DB",
+    "database_name": "bitevo-r50-staging-20261026",
+    "database_id": "00000000-0000-0000-0000-000000000000"
+  }],
+  "ratelimits": [{
+    "name": "BITEVO_EVENT_RATE_LIMITER",
+    "namespace_id": "150026",
+    "simple": { "limit": 30, "period": 60 }
+  }],
+  "vars": {
+    "BITEVO_R50_GRANT_RECEIVER_ENABLED": "false",
+    "BITEVO_EVENT_COUNTER_RECEIVER_ENABLED": "false"
+  }
+}
