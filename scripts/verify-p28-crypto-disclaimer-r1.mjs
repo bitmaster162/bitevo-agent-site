@@ -25,9 +25,9 @@ for (const [route, file, disclaimer] of routes) {
 }
 const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
 const expected = {
-  '/ru/universe':['2026-10-16','sha256:96cc5a022181f7ca183aea7859ab283c5315d03438868f077496145d360608e9'],
+  '/ru/universe':['2026-10-26','sha256:db8d874dcd126869078ed1802e5bf704224142fe2ba8f786abb4c9be48b886c0'],
   '/ru/vision':['2026-10-13','sha256:69596fd7cfba45fedcefafa924aa151271032f2743b488cced1198cc6ab6c924'],
-  '/universe':['2026-10-20','sha256:a5a4e121b225fe9d01d20d2b934da0433de6bf61fdbd1b83e03e28fb3b704a3b'],
+  '/universe':['2026-10-26','sha256:1bd9c9722c2c5a478d43197d58e54441f4042be8461787267724e9efc0c33d15'],
   '/vision':['2026-10-13','sha256:c05f365e5bf41ee50d39076b1132a80a11710b81d4c65c252b3cc9ef5d649a24']
 };
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
