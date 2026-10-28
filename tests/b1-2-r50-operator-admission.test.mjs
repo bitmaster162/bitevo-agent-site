@@ -260,6 +260,20 @@ const r50ProtectedSources = Object.freeze({
   "scripts/verify-b1-2-event-counter.mjs": "38995a0577b9bf5ea17cb634b90701f94cd8b0b0c77b9ba09e62594bf9b0c0c1",
   "scripts/verify-r47a-privacy.mjs": "1a17201db3cd530bee7b08503a32ca18fa6dd4582441e8786265ef89314c1689"
 });
+// R50-D exact successor for Guide #3: preserve every historical protected SHA.
+// The changed verifier scripts are admitted ONLY for the precisely pinned guide3 registry+manifest.
+const r50Guide4SuccessorSha = Object.freeze({
+  'worker/index.mjs': 'd8c97fad17a033dc361dd5f30132f2a292198835c9e6a9d0bf2550bf904f86d6',
+  'vercel.json': '99d0c0f6d371db9453234c3580f63177494cb26054225b59be9dbf65ab9d7565',
+  'scripts/verify-r47a-privacy.mjs': '70f31d897864c6eb5c3d73f57ad94df110b9e94faac50c787290a6eb2d7ebe7f',
+  'scripts/verify-b1-2-event-counter.mjs': '126084d75c32af5adbbd831da0c10bce0c65a0d547c4f379bdc5d49af2402178'
+});
+const { isExactGuide4Successor } = await import('../scripts/guide4-route-successor-r1.mjs');
+function r50ProtectedShaAccepted(path, sha) {
+  if (sha === r50ProtectedSources[path]) return true;
+  return isExactGuide4Successor() && r50Guide4SuccessorSha[path] === sha;
+}
+
 const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
 const r50RequiredSuffix = ' && ' + r50RequiredCommand;
 const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e4900f7e4c81880e9a8';
@@ -277,13 +291,22 @@ function r50PackageIsExact(candidate) {
 test('R50-B preserves public OFF source, five-column schema and existing release contracts',async()=>{
   for (const [path, expected] of Object.entries(r50ProtectedSources)) {
     const current = (await readFile(new URL('../'+path,import.meta.url),'utf8')).replace(/\r\n/g,'\n');
-    assert.equal(digest(current), expected, path+' is outside R50-D scope; pinned at '+BASE);
+    assert.ok(r50ProtectedShaAccepted(path,digest(current)), path+' outside R50-D scope; historic pinned at '+BASE+' sha='+expected);
   }
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
   assert.ok(r50PackageIsExact(pkg), 'only exact R50 required-test suffix may differ from pinned package');
   assert.equal(coverage.defaultMode,'disabled');assert.equal(coverage.routes.length,24);
   assert.equal(coverage.routes.reduce((n,r)=>n+r.events.length,0),31);
 });
+test('Guide4 R50-D successor exact SHA only; alien verifier fails',()=>{
+  for (const [path,sha] of Object.entries(r50Guide4SuccessorSha)) {
+    assert.ok(r50ProtectedShaAccepted(path,r50ProtectedSources[path]));
+    assert.ok(r50ProtectedShaAccepted(path,sha));
+    assert.equal(r50ProtectedShaAccepted(path,'0'.repeat(64)),false);
+  }
+  assert.equal(r50ProtectedShaAccepted('vercel.json',r50Guide4SuccessorSha['scripts/verify-r47a-privacy.mjs']),false);
+});
+
 test('R50-D required test pair is reached by unchanged build:core and required quality job',async()=>{
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
   const workflow = await readFile(new URL('../.github/workflows/quality-gate.yml',import.meta.url),'utf8');

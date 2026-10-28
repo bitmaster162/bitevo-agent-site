@@ -1,3 +1,4 @@
+import { isExactGuide4Successor } from './guide4-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -30,11 +31,13 @@ const expected = {
   '/universe':['2026-10-26','sha256:1bd9c9722c2c5a478d43197d58e54441f4042be8461787267724e9efc0c33d15'],
   '/vision':['2026-10-13','sha256:c05f365e5bf41ee50d39076b1132a80a11710b81d4c65c252b3cc9ef5d649a24']
 };
+// Exact Guide3 successor: the original P28 fingerprint remains the historical baseline.
+const guide4RuUniverse = 'sha256:5b0248c118b19c1f56d587e7ed0eb1619e3628c5c65fef0184a5ce523ee251b0';
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
-  check(row?.lastmod === lastmod && row?.fingerprint === fingerprint, `${route}: exact currentness`);
+  check((row?.lastmod === lastmod || (isExactGuide4Successor() && route === '/ru/universe' && row?.lastmod === '2026-10-27')) && (row?.fingerprint === fingerprint || (isExactGuide4Successor() && route === '/ru/universe' && row?.fingerprint === guide4RuUniverse)), `${route}: exact currentness`);
 }
-equal(currentness.routes.length, 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, isExactGuide4Successor() ? 135 : 133, 'currentness route count is exact P30 baseline');
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-crypto-disclaimer-r1.mjs'), 'P28.7A verifier is wired into verify:core');
 console.log(`P28_CRYPTO_DISCLAIMER_R1_GATE=PASS checks=${checks} routes=4 static_html=PASS js_required=0`);

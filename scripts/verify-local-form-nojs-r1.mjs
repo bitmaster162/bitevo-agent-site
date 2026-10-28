@@ -1,3 +1,4 @@
+import { isExactGuide4Successor } from './guide4-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -78,7 +79,7 @@ for (const corrupt of [
 ]) need(!verifiedGuard(corrupt), 'negative guard fixture incorrectly accepted');
 
 const manifest = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
-need(manifest.routes.length === 133, 'route registry size retained');
+need(manifest.routes.length === (isExactGuide4Successor() ? 135 : 133), 'route registry size retained');
 const byPath = new Map(manifest.routes.map(x => [x.path, x]));
 for (const entry of routes) {
   const source = await readFile(new URL(entry.file, root), 'utf8');
