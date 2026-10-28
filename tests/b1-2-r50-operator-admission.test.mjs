@@ -264,7 +264,7 @@ const r50ProtectedSources = Object.freeze({
 // The changed verifier scripts are admitted ONLY for the precisely pinned guide3 registry+manifest.
 const r50Guide3SuccessorSha = Object.freeze({
   'worker/index.mjs': 'e5ef89b5505ca602032a0de36b33651c9a7ad50d3e3459d32724d49abcab0c52',
-  'vercel.json': '01d579e7aadb94bbef95531b3a3659450a568ac75ca7dfa523fe11270ffee4f1',
+  'vercel.json': 'd75a09d2cbcc872ac70442275ca8a1cad97d1b98ccad42bdd1ccb45ea11bf3eb',
   'scripts/verify-r47a-privacy.mjs': 'a49cf1f428148210b89a3fb1d3f0dbe8ffdc395b2cedf9ecf2341f3581be717c',
   'scripts/verify-b1-2-event-counter.mjs': '126084d75c32af5adbbd831da0c10bce0c65a0d547c4f379bdc5d49af2402178'
 });
