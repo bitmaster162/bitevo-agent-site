@@ -116,7 +116,7 @@ for (const file of htmlFiles) {
   }
   check(!source.includes('data-bitevo-events="enabled"'), file + ': event client remains OFF');
 }
-check(standalone === 4 && footerEn + footerRu === 146,
+check(standalone === 4 && footerEn + footerRu === (isExactGuide3Successor() ? 148 : 146),
   'exact four reviewed standalone exceptions and 146 shared footers');
 
 // R47A-F3: distinguish B1.2 OFF from separate analytics and describe processing

@@ -264,7 +264,7 @@ const r50ProtectedSources = Object.freeze({
 // The changed verifier scripts are admitted ONLY for the precisely pinned guide3 registry+manifest.
 const r50Guide3SuccessorSha = Object.freeze({
   'vercel.json': 'eef6d099c7ccf64d16defee4c620f74cd41f7b895aa88cbf3e242103a56b5ced',
-  'scripts/verify-r47a-privacy.mjs': 'b2d78af48b80bf7f86c02a72b9af75a0760fd8a055c898dd16f6fb7f2e067c42',
+  'scripts/verify-r47a-privacy.mjs': 'a49cf1f428148210b89a3fb1d3f0dbe8ffdc395b2cedf9ecf2341f3581be717c',
   'scripts/verify-b1-2-event-counter.mjs': '126084d75c32af5adbbd831da0c10bce0c65a0d547c4f379bdc5d49af2402178'
 });
 const { isExactGuide3Successor } = await import('../scripts/guide3-route-successor-r1.mjs');
