@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "e5ffe51e-1292-4df3-9b8b-26727fb41ab2",
   "nonce": "7423f227-f66a-4174-9abf-f8285789164d",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "df2b4b9a24fd89bea45a6f999a7bdbd5232020d1",
@@ -11,10 +11,10 @@
   "session": "GUIDE4_MCP_DRAFT_20261028",
   "worktree": "d:/bitevo_guide4_mcp_local_20261028_r1",
   "acquiredAt": "2026-10-28T15:22:03.834Z",
-  "updatedAt": "2026-10-28T15:22:03.834Z",
+  "updatedAt": "2026-10-28T15:36:56.022Z",
   "expiresAt": "2026-10-28T18:21:59.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "d9826b5650b45d6be1dcc84af0845d94cd778b02"
+  "sealedHead": "be92b404910765169bfe90e5a2ecda092bc3ec7d",
+  "sealedTree": "92c36ac902d906e8876a911ebd0a0f822657f649",
+  "featureRef": "refs/heads/agent/site-guide4-mcp-governance-20261028-r1",
+  "predecessor": "c0984a5ff9047ace21b086463c657f28fdfe8565"
 }
