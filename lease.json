@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "3616716f-85f5-4850-89f0-446ed5ba6139",
   "nonce": "5e9a2885-d4b3-4b89-8df2-b33a543554ed",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "df2b4b9a24fd89bea45a6f999a7bdbd5232020d1",
@@ -11,11 +11,13 @@
   "session": "GUIDE3_CSP_EXACT_SHA_20261028",
   "worktree": "d:/bitevo_guide3_successor_20261028_r1",
   "acquiredAt": "2026-10-28T14:55:50.876Z",
-  "updatedAt": "2026-10-28T15:21:22.197Z",
+  "updatedAt": "2026-10-28T15:21:53.539Z",
   "expiresAt": "2026-10-28T17:21:06.000Z",
   "sealedHead": "5cf04b45431cd8373bbe2d739751c86c75b03d65",
   "sealedTree": "d5bbed33fe022e75f6a35221fb0d57c30c81dad2",
   "featureRef": "refs/heads/agent/site-guides-false-green-retry-20261027-r1",
-  "predecessor": "b09f209e1fc40f27da9e89c9b110766cc8a0f001",
-  "transferredFrom": "chatgpt-bitevo-site"
+  "predecessor": "da20c3cef38d1a391eb7d23b7bc00cf16d557bce",
+  "transferredFrom": "chatgpt-bitevo-site",
+  "releasedAt": "2026-10-28T15:21:53.540Z",
+  "releaseReason": "guide3_draft_sealed_ci_monitor_handoff"
 }
