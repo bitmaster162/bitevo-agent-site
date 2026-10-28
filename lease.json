@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "b80795ee-b9c3-43e9-8f39-409aa0077e27",
   "nonce": "1f5a2b07-9955-45c2-accd-0b40b5edb73c",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "df2b4b9a24fd89bea45a6f999a7bdbd5232020d1",
@@ -11,10 +11,12 @@
   "session": "GUIDE4_CI_REPAIR_20261029",
   "worktree": "d:/bitevo_guide4_mcp_local_20261028_r1",
   "acquiredAt": "2026-10-28T19:34:09.571Z",
-  "updatedAt": "2026-10-28T19:40:30.599Z",
+  "updatedAt": "2026-10-28T19:59:43.049Z",
   "expiresAt": "2026-10-28T21:34:06.000Z",
   "sealedHead": "821e4d9f8a91cbc66f2a8a4a553527dd48c86d3f",
   "sealedTree": "70e847399996d1de02bd509e98f21122859d7478",
   "featureRef": "refs/heads/agent/site-guide4-mcp-governance-20261028-r1",
-  "predecessor": "ca273fe6ffd4c1784fc7df132222eb136fde2659"
+  "predecessor": "a31a9a7ca72814672b02b476efc84b9871cfb680",
+  "releasedAt": "2026-10-28T19:59:43.050Z",
+  "releaseReason": "guide4_ci_all_green_draft_sealed_transfer_to_guide3_vercel_policy_only"
 }
