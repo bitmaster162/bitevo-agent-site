@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "e24edf4e-6711-4f39-9ba1-e4365f62c766",
   "nonce": "55567253-36f8-47c3-adc2-c80342fe3cc9",
-  "state": "ACTIVE",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "df2b4b9a24fd89bea45a6f999a7bdbd5232020d1",
@@ -11,10 +11,12 @@
   "session": "GUIDE3_SUCCESSOR_20261028_LAPTOPDC",
   "worktree": "d:/bitevo_guide3_successor_20261028_r1",
   "acquiredAt": "2026-10-28T10:36:30.974Z",
-  "updatedAt": "2026-10-28T10:36:30.974Z",
+  "updatedAt": "2026-10-28T10:37:54.361Z",
   "expiresAt": "2026-10-28T13:36:27.000Z",
   "sealedHead": null,
   "sealedTree": null,
   "featureRef": null,
-  "predecessor": "017dc2177c80c722cbc5e8c530bcc1f04c624691"
+  "predecessor": "6bd539bd9124ddf9269887b950f01e2b92be1040",
+  "releasedAt": "2026-10-28T10:37:54.365Z",
+  "releaseReason": "successor_handoff_to_pr244"
 }
