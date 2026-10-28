@@ -1,0 +1,204 @@
+{
+  "document": "R50H_ISOLATED_MINIFLARE_LOCAL_TRIAL",
+  "checkedUtc": "2026-10-26T11:00:54.736Z",
+  "status": "PASS",
+  "resourceId": "BITEVO_R50H_SYNTHETIC_20261026_NOT_PROVIDER",
+  "oneWorker": true,
+  "oneD1": true,
+  "externalNetworkRequests": 0,
+  "productionRequests": 0,
+  "realCTA": 0,
+  "calCom": 0,
+  "providerCloudflareRequests": 0,
+  "secretMaterialInReceipt": false,
+  "sourceMain": "685c9833db261dd3f39d8edcd663290b11b5f0e3",
+  "scenarios": [
+    {
+      "name": "no_public_routes",
+      "status": "PASS",
+      "expected": {
+        "status": 404
+      },
+      "observed": {
+        "status": 404
+      }
+    },
+    {
+      "name": "initially_empty",
+      "status": "PASS",
+      "expected": {
+        "grants": 0,
+        "ledger": 0,
+        "aggregate": 0
+      },
+      "observed": {
+        "grants": 0,
+        "ledger": 0,
+        "aggregate": 0
+      }
+    },
+    {
+      "name": "valid_grant",
+      "status": "PASS",
+      "expected": {
+        "status": 200
+      },
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "same_grant_replay",
+      "status": "PASS",
+      "expected": {
+        "status": 409
+      },
+      "observed": {
+        "status": 409
+      }
+    },
+    {
+      "name": "valid_event",
+      "status": "PASS",
+      "expected": {
+        "status": 200
+      },
+      "observed": {
+        "status": 200
+      }
+    },
+    {
+      "name": "same_request_id_dedup",
+      "status": "PASS",
+      "expected": {
+        "status": 409
+      },
+      "observed": {
+        "status": 409
+      }
+    },
+    {
+      "name": "once_only",
+      "status": "PASS",
+      "expected": {
+        "grants": 1,
+        "ledger": 1,
+        "aggregate": 1
+      },
+      "observed": {
+        "grants": 1,
+        "ledger": 1,
+        "aggregate": 1
+      }
+    },
+    {
+      "name": "concurrent_grant",
+      "status": "PASS",
+      "expected": {
+        "statuses": [
+          200,
+          409
+        ]
+      },
+      "observed": {
+        "statuses": [
+          200,
+          409
+        ]
+      }
+    },
+    {
+      "name": "bad_token_HMAC",
+      "status": "PASS",
+      "expected": {
+        "status": 401
+      },
+      "observed": {
+        "status": 401
+      }
+    },
+    {
+      "name": "bad_token_not_consumed",
+      "status": "PASS",
+      "expected": {
+        "consumed": false
+      },
+      "observed": {
+        "consumed": false
+      }
+    },
+    {
+      "name": "window_or_digest_mismatch_denied",
+      "status": "PASS",
+      "expected": {
+        "status": 409
+      },
+      "observed": {
+        "status": 409
+      }
+    },
+    {
+      "name": "lost_grant_receipt_readback_NO_RETRY",
+      "status": "PASS",
+      "expected": {
+        "status": 200,
+        "consumed": true
+      },
+      "observed": {
+        "status": 200,
+        "consumed": true
+      }
+    },
+    {
+      "name": "lost_event_receipt_readback_NO_RETRY",
+      "status": "PASS",
+      "expected": {
+        "status": 200,
+        "deltaLedger": 1,
+        "deltaAggregate": 1
+      },
+      "observed": {
+        "status": 200,
+        "deltaLedger": 1,
+        "deltaAggregate": 1
+      }
+    },
+    {
+      "name": "trigger_failure_rollback",
+      "status": "PASS",
+      "expected": {
+        "status": 503,
+        "ledgerUnchanged": true
+      },
+      "observed": {
+        "status": 503,
+        "ledgerUnchanged": true
+      }
+    },
+    {
+      "name": "cleanup_zero",
+      "status": "PASS",
+      "expected": {
+        "grants": 0,
+        "ledger": 0,
+        "aggregate": 0
+      },
+      "observed": {
+        "grants": 0,
+        "ledger": 0,
+        "aggregate": 0
+      }
+    }
+  ],
+  "cleanup": {
+    "grants": 0,
+    "ledger": 0,
+    "aggregate": 0
+  },
+  "caveats": [
+    "locally emulated D1, not Cloudflare provider proof",
+    "API production guards not spoofed in Preview",
+    "no automatic retry after unknown receipt",
+    "Cloudflare Time Travel/log retention unverified"
+  ]
+}
