@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "909bfb0a-0c3f-4fb7-a16a-e70ca52b4bed",
   "nonce": "aafd4ae8-58d9-4a52-8005-83e4819bb4fe",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "df2b4b9a24fd89bea45a6f999a7bdbd5232020d1",
@@ -11,10 +11,10 @@
   "session": "PR244_SUCCESSOR_20261028_LAPTOPDC",
   "worktree": "d:/bitevo_r50h_staging_kit_685c983_20261026_r1",
   "acquiredAt": "2026-10-28T10:38:14.873Z",
-  "updatedAt": "2026-10-28T10:38:14.873Z",
+  "updatedAt": "2026-10-28T10:39:54.960Z",
   "expiresAt": "2026-10-28T13:38:11.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "0f3c90644609423a62d631f6c85b781ef0f08f96"
+  "sealedHead": "098cfadaf9b2ebe5f1c282dd14d90a8b09774558",
+  "sealedTree": "acfde118ae4169ee5dce66d453efc5fb2708025b",
+  "featureRef": "refs/heads/agent/site-r50h-staging-trial-20261026-r1",
+  "predecessor": "45147464e393ae6a6b00a578fc7c60ece7c6b99e"
 }
