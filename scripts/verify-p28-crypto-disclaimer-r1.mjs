@@ -1,3 +1,4 @@
+import { isExactGuide3Successor } from './guide3-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -34,7 +35,7 @@ for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
   check(row?.lastmod === lastmod && row?.fingerprint === fingerprint, `${route}: exact currentness`);
 }
-equal(currentness.routes.length, 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, isExactGuide3Successor() ? 135 : 133, 'currentness route count is exact P30 baseline');
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-crypto-disclaimer-r1.mjs'), 'P28.7A verifier is wired into verify:core');
 console.log(`P28_CRYPTO_DISCLAIMER_R1_GATE=PASS checks=${checks} routes=4 static_html=PASS js_required=0`);

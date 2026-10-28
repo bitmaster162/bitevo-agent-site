@@ -1,3 +1,4 @@
+import { isExactGuide3Successor } from './guide3-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
@@ -62,9 +63,9 @@ const enRoute = registry.routes.find(row => row.path === '/owasp-agentic-top-10'
 const ruRoute = registry.routes.find(row => row.path === '/ru/owasp-agentic-top-10');
 check(enRoute?.category === 'RESEARCH' && enRoute?.indexable === true && enRoute?.locale === 'en' && enRoute?.parent === '/agent-authority-audit', 'EN registry route exact');
 check(ruRoute?.category === 'RESEARCH' && ruRoute?.indexable === true && ruRoute?.locale === 'ru' && ruRoute?.parent === '/ru/agent-authority-audit', 'RU registry route exact');
-equal(registry.routes.filter(row => row.indexable).length, 133, 'indexable route count is exact N2 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 67, 'EN indexable route count is exact N2 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 66, 'RU indexable route count remains exact');
+equal(registry.routes.filter(row => row.indexable).length, isExactGuide3Successor() ? 135 : 133, 'indexable route count is exact N2 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, isExactGuide3Successor() ? 68 : 67, 'EN indexable route count is exact N2 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, isExactGuide3Successor() ? 67 : 66, 'RU indexable route count remains exact');
 
 const expectedCurrentness = {
   '/agent-authority-audit': { fingerprint:'sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9', lastmod:'2026-10-16' },
@@ -76,7 +77,7 @@ for (const [path,value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
   check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, isExactGuide3Successor() ? 135 : 133, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-owasp-agentic-top10-r1.mjs'), 'P28.6 verifier is wired into verify:core');
 
 console.log(`P28_OWASP_AGENTIC_TOP10_R1_GATE=PASS checks=${checks} rows=10 indexable=133 en=67 ru=66 static_html=PASS source_link=BOUND deferred_precheck=OMITTED deferred_booking=OMITTED js_required=0`);

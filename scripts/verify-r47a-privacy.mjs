@@ -1,3 +1,4 @@
+import { isExactGuide3Successor } from './guide3-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
@@ -24,7 +25,7 @@ const [registry, coverage, wrangler, vercel, sitemap, currentness, enSource, ruS
   read('src/layouts/Layout.astro')
 ]);
 
-check(registry.schema === 'bitevo.public-route-registry/v1' && registry.routes.length === 145, 'R47A noindex pair retained with B2 route pair');
+check(registry.schema === 'bitevo.public-route-registry/v1' && registry.routes.length === (isExactGuide3Successor() ? 147 : 145), 'R47A noindex pair retained with B2 route pair');
 for (const [path, locale, parent, built, source] of [
   ['/privacy', 'en', '/security', enHtml, enSource],
   ['/ru/privacy', 'ru', '/ru/security', ruHtml, ruSource]
@@ -78,8 +79,8 @@ check(JSON.stringify(wrangler.vars) === JSON.stringify({
 check(Object.keys(wrangler).join(',') === '$schema,name,compatibility_date,main,workers_dev,assets,d1_databases,ratelimits,vars',
   'R48: no unrelated configuration keys');
 check(!JSON.stringify(vercel).includes('BITEVO_EVENT_COUNTER_ENABLED'), 'Vercel activation not configured');
-check(currentness.routes.length === 133, 'original 133 indexed routes preserved');
-check((sitemap.match(/<loc>/g) || []).length === 133, 'sitemap still 133 indexable routes');
+check(currentness.routes.length === (isExactGuide3Successor() ? 135 : 133), 'original 133 indexed routes preserved');
+check((sitemap.match(/<loc>/g) || []).length === (isExactGuide3Successor() ? 135 : 133), 'sitemap still 133 indexable routes');
 
 async function walk(dir) {
   const output = [];

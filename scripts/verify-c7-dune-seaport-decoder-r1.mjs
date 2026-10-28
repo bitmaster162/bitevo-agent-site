@@ -1,3 +1,4 @@
+import { isExactGuide3Successor } from './guide3-route-successor-r1.mjs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -76,10 +77,10 @@ for (const [path, locale, parent] of [
   }
 }
 
-equal(registry.routes.filter(row => row.indexable).length, 133, 'indexable route count');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 67, 'EN indexable route count');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 66, 'RU indexable route count');
-equal(currentness.routes.length, 133, 'currentness route count');
+equal(registry.routes.filter(row => row.indexable).length, isExactGuide3Successor() ? 135 : 133, 'indexable route count');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, isExactGuide3Successor() ? 68 : 67, 'EN indexable route count');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, isExactGuide3Successor() ? 67 : 66, 'RU indexable route count');
+equal(currentness.routes.length, isExactGuide3Successor() ? 135 : 133, 'currentness route count');
 check(pkg.scripts?.['verify:core']?.includes('verify-c7-dune-seaport-decoder-r1.mjs'), 'C7 verifier wired into verify:core');
 
 const offerKeys = [...intake.matchAll(/^\s{4}'([^']+)': \{$/gm)].map(match => match[1]);
