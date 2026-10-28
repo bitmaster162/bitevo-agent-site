@@ -92,7 +92,7 @@ async function walk(dir) {
   return output;
 }
 const htmlFiles = await walk(dist);
-check(htmlFiles.length === 150, 'R47A should add exactly two HTML pages');
+check(htmlFiles.length === (isExactGuide3Successor() ? 152 : 150), 'R47A original 150 HTML pages or exact Guide3 152 successor');
 const standaloneWithoutSharedFooter = new Set([
   'concierge/index.html',
   'site-agent-copilot-lab/index.html',
