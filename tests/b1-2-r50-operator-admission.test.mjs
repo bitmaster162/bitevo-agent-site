@@ -260,6 +260,19 @@ const r50ProtectedSources = Object.freeze({
   "scripts/verify-b1-2-event-counter.mjs": "38995a0577b9bf5ea17cb634b90701f94cd8b0b0c77b9ba09e62594bf9b0c0c1",
   "scripts/verify-r47a-privacy.mjs": "1a17201db3cd530bee7b08503a32ca18fa6dd4582441e8786265ef89314c1689"
 });
+// Exact R50-H successor: the historical SHA above remains immutable.
+// Only the known staging-branch Vercel preview suppression config is admitted.
+const r50SuccessorVercel = Object.freeze({
+  path: 'vercel.json',
+  historicalSha256: r50ProtectedSources['vercel.json'],
+  successorSha256: '6df40d46670d10d69f4fdf85c32581309952937734a1c4a4288941499441179b',
+  branch: 'agent/site-r50h-staging-trial-20261026-r1'
+});
+function r50AcceptedProtectedDigest(path, actual) {
+  if (actual === r50ProtectedSources[path]) return true;
+  return path === r50SuccessorVercel.path && actual === r50SuccessorVercel.successorSha256;
+}
+
 const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
 const r50RequiredSuffix = ' && ' + r50RequiredCommand;
 const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e4900f7e4c81880e9a8';
@@ -277,13 +290,21 @@ function r50PackageIsExact(candidate) {
 test('R50-B preserves public OFF source, five-column schema and existing release contracts',async()=>{
   for (const [path, expected] of Object.entries(r50ProtectedSources)) {
     const current = (await readFile(new URL('../'+path,import.meta.url),'utf8')).replace(/\r\n/g,'\n');
-    assert.equal(digest(current), expected, path+' is outside R50-D scope; pinned at '+BASE);
+    assert.ok(r50AcceptedProtectedDigest(path, digest(current)), path+' is outside R50-D scope; historic pin '+expected+' at '+BASE);
   }
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
   assert.ok(r50PackageIsExact(pkg), 'only exact R50 required-test suffix may differ from pinned package');
   assert.equal(coverage.defaultMode,'disabled');assert.equal(coverage.routes.length,24);
   assert.equal(coverage.routes.reduce((n,r)=>n+r.events.length,0),31);
 });
+test('R50-H successor permits only historic or exact suppressed-preview vercel SHA',()=>{
+  assert.notEqual(r50SuccessorVercel.historicalSha256, r50SuccessorVercel.successorSha256);
+  assert.ok(r50AcceptedProtectedDigest('vercel.json',r50SuccessorVercel.historicalSha256));
+  assert.ok(r50AcceptedProtectedDigest('vercel.json',r50SuccessorVercel.successorSha256));
+  assert.equal(r50AcceptedProtectedDigest('vercel.json','0'.repeat(64)),false);
+  assert.equal(r50AcceptedProtectedDigest('wrangler.jsonc',r50SuccessorVercel.successorSha256),false);
+});
+
 test('R50-D required test pair is reached by unchanged build:core and required quality job',async()=>{
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
   const workflow = await readFile(new URL('../.github/workflows/quality-gate.yml',import.meta.url),'utf8');
