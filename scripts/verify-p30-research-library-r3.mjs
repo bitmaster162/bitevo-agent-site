@@ -20,7 +20,9 @@ const expectedMeta = new Map([
   ['/guides/mcp-server-authority-review', { reviewed: '2026-10-06', nextReview: '2027-01-06', h3: 20, card: '05' }],
   ['/ru/guides/mcp-server-authority-review', { reviewed: '2026-10-06', nextReview: '2027-01-06', h3: 20, card: '05' }],
   ['/guides/bitget-authority-after-orchestration-compromise', { reviewed: '2026-10-07', nextReview: '2027-01-07', h3: 4, card: '06' }],
-  ['/ru/guides/bitget-authority-after-orchestration-compromise', { reviewed: '2026-10-07', nextReview: '2027-01-07', h3: 4, card: '06' }]
+  ['/ru/guides/bitget-authority-after-orchestration-compromise', { reviewed: '2026-10-07', nextReview: '2027-01-07', h3: 4, card: '06' }],
+  ['/guides/false-green-and-retry-safety', { reviewed: '2026-10-26', nextReview: '2027-01-26', h3: 0, card: '07' }],
+  ['/ru/guides/false-green-and-retry-safety', { reviewed: '2026-10-26', nextReview: '2027-01-26', h3: 0, card: '07' }]
 ]);
 const expected = [...expectedMeta.keys()];
 const serverNames = [
