@@ -103,7 +103,7 @@
       "permanent": true
     },
     {
-      "source": "/guides/:slug((?!before-write-access|bitget-authority-after-orchestration-compromise|d3-tool-io-bridge-contract|fleet-coordinator-drift-monitoring|mcp-server-authority-review|security-sandboxing).*)",
+      "source": "/guides/:slug((?!before-write-access|bitget-authority-after-orchestration-compromise|d3-tool-io-bridge-contract|fleet-coordinator-drift-monitoring|mcp-and-coding-agent-governance|mcp-server-authority-review|security-sandboxing).*)",
       "destination": "/guides",
       "permanent": true
     }

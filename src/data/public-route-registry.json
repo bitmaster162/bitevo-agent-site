@@ -1009,6 +1009,15 @@
       "reviewed": "2026-10-07"
     },
     {
+      "path": "/guides/mcp-and-coding-agent-governance",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-27"
+    },
+    {
       "path": "/guides/mcp-server-authority-review",
       "category": "RESEARCH",
       "indexable": true,
@@ -1034,6 +1043,15 @@
       "parent": "/ru/guides",
       "generatedBy": "research-notes",
       "reviewed": "2026-10-07"
+    },
+    {
+      "path": "/ru/guides/mcp-and-coding-agent-governance",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/guides",
+      "generatedBy": "research-notes",
+      "reviewed": "2026-10-27"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",

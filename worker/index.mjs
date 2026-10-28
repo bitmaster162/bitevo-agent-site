@@ -4,7 +4,8 @@ const canonicalGuides = new Set([
   '/guides/d3-tool-io-bridge-contract',
   '/guides/before-write-access',
   '/guides/mcp-server-authority-review',
-  '/guides/bitget-authority-after-orchestration-compromise'
+  '/guides/bitget-authority-after-orchestration-compromise',
+  '/guides/mcp-and-coding-agent-governance'
 ]);
 
 const EVENT_PATH = '/b1-2/event';
