@@ -11,7 +11,7 @@ reviewed: 2026-10-27
 next_review: 2027-01-27
 related: [/ru/agent-authority-audit, /ru/security-validation, /ru/guides/before-write-access]
 schema: [Article, BreadcrumbList]
-research_source: "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; primary MCP, Check Point, Cline, Invariant and AWS sources; Part IV excluded"
+research_source: "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; первоисточники спецификации MCP, Check Point, Cline, Invariant Labs и AWS; непроверенные утверждения части IV исключены."
 ---
 
 Исследование · инженерное руководство с первоисточниками
@@ -24,17 +24,17 @@ research_source: "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; prima
 
 ## 1. Четыре границы доверия
 
-**Конфигурация проекта до доверия.** [Check Point Research, 25 февраля 2026 года](https://research.checkpoint.com/2026/rce-and-api-token-exfiltration-through-claude-code-project-files-cve-2025-59536/) разобрала злоупотребление проектными hooks, MCP-согласием и подменой `ANTHROPIC_BASE_URL` в Claude Code, включая **CVE-2025-59536** и **CVE-2026-21852**. Исследователи сообщают, что уязвимости исправлены до публичного раскрытия. Вывод: код из чужого репозитория не должен расширять полномочия или перенаправлять авторизованный трафик **до** принятия решения пользователем.
+**Конфигурация проекта до доверия.** [Check Point Research, 25 февраля 2026 года](https://research.checkpoint.com/2026/rce-and-api-token-exfiltration-through-claude-code-project-files-cve-2025-59536/) разобрала злоупотребление проектными hooks, MCP-согласием и подменой `ANTHROPIC_BASE_URL` в Claude Code, включая **CVE-2025-59536** и **CVE-2026-21852**. Исследователи сообщают, что Anthropic исправила раскрытые уязвимости до публичной публикации. Вывод: код из чужого репозитория не должен расширять полномочия или перенаправлять авторизованный трафик **до** принятия решения пользователем.
 
 **Цепочка сборки и публикации.** Согласно [постмортему Cline](https://cline.bot/blog/post-mortem-unauthorized-cline-cli-npm), **17 февраля 2026 года** злоумышленник использовал скомпрометированный npm-токен для публикации **cline@2.3.0** с postinstall, устанавливающим OpenClaw. Cline прямо пишет, что **вредоносный код не поставлялся**, а расширения IDE не пострадали. Случай иллюстрирует необходимость разделить права issue-triage, CI и npm publish, но не доказывает утечку данных клиентов.
 
 **Недоверенные данные и привилегированные инструменты.** [Invariant Labs, 26 мая 2025 года](https://invariantlabs.ai/blog/mcp-github-vulnerability) продемонстрировала инъекцию в GitHub Issue, после которой агент с широкими GitHub-MCP разрешениями обращался к закрытым репозиториям. Это **исследовательская демонстрация**, не подтверждённый инцидент клиента BitEvo. Проверять нужно передачу полномочий между инструментами, а не только текст инструкции в issue.
 
-**OAuth-шлюз и downstream-сервисы.** [MCP Authorization 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) и [Security Considerations](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/security-considerations) описывают метаданные защищённого ресурса, audience, согласие, token passthrough и confused deputy. **Авторизация необязательна для всех реализаций MCP в целом**; при использовании OAuth через HTTP применяются соответствующие правила профиля. Нельзя объявлять каждый MCP-транспорт обязательным OAuth-клиентом.
+**OAuth-шлюз и downstream-сервисы.** [MCP Authorization 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) и [Security Considerations](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#security-considerations) описывают метаданные защищённого ресурса, audience, согласие, token passthrough и confused deputy. **Авторизация необязательна для всех реализаций MCP в целом**; при использовании OAuth через HTTP применяются соответствующие правила профиля. Нельзя объявлять каждый MCP-транспорт обязательным OAuth-клиентом.
 
 ## 2. Что закреплено спецификацией
 
-При реализации HTTP OAuth проверяйте Protected Resource Metadata по **RFC 9728** и `resource` по [RFC 8707](https://www.rfc-editor.org/info/rfc8707). Клиент запрашивает токен для конкретного целевого ресурса; MCP-сервер валидирует его audience. Входящий access token нельзя без изменения передавать во внутренний API: для upstream-ресурса нужен отдельный токен с надлежащей привязкой. [Примечания к выпуску MCP 2026-07-28](https://blog.modelcontextprotocol.io/posts/2026-07-28/) затрагивают проверку `iss` и предотвращение mix-up атак.
+При реализации HTTP OAuth проверяйте Protected Resource Metadata по **RFC 9728** и `resource` по [RFC 8707](https://www.rfc-editor.org/info/rfc8707). Клиент запрашивает токен для конкретного целевого ресурса; MCP-сервер валидирует его audience. Входящий access token нельзя без изменения передавать во внутренний API: для upstream-ресурса нужен отдельный токен с надлежащей привязкой. [Примечания к выпуску MCP 2026-07-28](https://blog.modelcontextprotocol.io/posts/2026-07-28/) затрагивают проверку `iss` и предотвращение mix-up атак. Проверьте точную реализацию установленного SDK, не предполагая одинаковую поддержку во всех версиях.
 
 Проверяйте управляемые настройки и их приоритет по официальной [Claude Code Settings Reference](https://code.claude.com/docs/en/settings-reference). Само наличие параметра в JSON не означает, что указанная версия клиента или политика реально его применяет. Требуется контролируемый негативный тест.
 

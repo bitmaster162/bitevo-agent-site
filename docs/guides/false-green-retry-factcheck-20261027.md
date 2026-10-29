@@ -37,5 +37,5 @@ All five unverified/rebutted rows in Part IV were **not copied into either publi
 
 - Dates on both pages: **Reviewed 2026-10-26; Next review 2027-01-26** (editorial metadata, not incident occurrence dates).
 - Each retained incident/number is attributed inline to a link that opened in the evidence reader, with caveats. A source being readable is NOT a guarantee of its independent truth.
-- The registered routes must be measured in a clean Astro build before production; `src/data/sitemap-currentness.json` currently contains **temporary all-zero fingerprint placeholders**, deliberately **not a release PASS**. This must be resolved with exact dist SHA256 and full CI **before merge**.
+- Release gate: verify the computed fingerprints in `src/data/sitemap-currentness.json` against a clean Astro build and exact successor SHA pins; require all CI gates to pass before any merge. Historical all-zero placeholders have already been replaced.
 - No production deployment, PR must remain Draft.

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const pinned = Object.freeze({
   'src/data/public-route-registry.json': '52749f610fead495b4b5256f107388653d924b862114f7cb1f30503bbae807af',
-  'src/data/sitemap-currentness.json': 'ce26f6747e6b48162860f808af65c8b975464101d378667fa2270c98d3eb958e'
+  'src/data/sitemap-currentness.json': '62e61afdd1c233dc053bb7b7e65d799135307e3667ad86ec5a620a969e75e508'
 });
 function hash(value) { return createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex'); }
 export function isExactGuides34Successor(registryInput, currentnessInput) {

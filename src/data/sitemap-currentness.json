@@ -650,12 +650,12 @@
     {
       "path": "/guides/false-green-and-retry-safety",
       "lastmod": "2026-10-26",
-      "fingerprint": "sha256:cb1217686fc77ab7024afceccd4c8969017abb5cffcf4926934fe79edc649d3e"
+      "fingerprint": "sha256:424d0304a0ba9bddbb5296841dc6496e7e4957daabac0b3925758c3243231978"
     },
     {
       "path": "/guides/mcp-and-coding-agent-governance",
       "lastmod": "2026-10-27",
-      "fingerprint": "sha256:f780d830d2bd94e62ef9fae291b88084ee4784c90ca22c7a8985efc043e97429"
+      "fingerprint": "sha256:f3d4840cbd649159c1fa19f968bfc6643d67de40e9068fca0cbf03ea4d949eed"
     },
     {
       "path": "/guides/mcp-server-authority-review",
@@ -675,12 +675,12 @@
     {
       "path": "/ru/guides/false-green-and-retry-safety",
       "lastmod": "2026-10-26",
-      "fingerprint": "sha256:dedf0de7e8fa44cc765ed833987af0aca84e25bd66fe8d025dd44486e9842a07"
+      "fingerprint": "sha256:9b9769022666651b1fb739b6b3c0b659e3b0c7d1421a1d55e93fa847cf18d9ac"
     },
     {
       "path": "/ru/guides/mcp-and-coding-agent-governance",
       "lastmod": "2026-10-27",
-      "fingerprint": "sha256:091a9e3a61140763542c1a02307af4b0bcdc6cab3cfd4aad8363e4fa75efb2de"
+      "fingerprint": "sha256:3a9a5f3aada33d17948ceb0cc961edd1001b405dee1d713f31d9540ed9e46f8d"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",

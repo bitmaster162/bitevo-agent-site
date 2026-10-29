@@ -260,7 +260,7 @@ const r50ProtectedSources = Object.freeze({
   "scripts/verify-b1-2-event-counter.mjs": "38995a0577b9bf5ea17cb634b90701f94cd8b0b0c77b9ba09e62594bf9b0c0c1",
   "scripts/verify-r47a-privacy.mjs": "1a17201db3cd530bee7b08503a32ca18fa6dd4582441e8786265ef89314c1689"
 });
-// R50-D exact successor for Guide #3: preserve every historical protected SHA.
+// R50-D exact successor for combined Guides #3+#4: preserve every historical protected SHA.
 // The changed verifier scripts are admitted ONLY for the precisely pinned guides34 registry+manifest.
 const r50Guides34SuccessorSha = Object.freeze({
   'worker/index.mjs': '10e8fa276340b1543d5ee7686487e8304dcc1314a943bd4eaff248de6071d71a',

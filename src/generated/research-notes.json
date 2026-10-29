@@ -216,7 +216,7 @@
         "Article",
         "BreadcrumbList"
       ],
-      "research_source": "GUIDE_DRAFT_G2_false-green-and-retry-safety_20261026; первоисточники Cyera, AIID #1152, Cline post-mortem, AWS bulletin, OWASP, IETF draft; непроверенные утверждения исключены."
+      "research_source": "GUIDE_DRAFT_G2_false-green-and-retry-safety_20261026; первоисточники Cyera, AIID #1152, Cline post-mortem, AWS bulletin, OWASP, IETF Internet-Draft и опубликованные условия BitEvo; непроверенные утверждения исключены."
     },
     {
       "source": "src/content/research-notes/mcp-and-coding-agent-governance.ru.md",
@@ -243,7 +243,7 @@
         "Article",
         "BreadcrumbList"
       ],
-      "research_source": "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; primary MCP, Check Point, Cline, Invariant and AWS sources; Part IV excluded"
+      "research_source": "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; первоисточники спецификации MCP, Check Point, Cline, Invariant Labs и AWS; непроверенные утверждения части IV исключены."
     },
     {
       "source": "src/content/research-notes/mcp-server-authority-review.ru.md",

@@ -31,11 +31,11 @@ const expected = {
   '/universe':['2026-10-26','sha256:1bd9c9722c2c5a478d43197d58e54441f4042be8461787267724e9efc0c33d15'],
   '/vision':['2026-10-13','sha256:c05f365e5bf41ee50d39076b1132a80a11710b81d4c65c252b3cc9ef5d649a24']
 };
-// Exact Guide3 successor: the original P28 fingerprint remains the historical baseline.
-const guide3RuUniverse = 'sha256:cc498e25a96c798b5211e65e2dc96a978c7c0b57be3879f4d018312a1eb0c18a';
+// Exact combined Guides 3+4 successor: retain the original P28 fingerprint baseline.
+const combinedGuides34RuUniverse = 'sha256:cc498e25a96c798b5211e65e2dc96a978c7c0b57be3879f4d018312a1eb0c18a';
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
-  check((row?.lastmod === lastmod || (isExactGuides34Successor() && route === '/ru/universe' && row?.lastmod === '2026-10-29')) && (row?.fingerprint === fingerprint || (isExactGuides34Successor() && route === '/ru/universe' && row?.fingerprint === guide3RuUniverse)), `${route}: exact currentness`);
+  check((row?.lastmod === lastmod || (isExactGuides34Successor() && route === '/ru/universe' && row?.lastmod === '2026-10-29')) && (row?.fingerprint === fingerprint || (isExactGuides34Successor() && route === '/ru/universe' && row?.fingerprint === combinedGuides34RuUniverse)), `${route}: exact currentness`);
 }
 equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
