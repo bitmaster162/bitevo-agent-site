@@ -62,3 +62,11 @@ research_source: "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; пе�
 Смежные источники: [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) и [бюллетень AWS Amazon Q Developer](https://aws.amazon.com/security/security-bulletins/AWS-2025-015/). AWS подчёркивает: внедрённый код **не исполнился** из-за синтаксической ошибки, поэтому нельзя объявлять доказанной компрометацию клиентов.
 
 Связанные страницы: [Аудит полномочий](/ru/agent-authority-audit), [Проверка контролей](/ru/control-validation), [Перед правом записи](/ru/guides/before-write-access).
+
+## Что дальше
+
+**Entry Audit — $1,500 фиксированно.** Один согласованный staging/test-воркфлоу и одно последующее действие агента. Результат — таблица **«ожидалось / наблюдалось»**, показывающая, что доказательства подтверждают и чего явно **НЕ подтверждают**. Объём и цена фиксируются письменно до первого платежа. Без production, учётных данных и внутреннего control-plane.
+
+[Условия Entry Audit](/ru/entry-audit) · [Подготовить audit-intake brief](/ru/audit-intake) · [Записаться на 20-минутную встречу в Cal.com](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage)
+
+Коммерческий контакт: robert@bitevo.work. Публичный intake готовит локальный brief; он не отправляет заявку и не разрешает тестирование.
