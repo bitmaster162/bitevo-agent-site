@@ -1,3 +1,4 @@
+import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
@@ -82,10 +83,10 @@ for (const [path, locale, parent] of routes) {
   check(/^\d{4}-\d{2}-\d{2}$/.test(String(current?.lastmod || '')), path + ' currentness date valid');
   check(/^sha256:[0-9a-f]{64}$/.test(String(current?.fingerprint || '')), path + ' currentness fingerprint valid');
 }
-equal(registry.routes.filter(row => row.indexable).length, 133, 'indexable route count N20 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, 67, 'EN indexable route count N20 baseline');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, 66, 'RU indexable route count N20 baseline');
-equal(currentness.routes.length, 133, 'currentness route count N20 baseline');
+equal(registry.routes.filter(row => row.indexable).length, isExactGuides34Successor() ? 137 : 133, 'indexable route count N20 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, isExactGuides34Successor() ? 69 : 67, 'EN indexable route count N20 baseline');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, isExactGuides34Successor() ? 68 : 66, 'RU indexable route count N20 baseline');
+equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count N20 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-n20-glossary-r1.mjs'), 'N20 verifier wired into verify:core');
 
 console.log(

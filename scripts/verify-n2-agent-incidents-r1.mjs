@@ -1,3 +1,4 @@
+import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { access, readFile } from 'node:fs/promises';
@@ -96,9 +97,9 @@ check(layoutSource.includes("['Agent incidents', '/agent-incidents']"), 'EN foot
 
 const route = registry.routes.find(item => item.path === '/agent-incidents');
 check(route?.category === 'RESEARCH' && route?.indexable === true && route?.locale === 'en' && route?.parent === '/owasp-agentic-top-10' && route?.localePair === 'deferred' && route?.localePairReason === 'grounded_translation_pending', 'registry route exact with grounded deferred locale contract');
-equal(registry.routes.filter(item => item.indexable).length, 133, 'indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, 67, 'EN indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, 66, 'RU indexable route count unchanged');
+equal(registry.routes.filter(item => item.indexable).length, isExactGuides34Successor() ? 137 : 133, 'indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, isExactGuides34Successor() ? 69 : 67, 'EN indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, isExactGuides34Successor() ? 68 : 66, 'RU indexable route count unchanged');
 check(!registry.routes.some(item => item.path === '/ru/agent-incidents'), 'RU route deferred pending grounded translation');
 check(!html.includes('hreflang="ru"') && !html.includes('data-global-locale-switch="en-to-ru"'), 'deferred EN route emits no false RU alternate or switch');
 let ruPageExists = true;
@@ -109,7 +110,7 @@ const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
 equal(row?.lastmod, '2026-10-16', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
-equal(currentness.routes.length, 133, 'currentness route count is N2 baseline');
+equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is N2 baseline');
 check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-16</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');

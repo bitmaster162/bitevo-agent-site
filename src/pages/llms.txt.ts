@@ -183,6 +183,10 @@ export function GET() {
     '- /guides/security-sandboxing',
     '- /guides/fleet-coordinator-drift-monitoring',
     '- /guides/d3-tool-io-bridge-contract',
+    '- /guides/false-green-and-retry-safety (EN, reviewed 2026-10-26, next 2027-01-26)',
+    '- /ru/guides/false-green-and-retry-safety (RU, reviewed 2026-10-26, next 2027-01-26)',
+    '- /guides/mcp-and-coding-agent-governance (EN, reviewed 2026-10-27; next 2027-01-27)',
+    '- /ru/guides/mcp-and-coding-agent-governance (RU, reviewed 2026-10-27; next 2027-01-27)',
     '',
     'Historical guide routes are not part of the reviewed public research set and may be redirected to /guides.',
     'This manifest intentionally contains no runtime telemetry, internal checkpoints, infrastructure identifiers, private operational state, credentials, or control endpoints.'

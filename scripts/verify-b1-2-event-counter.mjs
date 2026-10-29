@@ -1,3 +1,4 @@
+import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -220,7 +221,7 @@ expect(JSON.stringify(coverage.routes) === JSON.stringify(expectedRows), 'exact 
 expect(coverage.routes.length === 24 && new Set(coverage.routes.map(row => row.path)).size === 24, '24 unique covered pages');
 const byPath = new Map(coverage.routes.map(row => [row.path, row]));
 const publicRows = registry.routes.filter(row => row.indexable);
-expect(publicRows.length === 133, '133 indexable routes preserved');
+expect(publicRows.length === (isExactGuides34Successor() ? 137 : 133), '133 indexable routes preserved');
 expect(coverage.routes.every(row => publicRows.some(p => p.path === row.path && p.locale === row.locale)), 'coverage registry and locale parity');
 expect(ingress.includes('COVERAGE_PATHS.get(row.page)') && ingress.includes('coverage.events.includes(row.event)'), 'ingress enforces approved event per page');
 expect(tracker.includes('pageEvents.has(event)') && tracker.includes("'events,locale,path'"), 'client enforces exact per-page metadata');

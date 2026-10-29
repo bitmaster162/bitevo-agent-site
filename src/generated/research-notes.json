@@ -57,6 +57,60 @@
       "research_source": "Bitget official updates through 2026-10-04; Mandiant status report 2026-09-28; SlowMist progress report through 2026-09-29; XRPL protocol docs; BitEvo MatrixOut XRPL evidence"
     },
     {
+      "source": "src/content/research-notes/false-green-and-retry-safety.en.md",
+      "filename": "false-green-and-retry-safety.en.md",
+      "slug": "false-green-and-retry-safety",
+      "path": "/guides/false-green-and-retry-safety",
+      "alternate": "/ru/guides/false-green-and-retry-safety",
+      "lang": "en",
+      "card": "07 · Research · False Green and retry safety — Evidence-bound design for unknown outcomes, safe replay and independent external confirmation.",
+      "card_number": "07",
+      "card_type": "Research",
+      "card_text": "False Green and retry safety — Evidence-bound design for unknown outcomes, safe replay and independent external confirmation.",
+      "title": "False Green and retry safety for action-capable AI agents",
+      "seo_title": "False Green and safe retries for AI agents | BitEvo",
+      "description": "How to distinguish an agent's Done claim from a verified external effect, and assess authority, replay and recovery in a bounded staging workflow.",
+      "reviewed": "2026-10-26",
+      "next_review": "2027-01-26",
+      "related": [
+        "/agent-authority-audit",
+        "/build",
+        "/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "GUIDE_DRAFT_G2_false-green-and-retry-safety_20261026; first-party Cyera, AIID #1152, Cline post-mortem, AWS bulletin, OWASP, IETF Internet-Draft, BitEvo published scope. Unverified draft claims excluded."
+    },
+    {
+      "source": "src/content/research-notes/mcp-and-coding-agent-governance.en.md",
+      "filename": "mcp-and-coding-agent-governance.en.md",
+      "slug": "mcp-and-coding-agent-governance",
+      "path": "/guides/mcp-and-coding-agent-governance",
+      "alternate": "/ru/guides/mcp-and-coding-agent-governance",
+      "lang": "en",
+      "card": "08 · Research · MCP and coding-agent governance — Four trust-boundary failure modes, authorization requirements and ten negative tests.",
+      "card_number": "08",
+      "card_type": "Research",
+      "card_text": "MCP and coding-agent governance — Four trust-boundary failure modes, authorization requirements and ten negative tests.",
+      "title": "Governing MCP servers and coding agents: authority before execution",
+      "seo_title": "Governing MCP servers and coding agents: authority before execution | BitEvo",
+      "description": "Governance of MCP and coding agents: project hooks, OAuth audience, tool permissions, consent and evidence-bound negative testing.",
+      "reviewed": "2026-10-27",
+      "next_review": "2027-01-27",
+      "related": [
+        "/agent-authority-audit",
+        "/control-validation",
+        "/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; primary MCP, Check Point, Cline, Invariant and AWS sources; Part IV excluded"
+    },
+    {
       "source": "src/content/research-notes/mcp-server-authority-review.en.md",
       "filename": "mcp-server-authority-review.en.md",
       "slug": "mcp-server-authority-review",
@@ -136,6 +190,60 @@
         "BreadcrumbList"
       ],
       "research_source": "Официальные обновления Bitget по 2026-10-04; отчёт Mandiant от 2026-09-28; отчёт SlowMist по 2026-09-29; документация XRPL; evidence pack BitEvo MatrixOut по XRP"
+    },
+    {
+      "source": "src/content/research-notes/false-green-and-retry-safety.ru.md",
+      "filename": "false-green-and-retry-safety.ru.md",
+      "slug": "false-green-and-retry-safety",
+      "path": "/ru/guides/false-green-and-retry-safety",
+      "alternate": "/guides/false-green-and-retry-safety",
+      "lang": "ru",
+      "card": "07 · Исследование · False Green и безопасный retry — Как проверить внешний эффект, исключить слепой повтор и зафиксировать неопределённый результат.",
+      "card_number": "07",
+      "card_type": "Исследование",
+      "card_text": "False Green и безопасный retry — Как проверить внешний эффект, исключить слепой повтор и зафиксировать неопределённый результат.",
+      "title": "False Green и безопасность повторов действий ИИ-агента",
+      "seo_title": "False Green и безопасность retry ИИ-агента | BitEvo",
+      "description": "Как отличить отчёт агента от независимого подтверждения эффекта и проверить полномочия, повтор и восстановление в ограниченном staging-процессе.",
+      "reviewed": "2026-10-26",
+      "next_review": "2027-01-26",
+      "related": [
+        "/ru/agent-authority-audit",
+        "/ru/build",
+        "/ru/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "GUIDE_DRAFT_G2_false-green-and-retry-safety_20261026; первоисточники Cyera, AIID #1152, Cline post-mortem, AWS bulletin, OWASP, IETF Internet-Draft и опубликованные условия BitEvo; непроверенные утверждения исключены."
+    },
+    {
+      "source": "src/content/research-notes/mcp-and-coding-agent-governance.ru.md",
+      "filename": "mcp-and-coding-agent-governance.ru.md",
+      "slug": "mcp-and-coding-agent-governance",
+      "path": "/ru/guides/mcp-and-coding-agent-governance",
+      "alternate": "/guides/mcp-and-coding-agent-governance",
+      "lang": "ru",
+      "card": "08 · Исследование · Управление MCP и coding-агентами — Четыре границы доверия, требования OAuth и десять негативных тестов.",
+      "card_number": "08",
+      "card_type": "Исследование",
+      "card_text": "Управление MCP и coding-агентами — Четыре границы доверия, требования OAuth и десять негативных тестов.",
+      "title": "Управление MCP-серверами и coding-агентами: полномочия до действия",
+      "seo_title": "Управление MCP-серверами и coding-агентами: полномочия до действия | BitEvo",
+      "description": "Фактчек и инженерные проверки конфигурации Claude Code, разрешений MCP, привязки OAuth-токенов, изоляции и доказательств внешних эффектов.",
+      "reviewed": "2026-10-27",
+      "next_review": "2027-01-27",
+      "related": [
+        "/ru/agent-authority-audit",
+        "/ru/control-validation",
+        "/ru/guides/before-write-access"
+      ],
+      "schema": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "research_source": "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; первоисточники спецификации MCP, Check Point, Cline, Invariant Labs и AWS; непроверенные утверждения части IV исключены."
     },
     {
       "source": "src/content/research-notes/mcp-server-authority-review.ru.md",
