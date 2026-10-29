@@ -6,6 +6,12 @@
     "note": "P27.6 SEO structured-data and locale-style review. Exact candidate build emits 8 unique executable inline script hashes, all already reviewed before this round; P27.6 introduces 74 new application/ld+json hashes and no new executable inline JavaScript. Three style hashes replace three stale style hashes after RU parity UI removal/bundling. No unsafe-inline, unsafe-eval, inline style attribute, wildcard, or new executable inline authority is authorized."
   },
   "scripts": [
+    "sGFsTcQb4ZCjH2fcBAP5z6ulGKdZVQmtFDBDDXzgbcE=",
+    "gZB0iQtc3W6n7QKSEODTuCEnd+kequWoBq0Ac2+cabY=",
+    "TDV790NzoeY/S2qEjH4UNKy9ze4PDsQME5ivMb6SQHM=",
+    "exR63VGlJ3i5ob4Ltv9EkBt4jGgA8qp3qDuwYfuq1ZY=",
+    "sMR2j+eVtSfX7vRO3vPG+EVWYArNjyV3EPdJyWVcanE=",
+    "1aOZt3SXI8bBsdTtW/w4Pfw5TdCmj+VHT6IfzZoJf6M=",
     "+8gsz1PaypAN3Y1xX88r0xJdO+px3QKirrjTJ8LmExc=",
     "+fWeL3tekbLBWLk1vHHfd9C+2meA1I2tjPTv8g8mOE4=",
     "IPVqvpbeGU14srJWAliwhkZU2wTa2jMms/M7XdufYQw=",

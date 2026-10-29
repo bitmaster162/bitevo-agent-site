@@ -1,3 +1,4 @@
+import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -70,7 +71,7 @@ equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, 's
 equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, 'sha256:415b4b109f41b8cb5fe985b6a38ce2dcf3d36a912f50e3326fa9b09c87e919b6', '/security currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/ru/pricing')?.fingerprint, 'sha256:1cca42fc4d49d429b56530a461804f15157c642a0c71c57c2e23b435ff5663b4', '/ru/pricing currentness exact');
 equal(currentness.routes.find(item => item.path === '/ru/security')?.fingerprint, 'sha256:a2a9069a182981dc9ee3b92c0318f503a5a99290081a499f0964995d3777c356', '/ru/security currentness exact');
-equal(currentness.routes.length, 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-5a-how-work-works-confirmed-r1.mjs'), 'P29.5A verifier wired into verify:core');
 
 console.log(`P29_5A_HOW_WORK_WORKS_CONFIRMED_R1_GATE=PASS checks=${checks} copy_hash=ae7506c2fb9fdeab53ae7cf8df0c1994e760f5bcfae058ae2461adfea82cc67f surfaces=2 q4=CONFIRMED q5=CONFIRMED q1_q2=DELEGATED_P29_5B q3=OMITTED prices=UNCHANGED free_cta=P29_1 paid_ctas=UNCHANGED currentness_rebased=P27_6`);

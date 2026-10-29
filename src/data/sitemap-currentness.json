@@ -254,8 +254,8 @@
     },
     {
       "path": "/guides",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:a6c1d17ccbf8df396957ac3d04dc8e106e110b46ee769449ac4013f393b83aed"
+      "lastmod": "2026-10-29",
+      "fingerprint": "sha256:4998fb9185148be2839513138fdb02cfd9b9be31ec3bbb98a485859a114a2ed9"
     },
     {
       "path": "/guides/security-sandboxing",
@@ -419,8 +419,8 @@
     },
     {
       "path": "/ru/guides",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:9a28a8018e5cbfd2c30c026e80e46146b5f5cfd50cbf909ba844dd67480fb404"
+      "lastmod": "2026-10-29",
+      "fingerprint": "sha256:a1b1b062a01a6bfc70b771c9f79f140023b021cb8c60af9a5e5f874ef5708874"
     },
     {
       "path": "/ru/doctrine",
@@ -439,8 +439,8 @@
     },
     {
       "path": "/ru/universe",
-      "lastmod": "2026-10-26",
-      "fingerprint": "sha256:db8d874dcd126869078ed1802e5bf704224142fe2ba8f786abb4c9be48b886c0"
+      "lastmod": "2026-10-29",
+      "fingerprint": "sha256:cc498e25a96c798b5211e65e2dc96a978c7c0b57be3879f4d018312a1eb0c18a"
     },
     {
       "path": "/ru/vision",
@@ -648,6 +648,16 @@
       "fingerprint": "sha256:e6ba53246af4318c97c05fce2718932331f1f5bbb193fbceecd7495df09beae2"
     },
     {
+      "path": "/guides/false-green-and-retry-safety",
+      "lastmod": "2026-10-26",
+      "fingerprint": "sha256:cb1217686fc77ab7024afceccd4c8969017abb5cffcf4926934fe79edc649d3e"
+    },
+    {
+      "path": "/guides/mcp-and-coding-agent-governance",
+      "lastmod": "2026-10-27",
+      "fingerprint": "sha256:f780d830d2bd94e62ef9fae291b88084ee4784c90ca22c7a8985efc043e97429"
+    },
+    {
       "path": "/guides/mcp-server-authority-review",
       "lastmod": "2026-10-06",
       "fingerprint": "sha256:9a54821ea5a233c98d122638233464230f18539157686bc7350676c0d7761458"
@@ -661,6 +671,16 @@
       "path": "/ru/guides/bitget-authority-after-orchestration-compromise",
       "lastmod": "2026-10-07",
       "fingerprint": "sha256:392096cd39ca4b25f9d11ceb7ce3fd0c781f0792221be0b8e692f960729f60e3"
+    },
+    {
+      "path": "/ru/guides/false-green-and-retry-safety",
+      "lastmod": "2026-10-26",
+      "fingerprint": "sha256:dedf0de7e8fa44cc765ed833987af0aca84e25bd66fe8d025dd44486e9842a07"
+    },
+    {
+      "path": "/ru/guides/mcp-and-coding-agent-governance",
+      "lastmod": "2026-10-27",
+      "fingerprint": "sha256:091a9e3a61140763542c1a02307af4b0bcdc6cab3cfd4aad8363e4fa75efb2de"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",

@@ -1,3 +1,4 @@
+import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
@@ -93,7 +94,7 @@ for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   equal(row?.lastmod, lastmod, `${route}: currentness date exact`);
   equal(row?.fingerprint, fingerprint, `${route}: currentness fingerprint exact`);
 }
-equal(currentness.routes.length, 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-1-calcom-triage-r1.mjs'), 'P29.1 verifier is wired into verify:core');
 
 check(homeSource.includes('Typical failures we test for:'), 'P29.2 EN failure examples remain present');
