@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -35,9 +36,9 @@ const expected = {
 const combinedGuides34RuUniverse = 'sha256:cc498e25a96c798b5211e65e2dc96a978c7c0b57be3879f4d018312a1eb0c18a';
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
-  check((row?.lastmod === lastmod || (isExactGuides34Successor() && route === '/ru/universe' && row?.lastmod === '2026-10-29')) && (row?.fingerprint === fingerprint || (isExactGuides34Successor() && route === '/ru/universe' && row?.fingerprint === combinedGuides34RuUniverse)), `${route}: exact currentness`);
+  check((row?.lastmod === rgapsExpectedLastmod(route, lastmod) || (isExactGuides34Successor() && route === '/ru/universe' && row?.lastmod === '2026-10-29')) && (row?.fingerprint === rgapsExpectedFingerprint(route, fingerprint) || (isExactGuides34Successor() && route === '/ru/universe' && row?.fingerprint === combinedGuides34RuUniverse)), `${route}: exact currentness`);
 }
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-crypto-disclaimer-r1.mjs'), 'P28.7A verifier is wired into verify:core');
 console.log(`P28_CRYPTO_DISCLAIMER_R1_GATE=PASS checks=${checks} routes=4 static_html=PASS js_required=0`);

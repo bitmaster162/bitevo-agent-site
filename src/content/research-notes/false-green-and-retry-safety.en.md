@@ -81,7 +81,7 @@ Pick **one** agreed action-capable workflow and one target environment. Record t
 4. Preserve the original request ID; query provider/system-of-record state before any retry.
 5. Report **expected / observed / not established**, with the authority gap, residual uncertainty, recovery owner and concrete retest criterion.
 
-The public [BitEvo pricing and scope](https://bitevo.work/pricing) describe a **BUILD Workflow Exception Diagnostic at $3,000 fixed over 5 business days**. This is a bounded engineering review, not a promise of elimination of errors or 100% uptime. A separate **Entry Audit at $1,500 fixed** concerns one agreed staging workflow and one follow-up agent action; scope and price are fixed in writing before first payment, and its expected/observed result states what evidence supports and **does not** support.
+The public [BitEvo pricing and scope](https://bitevo.work/pricing) describe a **BUILD Workflow Exception Diagnostic at $3,000 fixed over 5 business days**. This is a bounded engineering review, not a promise of elimination of errors or 100% uptime. A separate **Entry Audit at $1,500 fixed** concerns one action chain and one primary control or failure hypothesis in staging/test; scope and price are fixed in writing before first payment, and its expected/observed result states what evidence supports and **does not** support.
 
 This guide does not authorize access, execution, payments, penetration testing or deployment. It is not a certification or legal advice. Sources are public, with limitations and contested statements noted rather than silently converted into facts.
 
@@ -89,7 +89,7 @@ This guide does not authorize access, execution, payments, penetration testing o
 
 ## What next
 
-**Entry Audit — $1,500 fixed.** One agreed staging/test workflow and one subsequent agent action. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
+**Entry Audit — $1,500 fixed.** One action chain and one primary control or failure hypothesis, tested in staging/test. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
 
 [Review the Entry Audit scope](/entry-audit) · [Prepare the audit-intake brief](/audit-intake) · [Schedule a 20-minute triage on Cal.com](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage)
 

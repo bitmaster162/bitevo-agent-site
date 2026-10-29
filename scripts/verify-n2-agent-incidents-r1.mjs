@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -96,21 +97,21 @@ check(auditSource.includes('href="/agent-incidents"'), 'Agent Authority Audit li
 check(layoutSource.includes("['Agent incidents', '/agent-incidents']"), 'EN footer links to incident library');
 
 const route = registry.routes.find(item => item.path === '/agent-incidents');
-check(route?.category === 'RESEARCH' && route?.indexable === true && route?.locale === 'en' && route?.parent === '/owasp-agentic-top-10' && route?.localePair === 'deferred' && route?.localePairReason === 'grounded_translation_pending', 'registry route exact with grounded deferred locale contract');
-equal(registry.routes.filter(item => item.indexable).length, isExactGuides34Successor() ? 137 : 133, 'indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, isExactGuides34Successor() ? 69 : 67, 'EN indexable route count is N2 baseline');
-equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, isExactGuides34Successor() ? 68 : 66, 'RU indexable route count unchanged');
-check(!registry.routes.some(item => item.path === '/ru/agent-incidents'), 'RU route deferred pending grounded translation');
-check(!html.includes('hreflang="ru"') && !html.includes('data-global-locale-switch="en-to-ru"'), 'deferred EN route emits no false RU alternate or switch');
+check(route?.category === 'RESEARCH' && route?.indexable === true && route?.locale === 'en' && route?.parent === '/owasp-agentic-top-10' && (isExactRGapsSuccessor() ? !route?.localePair && !route?.localePairReason : route?.localePair === 'deferred' && route?.localePairReason === 'grounded_translation_pending'), 'registry route exact with grounded deferred locale contract');
+equal(registry.routes.filter(item => item.indexable).length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'en').length, (isExactRGapsSuccessor() ? 71 : (isExactGuides34Successor() ? 69 : 67)), 'EN indexable route count is N2 baseline');
+equal(registry.routes.filter(item => item.indexable && item.locale === 'ru').length, (isExactRGapsSuccessor() ? 71 : (isExactGuides34Successor() ? 68 : 66)), 'RU indexable route count unchanged');
+check(isExactRGapsSuccessor() ? registry.routes.some(item => item.path === '/ru/agent-incidents' && item.indexable) : !registry.routes.some(item => item.path === '/ru/agent-incidents'), 'RU route deferred pending grounded translation');
+check(isExactRGapsSuccessor() ? (html.includes('hreflang="ru"') && html.includes('data-global-locale-switch="en-to-ru"')) : (!html.includes('hreflang="ru"') && !html.includes('data-global-locale-switch="en-to-ru"')),  'deferred EN route emits no false RU alternate or switch');
 let ruPageExists = true;
 try { await access(new URL('src/pages/ru/agent-incidents.astro', root)); } catch { ruPageExists = false; }
-equal(ruPageExists, false, 'RU page is not created without grounded translation');
+equal(ruPageExists, isExactRGapsSuccessor(), 'RU page is not created without grounded translation');
 
 const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
 equal(row?.lastmod, '2026-10-16', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is N2 baseline');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is N2 baseline');
 check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-16</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');

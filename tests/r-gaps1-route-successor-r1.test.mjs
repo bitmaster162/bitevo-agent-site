@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { isExactRGapsSuccessor } from '../scripts/r-gaps1-route-successor-r1.mjs';
+const registryText=readFileSync(new URL('../src/data/public-route-registry.json',import.meta.url),'utf8');
+const manifestText=readFileSync(new URL('../src/data/sitemap-currentness.json',import.meta.url),'utf8');
+test('R-GAPS-1 exact 154-route, 142-indexable successor admitted',()=>assert.equal(isExactRGapsSuccessor(),true));
+test('alien registry fails closed',()=>assert.equal(isExactRGapsSuccessor(registryText.replace('"/buyer-pack"','"/buyer-pack-stolen"'),manifestText),false));
+test('alien sitemap fingerprint fails closed',()=>assert.equal(isExactRGapsSuccessor(registryText,manifestText.replace('sha256:','sha256:0')),false));
+test('lost incident RU pairing fails closed',()=>assert.equal(isExactRGapsSuccessor(registryText.replace('"/ru/agent-incidents"','"/ru/fake-incidents"'),manifestText),false));

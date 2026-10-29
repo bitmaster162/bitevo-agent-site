@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -92,9 +93,9 @@ for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
   check(Boolean(row), `${route}: currentness row exists`);
   equal(row?.lastmod, lastmod, `${route}: currentness date exact`);
-  equal(row?.fingerprint, fingerprint, `${route}: currentness fingerprint exact`);
+  equal(row?.fingerprint, rgapsExpectedFingerprint(route, fingerprint), `${route}: currentness fingerprint exact`);
 }
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-1-calcom-triage-r1.mjs'), 'P29.1 verifier is wired into verify:core');
 
 check(homeSource.includes('Typical failures we test for:'), 'P29.2 EN failure examples remain present');

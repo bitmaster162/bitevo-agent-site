@@ -8,6 +8,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 const generated = JSON.parse(await readFile(join(root, 'src/generated/research-notes.json'), 'utf8'));
 const registry = JSON.parse(await readFile(join(root, 'src/data/public-route-registry.json'), 'utf8'));
+const currentness = JSON.parse(await readFile(join(root, 'src/data/sitemap-currentness.json'), 'utf8'));
 const vercel = JSON.parse(await readFile(join(root, 'vercel.json'), 'utf8'));
 const worker = await readFile(join(root, 'worker/index.mjs'), 'utf8');
 let checks = 0;
@@ -106,7 +107,13 @@ for (const phrase of ['RU · PUBLIC PRODUCT LAYER','reviewed note','isolation bo
 for (const phrase of ['Изоляция и ограниченный запуск инструментов','Мониторинг дрейфа координатора','Контракт ввода-вывода инструментов','Проверенные публичные заметки']) check(ruIndex.includes(phrase), `/ru/guides required Russian phrase missing: ${phrase}`);
 
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
-for (const note of generated.notes) check(sitemap.includes(`<loc>https://bitevo.work${note.path}</loc><lastmod>${note.reviewed}</lastmod>`), `sitemap currentness missing ${note.path}`);
+const editorialCorrections = new Set(['/guides/false-green-and-retry-safety', '/ru/guides/false-green-and-retry-safety', '/guides/mcp-and-coding-agent-governance', '/ru/guides/mcp-and-coding-agent-governance']);
+for (const note of generated.notes) {
+  const row = currentness.routes.find(row => row.path === note.path);
+  const expectedLastmod = editorialCorrections.has(note.path) ? '2026-10-30' : note.reviewed;
+  check(row?.lastmod === expectedLastmod, `${note.path}: exact reviewed/lastmod boundary`);
+  check(sitemap.includes(`<loc>https://bitevo.work${note.path}</loc><lastmod>${row?.lastmod}</lastmod>`), `sitemap currentness missing ${note.path}`);
+}
 
 const llms = await readFile(join(dist, 'llms.txt'), 'utf8');
 const researchStart = llms.indexOf('### Research');
