@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "77f23ae0-52c6-4282-b086-f79d70a92aa3",
   "nonce": "35da9898-25f1-43ea-beff-e3d5c717b0f1",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "8b20e2584325928a070b1687c9c098eb66eb2193",
@@ -11,10 +11,10 @@
   "session": "RGAPS1_CONTACT_BUYER_INCIDENTS_DRAFT_20261029",
   "worktree": "d:/bitevo_rgaps1_local_20261029_r1",
   "acquiredAt": "2026-10-29T16:20:07.107Z",
-  "updatedAt": "2026-10-29T16:20:07.107Z",
+  "updatedAt": "2026-10-29T17:45:47.324Z",
   "expiresAt": "2026-10-29T19:20:03.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "58efb93b728de044755a3a602decf5db004377b3"
+  "sealedHead": "4a1e0fde712038498c0d1e053a83e36df4552056",
+  "sealedTree": "ddf35259409ae4b39bbe0655a6a85c788192e08e",
+  "featureRef": "refs/heads/agent/site-r-gaps-1-procurement-contact-20261029-r1",
+  "predecessor": "926d702f00861a84b84bc7cc4b672b7f6a2cc56e"
 }
