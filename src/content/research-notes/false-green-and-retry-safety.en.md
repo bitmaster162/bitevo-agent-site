@@ -86,3 +86,11 @@ The public [BitEvo pricing and scope](https://bitevo.work/pricing) describe a **
 This guide does not authorize access, execution, payments, penetration testing or deployment. It is not a certification or legal advice. Sources are public, with limitations and contested statements noted rather than silently converted into facts.
 
 **Related:** [Authority and evidence audit](/agent-authority-audit) · [BUILD workflow review](/build) · [Before write access](/guides/before-write-access).
+
+## What next
+
+**Entry Audit — $1,500 fixed.** One agreed staging/test workflow and one subsequent agent action. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
+
+[Review the Entry Audit scope](/entry-audit) · [Prepare the audit-intake brief](/audit-intake) · [Schedule a 20-minute triage on Cal.com](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage)
+
+Commercial contact: robert@bitevo.work. Public intake prepares a local brief; it does not submit a request or authorize testing.

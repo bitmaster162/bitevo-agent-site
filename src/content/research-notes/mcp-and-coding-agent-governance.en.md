@@ -62,3 +62,11 @@ A useful conclusion is a matrix of **expected / observed / not established**. Ex
 Source context: [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) and the [AWS Amazon Q Developer extension bulletin](https://aws.amazon.com/security/security-bulletins/AWS-2025-015/) provide adjacent patterns. AWS specifically says an injected snippet in its affected extension **did not execute** because of a syntax error; do not turn that into an established customer compromise.
 
 Related: [Agent authority audit](/agent-authority-audit), [Control validation](/control-validation), [Before write access](/guides/before-write-access).
+
+## What next
+
+**Entry Audit — $1,500 fixed.** One agreed staging/test workflow and one subsequent agent action. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
+
+[Review the Entry Audit scope](/entry-audit) · [Prepare the audit-intake brief](/audit-intake) · [Schedule a 20-minute triage on Cal.com](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage)
+
+Commercial contact: robert@bitevo.work. Public intake prepares a local brief; it does not submit a request or authorize testing.
