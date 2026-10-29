@@ -269,9 +269,17 @@ const r50Guides34SuccessorSha = Object.freeze({
   'scripts/verify-b1-2-event-counter.mjs': '3512ac77634cffa3df0b9cf49bf589fc6959ae8f51951a7ba499074c30088cc9'
 });
 const { isExactGuides34Successor } = await import('../scripts/guides34-route-successor-r1.mjs');
+const { isExactRGapsSuccessor } = await import('../scripts/r-gaps1-route-successor-r1.mjs');
+const r50RGapsSuccessorSha = Object.freeze({
+  "src/layouts/Layout.astro": "7d6927461ae2c3e274393b200ff9056413d4303a8719f239d9e24a36d1510f6d",
+  "vercel.json": "09ca9e9c0a10efdd1439c9dd9702fb887853f3c2e8f4f66b87770a30c25c5c3b",
+  "scripts/verify-r47a-privacy.mjs": "2eb06888fca1b8d7c18ab67f17ffa3768ae8d2b9c356b7c7491a9600696f1e17",
+  "scripts/verify-b1-2-event-counter.mjs": "9eb75a437ab0ed6705a9bf9b8787fee178200965c0e716ca5d4c182b031bd0fa"
+});
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
-  return isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha;
+  return (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
+    (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
 
 const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
@@ -307,6 +315,15 @@ test('Guides34 R50-D successor exact SHA only; alien verifier fails',()=>{
   assert.equal(r50ProtectedShaAccepted('vercel.json',r50Guides34SuccessorSha['scripts/verify-r47a-privacy.mjs']),false);
 });
 
+test('R-GAPS-1 R50 exact pins admit only the new protected files and preserve historical pins',()=>{
+  assert.equal(isExactRGapsSuccessor(), true);
+  for(const [path,currentSha] of Object.entries(r50RGapsSuccessorSha)) {
+    assert.ok(r50ProtectedShaAccepted(path,r50ProtectedSources[path]));
+    assert.ok(r50ProtectedShaAccepted(path,currentSha));
+    assert.equal(r50ProtectedShaAccepted(path,'0'.repeat(64)),false);
+  }
+  assert.equal(r50ProtectedShaAccepted('vercel.json',r50RGapsSuccessorSha['src/layouts/Layout.astro']), false);
+});
 test('R50-D required test pair is reached by unchanged build:core and required quality job',async()=>{
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
   const workflow = await readFile(new URL('../.github/workflows/quality-gate.yml',import.meta.url),'utf8');

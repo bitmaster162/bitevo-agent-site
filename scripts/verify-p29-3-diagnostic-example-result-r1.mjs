@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -117,9 +118,9 @@ const noJsGuardSuccessor = hasENGuard && hasRUGuard;
 const expectedCurrentness = noJsGuardSuccessor ? noJsGuardCurrentness : legacyCurrentness;
 for (const [path, value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
+  check(row?.lastmod === value.lastmod && row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint), `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-3-diagnostic-example-result-r1.mjs'), 'P29.3 verifier wired into verify:core');
 
 console.log(`P29_3_DIAGNOSTIC_EXAMPLE_RESULT_R1_GATE=PASS checks=${checks} locales=2 gates=7 yes=3 no=1 unknown=3 unresolved=4 static_html=PASS native_details=COLLAPSED legacy_dynamic_logic=UNCHANGED nojs_guard_successor=${Number(noJsGuardSuccessor)} p29_1_calcom=OMITTED`);

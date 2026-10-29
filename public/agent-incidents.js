@@ -8,6 +8,7 @@
   const asiButtons = [...filters.querySelectorAll('[data-asi-filter]')];
   const reset = filters.querySelector('[data-filter-reset]');
   const status = filters.querySelector('[data-filter-status]');
+  const isRu = document.documentElement.lang.toLowerCase().startsWith('ru');
   let gate = '';
   let asi = '';
 
@@ -30,8 +31,8 @@
     updatePressed(asiButtons, asi, 'data-asi-filter');
     reset?.setAttribute('aria-pressed', !gate && !asi ? 'true' : 'false');
     if (status) status.textContent = !gate && !asi
-      ? 'Showing all 12 cases.'
-      : `Showing ${visible} of ${cards.length} cases.`;
+      ? (isRu ? 'Показаны все 12 случаев.' : 'Showing all 12 cases.')
+      : (isRu ? `Показано ${visible} из ${cards.length} случаев.` : `Showing ${visible} of ${cards.length} cases.`);
   };
 
   for (const button of gateButtons) {
