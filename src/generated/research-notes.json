@@ -101,7 +101,7 @@
       "next_review": "2027-01-27",
       "related": [
         "/agent-authority-audit",
-        "/security-validation",
+        "/control-validation",
         "/guides/before-write-access"
       ],
       "schema": [
@@ -236,7 +236,7 @@
       "next_review": "2027-01-27",
       "related": [
         "/ru/agent-authority-audit",
-        "/ru/security-validation",
+        "/ru/control-validation",
         "/ru/guides/before-write-access"
       ],
       "schema": [

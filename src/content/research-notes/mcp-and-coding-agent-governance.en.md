@@ -9,7 +9,7 @@ seo_title: "Governing MCP servers and coding agents: authority before execution 
 description: "Governance of MCP and coding agents: project hooks, OAuth audience, tool permissions, consent and evidence-bound negative testing."
 reviewed: 2026-10-27
 next_review: 2027-01-27
-related: [/agent-authority-audit, /security-validation, /guides/before-write-access]
+related: [/agent-authority-audit, /control-validation, /guides/before-write-access]
 schema: [Article, BreadcrumbList]
 research_source: "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; primary MCP, Check Point, Cline, Invariant and AWS sources; Part IV excluded"
 ---

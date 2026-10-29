@@ -9,7 +9,7 @@ seo_title: "Управление MCP-серверами и coding-агентам
 description: "Фактчек и инженерные проверки конфигурации Claude Code, разрешений MCP, привязки OAuth-токенов, изоляции и доказательств внешних эффектов."
 reviewed: 2026-10-27
 next_review: 2027-01-27
-related: [/ru/agent-authority-audit, /ru/security-validation, /ru/guides/before-write-access]
+related: [/ru/agent-authority-audit, /ru/control-validation, /ru/guides/before-write-access]
 schema: [Article, BreadcrumbList]
 research_source: "GUIDE_DRAFT_G3_mcp-and-coding-agent-governance_20261027; первоисточники спецификации MCP, Check Point, Cline, Invariant Labs и AWS; непроверенные утверждения части IV исключены."
 ---
