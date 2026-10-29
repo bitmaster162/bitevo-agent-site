@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "4fbdcd4b-6cd5-49e4-99cb-cb10e856add3",
   "nonce": "26568420-be82-45af-b47c-10f7caa9258b",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "5a98beb02dae1a354dc9dbdf9e56cf98cc35096a",
@@ -11,10 +11,10 @@
   "session": "A5_GUIDES_34_NEXT_STEPS_DRAFT_20261029",
   "worktree": "d:/bitevo_a5_guides_next_steps_local_20261029_r1",
   "acquiredAt": "2026-10-29T15:41:21.539Z",
-  "updatedAt": "2026-10-29T15:41:21.539Z",
+  "updatedAt": "2026-10-29T15:50:44.365Z",
   "expiresAt": "2026-10-29T18:41:18.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "806944bc0f5fceb9f6e6524fee6d2b2f3f2356e1"
+  "sealedHead": "a1f7c8c9d3916936049116a82d3e6fcc88a0ef7d",
+  "sealedTree": "e356f7c42883f0043fe4f54728ba71c04ae8f13a",
+  "featureRef": "refs/heads/agent/site-a5-guide-next-steps-20261029-r1",
+  "predecessor": "94b1accc1f2ad9e5535aa8a1a2742ce45e200cd6"
 }
