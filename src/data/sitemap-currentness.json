@@ -649,13 +649,13 @@
     },
     {
       "path": "/buyer-pack",
-      "lastmod": "2026-10-29",
-      "fingerprint": "sha256:7782e3eac8431dd2f3838399cb102828b42af04caabfb7b90de20bebed04c418"
+      "lastmod": "2026-10-30",
+      "fingerprint": "sha256:121d2c6694578964c76f1be9db19496b4806587a6ac03deeb20a93d5671c9392"
     },
     {
       "path": "/ru/buyer-pack",
-      "lastmod": "2026-10-29",
-      "fingerprint": "sha256:e5aff0bed945b0e5892f3e77e8a039775e32e3aef0d04435dbb5833388313a5b"
+      "lastmod": "2026-10-30",
+      "fingerprint": "sha256:e9f5ca2e044557ac2e505422850ff3be15d16ce763c236e5ff8ca90bfd83b433"
     },
     {
       "path": "/ru/agent-incidents",
@@ -674,13 +674,13 @@
     },
     {
       "path": "/guides/false-green-and-retry-safety",
-      "lastmod": "2026-10-26",
-      "fingerprint": "sha256:58d008e060e3f1348fb5b35df6578f915b138845d0a71af30693be9173453409"
+      "lastmod": "2026-10-30",
+      "fingerprint": "sha256:e1b01f1bc820a40e70a88832188945bd8f0f9d8d9471714e937a154aa3211a83"
     },
     {
       "path": "/guides/mcp-and-coding-agent-governance",
-      "lastmod": "2026-10-27",
-      "fingerprint": "sha256:146159d5007a595904880814a3eda5e03bc9f90b1860a37416ff180565d4661c"
+      "lastmod": "2026-10-30",
+      "fingerprint": "sha256:462afffb997bb834d6e7cfc504961366f797e65c82f92792ca1a3dd5f6af24ff"
     },
     {
       "path": "/guides/mcp-server-authority-review",
@@ -699,13 +699,13 @@
     },
     {
       "path": "/ru/guides/false-green-and-retry-safety",
-      "lastmod": "2026-10-26",
-      "fingerprint": "sha256:febef949448f1f89d9a4632c5aa162e8293aab184ade9a7ba96f5016bdf8fb87"
+      "lastmod": "2026-10-30",
+      "fingerprint": "sha256:1ce53bc4e0f57bedd635ad500c928acc75e6d63c0fd813105fedc72457b82e6c"
     },
     {
       "path": "/ru/guides/mcp-and-coding-agent-governance",
-      "lastmod": "2026-10-27",
-      "fingerprint": "sha256:af7ce5cbecb5c16afcfd757a8b9df454a8bbf15126bf1d393397aff1f3cd04df"
+      "lastmod": "2026-10-30",
+      "fingerprint": "sha256:288a727af020e74c97b272b7cfc1e5bc35f6abc004c61df391507c6d4228b240"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",
