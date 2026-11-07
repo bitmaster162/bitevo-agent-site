@@ -272,7 +272,7 @@ const { isExactGuides34Successor } = await import('../scripts/guides34-route-suc
 const { isExactRGapsSuccessor } = await import('../scripts/r-gaps1-route-successor-r1.mjs');
 const r50RGapsSuccessorSha = Object.freeze({
   "src/layouts/Layout.astro": "7d6927461ae2c3e274393b200ff9056413d4303a8719f239d9e24a36d1510f6d",
-  "vercel.json": "09ca9e9c0a10efdd1439c9dd9702fb887853f3c2e8f4f66b87770a30c25c5c3b",
+  "vercel.json": "b74521028122d966e994363391bcbd39f19d114a909901144b354733b4e534fe",
   "scripts/verify-r47a-privacy.mjs": "2eb06888fca1b8d7c18ab67f17ffa3768ae8d2b9c356b7c7491a9600696f1e17",
   "scripts/verify-b1-2-event-counter.mjs": "9eb75a437ab0ed6705a9bf9b8787fee178200965c0e716ca5d4c182b031bd0fa"
 });
