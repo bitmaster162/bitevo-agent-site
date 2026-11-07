@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 
 const pins = Object.freeze({
   'src/data/public-route-registry.json': 'bc4d8876b9cf92a7925ffe276e66ecdb387196536a83696c27fb6f830f7e5759',
-  'src/data/sitemap-currentness.json': 'fa833c0cf9626e0f34bfe77bdc4d6522a79e69cdbc654d76c6d19e0880478289'
+  'src/data/sitemap-currentness.json': '78a4015a51bcd0794473eb6bdcea5b260ef8bd01e227b29574513bc4a9855797'
 });
 const hash = value => createHash('sha256').update(value.replace(/\r\n/g, '\n')).digest('hex');
 export function isExactRGapsSuccessor(registryInput, currentnessInput) {
@@ -24,7 +24,7 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     for (const [path,locale] of expected) {
       const row = registry.routes.find(r => r.path === path);
       const fingerprint = manifest.routes.find(r => r.path === path);
-      if (!row?.indexable || row.locale !== locale || fingerprint?.lastmod !== (path.endsWith('/buyer-pack') ? '2026-10-30' : '2026-10-29') ||
+      if (!row?.indexable || row.locale !== locale || fingerprint?.lastmod !== (path === '/ru/agent-incidents' ? '2026-11-07' : (path.endsWith('/buyer-pack') ? '2026-10-30' : '2026-10-29')) ||
           !/^sha256:[a-f0-9]{64}$/.test(fingerprint.fingerprint)) return false;
     }
     const paired = registry.routes.find(r => r.path === '/agent-incidents');

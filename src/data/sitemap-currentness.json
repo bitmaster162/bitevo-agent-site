@@ -249,8 +249,8 @@
     },
     {
       "path": "/agent-incidents",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:8c5a467805042cf91d20f5a6023199bdd9f82f4e1271523fbf58c0c3a01bfd11"
+      "lastmod": "2026-11-07",
+      "fingerprint": "sha256:d124bc60328b50fdab517ecde6d33f882421cf148a6e439ec95dad394ff59627"
     },
     {
       "path": "/guides",
@@ -659,8 +659,8 @@
     },
     {
       "path": "/ru/agent-incidents",
-      "lastmod": "2026-10-29",
-      "fingerprint": "sha256:0743b18f75794cfa2656d41a44a5fedcf708442b932145d1381d3da10b6af1f3"
+      "lastmod": "2026-11-07",
+      "fingerprint": "sha256:9d2245cbe9e0015250d346fb8ffceb0b22d16dab2a9844ae84949ec6514c43bc"
     },
     {
       "path": "/guides/before-write-access",

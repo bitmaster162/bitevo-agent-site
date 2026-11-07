@@ -109,10 +109,10 @@ equal(ruPageExists, isExactRGapsSuccessor(), 'RU page is not created without gro
 
 const row = currentness.routes.find(item => item.path === '/agent-incidents');
 check(Boolean(row), 'N2 currentness row exists');
-equal(row?.lastmod, '2026-10-16', 'N2 sitemap currentness date exact');
+equal(row?.lastmod, isExactRGapsSuccessor() ? '2026-11-07' : '2026-10-16', 'N2 sitemap currentness date exact');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'N2 currentness fingerprint valid');
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is N2 baseline');
-check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>2026-10-16</lastmod>'), 'sitemap includes N2 exact route/date');
+check(sitemap.includes('<loc>https://bitevo.work/agent-incidents</loc><lastmod>' + (isExactRGapsSuccessor() ? '2026-11-07' : '2026-10-16') + '</lastmod>'), 'sitemap includes N2 exact route/date');
 
 const researchStart = llms.indexOf('### Research');
 const contextStart = llms.indexOf('### Context', researchStart);
