@@ -31,7 +31,8 @@
   .incident-footer .text-link{text-decoration:underline;text-underline-offset:.18em}
   [hidden]{display:none!important}
   @media(max-width:900px){
-    .incident-card{grid-template-columns:1fr}
+    .incident-card{grid-template-columns:minmax(0,1fr)}
+    .incident-main,.incident-evidence{min-width:0;overflow-wrap:anywhere}
     .incident-evidence{padding-left:0;padding-top:26px;border-left:0;border-top:1px solid var(--line)}
     .incident-footer{grid-template-columns:1fr}
   }
