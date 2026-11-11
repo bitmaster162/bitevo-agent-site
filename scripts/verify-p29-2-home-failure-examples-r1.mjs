@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -55,9 +56,9 @@ const expected = {
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.lastmod === value.lastmod && row?.fingerprint === value.fingerprint, `currentness exact for ${path}`);
+  check(row?.lastmod === value.lastmod && row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint), `currentness exact for ${path}`);
 }
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-2-home-failure-examples-r1.mjs'), 'P29.2 verifier wired into verify:core');
 
 console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_LEAD_BEFORE_ACTIONS p29_1_calcom=PUBLISHED`);

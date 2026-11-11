@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -46,9 +47,9 @@ const expected = {
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.fingerprint === value.fingerprint && row?.lastmod === value.lastmod, 'currentness exact for ' + path);
+  check(row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint) && row?.lastmod === value.lastmod, 'currentness exact for ' + path);
 }
-check(currentness.routes.length === (isExactGuides34Successor() ? 137 : 133), 'currentness route count is exact post-C6+N1 baseline');
+check(currentness.routes.length === ((isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133))), 'currentness route count is exact post-C6+N1 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-intake-copy-r1.mjs'), 'P28 intake copy verifier is wired into verify:core');
 
 console.log('P28_INTAKE_COPY_R1_GATE=PASS checks=' + checks + ' scope=UP_TO_3_TOOLS_APIS_MCP consent=EXPLICIT retention=UP_TO_30D triage_booking_link=1 scope_form_booking=0 testing_authorization=0 stale_local_only_claims=0 locales=2');

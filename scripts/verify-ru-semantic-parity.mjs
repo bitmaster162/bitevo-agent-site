@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor } from './r-gaps1-route-successor-r1.mjs';
 import { access, readFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { join } from 'node:path';
@@ -54,8 +55,8 @@ const deferredEnRoutes = enRoutes.filter(route => route.localePair === 'deferred
 const pairedEnRoutes = enRoutes.filter(route => route.localePair !== 'deferred');
 checks += 4;
 if (pairedEnRoutes.length !== ruRoutes.length) failures.push(`paired locale count mismatch: paired_en=${pairedEnRoutes.length} ru=${ruRoutes.length}`);
-if (pairedEnRoutes.length !== 63 + generatedResearchEn) failures.push(`unexpected canonical paired EN route count: ${pairedEnRoutes.length}`);
-if (deferredEnRoutes.length !== 1) failures.push(`unexpected deferred locale route count: ${deferredEnRoutes.length}`);
+if (pairedEnRoutes.length !== (isExactRGapsSuccessor() ? 71 : 63 + generatedResearchEn)) failures.push(`unexpected canonical paired EN route count: ${pairedEnRoutes.length}`);
+if (deferredEnRoutes.length !== (isExactRGapsSuccessor() ? 0 : 1)) failures.push(`unexpected deferred locale route count: ${deferredEnRoutes.length}`);
 if (deferredEnRoutes.some(route => route.localePairReason !== 'grounded_translation_pending')) failures.push('deferred locale route missing grounded_translation_pending reason');
 
 const expectedGenerated = new Set();

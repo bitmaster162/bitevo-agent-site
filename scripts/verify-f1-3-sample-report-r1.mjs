@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -92,7 +93,7 @@ for (const path of ['/sample-audit', '/pricing', '/entry-audit']) {
   equal(row?.lastmod, path === '/pricing' ? '2026-10-16' : '2026-10-13', path + ' lastmod remains reviewed date');
   check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint || ''), path + ' currentness fingerprint valid');
 }
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'indexable currentness route count unchanged');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'indexable currentness route count unchanged');
 check(packageJson.scripts?.['verify:core']?.includes('verify-f1-3-sample-report-r1.mjs'), 'F1.3 verifier wired into verify:core');
 
 console.log(

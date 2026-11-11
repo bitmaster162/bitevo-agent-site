@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -71,8 +72,8 @@ equal((firstScreen.match(/<a\b/g) || []).length, 2, 'existing two hero CTAs pres
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
 equal(row?.lastmod, '2026-10-13', '/ru currentness date exact');
-equal(row?.fingerprint, 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6', '/ru currentness fingerprint exact');
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count is exact P30 baseline');
+equal(row?.fingerprint, rgapsExpectedFingerprint('/ru', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'), '/ru currentness fingerprint exact');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');
 
 console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=b12d9fbc775d2fb31be7ecb144a0b271bf2ed0d48b0e06f762f339f1ab0b1773 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);

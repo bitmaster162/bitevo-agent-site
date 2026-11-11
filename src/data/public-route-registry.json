@@ -366,9 +366,7 @@
       "category": "RESEARCH",
       "indexable": true,
       "locale": "en",
-      "parent": "/owasp-agentic-top-10",
-      "localePair": "deferred",
-      "localePairReason": "grounded_translation_pending"
+      "parent": "/owasp-agentic-top-10"
     },
     {
       "path": "/guides",
@@ -989,6 +987,41 @@
       "locale": "en",
       "parent": "/start",
       "state": "experimental"
+    },
+    {
+      "path": "/contact",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/start"
+    },
+    {
+      "path": "/ru/contact",
+      "category": "FLAGSHIP",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/start"
+    },
+    {
+      "path": "/buyer-pack",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "en",
+      "parent": "/pricing"
+    },
+    {
+      "path": "/ru/buyer-pack",
+      "category": "PROOF",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/pricing"
+    },
+    {
+      "path": "/ru/agent-incidents",
+      "category": "RESEARCH",
+      "indexable": true,
+      "locale": "ru",
+      "parent": "/ru/owasp-agentic-top-10"
     },
     {
       "path": "/guides/before-write-access",

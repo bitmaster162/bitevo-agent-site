@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -79,7 +80,7 @@ for (const corrupt of [
 ]) need(!verifiedGuard(corrupt), 'negative guard fixture incorrectly accepted');
 
 const manifest = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
-need(manifest.routes.length === (isExactGuides34Successor() ? 137 : 133), 'route registry size retained');
+need(manifest.routes.length === ((isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133))), 'route registry size retained');
 const byPath = new Map(manifest.routes.map(x => [x.path, x]));
 for (const entry of routes) {
   const source = await readFile(new URL(entry.file, root), 'utf8');
@@ -96,7 +97,7 @@ for (const entry of routes) {
   need(staticArea.includes(noJsMessage[entry.locale]) && staticArea.includes('mailto:robert@bitevo.work'),
        'static no-JS note missing');
   need(byPath.get(entry.path)?.lastmod === '2026-10-13' &&
-       byPath.get(entry.path)?.fingerprint === entry.fingerprint, 'exact successor currentness drift');
+       byPath.get(entry.path)?.fingerprint === rgapsExpectedFingerprint(entry.path, entry.fingerprint), 'exact successor currentness drift');
   // Negative tests prove independent semantic fail-closed behavior, not only SHA equality.
   const perturbations = [
     source.replace('method="post"', 'method="get"'),

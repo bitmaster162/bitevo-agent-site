@@ -1,3 +1,4 @@
+import { isExactRGapsSuccessor } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -77,10 +78,10 @@ for (const [path, locale, parent] of [
   }
 }
 
-equal(registry.routes.filter(row => row.indexable).length, isExactGuides34Successor() ? 137 : 133, 'indexable route count');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, isExactGuides34Successor() ? 69 : 67, 'EN indexable route count');
-equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, isExactGuides34Successor() ? 68 : 66, 'RU indexable route count');
-equal(currentness.routes.length, isExactGuides34Successor() ? 137 : 133, 'currentness route count');
+equal(registry.routes.filter(row => row.indexable).length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'indexable route count');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length, (isExactRGapsSuccessor() ? 71 : (isExactGuides34Successor() ? 69 : 67)), 'EN indexable route count');
+equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, (isExactRGapsSuccessor() ? 71 : (isExactGuides34Successor() ? 68 : 66)), 'RU indexable route count');
+equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count');
 check(pkg.scripts?.['verify:core']?.includes('verify-c7-dune-seaport-decoder-r1.mjs'), 'C7 verifier wired into verify:core');
 
 const offerKeys = [...intake.matchAll(/^\s{4}'([^']+)': \{$/gm)].map(match => match[1]);
