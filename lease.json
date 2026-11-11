@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "193902b1-9ed7-42c8-92f1-fd5318bd3c1d",
   "nonce": "0c39a52c-dc99-4495-8471-fbd2ed254148",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "8b20e2584325928a070b1687c9c098eb66eb2193",
@@ -11,10 +11,10 @@
   "session": "OB_R2_PR250_OWNER_MERGE_APPROVED_20261112",
   "worktree": "c:/_agent_work/bitevo-pr250-mobile-lease-r1",
   "acquiredAt": "2026-11-11T23:46:18.999Z",
-  "updatedAt": "2026-11-11T23:46:18.999Z",
+  "updatedAt": "2026-11-11T23:46:30.130Z",
   "expiresAt": "2026-11-12T03:46:15.072Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "3ad85d6dfba966ca6fb9483acbf5f62fc68d4bad"
+  "sealedHead": "050a81fe85c7d2f5c05f81485cf18cfccc6470f5",
+  "sealedTree": "b6e9fc6b3c741a70aae9b5717e8ec48883263014",
+  "featureRef": "refs/heads/agent/site-r-gaps-1-procurement-contact-20261029-r1",
+  "predecessor": "4992bc8c39303e1862d248a553c120bb4c5a7e74"
 }
