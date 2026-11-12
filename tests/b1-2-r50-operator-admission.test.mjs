@@ -282,7 +282,7 @@ function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
   if (path === 'package-lock.json' && sha === '4aa343921ad8dd97224312ef09e8e605ec015b39be5c357e1dc17454761d304c') return true;
   return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
-  return (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
+    (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
     (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
 
