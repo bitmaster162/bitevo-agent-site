@@ -46,3 +46,16 @@ test('build runtime is pinned to Node 24 and review branch cannot auto-deploy', 
   assert.equal(pkg.engines.node, '24.x');
   assert.equal(config.git.deploymentEnabled[branch], false);
 });
+
+test('CI workflows match Node 24 package pin and scope-handoff runtime gate', () => {
+  for (const [filename, expectedCount] of [
+    ['.github/workflows/quality-gate.yml', 2],
+    ['.github/workflows/bitevo-precheck.yml', 1]
+  ]) {
+    const workflow = readFileSync(new URL('../' + filename, import.meta.url), 'utf8');
+    assert.equal((workflow.match(/node-version:\s*['"]24['"]/g) || []).length, expectedCount);
+    assert.ok(!workflow.includes('node-version: 22.19.0'));
+  }
+  const runtime = readFileSync(new URL('../scripts/verify-scope-handoff-r1-runtime.mjs', import.meta.url), 'utf8');
+  assert.ok(runtime.includes("pkg.engines?.node === '24.x'"));
+});
