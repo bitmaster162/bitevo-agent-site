@@ -12,7 +12,14 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
       'src/data/public-route-registry.json': registryInput ?? readFileSync(new URL('../src/data/public-route-registry.json', import.meta.url), 'utf8'),
       'src/data/sitemap-currentness.json': currentnessInput ?? readFileSync(new URL('../src/data/sitemap-currentness.json', import.meta.url), 'utf8')
     };
-    if (Object.entries(pins).some(([path,pin]) => hash(content[path]) !== pin)) return false;
+    // Admit only the prior sealed manifest or the exact A3 V2 /sample-audit
+  // fingerprint successor; do not widen route or registry acceptance.
+  const allowedCurrentnessHashes = new Set([
+    pins['src/data/sitemap-currentness.json'],
+    '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e'
+  ]);
+  if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
+      !allowedCurrentnessHashes.has(hash(content['src/data/sitemap-currentness.json']))) return false;
     const registry = JSON.parse(content['src/data/public-route-registry.json']);
     const manifest = JSON.parse(content['src/data/sitemap-currentness.json']);
     if (registry.schema !== 'bitevo.public-route-registry/v1' || registry.routes.length !== 154 ||

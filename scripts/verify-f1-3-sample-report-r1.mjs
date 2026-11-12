@@ -42,6 +42,22 @@ check(sampleSource.includes('placeholders are not observations, test results or 
 check(sampleHtml.includes('TEMPLATE ONLY'), 'static HTML preserves template-only status banner');
 check(sampleHtml.includes('SYNTHETIC / NOT EXECUTED'), 'existing SAMPLE synthetic boundary remains visible');
 
+check(sampleSource.includes('data-a3-v2-report-example'), 'A3 V2 companion report present in source');
+check(sampleHtml.includes('data-a3-v2-report-example'), 'A3 V2 companion report present in static output');
+check(sampleHtml.includes('Would a revoked permission really stop a retry?'), 'A3 V2 question is visible');
+check(sampleHtml.includes('FICTIONAL / NOT TESTED'), 'A3 V2 disclaimer visible');
+check(sampleHtml.includes('Outcomes below are expectations, not observed findings'), 'A3 V2 separates expected from observed');
+check(sampleHtml.includes('Observed: not tested'), 'A3 V2 includes untested observations');
+check(sampleHtml.includes('no positive or negative finding is supported'), 'A3 V2 forbids fictitious findings');
+check(sampleHtml.includes('An independent tool-entry witness'), 'A3 V2 requires independent effect proof');
+check(sampleHtml.includes('href="#revoked-read-report-example"'), 'A3 V2 reachable from SAMPLE hero');
+check(isExactRGapsSuccessor(), 'A3 V2 exact sitemap successor preserves guarded R-GAPS lineage');
+const alteredCurrentness = structuredClone(currentness);
+alteredCurrentness.routes.find(route => route.path === '/sample-audit').lastmod = '2026-11-12';
+check(!isExactRGapsSuccessor(undefined, JSON.stringify(alteredCurrentness)), 'A3 V2 successor denies unauthorised sitemap mutations');
+check(!sampleHtml.includes('href="/fictional-report.pdf"'), 'A3 V2 does not publish unapproved PDF');
+
+
 deep(pack.report_template?.status_vocabulary, statuses, 'machine-readable status vocabulary exact');
 deep(pack.report_template?.test_matrix_columns, columns, 'machine-readable expected-vs-observed columns exact');
 deep(pack.report_template?.finding_card_fields, findingFields, 'machine-readable finding card fields exact');
@@ -90,7 +106,7 @@ check(!sitemap.includes('<loc>https://bitevo.work/pre-check</loc>'), 'Pre-Check 
 for (const path of ['/sample-audit', '/pricing', '/entry-audit']) {
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ' currentness row exists');
-  equal(row?.lastmod, path === '/pricing' ? '2026-10-16' : '2026-10-13', path + ' lastmod remains reviewed date');
+  equal(row?.lastmod, path === '/pricing' ? '2026-10-16' : (path === '/sample-audit' ? '2026-11-13' : '2026-10-13'), path + ' lastmod remains reviewed date');
   check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint || ''), path + ' currentness fingerprint valid');
 }
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'indexable currentness route count unchanged');

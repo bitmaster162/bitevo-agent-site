@@ -85,7 +85,7 @@ check(html.includes('No customer system, customer data, private infrastructure, 
 check(jsonSource.includes(authority) && jsonSource.includes(evidence), 'JSON source includes the two formerly missing visible finding fields');
 
 const row = currentness.routes.find(item => item.path === '/sample-audit');
-check(row?.lastmod === '2026-10-13', 'sample-audit lastmod is 2026-10-13 after R47A footer update');
+check(row?.lastmod === '2026-11-13', 'sample-audit lastmod is reviewed A3 V2 date 2026-11-13');
 check(/^sha256:[0-9a-f]{64}$/.test(row?.fingerprint ?? ''), 'sample-audit currentness fingerprint valid');
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-sample-audit-owasp-r1.mjs'), 'P28.9 verifier wired into verify:core');
