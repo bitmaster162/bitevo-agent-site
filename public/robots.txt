@@ -7,6 +7,8 @@ Allow: /guides/d3-tool-io-bridge-contract
 Allow: /guides/before-write-access
 Allow: /guides/bitget-authority-after-orchestration-compromise
 Allow: /guides/mcp-server-authority-review
+Allow: /guides/false-green-and-retry-safety
+Allow: /guides/mcp-and-coding-agent-governance
 
 User-agent: Google-Extended
 Allow: /
@@ -17,6 +19,8 @@ Allow: /guides/d3-tool-io-bridge-contract
 Allow: /guides/before-write-access
 Allow: /guides/bitget-authority-after-orchestration-compromise
 Allow: /guides/mcp-server-authority-review
+Allow: /guides/false-green-and-retry-safety
+Allow: /guides/mcp-and-coding-agent-governance
 
 User-agent: GPTBot
 Allow: /
@@ -27,6 +31,8 @@ Allow: /guides/d3-tool-io-bridge-contract
 Allow: /guides/before-write-access
 Allow: /guides/bitget-authority-after-orchestration-compromise
 Allow: /guides/mcp-server-authority-review
+Allow: /guides/false-green-and-retry-safety
+Allow: /guides/mcp-and-coding-agent-governance
 
 User-agent: ClaudeBot
 Allow: /
@@ -37,5 +43,7 @@ Allow: /guides/d3-tool-io-bridge-contract
 Allow: /guides/before-write-access
 Allow: /guides/bitget-authority-after-orchestration-compromise
 Allow: /guides/mcp-server-authority-review
+Allow: /guides/false-green-and-retry-safety
+Allow: /guides/mcp-and-coding-agent-governance
 
 Sitemap: https://bitevo.work/sitemap.xml

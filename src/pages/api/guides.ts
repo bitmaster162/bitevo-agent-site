@@ -10,7 +10,12 @@ export function GET() {
     reviewed_guides: [
       '/guides/security-sandboxing',
       '/guides/fleet-coordinator-drift-monitoring',
-      '/guides/d3-tool-io-bridge-contract'
+      '/guides/d3-tool-io-bridge-contract',
+      '/guides/before-write-access',
+      '/guides/bitget-authority-after-orchestration-compromise',
+      '/guides/mcp-server-authority-review',
+      '/guides/false-green-and-retry-safety',
+      '/guides/mcp-and-coding-agent-governance'
     ],
     legacy_policy: 'Historical guide routes are not in the reviewed public set and may redirect to /guides.',
     boundary: 'Internal hostnames, IP addresses, operator-control endpoints, credentials, private registry paths, changing runtime metrics and secret-bearing logs are intentionally excluded from this public API.'
