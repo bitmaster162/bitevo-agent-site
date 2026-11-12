@@ -276,9 +276,12 @@ const r50RGapsSuccessorSha = Object.freeze({
   "scripts/verify-r47a-privacy.mjs": "2eb06888fca1b8d7c18ab67f17ffa3768ae8d2b9c356b7c7491a9600696f1e17",
   "scripts/verify-b1-2-event-counter.mjs": "9eb75a437ab0ed6705a9bf9b8787fee178200965c0e716ca5d4c182b031bd0fa"
 });
+// Header-only successor: exact vercel.json normalized SHA; no Node/package pin changes.
+const r50GuidesHeadersOnlySha = '3c6d073294212f2a7aefa87fd1472522b8839935776ebb0c98b61887cb969a4b';
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
-  return (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
+  return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
+    (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
     (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
 
@@ -323,6 +326,22 @@ test('R-GAPS-1 R50 exact pins admit only the new protected files and preserve hi
     assert.equal(r50ProtectedShaAccepted(path,'0'.repeat(64)),false);
   }
   assert.equal(r50ProtectedShaAccepted('vercel.json',r50RGapsSuccessorSha['src/layouts/Layout.astro']), false);
+});
+test('Guides API header-only R50 successor is pinned, JSON and noindex on exact path',async()=>{
+  const raw = (await readFile(new URL('../vercel.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
+  assert.equal(digest(raw),r50GuidesHeadersOnlySha);
+  assert.ok(r50ProtectedShaAccepted('vercel.json',r50GuidesHeadersOnlySha));
+  assert.equal(r50ProtectedShaAccepted('vercel.json','0'.repeat(64)),false);
+  const config = JSON.parse(raw);
+  const targetRoutes = config.routes.filter(entry=>entry.src==='/api/guides');
+  const targetHeaders = config.headers.filter(entry=>entry.source==='/api/guides');
+  assert.equal(targetRoutes.length,1);assert.equal(targetHeaders.length,1);
+  assert.deepEqual(targetRoutes[0].headers,{'Content-Type':'application/json; charset=utf-8','X-Robots-Tag':'noindex'});
+  assert.equal(targetRoutes[0].continue,true);
+  assert.deepEqual(targetHeaders[0].headers,[
+    {key:'Content-Type',value:'application/json; charset=utf-8'},
+    {key:'X-Robots-Tag',value:'noindex'}
+  ]);
 });
 test('R50-D required test pair is reached by unchanged build:core and required quality job',async()=>{
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));

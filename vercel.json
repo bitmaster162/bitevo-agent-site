@@ -29,6 +29,14 @@
       "continue": true
     },
     {
+      "src": "/api/guides",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "X-Robots-Tag": "noindex"
+      },
+      "continue": true
+    },
+    {
       "src": "/_astro/(.*)",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
@@ -109,6 +117,19 @@
     }
   ],
   "headers": [
+    {
+      "source": "/api/guides",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
