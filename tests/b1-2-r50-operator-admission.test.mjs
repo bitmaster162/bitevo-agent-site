@@ -270,21 +270,29 @@ const r50Guides34SuccessorSha = Object.freeze({
 });
 const { isExactGuides34Successor } = await import('../scripts/guides34-route-successor-r1.mjs');
 const { isExactRGapsSuccessor } = await import('../scripts/r-gaps1-route-successor-r1.mjs');
+const { isExactGuidesApiNode24Successor } = await import('../scripts/guides-api-node24-successor-r1.mjs');
 const r50RGapsSuccessorSha = Object.freeze({
   "src/layouts/Layout.astro": "7d6927461ae2c3e274393b200ff9056413d4303a8719f239d9e24a36d1510f6d",
   "vercel.json": "b74521028122d966e994363391bcbd39f19d114a909901144b354733b4e534fe",
   "scripts/verify-r47a-privacy.mjs": "2eb06888fca1b8d7c18ab67f17ffa3768ae8d2b9c356b7c7491a9600696f1e17",
   "scripts/verify-b1-2-event-counter.mjs": "9eb75a437ab0ed6705a9bf9b8787fee178200965c0e716ca5d4c182b031bd0fa"
 });
+// R50-D successor #252: exact changed config SHA, only under fully pinned scope.
+const r50Node24SuccessorSha = Object.freeze({ 'vercel.json': 'bc60f5ae87a84bf71ab3f094b0a074094a686956170f1d5f043669ff6e1075de' });
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
-  return (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
+  return (isExactGuidesApiNode24Successor() && r50Node24SuccessorSha[path] === sha) ||
+    (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
     (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
 
 const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
 const r50RequiredSuffix = ' && ' + r50RequiredCommand;
 const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e4900f7e4c81880e9a8';
+// New normalized package digest pins only Node 24 and the dedicated new mandatory test.
+const r50Node24PackageDigest = '7c12fdf05417b906fccdbbb170cd3f08e8e0b6f94b3ae8e47b4a73926b13541e';
+const r50Node24RequiredCommand = 'node --test --test-reporter=tap tests/guides-response-headers-node24-r1.test.mjs';
+const r50Node24RequiredSuffix = ' && ' + r50Node24RequiredCommand;
 function r50PackageIsExact(candidate) {
   try {
     const copy = structuredClone(candidate);
@@ -292,7 +300,12 @@ function r50PackageIsExact(candidate) {
     if (typeof core !== 'string' || !core.endsWith(r50RequiredSuffix)
       || core.split(r50RequiredCommand).length !== 2) return false;
     copy.scripts['verify:core'] = core.slice(0, -r50RequiredSuffix.length);
-    return digest(JSON.stringify(copy)) === r50PinnedPackageDigest;
+    if (digest(JSON.stringify(copy)) === r50PinnedPackageDigest) return true; // immutable historical pin
+    const newer = copy.scripts['verify:core'];
+    if (!newer.endsWith(r50Node24RequiredSuffix) ||
+        newer.split(r50Node24RequiredCommand).length !== 2) return false;
+    copy.scripts['verify:core'] = newer.slice(0, -r50Node24RequiredSuffix.length);
+    return isExactGuidesApiNode24Successor() && digest(JSON.stringify(copy)) === r50Node24PackageDigest;
   } catch { return false; }
 }
 
@@ -323,6 +336,12 @@ test('R-GAPS-1 R50 exact pins admit only the new protected files and preserve hi
     assert.equal(r50ProtectedShaAccepted(path,'0'.repeat(64)),false);
   }
   assert.equal(r50ProtectedShaAccepted('vercel.json',r50RGapsSuccessorSha['src/layouts/Layout.astro']), false);
+  // Authorized successor #252: exact current files only, old R50 pins unchanged.
+  assert.equal(isExactGuidesApiNode24Successor(), true);
+  assert.equal(isExactGuidesApiNode24Successor({ 'vercel.json': 'altered' }), false);
+  assert.equal(isExactGuidesApiNode24Successor({ 'package.json': '{}' }), false);
+  assert.equal(r50ProtectedShaAccepted('vercel.json',r50Node24SuccessorSha['vercel.json']), true);
+  assert.equal(r50ProtectedShaAccepted('vercel.json','0'.repeat(64)), false);
 });
 test('R50-D required test pair is reached by unchanged build:core and required quality job',async()=>{
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
