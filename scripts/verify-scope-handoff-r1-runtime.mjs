@@ -105,7 +105,7 @@ check(
   pkg.dependencies?.['@vercel/functions'] === '3.9.9' &&
   pkg.dependencies?.astro === '7.2.10' &&
   pkg.devDependencies?.esbuild === '0.28.1' &&
-  pkg.engines?.node === '>=22.19.0',
+  pkg.engines?.node === '24.x',
   'dependency and runtime baseline'
 );
 check(wrangler.includes('worker/index.mjs') && !wrangler.includes('scope-handoff'),'Cloudflare config unchanged for scope handoff');
