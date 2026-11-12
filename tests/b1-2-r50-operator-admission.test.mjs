@@ -276,18 +276,22 @@ const r50RGapsSuccessorSha = Object.freeze({
   "scripts/verify-r47a-privacy.mjs": "2eb06888fca1b8d7c18ab67f17ffa3768ae8d2b9c356b7c7491a9600696f1e17",
   "scripts/verify-b1-2-event-counter.mjs": "9eb75a437ab0ed6705a9bf9b8787fee178200965c0e716ca5d4c182b031bd0fa"
 });
-// Header-only successor: exact vercel.json normalized SHA; no Node/package pin changes.
+// Reviewed /api/guides header-only successor retained after Node24 rebase.
 const r50GuidesHeadersOnlySha = '3c6d073294212f2a7aefa87fd1472522b8839935776ebb0c98b61887cb969a4b';
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
+  if (path === 'package-lock.json' && sha === '4aa343921ad8dd97224312ef09e8e605ec015b39be5c357e1dc17454761d304c') return true;
   return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
-    (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
+  return (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
     (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
 
 const r50RequiredCommand = 'node --test --test-reporter=tap tests/b1-2-r50-operator-admission.test.mjs tests/b1-2-r50-durable-grant.test.mjs tests/b1-2-r50-package-runtime.test.mjs';
 const r50RequiredSuffix = ' && ' + r50RequiredCommand;
 const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e4900f7e4c81880e9a8';
+// Exact Node 24 migration successor; old R50 pins remain accepted.
+const r50Node24PackageDigest = '7de508ca0b1eb9d9519e7753725a48a6053c2c416d83d487af391c8a9805c7a2';
+const r50Node24LockSha = '4aa343921ad8dd97224312ef09e8e605ec015b39be5c357e1dc17454761d304c';
 function r50PackageIsExact(candidate) {
   try {
     const copy = structuredClone(candidate);
@@ -295,7 +299,8 @@ function r50PackageIsExact(candidate) {
     if (typeof core !== 'string' || !core.endsWith(r50RequiredSuffix)
       || core.split(r50RequiredCommand).length !== 2) return false;
     copy.scripts['verify:core'] = core.slice(0, -r50RequiredSuffix.length);
-    return digest(JSON.stringify(copy)) === r50PinnedPackageDigest;
+    const observed = digest(JSON.stringify(copy));
+    return observed === r50PinnedPackageDigest || observed === r50Node24PackageDigest;
   } catch { return false; }
 }
 
@@ -326,6 +331,31 @@ test('R-GAPS-1 R50 exact pins admit only the new protected files and preserve hi
     assert.equal(r50ProtectedShaAccepted(path,'0'.repeat(64)),false);
   }
   assert.equal(r50ProtectedShaAccepted('vercel.json',r50RGapsSuccessorSha['src/layouts/Layout.astro']), false);
+});
+
+test('Node 24 isolated successor is pinned and cannot admit unrelated package or lock edits',async()=>{
+  const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
+  const raw = (await readFile(new URL('../package-lock.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
+  const lock = JSON.parse(raw);
+  assert.equal(digest(raw),r50Node24LockSha);
+  assert.ok(r50ProtectedShaAccepted('package-lock.json',r50Node24LockSha));
+  assert.equal(r50ProtectedShaAccepted('package-lock.json','0'.repeat(64)),false);
+  assert.ok(r50PackageIsExact(pkg));
+  assert.equal(pkg.engines.node,'24.x');
+  assert.equal(pkg.devDependencies['@types/node'],'24.19.2');
+  assert.equal(lock.packages[''].engines.node,'24.x');
+  assert.equal(lock.packages[''].devDependencies['@types/node'],'24.19.2');
+  assert.equal(lock.packages['node_modules/@types/node'].version,'24.19.2');
+  assert.equal(lock.packages['node_modules/undici-types'].version,'7.24.6');
+  const quality = await readFile(new URL('../.github/workflows/quality-gate.yml',import.meta.url),'utf8');
+  const precheck = await readFile(new URL('../.github/workflows/bitevo-precheck.yml',import.meta.url),'utf8');
+  assert.equal((quality.match(/node-version: 24\.16\.0/g)||[]).length,2);
+  assert.equal((precheck.match(/node-version: 24\.16\.0/g)||[]).length,1);
+  for (const mutation of [
+    p=>{p.engines.node='>=24.0.0';},
+    p=>{p.devDependencies['@types/node']='24.19.1';},
+    p=>{p.scripts['verify:core']='echo bypass';}
+  ]) {const altered=structuredClone(pkg);mutation(altered);assert.equal(r50PackageIsExact(altered),false);}
 });
 test('Guides API header-only R50 successor is pinned, JSON and noindex on exact path',async()=>{
   const raw = (await readFile(new URL('../vercel.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
