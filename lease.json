@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "4df53923-822d-4930-aca1-1f8b03655289",
   "nonce": "76d4ea29a4c2444b8de06cd73429c4aa",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "4bc264a939d03ec461e9ec0251751953225be525",
@@ -11,10 +11,10 @@
   "session": "chat3-pr256-rebase-sitemap-20261113",
   "worktree": "c:/_evidence_bitevo_pr256_rebase_20261113",
   "acquiredAt": "2026-11-13T08:12:25.738Z",
-  "updatedAt": "2026-11-13T08:12:25.738Z",
+  "updatedAt": "2026-11-13T08:12:40.404Z",
   "expiresAt": "2026-11-13T09:07:20.483Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "2f066ab3f69f9e7e264601bc87cc40ebd5acac7a"
+  "sealedHead": "7d23e5157ae65df47d9675aad8039fd916ed3748",
+  "sealedTree": "bc9fd965d669adb3e59624e7665e0609ffadf9d2",
+  "featureRef": "refs/heads/gpt/bitevo-a3-report-example-20261113",
+  "predecessor": "5107e4248043f6caa7126ccead3a637477b87955"
 }
