@@ -26,9 +26,9 @@ const tiers = [
   },
   {
     eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
-    desc: 'Use when one consequential agent action boundary needs validation. We test up to two connected tools across 3–5 agreed failure and retry scenarios in staging or synthetic conditions. The $1,500 fee is credited toward the $4,900 Primary Audit if you upgrade within the agreed scope.',
-    includes: ['1 action / authority boundary', 'Up to 2 connected tools', '3–5 agreed failure and retry scenarios', '1 retest within 14 days'],
-    excludes: ['No workflow-wide certification', 'No production access by default', 'No unrestricted penetration testing'],
+    desc: 'One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one retest within 14 days of the finding memo. The USD 1,500 fee is credited in full toward the USD 4,900 Primary Audit if booked within 30 days of the finding memo under a separate written scope.',
+    includes: ['1 action / authority boundary', 'Up to 2 connected tools', '3–5 agreed failure and retry scenarios', '1 retest within 14 days of the finding memo'],
+    excludes: ['No full Authority Ledger / Evidence Contract', 'No certification, compliance or legal opinion', 'No production access or unrestricted penetration testing by default'],
     cta: 'Open Entry Audit', href: '/entry-audit', scopeCta: 'Prepare Entry Audit scope', scopeHref: '/audit-intake?offer=entry-audit', sampleCta: 'See sample report', sampleHref: '/sample-audit'
   },
   {
@@ -46,10 +46,10 @@ const comparison = [
   ['Audit object', '1 proposed action', '1 action boundary, up to 2 tools', '1 staging/test workflow'],
   ['Failure depth', 'No failure tested', '3–5 agreed scenarios', '10–20 agreed scenarios'],
   ['Authority analysis', 'Owner + boundary only', 'Tested boundary, identity and approval binding', 'Action/object/approval map included'],
-  ['Evidence depth', 'Qualification evidence only', 'Reproducible results for 3–5 scenarios', 'Evidence Before Effect + confirmation + recovery'],
+  ['Evidence depth', 'Qualification evidence only', 'Expected-vs-observed results for 3–5 scenarios', 'Evidence Before Effect + confirmation + recovery'],
   ['False Green coverage', 'Not tested', 'Where applicable in the agreed scenarios', 'Explicitly tested where applicable'],
-  ['Primary output', 'Audit / do not audit', 'Scoped findings and repair / retest decision', 'Expand / constrain / repair / retest'],
-  ['Retest', 'No', '1 within 14 days', '1 included']
+  ['Primary output', 'Audit / do not audit', 'Concise finding memo and repair / retest decision', 'Expand / constrain / repair / retest'],
+  ['Retest', 'No', '1 within 14 days of the finding memo', '1 included']
 ];
 
 const offerCatalog = {
@@ -61,7 +61,6 @@ const offerCatalog = {
   itemListElement: [
     { '@type': 'Offer', price: '0', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Scope / Authority Triage', url: 'https://bitevo.work/start' } },
     { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Entry Audit', url: 'https://bitevo.work/entry-audit' } },
-    { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Security Control Validation', url: 'https://bitevo.work/control-validation' } },
     { '@type': 'Offer', price: '3000', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'BUILD Workflow Exception Diagnostic', url: 'https://bitevo.work/build/exception-workflow-diagnostic' } },
     { '@type': 'Offer', price: '4900', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/agent-authority-audit' } },
     { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free 30-minute Company Twin introduction; request is not a booked slot', itemOffered: { '@type': 'Service', name: 'Company Twin introduction (30 minutes)', url: 'https://bitevo.work/company-twin' } },
@@ -72,7 +71,7 @@ const offerCatalog = {
 };
 ---
 
-<Layout mainClass="pricing-phone-scroll-affordance" title="Pricing for AI Agent Authority Decisions | BitEvo" description="BitEvo pricing for the audit ladder and bounded specialist paths, including Security Control Validation and BUILD Workflow Exception Diagnostic.">
+<Layout mainClass="pricing-phone-scroll-affordance" title="Pricing for AI Agent Authority Decisions | BitEvo" description="BitEvo pricing for the audit ladder and bounded specialist paths, including the Entry Audit and BUILD Workflow Exception Diagnostic.">
   <script type="application/ld+json" data-bitevo-offer-catalog set:html={JSON.stringify(offerCatalog)} />
   <section class="pricing-hero section">
     <div class="container hero-grid">
@@ -99,18 +98,13 @@ const offerCatalog = {
     </div>
     <div class="container commercial-boundary panel" data-free-schema-triage>
       <div class="eyebrow">Free first step · agent write-tool schema</div>
-      <strong>One redacted JSON schema · one-page risk map within 24 hours</strong>
-      <p>Send the JSON schema of one tool that can update an external system, with all personal data, credentials, secrets, live identifiers and client records removed. After we confirm the schema is safe and complete, we return one page describing possible duplicate actions, permission overruns and failure/retry boundaries. This is a preliminary review, not a tested finding, audit report or authorization to access systems.</p>
+      <strong>One redacted JSON schema · one-page risk map within 24 hours on business days (Mon–Fri, ICT, UTC+7)</strong>
+      <p>Send the JSON schema of one tool that can update an external system, with all personal data, credentials, secrets, live identifiers, internal hostnames/URLs, account IDs and client records removed. Within 24 hours on business days (Mon–Fri, ICT, UTC+7) after we confirm the schema is safe and complete, we return one page describing possible duplicate actions, permission overruns and failure/retry boundaries. This is a preliminary review, not a tested finding, audit report or authorization to access systems.</p>
       <a class="text-link" href="mailto:robert@bitevo.work?subject=BitEvo%20free%2024-hour%20tool%20schema%20review">Ask for the free schema review →</a>
       <p>Opens your own mail app; nothing is sent by this page. The existing free 20-minute booking remains a separate option.</p>
     </div>
     <HowWorkWorksConfirmed />
-    <div class="container commercial-boundary panel">
-      <div class="eyebrow">Parallel specialist path</div>
-      <strong>Security Control Validation · fixed $1,500</strong>
-      <p>Use this when the owner question is whether one consequential staging/test control produces the expected ALLOW / DENY / HOLD / ESCALATE outcome and the real downstream state can be verified. <a class="text-link" href="/control-validation">Open Security Control Validation →</a></p>
-    </div>
-    <div class="container commercial-boundary panel">
+<div class="container commercial-boundary panel">
       <div class="eyebrow">Parallel BUILD path</div>
       <strong>BUILD Workflow Exception Diagnostic · $3,000 / 5 business days</strong>
       <p>Use this when one recurring operational exception has a named owner and the next decision needs a frozen workflow boundary, review states, evidence handoff and measurable baseline before deeper implementation. The first phase does not require production-system mutation. <a class="text-link" href="/build/exception-workflow-diagnostic">Open BUILD Workflow Exception Diagnostic →</a></p>
