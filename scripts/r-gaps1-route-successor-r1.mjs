@@ -16,7 +16,8 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   // fingerprint successor; do not widen route or registry acceptance.
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
-    '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e'
+    '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e',
+    '5995adf644771bb29ce7afb5535235bd5aadd4047011fc1b81ffa5da8973187b'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(hash(content['src/data/sitemap-currentness.json']))) return false;
