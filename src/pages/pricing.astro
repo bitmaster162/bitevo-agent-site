@@ -26,9 +26,9 @@ const tiers = [
   },
   {
     eyebrow: 'Narrow decision', price: '$1,500', cadence: 'fixed', title: 'Entry Audit',
-    desc: 'Use when one suspected failure controls the decision. We test one action chain and one primary hypothesis to determine whether it is reproducible and worth repairing.',
-    includes: ['1 critical action chain', '1 primary failure hypothesis', 'Bounded reproduction', 'Concise finding memo'],
-    excludes: ['No full Authority Ledger / Evidence Contract', 'No multi-scenario failure plan', 'No included retest'],
+    desc: 'Use when one consequential agent action boundary needs validation. We test up to two connected tools across 3–5 agreed failure and retry scenarios in staging or synthetic conditions. The $1,500 fee is credited toward the $4,900 Primary Audit if you upgrade within the agreed scope.',
+    includes: ['1 action / authority boundary', 'Up to 2 connected tools', '3–5 agreed failure and retry scenarios', '1 retest within 14 days'],
+    excludes: ['No workflow-wide certification', 'No production access by default', 'No unrestricted penetration testing'],
     cta: 'Open Entry Audit', href: '/entry-audit', scopeCta: 'Prepare Entry Audit scope', scopeHref: '/audit-intake?offer=entry-audit', sampleCta: 'See sample report', sampleHref: '/sample-audit'
   },
   {
@@ -42,14 +42,14 @@ const tiers = [
 ];
 
 const comparison = [
-  ['Owner question', 'Is this worth auditing?', 'Is this one failure real?', 'Has this workflow earned its Authority Budget?'],
-  ['Audit object', '1 proposed action', '1 critical action chain', '1 staging/test workflow'],
-  ['Failure depth', 'No failure tested', '1 primary hypothesis', '10–20 agreed scenarios'],
-  ['Authority analysis', 'Owner + boundary only', 'Only what the finding requires', 'Action/object/approval map included'],
-  ['Evidence depth', 'Qualification evidence only', 'Enough to accept/reject one finding', 'Evidence Before Effect + confirmation + recovery'],
-  ['False Green coverage', 'Not tested', 'Only if part of the hypothesis', 'Explicitly tested where applicable'],
-  ['Primary output', 'Audit / do not audit', 'Repair / reject hypothesis', 'Expand / constrain / repair / retest'],
-  ['Retest', 'No', 'Not included', '1 included']
+  ['Owner question', 'Is this worth auditing?', 'Can this action cross an authority or retry boundary?', 'Has this workflow earned its Authority Budget?'],
+  ['Audit object', '1 proposed action', '1 action boundary, up to 2 tools', '1 staging/test workflow'],
+  ['Failure depth', 'No failure tested', '3–5 agreed scenarios', '10–20 agreed scenarios'],
+  ['Authority analysis', 'Owner + boundary only', 'Tested boundary, identity and approval binding', 'Action/object/approval map included'],
+  ['Evidence depth', 'Qualification evidence only', 'Reproducible results for 3–5 scenarios', 'Evidence Before Effect + confirmation + recovery'],
+  ['False Green coverage', 'Not tested', 'Where applicable in the agreed scenarios', 'Explicitly tested where applicable'],
+  ['Primary output', 'Audit / do not audit', 'Scoped findings and repair / retest decision', 'Expand / constrain / repair / retest'],
+  ['Retest', 'No', '1 within 14 days', '1 included']
 ];
 
 const offerCatalog = {
@@ -96,6 +96,13 @@ const offerCatalog = {
           {t.detailCta && t.detailHref && <a href={t.detailHref} class="text-link">{t.detailCta} →</a>}
         </article>
       ))}
+    </div>
+    <div class="container commercial-boundary panel" data-free-schema-triage>
+      <div class="eyebrow">Free first step · agent write-tool schema</div>
+      <strong>One redacted JSON schema · one-page risk map within 24 hours</strong>
+      <p>Send the JSON schema of one tool that can update an external system, with all personal data, credentials, secrets, live identifiers and client records removed. After we confirm the schema is safe and complete, we return one page describing possible duplicate actions, permission overruns and failure/retry boundaries. This is a preliminary review, not a tested finding, audit report or authorization to access systems.</p>
+      <a class="text-link" href="mailto:robert@bitevo.work?subject=BitEvo%20free%2024-hour%20tool%20schema%20review">Ask for the free schema review →</a>
+      <p>Opens your own mail app; nothing is sent by this page. The existing free 20-minute booking remains a separate option.</p>
     </div>
     <HowWorkWorksConfirmed />
     <div class="container commercial-boundary panel">
@@ -146,7 +153,7 @@ const offerCatalog = {
     <div class="container doctrine-grid">
       <article class="panel"><div class="eyebrow">Authority Budget</div><h2>What permission surface are you deciding about?</h2><p>Scope expands when the owner needs a defensible answer about more actions, objects, approvals or integrations — not because a higher price buys a stronger guarantee.</p></article>
       <article class="panel"><div class="eyebrow">Evidence Before Effect</div><h2>How much proof must exist before the action?</h2><p>The commercial ladder buys different evidence depth. The primary audit tests whether decision-time evidence and external confirmation are strong enough for the authority being exercised.</p></article>
-      <article class="panel"><div class="eyebrow">False Green</div><h2>How broadly do we test apparent success?</h2><p>A narrow audit may test one suspected mismatch. The primary audit can include multiple agreed scenarios where internal success, freshness or external state may diverge.</p></article>
+      <article class="panel"><div class="eyebrow">False Green</div><h2>How broadly do we test apparent success?</h2><p>Entry tests 3–5 agreed failure and retry scenarios around one action boundary. The primary audit can include 10–20 agreed scenarios where internal success, freshness or external state may diverge.</p></article>
     </div>
   </section>
 
@@ -155,7 +162,7 @@ const offerCatalog = {
       <div><div class="eyebrow">Selection rule</div><h2 class="section-title">Start from the owner decision, then buy the evidence.</h2></div>
       <div class="decision-list">
         <article><span>Free</span><div><strong>“Should we spend time auditing this workflow at all?”</strong><p>Use triage when the action, owner or staging boundary is still unclear.</p></div></article>
-        <article><span>$1.5k</span><div><strong>“Is this specific failure real enough to act on?”</strong><p>Use the Entry Audit when one hypothesis dominates the engineering decision.</p></div></article>
+        <article><span>$1.5k</span><div><strong>“Can this agent action cross an authority or retry boundary?”</strong><p>Entry tests up to two tools across 3–5 agreed scenarios, includes one retest within 14 days, and credits the fee toward a $4,900 Primary Audit upgrade.</p></div></article>
         <article><span>$4.9k</span><div><strong>“Should this workflow keep, gain or lose authority?”</strong><p>Use the primary audit when the answer requires multiple failure scenarios, an Authority Ledger + Evidence Contract, evidence-at-decision-time and a retestable owner backlog.</p></div></article>
       </div>
     </div>
