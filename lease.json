@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "fc71e38b-b2d6-4171-9e0a-bf492c3ac568",
   "nonce": "16b7def53cf373cd968b658fc41a1d1dc6492dd2dd991988c0d4b7c8863b35f5",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "4bc264a939d03ec461e9ec0251751953225be525",
@@ -11,10 +11,12 @@
   "session": "chat3-pr256-20261113-2100",
   "worktree": "c:/_evidence_bitevo_pr256_merge_20261113",
   "acquiredAt": "2026-11-13T14:01:33.922Z",
-  "updatedAt": "2026-11-13T14:02:00.450Z",
+  "updatedAt": "2026-11-13T14:04:47.236Z",
   "expiresAt": "2026-11-13T14:46:29.447Z",
   "sealedHead": "7d23e5157ae65df47d9675aad8039fd916ed3748",
   "sealedTree": "bc9fd965d669adb3e59624e7665e0609ffadf9d2",
   "featureRef": "refs/heads/gpt/bitevo-a3-report-example-20261113",
-  "predecessor": "3ce608cfa38557586e03b8394bc7e6585d53fe83"
+  "predecessor": "5aa3fee6081110837f77d76e5affb2f8225ebf22",
+  "releasedAt": "2026-11-13T14:04:47.237Z",
+  "releaseReason": "pr256-merge-and-exact-production-version-verified"
 }
