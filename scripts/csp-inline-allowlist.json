@@ -35,7 +35,7 @@
     "6VA0DCYzkFXJhU764X+OW5x2RE61lVFMPA9Fx/CazKA=",
     "6pqfoDlTHdK7P4KAXBIYfsE9VCzL2tko/AR63TnYwBE=",
     "7tQYy75gyS2DTY3qO/I0AtE/pBlFQ0A0BAHrsgM4Ec4=",
-    "8kPcFXmNmIdJJNvwzV4PdsQ0aHS1cwXpJYYCmHm+V8w=",
+    "OGC3N2lXCnHBaJLiMuJPslq5t2wAuQh19jMewu1XBVg=",
     "j6x64MaSO8IRLfq1AWxeU5JebjXt5+yAAOCWPA94AqQ=",
     "ATXqitAHkcme7WY7lEmLCHMnBtcZ3kpwv28V/0Rrgns=",
     "BpPLYc38ftu5eL9RFucFXTpdN/sUaFlfpcfIApfLAXM=",
@@ -47,7 +47,7 @@
     "EOjBDgBUBATcg2F+52tMrl3V6zR6+U0IonnDow48kng=",
     "Ekjw35k2jMBEelU6OvebTpwUflK/5KTfuxOI/hIlSLw=",
     "F+ekA+BQyT/AVWln1Oxc6veOlNHKBfetj8ZBQScKQ5Q=",
-    "Fz9edrLFehz99ELFaAcKUiVY9MdcjJ3Pm8J5lFtuuV0=",
+    "mbCvZLS7RjR93oNgcb3CaSbpiWP2+UbWqehHddDJlT8=",
     "GC8oMqFFc3EXfKbEMv02HqMJHBjKLh2IZ4dQzMu4dr8=",
     "GGOdwywGXR498R4Mvr3VFRKtFC2lDrCUo5p901F2PIA=",
     "GOIILBW1zwe7Ob5Y58aKeCS+2djZzrXxbcU9IAPRGjY=",
@@ -92,7 +92,7 @@
     "cCgBv+YSz85Uv5B9O9/qNxrKn3Lusy/Kog1ppRg2wKA=",
     "cF/2f+NgQAmxMt1NGUbFEtAU8GE4TrWpBxDVKe/6gNs=",
     "chduDruEJ2yPCoPjAC/VzeOXMfkoj7AnmmbtIam8kEU=",
-    "e/f7KRK1t8LFkGhFZ7w+SKMZiMQ4cvCvYyQl0A04u3g=",
+    "cqhRSnngiRkG6eBdW5AIEmporCEVrPqZSNx3p6YsULo=",
     "gm46kfD95eg+goLf0p/EnupG09RLu2nAnnXJdt4CoZk=",
     "gtv2h1YrH2U9QX+rDwMcnXqOesD7NjlnElm7N11nSzc=",
     "hA7gMtt01TB/kjjscmmAzzxdQSk0gM4cUvkrrMderHE=",
@@ -515,6 +515,37 @@
         "/ru/company-twin",
         "/pricing",
         "/ru/pricing"
+      ]
+    },
+    {
+      "sourceSha": "LOCAL_PR257_POST256_REBASE_PRECOMMIT",
+      "note": "Post PR256 merge, PR257 Entry offer EN/RU content renders three changed inert application/ld+json blocks. Verified exact SHA256 against built HTML and removed exactly the three now-stale hashes. No executable inline JavaScript, styles, wildcard, unsafe-inline, unsafe-eval, external network origin or provider write authorized.",
+      "scripts": [
+        "cqhRSnngiRkG6eBdW5AIEmporCEVrPqZSNx3p6YsULo=",
+        "OGC3N2lXCnHBaJLiMuJPslq5t2wAuQh19jMewu1XBVg=",
+        "mbCvZLS7RjR93oNgcb3CaSbpiWP2+UbWqehHddDJlT8="
+      ],
+      "replaces": [
+        {
+          "route": "/pricing",
+          "old": "e/f7KRK1t8LFkGhFZ7w+SKMZiMQ4cvCvYyQl0A04u3g=",
+          "new": "cqhRSnngiRkG6eBdW5AIEmporCEVrPqZSNx3p6YsULo="
+        },
+        {
+          "route": "/ru/pricing",
+          "old": "8kPcFXmNmIdJJNvwzV4PdsQ0aHS1cwXpJYYCmHm+V8w=",
+          "new": "OGC3N2lXCnHBaJLiMuJPslq5t2wAuQh19jMewu1XBVg="
+        },
+        {
+          "route": "/ru/entry-audit",
+          "old": "Fz9edrLFehz99ELFaAcKUiVY9MdcjJ3Pm8J5lFtuuV0=",
+          "new": "mbCvZLS7RjR93oNgcb3CaSbpiWP2+UbWqehHddDJlT8="
+        }
+      ],
+      "routes": [
+        "/pricing",
+        "/ru/pricing",
+        "/ru/entry-audit"
       ]
     }
   ]

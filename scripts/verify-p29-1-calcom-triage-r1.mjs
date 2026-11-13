@@ -86,8 +86,8 @@ const packageJson = JSON.parse(await read('package.json'));
 const expected = {
   '/': ['2026-10-13', 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197'],
   '/ru': ['2026-10-13', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'],
-  '/pricing': ['2026-10-16', 'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2'],
-  '/entry-audit': ['2026-10-13', 'sha256:bacc8560dd46327529cca2621a862a87c47d310092305f9cf7f2a73066a65449']
+  '/pricing': ['2026-11-13', 'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2'],
+  '/entry-audit': ['2026-11-13', 'sha256:bacc8560dd46327529cca2621a862a87c47d310092305f9cf7f2a73066a65449']
 };
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);

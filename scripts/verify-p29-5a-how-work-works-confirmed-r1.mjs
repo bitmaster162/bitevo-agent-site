@@ -66,7 +66,7 @@ check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b|<button\b|<a\b
 for (const path of ['/pricing', '/security']) {
   const row = currentness.routes.find(item => item.path === path);
   check(Boolean(row), path + ' currentness row exists');
-  equal(row?.lastmod, path === '/pricing' ? '2026-10-16' : '2026-10-13', path + ' currentness date exact');
+  equal(row?.lastmod, path === '/pricing' ? '2026-11-13' : '2026-10-13', path + ' currentness date exact');
 }
 equal(currentness.routes.find(item => item.path === '/pricing')?.fingerprint, rgapsExpectedFingerprint("/pricing", 'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2'), '/pricing currentness fingerprint exact');
 equal(currentness.routes.find(item => item.path === '/security')?.fingerprint, rgapsExpectedFingerprint("/security", 'sha256:415b4b109f41b8cb5fe985b6a38ce2dcf3d36a912f50e3326fa9b09c87e919b6'), '/security currentness fingerprint exact');

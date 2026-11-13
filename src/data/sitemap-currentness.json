@@ -9,18 +9,18 @@
     },
     {
       "path": "/start",
-      "lastmod": "2026-10-26",
-      "fingerprint": "sha256:27739fcf4b5ff59a20f38ec02ac58334adf06672f66b1faab0f41e97224a69dc"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:5693c71857706fea537dc4c034a2592734b808574141132e2181ddd2c1f9e279"
     },
     {
       "path": "/pricing",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:7dd7f144d9d2550b73af244074c772c7cc3c83b426ea646062279bfb864ab427"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:a4f10f548ba0ce2b5d6ee9d40073e3caee3e3adc8e26c6a2b2427b35551b72a4"
     },
     {
       "path": "/consulting",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:d120a3f8ec42fbf59ddc7147e7389cd967c4fe407e7c1659ef25e584f63fca60"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:bfc5ecc77eb3dd217980a781624b4886455e20a7e54ca8eaf447c41012a27ff1"
     },
     {
       "path": "/company-twin",
@@ -44,18 +44,18 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:13c57d4585e53b7acc2dfbdafc80fe53ff8b22d37a9e3ba74a61c77b9bcc2796"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:1b7542573288790cdf60b69bbc84ef2e1862a5aff134cb2500ba51f58da38c57"
     },
     {
       "path": "/entry-audit-vs-pentest-ai-security-grc",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:a83506faa44c5a8aa30c65d00c2819783b53b1c971234b79528722ff9e27b1d9"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:913feeb755c8f5c20b71622f5663e16e4c358cf5692d2221a3188b28cd095691"
     },
     {
       "path": "/control-validation",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:7f21338d8b990cdcfeb984fbfb3dcce7263a1f057b0471122a1f06b8fcfbb2a3"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:f5da28398fdb30d0a22bc0f3b228dc4dd9b03d29a214cdda9b4f3e41ee3bd222"
     },
     {
       "path": "/evidence-readiness",
@@ -199,8 +199,8 @@
     },
     {
       "path": "/build",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:71e9b4bcabb948ef9398178039f021da370c39506088b04505c1d85f32fa9838"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:7bd17e5f33e045c74474ad15b9908c6aa4744781cb89f009aab70a4b5edf8402"
     },
     {
       "path": "/sample-audit",
@@ -224,8 +224,8 @@
     },
     {
       "path": "/operator",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:0bb48f415ae7c0bb9d22faeda2b047f1a5721b92c4990c75edb44885c27c8be3"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:7214ebac800b625a4e439a3e83281406fe2ed90e109d932673169d32a94b4a5a"
     },
     {
       "path": "/ai-skill-lab-sample",
@@ -304,8 +304,8 @@
     },
     {
       "path": "/consequential-actions",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:cc4cfda08c492eec42f13e241e6ee294a112b5bbe49f5e09c5b778c1bd9a1610"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:dea4559752a2a148fa6b72acc2b32f93b1acd8467cc92c609552714217265ffb"
     },
     {
       "path": "/commerce-action-validation",
@@ -329,13 +329,13 @@
     },
     {
       "path": "/ru/pricing",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:764a95f9d73240b50f537267bb2063f86abca6fa4287674d8e6d084c77cd6b35"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:4f0fe9b639f89f747eca6fb1e356932b3607422cea9ad15fbf8ae1308ff9bfed"
     },
     {
       "path": "/ru/consulting",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:f058455050b791b54b42fd0021d3415e9cda0d70c1eacdadcd23f62788073732"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:ac1f7c4ce5d39c491d1408935412ad28070eef9b3a81917eb9086e9c78411216"
     },
     {
       "path": "/ru/company-twin",
@@ -449,23 +449,23 @@
     },
     {
       "path": "/ru/start",
-      "lastmod": "2026-10-26",
-      "fingerprint": "sha256:a26aafadc12c5eb0f1ab579da2659144d0db8cf5283ef02acce857d0d2ba7e0f"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:15d89e197454746a4c673cc063047476f1b622ad4231901e773d275aa1142113"
     },
     {
       "path": "/ru/entry-audit",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:fa22c07ce156fc548ed45140f4d52fcd4ff420c210d30edff90b60f04cfe690d"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:5193943fb9e3a19abe7c390b070d2b959b8bd85b5fac87c68db1af7dee356561"
     },
     {
       "path": "/ru/entry-audit-vs-pentest-ai-security-grc",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:f6ce8e95849b18b0c4d700776d0f9ff455eaf3ad4ffcc5aa9ff5892e9ef0c375"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:ca47686f1d8f2618ddee7f00ab43264d63ec883f8dcee595ad2c7ac066704b83"
     },
     {
       "path": "/ru/control-validation",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:948d4ef3cfcdf7714b6e389a103f4502c175026b719e13a25a501ba8a4fd95ce"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:68b62a0e4b488173e72473cee01424f5167de724dc0f4b952c897b6ac012a5bc"
     },
     {
       "path": "/ru/evidence-readiness",
@@ -649,13 +649,13 @@
     },
     {
       "path": "/buyer-pack",
-      "lastmod": "2026-10-30",
-      "fingerprint": "sha256:121d2c6694578964c76f1be9db19496b4806587a6ac03deeb20a93d5671c9392"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:7e6a7ebd4e1342ba82d3a07e2d6311044369a58e4a8fe7d93829ff5f17e52bbb"
     },
     {
       "path": "/ru/buyer-pack",
-      "lastmod": "2026-10-30",
-      "fingerprint": "sha256:e9f5ca2e044557ac2e505422850ff3be15d16ce763c236e5ff8ca90bfd83b433"
+      "lastmod": "2026-11-13",
+      "fingerprint": "sha256:db397ad82cc59b8e04f758b182f310c2476ee40ba16c37b5e0f9336cc5ea861e"
     },
     {
       "path": "/ru/agent-incidents",
@@ -675,12 +675,12 @@
     {
       "path": "/guides/false-green-and-retry-safety",
       "lastmod": "2026-10-30",
-      "fingerprint": "sha256:e1b01f1bc820a40e70a88832188945bd8f0f9d8d9471714e937a154aa3211a83"
+      "fingerprint": "sha256:8170223425a34165bf16de9130afdef27d760a46d95b925e0a5dd1b3211d90c4"
     },
     {
       "path": "/guides/mcp-and-coding-agent-governance",
       "lastmod": "2026-10-30",
-      "fingerprint": "sha256:462afffb997bb834d6e7cfc504961366f797e65c82f92792ca1a3dd5f6af24ff"
+      "fingerprint": "sha256:dcfef2203305dcab094b9801eafb3fc2fd65a7e5ebaf6a8a4e5ea538fa9d49c6"
     },
     {
       "path": "/guides/mcp-server-authority-review",
@@ -700,12 +700,12 @@
     {
       "path": "/ru/guides/false-green-and-retry-safety",
       "lastmod": "2026-10-30",
-      "fingerprint": "sha256:1ce53bc4e0f57bedd635ad500c928acc75e6d63c0fd813105fedc72457b82e6c"
+      "fingerprint": "sha256:6e6815e6e1c9191e120abb7241884e582794af6104b4e711244456f60948d5cb"
     },
     {
       "path": "/ru/guides/mcp-and-coding-agent-governance",
       "lastmod": "2026-10-30",
-      "fingerprint": "sha256:288a727af020e74c97b272b7cfc1e5bc35f6abc004c61df391507c6d4228b240"
+      "fingerprint": "sha256:9d5502d0dc2fc5c15e0edbda87fded4f0b8d1c38e7abcf9574fcfbc0c6c32b4a"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",

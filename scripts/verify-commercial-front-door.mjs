@@ -66,12 +66,16 @@ check(!intake.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20revie
 
 const offerIntentRoutes = [
   ['/entry-audit', entryAudit, '/audit-intake?offer=entry-audit'],
-  ['/control-validation', controlValidation, '/audit-intake?offer=security-control-validation'],
+  ['/control-validation', controlValidation, '/entry-audit'],
   ['/agent-authority-audit', primaryAudit, '/audit-intake?offer=primary-agent-authority-audit'],
   ['/ru/entry-audit', ruEntryAudit, '/ru/audit-intake?offer=entry-audit'],
-  ['/ru/control-validation', ruControlValidation, '/ru/audit-intake?offer=security-control-validation'],
+  ['/ru/control-validation', ruControlValidation, '/ru/entry-audit'],
   ['/ru/agent-authority-audit', ruPrimaryAudit, '/ru/audit-intake?offer=primary-agent-authority-audit']
 ];
+// Previously separate Security Control Validation now routes to bounded Entry Audit.
+check(!controlValidation.includes('href="/audit-intake?offer=security-control-validation"') &&
+      !ruControlValidation.includes('href="/ru/audit-intake?offer=security-control-validation"'),
+      'retired standalone Security Control Validation offer intent must not be reintroduced');
 for (const [route, html, href] of offerIntentRoutes) {
   check(html.includes(`href="${href}"`), `${route} must preserve selected offer intent into audit intake`);
 }

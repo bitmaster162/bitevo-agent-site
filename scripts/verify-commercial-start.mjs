@@ -80,7 +80,7 @@ for (const [requiredText, href, cta] of startContracts) {
 
 const llmsCommercialContracts = [
   ['USD 1,500 Entry Audit', '/entry-audit'],
-  ['USD 1,500 Security Control Validation', '/control-validation'],
+  ['Security Control Validation is now delivered as Entry Audit', '/entry-audit'],
   ['USD 3,000 BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic'],
   ['USD 4,900 Primary Audit', '/agent-authority-audit']
 ];
@@ -309,7 +309,6 @@ for (const key of expectedAuditOffers.map(item=>item[0])) {
 const pricingContracts = [
   ['/start', 'Choose the right scope'],
   ['/entry-audit', 'Open Entry Audit'],
-  ['/control-validation', 'Open Security Control Validation'],
   ['/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'],
   ['/audit-intake?offer=entry-audit', 'Prepare Entry Audit scope'],
   ['/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope'],
@@ -323,7 +322,6 @@ for (const [href, cta] of pricingContracts) {
 const ruPricingContracts = [
   ['/ru/audit-intake?offer=entry-audit', 'Entry'],
   ['/ru/audit-intake?offer=primary-agent-authority-audit', 'Primary'],
-  ['/ru/control-validation', 'Открыть Security Control Validation'],
   ['/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic'],
   ['mailto:robert@bitevo.work?subject=BitEvo%20scope%20review', 'Связаться с Робертом']
 ];
@@ -373,11 +371,16 @@ if (pricing.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&
 }
 
 const pricingText = stripTags(pricing);
-for (const required of ['Free', '$1,500', '$4,900', 'Security Control Validation · fixed $1,500', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 business days', 'This page does not book a triage, submit an audit request or authorize testing.']) {
+for (const required of ['Free', '$1,500', '$4,900', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 business days', 'This page does not book a triage, submit an audit request or authorize testing.']) {
   if (!pricingText.includes(required)) failures.push(`/pricing: missing commercial invariant "${required}"`);
 }
+// SCV is no longer an independently purchasable Pricing SKU.
+if (hasAnchor(pricing, '/control-validation', 'Open Security Control Validation') ||
+    hasAnchor(ruPricing, '/ru/control-validation', 'Security Control Validation')) {
+  failures.push('Pricing must not advertise standalone Security Control Validation checkout scope');
+}
 const ruPricingText = stripTags(ruPricing);
-for (const required of ['Security Control Validation · фиксированные $1,500', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 рабочих дней']) {
+for (const required of ['BUILD Workflow Exception Diagnostic · $3,000 / 5 рабочих дней']) {
   if (!ruPricingText.includes(required)) failures.push(`/ru/pricing: missing commercial invariant "${required}"`);
 }
 

@@ -106,8 +106,8 @@ for (const route of ['/pricing','/ru/pricing']) {
   const catalogs = objects.filter(item => item['@type'] === 'OfferCatalog');
   equal(catalogs.length, 1, `${route}: OfferCatalog count`);
   const offers = catalogs[0]?.itemListElement || [];
-  equal(offers.length, 9, `${route}: OfferCatalog offer count`);
-  deepEqual(offers.map(offer => Number(offer.price)).sort((a,b) => a-b), [0,0,500,1500,1500,3000,3000,4900,9000], `${route}: canonical offer prices`);
+  equal(offers.length, 8, `${route}: OfferCatalog offer count`);
+  deepEqual(offers.map(offer => Number(offer.price)).sort((a,b) => a-b), [0,0,500,1500,3000,3000,4900,9000], `${route}: canonical offer prices`);
   for (const offer of offers) {
     check(offer?.['@type'] === 'Offer', `${route}: catalog item must be Offer`);
     check(offer?.priceCurrency === 'USD', `${route}: offer currency must be USD`);
