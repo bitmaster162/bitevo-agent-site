@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.19.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "npm run generate:research-notes && astro dev",
@@ -34,7 +34,7 @@
     "astro": "7.2.10"
   },
   "devDependencies": {
-    "@types/node": "22.19.0",
+    "@types/node": "24.19.2",
     "esbuild": "0.28.1",
     "typescript": "5.9.3"
   }
