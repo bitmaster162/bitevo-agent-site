@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "c1447f5c-bf5b-47be-a695-a0e53c709977",
   "nonce": "0460aaffbf96a7fe87ed2c77647bf863bb61eca3a75c973bc9e0b61613b58c57",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "e26bedf0b330e9ca7357946938f491f59e2806b8",
@@ -11,10 +11,10 @@
   "session": "chat3-deps-20261113",
   "worktree": "c:/_evidence_bitevo_deps_bumps_20261113",
   "acquiredAt": "2026-11-13T15:07:54.225Z",
-  "updatedAt": "2026-11-13T15:07:54.225Z",
+  "updatedAt": "2026-11-13T15:08:09.670Z",
   "expiresAt": "2026-11-13T15:52:51.194Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "7e201420cefcf81b1cf73a8c437798999c28229d"
+  "sealedHead": "3a2983429f63eaaa04ae71c163472a9c0c6ebb96",
+  "sealedTree": "5ecca4d28ba3876253c025c471154dcaa3a3a5b1",
+  "featureRef": "refs/heads/gpt/bitevo-deps-security-patch-minor-20261113",
+  "predecessor": "f18d9a5b095ca44077c89b9c7f3868dcc4a114bc"
 }
