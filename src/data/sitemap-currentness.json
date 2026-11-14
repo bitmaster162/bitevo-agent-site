@@ -259,18 +259,18 @@
     },
     {
       "path": "/guides/security-sandboxing",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:cd2dcbc630632d2aaa80c70a386728c0a29f698f3ae5a594b05763eb2cd87185"
+      "lastmod": "2026-11-14",
+      "fingerprint": "sha256:6a74d05794c52f72568d713ac26ed380e2793682458359a155f5f98da46f8264"
     },
     {
       "path": "/guides/fleet-coordinator-drift-monitoring",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:0b4f08f7a0308ecd322ce416af2d0e731d03c43e9ec6d0d69a22279a0dda0c46"
+      "lastmod": "2026-11-14",
+      "fingerprint": "sha256:d5edd4717896d828f9febdc472ac1ac64b9246ea73542909e41c2b1022ed2cfe"
     },
     {
       "path": "/guides/d3-tool-io-bridge-contract",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:2fc681801fb728887726744fd0640f1c71796ec16d5335694b8056c4597bdb09"
+      "lastmod": "2026-11-14",
+      "fingerprint": "sha256:f0c3ac0b447401ce118fc2a93d796e99eb43aa5d433bd45c812f592c95d2524b"
     },
     {
       "path": "/doctrine",
@@ -599,18 +599,18 @@
     },
     {
       "path": "/ru/guides/security-sandboxing",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:de3bcc0bc65d54aeff0474dae72798416dcf5a79a6999e39578ca0c890121a18"
+      "lastmod": "2026-11-14",
+      "fingerprint": "sha256:b4a767a3a4ba177bd0e64c9e927ffba7e0df67db865c49c153b6e1e236de6972"
     },
     {
       "path": "/ru/guides/fleet-coordinator-drift-monitoring",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:c4e5ec9c2803a93a07ecc6820e8590ed2662ea9c7977e71c44c8dcd63ec6d202"
+      "lastmod": "2026-11-14",
+      "fingerprint": "sha256:cce0882d881cd6dbcf7675202fe9d7b163daa18580688eebdd07ef2765b30a87"
     },
     {
       "path": "/ru/guides/d3-tool-io-bridge-contract",
-      "lastmod": "2026-10-13",
-      "fingerprint": "sha256:07dfff1c3b6fe04ae13bab05838d0ad2d2ee924f5c168a0890e2555641b0fac6"
+      "lastmod": "2026-11-14",
+      "fingerprint": "sha256:dd382e3ee69e0cc61d1a66dd87e98640236ce6b264fb097e3567590d56d37a72"
     },
     {
       "path": "/ru/ruap",
@@ -690,27 +690,27 @@
     {
       "path": "/ru/guides/before-write-access",
       "lastmod": "2026-10-01",
-      "fingerprint": "sha256:3de6956cff9bc4e0f9d56adbb3547f53b900cfd04979b05b9cff622c1c767560"
+      "fingerprint": "sha256:8c75a7f8490818797507ddd9ead369618904eb1d65be445bc736940e84698dfb"
     },
     {
       "path": "/ru/guides/bitget-authority-after-orchestration-compromise",
       "lastmod": "2026-10-07",
-      "fingerprint": "sha256:cad14446bab2f013c87a014ee3f1015ae8a1c8563fa42a4e9a508cc6ea82a377"
+      "fingerprint": "sha256:265e395cce5400da3fb7345aed1bfcf807695eb8c5ac8c971556e965ccb63178"
     },
     {
       "path": "/ru/guides/false-green-and-retry-safety",
       "lastmod": "2026-11-14",
-      "fingerprint": "sha256:070f1074df5709116cede19912e47a3e8121421ee6c28d0dbef12ee2202a2353"
+      "fingerprint": "sha256:0784d2a0faf4cf0e880778c97c3aace8c5511c71f1eaba8271e8f6734a6ea863"
     },
     {
       "path": "/ru/guides/mcp-and-coding-agent-governance",
       "lastmod": "2026-11-14",
-      "fingerprint": "sha256:4c03dd97bc09a7fffc6eb78e8192722da4513f65fbe84ee426cdffc05d84871f"
+      "fingerprint": "sha256:917502a05592facec8721eb054bc4e15396e38cc32798c58dd37b09e8c300d6b"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",
       "lastmod": "2026-10-06",
-      "fingerprint": "sha256:414849385df2b0d68a2fc2b446f8c95c1590cb203423a6d9818bdfce965bd106"
+      "fingerprint": "sha256:c30fa6fcad393eb9282a522d3afa48c55e41ad73473f2f08cb8fd2161a37ea5d"
     }
   ]
 }

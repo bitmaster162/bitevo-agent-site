@@ -21,7 +21,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     'd87a40175f60f8c653fff8c1aad0916f82b5adbb7f3bd7be8d5de75f6b4a06f9',
     '21a1a8d9a17d4696f845a4de58d8af8ffe2b334f29a6340be5919336fab7df9c',
     // 2026-11-14 audited offer + Article schema + canonical fix, 142-route exact render.
-    'a685886ddef0621d54c048e061452ba42dd15b669ab71adc2d38e72eabd8aeb3'
+    'a685886ddef0621d54c048e061452ba42dd15b669ab71adc2d38e72eabd8aeb3',
+    // 2026-11-14 all 16 indexed editorial guides have scoped Article + author; 11 source-render updates.
+    '5a8485acb844a0c125a073e1fcaac085c918b520187e47f39484acb53f12ecd1'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(hash(content['src/data/sitemap-currentness.json']))) return false;

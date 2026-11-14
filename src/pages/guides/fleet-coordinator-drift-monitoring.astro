@@ -1,8 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+// Public-safe editorial guide; no fabricated publication timestamp.
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  author: { '@type': 'Person', name: 'Robert Dumanyan', url: 'https://bitevo.work/operator' },
+  headline: "Fleet coordination and technical drift monitoring",
+  description: "Public-safe governance overview of fleet drift detection, expected-vs-observed reconciliation and evidence, without infrastructure identifiers.",
+  inLanguage: 'en',
+  mainEntityOfPage: 'https://bitevo.work/guides/fleet-coordinator-drift-monitoring',
+  publisher: { '@id': 'https://bitevo.work/#organization' }
+};
 ---
 
 <Layout title="Fleet Coordination & Drift Monitoring — BitEvo" description="Public-safe governance overview of fleet drift detection, expected-vs-observed reconciliation and evidence, without infrastructure identifiers.">
+  <script type="application/ld+json" set:html={JSON.stringify(article)}></script>
   <section class="guide"><div class="container card">
     <div class="kicker">Governance · public-safe reference</div>
     <h1>Fleet coordination and technical drift monitoring</h1>
