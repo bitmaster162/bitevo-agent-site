@@ -284,12 +284,19 @@ const r50Pr257ExactCspSha = '34af69da193b55faf8a0095ad499aa7a50c69cfb944e1901a57
 // R11 exact-price successor: four inert JSON-LD hashes updated for approved Entry/Primary pricing.
 // Historical pins remain; admission still requires exact R-GAPS registry+currentness.
 const r50R11PriceCspSha = '68287de91a1e314b807b570d3dc5f253568d556b9b7856168665e1fd9d7a0c8a';
+// Exact Opus-approved audit successor: 404 canonical guard and JSON-LD-only CSP update.
+// Accepted only when pinned R-GAPS registry + 142-route render fingerprint pair is intact.
+const r50R11AuditExactSha = Object.freeze({
+  'src/layouts/Layout.astro': '692062ab24da61ef40b27c19b3c880418b324bbd9f22fd8d42a8633a4362c4a6',
+  'vercel.json': '4b1bda31231cbb96704fdce536c848f7bb5cd0b42925a05baf52924a1bdc68a8'
+});
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
   if (path === 'package-lock.json' && (sha === r50Node24LockSha || sha === r50DepsPatchMinorLockSha)) return true;
   return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50Pr257ExactCspSha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50R11PriceCspSha) ||
+    (isExactRGapsSuccessor() && r50R11AuditExactSha[path] === sha) ||
     (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
     (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
@@ -374,11 +381,15 @@ test('Node 24 isolated successor is pinned and cannot admit unrelated package or
 });
 test('Guides API header-only R50 successor is pinned, JSON and noindex on exact path',async()=>{
   const raw = (await readFile(new URL('../vercel.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
-  assert.ok(digest(raw) === r50GuidesHeadersOnlySha || (isExactRGapsSuccessor() && (digest(raw) === r50Pr257ExactCspSha || digest(raw) === r50R11PriceCspSha)), 'only exact historical or PR257 reviewed Vercel CSP hash');
+  assert.ok(digest(raw) === r50GuidesHeadersOnlySha || (isExactRGapsSuccessor() && (digest(raw) === r50Pr257ExactCspSha || digest(raw) === r50R11PriceCspSha || digest(raw) === r50R11AuditExactSha['vercel.json'])), 'only exact historical or PR257 reviewed Vercel CSP hash');
   assert.ok(r50ProtectedShaAccepted('vercel.json',digest(raw)));
   assert.equal(r50ProtectedShaAccepted('vercel.json','0'.repeat(64)),false);
   assert.ok(r50ProtectedShaAccepted('vercel.json',r50GuidesHeadersOnlySha));
   assert.equal(r50ProtectedShaAccepted('vercel.json','0'.repeat(64)),false);
+  // Audit successor accepts exact reviewed 404 layout and CSP only: arbitrary siblings remain denied.
+  assert.ok(r50ProtectedShaAccepted('src/layouts/Layout.astro',r50R11AuditExactSha['src/layouts/Layout.astro']));
+  assert.ok(r50ProtectedShaAccepted('vercel.json',r50R11AuditExactSha['vercel.json']));
+  assert.equal(r50ProtectedShaAccepted('src/layouts/Layout.astro','0'.repeat(64)),false);
   const config = JSON.parse(raw);
   const targetRoutes = config.routes.filter(entry=>entry.src==='/api/guides');
   const targetHeaders = config.headers.filter(entry=>entry.source==='/api/guides');

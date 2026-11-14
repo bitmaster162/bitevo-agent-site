@@ -104,7 +104,8 @@ const offerHandoffs = [
   ['/agent-authority-audit', primaryAudit, primaryAuditReviewHref, 'Contact Robert', true],
   ['/build/exception-workflow-diagnostic', buildDiagnostic, buildQualificationHref, 'Contact Robert at BitEvo', false],
   ['/ru/entry-audit', ruEntryAudit, entryAuditReviewHref, 'Связаться с Робертом', true],
-  ['/ru/control-validation', ruControlValidation, controlValidationReviewHref, 'Связаться с Робертом', true],
+  // RU SCV is included in Entry Audit, so the direct manual handoff uses the Entry subject.
+  ['/ru/control-validation', ruControlValidation, entryAuditReviewHref, 'Связаться с Робертом', true],
   ['/ru/agent-authority-audit', ruPrimaryAudit, primaryAuditReviewHref, 'Связаться с Робертом', true],
   ['/ru/build/exception-workflow-diagnostic', ruBuildDiagnostic, buildQualificationHref, 'Связаться с Робертом', true]
 ];
