@@ -283,7 +283,7 @@ const r50GuidesHeadersOnlySha = '3c6d073294212f2a7aefa87fd1472522b8839935776ebb0
 const r50Pr257ExactCspSha = '34af69da193b55faf8a0095ad499aa7a50c69cfb944e1901a57ce0886facfdc4';
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
-  if (path === 'package-lock.json' && sha === '4aa343921ad8dd97224312ef09e8e605ec015b39be5c357e1dc17454761d304c') return true;
+  if (path === 'package-lock.json' && (sha === r50Node24LockSha || sha === r50DepsPatchMinorLockSha)) return true;
   return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50Pr257ExactCspSha) ||
     (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
@@ -296,6 +296,9 @@ const r50PinnedPackageDigest = '4e60d233a8f495bfe02ff270a2c01834b1ffcc2daa7c8e49
 // Exact Node 24 migration successor; old R50 pins remain accepted.
 const r50Node24PackageDigest = '7de508ca0b1eb9d9519e7753725a48a6053c2c416d83d487af391c8a9805c7a2';
 const r50Node24LockSha = '4aa343921ad8dd97224312ef09e8e605ec015b39be5c357e1dc17454761d304c';
+// Security-only, exact lock successor: 7 verified non-major transitive dependency
+// updates from npm audit fix, no root package or protected source changes.
+const r50DepsPatchMinorLockSha = '1a7b01f909c675ca9b968f7b47e4ea6fc3bc00891574d8e41141bd1092379349';
 function r50PackageIsExact(candidate) {
   try {
     const copy = structuredClone(candidate);
@@ -341,7 +344,11 @@ test('Node 24 isolated successor is pinned and cannot admit unrelated package or
   const pkg = JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8'));
   const raw = (await readFile(new URL('../package-lock.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
   const lock = JSON.parse(raw);
-  assert.equal(digest(raw),r50Node24LockSha);
+  assert.ok(digest(raw)===r50Node24LockSha || digest(raw)===r50DepsPatchMinorLockSha, 'only exact historic or reviewed patch/minor lock SHA');
+   if(digest(raw)===r50DepsPatchMinorLockSha){
+     const versions=Object.freeze({'node_modules/@vercel/blob/node_modules/undici':'6.29.1','node_modules/nanoid':'3.3.20','node_modules/postcss':'8.5.32','node_modules/smol-toml':'1.9.1','node_modules/source-map-js':'1.2.2','node_modules/undici':'8.12.4','node_modules/zod':'4.6.7'});
+     for(const [name,expected] of Object.entries(versions))assert.equal(lock.packages[name].version,expected, 'approved security-only lock entry '+name);
+   }
   assert.ok(r50ProtectedShaAccepted('package-lock.json',r50Node24LockSha));
   assert.equal(r50ProtectedShaAccepted('package-lock.json','0'.repeat(64)),false);
   assert.ok(r50PackageIsExact(pkg));
