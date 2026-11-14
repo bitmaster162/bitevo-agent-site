@@ -21,19 +21,19 @@
     {
       "key": "entry-audit",
       "name": "Entry Audit",
-      "price_usd": 1500,
-      "scope": "one consequential action chain and one primary evidence/control hypothesis"
+      "price_usd": 750,
+      "scope": "one consequential action/authority boundary, up to two connected tools, 3-5 agreed failure/retry scenarios in staging/test or synthetic by default; one retest within 14 days of the finding memo"
     },
     {
       "key": "security-control-validation",
-      "name": "Security Control Validation",
-      "price_usd": 1500,
-      "scope": "one consequential staging/test control boundary"
+      "name": "Security Control Validation (included in Entry Audit)",
+      "price_usd": 750,
+      "scope": "legacy alias for Entry Audit; control validation included, not a separate purchasable service"
     },
     {
       "key": "primary-agent-authority-audit",
       "name": "Primary Agent Authority & Evidence Audit",
-      "price_usd": 4900,
+      "price_usd": 2450,
       "scope": "one staging/test workflow within the published Primary audit boundary"
     }
   ],

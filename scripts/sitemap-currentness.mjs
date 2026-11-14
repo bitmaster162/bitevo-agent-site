@@ -122,7 +122,12 @@ async function update() {
     const old = oldByPath.get(row.path);
     const stable = old && old.fingerprint === row.fingerprint && validDate(old.lastmod);
     const route = routeByPath.get(row.path);
-    const generatedLastmod = route?.generatedBy === 'research-notes' && validDate(route.reviewed) ? route.reviewed : date;
+    const reviewedDate = route?.generatedBy === 'research-notes' && validDate(route.reviewed) ? route.reviewed : null;
+    // Preserve later, already-reviewed editorial lastmod dates for research notes;
+    // a source metadata date must never silently backdate a published correction.
+    const generatedLastmod = reviewedDate
+      ? (old && validDate(old.lastmod) && old.lastmod <= date && old.lastmod > reviewedDate ? old.lastmod : reviewedDate)
+      : date;
     if (!stable) changed += 1;
     return { path: row.path, lastmod: stable ? old.lastmod : generatedLastmod, fingerprint: row.fingerprint };
   });

@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -17,6 +17,8 @@ const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentn
 
 const EN = 'An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
 const RU = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
+const EN_HOME = EN.replace('An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow:', 'AI agent permissions, tool authority and MCP integrations are the focus of this bounded engineering review of an action-capable AI workflow:');
+const RU_HOME = 'Проверка прав AI-агентов (AI agent permissions), полномочий инструментов (tool authority) и интеграций MCP. BitEvo исследует, кто может изменить внешние данные, требуется ли одобрение владельца, как проверяется результат и безопасен ли повтор.';
 const RU_AUDIT = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
 
 function firstLedeAfterH1(source) {
@@ -29,13 +31,13 @@ function firstLedeAfterH1(source) {
   return match?.[1] || '';
 }
 
-equal(firstLedeAfterH1(home), EN, 'EN homepage first text after h1 is approved definition');
-equal(firstLedeAfterH1(ruHome), RU, 'RU homepage first text after h1 is approved definition');
+equal(firstLedeAfterH1(home), EN_HOME, 'EN homepage first text includes agent permissions/tool authority/MCP');
+equal(firstLedeAfterH1(ruHome), RU_HOME, 'RU homepage first text includes agent permissions/tool authority/MCP');
 equal(firstLedeAfterH1(audit), EN, 'Agent Authority Audit first text after h1 is approved definition');
 equal(firstLedeAfterH1(ruAudit), RU_AUDIT, 'RU Agent Authority Audit first text after h1 is approved definition');
 
-equal((home.match(/An Agent Authority Audit is a bounded engineering review/g) || []).length, 1, 'EN homepage definition appears once');
-equal((ruHome.match(/Аудит полномочий AI-агента \(Agent Authority Audit\) — ограниченная инженерная проверка/g) || []).length, 1, 'RU homepage definition appears once');
+equal((home.match(/AI agent permissions, tool authority and MCP integrations are the focus/g) || []).length, 1, 'EN homepage buyer-context paragraph appears once');
+equal((ruHome.match(/Проверка прав AI-агентов \(AI agent permissions\), полномочий инструментов/g) || []).length, 1, 'RU homepage buyer-context paragraph appears once');
 equal((audit.match(/An Agent Authority Audit is a bounded engineering review/g) || []).length, 1, 'audit definition appears once');
 equal((ruAudit.match(/Аудит полномочий AI-агента \(Agent Authority Audit\) — ограниченная инженерная проверка/g) || []).length, 1, 'RU audit definition appears once');
 
@@ -43,8 +45,8 @@ check(!home.includes('BitEvo audits the action layer of AI systems: what a workf
 check(!ruHome.includes('BitEvo проверяет action layer AI-систем: что workflow может изменить'), 'old RU homepage lead removed');
 check(!audit.includes('The audit answers one operational question: does this action-capable workflow have enough evidence'), 'old audit lead removed');
 
-check(EN.includes('staging or test, not the model in isolation.'), 'EN definition preserves staging/test and model-isolation boundary');
-check(RU.includes('в staging или test') && RU.includes('а не модель в отрыве от неё.'), 'RU homepage definition preserves staging/test and model-isolation boundary');
+check(EN_HOME.includes('staging or test, not the model in isolation.') && EN.includes('staging or test, not the model in isolation.'), 'EN home and audit preserve staging/test and model-isolation boundary');
+check(RU_HOME.includes('AI agent permissions') && RU_HOME.includes('MCP') && RU_AUDIT.includes('в staging или test'), 'RU home states buyer context, RU audit retains model-isolation and test boundary');
 check(RU_AUDIT.includes('staging или test') && RU_AUDIT.includes('а не модель в отрыве от неё.'), 'RU audit definition preserves staging/test and model-isolation boundary');
 
 const expectedCurrentness = {
@@ -55,7 +57,7 @@ const expectedCurrentness = {
 };
 for (const [route, expected] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === route);
-  check(row?.fingerprint === rgapsExpectedFingerprint(route, expected.fingerprint) && row?.lastmod === expected.lastmod, 'currentness exact for ' + route);
+  check(row?.fingerprint === rgapsExpectedFingerprint(route, expected.fingerprint) && row?.lastmod === rgapsExpectedLastmod(route, expected.lastmod), 'currentness exact for ' + route);
 }
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-definition-r1.mjs'), 'P28.1 verifier is wired into verify:core');

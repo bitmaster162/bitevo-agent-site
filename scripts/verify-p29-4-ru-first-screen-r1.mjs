@@ -11,7 +11,7 @@ const sha = value => createHash('sha256').update(value, 'utf8').digest('hex');
 const root = new URL('../', import.meta.url);
 
 const H1 = 'Агент должен заслужить полномочия доказательствами.';
-const LEDE = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
+const LEDE = 'Проверка прав AI-агентов (AI agent permissions), полномочий инструментов (tool authority) и интеграций MCP. BitEvo исследует, кто может изменить внешние данные, требуется ли одобрение владельца, как проверяется результат и безопасен ли повтор.';
 const P29_2 = 'Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.';
 const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
 const P29_1 = 'Записаться на бесплатный разбор, 20 минут';
@@ -22,7 +22,7 @@ const SIGNALS = [
   ['РЕШЕНИЕ', 'расширить, ограничить, исправить, перепроверить']
 ];
 const COPY_BUNDLE = [H1, LEDE, ...SIGNALS.map(([label, value]) => `${label} — ${value}`)].join('\n');
-equal(sha(COPY_BUNDLE), 'b12d9fbc775d2fb31be7ecb144a0b271bf2ed0d48b0e06f762f339f1ab0b1773', 'approved P29.4 copy bundle hash');
+equal(sha(COPY_BUNDLE), 'bd54441e9bdb2354e44e13deb9305ab9eefc9f8b6ffa2acd9fc1199079e49e2c', 'approved P29.4 copy bundle hash');
 
 const source = await readFile(new URL('src/pages/ru/index.astro', root), 'utf8');
 const ruLayout = await readFile(new URL('src/layouts/RuLayout.astro', root), 'utf8');
@@ -38,7 +38,7 @@ const h1End = source.indexOf('</h1>', h1Index);
 const ledeMatch = source.slice(h1End + 5).match(/<p class="lede">([\s\S]*?)<\/p>/);
 check(Boolean(ledeMatch), 'first lede after H1 exists');
 equal(ledeMatch?.[1] || '', LEDE, 'RU home first lede is canonical P28.1 definition while P29.4 localization remains');
-equal((source.match(/Аудит полномочий AI-агента \(Agent Authority Audit\) — ограниченная инженерная проверка/g) || []).length, 1, 'canonical P28.1 RU definition appears once in source');
+equal(source.split(LEDE).length - 1, 1, 'buyer-context P28.1 RU definition appears exactly once in source');
 
 for (const [label, value] of SIGNALS) {
   check(source.includes(`<small>${label}</small><strong>${value}</strong>`), `${label}: exact Russian signal row in source`);
@@ -59,7 +59,7 @@ const failureIndex = source.indexOf(P29_2);
 const actionsIndex = source.indexOf('<div class="hero-actions">', ledeIndex);
 check(ledeIndex >= 0 && failureIndex > ledeIndex && actionsIndex > failureIndex, 'P29.2 failure copy remains after new lead and before hero actions');
 check(html.includes(P29_1) && html.includes(TRIAGE_URL) && !source.includes(P29_1) && !source.includes(TRIAGE_URL), 'P29.1 Cal.com CTA is published in RU static HTML while source stays CSP-stable');
-check(source.includes('Agent Authority & Evidence Audit') && source.includes('$4,900'), 'package name and price remain present');
+check(source.includes('Agent Authority & Evidence Audit') && source.includes('$2,450'), 'package name and price remain present');
 check(baseLayout.includes('Authority Budget. Evidence Before Effect. False Green.'), 'Authority Budget / Evidence Before Effect / False Green terms remain unchanged');
 
 const firstScreenStart = source.indexOf('<section class="ru-hero section">');
@@ -67,13 +67,15 @@ const firstScreenEnd = source.indexOf('<section class="section section-rule">', 
 const firstScreen = source.slice(firstScreenStart, firstScreenEnd);
 check(firstScreenStart >= 0 && firstScreenEnd > firstScreenStart, 'RU first-screen source segment is bounded');
 check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|<form\b)/i.test(firstScreen), 'P29.4 first-screen copy adds no JS, network action or form');
-equal((firstScreen.match(/<a\b/g) || []).length, 2, 'existing two hero CTAs preserved');
+equal((firstScreen.match(/<a\b/g) || []).length, 3, 'three buyer CTAs include the approved free schema review without removing prior navigation');
+check(firstScreen.includes('href="mailto:robert@bitevo.work?subject=BitEvo%20free%20write%20tool%20schema%20review"'), 'schema CTA is an explicit mailto link, no automatic send');
+check(firstScreen.includes('href="/ru/mapper"') && firstScreen.includes('href="/ru/agent-authority-audit"'), 'prior two RU navigation links preserved');
 
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
-equal(row?.lastmod, '2026-10-13', '/ru currentness date exact');
+equal(row?.lastmod, '2026-11-14', '/ru currentness date exact');
 equal(row?.fingerprint, rgapsExpectedFingerprint('/ru', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'), '/ru currentness fingerprint exact');
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');
 
-console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=b12d9fbc775d2fb31be7ecb144a0b271bf2ed0d48b0e06f762f339f1ab0b1773 h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);
+console.log(`P29_4_RU_FIRST_SCREEN_R1_GATE=PASS checks=${checks} copy_hash=bd54441e9bdb2354e44e13deb9305ab9eefc9f8b6ffa2acd9fc1199079e49e2c h1=PRESERVED lede=RUSSIAN signal_rows=4 internal_label_home=REMOVED ru_locale_bar=PRESERVED p29_2=UNCHANGED p29_1_calcom=PUBLISHED`);

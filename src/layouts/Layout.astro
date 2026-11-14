@@ -34,6 +34,7 @@ const selfCanonicalPath = path === '/' ? '/' : path.replace(/\/+$/, '');
 const counterCoverage = eventCoverage.routes.find(route => route.path === selfCanonicalPath && route.locale === lang);
 const canonicalPath = canonical ?? selfCanonicalPath;
 const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).toString();
+const isNotFoundPage = /(?:^|\/)404\/?$/.test(Astro.url.pathname) || Astro.response.status === 404;
 const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
 const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
@@ -204,7 +205,7 @@ const globalStructuredData = [
     <meta name="color-scheme" content="dark" />
     <meta name="author" content="BitEvo" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonicalUrl} />
+    {!isNotFoundPage && <link rel="canonical" href={canonicalUrl} />}
     {alternateEntries.map(([alternateLang, alternatePath]) => <link rel="alternate" hreflang={alternateLang} href={absoluteSiteUrl(alternatePath)} />)}
     {alternates.en && <link rel="alternate" hreflang="x-default" href={absoluteSiteUrl(alternates.en)} />}
     <meta name="generator" content={Astro.generator} />

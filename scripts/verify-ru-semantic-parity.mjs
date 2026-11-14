@@ -171,8 +171,8 @@ checks += 7;
 if (!ruHome.includes('href="/ru/start"') || !ruHome.includes('Выбрать формат')) failures.push('/ru: primary commercial CTA is not /ru/start');
 if (!ruHome.includes('<a class="header-cta" href="/ru/start"') || !ruHome.includes('>Начать <')) failures.push('/ru: shared header does not use RU Start');
 if (!ruStart.includes('Free / 20 минут')) failures.push('/ru/start: missing Free triage marker');
-if (!ruStart.includes('$1,500')) failures.push('/ru/start: missing Entry price marker');
-if (!ruStart.includes('$4,900')) failures.push('/ru/start: missing Primary price marker');
+if (!ruStart.includes('$750')) failures.push('/ru/start: missing Entry price marker');
+if (!ruStart.includes('$2,450')) failures.push('/ru/start: missing Primary price marker');
 if (!ruStart.includes('разрешение на тестирование')) failures.push('/ru/start: missing authorization boundary');
 if (!ruStart.includes('href="/ru/pricing"')) failures.push('/ru/start: missing pricing decision path');
 

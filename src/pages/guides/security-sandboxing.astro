@@ -1,8 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+// Public-safe editorial guide; no fabricated publication timestamp.
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  author: { '@type': 'Person', name: 'Robert Dumanyan', url: 'https://bitevo.work/operator' },
+  headline: "Security Sandboxing: isolation and bounded tool execution",
+  description: "Public-safe overview of execution isolation, bounded tool controls and approval boundaries, with internal control endpoints and credentials omitted.",
+  inLanguage: 'en',
+  mainEntityOfPage: 'https://bitevo.work/guides/security-sandboxing',
+  publisher: { '@id': 'https://bitevo.work/#organization' }
+};
 ---
 
 <Layout title="Security Sandboxing for AI Agents — BitEvo" description="Public-safe overview of execution isolation, bounded tool controls and approval boundaries, with internal control endpoints and credentials omitted.">
+  <script type="application/ld+json" set:html={JSON.stringify(article)}></script>
   <section class="guide"><div class="container card">
     <div class="kicker">Security · public-safe reference</div>
     <h1>Security Sandboxing: isolation and bounded tool execution</h1>

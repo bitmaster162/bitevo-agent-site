@@ -17,7 +17,7 @@ const [ru404, en404, vercel, wrangler] = await Promise.all([
 
 check('ru404 lang=ru', /<html\b[^>]*\blang="ru"/i.test(ru404));
 check('ru404 noindex', /<meta\b[^>]*name="robots"[^>]*content="noindex, follow"/i.test(ru404));
-check('ru404 canonical', ru404.includes('rel="canonical" href="https://bitevo.work/ru/404"'));
+check('ru404 has no canonical', !/<link\b[^>]*rel="canonical"/i.test(ru404));
 check('ru404 og:url', ru404.includes('property="og:url" content="https://bitevo.work/ru/404"'));
 check('ru404 Russian title', ru404.includes('<title>404 — Страница не найдена | BitEvo</title>'));
 check('ru404 Russian content', ru404.includes('Маршрут не найден') && ru404.includes('По этому адресу нет доступной страницы.'));
@@ -25,7 +25,7 @@ check('ru404 RU navigation', ru404.includes('href="/ru/doctrine"') && ru404.incl
 check('ru404 RU actions', ru404.includes('href="/ru"') && ru404.includes('href="/ru/agent-authority-audit"') && ru404.includes('href="/ru/guides"'));
 check('ru404 has no hreflang', !/hreflang=/i.test(ru404));
 check('en404 remains lang=en', /<html\b[^>]*\blang="en"/i.test(en404));
-check('en404 remains canonical /404', en404.includes('rel="canonical" href="https://bitevo.work/404"'));
+check('en404 has no canonical', !/<link\b[^>]*rel="canonical"/i.test(en404));
 
 const routes = Array.isArray(vercel.routes) ? vercel.routes : [];
 const filesystemIndex = routes.findIndex(route => route?.handle === 'filesystem');

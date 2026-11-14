@@ -26,8 +26,8 @@ const ruHtml = await readFile(new URL('dist/ru/index.html', root), 'utf8');
 const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 
-const enLead = 'An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
-const ruLead = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
+const enLead = 'AI agent permissions, tool authority and MCP integrations are the focus of this bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
+const ruLead = 'Проверка прав AI-агентов (AI agent permissions), полномочий инструментов (tool authority) и интеграций MCP. BitEvo исследует, кто может изменить внешние данные, требуется ли одобрение владельца, как проверяется результат и безопасен ли повтор.';
 
 for (const [name, source, html, lead, copy, actionsMarker] of [
   ['EN', enSource, enHtml, enLead, EN, '<div class="hero-actions">'],
@@ -47,12 +47,12 @@ for (const [name, source, html, lead, copy, actionsMarker] of [
 check(enSource.includes(EN_TRIAGE) && enSource.includes(TRIAGE_URL), 'P29.1 EN Cal.com CTA is published');
 check(!ruSource.includes(RU_TRIAGE) && !ruSource.includes(TRIAGE_URL), 'RU source remains CSP-stable; P29.1 RU Cal.com CTA is emitted by bounded postprocess');
 check(enHtml.includes(TRIAGE_URL) && ruHtml.includes(TRIAGE_URL), 'P29.1 verified Cal.com URL is present in both home static pages');
-check(enSource.includes('$4,900'), 'existing EN price remains present');
-check(ruSource.includes('$4,900'), 'existing RU price remains present');
+check(enSource.includes('$2,450'), 'existing EN price remains present');
+check(ruSource.includes('$2,450'), 'existing RU price remains present');
 
 const expected = {
-  '/': { lastmod: '2026-10-13', fingerprint: 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197' },
-  '/ru': { lastmod: '2026-10-13', fingerprint: 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6' }
+  '/': { lastmod: '2026-11-14', fingerprint: 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197' },
+  '/ru': { lastmod: '2026-11-14', fingerprint: 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

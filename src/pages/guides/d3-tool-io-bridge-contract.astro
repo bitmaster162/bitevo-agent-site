@@ -1,8 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+// Public-safe editorial guide; no fabricated publication timestamp.
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  author: { '@type': 'Person', name: 'Robert Dumanyan', url: 'https://bitevo.work/operator' },
+  headline: "Tool I/O Bridge: bounded execution contract",
+  description: "Public-safe overview of agent tool-call boundaries, validation and evidence, with internal execution routes and operator-control endpoints omitted.",
+  inLanguage: 'en',
+  mainEntityOfPage: 'https://bitevo.work/guides/d3-tool-io-bridge-contract',
+  publisher: { '@id': 'https://bitevo.work/#organization' }
+};
 ---
 
 <Layout title="Tool I/O Bridge Contract — BitEvo" description="Public-safe overview of agent tool-call boundaries, validation and evidence, with internal execution routes and operator-control endpoints omitted.">
+  <script type="application/ld+json" set:html={JSON.stringify(article)}></script>
   <section class="guide">
     <div class="container card">
       <div class="kicker">Agent controls · public-safe reference</div>

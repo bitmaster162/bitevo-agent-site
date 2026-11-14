@@ -17,7 +17,13 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
     '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e',
-    '5995adf644771bb29ce7afb5535235bd5aadd4047011fc1b81ffa5da8973187b'
+    '5995adf644771bb29ce7afb5535235bd5aadd4047011fc1b81ffa5da8973187b',
+    'd87a40175f60f8c653fff8c1aad0916f82b5adbb7f3bd7be8d5de75f6b4a06f9',
+    '21a1a8d9a17d4696f845a4de58d8af8ffe2b334f29a6340be5919336fab7df9c',
+    // 2026-11-14 audited offer + Article schema + canonical fix, 142-route exact render.
+    'a685886ddef0621d54c048e061452ba42dd15b669ab71adc2d38e72eabd8aeb3',
+    // 2026-11-14 all 16 indexed editorial guides have scoped Article + author; 11 source-render updates.
+    '5a8485acb844a0c125a073e1fcaac085c918b520187e47f39484acb53f12ecd1'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(hash(content['src/data/sitemap-currentness.json']))) return false;
@@ -32,7 +38,7 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     for (const [path,locale] of expected) {
       const row = registry.routes.find(r => r.path === path);
       const fingerprint = manifest.routes.find(r => r.path === path);
-      if (!row?.indexable || row.locale !== locale || fingerprint?.lastmod !== (path === '/ru/agent-incidents' ? '2026-11-07' : (path.endsWith('/buyer-pack') ? '2026-10-30' : '2026-10-29')) ||
+      if (!row?.indexable || row.locale !== locale || fingerprint?.lastmod !== (path === '/ru/agent-incidents' ? '2026-11-07' : (path.endsWith('/buyer-pack') ? '2026-11-14' : '2026-10-29')) ||
           !/^sha256:[a-f0-9]{64}$/.test(fingerprint.fingerprint)) return false;
     }
     const paired = registry.routes.find(r => r.path === '/agent-incidents');

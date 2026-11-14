@@ -37,7 +37,7 @@ const buyerPrep = [
 
   <section class="section section-rule"><div class="container gate panel"><div><div class="eyebrow">Build-breaking invariants</div><h2>Автоматизируем только то, что можно проверить точно.</h2><p>Machine gates не сертифицируют дизайн, business value, security или runtime correctness.</p></div><ol>{gates.map((x,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{x}</strong></li>)}</ol></div></section>
 
-  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Human acceptance</div><h2 class="section-title">Следующий уровень — проверка глазами клиента.</h2></div><div><p class="lede">После machine PASS мы отдельно оцениваем: понятность оффера за 15–30 секунд, визуальную иерархию, доверие к proof, mobile rhythm, цену $4,900 в контексте value и отсутствие лишней технической перегрузки.</p><p class="lede">Lighthouse / Core Web Vitals должны измеряться отдельно; build gate не подменяет эти receipts.</p></div></div></section>
+  <section class="section section-rule"><div class="container split"><div><div class="eyebrow">Human acceptance</div><h2 class="section-title">Следующий уровень — проверка глазами клиента.</h2></div><div><p class="lede">После machine PASS мы отдельно оцениваем: понятность оффера за 15–30 секунд, визуальную иерархию, доверие к proof, mobile rhythm, цену $2,450 в контексте value и отсутствие лишней технической перегрузки.</p><p class="lede">Lighthouse / Core Web Vitals должны измеряться отдельно; build gate не подменяет эти receipts.</p></div></div></section>
 </RuLayout>
 
 <style>

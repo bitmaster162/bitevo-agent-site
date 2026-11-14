@@ -94,6 +94,35 @@ for (const [route, objects] of jsonByRoute) {
   check(org.founder?.['@type'] === 'Person' && org.founder?.name === 'Robert Dumanyan', `${route}: Organization founder Person Robert Dumanyan`);
 }
 
+// Every indexable editorial guide must have one Article with human author and exact page URL.
+// Product/tool cards with <article> markup are not editorial Article schema.
+const editorialGuideRoutes = registry.routes.filter(route =>
+  route.indexable && /^\/(?:ru\/)?guides\/[^/]+$/.test(route.path));
+equal(editorialGuideRoutes.length, 16, 'exact indexable EN/RU editorial guide coverage');
+for (const route of editorialGuideRoutes) {
+  const articles = (jsonByRoute.get(route.path) || []).filter(o => o['@type'] === 'Article');
+  equal(articles.length, 1, `${route.path}: one Article JSON-LD`);
+  const article = articles[0];
+  if (!article) continue;
+  equal(article.mainEntityOfPage, origin + route.path, `${route.path}: canonical Article mainEntityOfPage`);
+  equal(article.inLanguage, route.locale, `${route.path}: Article language matches registry`);
+  check(typeof article.headline === 'string' && article.headline.trim().length > 12, `${route.path}: Article headline required`);
+  check(typeof article.description === 'string' && article.description.trim().length > 24, `${route.path}: Article description required`);
+  check(article.author?.['@type'] === 'Person' && article.author.name === 'Robert Dumanyan'
+      && article.author.url === origin + '/operator', `${route.path}: accountable author Person`);
+  equal(article.publisher?.['@id'], origin + '/#organization', `${route.path}: canonical publisher`);
+}
+const summarizedRuGuideSlugs = [
+  'guides/security-sandboxing',
+  'guides/fleet-coordinator-drift-monitoring',
+  'guides/d3-tool-io-bridge-contract'
+];
+for (const slug of summarizedRuGuideSlugs) {
+  const route = '/ru/' + slug;
+  const article = (jsonByRoute.get(route) || []).find(o => o['@type'] === 'Article');
+  equal(article?.isBasedOn, origin + '/' + slug, `${route}: RU editorial summary cites EN source`);
+}
+
 const logo = await readFile(join(root, 'public/bitevo-logo-512.png'));
 check(logo.length > 24 && logo.subarray(1,4).toString('ascii') === 'PNG', 'logo: valid PNG signature');
 const logoWidth = logo.readUInt32BE(16);
@@ -106,8 +135,8 @@ for (const route of ['/pricing','/ru/pricing']) {
   const catalogs = objects.filter(item => item['@type'] === 'OfferCatalog');
   equal(catalogs.length, 1, `${route}: OfferCatalog count`);
   const offers = catalogs[0]?.itemListElement || [];
-  equal(offers.length, 9, `${route}: OfferCatalog offer count`);
-  deepEqual(offers.map(offer => Number(offer.price)).sort((a,b) => a-b), [0,0,500,1500,1500,3000,3000,4900,9000], `${route}: canonical offer prices`);
+  equal(offers.length, 8, `${route}: OfferCatalog offer count`);
+  deepEqual(offers.map(offer => Number(offer.price)).sort((a,b) => a-b), [0,0,500,750,2450,3000,3000,9000], `${route}: canonical offer prices`);
   for (const offer of offers) {
     check(offer?.['@type'] === 'Offer', `${route}: catalog item must be Offer`);
     check(offer?.priceCurrency === 'USD', `${route}: offer currency must be USD`);
@@ -141,7 +170,7 @@ const firstLines = llms.split(/\r?\n/).slice(0, 32).join('\n');
 for (const marker of [
   'Who: BitEvo is an independent B2B engineering practice operated by Robert Dumanyan.',
   'What: BitEvo audits authority',
-  'Prices: Free 20-minute triage;',
+  'Prices: free 20-minute fit call;',
   'Timing: Free triage is 20 minutes;',
   'Contact: Robert Dumanyan — robert@bitevo.work.',
   '[Pricing](https://bitevo.work/pricing)',

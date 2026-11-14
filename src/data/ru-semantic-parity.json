@@ -8,14 +8,14 @@
       "eyebrow": "КОММЕРЧЕСКИЙ ВХОД",
       "title": "Выберите самый маленький объём доказательств, который способен изменить решение.",
       "metaTitle": "Начать работу с BitEvo: triage и пять путей",
-      "description": "Вход BitEvo: free triage, Entry Audit $1,500, Security Control Validation $1,500, BUILD Diagnostic $3,000 и Primary Audit $4,900.",
+      "description": "Вход BitEvo: free triage, Entry Audit $750, Security Control Validation в составе Entry Audit, BUILD Diagnostic $3,000 и Primary Audit $2,450.",
       "points": [
         "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
-        "$1,500 Entry Audit: проверить одну критическую action chain и одну основную failure hypothesis.",
-        "$1,500 Security Control Validation: проверить одну consequential staging/test control boundary и сопоставить ожидаемое ALLOW / DENY / HOLD / ESCALATE решение с реальным downstream state.",
+        "$750 Entry Audit: Одна граница полномочий, до 2 подключённых инструментов, 3–5 согласованных сценариев сбоя/повтора в staging/test или на синтетике по умолчанию, один retest в течение 14 дней после finding memo. Оплата $750 полностью засчитывается в $2,450 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope.",
+        "Security Control Validation в составе Entry Audit: проверить одну consequential staging/test control boundary и сопоставить ожидаемое ALLOW / DENY / HOLD / ESCALATE решение с реальным downstream state.",
         "MCP / Tool Governance: разобрать одну agent-to-tool boundary по identity, policy, approval, bypass и retry evidence.",
         "$3,000 BUILD Workflow Exception Diagnostic: выбрать один recurring exception, затем локально зафиксировать buyer-confirmed baseline и отдельно проверить synthetic measurement proof.",
-        "$4,900 Primary Audit: решить, должен ли один action-capable workflow сохранить, получить или потерять полномочия."
+        "$2,450 Primary Audit: решить, должен ли один action-capable workflow сохранить, получить или потерять полномочия."
       ],
       "primaryHref": "/ru/pricing",
       "primaryLabel": "Сравнить уровни"
@@ -24,14 +24,14 @@
       "slug": "entry-audit",
       "enPath": "/entry-audit",
       "category": "ENTRY",
-      "eyebrow": "ENTRY AUDIT · $1,500",
-      "title": "Одна action chain. Одна основная гипотеза. Одно решение.",
-      "metaTitle": "Entry Audit — одна гипотеза, одно решение | BitEvo",
-      "description": "Фиксированный $1,500 Entry Audit для воспроизводимой проверки одной decision-relevant failure hypothesis в одном критическом action chain.",
+      "eyebrow": "ENTRY AUDIT · $750",
+      "title": "Одна граница полномочий. 3–5 сценариев. Одно проверяемое решение.",
+      "metaTitle": "Entry Audit $750 — права AI-агентов, полномочия инструментов и MCP | BitEvo",
+      "description": "Entry Audit $750: права AI-агентов, полномочия инструментов и MCP, до 2 инструментов, 3–5 сценариев и одна повторная проверка.",
       "points": [
-        "Объект — один критический action chain, а не весь продукт или вся система.",
-        "Цель — принять или отвергнуть одну основную failure hypothesis на воспроизводимом evidence.",
-        "Полный Authority Ledger, multi-scenario план и включённый retest относятся к более глубокому Primary Audit, а не к Entry scope."
+        "Объект — одна граница полномочий, до двух инструментов, не весь продукт.",
+        "Цель — сопоставить ожидаемые и наблюдаемые результаты 3–5 согласованных сценариев; результат может быть BLOCKED.",
+        "Полный Authority Ledger / Evidence Contract относится к Primary Audit; один retest включён в Entry в течение 14 дней после finding memo. Тесты только по отдельным Rules of Engagement."
       ],
       "primaryHref": "/ru/audit-intake?offer=entry-audit",
       "primaryLabel": "Подготовить scope"
@@ -40,17 +40,17 @@
       "slug": "control-validation",
       "enPath": "/control-validation",
       "category": "SPECIALIST",
-      "eyebrow": "SECURITY CONTROL VALIDATION · $1,500",
+      "eyebrow": "SECURITY CONTROL VALIDATION · В СОСТАВЕ ENTRY AUDIT",
       "title": "Проверьте один control там, где software реально может что-то изменить.",
-      "metaTitle": "Проверка контроля безопасности, $1,500 — BitEvo",
-      "description": "Фиксированная $1,500 проверка одной consequential control boundary в staging/test с expected decision, downstream readback и воспроизводимым evidence.",
+      "metaTitle": "Security Control Validation в составе Entry Audit — BitEvo",
+      "description": "Security Control Validation теперь предоставляется как Entry Audit за $750; expected decision и downstream readback остаются частью проверки.",
       "points": [
         "До теста фиксируется ожидаемое ALLOW / DENY / HOLD / ESCALATE поведение.",
         "Проверяется реальный downstream state, а не только внутренний tool response или ACK.",
         "Это bounded engineering validation: не pentest, не certification, не statutory audit и не доказательство безопасности всей системы."
       ],
-      "primaryHref": "/ru/audit-intake?offer=security-control-validation",
-      "primaryLabel": "Описать control boundary"
+      "primaryHref": "/ru/entry-audit",
+      "primaryLabel": "Открыть Entry Audit"
     },
     {
       "slug": "evidence-readiness",

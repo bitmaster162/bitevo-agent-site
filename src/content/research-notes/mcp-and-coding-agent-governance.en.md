@@ -65,7 +65,7 @@ Related: [Agent authority audit](/agent-authority-audit), [Control validation](/
 
 ## What next
 
-**Entry Audit — $1,500 fixed.** One action chain and one primary control or failure hypothesis, tested in staging/test. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
+**Entry Audit — $750 fixed.** One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one retest within 14 days of the finding memo. The USD 750 fee is credited in full toward the USD 2,450 Primary Audit if booked within 30 days of the finding memo under a separate written scope. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
 
 [Review the Entry Audit scope](/entry-audit) · [Prepare the audit-intake brief](/audit-intake) · [Schedule a 20-minute triage on Cal.com](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage)
 
