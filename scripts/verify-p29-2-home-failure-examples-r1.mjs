@@ -47,12 +47,12 @@ for (const [name, source, html, lead, copy, actionsMarker] of [
 check(enSource.includes(EN_TRIAGE) && enSource.includes(TRIAGE_URL), 'P29.1 EN Cal.com CTA is published');
 check(!ruSource.includes(RU_TRIAGE) && !ruSource.includes(TRIAGE_URL), 'RU source remains CSP-stable; P29.1 RU Cal.com CTA is emitted by bounded postprocess');
 check(enHtml.includes(TRIAGE_URL) && ruHtml.includes(TRIAGE_URL), 'P29.1 verified Cal.com URL is present in both home static pages');
-check(enSource.includes('$4,900'), 'existing EN price remains present');
-check(ruSource.includes('$4,900'), 'existing RU price remains present');
+check(enSource.includes('$2,450'), 'existing EN price remains present');
+check(ruSource.includes('$2,450'), 'existing RU price remains present');
 
 const expected = {
-  '/': { lastmod: '2026-10-13', fingerprint: 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197' },
-  '/ru': { lastmod: '2026-10-13', fingerprint: 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6' }
+  '/': { lastmod: '2026-11-14', fingerprint: 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197' },
+  '/ru': { lastmod: '2026-11-14', fingerprint: 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6' }
 };
 for (const [path, value] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === path);

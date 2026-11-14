@@ -59,7 +59,7 @@ const failureIndex = source.indexOf(P29_2);
 const actionsIndex = source.indexOf('<div class="hero-actions">', ledeIndex);
 check(ledeIndex >= 0 && failureIndex > ledeIndex && actionsIndex > failureIndex, 'P29.2 failure copy remains after new lead and before hero actions');
 check(html.includes(P29_1) && html.includes(TRIAGE_URL) && !source.includes(P29_1) && !source.includes(TRIAGE_URL), 'P29.1 Cal.com CTA is published in RU static HTML while source stays CSP-stable');
-check(source.includes('Agent Authority & Evidence Audit') && source.includes('$4,900'), 'package name and price remain present');
+check(source.includes('Agent Authority & Evidence Audit') && source.includes('$2,450'), 'package name and price remain present');
 check(baseLayout.includes('Authority Budget. Evidence Before Effect. False Green.'), 'Authority Budget / Evidence Before Effect / False Green terms remain unchanged');
 
 const firstScreenStart = source.indexOf('<section class="ru-hero section">');
@@ -71,7 +71,7 @@ equal((firstScreen.match(/<a\b/g) || []).length, 2, 'existing two hero CTAs pres
 
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
-equal(row?.lastmod, '2026-10-13', '/ru currentness date exact');
+equal(row?.lastmod, '2026-11-14', '/ru currentness date exact');
 equal(row?.fingerprint, rgapsExpectedFingerprint('/ru', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'), '/ru currentness fingerprint exact');
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');

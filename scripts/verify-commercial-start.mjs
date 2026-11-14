@@ -66,11 +66,11 @@ const auditRenewalExpansionJson = JSON.parse(await readFile(`${dist}/audit/renew
 const llms = await readFile(`${dist}/llms.txt`, 'utf8');
 
 const startContracts = [
-  ['$1,500 Entry Audit', '/entry-audit', 'Open Entry Audit'],
-  ['$1,500 Security Control Validation', '/control-validation', 'Open Security Control Validation'],
+  ['$750 Entry Audit', '/entry-audit', 'Open Entry Audit'],
+  ['Security Control Validation (included in Entry Audit)', '/control-validation', 'See Entry control validation scope'],
   ['MCP / Tool Governance', '/mcp-governance', 'Open MCP Governance'],
   ['$3,000 BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic', 'Open BUILD Diagnostic'],
-  ['$4,900 Primary Audit', '/agent-authority-audit', 'Open Primary Audit']
+  ['$2,450 Primary Audit', '/agent-authority-audit', 'Open Primary Audit']
 ];
 
 for (const [requiredText, href, cta] of startContracts) {
@@ -79,10 +79,10 @@ for (const [requiredText, href, cta] of startContracts) {
 }
 
 const llmsCommercialContracts = [
-  ['USD 1,500 Entry Audit', '/entry-audit'],
+  ['USD 750 Entry Audit', '/entry-audit'],
   ['Security Control Validation is now delivered as Entry Audit', '/entry-audit'],
   ['USD 3,000 BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic'],
-  ['USD 4,900 Primary Audit', '/agent-authority-audit']
+  ['USD 2,450 Primary Audit', '/agent-authority-audit']
 ];
 for (const [offer, route] of llmsCommercialContracts) {
   if (!llms.includes(offer)) failures.push(`llms.txt: missing SELL_NOW offer "${offer}"`);
@@ -98,7 +98,7 @@ for (const [href, cta] of startBuildPrep) {
   if (!hasAnchor(start, href, cta)) failures.push(`/start: missing BUILD prep CTA "${cta}" -> ${href}`);
 }
 const ruStartText = stripTags(ruStart);
-for (const phrase of ['$1,500 Security Control Validation', 'MCP / Tool Governance', '$3,000 BUILD Workflow Exception Diagnostic', '$4,900 Primary Audit']) {
+for (const phrase of ['Security Control Validation в составе Entry Audit', 'MCP / Tool Governance', '$3,000 BUILD Workflow Exception Diagnostic', '$2,450 Primary Audit']) {
   if (!ruStartText.includes(phrase)) failures.push(`/ru/start: stale commercial routing; missing "${phrase}"`);
 }
 
@@ -227,9 +227,9 @@ for (const phrase of ['Краткое описание границ ещё не 
   if (!ruAuditProposalText.includes(phrase)) failures.push(`/ru/audit/proposal-readiness: missing boundary phrase "${phrase}"`);
 }
 const expectedAuditOffers = [
-  ['entry-audit','Entry Audit',1500],
-  ['security-control-validation','Security Control Validation',1500],
-  ['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',4900]
+  ['entry-audit','Entry Audit',750],
+  ['security-control-validation','Security Control Validation (included in Entry Audit)',750],
+  ['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',2450]
 ];
 if (auditProposalJson.schema !== 'bitevo.audit-proposal-readiness/v1' || auditProposalJson.state !== 'PUBLIC_AUDIT_PROPOSAL_READINESS_TEMPLATE_NOT_CUSTOMER_STATE' || auditProposalJson.customer_state !== 'NOT_REPRESENTED') failures.push('/audit/proposal-readiness.json: schema/state/customer-state drift');
 for (const key of ['actual_proposal_issued','proposal_accepted','contract_formed','invoice_issued','payment_link_published','checkout_enabled','signature_capture_enabled','booking_enabled','testing_authorization']) if (auditProposalJson[key] !== false) failures.push(`/audit/proposal-readiness.json: ${key} must remain false`);
@@ -343,12 +343,12 @@ const ruConsultingAuditIntentContracts = [
 for (const [href, cta] of ruConsultingAuditIntentContracts) {
   if (!hasAnchor(ruConsulting, href, cta)) failures.push(`/ru/consulting: missing offer-aware audit CTA containing "${cta}" -> ${href}`);
 }
-if (!hasAnchor(assurance, '/audit-intake?offer=security-control-validation', 'Scope one control boundary')) {
+if (!hasAnchor(assurance, '/audit-intake?offer=entry-audit', 'Scope one control boundary')) {
   failures.push('/assurance: Security Control scope CTA must preserve offer intent');
 }
 
 const consultingSpecialistContracts = [
-  ['$1,500', 'Security Control Validation', '/control-validation', 'Open Security Control Validation'],
+  ['Included in Entry Audit', 'Security Control Validation', '/control-validation', 'See Entry control validation scope'],
   ['$3,000', 'BUILD Workflow Exception Diagnostic', '/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic']
 ];
 for (const [price, offer, href, cta] of consultingSpecialistContracts) {
@@ -357,7 +357,7 @@ for (const [price, offer, href, cta] of consultingSpecialistContracts) {
   if (!hasAnchor(consulting, href, cta)) failures.push(`/consulting: missing specialist CTA "${cta}" -> ${href}`);
 }
 const ruConsultingSpecialistContracts = [
-  ['$1,500', 'Security Control Validation', '/ru/control-validation', 'Открыть Security Control Validation'],
+  ['В составе Entry Audit', 'Security Control Validation', '/ru/control-validation', 'Как SCV включена в Entry Audit'],
   ['$3,000', 'BUILD Workflow Exception Diagnostic', '/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic']
 ];
 for (const [price, offer, href, cta] of ruConsultingSpecialistContracts) {
@@ -371,7 +371,7 @@ if (pricing.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review&
 }
 
 const pricingText = stripTags(pricing);
-for (const required of ['Free', '$1,500', '$4,900', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 business days', 'This page does not book a triage, submit an audit request or authorize testing.']) {
+for (const required of ['Free', '$750', '$2,450', 'BUILD Workflow Exception Diagnostic · $3,000 / 5 business days', 'This page does not book a triage, submit an audit request or authorize testing.']) {
   if (!pricingText.includes(required)) failures.push(`/pricing: missing commercial invariant "${required}"`);
 }
 // SCV is no longer an independently purchasable Pricing SKU.

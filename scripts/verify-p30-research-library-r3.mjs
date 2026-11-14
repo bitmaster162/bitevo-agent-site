@@ -110,7 +110,7 @@ const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
 const editorialCorrections = new Set(['/guides/false-green-and-retry-safety', '/ru/guides/false-green-and-retry-safety', '/guides/mcp-and-coding-agent-governance', '/ru/guides/mcp-and-coding-agent-governance']);
 for (const note of generated.notes) {
   const row = currentness.routes.find(row => row.path === note.path);
-  const expectedLastmod = editorialCorrections.has(note.path) ? '2026-10-30' : note.reviewed;
+  const expectedLastmod = editorialCorrections.has(note.path) ? '2026-11-14' : note.reviewed;
   check(row?.lastmod === expectedLastmod, `${note.path}: exact reviewed/lastmod boundary`);
   check(sitemap.includes(`<loc>https://bitevo.work${note.path}</loc><lastmod>${row?.lastmod}</lastmod>`), `sitemap currentness missing ${note.path}`);
 }

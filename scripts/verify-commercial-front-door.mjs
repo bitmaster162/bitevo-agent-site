@@ -41,20 +41,20 @@ check([...home.matchAll(/<a\b[^>]*>/gi)].some(match => /data-funnel="home-primar
 check(/<a class="header-cta" href="\/start"[^>]*>Start here/.test(home), 'English header CTA must route to /start');
 check(/<a class="mobile-cta" href="\/start"[^>]*>Start here →<\/a>/.test(home), 'English mobile CTA must route to /start');
 
-check(start.includes('$1,500 Entry Audit'), '/start must retain Entry Audit path');
-check(start.includes('$1,500 Security Control Validation'), '/start must retain Security Control Validation path');
-check(hasAnchor(start, '/control-validation', 'Open Security Control Validation'), '/start Security Control Validation CTA must route to /control-validation');
+check(start.includes('$750 Entry Audit'), '/start must retain Entry Audit path');
+check(start.includes('Security Control Validation (included in Entry Audit)'), '/start must preserve SCV as included Entry scope');
+check(hasAnchor(start, '/control-validation', 'See Entry control validation scope'), '/start Security Control Validation CTA must route to /control-validation');
 check(start.includes('MCP / Tool Governance'), '/start must retain MCP path');
 check(start.includes('$3,000 BUILD Workflow Exception Diagnostic'), '/start must retain BUILD path');
-check(start.includes('$4,900 Primary Audit'), '/start must retain Primary Audit path');
+check(start.includes('$2,450 Primary Audit'), '/start must retain Primary Audit path');
 check(start.includes('The public site does not authorize testing.'), '/start must retain no-testing boundary');
 
-check(consulting.includes('Security Control Validation') && consulting.includes('$1,500'), '/consulting must expose Security Control Validation at $1,500');
-check(hasAnchor(consulting, '/control-validation', 'Open Security Control Validation'), '/consulting Security Control CTA must route to /control-validation');
+check(consulting.includes('Security Control Validation (included in Entry Audit)') && consulting.includes('Included in Entry Audit'), '/consulting must show SCV included in Entry, not separately priced');
+check(hasAnchor(consulting, '/control-validation', 'See Entry control validation scope'), '/consulting Security Control CTA must route to /control-validation');
 check(consulting.includes('BUILD Workflow Exception Diagnostic') && consulting.includes('$3,000'), '/consulting must expose BUILD Workflow Exception Diagnostic at $3,000');
 check(hasAnchor(consulting, '/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'), '/consulting BUILD CTA must route to /build/exception-workflow-diagnostic');
-check(ruConsulting.includes('Security Control Validation') && ruConsulting.includes('$1,500'), '/ru/consulting must expose Security Control Validation at $1,500');
-check(hasAnchor(ruConsulting, '/ru/control-validation', 'Открыть Security Control Validation'), '/ru/consulting Security Control CTA must route to /ru/control-validation');
+check(ruConsulting.includes('Security Control Validation (в составе Entry Audit)') && ruConsulting.includes('В составе Entry Audit'), '/ru/consulting must show SCV included in Entry, not separately priced');
+check(hasAnchor(ruConsulting, '/ru/control-validation', 'Как SCV включена в Entry Audit'), '/ru/consulting Security Control CTA must route to /ru/control-validation');
 check(ruConsulting.includes('BUILD Workflow Exception Diagnostic') && ruConsulting.includes('$3,000'), '/ru/consulting must expose BUILD Workflow Exception Diagnostic at $3,000');
 check(hasAnchor(ruConsulting, '/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic'), '/ru/consulting BUILD CTA must route to /ru/build/exception-workflow-diagnostic');
 
@@ -93,9 +93,9 @@ check(ruHome.includes('data-triage-source="home-ru"') && ruHome.includes('data-t
 check(!/<a class="header-cta" href="\/ru\/mapper"[^>]*>/.test(ruHome), 'old RU Mapper header CTA must not survive R5 build output');
 check(ruHome.includes('href="/ru/mapper"'), 'RU product layer must retain a visible Mapper path after moving the commercial front door');
 check(ruStart.includes('Free / 20 минут'), '/ru/start must retain Free triage path');
-check(ruStart.includes('$1,500'), '/ru/start must retain Entry price marker');
+check(ruStart.includes('$750'), '/ru/start must retain Entry price marker');
 check(ruStart.includes('Security Control Validation'), '/ru/start must retain Security Control Validation marker');
-check(ruStart.includes('$4,900'), '/ru/start must retain Primary price marker');
+check(ruStart.includes('$2,450'), '/ru/start must retain Primary price marker');
 check(ruStart.includes('разрешение на тестирование'), '/ru/start must retain no-testing boundary');
 
 const offerHandoffs = [

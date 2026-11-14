@@ -11,14 +11,14 @@ const tiers = [
     cta: 'Подготовить triage brief', href: '/ru/audit-intake'
   },
   {
-    name: 'Entry Audit', price: '$1,500', timing: 'ограниченный scope',
-    text: 'Одна граница полномочий, до 2 подключённых инструментов, 3–5 согласованных сценариев сбоя/повтора в staging/test или на синтетике по умолчанию, один retest в течение 14 дней после finding memo. Оплата $1,500 полностью засчитывается в $4,900 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope.',
+    name: 'Entry Audit', price: '$750', timing: 'ограниченный scope',
+    text: 'Одна граница полномочий, до 2 подключённых инструментов, 3–5 согласованных сценариев сбоя/повтора в staging/test или на синтетике по умолчанию, один retest в течение 14 дней после finding memo. Оплата $750 полностью засчитывается в $2,450 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope.',
     includes: ['1 граница полномочий · до 2 инструментов', '3–5 согласованных сценариев сбоя и retry', 'Finding memo и ожидаемые/наблюдаемые результаты', '1 retest в течение 14 дней после finding memo'],
     excludes: ['Нет полного Authority Ledger / Evidence Contract', 'Нет сертификата, compliance или legal opinion', 'Нет production-доступа по умолчанию'],
     cta: 'Подготовить Entry scope', href: '/ru/audit-intake?offer=entry-audit'
   },
   {
-    name: 'Primary Audit', price: '$4,900', timing: '5 рабочих дней после complete evidence/access + written scope',
+    name: 'Primary Audit', price: '$2,450', timing: '5 рабочих дней после complete evidence/access + written scope',
     text: 'Контролируемый paid pilot для одного staging/test workflow, до трёх tools/APIs/MCP servers и 10–20 согласованных failure scenarios.',
     includes: ['8 deliverable classes', 'Приоритизированный repair backlog', 'Один retest'],
     excludes: ['Не certification', 'Не universal safety score', 'Не production pentest по умолчанию'],
@@ -34,9 +34,9 @@ const offerCatalog = {
   url: 'https://bitevo.work/ru/pricing',
   itemListElement: [
     { '@type': 'Offer', price: '0', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Authority Triage', url: 'https://bitevo.work/ru/start' } },
-    { '@type': 'Offer', price: '1500', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Entry Audit', url: 'https://bitevo.work/ru/entry-audit' } },
+    { '@type': 'Offer', price: '750', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Entry Audit', url: 'https://bitevo.work/ru/entry-audit' } },
     { '@type': 'Offer', price: '3000', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'BUILD Workflow Exception Diagnostic', url: 'https://bitevo.work/ru/build/exception-workflow-diagnostic' } },
-    { '@type': 'Offer', price: '4900', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/ru/agent-authority-audit' } },
+    { '@type': 'Offer', price: '2450', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'Agent Authority & Evidence Audit', url: 'https://bitevo.work/ru/agent-authority-audit' } },
     { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Company Twin: бесплатное знакомство 30 минут, заявка не бронирует слот', itemOffered: { '@type': 'Service', name: 'Company Twin — знакомство 30 минут', url: 'https://bitevo.work/ru/company-twin' } },
     { '@type': 'Offer', price: '3000', priceCurrency: 'USD', description: 'Team Twin: фиксированный пилот 3 недели, одна команда, 1–2 источника, 3 месяца истории', itemOffered: { '@type': 'Service', name: 'Team Twin — пилот 3 недели', url: 'https://bitevo.work/ru/company-twin' } },
     { '@type': 'Offer', price: '9000', priceCurrency: 'USD', description: 'Company Twin: 12 месяцев, от USD 9,000, вся компания, до пяти источников и год истории', itemOffered: { '@type': 'Service', name: 'Company Twin — 12 месяцев, от USD 9,000', url: 'https://bitevo.work/ru/company-twin' } },
@@ -74,7 +74,7 @@ const offerCatalog = {
 
   <ScopeHandoffShort locale="ru" offer="pricing" />
 
-  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Primary delivery package</div><h2 class="section-title">$4,900 — это не четыре внутренних артефакта, а полный пакет из восьми deliverable classes.</h2><p class="lede">Executive report; authority/effect map; test inventory + scenario results; reproducible evidence pack; finding cards; repair backlog; one retest; evidence manifest/hashes where applicable.</p><div class="actions"><a class="button button-primary" href="/ru/agent-authority-audit">Метод Primary Audit →</a><a class="button" href="/mapper">Authority Mapper (EN)</a></div></div></section>
+  <section class="section section-rule"><div class="narrow"><div class="eyebrow">Primary delivery package</div><h2 class="section-title">$2,450 — это не четыре внутренних артефакта, а полный пакет из восьми deliverable classes.</h2><p class="lede">Executive report; authority/effect map; test inventory + scenario results; reproducible evidence pack; finding cards; repair backlog; one retest; evidence manifest/hashes where applicable.</p><div class="actions"><a class="button button-primary" href="/ru/agent-authority-audit">Метод Primary Audit →</a><a class="button" href="/mapper">Authority Mapper (EN)</a></div></div></section>
 </RuLayout>
 
 <style>

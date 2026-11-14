@@ -19,7 +19,7 @@ if (data.schema !== 'bitevo.audit-measured-value-gate/v1' || data.state !== 'PUB
 for (const [key,value] of Object.entries(data.claims||{})) if (value !== false) failures.push(`claim ${key} must remain false`);
 if (Object.keys(data.claims||{}).length !== 10) failures.push('claim count drift');
 for (const key of ['delivery_started','delivery_completed','measurement_window_closed','measured_value_observed','customer_case_evidence','renewal_expansion_evidence']) if (data.claims?.[key] !== false) failures.push(`required false claim drift ${key}`);
-const expectedOffers = [['entry-audit','Entry Audit',1500],['security-control-validation','Security Control Validation',1500],['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',4900]];
+const expectedOffers = [['entry-audit','Entry Audit',750],['security-control-validation','Security Control Validation (included in Entry Audit)',750],['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',2450]];
 if (data.offer_query_allowlist?.length !== expectedOffers.length) failures.push('offer allowlist length drift');
 for (const [key,name,price] of expectedOffers) { const offer=data.offer_query_allowlist?.find(x=>x.key===key); if(!offer||offer.name!==name||offer.price_usd!==price) failures.push(`offer allowlist drift ${key}`); if(!strip(en).includes(key)||!strip(ru).includes(key)) failures.push(`rendered offer key missing ${key}`); }
 if (!Array.isArray(data.required_measurement_evidence) || data.required_measurement_evidence.length !== 8 || data.required_measurement_evidence.some(x => x.status !== 'REQUIRES_EXTERNAL_EVIDENCE')) failures.push('measurement evidence gate drift');

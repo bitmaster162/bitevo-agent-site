@@ -44,8 +44,8 @@ const structuredData = {
   areaServed: 'Worldwide',
   offers: [
     { '@type': 'Offer', name: 'AI Evidence Readiness Sprint', price: '1500', priceCurrency: 'USD' },
-    { '@type': 'Offer', name: 'Security Control Validation', price: '1500', priceCurrency: 'USD' },
-    { '@type': 'Offer', name: 'Agent Authority & Evidence Primary Audit', price: '4900', priceCurrency: 'USD' }
+    { '@type': 'Offer', name: 'Entry Audit (including Security Control Validation)', price: '750', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Agent Authority & Evidence Primary Audit', price: '2450', priceCurrency: 'USD' }
   ]
 };
 ---
@@ -83,7 +83,7 @@ const structuredData = {
   <section class="signal-strip section-rule" aria-label="System assurance principles">
     <div class="container strip-grid">
       <div><small>OBJECT</small><strong>One bounded workflow</strong></div>
-      <div><small>ENTRY</small><strong>$1,500 fixed scope</strong></div>
+      <div><small>ENTRY</small><strong>Entry Audit $750 · Evidence Readiness $1,500</strong></div>
       <div><small>DEFAULT</small><strong>Staging / test</strong></div>
       <div><small>OUTPUT</small><strong>Evidence for a decision</strong></div>
     </div>
@@ -108,17 +108,17 @@ const structuredData = {
 
       <article class="offer-card panel offer-primary">
         <div class="offer-kicker">02 · BEHAVIOR / CONTROL BOUNDARY</div>
-        <h3>Security Control Validation</h3>
-        <div class="price"><strong>$1,500</strong><span>fixed · one bounded staging scenario</span></div>
+        <h3>Security Control Validation — included in Entry Audit</h3>
+        <div class="price"><strong>$750 Entry Audit</strong><span>includes control validation · bounded staging/test</span></div>
         <p>For a system that can read sensitive data, make a consequential decision, call a tool, change a record, trigger a payment, send an external action or cross an approval boundary.</p>
         <ul>{validationDeliverables.map(item => <li>{item}</li>)}</ul>
         <div class="offer-boundary"><strong>Independent validation.</strong> Not a pentest, certification, statutory/accredited audit, legal opinion or compliance-pass guarantee.</div>
-        <a href="/audit-intake?offer=security-control-validation" class="button button-primary">Scope one control boundary →</a>
+        <a href="/audit-intake?offer=entry-audit" class="button button-primary">Scope one control boundary →</a>
       </article>
     </div>
 
     <div class="container primary-audit panel">
-      <div><div class="eyebrow">Deeper agent-specific work</div><h3>Agent Authority & Evidence Primary Audit — $4,900</h3><p>When one entry scenario is not enough, the existing Primary Audit remains the deeper specialized offer for action-capable AI-agent workflows: authority/effect mapping, 10–20 agreed scenarios, finding cards, evidence pack, repair backlog and one retest.</p></div>
+      <div><div class="eyebrow">Deeper agent-specific work</div><h3>Agent Authority & Evidence Primary Audit — $2,450</h3><p>When one entry scenario is not enough, the existing Primary Audit remains the deeper specialized offer for action-capable AI-agent workflows: authority/effect mapping, 10–20 agreed scenarios, finding cards, evidence pack, repair backlog and one retest.</p></div>
       <a href="/agent-authority-audit" class="button">Open Primary Audit →</a>
     </div>
   </section>
