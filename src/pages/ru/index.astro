@@ -21,8 +21,8 @@ const deliverables = [
 ---
 
 <RuLayout
-  title="BitEvo — инженерия полномочий и доказательств для AI-агентов"
-  description="BitEvo проверяет полномочия, доказательства, внешние эффекты и восстановление в AI-agent workflow, способных выполнять реальные действия."
+  title="Права AI-агентов, полномочия инструментов и MCP — аудит | BitEvo"
+  description="Проверяем права AI-агентов (AI agent permissions), полномочия инструментов (tool authority), MCP, подтверждение записей и безопасные повторы."
   enPath="/"
   ruPath="/ru"
 >
@@ -33,9 +33,11 @@ const deliverables = [
         <h1 class="display">Агент должен заслужить полномочия доказательствами.</h1>
       </div>
       <div>
-        <p class="lede">Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.</p>
+        <p class="lede">Проверка прав AI-агентов (AI agent permissions), полномочий инструментов (tool authority) и интеграций MCP. BitEvo исследует, кто может изменить внешние данные, требуется ли одобрение владельца, как проверяется результат и безопасен ли повтор.</p>
         <p class="tool-note">Типичные сбои, которые мы проверяем: изменение в CRM ушло не в ту запись, сообщение отправлено дважды после повтора, тикет помечен «готово» раньше, чем внешняя система это подтвердила.</p>
-        <div class="hero-actions"><a class="button button-primary" href="/ru/mapper">Собрать карту workflow <span aria-hidden="true">↗</span></a><a class="button" href="/ru/agent-authority-audit">Посмотреть аудит</a></div>
+        <p class="tool-note" data-entry-primary-offer>Для владельцев AI-продуктов, разработчиков и компаний с агентами, меняющими данные: <strong>Entry Audit $750 · Primary Audit $2,450</strong>.</p>
+        <p class="tool-note" data-free-tool-schema>Пришлите одну обезличенную JSON-схему инструмента с правом записи: бесплатный предварительный разбор за 24 часа в рабочие дни (пн–пт, ICT). Не присылайте ключи, пароли и данные клиентов.</p>
+        <div class="hero-actions"><a class="button" href="mailto:robert@bitevo.work?subject=BitEvo%20free%20write%20tool%20schema%20review">Бесплатный разбор JSON-схемы ↗</a><a class="button button-primary" href="/ru/mapper">Собрать карту workflow <span aria-hidden="true">↗</span></a><a class="button" href="/ru/agent-authority-audit">Посмотреть аудит</a></div>
         <p class="tool-note">Русский product path уже включает Mapper, Decision Workspace, Diagnostic и Decision Scope Intake. Все они browser-local и не создают testing authorization.</p>
       </div>
     </div>

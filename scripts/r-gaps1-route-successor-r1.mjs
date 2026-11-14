@@ -19,7 +19,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e',
     '5995adf644771bb29ce7afb5535235bd5aadd4047011fc1b81ffa5da8973187b',
     'd87a40175f60f8c653fff8c1aad0916f82b5adbb7f3bd7be8d5de75f6b4a06f9',
-    '21a1a8d9a17d4696f845a4de58d8af8ffe2b334f29a6340be5919336fab7df9c'
+    '21a1a8d9a17d4696f845a4de58d8af8ffe2b334f29a6340be5919336fab7df9c',
+    // 2026-11-14 audited offer + Article schema + canonical fix, 142-route exact render.
+    'a685886ddef0621d54c048e061452ba42dd15b669ab71adc2d38e72eabd8aeb3'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(hash(content['src/data/sitemap-currentness.json']))) return false;

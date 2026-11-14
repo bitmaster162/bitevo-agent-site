@@ -26,8 +26,8 @@
       "category": "ENTRY",
       "eyebrow": "ENTRY AUDIT · $750",
       "title": "Одна граница полномочий. 3–5 сценариев. Одно проверяемое решение.",
-      "metaTitle": "Entry Audit — 1 граница, 3–5 сценариев | BitEvo",
-      "description": "Entry Audit за $750: одна граница полномочий, до 2 инструментов и 3–5 сценариев сбоя/повтора; retest в течение 14 дней после finding memo.",
+      "metaTitle": "Entry Audit $750 — права AI-агентов, полномочия инструментов и MCP | BitEvo",
+      "description": "Entry Audit $750: права AI-агентов, полномочия инструментов и MCP, до 2 инструментов, 3–5 сценариев и одна повторная проверка.",
       "points": [
         "Объект — одна граница полномочий, до двух инструментов, не весь продукт.",
         "Цель — сопоставить ожидаемые и наблюдаемые результаты 3–5 согласованных сценариев; результат может быть BLOCKED.",
@@ -50,7 +50,7 @@
         "Это bounded engineering validation: не pentest, не certification, не statutory audit и не доказательство безопасности всей системы."
       ],
       "primaryHref": "/ru/entry-audit",
-      "primaryLabel": "Описать control boundary"
+      "primaryLabel": "Открыть Entry Audit"
     },
     {
       "slug": "evidence-readiness",

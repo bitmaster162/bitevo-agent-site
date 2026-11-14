@@ -26,8 +26,8 @@ const ruHtml = await readFile(new URL('dist/ru/index.html', root), 'utf8');
 const currentness = JSON.parse(await readFile(new URL('src/data/sitemap-currentness.json', root), 'utf8'));
 const packageJson = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));
 
-const enLead = 'An Agent Authority Audit is a bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
-const ruLead = 'Аудит полномочий AI-агента (Agent Authority Audit) — ограниченная инженерная проверка workflow, который может действовать: что он меняет, над каким объектом, с чьего одобрения — и хватает ли ему доказательств, внешнего подтверждения и контроля восстановления для этих полномочий. BitEvo проверяет цепочку действий в staging или test, а не модель в отрыве от неё.';
+const enLead = 'AI agent permissions, tool authority and MCP integrations are the focus of this bounded engineering review of an action-capable AI workflow: what it can change, on which object, with whose approval — and whether it has enough evidence, external confirmation and recovery control for that authority. BitEvo audits the action chain in staging or test, not the model in isolation.';
+const ruLead = 'Проверка прав AI-агентов (AI agent permissions), полномочий инструментов (tool authority) и интеграций MCP. BitEvo исследует, кто может изменить внешние данные, требуется ли одобрение владельца, как проверяется результат и безопасен ли повтор.';
 
 for (const [name, source, html, lead, copy, actionsMarker] of [
   ['EN', enSource, enHtml, enLead, EN, '<div class="hero-actions">'],

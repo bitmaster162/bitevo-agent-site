@@ -141,7 +141,7 @@ const firstLines = llms.split(/\r?\n/).slice(0, 32).join('\n');
 for (const marker of [
   'Who: BitEvo is an independent B2B engineering practice operated by Robert Dumanyan.',
   'What: BitEvo audits authority',
-  'Prices: Free 20-minute triage;',
+  'Prices: free 20-minute fit call;',
   'Timing: Free triage is 20 minutes;',
   'Contact: Robert Dumanyan — robert@bitevo.work.',
   '[Pricing](https://bitevo.work/pricing)',

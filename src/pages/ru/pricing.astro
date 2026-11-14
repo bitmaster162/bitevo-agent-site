@@ -11,18 +11,18 @@ const tiers = [
     cta: 'Подготовить triage brief', href: '/ru/audit-intake'
   },
   {
-    name: 'Entry Audit', price: '$750', timing: 'ограниченный scope',
+    name: 'Entry Audit', price: '$750', timing: 'объём определяется письменно',
     text: 'Одна граница полномочий, до 2 подключённых инструментов, 3–5 согласованных сценариев сбоя/повтора в staging/test или на синтетике по умолчанию, один retest в течение 14 дней после finding memo. Оплата $750 полностью засчитывается в $2,450 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope.',
-    includes: ['1 граница полномочий · до 2 инструментов', '3–5 согласованных сценариев сбоя и retry', 'Finding memo и ожидаемые/наблюдаемые результаты', '1 retest в течение 14 дней после finding memo'],
+    includes: ['1 граница полномочий · до 2 инструментов', '3–5 согласованных сценариев сбоя и повтора', 'Заключение и ожидаемые/наблюдаемые результаты', '1 повторная проверка в течение 14 дней после заключения'],
     excludes: ['Нет полного Authority Ledger / Evidence Contract', 'Нет сертификата, compliance или legal opinion', 'Нет production-доступа по умолчанию'],
-    cta: 'Подготовить Entry scope', href: '/ru/audit-intake?offer=entry-audit'
+    cta: 'Подготовить описание Entry', href: '/ru/audit-intake?offer=entry-audit'
   },
   {
     name: 'Primary Audit', price: '$2,450', timing: '5 рабочих дней после complete evidence/access + written scope',
     text: 'Контролируемый paid pilot для одного staging/test workflow, до трёх tools/APIs/MCP servers и 10–20 согласованных failure scenarios.',
     includes: ['8 deliverable classes', 'Приоритизированный repair backlog', 'Один retest'],
     excludes: ['Не certification', 'Не universal safety score', 'Не production pentest по умолчанию'],
-    cta: 'Подготовить Primary scope', href: '/ru/audit-intake?offer=primary-agent-authority-audit'
+    cta: 'Подготовить описание Primary', href: '/ru/audit-intake?offer=primary-agent-authority-audit'
   }
 ];
 
@@ -47,7 +47,7 @@ const offerCatalog = {
 
 <RuLayout title="Цены — Agent Authority & Evidence Audit | BitEvo" description="Цены BitEvo: triage, Entry Audit, Primary Audit и BUILD Workflow Exception Diagnostic за $3,000 / 5 рабочих дней. Выберите scope по evidence." enPath="/pricing" ruPath="/ru/pricing">
   <script type="application/ld+json" data-bitevo-offer-catalog set:html={JSON.stringify(offerCatalog)} />
-  <section class="section pricing-hero"><div class="container split"><div><div class="eyebrow">Commercial ladder</div><h1 class="display">Начать с минимального scope. Расширять только по evidence.</h1></div><p class="lede">Форма Scope Handoff отправляет только заполненные вами поля после явного согласия. Принятые записи хранятся приватно до 30 дней. Отправка не создаёт booking и не выдаёт testing authorization.</p></div></section>
+  <section class="section pricing-hero"><div class="container split"><div><div class="eyebrow">Проверка полномочий AI-агентов</div><h1 class="display">Убедитесь, что агент меняет только разрешённое, а результат проверяется независимо.</h1></div><p class="lede">Entry Audit $750 — одна граница полномочий и 3–5 согласованных сценариев. Primary Audit $2,450 — расширенная проверка полномочий, внешних эффектов и восстановления. Начните с бесплатного разбора одной обезличенной JSON-схемы инструмента записи за 24 часа в рабочие дни.</p></div></section>
 
   <section class="section section-rule"><div class="narrow" data-free-schema-triage><h2 class="section-title">Бесплатный разбор схемы инструмента</h2><p class="lede">Одна обезличенная JSON-схема инструмента с правом записи — без данных клиентов, паролей, ключей, внутренних hostnames/URL и ID аккаунтов. В течение 24 часов в рабочие дни (пн–пт, ICT, UTC+7) после получения полной безопасной схемы мы вернём одну страницу потенциальных рисков дублей, превышения полномочий и retry. Это не тест и не разрешение на доступ.</p><a class="button" href="mailto:robert@bitevo.work?subject=BitEvo%20free%2024-hour%20tool%20schema%20review">Запросить бесплатный разбор схемы →</a><p>Ссылка открывает почтовое приложение; ничего автоматически не отправляется.</p></div></section>
 
@@ -73,6 +73,7 @@ const offerCatalog = {
   </section>
 
   <ScopeHandoffShort locale="ru" offer="pricing" />
+  <section class="section section-rule" data-consent-boundary><div class="narrow"><div class="eyebrow">Данные и согласие</div><p class="lede">Форма Scope Handoff отправляет только заполненные вами поля после явного согласия. Принятые записи хранятся приватно до 30 дней. Отправка не создаёт booking и не выдаёт testing authorization.</p><p>Заполнение формы само по себе не означает согласия на проверку чужих систем: понадобится отдельное письменное разрешение владельца.</p></div></section>
 
   <section class="section section-rule"><div class="narrow"><div class="eyebrow">Primary delivery package</div><h2 class="section-title">$2,450 — это не четыре внутренних артефакта, а полный пакет из восьми deliverable classes.</h2><p class="lede">Executive report; authority/effect map; test inventory + scenario results; reproducible evidence pack; finding cards; repair backlog; one retest; evidence manifest/hashes where applicable.</p><div class="actions"><a class="button button-primary" href="/ru/agent-authority-audit">Метод Primary Audit →</a><a class="button" href="/mapper">Authority Mapper (EN)</a></div></div></section>
 </RuLayout>

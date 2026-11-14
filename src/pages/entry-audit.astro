@@ -2,6 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
 
+const entryOffer = {
+  "@context": "https://schema.org", "@type": "Service",
+  name: "AI Agent Permissions and MCP Tool Authority Entry Audit",
+  serviceType: "AI agent permissions, tool authority and MCP security boundary review",
+  provider: { "@id": "https://bitevo.work/#organization" },
+  url: "https://bitevo.work/entry-audit",
+  offers: { "@type": "Offer", price: "750", priceCurrency: "USD", url: "https://bitevo.work/entry-audit" }
+};
 const TRIAGE_URL = 'https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage';
 
 const tests = [
@@ -24,12 +32,13 @@ const outputs = [
 ];
 ---
 
-<Layout title="Entry Audit — One Action, One Evidence Decision | BitEvo" description="A fixed $750 bounded BitEvo Entry Audit for one consequential action/authority boundary with up to two tools and 3–5 scenarios.">
+<Layout title="Entry Audit $750 — AI Agent Permissions, Tool Authority & MCP | BitEvo" description="Entry Audit $750: AI agent permissions, tool authority and MCP writes, up to two tools, 3–5 scenarios and an eligible retest.">
+  <script type="application/ld+json" set:html={JSON.stringify(entryOffer)} />
   <section class="section">
     <div class="narrow">
       <div class="eyebrow">Fixed bounded entry</div>
       <h1 class="display">One consequential action. One question worth $750.</h1>
-      <p class="lede">The Entry Audit is the smallest paid BitEvo engagement. We test One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one retest within 14 days of the finding memo. The USD 750 fee is credited in full toward the USD 2,450 Primary Audit if booked within 30 days of the finding memo under a separate written scope. We preserve the evidence and return a bounded owner decision.</p>
+      <p class="lede">AI agent permissions, tool authority and MCP write boundaries are the focus of Entry Audit. The Entry Audit is the smallest paid BitEvo engagement. We test One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one retest within 14 days of the finding memo. The USD 750 fee is credited in full toward the USD 2,450 Primary Audit if booked within 30 days of the finding memo under a separate written scope. We preserve the evidence and return a bounded owner decision.</p>
       <div><a class="button button-primary" href={TRIAGE_URL} data-triage-click="true" data-triage-source="entry-audit">Book a free 20-minute triage <span aria-hidden="true">↗</span></a> <a class="button button-ghost" href="#send-scope">Send a short scope</a> <a class="button button-ghost" href="/sample-audit">See sample report</a> <a class="button button-ghost" href="/artifacts">See worked proof</a> <a class="button button-ghost" href="/start">Compare all scope paths</a></div>
     </div>
   </section>

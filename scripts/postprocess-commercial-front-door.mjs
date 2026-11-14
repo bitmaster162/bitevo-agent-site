@@ -55,7 +55,7 @@ const offerHandoffTargets = new Map([
   ['control-validation/index.html', { anchorText: 'Scope one control boundary', href: controlValidationReviewHref, label: 'Contact Robert' }],
   ['agent-authority-audit/index.html', { anchorText: 'Prepare Primary Audit scope', href: primaryAuditReviewHref, label: 'Contact Robert' }],
   ['ru/entry-audit/index.html', { anchorText: 'Подготовить scope', href: entryAuditReviewHref, label: 'Связаться с Робертом' }],
-  ['ru/control-validation/index.html', { anchorText: 'Описать control boundary', href: controlValidationReviewHref, label: 'Связаться с Робертом' }],
+  ['ru/control-validation/index.html', { anchorText: 'Открыть Entry Audit', href: entryAuditReviewHref, label: 'Связаться с Робертом' }],
   ['ru/agent-authority-audit/index.html', { anchorText: 'Подготовить Primary scope ↗', href: primaryAuditReviewHref, label: 'Связаться с Робертом' }],
   ['ru/build/exception-workflow-diagnostic/index.html', { anchorText: 'Открыть Build', href: buildQualificationHref, label: 'Связаться с Робертом' }]
 ]);
