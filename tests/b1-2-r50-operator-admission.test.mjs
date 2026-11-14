@@ -281,11 +281,15 @@ const r50GuidesHeadersOnlySha = '3c6d073294212f2a7aefa87fd1472522b8839935776ebb0
 // Exact PR257 CSP successor: three independently verified inert JSON-LD hash replacements
 // in both Vercel CSP policies; no broad verifier or config admission.
 const r50Pr257ExactCspSha = '34af69da193b55faf8a0095ad499aa7a50c69cfb944e1901a57ce0886facfdc4';
+// R11 exact-price successor: four inert JSON-LD hashes updated for approved Entry/Primary pricing.
+// Historical pins remain; admission still requires exact R-GAPS registry+currentness.
+const r50R11PriceCspSha = '68287de91a1e314b807b570d3dc5f253568d556b9b7856168665e1fd9d7a0c8a';
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
   if (path === 'package-lock.json' && (sha === r50Node24LockSha || sha === r50DepsPatchMinorLockSha)) return true;
   return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50Pr257ExactCspSha) ||
+    (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50R11PriceCspSha) ||
     (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
     (isExactRGapsSuccessor() && (r50RGapsSuccessorSha[path] === sha || r50Guides34SuccessorSha[path] === sha));
 }
@@ -370,7 +374,7 @@ test('Node 24 isolated successor is pinned and cannot admit unrelated package or
 });
 test('Guides API header-only R50 successor is pinned, JSON and noindex on exact path',async()=>{
   const raw = (await readFile(new URL('../vercel.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
-  assert.ok(digest(raw) === r50GuidesHeadersOnlySha || (isExactRGapsSuccessor() && digest(raw) === r50Pr257ExactCspSha), 'only exact historical or PR257 reviewed Vercel CSP hash');
+  assert.ok(digest(raw) === r50GuidesHeadersOnlySha || (isExactRGapsSuccessor() && (digest(raw) === r50Pr257ExactCspSha || digest(raw) === r50R11PriceCspSha)), 'only exact historical or PR257 reviewed Vercel CSP hash');
   assert.ok(r50ProtectedShaAccepted('vercel.json',digest(raw)));
   assert.equal(r50ProtectedShaAccepted('vercel.json','0'.repeat(64)),false);
   assert.ok(r50ProtectedShaAccepted('vercel.json',r50GuidesHeadersOnlySha));
