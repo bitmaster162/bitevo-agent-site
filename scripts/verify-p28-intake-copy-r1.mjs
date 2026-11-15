@@ -42,7 +42,7 @@ check(short.includes('explicit consent') && short.includes('up to 30 days'), 'sh
 check(short.includes('does not authorize testing or execution'), 'shared P27.1 component keeps authorization boundary');
 const expected = {
   "/pricing": { fingerprint: "sha256:ff9fbd2ed323c8fc88e7dc146af2a6aef058e08e7a12ff70cd18c04ff82b27c8", lastmod: "2026-11-14" },
-  "/ru/pricing": { fingerprint: "sha256:85b3363aaef2c08328348763f24ef6980c22393fb14e137531b11b139d152093", lastmod: "2026-11-14" },
+  "/ru/pricing": { fingerprint: "sha256:85b3363aaef2c08328348763f24ef6980c22393fb14e137531b11b139d152093", lastmod: "2026-11-15" },
   "/agent-authority-audit": { fingerprint: "sha256:fc7dc51e9773c10d8332ca0308816cae83a69c5ed965a6f5ed1265ceff7c2e60", lastmod: "2026-11-14" }
 };
 for (const [path, value] of Object.entries(expected)) {

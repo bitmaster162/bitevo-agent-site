@@ -26,7 +26,7 @@ test('R250 commercial source route metadata is current and exact', () => {
   const current=JSON.parse(readFileSync(new URL('src/data/sitemap-currentness.json',root),'utf8'));
   for(const x of ['/buyer-pack','/ru/buyer-pack','/guides/false-green-and-retry-safety','/ru/guides/false-green-and-retry-safety','/guides/mcp-and-coding-agent-governance','/ru/guides/mcp-and-coding-agent-governance']) {
     const row=current.routes.find(r=>r.path===x);
-    assert.equal(row?.lastmod,'2026-11-14',x);
+    assert.equal(row?.lastmod, x.includes('mcp-and-coding-agent-governance') ? '2026-11-14' : '2026-11-15',x);
     assert.match(row.fingerprint,/^sha256:[0-9a-f]{64}$/);
   }
 });

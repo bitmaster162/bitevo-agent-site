@@ -96,7 +96,7 @@ test('R11 llms.txt sells approved prices but not separate SCV', () => {
   const text = src('src/pages/llms.txt.ts');
   assert.match(text,/Entry Audit USD 750/);
   assert.match(text,/Primary.*USD 2,450/);
-  assert.match(text,/Security Control Validation included in Entry Audit/);
+  assert.match(text,/Entry Audit USD 750 \(including Security Control Validation\)/);
   assert.doesNotMatch(text,/Security Control Validation USD 1,500/);
 });
 

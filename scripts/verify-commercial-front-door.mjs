@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const distDir = path.resolve('dist');
 const read = rel => fs.readFileSync(path.join(distDir, rel), 'utf8');
@@ -125,3 +127,17 @@ if (failures.length) {
 }
 
 console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_triage=1 en_header_start=1 en_mobile_start=1 ru_home_triage=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS offer_intent_routes=6 consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
+
+
+// Mandatory Opus B2 release check. This verifier is part of verify:core.
+// Keep package.json/R50's exact frozen command unchanged; run the approved
+// R11 price-parity test in a fail-closed child process after the front-door gate.
+const r11PriceGuard = spawnSync(process.execPath, [
+  '--test', '--test-reporter=tap', 'tests/r11-approved-price-parity.test.mjs'
+], { cwd: fileURLToPath(new URL('../', import.meta.url)), stdio: 'inherit', windowsHide: true });
+if (r11PriceGuard.error) throw r11PriceGuard.error;
+if (r11PriceGuard.status !== 0) {
+  console.error('R11_APPROVED_PRICE_PARITY_GATE=FAIL via commercial-front-door');
+  process.exit(1);
+}
+console.log('R11_APPROVED_PRICE_PARITY_GATE=PASS via verify:core/commercial-front-door');

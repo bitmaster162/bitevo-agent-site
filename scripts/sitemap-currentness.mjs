@@ -125,8 +125,11 @@ async function update() {
     const reviewedDate = route?.generatedBy === 'research-notes' && validDate(route.reviewed) ? route.reviewed : null;
     // Preserve later, already-reviewed editorial lastmod dates for research notes;
     // a source metadata date must never silently backdate a published correction.
+    // A changed published research page receives the actual editorial-change date.
+    // Stable research pages retain their independently reviewed/publication dates.
+    const changedEditorial = Boolean(reviewedDate && old && old.fingerprint !== row.fingerprint);
     const generatedLastmod = reviewedDate
-      ? (old && validDate(old.lastmod) && old.lastmod <= date && old.lastmod > reviewedDate ? old.lastmod : reviewedDate)
+      ? (changedEditorial ? date : (old && validDate(old.lastmod) && old.lastmod <= date && old.lastmod > reviewedDate ? old.lastmod : reviewedDate))
       : date;
     if (!stable) changed += 1;
     return { path: row.path, lastmod: stable ? old.lastmod : generatedLastmod, fingerprint: row.fingerprint };

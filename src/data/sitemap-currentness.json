@@ -44,8 +44,8 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:30edd0bd8eccecda10a42ae4934cb44f59997a4a146c077585172848d7aaf90b"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:a10db7e657151223c85e3428ae6a08eb2307763a24e5246c7ba407974205fd97"
     },
     {
       "path": "/entry-audit-vs-pentest-ai-security-grc",
@@ -329,8 +329,8 @@
     },
     {
       "path": "/ru/pricing",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:abc256255f0143102f44b8c20482cc51fcfeb2ce6e844f1ee4f08a010377ddda"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:6f4058564843236dfd5f8e86bb9fc202a5c583519d11bb7b1e2f4040aaf5f5eb"
     },
     {
       "path": "/ru/consulting",
@@ -454,8 +454,8 @@
     },
     {
       "path": "/ru/entry-audit",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:27a61f11d4d2538ac57eda06d749b55ed5aecea6219ed47893123bf7e9a652c1"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:0f07c261be82101500f4590fe12cc6e45d467b7b55bd7fb8940f1326b62f4420"
     },
     {
       "path": "/ru/entry-audit-vs-pentest-ai-security-grc",
@@ -649,13 +649,13 @@
     },
     {
       "path": "/buyer-pack",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:7a3943d8eb4285f3a012c7c5224bdd2ca0477ab28b1ddc445facb605c513f79d"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:e5cebd08554582091e1826dcf0fde86cdff8f0980a1ff1dba6b2aad2382c6c43"
     },
     {
       "path": "/ru/buyer-pack",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:edeb5a49005d9b93282302545671c7b25b0dda7cc20390ef63a236bdee4795a2"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:29708879d72e4e80c6791d51c88152ae105e5fd4e222a510ca6dbf7b4541e076"
     },
     {
       "path": "/ru/agent-incidents",
@@ -674,8 +674,8 @@
     },
     {
       "path": "/guides/false-green-and-retry-safety",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:7cb0603253409ceab63a068199ae76e9d99da981664f451030ea6857f8014b12"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:96529d3d782300d7a317faa5ab0178a84dbe1c22d550df6c8e4a2cb6a1cf2124"
     },
     {
       "path": "/guides/mcp-and-coding-agent-governance",
@@ -699,8 +699,8 @@
     },
     {
       "path": "/ru/guides/false-green-and-retry-safety",
-      "lastmod": "2026-11-14",
-      "fingerprint": "sha256:0784d2a0faf4cf0e880778c97c3aace8c5511c71f1eaba8271e8f6734a6ea863"
+      "lastmod": "2026-11-15",
+      "fingerprint": "sha256:c6ca25c69db3956736e69604b09d1cae0c79b5d3bebca099731245f02ea7803f"
     },
     {
       "path": "/ru/guides/mcp-and-coding-agent-governance",

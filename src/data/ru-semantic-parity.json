@@ -31,7 +31,8 @@
       "points": [
         "Объект — одна граница полномочий, до двух инструментов, не весь продукт.",
         "Цель — сопоставить ожидаемые и наблюдаемые результаты 3–5 согласованных сценариев; результат может быть BLOCKED.",
-        "Полный Authority Ledger / Evidence Contract относится к Primary Audit; один retest включён в Entry в течение 14 дней после finding memo. Тесты только по отдельным Rules of Engagement."
+        "Полный Authority Ledger / Evidence Contract относится к Primary Audit; один retest включён в Entry в течение 14 дней после finding memo. Тесты только по отдельным Rules of Engagement.",
+        "Оплата $750 полностью засчитывается в $2,450 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope."
       ],
       "primaryHref": "/ru/audit-intake?offer=entry-audit",
       "primaryLabel": "Подготовить scope"
