@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "01741cff-a945-4b33-9b7b-0f11e6165ef1",
   "nonce": "1eed45c4-ceee-4242-a79a-808a0b7d474a",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "3e8dd6e5eec12c8a01ee69717e5c33b54fbbd2b1",
@@ -11,10 +11,12 @@
   "session": "20261115-PR257-R13-Direct",
   "worktree": "d:/_evidence/bitevo_pr257_r13_pr_writer_20261115",
   "acquiredAt": "2026-11-15T06:03:21.321Z",
-  "updatedAt": "2026-11-15T06:04:36.249Z",
+  "updatedAt": "2026-11-15T06:09:28.780Z",
   "expiresAt": "2026-11-15T06:43:18.435Z",
   "sealedHead": "08654e743b00a84e7fa15310f74a97a1a8c6945e",
   "sealedTree": "78cc9840f9573e6f8a66586f1fa639bf2b9d7201",
   "featureRef": "refs/heads/gpt/bitevo-entry-v2-free-schema-20261113",
-  "predecessor": "1f6d631a1b2995498263679f02a90458f30a2dc7"
+  "predecessor": "d9f614520516262d428abff6ba9fc0633538673b",
+  "releasedAt": "2026-11-15T06:09:28.781Z",
+  "releaseReason": "r14_ci_green_pending_independent_review"
 }
