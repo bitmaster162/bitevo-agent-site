@@ -100,6 +100,16 @@ test('R11 llms.txt sells approved prices but not separate SCV', () => {
   assert.doesNotMatch(text,/Security Control Validation USD 1,500/);
 });
 
+test('R11 mandatory parity verifier remains wired and bounded under verify:core', () => {
+  const scripts = json('package.json').scripts;
+  const verifier = src('scripts/verify-commercial-front-door.mjs');
+  assert.match(scripts['verify:core'], /node scripts\/verify-commercial-front-door\.mjs/);
+  assert.match(verifier, /spawnSync\(process\.execPath/);
+  assert.match(verifier, /tests\/r11-approved-price-parity\.test\.mjs/);
+  assert.match(verifier, /r11PriceGuard\.status !== 0/);
+  assert.match(verifier, /timeout: 60000/);
+});
+
 test('R11 rendered EN/RU pages show approved prices; free review is not paid SLA', () => {
   for (const path of ['pricing','ru/pricing','start','consulting','ru/consulting']) {
     const html=src(`dist/${path}/index.html`);

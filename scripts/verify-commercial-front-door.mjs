@@ -3,7 +3,8 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const distDir = path.resolve('dist');
+const projectRoot = fileURLToPath(new URL('../', import.meta.url));
+const distDir = path.join(projectRoot, 'dist');
 const read = rel => fs.readFileSync(path.join(distDir, rel), 'utf8');
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
@@ -23,7 +24,7 @@ const ruEntryAudit = read('ru/entry-audit/index.html');
 const ruControlValidation = read('ru/control-validation/index.html');
 const ruPrimaryAudit = read('ru/agent-authority-audit/index.html');
 const ruBuildDiagnostic = read('ru/build/exception-workflow-diagnostic/index.html');
-const intakeController = fs.readFileSync(path.resolve('public/intake-segmentation.js'), 'utf8');
+const intakeController = fs.readFileSync(path.join(projectRoot, 'public/intake-segmentation.js'), 'utf8');
 
 const stripTags = text => text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 const hasAnchor = (html, href, textFragment) => [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].some(match => {
@@ -134,7 +135,7 @@ console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_triage=1 en_header_start=1 
 // R11 price-parity test in a fail-closed child process after the front-door gate.
 const r11PriceGuard = spawnSync(process.execPath, [
   '--test', '--test-reporter=tap', 'tests/r11-approved-price-parity.test.mjs'
-], { cwd: fileURLToPath(new URL('../', import.meta.url)), stdio: 'inherit', windowsHide: true });
+], { cwd: projectRoot, stdio: 'inherit', windowsHide: true, timeout: 60000 });
 if (r11PriceGuard.error) throw r11PriceGuard.error;
 if (r11PriceGuard.status !== 0) {
   console.error('R11_APPROVED_PRICE_PARITY_GATE=FAIL via commercial-front-door');

@@ -13,6 +13,8 @@ const cases = [
 for (const {file,value,expectedCount=1} of cases) test(`R250 public Entry Audit scope: ${file}`, () => {
   const source = readFileSync(new URL(file,root),'utf8');
   assert.equal(source.split(value).length - 1, expectedCount, 'exact canonical scope count in the target blocks');
+  // Opus B1 negative fixture: canonical text may be present yet followed by broken punctuation.
+  assert.doesNotMatch(source, /scope\.\s*[,;]|We test One action|охватывает Одна граница/u, 'no malformed scope join or capitalization regression');
   assert.doesNotMatch(source, /one staging workflow|one subsequent agent action|one follow-up agent action|One agreed staging\/test workflow|один staging-воркфлоу|одно последующее действие агента|Один согласованный staging\/test-воркфлоу/u);
   assert.match(source, /(?:\/ru\/entry-audit|\/entry-audit)/);
 });
