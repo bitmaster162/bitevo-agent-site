@@ -17,7 +17,7 @@
       "key": "entry-audit",
       "name": "Entry Audit",
       "price_usd": 750,
-      "scope": "one consequential action/authority boundary, up to two connected tools, 3-5 agreed failure/retry scenarios in staging/test or synthetic by default; one retest within 14 days of the finding memo"
+      "scope": "one consequential action/authority boundary, up to two connected tools, 3-5 agreed failure/retry scenarios in staging/test or synthetic by default; one in-scope retest if a corrected test artifact is provided within 14 calendar days after delivery of the finding memo and written testing authority remains valid"
     },
     {
       "key": "security-control-validation",

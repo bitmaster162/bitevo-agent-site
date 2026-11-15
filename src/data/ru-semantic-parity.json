@@ -11,7 +11,7 @@
       "description": "Вход BitEvo: free triage, Entry Audit $750, Security Control Validation в составе Entry Audit, BUILD Diagnostic $3,000 и Primary Audit $2,450.",
       "points": [
         "Free / 20 минут: понять, стоит ли вообще аудировать workflow и где проходит критическая граница действия.",
-        "$750 Entry Audit: Одна граница полномочий, до 2 подключённых инструментов, 3–5 согласованных сценариев сбоя/повтора в staging/test или на синтетике по умолчанию, один retest в течение 14 дней после finding memo. Оплата $750 полностью засчитывается в $2,450 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope.",
+        "$750 Entry Audit: Одна граница полномочий, до 2 подключённых инструментов, 3–5 согласованных сценариев сбоя/повтора в staging/test или на синтетике по умолчанию, одна повторная проверка исправления в исходной границе при получении тестового артефакта в течение 14 календарных дней после передачи заключения Entry и действующем письменном разрешении. Оплата $750 полностью засчитывается в $2,450 Primary Audit только если Primary Audit отдельно согласован письменно в течение 30 календарных дней после передачи заключения Entry.",
         "Security Control Validation в составе Entry Audit: проверить одну consequential staging/test control boundary и сопоставить ожидаемое ALLOW / DENY / HOLD / ESCALATE решение с реальным downstream state.",
         "MCP / Tool Governance: разобрать одну agent-to-tool boundary по identity, policy, approval, bypass и retry evidence.",
         "$3,000 BUILD Workflow Exception Diagnostic: выбрать один recurring exception, затем локально зафиксировать buyer-confirmed baseline и отдельно проверить synthetic measurement proof.",
@@ -31,8 +31,8 @@
       "points": [
         "Объект — одна граница полномочий, до двух инструментов, не весь продукт.",
         "Цель — сопоставить ожидаемые и наблюдаемые результаты 3–5 согласованных сценариев; результат может быть BLOCKED.",
-        "Полный Authority Ledger / Evidence Contract относится к Primary Audit; один retest включён в Entry в течение 14 дней после finding memo. Тесты только по отдельным Rules of Engagement.",
-        "Оплата $750 полностью засчитывается в $2,450 Primary Audit при заказе в течение 30 дней после finding memo по отдельному письменному scope."
+        "Полный Authority Ledger / Evidence Contract относится к Primary Audit; одна повторная проверка исправления включена в Entry при получении тестового артефакта в течение 14 календарных дней после передачи заключения Entry и действующем письменном разрешении. Тесты только по отдельным Rules of Engagement.",
+        "Оплата $750 полностью засчитывается в $2,450 Primary Audit только если Primary Audit отдельно согласован письменно в течение 30 календарных дней после передачи заключения Entry."
       ],
       "primaryHref": "/ru/audit-intake?offer=entry-audit",
       "primaryLabel": "Подготовить scope"

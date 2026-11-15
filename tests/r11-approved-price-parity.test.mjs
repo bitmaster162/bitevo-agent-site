@@ -119,7 +119,98 @@ test('R11 rendered EN/RU pages show approved prices; free review is not paid SLA
     if (path !== 'pricing') assert.doesNotMatch(html,/\$1,500 Entry Audit/,path);
   }
   const start = src('dist/start/index.html');
-  assert.match(start,/Within 24 hours on business days/);
-  assert.match(start,/free one-page review/);
+  assert.match(start,/within one business day/i);
+  assert.match(start,/non-binding response target/i);
+  assert.match(start,/not a contractual SLA/i);
+  assert.match(start,/free one-page preliminary map/i);
   assert.doesNotMatch(start,/Entry Audit (?:delivered|completed) in 24 hours/i);
+});
+
+// PROPOSED ONLY, not yet commercial-owner approved.
+// Unlike a concatenated-source search, this test fails if a required clause
+// disappears from one specific public or machine-readable surface.
+test('R26 individual public claims are pinned by source file', () => {
+  const groups = {
+    B_EN: [
+    "src/content/research-notes/false-green-and-retry-safety.en.md",
+    "src/content/research-notes/mcp-and-coding-agent-governance.en.md",
+    "src/pages/build.astro",
+    "src/pages/buyer-pack.astro",
+    "src/pages/consequential-actions.astro",
+    "src/pages/consulting.astro",
+    "src/pages/entry-audit-vs-pentest-ai-security-grc.astro",
+    "src/pages/entry-audit.astro",
+    "src/pages/llms.txt.ts",
+    "src/pages/operator.astro",
+    "src/pages/pricing.astro",
+    "src/pages/start.astro"
+],
+    B_RU: [
+    "src/content/research-notes/false-green-and-retry-safety.ru.md",
+    "src/content/research-notes/mcp-and-coding-agent-governance.ru.md",
+    "src/data/ru-semantic-parity.json",
+    "src/pages/ru/buyer-pack.astro",
+    "src/pages/ru/consulting.astro",
+    "src/pages/ru/entry-audit-vs-pentest-ai-security-grc.astro",
+    "src/pages/ru/pricing.astro"
+],
+    D_EN: [
+    "src/content/research-notes/false-green-and-retry-safety.en.md",
+    "src/content/research-notes/mcp-and-coding-agent-governance.en.md",
+    "src/data/audit-measured-value-gate.json",
+    "src/data/audit-paid-start-gate.json",
+    "src/data/audit-proposal-readiness.json",
+    "src/data/audit-renewal-expansion-gate.json",
+    "src/pages/build.astro",
+    "src/pages/buyer-pack.astro",
+    "src/pages/consequential-actions.astro",
+    "src/pages/consulting.astro",
+    "src/pages/entry-audit-vs-pentest-ai-security-grc.astro",
+    "src/pages/entry-audit.astro",
+    "src/pages/llms.txt.ts",
+    "src/pages/operator.astro",
+    "src/pages/pricing.astro",
+    "src/pages/start.astro"
+],
+    D_RU: [
+    "src/content/research-notes/false-green-and-retry-safety.ru.md",
+    "src/content/research-notes/mcp-and-coding-agent-governance.ru.md",
+    "src/data/ru-semantic-parity.json",
+    "src/pages/ru/buyer-pack.astro",
+    "src/pages/ru/consulting.astro",
+    "src/pages/ru/entry-audit-vs-pentest-ai-security-grc.astro",
+    "src/pages/ru/pricing.astro"
+],
+    C_EN: [
+    "src/pages/index.astro",
+    "src/pages/llms.txt.ts",
+    "src/pages/pricing.astro",
+    "src/pages/start.astro"
+],
+    C_RU: [
+    "src/pages/llms.txt.ts",
+    "src/pages/ru/index.astro",
+    "src/pages/ru/pricing.astro"
+]
+  };
+  const checks = {
+    B_EN: [/30 calendar days/i, /separately agreed in writing/i],
+    B_RU: [/30 календарных дней/u, /отдельно согласован письменно/u],
+    D_EN: [/14 calendar days/i, /written testing authority/i],
+    D_RU: [/14 календарных дней после передачи заключения Entry/u, /письменном разрешении/u],
+    C_EN: [/one[- ]business[- ]day/i, /non-binding/i],
+    C_RU: [/(?:одного рабочего дня|один рабочий день)/u, /не договорной SLA/u]
+  };
+  const covered = new Set();
+  for (const [category, files] of Object.entries(groups)) {
+    assert.ok(files.length > 0, category + ': pins must exist');
+    for (const file of files) {
+      covered.add(file);
+      const body = src(file);
+      for (const pattern of checks[category]) {
+        assert.match(body, pattern, category + ': required clause missing in ' + file);
+      }
+    }
+  }
+  assert.equal(covered.size, 25, 'R26 source coverage count drift');
 });
