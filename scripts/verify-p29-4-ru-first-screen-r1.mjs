@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -73,7 +73,7 @@ check(firstScreen.includes('href="/ru/mapper"') && firstScreen.includes('href="/
 
 const row = currentness.routes.find(item => item.path === '/ru');
 check(Boolean(row), '/ru currentness row exists');
-equal(row?.lastmod, '2026-11-14', '/ru currentness date exact');
+equal(row?.lastmod, rgapsExpectedLastmod('/ru', '2026-11-14'), '/ru currentness date exact');
 equal(row?.fingerprint, rgapsExpectedFingerprint('/ru', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'), '/ru currentness fingerprint exact');
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-4-ru-first-screen-r1.mjs'), 'P29.4 verifier wired into verify:core');

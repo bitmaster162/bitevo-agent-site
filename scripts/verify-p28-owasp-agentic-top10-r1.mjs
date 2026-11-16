@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -76,7 +76,7 @@ const expectedCurrentness = {
 };
 for (const [path,value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.lastmod === value.lastmod && row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint), `currentness exact for ${path}`);
+  check(row?.lastmod === rgapsExpectedLastmod(path, value.lastmod) && row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint), `currentness exact for ${path}`);
 }
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-owasp-agentic-top10-r1.mjs'), 'P28.6 verifier is wired into verify:core');

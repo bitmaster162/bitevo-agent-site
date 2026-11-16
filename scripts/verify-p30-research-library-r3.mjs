@@ -1,3 +1,4 @@
+import { rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -111,7 +112,7 @@ const editorialCorrections = new Set(['/guides/false-green-and-retry-safety', '/
 for (const note of generated.notes) {
   const row = currentness.routes.find(row => row.path === note.path);
   const expectedLastmod = editorialCorrections.has(note.path) ? (note.path.includes('false-green-and-retry-safety') ? '2026-11-15' : '2026-11-14') : note.reviewed;
-  check(row?.lastmod === expectedLastmod, `${note.path}: exact reviewed/lastmod boundary`);
+  check(row?.lastmod === rgapsExpectedLastmod(note.path, expectedLastmod), `${note.path}: exact reviewed/lastmod boundary`);
   check(sitemap.includes(`<loc>https://bitevo.work${note.path}</loc><lastmod>${row?.lastmod}</lastmod>`), `sitemap currentness missing ${note.path}`);
 }
 
