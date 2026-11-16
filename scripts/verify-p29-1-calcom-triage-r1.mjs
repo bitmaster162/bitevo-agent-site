@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -92,7 +92,7 @@ const expected = {
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
   check(Boolean(row), `${route}: currentness row exists`);
-  equal(row?.lastmod, lastmod, `${route}: currentness date exact`);
+  equal(row?.lastmod, rgapsExpectedLastmod(route, lastmod), `${route}: currentness date exact`);
   equal(row?.fingerprint, rgapsExpectedFingerprint(route, fingerprint), `${route}: currentness fingerprint exact`);
 }
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
