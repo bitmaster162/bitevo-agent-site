@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { twinIntroEmails } from '../data/twin-intro-emails.mjs';
 import '../styles/company-twin.css';
 
 const hierarchy = [
@@ -23,10 +24,10 @@ const records = [
         <h1 class="display">Company memory with people in control.</h1>
         <p class="lede">Company Twin organizes company history for people and AI agents. The director keeps authority; employees and teams contribute context; the company memory preserves the decision trail; agents only read permitted material and make proposals for human review.</p>
         <div class="twin-actions">
-          <a class="button button-primary" href="/audit-intake">Book a free 30-min call</a>
+          <a class="button button-primary" href={twinIntroEmails.en.intro}>Email to arrange a free 30-minute call</a>
           <a class="button" href="/pricing">See approved prices</a>
         </div>
-        <p class="twin-note">This opens the triage request path. The request does not itself book a time; the 30-minute conversation is agreed separately.</p>
+        <p class="twin-note">Your email app opens a draft for Robert. Send it and he’ll reply to agree a time. If you use webmail, write to robert@bitevo.work.</p>
       </div>
       <aside class="panel twin-summary">
         <div class="eyebrow">Human authority boundary</div>
@@ -74,6 +75,7 @@ const records = [
           <h3>One team</h3>
           <p class="twin-price">$3,000 <small>fixed · 3 weeks</small></p>
           <p>One team, 1–2 sources and 3 months of history.</p>
+          <a class="text-link" href={twinIntroEmails.en.team}>Email about the Team Twin pilot</a>
         </article>
         <article class="panel twin-offer">
           <span class="eyebrow">Company Twin · 12 months</span>
@@ -81,9 +83,10 @@ const records = [
           <p class="twin-price">From $9,000</p>
           <p>Entire company, up to 5 sources and 12 months of history.</p>
           <p>Support from $500 per month, separately scoped.</p>
+          <a class="text-link" href={twinIntroEmails.en.company}>Email about Company Twin</a>
         </article>
       </div>
-      <div class="twin-actions"><a class="button button-primary" href="/audit-intake">Book a free 30-min call</a><a class="button" href="/pricing">Full pricing</a></div>
+      <div class="twin-actions"><a class="button button-primary" href={twinIntroEmails.en.intro}>Email to arrange a free 30-minute call</a><a class="button" href="/pricing">Full pricing</a></div>
     </div>
   </section>
   <section class="section section-rule">

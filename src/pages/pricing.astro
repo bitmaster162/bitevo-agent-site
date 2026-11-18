@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { twinIntroEmails } from '../data/twin-intro-emails.mjs';
 import ScopeHandoffShort from '../components/ScopeHandoffShort.astro';
 import HowWorkWorksConfirmed from '../components/HowWorkWorksConfirmed.astro';
 
@@ -133,11 +134,11 @@ const offerCatalog = {
       <p class="lede">Director → employees and teams → company memory → agents. Agents read and propose; humans decide. Demo uses a fictional company; real data requires written consent and read-only access.</p>
       <div class="pricing-grid">
         <article class="panel"><strong>Free introduction · 30 minutes</strong><p>Discuss the pilot scope and access boundary.</p></article>
-        <article class="panel"><strong>Team Twin · $3,000 fixed · 3 weeks</strong><p>One team, 1–2 sources, 3 months of history.</p></article>
-        <article class="panel"><strong>Company Twin · 12 months · from $9,000</strong><p>Whole company, up to 5 sources, one year of history. Support from $500 per month.</p></article>
+        <article class="panel"><strong>Team Twin · $3,000 fixed · 3 weeks</strong><p>One team, 1–2 sources, 3 months of history.</p><a class="text-link" href={twinIntroEmails.en.team}>Email about the Team Twin pilot</a></article>
+        <article class="panel"><strong>Company Twin · 12 months · from $9,000</strong><p>Whole company, up to 5 sources, one year of history. Support from $500 per month.</p><a class="text-link" href={twinIntroEmails.en.company}>Email about Company Twin</a></article>
       </div>
-      <div class="hero-actions"><a class="button button-primary" href="/company-twin">Open Company Twin</a><a class="button" href="/audit-intake">Request a free 30-min call</a></div>
-      <p class="lede">This is a triage request path, not an automatic booking. No client cases, effect metrics or guaranteed outcomes are claimed.</p>
+      <div class="hero-actions"><a class="button button-primary" href="/company-twin">Open Company Twin</a><a class="button" href={twinIntroEmails.en.intro}>Email to arrange a free 30-minute call</a></div>
+      <p class="lede">We’ll agree a time by email. If you use webmail, write to robert@bitevo.work. No client cases, effect metrics or guaranteed outcomes are claimed.</p>
     </div>
   </section>
 
