@@ -12,7 +12,7 @@ const html = await readFile(source, 'utf8');
 for (const [label, ok] of [
   ['lang=ru', /<html\b[^>]*\blang="ru"/i.test(html)],
   ['noindex', /<meta\b[^>]*name="robots"[^>]*content="noindex, follow"/i.test(html)],
-  ['canonical', html.includes('rel="canonical" href="https://bitevo.work/ru/404"')],
+  ['no canonical on 404', !/<link\b[^>]*rel="canonical"/i.test(html)],
   ['Russian content', html.includes('Маршрут не найден') && html.includes('По этому адресу нет доступной страницы.')]
 ]) {
   if (!ok) throw new Error(`localized 404 postprocess precondition failed: ${label}`);

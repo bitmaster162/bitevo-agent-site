@@ -5,6 +5,14 @@ import parity from '../../data/ru-semantic-parity.json';
 
 const page = parity.pages.find((item) => item.slug === 'entry-audit');
 if (!page) throw new Error('RU parity page missing: entry-audit');
+const entryOffer = {
+  "@context": "https://schema.org", "@type": "Service",
+  name: "Проверка прав AI-агента и MCP-инструментов — Entry Audit",
+  serviceType: "AI agent permissions, tool authority, MCP",
+  provider: { "@id": "https://bitevo.work/#organization" },
+  url: "https://bitevo.work/ru/entry-audit",
+  offers: { "@type": "Offer", price: "750", priceCurrency: "USD", url: "https://bitevo.work/ru/entry-audit" }
+};
 const ruPath = `/ru/${page.slug}`;
 const eyebrowIsEnglish = !/[А-Яа-яЁё]/.test(page.eyebrow ?? '');
 ---
@@ -15,6 +23,7 @@ const eyebrowIsEnglish = !/[А-Яа-яЁё]/.test(page.eyebrow ?? '');
   enPath={page.enPath}
   ruPath={ruPath}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(entryOffer)} />
   <section class="parity-hero section">
     <div class="container parity-grid">
       <div>

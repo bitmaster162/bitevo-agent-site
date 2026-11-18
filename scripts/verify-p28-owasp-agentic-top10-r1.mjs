@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -69,14 +69,14 @@ equal(registry.routes.filter(row => row.indexable && row.locale === 'en').length
 equal(registry.routes.filter(row => row.indexable && row.locale === 'ru').length, (isExactRGapsSuccessor() ? 71 : (isExactGuides34Successor() ? 68 : 66)), 'RU indexable route count remains exact');
 
 const expectedCurrentness = {
-  '/agent-authority-audit': { fingerprint:'sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9', lastmod:'2026-10-16' },
+  '/agent-authority-audit': { fingerprint:'sha256:6c8db40b101026e89112c08045edfcb45f3404369514c8fb485417571cc9e6a9', lastmod:'2026-11-14' },
   '/owasp-agentic-top-10': { fingerprint:'sha256:077f2c908297a6803d6229a8dccf6275bd1c653762f59fdc34834baf8ea06186', lastmod:'2026-10-13' },
-  '/pricing': { fingerprint:'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2', lastmod:'2026-10-16' },
+  '/pricing': { fingerprint:'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2', lastmod:'2026-11-14' },
   '/ru/owasp-agentic-top-10': { fingerprint:'sha256:564ba60d42a409f90f5bf0ac3f329b778bb80106c652da74c008ef26fc0c0d04', lastmod:'2026-10-13' }
 };
 for (const [path,value] of Object.entries(expectedCurrentness)) {
   const row = currentness.routes.find(item => item.path === path);
-  check(row?.lastmod === value.lastmod && row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint), `currentness exact for ${path}`);
+  check(row?.lastmod === rgapsExpectedLastmod(path, value.lastmod) && row?.fingerprint === rgapsExpectedFingerprint(path, value.fingerprint), `currentness exact for ${path}`);
 }
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p28-owasp-agentic-top10-r1.mjs'), 'P28.6 verifier is wired into verify:core');

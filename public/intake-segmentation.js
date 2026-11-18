@@ -14,15 +14,15 @@
 
   const offerIntents = Object.freeze({
     'entry-audit': {
-      key: 'entry-audit', depth: 'entry', label: 'Entry Audit ($1,500)',
+      key: 'entry-audit', depth: 'entry', label: 'Entry Audit ($750)',
       subject: 'BitEvo Agent Authority Entry Audit scope review'
     },
     'security-control-validation': {
-      key: 'security-control-validation', depth: 'entry', label: 'Security Control Validation ($1,500)',
+      key: 'security-control-validation', depth: 'entry', label: 'Security Control Validation (included in Entry Audit $750)',
       subject: 'BitEvo Security Control Validation scope review'
     },
     'primary-agent-authority-audit': {
-      key: 'primary-agent-authority-audit', depth: 'primary', label: 'Primary Agent Authority & Evidence Audit ($4,900)',
+      key: 'primary-agent-authority-audit', depth: 'primary', label: 'Primary Agent Authority & Evidence Audit ($2,450)',
       subject: 'BitEvo Primary Agent Authority Audit scope review'
     }
   });

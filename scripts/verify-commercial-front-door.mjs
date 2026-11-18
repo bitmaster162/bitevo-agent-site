@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const distDir = path.resolve('dist');
+const projectRoot = fileURLToPath(new URL('../', import.meta.url));
+const distDir = path.join(projectRoot, 'dist');
 const read = rel => fs.readFileSync(path.join(distDir, rel), 'utf8');
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
@@ -21,7 +24,7 @@ const ruEntryAudit = read('ru/entry-audit/index.html');
 const ruControlValidation = read('ru/control-validation/index.html');
 const ruPrimaryAudit = read('ru/agent-authority-audit/index.html');
 const ruBuildDiagnostic = read('ru/build/exception-workflow-diagnostic/index.html');
-const intakeController = fs.readFileSync(path.resolve('public/intake-segmentation.js'), 'utf8');
+const intakeController = fs.readFileSync(path.join(projectRoot, 'public/intake-segmentation.js'), 'utf8');
 
 const stripTags = text => text.replace(/<[^>]*>/g, ' ').replace(/&[a-z0-9#]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 const hasAnchor = (html, href, textFragment) => [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].some(match => {
@@ -41,20 +44,20 @@ check([...home.matchAll(/<a\b[^>]*>/gi)].some(match => /data-funnel="home-primar
 check(/<a class="header-cta" href="\/start"[^>]*>Start here/.test(home), 'English header CTA must route to /start');
 check(/<a class="mobile-cta" href="\/start"[^>]*>Start here →<\/a>/.test(home), 'English mobile CTA must route to /start');
 
-check(start.includes('$1,500 Entry Audit'), '/start must retain Entry Audit path');
-check(start.includes('$1,500 Security Control Validation'), '/start must retain Security Control Validation path');
-check(hasAnchor(start, '/control-validation', 'Open Security Control Validation'), '/start Security Control Validation CTA must route to /control-validation');
+check(start.includes('$750 Entry Audit'), '/start must retain Entry Audit path');
+check(start.includes('Security Control Validation (included in Entry Audit)'), '/start must preserve SCV as included Entry scope');
+check(hasAnchor(start, '/control-validation', 'See Entry control validation scope'), '/start Security Control Validation CTA must route to /control-validation');
 check(start.includes('MCP / Tool Governance'), '/start must retain MCP path');
 check(start.includes('$3,000 BUILD Workflow Exception Diagnostic'), '/start must retain BUILD path');
-check(start.includes('$4,900 Primary Audit'), '/start must retain Primary Audit path');
+check(start.includes('$2,450 Primary Audit'), '/start must retain Primary Audit path');
 check(start.includes('The public site does not authorize testing.'), '/start must retain no-testing boundary');
 
-check(consulting.includes('Security Control Validation') && consulting.includes('$1,500'), '/consulting must expose Security Control Validation at $1,500');
-check(hasAnchor(consulting, '/control-validation', 'Open Security Control Validation'), '/consulting Security Control CTA must route to /control-validation');
+check(consulting.includes('Security Control Validation (included in Entry Audit)') && consulting.includes('Included in Entry Audit'), '/consulting must show SCV included in Entry, not separately priced');
+check(hasAnchor(consulting, '/control-validation', 'See Entry control validation scope'), '/consulting Security Control CTA must route to /control-validation');
 check(consulting.includes('BUILD Workflow Exception Diagnostic') && consulting.includes('$3,000'), '/consulting must expose BUILD Workflow Exception Diagnostic at $3,000');
 check(hasAnchor(consulting, '/build/exception-workflow-diagnostic', 'Open BUILD Workflow Exception Diagnostic'), '/consulting BUILD CTA must route to /build/exception-workflow-diagnostic');
-check(ruConsulting.includes('Security Control Validation') && ruConsulting.includes('$1,500'), '/ru/consulting must expose Security Control Validation at $1,500');
-check(hasAnchor(ruConsulting, '/ru/control-validation', 'Открыть Security Control Validation'), '/ru/consulting Security Control CTA must route to /ru/control-validation');
+check(ruConsulting.includes('Security Control Validation (в составе Entry Audit)') && ruConsulting.includes('В составе Entry Audit'), '/ru/consulting must show SCV included in Entry, not separately priced');
+check(hasAnchor(ruConsulting, '/ru/control-validation', 'Как SCV включена в Entry Audit'), '/ru/consulting Security Control CTA must route to /ru/control-validation');
 check(ruConsulting.includes('BUILD Workflow Exception Diagnostic') && ruConsulting.includes('$3,000'), '/ru/consulting must expose BUILD Workflow Exception Diagnostic at $3,000');
 check(hasAnchor(ruConsulting, '/ru/build/exception-workflow-diagnostic', 'Открыть BUILD Workflow Exception Diagnostic'), '/ru/consulting BUILD CTA must route to /ru/build/exception-workflow-diagnostic');
 
@@ -66,12 +69,16 @@ check(!intake.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20revie
 
 const offerIntentRoutes = [
   ['/entry-audit', entryAudit, '/audit-intake?offer=entry-audit'],
-  ['/control-validation', controlValidation, '/audit-intake?offer=security-control-validation'],
+  ['/control-validation', controlValidation, '/entry-audit'],
   ['/agent-authority-audit', primaryAudit, '/audit-intake?offer=primary-agent-authority-audit'],
   ['/ru/entry-audit', ruEntryAudit, '/ru/audit-intake?offer=entry-audit'],
-  ['/ru/control-validation', ruControlValidation, '/ru/audit-intake?offer=security-control-validation'],
+  ['/ru/control-validation', ruControlValidation, '/ru/entry-audit'],
   ['/ru/agent-authority-audit', ruPrimaryAudit, '/ru/audit-intake?offer=primary-agent-authority-audit']
 ];
+// Previously separate Security Control Validation now routes to bounded Entry Audit.
+check(!controlValidation.includes('href="/audit-intake?offer=security-control-validation"') &&
+      !ruControlValidation.includes('href="/ru/audit-intake?offer=security-control-validation"'),
+      'retired standalone Security Control Validation offer intent must not be reintroduced');
 for (const [route, html, href] of offerIntentRoutes) {
   check(html.includes(`href="${href}"`), `${route} must preserve selected offer intent into audit intake`);
 }
@@ -89,9 +96,9 @@ check(ruHome.includes('data-triage-source="home-ru"') && ruHome.includes('data-t
 check(!/<a class="header-cta" href="\/ru\/mapper"[^>]*>/.test(ruHome), 'old RU Mapper header CTA must not survive R5 build output');
 check(ruHome.includes('href="/ru/mapper"'), 'RU product layer must retain a visible Mapper path after moving the commercial front door');
 check(ruStart.includes('Free / 20 минут'), '/ru/start must retain Free triage path');
-check(ruStart.includes('$1,500'), '/ru/start must retain Entry price marker');
+check(ruStart.includes('$750'), '/ru/start must retain Entry price marker');
 check(ruStart.includes('Security Control Validation'), '/ru/start must retain Security Control Validation marker');
-check(ruStart.includes('$4,900'), '/ru/start must retain Primary price marker');
+check(ruStart.includes('$2,450'), '/ru/start must retain Primary price marker');
 check(ruStart.includes('разрешение на тестирование'), '/ru/start must retain no-testing boundary');
 
 const offerHandoffs = [
@@ -100,7 +107,8 @@ const offerHandoffs = [
   ['/agent-authority-audit', primaryAudit, primaryAuditReviewHref, 'Contact Robert', true],
   ['/build/exception-workflow-diagnostic', buildDiagnostic, buildQualificationHref, 'Contact Robert at BitEvo', false],
   ['/ru/entry-audit', ruEntryAudit, entryAuditReviewHref, 'Связаться с Робертом', true],
-  ['/ru/control-validation', ruControlValidation, controlValidationReviewHref, 'Связаться с Робертом', true],
+  // RU SCV is included in Entry Audit, so the direct manual handoff uses the Entry subject.
+  ['/ru/control-validation', ruControlValidation, entryAuditReviewHref, 'Связаться с Робертом', true],
   ['/ru/agent-authority-audit', ruPrimaryAudit, primaryAuditReviewHref, 'Связаться с Робертом', true],
   ['/ru/build/exception-workflow-diagnostic', ruBuildDiagnostic, buildQualificationHref, 'Связаться с Робертом', true]
 ];
@@ -120,3 +128,17 @@ if (failures.length) {
 }
 
 console.log(`COMMERCIAL_FRONT_DOOR_GATE=PASS en_home_triage=1 en_header_start=1 en_mobile_start=1 ru_home_triage=1 ru_header_start=1 ru_mobile_start=1 ru_mapper_visible=1 manual_handoff=1 offer_handoffs=${offerHandoffs.length} injected_offer_handoffs=7 handoff_subjects=4 offer_intent=PASS offer_intent_routes=6 consulting_specialists=2 ru_consulting_specialists=2 auto_send=0 authorization_boundary=PASS`);
+
+
+// Mandatory Opus B2 release check. This verifier is part of verify:core.
+// Keep package.json/R50's exact frozen command unchanged; run the approved
+// R11 price-parity test in a fail-closed child process after the front-door gate.
+const r11PriceGuard = spawnSync(process.execPath, [
+  '--test', '--test-reporter=tap', 'tests/r11-approved-price-parity.test.mjs'
+], { cwd: projectRoot, stdio: 'inherit', windowsHide: true, timeout: 60000 });
+if (r11PriceGuard.error) throw r11PriceGuard.error;
+if (r11PriceGuard.status !== 0) {
+  console.error('R11_APPROVED_PRICE_PARITY_GATE=FAIL via commercial-front-door');
+  process.exit(1);
+}
+console.log('R11_APPROVED_PRICE_PARITY_GATE=PASS via verify:core/commercial-front-door');

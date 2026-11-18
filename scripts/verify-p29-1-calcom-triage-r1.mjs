@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -68,7 +68,7 @@ for (const [label, html, secondary] of [
   check(html.includes('src="/triage-click.js"'), `${label}: local triage click tracker is loaded`);
 }
 
-check(pricingSource.includes("price: 'Free'") && pricingSource.includes("price: '$1,500'") && pricingSource.includes("price: '$4,900'"), 'pricing values remain unchanged');
+check(pricingSource.includes("price: 'Free'") && pricingSource.includes("price: '$750'") && pricingSource.includes("price: '$2,450'"), 'pricing values remain unchanged');
 check(pricingSource.includes("cta: 'Open Entry Audit'") && pricingSource.includes("cta: 'Prepare Primary Audit scope'"), 'paid pricing CTAs remain unchanged');
 check(entrySource.includes('href="/audit-intake?offer=entry-audit"') && entrySource.includes('Prepare the bounded scope'), 'Entry Audit paid scope CTA remains available');
 check(pricingHtml.includes('Contact Robert'), 'pricing retains Contact Robert handoff');
@@ -84,15 +84,15 @@ check(llms.includes(TRIAGE) && llms.includes('verified Cal.com booking page'), '
 const currentness = JSON.parse(await read('src/data/sitemap-currentness.json'));
 const packageJson = JSON.parse(await read('package.json'));
 const expected = {
-  '/': ['2026-10-13', 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197'],
-  '/ru': ['2026-10-13', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'],
-  '/pricing': ['2026-10-16', 'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2'],
-  '/entry-audit': ['2026-10-13', 'sha256:bacc8560dd46327529cca2621a862a87c47d310092305f9cf7f2a73066a65449']
+  '/': ['2026-11-14', 'sha256:c463fa1cbead1e5f2af4f313372aa983701dd9a2414123b5e3a33a86f90a4197'],
+  '/ru': ['2026-11-14', 'sha256:b86c985d9527d7da7709e6fc1c811b156446446a6aba7148cef00a515d9b73e6'],
+  '/pricing': ['2026-11-14', 'sha256:dbc35c177045b27f9fafacac85fead3e62af86529bdbbd4805591af65d3a1fc2'],
+  '/entry-audit': ['2026-11-15', 'sha256:bacc8560dd46327529cca2621a862a87c47d310092305f9cf7f2a73066a65449']
 };
 for (const [route, [lastmod, fingerprint]] of Object.entries(expected)) {
   const row = currentness.routes.find(item => item.path === route);
   check(Boolean(row), `${route}: currentness row exists`);
-  equal(row?.lastmod, lastmod, `${route}: currentness date exact`);
+  equal(row?.lastmod, rgapsExpectedLastmod(route, lastmod), `${route}: currentness date exact`);
   equal(row?.fingerprint, rgapsExpectedFingerprint(route, fingerprint), `${route}: currentness fingerprint exact`);
 }
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');

@@ -169,7 +169,7 @@ const toolContracts = [
   ['/ru/pricing', ruPricing.includes('href="/ru/audit-intake"') && ruPricing.includes('href="/ru/audit-intake?offer=entry-audit"') && ruPricing.includes('href="/ru/audit-intake?offer=primary-agent-authority-audit"') && !ruPricing.includes('href="/audit-intake')],
   ['/ru/agent-authority-audit', ruAudit.includes('href="/ru/audit-intake?offer=primary-agent-authority-audit"') && !ruAudit.includes('href="/audit-intake')],
   ['/ru/entry-audit', ruEntryAudit.includes('href="/ru/audit-intake?offer=entry-audit"')],
-  ['/ru/control-validation', ruControlValidation.includes('href="/ru/audit-intake?offer=security-control-validation"')]
+  ['/ru/control-validation', ruControlValidation.includes('href="/ru/entry-audit"') && !ruControlValidation.includes('href="/ru/audit-intake?offer=security-control-validation"')]
 ];
 checks += toolContracts.length;
 for (const [route, ok] of toolContracts) if (!ok) failures.push(`${route}: localized functional/commercial boundary contract failed`);

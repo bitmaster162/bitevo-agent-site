@@ -20,7 +20,7 @@ const packageJson = JSON.parse(await read('package.json'));
 const checked = '2026-10-05';
 const ids = ['entry-audit','pentest','ai-security-platform','grc'];
 const products = ['BitEvo Entry Audit','Cobalt Autonomous Pentest','Mindgard Platform','Secureframe Fundamentals'];
-const prices = ['$1,500 fixed','$3,500 per test','Public list price not shown','Starting at $7,000/year'];
+const prices = ['$750 fixed','$3,500 per test','Public list price not shown','Starting at $7,000/year'];
 const sources = [
   'https://www.cobalt.io/platform/pricing',
   'https://mindgard.ai/',

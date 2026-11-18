@@ -345,7 +345,7 @@ const funnelTextContracts = [
   ['/consulting', '/audit-intake?offer=primary-agent-authority-audit', 'Prepare Primary Audit scope'],
   ['/consulting', '/mapper', 'Map a workflow'],
   ['/consulting', '/mapper', 'Map the critical action'],
-  ['/assurance', '/audit-intake?offer=security-control-validation', 'Scope one control boundary'],
+  ['/assurance', '/audit-intake?offer=entry-audit', 'Scope one control boundary'],
   ['/doctrine', '/mapper', 'Map one workflow']
 ];
 for (const [route, href, label] of funnelTextContracts) {

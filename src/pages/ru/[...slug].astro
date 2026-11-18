@@ -12,6 +12,23 @@ export function getStaticPaths() {
 const { page } = Astro.props;
 const ruPath = `/ru/${page.slug}`;
 const eyebrowIsEnglish = !/[А-Яа-яЁё]/.test(page.eyebrow ?? '');
+// Only the three editorial guide summaries are Articles; product/tool pages are not.
+const editorialGuideSlugs = new Set([
+  'guides/security-sandboxing',
+  'guides/fleet-coordinator-drift-monitoring',
+  'guides/d3-tool-io-bridge-contract'
+]);
+const guideArticle = editorialGuideSlugs.has(page.slug) ? {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  author: { '@type': 'Person', name: 'Robert Dumanyan', url: 'https://bitevo.work/operator' },
+  headline: page.title,
+  description: page.description,
+  inLanguage: 'ru',
+  mainEntityOfPage: 'https://bitevo.work' + ruPath,
+  isBasedOn: 'https://bitevo.work' + page.enPath,
+  publisher: { '@id': 'https://bitevo.work/#organization' }
+} : null;
 ---
 
 <RuLayout
@@ -20,6 +37,7 @@ const eyebrowIsEnglish = !/[А-Яа-яЁё]/.test(page.eyebrow ?? '');
   enPath={page.enPath}
   ruPath={ruPath}
 >
+  {guideArticle && <script type="application/ld+json" set:html={JSON.stringify(guideArticle)}></script>}
   <section class="parity-hero section">
     <div class="container parity-grid">
       <div>

@@ -133,7 +133,7 @@ const pricing = await readHtml('/pricing');
 for (const marker of ['Scope / Authority Triage', 'Entry Audit', 'Agent Authority &amp; Evidence Audit']) {
   if (!pricing.includes(marker)) failures.push(`/pricing missing canonical ladder marker: ${marker}`);
 }
-for (const marker of ['Free', '$1,500', '$4,900']) {
+for (const marker of ['Free', '$750', '$2,450']) {
   if (!pricing.includes(marker)) failures.push(`/pricing missing canonical price marker: ${marker}`);
 }
 

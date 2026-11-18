@@ -18,7 +18,7 @@ for (const phrase of ['Предложение ещё не означает оп�
 if (data.schema !== 'bitevo.audit-paid-start-gate/v1' || data.state !== 'PUBLIC_AUDIT_PAID_START_GATE_TEMPLATE_NOT_CUSTOMER_STATE' || data.customer_state !== 'NOT_REPRESENTED') failures.push('schema/state/customer-state drift');
 for (const [key,value] of Object.entries(data.claims||{})) if (value !== false) failures.push(`claim ${key} must remain false`);
 if (Object.keys(data.claims||{}).length !== 10) failures.push('claim count drift');
-const expectedOffers = [['entry-audit','Entry Audit',1500],['security-control-validation','Security Control Validation',1500],['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',4900]];
+const expectedOffers = [['entry-audit','Entry Audit',750],['security-control-validation','Security Control Validation (included in Entry Audit)',750],['primary-agent-authority-audit','Primary Agent Authority & Evidence Audit',2450]];
 if (data.offer_query_allowlist?.length !== expectedOffers.length) failures.push('offer allowlist length drift');
 for (const [key,name,price] of expectedOffers) {
   const offer = data.offer_query_allowlist?.find(item => item.key === key);

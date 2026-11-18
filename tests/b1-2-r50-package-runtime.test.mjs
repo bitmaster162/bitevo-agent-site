@@ -54,4 +54,23 @@ test('R50-E root fix and mandatory suite preserve R50-D protected gate rather th
  assert.equal(pkg.scripts['verify:core'].split('tests/b1-2-r50-package-runtime.test.mjs').length,2);
  assert.equal(pkg.scripts['build:core'],'npm run build:site && npm run verify:core');
  assert.doesNotMatch(suffix,/test-name-pattern|\|\|/);
+ // R17 independent pin: this R50 suite executes directly from the frozen
+ // verify:core suffix, even if the commercial verifier's own nested test is removed.
+ assert.ok(pkg.scripts['verify:core'].includes('&& node scripts/verify-commercial-front-door.mjs &&'),
+   'commercial verifier must remain mandatory in the fail-closed command chain');
+ const commercialSource=fs.readFileSync(path.join(sourceRoot,'scripts/verify-commercial-front-door.mjs'),'utf8').replace(/\r\n/g,'\n');
+ const mandatoryR11Guard=[
+   'const r11PriceGuard = spawnSync(process.execPath, [',
+   "  '--test', '--test-reporter=tap', 'tests/r11-approved-price-parity.test.mjs'",
+   "], { cwd: projectRoot, stdio: 'inherit', windowsHide: true, timeout: 60000 });",
+   'if (r11PriceGuard.error) throw r11PriceGuard.error;',
+   'if (r11PriceGuard.status !== 0) {',
+   "  console.error('R11_APPROVED_PRICE_PARITY_GATE=FAIL via commercial-front-door');",
+   '  process.exit(1);',
+   '}'
+ ].join('\n');
+ assert.equal(commercialSource.split(mandatoryR11Guard).length,2,
+   'the exact R11 price-parity child gate must remain present and fail-closed');
+ assert.ok(fs.existsSync(path.join(sourceRoot,'tests/r11-approved-price-parity.test.mjs')),
+   'the separately executed R11 price-parity test must exist');
 });
