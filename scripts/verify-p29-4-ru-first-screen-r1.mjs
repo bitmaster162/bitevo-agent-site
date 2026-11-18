@@ -57,7 +57,7 @@ equal(html.split(P29_2).length - 1, 1, 'P29.2 RU failure copy remains in static 
 const ledeIndex = source.indexOf(LEDE);
 const failureIndex = source.indexOf(P29_2);
 const actionsIndex = source.indexOf('<div class="hero-actions">', ledeIndex);
-check(ledeIndex >= 0 && failureIndex > ledeIndex && actionsIndex > failureIndex, 'P29.2 failure copy remains after new lead and before hero actions');
+check(ledeIndex >= 0 && actionsIndex > ledeIndex && failureIndex > actionsIndex, 'P29.2 failure copy follows the contact actions and the canonical lead');
 check(html.includes(P29_1) && html.includes(TRIAGE_URL) && !source.includes(P29_1) && !source.includes(TRIAGE_URL), 'P29.1 Cal.com CTA is published in RU static HTML while source stays CSP-stable');
 check(source.includes('Agent Authority & Evidence Audit') && source.includes('$2,450'), 'package name and price remain present');
 check(baseLayout.includes('Authority Budget. Evidence Before Effect. False Green.'), 'Authority Budget / Evidence Before Effect / False Green terms remain unchanged');

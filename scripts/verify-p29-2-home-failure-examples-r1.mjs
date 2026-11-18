@@ -38,10 +38,14 @@ for (const [name, source, html, lead, copy, actionsMarker] of [
   const leadIndex = source.indexOf(lead);
   const copyIndex = source.indexOf(copy);
   const actionsIndex = source.indexOf(actionsMarker, leadIndex);
-  check(leadIndex >= 0 && copyIndex > leadIndex && actionsIndex > copyIndex, `${name}: copy is immediately in hero flow after lead and before actions`);
-  const between = source.slice(leadIndex + lead.length, actionsIndex);
-  check(between.includes(copy), `${name}: hero lead-to-actions segment contains exact copy`);
-  check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|href=|src=)/i.test(between), `${name}: inserted hero segment adds no JS, network call or CTA`);
+  const priceIndex = source.indexOf('data-entry-primary-offer', leadIndex);
+  check(leadIndex >= 0 && priceIndex > leadIndex && actionsIndex > priceIndex && copyIndex > actionsIndex,
+    `${name}: the paid offers and contact actions precede the failure examples`);
+  const beforeActions = source.slice(leadIndex + lead.length, actionsIndex);
+  check(!/(?:fetch\s*\(|XMLHttpRequest|sendBeacon|<script\b|href=|src=)/i.test(beforeActions),
+    `${name}: hero introduction adds no network call or extra CTA`);
+  check(source.includes('>' + copy + '</p>') && html.includes('>' + copy + '</p>'),
+    `${name}: the complete failure example remains a text-only paragraph`);
 }
 
 check(enSource.includes(EN_TRIAGE) && enSource.includes(TRIAGE_URL), 'P29.1 EN Cal.com CTA is published');
@@ -61,4 +65,4 @@ for (const [path, value] of Object.entries(expected)) {
 equal(currentness.routes.length, (isExactRGapsSuccessor() ? 142 : (isExactGuides34Successor() ? 137 : 133)), 'currentness route count is exact P30 baseline');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p29-2-home-failure-examples-r1.mjs'), 'P29.2 verifier wired into verify:core');
 
-console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_LEAD_BEFORE_ACTIONS p29_1_calcom=PUBLISHED`);
+console.log(`P29_2_HOME_FAILURE_EXAMPLES_R1_GATE=PASS checks=${checks} locales=2 static_html=PASS position=AFTER_CONTACT_ACTIONS p29_1_calcom=PUBLISHED`);
