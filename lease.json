@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "692277be-efc7-47f2-a939-cbf04e031fc9",
   "nonce": "51d6bc136e72fa43f5cd2fc3698531ed",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "3ddd0a5f5b69936a7f17a515fc6f904414abe929",
@@ -11,10 +11,10 @@
   "session": "guide3-20261118",
   "worktree": "github-data-api://bitmaster162/bitevo-agent-site/docs/guide3-retry-triage-20261118",
   "acquiredAt": "2026-11-18T18:25:04.232Z",
-  "updatedAt": "2026-11-18T18:25:04.232Z",
+  "updatedAt": "2026-11-18T18:25:31.130Z",
   "expiresAt": "2026-11-18T20:25:04.232Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "559640a2d8a4ed641bbbbeb57b350bfd58fc7a8f"
+  "sealedHead": "02bc2b79e97d359c565aa202a334a93d808e1a16",
+  "sealedTree": "174ec3170a23d6b9c1ccd0bcfaee542b682cb71d",
+  "featureRef": "refs/heads/docs/guide3-retry-triage-20261118",
+  "predecessor": "e0a959805ac2f3958238a7f69dacb72fff301937"
 }
