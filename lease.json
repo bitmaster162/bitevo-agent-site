@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "9ea7bd6d-692d-4f6b-913c-9105320258a1",
   "nonce": "882fd2d27e9d4b7faac209848be5fd2b",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "3e8dd6e5eec12c8a01ee69717e5c33b54fbbd2b1",
@@ -11,10 +11,10 @@
   "session": "Outbox-Claude-GO-PR257-20261118",
   "worktree": "d:/_evidence/bitevo_pr257_r31_approved_local_20261116",
   "acquiredAt": "2026-11-18T05:56:08.918Z",
-  "updatedAt": "2026-11-18T05:56:08.918Z",
+  "updatedAt": "2026-11-18T06:05:31.372Z",
   "expiresAt": "2026-11-18T08:56:05.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "7340a3a7f095f6197437abc9c390f7a7a8fc3209"
+  "sealedHead": "e32e9023b2afacd79bb2c14d61a21f26f2f2eb76",
+  "sealedTree": "5436c5eab5bdcf5774eeb4a24c749d1e44218384",
+  "featureRef": "refs/heads/gpt/bitevo-entry-v2-free-schema-20261113",
+  "predecessor": "b5eb7df90c645658ff4872b7dd49e280f9dc402d"
 }
