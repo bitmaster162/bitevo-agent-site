@@ -53,7 +53,9 @@ A successful transport response may be useful evidence; its meaning is provider-
 | Interrupted handoff | A successor worker may mistake an incomplete receipt for failure | Transfer durable state and the outstanding effect identity, not just chat text |
 | Failed recovery | Backup or rollback credentials may be inside the agent's own authority | Test restoration with an independent owner and isolated recovery credentials |
 
-The [IETF HTTPAPI Idempotency-Key document](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/) describes how an idempotency header may aid non-idempotent requests; **the referenced Internet-Draft is expired, not an adopted RFC**. Whether a particular API actually deduplicates retries must be established from that provider's contract and a controlled test.
+**After a timeout, stop automatic retries.** Keep the original request ID, idempotency key and intended change. Use a separate reader to look up the operation in the provider’s records. Match the target, version and resulting state to the original request. If the change is confirmed, record the receipt and finish. If the provider still reports a pending or unknown outcome, keep the hold. Retry only when the provider’s documented rules allow a safe replay with the original key and unchanged payload.
+
+The [IETF Internet-Draft on the Idempotency-Key header](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/) describes this mechanism in revision 08. Check which operations the provider deduplicates and how long it retains keys, then test those conditions in staging.
 
 ## 4. Seven evidence gates for write-capable workflows
 
@@ -81,7 +83,7 @@ Pick **one** agreed action-capable workflow and one target environment. Record t
 4. Preserve the original request ID; query provider/system-of-record state before any retry.
 5. Report **expected / observed / not established**, with the authority gap, residual uncertainty, recovery owner and concrete retest criterion.
 
-The public [BitEvo pricing and scope](https://bitevo.work/pricing) describe a **BUILD Workflow Exception Diagnostic at $3,000 fixed over 5 business days**. This is a bounded engineering review, not a promise of elimination of errors or 100% uptime. A separate **Entry Audit at $750 fixed** covers this scope: One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one in-scope retest if a corrected test artifact is provided within 14 calendar days after delivery of the finding memo and written testing authority remains valid. The USD 750 fee is credited in full toward the USD 2,450 Primary Audit if the Primary Audit is separately agreed in writing within 30 calendar days after delivery of the Entry finding memo. Scope and price are fixed in writing before first payment, and its expected/observed result states what evidence supports and **does not** support.
+The [BUILD Workflow Exception Diagnostic](/build/exception-workflow-diagnostic) costs **$3,000** for a five-business-day review. See [pricing and scope](/pricing) for the **$2,450 Primary Audit**. A separate **Entry Audit at $750 fixed** covers this scope: One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one in-scope retest if a corrected test artifact is provided within 14 calendar days after delivery of the finding memo and written testing authority remains valid. The USD 750 fee is credited in full toward the USD 2,450 Primary Audit if the Primary Audit is separately agreed in writing within 30 calendar days after delivery of the Entry finding memo. Scope and price are fixed in writing before first payment, and its expected/observed result states what evidence supports and **does not** support.
 
 This guide does not authorize access, execution, payments, penetration testing or deployment. It is not a certification or legal advice. Sources are public, with limitations and contested statements noted rather than silently converted into facts.
 
@@ -89,8 +91,10 @@ This guide does not authorize access, execution, payments, penetration testing o
 
 ## What next
 
+[Book a free 20-minute triage](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage) to choose one workflow and check whether you can test it in staging.
+
 **Entry Audit — $750 fixed.** One action/authority boundary, up to 2 connected tools, 3–5 agreed failure/retry scenarios in staging/test or synthetic by default, with one in-scope retest if a corrected test artifact is provided within 14 calendar days after delivery of the finding memo and written testing authority remains valid. The USD 750 fee is credited in full toward the USD 2,450 Primary Audit if the Primary Audit is separately agreed in writing within 30 calendar days after delivery of the Entry finding memo. The result is an **expected / observed** table showing what the evidence supports and explicitly **does not** support. Scope and price are agreed in writing before the first payment. No production, credentials or internal control-plane access.
 
-[Review the Entry Audit scope](/entry-audit) · [Prepare the audit-intake brief](/audit-intake) · [Schedule a 20-minute triage on Cal.com](https://cal.com/robert-dumanyan-vlck0x/free-20-minute-triage)
+[Review the paid Entry Audit ($750)](/entry-audit) or [prepare an audit-intake brief](/audit-intake).
 
 Commercial contact: robert@bitevo.work. Public intake prepares a local brief; it does not submit a request or authorize testing.

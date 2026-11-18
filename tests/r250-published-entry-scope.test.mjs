@@ -28,10 +28,18 @@ test('R250 research articles have no conflicting earlier Entry scope', () => {
 });
 test('R250 commercial source route metadata is current and exact', () => {
   const current=JSON.parse(readFileSync(new URL('src/data/sitemap-currentness.json',root),'utf8'));
-  for(const x of ['/buyer-pack','/ru/buyer-pack','/guides/false-green-and-retry-safety','/ru/guides/false-green-and-retry-safety','/guides/mcp-and-coding-agent-governance','/ru/guides/mcp-and-coding-agent-governance']) {
-    const row=current.routes.find(r=>r.path===x);
-    assert.equal(row?.lastmod, '2026-11-16',x);
-    assert.match(row.fingerprint,/^sha256:[0-9a-f]{64}$/);
+  const expectedDates = {
+    '/buyer-pack': '2026-11-16',
+    '/ru/buyer-pack': '2026-11-16',
+    '/guides/false-green-and-retry-safety': '2026-11-18',
+    '/ru/guides/false-green-and-retry-safety': '2026-11-18',
+    '/guides/mcp-and-coding-agent-governance': '2026-11-16',
+    '/ru/guides/mcp-and-coding-agent-governance': '2026-11-16'
+  };
+  for (const [path, lastmod] of Object.entries(expectedDates)) {
+    const row = current.routes.find(route => route.path === path);
+    assert.equal(row?.lastmod, lastmod, path);
+    assert.match(row.fingerprint, /^sha256:[0-9a-f]{64}$/);
   }
 });
 
