@@ -16,7 +16,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   // fingerprint successor; do not widen route or registry acceptance.
   // Owner-approved A-D R41: exact 142-route rendered fingerprint successor only.
   const currentnessSha = hash(content['src/data/sitemap-currentness.json']);
-  const isR41ApprovedCurrentness = currentnessSha === '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa';
+  const conversionCurrentness = 'aa01c26536ab407ed05b1ad2b3afba45b5a4f39f93160067a9dc965d46c81cff';
+  const mobileFitCurrentness = '7ce7b80e0672e8fee1d8cd19c0b6017928a1ce25cd134f8408df633a97dddfe0';
+  const isR41ApprovedCurrentness = currentnessSha === '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa' || currentnessSha === conversionCurrentness || currentnessSha === mobileFitCurrentness;
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
     '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e',
@@ -30,7 +32,10 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // 2026-11-15 Opus B1/B2 repair: 7 modified published routes, 142 exact currentness records.
     'b50fdcc5a2f9b7b7b0f32394ba2d28e6564bea3545292b20961e22ae35feca11',
     // 2026-11-16 owner-approved A-D: official two-build 142-route verify (R38).
-    '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa'
+    '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa',
+    // Six EN/RU acquisition routes changed on 2026-11-18.
+    conversionCurrentness,
+    mobileFitCurrentness
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;

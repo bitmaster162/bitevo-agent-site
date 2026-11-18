@@ -4,8 +4,8 @@
   "routes": [
     {
       "path": "/",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:a53dd6353fa749ab03d7b9ac6992df17d3d2f48616cadc246a3d5d2975097f43"
+      "lastmod": "2026-11-18",
+      "fingerprint": "sha256:2c88353b5f7f46c699bdcc965787eedc132e501706819b64e4ebbb169e770bba"
     },
     {
       "path": "/start",
@@ -14,8 +14,8 @@
     },
     {
       "path": "/pricing",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:898a0c4065bf9c258cab0e5d119a9d0a95a6eb07cc9376242e3968fbfd99eb88"
+      "lastmod": "2026-11-18",
+      "fingerprint": "sha256:eaffc6e44fbcb347e07a805996a6a30a469d891ae45f35875c41c0409f6c6af1"
     },
     {
       "path": "/consulting",
@@ -24,8 +24,8 @@
     },
     {
       "path": "/company-twin",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:658b4b6382f0e458c67fb3f7481828ac726cf71fc2c040a7151144d8d2e97526"
+      "lastmod": "2026-11-18",
+      "fingerprint": "sha256:cb6e56b9c34b893f992d7e1c27ba57e531e6d763811973c092a69a87321dcf39"
     },
     {
       "path": "/agent-authority-audit",
@@ -324,13 +324,13 @@
     },
     {
       "path": "/ru",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:664dd873a3e9f29e143d514b1cd58bef646908df9f335892d36c5a5708954494"
+      "lastmod": "2026-11-18",
+      "fingerprint": "sha256:207dc05f974a49c3367442598aeede44cce3fc5957e175f39d7d50c59b18b182"
     },
     {
       "path": "/ru/pricing",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:19a36d6371374f4b9ba4777f6a9dc60032f5f8681064b379ffbbbea6b78e397e"
+      "lastmod": "2026-11-18",
+      "fingerprint": "sha256:1db6fe42cc54cebc75ecd297c14853e82dd09148f6b4d19f00d90b2fa4eee43d"
     },
     {
       "path": "/ru/consulting",
@@ -339,8 +339,8 @@
     },
     {
       "path": "/ru/company-twin",
-      "lastmod": "2026-10-16",
-      "fingerprint": "sha256:6261b29e1a63a2d16794240d41ef90f3490ce4b7cf28886f3333149812ea8720"
+      "lastmod": "2026-11-18",
+      "fingerprint": "sha256:7ca4e8fa627993fefeacef085bf7c199ee44ddb760f672935cd7a421643c3a55"
     },
     {
       "path": "/ru/agent-authority-audit",

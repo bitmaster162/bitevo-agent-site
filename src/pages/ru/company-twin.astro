@@ -1,6 +1,7 @@
 ---
-import RuLayout from '../../layouts/RuLayout.astro';
 import '../../styles/company-twin.css';
+import RuLayout from '../../layouts/RuLayout.astro';
+import { twinIntroEmails } from '../../data/twin-intro-emails.mjs';
 
 const hierarchy = [
   ['Директор', 'Задаёт права доступа и остаётся владельцем решений компании.'],
@@ -23,10 +24,10 @@ const records = [
         <h1 class="display">Память компании под управлением людей.</h1>
         <p class="lede">Company Twin собирает историю компании для сотрудников и AI-агентов. Директор сохраняет полномочия; сотрудники и команды предоставляют контекст; память хранит ход решений; агентам разрешено только читать доступные сведения и предлагать следующий шаг человеку.</p>
         <div class="twin-actions">
-          <a class="button button-primary" href="/ru/audit-intake">Записаться на бесплатные 30 минут</a>
+          <a class="button button-primary" href={twinIntroEmails.ru.intro}>Написать о бесплатном звонке на 30 минут</a>
           <a class="button" href="/ru/pricing">Смотреть цены</a>
         </div>
-        <p class="twin-note">Кнопка ведёт к заявке на знакомство. Сама заявка не бронирует встречу; время 30-минутного разговора согласуется отдельно.</p>
+        <p class="twin-note">Откроется черновик письма Роберту. После отправки он ответит и предложит время. Если почтовая программа не настроена, напишите на robert@bitevo.work.</p>
       </div>
       <aside class="panel twin-summary">
         <div class="eyebrow">Границы полномочий</div>
@@ -74,6 +75,7 @@ const records = [
           <h3>Одна команда</h3>
           <p class="twin-price">$3,000 <small>фикс · 3 недели</small></p>
           <p>Одна команда, 1–2 источника, 3 месяца истории.</p>
+          <a class="text-link" href={twinIntroEmails.ru.team}>Написать о пилоте Team Twin</a>
         </article>
         <article class="panel twin-offer">
           <span class="eyebrow">Company Twin · 12 месяцев</span>
@@ -81,9 +83,10 @@ const records = [
           <p class="twin-price">От $9,000</p>
           <p>Вся компания, до 5 источников, год истории.</p>
           <p>Поддержка — от $500 в месяц, отдельный согласованный объём.</p>
+          <a class="text-link" href={twinIntroEmails.ru.company}>Написать о Company Twin</a>
         </article>
       </div>
-      <div class="twin-actions"><a class="button button-primary" href="/ru/audit-intake">Записаться на бесплатные 30 минут</a><a class="button" href="/ru/pricing">Все цены</a></div>
+      <div class="twin-actions"><a class="button button-primary" href={twinIntroEmails.ru.intro}>Написать о бесплатном звонке на 30 минут</a><a class="button" href="/ru/pricing">Все цены</a></div>
     </div>
   </section>
   <section class="section section-rule">

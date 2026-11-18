@@ -323,8 +323,8 @@ const funnelContracts = [
   ['/', 'map', '/mapper'],
   ['/', 'proof', '/proof'],
   ['/', 'scope', '/audit-intake'],
-  ['/', 'home-primary-scope', '/audit-intake'],
-  ['/', 'home-primary-scope-mobile', '/audit-intake']
+  ['/', 'home-primary-scope', '/audit-intake?offer=primary-agent-authority-audit'],
+  ['/', 'home-primary-scope-mobile', '/audit-intake?offer=primary-agent-authority-audit']
 ];
 for (const [route, marker, href] of funnelContracts) {
   funnelChecks += 1;
@@ -382,7 +382,7 @@ for (const staleTiming of ['Day 0', 'Days 1–2', 'Days 3–4', 'Day 5']) {
 
 const mobileDock = homepageHtml.match(/<div\b[^>]*class=["'][^"']*mobile-dock[^"']*["'][^>]*>[\s\S]*?<\/div>/i)?.[0] || '';
 trustBoundaryChecks += 1;
-if (!mobileDock.toUpperCase().includes('5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE') || !anchorHasFunnel(mobileDock, 'home-primary-scope-mobile', '/audit-intake')) {
+if (!mobileDock.toUpperCase().includes('5 WORKING DAYS AFTER COMPLETE EVIDENCE/ACCESS + WRITTEN SCOPE') || !anchorHasFunnel(mobileDock, 'home-primary-scope-mobile', '/audit-intake?offer=primary-agent-authority-audit')) {
   failures.push('/: mobile Primary dock must preserve qualified timing and local scope-prep CTA');
 }
 
