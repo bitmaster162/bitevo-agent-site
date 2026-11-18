@@ -18,7 +18,11 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   const currentnessSha = hash(content['src/data/sitemap-currentness.json']);
   const conversionCurrentness = 'aa01c26536ab407ed05b1ad2b3afba45b5a4f39f93160067a9dc965d46c81cff';
   const mobileFitCurrentness = '7ce7b80e0672e8fee1d8cd19c0b6017928a1ce25cd134f8408df633a97dddfe0';
-  const isR41ApprovedCurrentness = currentnessSha === '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa' || currentnessSha === conversionCurrentness || currentnessSha === mobileFitCurrentness;
+  const guide3Currentness = 'cf52c05cd0fcaeb89d83a842df0d32830b9c1431c3042072158b67bb23d7303d';
+  const isR41ApprovedCurrentness = [
+    '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa',
+    conversionCurrentness, mobileFitCurrentness, guide3Currentness
+  ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
     '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e',
@@ -35,7 +39,8 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa',
     // Six EN/RU acquisition routes changed on 2026-11-18.
     conversionCurrentness,
-    mobileFitCurrentness
+    mobileFitCurrentness,
+    guide3Currentness
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;
