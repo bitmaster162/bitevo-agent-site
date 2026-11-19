@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "e8c179c7-6f2c-4d26-8abd-3cb909f0fe48",
   "nonce": "f35a5ac2-6a41-407e-9c4d-2e3d8da13e44",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "913d0a70412fa72f0d67bc7ead58d1568ae7210b",
@@ -11,10 +11,10 @@
   "session": "GPT6-20261119-SEO-1",
   "worktree": "d:/bitevo_l01_hydrogen_20261119",
   "acquiredAt": "2026-11-19T08:34:50.428Z",
-  "updatedAt": "2026-11-19T08:34:50.428Z",
+  "updatedAt": "2026-11-19T09:11:49.540Z",
   "expiresAt": "2026-11-20T04:34:47.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "5bdbde7bb7550a49b3df202b4e819ebac6e8a388"
+  "sealedHead": "8edafccddcb81476969b92664a457e809911dfbc",
+  "sealedTree": "2f584c9ef7e623d4a275b69090c32bdf5823363c",
+  "featureRef": "refs/heads/fix/l01-hydrogen-perf-meta-20261119",
+  "predecessor": "dddfe8909a6aebcc6ee681ddf0969f0bad2e9ec7"
 }
