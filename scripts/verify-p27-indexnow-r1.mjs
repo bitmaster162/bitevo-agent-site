@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildIndexNowPayload, changedRoutePaths } from './indexnow-lib.mjs';
+import { checkPublicRelease, matchesExactBuild } from './indexnow-live-gate.mjs';
 
 let checks = 0;
 const check = (value, message) => { assert.ok(value, message); checks += 1; };
@@ -32,13 +33,28 @@ check(!workflow.includes('pull_request:'), 'workflow never submits on pull reque
 check(!workflow.includes('workflow_dispatch:'), 'workflow has no manual provider-write trigger');
 check(workflow.includes('contents: read'), 'workflow uses read-only repository permission');
 check(workflow.includes('fetch-depth: 2'), 'workflow fetches previous main commit for delta');
-check(workflow.includes('data-build-sha=\\"$GITHUB_SHA\\"'), 'workflow waits for exact production build SHA');
-check(workflow.includes('https://bitevo.work/${KEY}.txt'), 'workflow waits for public key file derived from config key');
-check(workflow.includes('https://api.indexnow.org/indexnow'), 'workflow posts only to global IndexNow endpoint');
-check(workflow.includes('200|202)'), 'workflow accepts documented success/pending verification codes');
+check(workflow.includes('node scripts/indexnow-live-gate.mjs'), 'workflow waits for exact live release with checked HTTPS');
+check(workflow.includes('node scripts/indexnow-submit.mjs indexnow-payload.json'), 'workflow gates provider submission behind live readback');
+check(workflow.includes('--full > indexnow-payload.json'), 'workflow replays full sitemap after unsuccessful historic runs');
+check(!workflow.includes('curl '), 'workflow no longer uses runner curl prone to error 100');
 check(!workflow.includes('${{ secrets.'), 'IndexNow workflow requires no repository secrets');
 
 check(packageJson.scripts?.['verify:core']?.includes('verify-p27-indexnow-r1.mjs'), 'P27.4 verifier is wired into verify:core');
+
+const liveGateSource = await readFile(join(root, 'scripts/indexnow-live-gate.mjs'), 'utf8');
+const submitSource = await readFile(join(root, 'scripts/indexnow-submit.mjs'), 'utf8');
+const httpSource = await readFile(join(root, 'scripts/indexnow-http.mjs'), 'utf8');
+check(liveGateSource.includes('requestText(origin') && liveGateSource.includes('INDEXNOW_LIVE_GATE=PASS'), 'live gate uses checked HTTPS');
+check(submitSource.includes('response.status !== 200 && response.status !== 202'), 'submission requires documented HTTP acceptance');
+check(httpSource.includes('maxHeaderSize: 128 * 1024'), 'HTTP transport tolerates large response headers');
+const fakeSha = 'a'.repeat(40);
+const goodHome = { status: 200, body: '<main data-build-sha="' + fakeSha + '"></main>' };
+const goodKey = { status: 200, body: config.key + '\n' };
+check(matchesExactBuild(goodHome.body, fakeSha), 'exact build attribute accepted');
+check(!matchesExactBuild(goodHome.body, 'b'.repeat(40)), 'wrong build SHA rejected');
+check(checkPublicRelease(goodHome, goodKey, fakeSha, config.key).ready, 'complete live and key readback accepted');
+check(!checkPublicRelease({ ...goodHome, status: 404 }, goodKey, fakeSha, config.key).ready, 'HTTP error fails closed');
+check(!checkPublicRelease(goodHome, { ...goodKey, body: 'wrong' }, fakeSha, config.key).ready, 'wrong public key fails closed');
 
 const previous = {
   schema: 'bitevo.sitemap-currentness/v1',
@@ -94,5 +110,12 @@ const expectedPayload = buildIndexNowPayload(config, expectedPaths);
 deepEqual(generated.urlList, expectedPayload.urlList, parentIndexNow ? 'post-bootstrap history emits exact semantic delta' : 'pre-IndexNow history emits exact one-time bootstrap');
 check(generated.urlList.every(url => url.startsWith('https://bitevo.work/')), 'generated URLs stay on canonical host');
 check(generated.urlList.length <= 10000, 'generated batch stays below IndexNow bulk limit');
+
+const recovery = JSON.parse(execFileSync(process.execPath, [
+  join(root, 'scripts/indexnow-changed-urls.mjs'), 'HEAD^', 'HEAD', '--full'
+], { cwd: root, encoding: 'utf8' }));
+const expectedRecovery = buildIndexNowPayload(config, changedRoutePaths(null, headManifest, { bootstrap: true }));
+deepEqual(recovery.urlList, expectedRecovery.urlList, 'recovery mode replays every current indexed URL, not only the delta');
+equal(recovery.urlList.length, headManifest.routes.length, 'recovery payload matches current sitemap route census');
 
 console.log('P27_4_INDEXNOW_R1_GATE=PASS checks=' + checks + ' mode=' + (parentIndexNow ? 'DELTA' : 'BOOTSTRAP') + ' urls=' + generated.urlList.length + ' delta_add_modify_delete=PASS provider_write=WORKFLOW_MAIN_ONLY secrets=0 endpoint=GLOBAL_INDEXNOW key_file=ROOT_UTF8');

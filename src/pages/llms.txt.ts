@@ -14,7 +14,7 @@ export function GET() {
     '## Кратко по-русски',
     '- Кто: BitEvo — независимая B2B-инженерная практика Роберта Думаняна.',
     '- Что: аудит полномочий, доказательств до действия, внешнего эффекта и recovery для action-capable AI-agent и software workflow.',
-    '- Цены: triage — бесплатно / 20 минут; Entry Audit — USD 750 including control validation; BUILD Workflow Exception Diagnostic — USD 3,000; Primary Audit — USD 2,450.',
+    '- Цены: triage — бесплатно / 20 минут; Entry Audit — USD 750 (включая Security Control Validation, SCV); BUILD Workflow Exception Diagnostic — USD 3,000; Primary Audit — USD 2,450.',
     '- Бесплатная обезличенная схема: ориентир — одна предварительная карта рисков в течение одного рабочего дня после подтверждения полноты и безопасности (пн–пт, ICT), не договорной SLA.',
     '- Сроки: BUILD — 5 рабочих дней; Primary Audit — 5 рабочих дней после complete evidence/access + written scope.',
     '- Контакт: robert@bitevo.work. [Начать](https://bitevo.work/ru/start) · [Цены](https://bitevo.work/ru/pricing).',
