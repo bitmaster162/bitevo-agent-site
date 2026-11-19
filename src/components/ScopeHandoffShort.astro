@@ -22,5 +22,5 @@ const detailedHref = ru ? '/ru/audit-intake' : '/audit-intake';
     <p class="scope-short-detail">{ru ? 'Нужен полный контекст?' : 'Need the full context?'} <a class="text-link" href={detailedHref}>{ru ? 'Открыть подробный brief →' : 'Open the detailed brief →'}</a></p>
   </div>
 </section>
-<link rel="stylesheet" href="/scope-handoff-short.css" />
-<script is:inline src="/scope-handoff-r1.js" data-scope-handoff-r1-activation={activation.uiMarker}></script>
+{activation.uiEnabled && <link rel="stylesheet" href="/scope-handoff-short.css" />}
+{activation.uiEnabled && <script is:inline src="/scope-handoff-r1.js" data-scope-handoff-r1-activation={activation.uiMarker}></script>}

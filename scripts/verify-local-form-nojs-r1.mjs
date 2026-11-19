@@ -1,4 +1,4 @@
-import { isExactRGapsSuccessor, rgapsExpectedFingerprint } from './r-gaps1-route-successor-r1.mjs';
+import { isExactRGapsSuccessor, rgapsExpectedFingerprint, rgapsExpectedLastmod } from './r-gaps1-route-successor-r1.mjs';
 import { isExactGuides34Successor } from './guides34-route-successor-r1.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -96,7 +96,7 @@ for (const entry of routes) {
   need(html.includes('src="/local-form-nojs-r1.js"') && html.includes('defer'), 'static guard link absent');
   need(staticArea.includes(noJsMessage[entry.locale]) && staticArea.includes('mailto:robert@bitevo.work'),
        'static no-JS note missing');
-  need(byPath.get(entry.path)?.lastmod === '2026-10-13' &&
+  need(byPath.get(entry.path)?.lastmod === rgapsExpectedLastmod(entry.path, '2026-10-13') &&
        byPath.get(entry.path)?.fingerprint === rgapsExpectedFingerprint(entry.path, entry.fingerprint), 'exact successor currentness drift');
   // Negative tests prove independent semantic fail-closed behavior, not only SHA equality.
   const perturbations = [

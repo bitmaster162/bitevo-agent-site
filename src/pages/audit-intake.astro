@@ -100,7 +100,7 @@ const scopeHandoffActivation = evaluateScopeHandoffActivation(process.env);
     }
   </script>
   <script is:inline src="/intake-segmentation.js"></script>
-  <script is:inline src="/scope-handoff-r1.js" data-scope-handoff-r1-activation={scopeHandoffActivation.uiMarker}></script>
+  {scopeHandoffActivation.uiEnabled && <script is:inline src="/scope-handoff-r1.js" data-scope-handoff-r1-activation={scopeHandoffActivation.uiMarker}></script>}
 </Layout>
 
 <style>

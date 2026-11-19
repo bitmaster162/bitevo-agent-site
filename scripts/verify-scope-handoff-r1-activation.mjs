@@ -124,8 +124,8 @@ check(pkg.scripts?.['verify:core']?.includes('verify-scope-handoff-r1-activation
 const current = evaluateScopeHandoffActivation(process.env);
 const expectedAttribute = `data-scope-handoff-r1-activation="${current.uiMarker}"`;
 for (const [locale, html] of [['EN', enDist], ['RU', ruDist]]) {
-  check(html.includes(expectedAttribute), `${locale}: built page marker matches evaluated environment`);
-  check(html.includes('src="/scope-handoff-r1.js"'), `${locale}: shared controller remains external and same-origin`);
+  equal(html.includes(expectedAttribute), current.uiEnabled, `${locale}: built page marker matches evaluated environment`);
+  equal(html.includes('src="/scope-handoff-r1.js"'), current.uiEnabled, `${locale}: same-origin controller is loaded only when the UI is enabled`);
 }
 
 console.log(`SCOPE_HANDOFF_R1_ACTIVATION_GATE=PASS checks=${checks} exact_staging_project=BOUND preview_only=PASS runtime_default=DISABLED ui_default=DISABLED current_runtime=${current.runtimeEnabled ? 'ENABLED' : 'DISABLED'} current_ui=${current.uiEnabled ? 'ENABLED' : 'DISABLED'} current_marker=${current.uiMarker} provider_writes=0`);
