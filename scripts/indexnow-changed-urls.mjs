@@ -35,7 +35,9 @@ if (!currentRaw) throw new Error(`cannot read current sitemap-currentness at ${a
 const current = parseManifest(currentRaw, 'current');
 const previous = parseManifest(gitShow(before, 'src/data/sitemap-currentness.json'), 'previous');
 const hadIndexNow = Boolean(gitShow(before, 'src/data/indexnow.json'));
-const bootstrap = !hadIndexNow || !previous;
+// Recovery replay: #257-#260 never reached the provider; send full sitemap only from a future main push.
+const forceFull = process.argv.includes('--full');
+const bootstrap = forceFull || !hadIndexNow || !previous;
 const changedPaths = changedRoutePaths(previous, current, { bootstrap });
 
 console.error(`INDEXNOW_CHANGESET mode=${bootstrap ? 'BOOTSTRAP' : 'DELTA'} urls=${changedPaths.length}`);

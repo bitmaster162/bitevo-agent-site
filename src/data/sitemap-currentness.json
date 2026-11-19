@@ -4,8 +4,8 @@
   "routes": [
     {
       "path": "/",
-      "lastmod": "2026-11-18",
-      "fingerprint": "sha256:2c88353b5f7f46c699bdcc965787eedc132e501706819b64e4ebbb169e770bba"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:4714075ef49c52264d4f94f9336f9328d9828608b9d4c295bc1ab472f87513f0"
     },
     {
       "path": "/start",
@@ -14,8 +14,8 @@
     },
     {
       "path": "/pricing",
-      "lastmod": "2026-11-18",
-      "fingerprint": "sha256:eaffc6e44fbcb347e07a805996a6a30a469d891ae45f35875c41c0409f6c6af1"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:60b09f586fc0d39b2e35ed4d55d3f7730a418388748c4c2a352aa0a41e929a90"
     },
     {
       "path": "/consulting",
@@ -44,8 +44,8 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:1615034bc8e7fe24e1d3526a1a28c845c8a090dd997cf460fdfabd1eb49b1294"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:104520148a6be3f79e443c1024db8c53e4b4eb9800dc385596fbf18ee3f912b2"
     },
     {
       "path": "/entry-audit-vs-pentest-ai-security-grc",
@@ -224,8 +224,8 @@
     },
     {
       "path": "/operator",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:592474ca4345fe5183a6c4d0af93930c7c58fe9b43a556b3421bda43106128c3"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:a88978eaaed69a6a46bec70d1f9a8404cad06f0bc0540b926dfc0722522d0e47"
     },
     {
       "path": "/ai-skill-lab-sample",
@@ -304,8 +304,8 @@
     },
     {
       "path": "/consequential-actions",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:db5c2a732c5e6e7b4c955b6ddce84ba8d27c5bb365199abedac0322eead611fe"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:5fc27db55beec12e3595e2841be677d2df010558d158068a8aae6d91ef1addc6"
     },
     {
       "path": "/commerce-action-validation",
@@ -329,8 +329,8 @@
     },
     {
       "path": "/ru/pricing",
-      "lastmod": "2026-11-18",
-      "fingerprint": "sha256:1db6fe42cc54cebc75ecd297c14853e82dd09148f6b4d19f00d90b2fa4eee43d"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:7fe8de0a984eeb12671228f883fab63340f2e5d12f2512fa0cac1ea8acabfd73"
     },
     {
       "path": "/ru/consulting",
@@ -449,13 +449,13 @@
     },
     {
       "path": "/ru/start",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:40de1ca4c650229c5509a4ae501ad69505652345f3bc427f010ad63b723728bf"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:6245181783f38ad4aac47646df683615b8acd8d2d854688cf0243dbe19f8873a"
     },
     {
       "path": "/ru/entry-audit",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:959eff042a5ae5f7facd6b05a6a698d0ec0573e8d446b276d69440bd623f6f40"
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:24bf828d7257c060b3d1d960e26d52c0467cad465d87393e9ae1602f7bdd713c"
     },
     {
       "path": "/ru/entry-audit-vs-pentest-ai-security-grc",

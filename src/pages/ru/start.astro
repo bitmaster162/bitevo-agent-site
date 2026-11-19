@@ -27,6 +27,18 @@ const eyebrowIsEnglish = !/[А-Яа-яЁё]/.test(page.eyebrow ?? '');
     </div>
   </section>
 
+  <section class="section section-rule" data-free-schema-triage>
+    <div class="container parity-boundary panel">
+      <div><div class="eyebrow">Бесплатная карта рисков</div><h2 class="section-title">Одна обезличенная JSON-схема инструмента записи</h2></div>
+      <div>
+        <p>Можно отправить одну JSON-схему инструмента, способного менять внешнюю систему, без персональных данных, ключей, паролей, реальных идентификаторов и данных клиентов. После проверки полноты и безопасности схемы ориентир — предварительная одностраничная карта возможных рисков дублей, превышения полномочий и повторов в течение одного рабочего дня (пн–пт, ICT, UTC+7).</p>
+        <p>Это необязательный ориентир, не договорной SLA, не испытанное заключение, не полноценный аудит и не разрешение на доступ или тестирование.</p>
+        <p><a class="button" href="mailto:robert@bitevo.work?subject=BitEvo%20free%20tool%20schema%20review">Запросить предварительную карту рисков</a></p>
+        <p>Ссылка открывает почтовое приложение; сайт ничего не отправляет автоматически.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section-tight section-rule">
     <div id={page.slug === 'reservation-action-validation' ? 'ruReservationActionValidationPoints' : undefined} class="container parity-points">
       {page.points.map((point, index) => (

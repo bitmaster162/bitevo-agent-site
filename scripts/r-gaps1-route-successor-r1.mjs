@@ -21,7 +21,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   const guide3Currentness = 'cf52c05cd0fcaeb89d83a842df0d32830b9c1431c3042072158b67bb23d7303d';
   const isR41ApprovedCurrentness = [
     '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa',
-    conversionCurrentness, mobileFitCurrentness, guide3Currentness
+    conversionCurrentness, mobileFitCurrentness, guide3Currentness,
+    // Exact L01 2026-11-19 sitemap successor, retaining A-D buyer-pack lastmod.
+    '2bb7c535afb2aa6685309554a4de03261573fa7635191a35ab84d4b8caaace67'
   ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
@@ -40,7 +42,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // Six EN/RU acquisition routes changed on 2026-11-18.
     conversionCurrentness,
     mobileFitCurrentness,
-    guide3Currentness
+    guide3Currentness,
+    // L01 2026-11-19 exact IndexNow/S5/SCV editorial sitemap successor (142 indexable routes).
+    '2bb7c535afb2aa6685309554a4de03261573fa7635191a35ab84d4b8caaace67'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;
