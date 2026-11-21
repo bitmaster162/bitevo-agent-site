@@ -44,8 +44,8 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-11-19",
-      "fingerprint": "sha256:934a4113a58acff99ce71797d2909d55e7defa968b7a563a57cfa61ad3cf520d"
+      "lastmod": "2026-11-21",
+      "fingerprint": "sha256:47630ff20143ee560f6b90292e38425aaf7bc75b0f60125cd4cbfd24dce5cc0c"
     },
     {
       "path": "/entry-audit-vs-pentest-ai-security-grc",
@@ -139,8 +139,8 @@
     },
     {
       "path": "/diagnostic",
-      "lastmod": "2026-11-19",
-      "fingerprint": "sha256:0df5caff05ac5ef8b717bf92446f943da4f985a5ebeb35dfb9fa7174bee4f6b1"
+      "lastmod": "2026-11-21",
+      "fingerprint": "sha256:481805a866012ca3f3dbebdf2c208ca2e048fe6d0002d45e47a326f8715d80dc"
     },
     {
       "path": "/audit-intake",
@@ -369,8 +369,8 @@
     },
     {
       "path": "/ru/diagnostic",
-      "lastmod": "2026-11-19",
-      "fingerprint": "sha256:2b6b98b1a83a45a1dc16e68c2b8260b1ba4cdde12049918e15e95e3824f4b98e"
+      "lastmod": "2026-11-21",
+      "fingerprint": "sha256:7bcd13819b3af46b5f6ce9bd30fce1d529f2330cb4463a18bb4ca0a6fc4e5637"
     },
     {
       "path": "/ru/audit-intake",
