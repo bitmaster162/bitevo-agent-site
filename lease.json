@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "213425e2-083f-48e7-9535-617842275e1d",
   "nonce": "c6760486-a1cb-4f1d-8276-d8e4cfa02a03",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "916e6a21314d18bd4e97f2bd067dd40874bb4e4b",
@@ -11,10 +11,10 @@
   "session": "BIT_P265_PROD_ERROR_EXACT_SHA_REPAIR_DRAFT_ONLY",
   "worktree": "d:/_evidence/bitevo_prod_variant_repair_20261121",
   "acquiredAt": "2026-11-21T06:43:48.819Z",
-  "updatedAt": "2026-11-21T06:43:48.819Z",
+  "updatedAt": "2026-11-21T06:44:10.073Z",
   "expiresAt": "2026-11-21T08:13:45.399Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "83b5192c21760d4fc9543c2a89a5a53530efd465"
+  "sealedHead": "88eb9f77205b15232b7cde27764bf3e30fc6ee19",
+  "sealedTree": "d2be480d7278378854219a02eb081668e3edda00",
+  "featureRef": "refs/heads/gpt/bitevo-production-currentness-overlay-20261121",
+  "predecessor": "2fbd3d791b5b55ac6e8b20ef88f8054b36a931a4"
 }
