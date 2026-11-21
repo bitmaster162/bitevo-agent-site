@@ -1,5 +1,6 @@
 """Exercise the shipped Google tag with local BitEvo HTML and intercepted analytics traffic."""
 import json
+from html import escape
 import mimetypes
 import os
 from pathlib import Path
@@ -31,6 +32,7 @@ class Visit:
         self.context = browser.new_context(service_workers="block")
         self.traffic = []
         self.vendor = vendor
+        self.from_referrer = None
         self.context.route("**/*", self.serve)
         if init:
             self.context.add_init_script(init)
@@ -39,6 +41,11 @@ class Visit:
     def serve(self, route):
         request = route.request
         url = urlsplit(request.url)
+        if request.is_navigation_request() and self.from_referrer and url.hostname in {"www.google.com", "unknown.example"}:
+            return route.fulfill(
+                content_type="text/html",
+                body='<a referrerpolicy="unsafe-url" href="' + escape(self.from_referrer) + '">Visit BitEvo</a>',
+            )
         if url.hostname in {"bitevo.work", "preview.vercel.app"}:
             file = DIST / url.path.lstrip("/")
             if file.is_dir():
@@ -84,7 +91,15 @@ class Visit:
         return self.views()[-1]
 
     def goto(self, path="/", referrer=None):
-        self.page.goto(ORIGIN + path, referer=referrer, wait_until="load")
+        if referrer:
+            self.from_referrer = ORIGIN + path
+            self.page.goto(referrer)
+            self.page.get_by_role("link", name="Visit BitEvo").click()
+            self.page.wait_for_url(ORIGIN + path)
+            self.from_referrer = None
+            assert self.page.evaluate("document.referrer") == referrer
+        else:
+            self.page.goto(ORIGIN + path, wait_until="load")
 
     def action(self, label):
         preferences = self.page.locator("[data-ga-preferences]")
@@ -106,7 +121,9 @@ def test_consent(browser, vendor):
     visit.action("Allow analytics")
     first = visit.wait_views(1)
     assert first["tid"] == [MEASUREMENT_ID] and first["dl"] == [ORIGIN + "/"]
-    assert first.get("dr") == ["https://www.google.com/"] and first.get("dt")
+    assert first.get("dr") == ["https://www.google.com/"] and first.get("dt"), {
+        key: first.get(key) for key in ("en", "tid", "dl", "dr", "dt")
+    }
     assert any(url == TAG and not referrer for url, _, referrer in visit.ga_requests())
     visit.action("Allow analytics")
     visit.page.wait_for_timeout(500)
@@ -117,7 +134,9 @@ def test_consent(browser, vendor):
     visit.page.locator("#company").fill(MARKER)
     visit.page.locator("#contact").fill(MARKER + "@example.invalid")
     second = visit.wait_views(2)
-    assert second["dl"] == [ORIGIN + "/audit-intake"] and not second.get("dr")
+    assert second["dl"] == [ORIGIN + "/audit-intake"] and not second.get("dr"), {
+        key: second.get(key) for key in ("en", "tid", "dl", "dr", "dt")
+    }
     assert MARKER not in str(visit.ga_requests())
     # Let the previous document finish sending its consented data before the
     # denied-page checks. The SDK can add automatic technical events.
