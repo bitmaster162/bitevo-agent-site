@@ -3,6 +3,7 @@ import json
 from html import escape
 import mimetypes
 import os
+import time
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 from urllib.request import urlopen
@@ -87,7 +88,9 @@ class Visit:
             if len(self.views()) >= count:
                 break
             self.page.wait_for_timeout(100)
-        assert len(self.views()) == count, [(urlsplit(url).hostname, urlsplit(url).path) for url, _, _ in self.ga_requests()]
+        assert len(self.views()) == count, [
+            {key: view.get(key) for key in ("en", "dl", "dt", "_s")} for view in self.views()
+        ]
         return self.views()[-1]
 
     def goto(self, path="/", referrer=None):
@@ -141,8 +144,10 @@ def test_consent(browser, vendor):
     visit.page.wait_for_timeout(500)
     assert len(visit.views()) == 1
     cookie_names = [c["name"] for c in visit.context.cookies()]
-    print("GA cookie names before withdrawal", cookie_names, flush=True)
-    print("GA consent fields", {key: first.get(key) for key in ("gcs", "gcd", "npa")}, flush=True)
+    expiry_days = {c["name"]: round((c["expires"] - time.time()) / 86400) for c in visit.context.cookies()}
+    print("GA cookie expiry in days", expiry_days, flush=True)
+    assert cookie_names and all(0 <= days <= 180 for days in expiry_days.values()), expiry_days
+    assert first.get("gcs") == ["G101"] and first.get("npa") == ["1"]
     assert MARKER not in str(visit.ga_requests())
 
     visit.goto("/audit-intake", referrer="https://unknown.example/path?entry=" + MARKER)

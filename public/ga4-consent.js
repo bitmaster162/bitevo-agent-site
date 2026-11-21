@@ -36,7 +36,10 @@
   function clearCookies() {
     for (const cookie of document.cookie.split(';')) {
       const name = cookie.split('=')[0].trim();
-      if (name.startsWith(cookiePrefix + '_')) document.cookie = name + '=; Path=/; Max-Age=0; Secure; SameSite=Lax';
+      if (!name.startsWith(cookiePrefix + '_') && name !== '_ga' && name !== '_ga_' + measurementId.slice(2)) continue;
+      const expired = name + '=; Path=/; Max-Age=0; Secure; SameSite=Lax';
+      document.cookie = expired;
+      document.cookie = expired + '; Domain=' + location.hostname;
     }
   }
 
@@ -68,14 +71,16 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { window.dataLayer.push(arguments); }
     const page = {page_location: canonical, page_referrer: referrer, page_title: document.querySelector('meta[property="og:title"]')?.content || 'BitEvo'};
-    gtag('consent', 'default', {analytics_storage:'granted', ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied'});
-    gtag('js', new Date());
-    gtag('set', page);
-    gtag('config', measurementId, {
-      ...page, send_page_view:false, allow_google_signals:false, allow_ad_personalization_signals:false,
+    const settings = {
+      ...page, allow_google_signals:false, allow_ad_personalization_signals:false,
       cookie_domain:'none', cookie_prefix:cookiePrefix, cookie_expires:maxAge, cookie_update:false
-    });
-    gtag('event', 'page_view', {...page, send_to:measurementId});
+    };
+    gtag('consent', 'default', {analytics_storage:'granted', ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied'});
+    gtag('set', settings);
+    gtag('js', new Date());
+    // This static site uses full-document navigation. Config sends the only
+    // requested page view for this document once explicit consent is available.
+    gtag('config', measurementId, {...settings, send_page_view:true});
     const script = document.createElement('script');
     script.async = true;
     script.referrerPolicy = 'no-referrer';
