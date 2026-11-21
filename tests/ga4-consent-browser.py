@@ -119,9 +119,21 @@ def test_consent(browser, vendor):
     visit.action("Decline / withdraw")
     visit.assert_quiet(0)
     visit.action("Allow analytics")
+    # The known referring domain supplied a private query. Even with consent
+    # the original request must not expose it to a tag that reads the DOM.
+    visit.assert_quiet(0)
+    # A same-document path/title change cannot make the unsafe referring
+    # document eligible. BitEvo itself uses full-document navigation.
+    visit.page.evaluate("value => { history.pushState({}, '', '/#' + value); document.title = value; }", MARKER)
+    visit.action("Allow analytics")
+    visit.assert_quiet(0)
+    visit.page.evaluate("history.replaceState({}, '', '/')")
+    visit.action("Allow analytics")
+    visit.assert_quiet(0)
+    visit.goto(referrer="https://www.google.com/")
     first = visit.wait_views(1)
     assert first["tid"] == [MEASUREMENT_ID] and first["dl"] == [ORIGIN + "/"]
-    assert first.get("dr") == ["https://www.google.com/"] and first.get("dt"), {
+    assert first.get("dr") == ["https://www.google.com/"] and first.get("dt") == [visit.page.locator('meta[property="og:title"]').get_attribute("content")], {
         key: first.get(key) for key in ("en", "tid", "dl", "dr", "dt")
     }
     assert any(url == TAG and not referrer for url, _, referrer in visit.ga_requests())
@@ -131,10 +143,24 @@ def test_consent(browser, vendor):
     assert any(c["name"].startswith("bitevoGa4_") for c in visit.context.cookies())
 
     visit.goto("/audit-intake", referrer="https://unknown.example/path?entry=" + MARKER)
+    count = len(visit.ga_requests())
+    visit.assert_quiet(count)
+    assert visit.page.locator('script[src*="googletagmanager"]').count() == 0
+    # Our referrer policy must protect same-origin navigation as well.
+    visit.goto()
+    visit.wait_views(2)
+    with visit.page.expect_navigation():
+        visit.page.evaluate("""() => {
+          const link = document.createElement('a');
+          link.href = '/audit-intake';
+          document.body.append(link);
+          link.click();
+        }""")
+    assert visit.page.evaluate("document.referrer") == ORIGIN + "/"
     visit.page.locator("#company").fill(MARKER)
     visit.page.locator("#contact").fill(MARKER + "@example.invalid")
-    second = visit.wait_views(2)
-    assert second["dl"] == [ORIGIN + "/audit-intake"] and not second.get("dr"), {
+    second = visit.wait_views(3)
+    assert second["dl"] == [ORIGIN + "/audit-intake"] and second.get("dr", [ORIGIN + "/"]) == [ORIGIN + "/"], {
         key: second.get(key) for key in ("en", "tid", "dl", "dr", "dt")
     }
     assert MARKER not in str(visit.ga_requests())
@@ -145,9 +171,9 @@ def test_consent(browser, vendor):
         before = len(visit.ga_requests())
         visit.assert_quiet(before)
         assert visit.page.locator('script[src*="googletagmanager"]').count() == 0
-    assert len(visit.views()) == 2
+    assert len(visit.views()) == 3
     visit.goto("/ru")
-    visit.wait_views(3)
+    visit.wait_views(4)
     with visit.page.expect_navigation():
         visit.action("Отклонить / отозвать")
     assert not any(c["name"].startswith("bitevoGa4_") for c in visit.context.cookies())
@@ -155,9 +181,9 @@ def test_consent(browser, vendor):
     visit.goto()
     visit.assert_quiet(before)
     visit.action("Allow analytics")
-    visit.wait_views(4)
+    visit.wait_views(5)
     assert MARKER not in str(visit.ga_requests())
-    print("Four intentional views on eligible documents; raw referrer and form values absent from intercepted requests")
+    print("Five intentional views on eligible documents; raw referrer and form values absent from intercepted requests")
     visit.context.close()
 
 
