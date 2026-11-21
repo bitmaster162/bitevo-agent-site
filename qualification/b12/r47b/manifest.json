@@ -1,0 +1,88 @@
+{
+  "schema": "bitevo.b12.isolated-qualification.v1",
+  "mode": "OFFLINE_ONLY",
+  "source": {
+    "repository": "bitmaster162/bitevo-agent-site",
+    "commit": "622d4580c8953688e26cb4ab9fc67825087b8428",
+    "tree": "bf97d795936e31cb03ed5f60fcb9d5a06b04e1e3"
+  },
+  "production": {
+    "vercel_project_id": "prj_U2iHyiwhJlO33r0u4uN65PpdzEiv",
+    "cloudflare_account_id": null,
+    "worker_name": "bitevo-agent-site",
+    "worker_url": "https://bitevo-agent-site.mirokonkr.workers.dev/b1-2/event",
+    "d1_database_id": null,
+    "rate_limit_namespace_id": null
+  },
+  "isolated": {
+    "vercel_project_id": null,
+    "cloudflare_account_id": null,
+    "worker_name": null,
+    "worker_url": null,
+    "d1_database_id": null,
+    "rate_limit_namespace_id": null
+  },
+  "inventory": {
+    "evidence_kind": "UNVERIFIED",
+    "reference": null,
+    "sha256": null,
+    "observed_at_utc": null,
+    "valid_until_utc": null,
+    "reviewed_by": null,
+    "exclusive_writer_reference": null
+  },
+  "controls": {
+    "network_io": false,
+    "provider_writes": false,
+    "event_posts": false,
+    "production_secret_access": false,
+    "install_packages": false,
+    "production_runtime_changes": false,
+    "client_activation": false,
+    "automatic_retry": false,
+    "execute": false,
+    "unknown_outcome": "STOP_READBACK_NO_RETRY",
+    "cleanup_semantics": "DISABLE_IS_NOT_DELETE",
+    "preview_semantics": "NO_PRODUCTION_ENV_SPOOFING"
+  },
+  "plan": {
+    "path": "ISOLATED_WORKER_DIRECT_NOT_VERCEL_PREVIEW",
+    "row": {
+      "day": null,
+      "event_name": "triage_click",
+      "page": "/agent-authority-audit",
+      "locale": "en"
+    },
+    "synthetic_data_only": true,
+    "desired_positive_delta": 1,
+    "desired_negative_delta": 0,
+    "outcome_unknown": "STOP_READBACK_NO_RETRY",
+    "limits": {
+      "event_posts": null,
+      "total_requests": null,
+      "response_bytes": null,
+      "duration_seconds": null,
+      "cost_minor_units": null,
+      "currency": null
+    },
+    "rate_limit": {
+      "requests": null,
+      "period_seconds": null
+    },
+    "retention": {
+      "hours": null,
+      "owner": null,
+      "deletion_reference": null,
+      "access_reference": null
+    },
+    "cleanup": {
+      "disable_reference": null,
+      "data_disposition_reference": null
+    }
+  },
+  "authority": {
+    "scope": "LOCAL_ONLY",
+    "provider_execution": false,
+    "cloud_approval_reference": null
+  }
+}
