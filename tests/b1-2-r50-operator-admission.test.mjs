@@ -299,7 +299,7 @@ const r50Ga4ConsentSha = Object.freeze({
   'src/layouts/Layout.astro': 'a0be597ebaf7ce2834a0885d004c34b6910ff929ba4f356bcf6cd393d6ae9feb',
   'src/pages/privacy.astro': '5b98ae006c9ee90ee2d60a325516cd93c338c0004e46bb398c4d73ad75b8c263',
   'src/pages/ru/privacy.astro': '270e1fa9025efd66584c4c872f6f17a4cc49f85b0d64540166403b427894e991',
-  'vercel.json': '29fc76e5853f10b0bb007e1f4d2f851176fba7e5cf83223aa916931265ac0342'
+  'vercel.json': '89a23c5e36859fb670172addbbb1ffd64b909b5d26ad3cb29d0ec532ef3fbae9'
 });
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;

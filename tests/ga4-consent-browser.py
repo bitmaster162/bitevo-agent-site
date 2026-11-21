@@ -22,6 +22,9 @@ CSP = next(
     if header["key"].lower() == "content-security-policy"
 )
 
+VERCEL_ROUTES = json.loads((ROOT / "vercel.json").read_text())["routes"]
+assert VERCEL_ROUTES[0]["headers"]["Content-Security-Policy"] == CSP
+
 
 class Visit:
     def __init__(self, browser, vendor, init=None):
