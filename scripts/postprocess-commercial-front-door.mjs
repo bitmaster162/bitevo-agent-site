@@ -18,7 +18,7 @@ const walk = dir => {
 walk(distDir);
 
 const ruPricingTemplateHtml = fs.readFileSync(path.join(distDir, 'ru', 'pricing', 'index.html'), 'utf8');
-const ruScopeTemplateMatch = ruPricingTemplateHtml.match(/<section id="send-scope" class="section section-rule scope-short-section" hidden data-scope-short-section>[\s\S]*?<\/section><link rel="stylesheet" href="\/scope-handoff-short\.css"><script src="\/scope-handoff-r1\.js"[^>]*><\/script>/);
+const ruScopeTemplateMatch = ruPricingTemplateHtml.match(/<section id="send-scope" class="section section-rule scope-short-section" hidden data-scope-short-section>[\s\S]*?<\/section>(?:<link rel="stylesheet" href="\/scope-handoff-short\.css"><script src="\/scope-handoff-r1\.js"[^>]*><\/script>)?/);
 if (!ruScopeTemplateMatch) throw new Error('RU P27.1 short-scope rendered template missing from /ru/pricing');
 const ruTriageScopeTemplate = ruScopeTemplateMatch[0].replace('data-scope-offer="pricing"', 'data-scope-offer="triage"');
 

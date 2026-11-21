@@ -23,7 +23,13 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa',
     conversionCurrentness, mobileFitCurrentness, guide3Currentness,
     // Exact L01 2026-11-19 sitemap successor, retaining A-D buyer-pack lastmod.
-    '2bb7c535afb2aa6685309554a4de03261573fa7635191a35ab84d4b8caaace67'
+    '2bb7c535afb2aa6685309554a4de03261573fa7635191a35ab84d4b8caaace67',
+    // 2026-11-19 Hydrogen: only 15 named routes changed; exact 142-route manifest and release-grade metadata remain pinned.
+    '29f48f9a33097747768eae58db8e86e7c63520ffde57815f71ab5f16b202bec1',
+    // 2026-11-21 exact SEO-only prior candidate, retained as historical admission.
+    '32b43e4de28a39adbd2daea4428541281c347bfb3bc13ac36da74b68de719a51',
+    // 2026-11-21 integration of exact Hydrogen+SEO render, 142 routes, no wildcard.
+    '4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47'
   ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
@@ -44,7 +50,13 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     mobileFitCurrentness,
     guide3Currentness,
     // L01 2026-11-19 exact IndexNow/S5/SCV editorial sitemap successor (142 indexable routes).
-    '2bb7c535afb2aa6685309554a4de03261573fa7635191a35ab84d4b8caaace67'
+    '2bb7c535afb2aa6685309554a4de03261573fa7635191a35ab84d4b8caaace67',
+    // 2026-11-19 Hydrogen: only 15 named routes changed; exact 142-route manifest and release-grade metadata remain pinned.
+    '29f48f9a33097747768eae58db8e86e7c63520ffde57815f71ab5f16b202bec1',
+    // 2026-11-21 exact SEO-only prior candidate, retained as historical admission.
+    '32b43e4de28a39adbd2daea4428541281c347bfb3bc13ac36da74b68de719a51',
+    // 2026-11-21 integration of exact Hydrogen+SEO render, 142 routes, no wildcard.
+    '4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;

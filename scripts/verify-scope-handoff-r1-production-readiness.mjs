@@ -182,7 +182,7 @@ check(!vercel.includes('SCOPE_HANDOFF_R1_STORAGE_OWNER'), 'storage owner is not 
 check(!vercel.includes('SCOPE_HANDOFF_R1_RATE_LIMIT_KEY_SECRET'), 'HMAC bucket secret is not committed to provider config');
 check(!vercel.includes('SCOPE_HANDOFF_R1_TELEGRAM_BOT_TOKEN') && !vercel.includes('SCOPE_HANDOFF_R1_TELEGRAM_CHAT_ID'), 'Telegram secrets are not committed to provider config');
 for (const [locale, html] of [['EN',enDist],['RU',ruDist]]) {
-  check(html.includes(expectedBuildAttribute), `${locale}: build marker matches evaluated environment`);
+  equal(html.includes(expectedBuildAttribute), currentBuildActivation.uiEnabled, `${locale}: build marker matches evaluated environment`);
   check(html.includes('mailto:robert@bitevo.work?subject=BitEvo%20scope%20review'), `${locale}: manual fallback preserved`);
 }
 for (const marker of [
