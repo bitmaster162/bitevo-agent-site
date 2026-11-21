@@ -1,0 +1,79 @@
+{
+  "schema": "bitevo.sitemap-currentness.production-overlay/v1",
+  "normalization": "provider-envelope-v3",
+  "base_manifest_sha256": "4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47",
+  "production_project_id": "prj_U2iHyiwhJlO33r0u4uN65PpdzEiv",
+  "activation_mode": "production_scope_review_r1",
+  "routes": [
+    {
+      "path": "/",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:4714075ef49c52264d4f94f9336f9328d9828608b9d4c295bc1ab472f87513f0"
+    },
+    {
+      "path": "/start",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:5c281d644058c09057bdd3829fa0ba358a6c5d17b7fb98b2f48318d24001280b"
+    },
+    {
+      "path": "/pricing",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:60b09f586fc0d39b2e35ed4d55d3f7730a418388748c4c2a352aa0a41e929a90"
+    },
+    {
+      "path": "/entry-audit",
+      "lastmod": "2026-11-21",
+      "fingerprint": "sha256:b9e9031fff5ecd19c061d30297601718988dcdc8b932204c6d8a6d56ab7e4fb0"
+    },
+    {
+      "path": "/mapper",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:33d046875f46cb18e7d4f608cffb828e548cd3b21b2cf792c9699f931f771efd"
+    },
+    {
+      "path": "/diagnostic",
+      "lastmod": "2026-11-21",
+      "fingerprint": "sha256:def91ebec60f2174e36f02594548e44ee48df121f08b3bee7f2f98bf85c57ca8"
+    },
+    {
+      "path": "/audit-intake",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:2a757cb1daad16c9bc5aa75bddcd909fc692734173b8cc1a891b9abb2abe8d16"
+    },
+    {
+      "path": "/ru",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:207dc05f974a49c3367442598aeede44cce3fc5957e175f39d7d50c59b18b182"
+    },
+    {
+      "path": "/ru/pricing",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:7fe8de0a984eeb12671228f883fab63340f2e5d12f2512fa0cac1ea8acabfd73"
+    },
+    {
+      "path": "/ru/mapper",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:4d74a7d4f9f5fbe51e56050e4bb936fb66c3c4e69b6ce58a41a7d8ce5ed54e73"
+    },
+    {
+      "path": "/ru/diagnostic",
+      "lastmod": "2026-11-21",
+      "fingerprint": "sha256:40836eefb486a6e90f0b306076dcf40eb128beed135847eb80cc79be63357892"
+    },
+    {
+      "path": "/ru/audit-intake",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:411be2e9f4880d8f4f8fcb2ca63f8b0197f0ba2cb743f8f86e422af758b10345"
+    },
+    {
+      "path": "/ru/start",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:6245181783f38ad4aac47646df683615b8acd8d2d854688cf0243dbe19f8873a"
+    },
+    {
+      "path": "/ru/entry-audit",
+      "lastmod": "2026-11-19",
+      "fingerprint": "sha256:24bf828d7257c060b3d1d960e26d52c0467cad465d87393e9ae1602f7bdd713c"
+    }
+  ]
+}

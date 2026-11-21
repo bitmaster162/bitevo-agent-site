@@ -34,6 +34,8 @@ jobs:
       - name: Inventory dependency advisories (non-blocking)
         continue-on-error: true
         run: npm audit --json
+      - name: Verify exact Scope Handoff production sitemap variant
+        run: node scripts/verify-production-currentness-overlay-r1.mjs
       - name: Build and run provider-neutral repository gates
         run: npm run build:core
       # Provider-bound provenance checks intentionally do not run in GitHub CI.

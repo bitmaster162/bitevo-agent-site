@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadProductionOverlayIfActive, productionUiVariantActive } from './production-currentness-overlay-r1.mjs';
 
 const repoRoot = fileURLToPath(new URL('../', import.meta.url));
 const distRoot = join(repoRoot, 'dist');
@@ -77,7 +78,9 @@ async function currentRows() {
 async function verify() {
   verifyVercelAnalyticsNormalization();
   verifyActivationMarkerNormalization();
-  const manifest = await readJson(manifestPath);
+  const manifestRaw = await readFile(manifestPath, 'utf8');
+  const manifest = JSON.parse(manifestRaw.replace(/^\uFEFF/, ''));
+  const overlayByPath = await loadProductionOverlayIfActive(manifestRaw, process.env);
   if (manifest.schema !== schema) throw new Error(`sitemap currentness schema mismatch: ${manifest.schema || 'missing'}`);
   if (manifest.normalization !== normalization) throw new Error(`sitemap currentness normalization mismatch: ${manifest.normalization || 'missing'}`);
   if (!Array.isArray(manifest.routes)) throw new Error('sitemap currentness routes must be an array');
@@ -97,7 +100,7 @@ async function verify() {
     if (!saved) continue;
     if (!validDate(saved.lastmod)) failures.push(`invalid lastmod for ${row.path}: ${saved.lastmod || 'missing'}`);
     if (!/^sha256:[0-9a-f]{64}$/.test(String(saved.fingerprint || ''))) failures.push(`invalid fingerprint for ${row.path}`);
-    else if (saved.fingerprint !== row.fingerprint) failures.push(`rendered fingerprint drift for ${row.path}: expected=${saved.fingerprint} observed=${row.fingerprint}`);
+    else if ((overlayByPath.get(row.path) ?? saved.fingerprint) !== row.fingerprint) failures.push(`rendered fingerprint drift for ${row.path}: expected=${overlayByPath.get(row.path) ?? saved.fingerprint} observed=${row.fingerprint}`);
   }
 
   if (failures.length) {
@@ -106,10 +109,11 @@ async function verify() {
     process.exitCode = 1;
     return;
   }
-  console.log(`SITEMAP_CURRENTNESS_VERIFY_PASS routes=${rows.length} normalization=${normalization}`);
+  console.log(`SITEMAP_CURRENTNESS_VERIFY_PASS routes=${rows.length} normalization=${normalization} production_overlay=${overlayByPath.size}`);
 }
 
 async function update() {
+  if (productionUiVariantActive(process.env)) throw new Error('Production scope overlay must not update the historical base sitemap manifest');
   const date = String(process.env.SITEMAP_CURRENTNESS_DATE || new Date().toISOString().slice(0, 10));
   if (!validDate(date)) throw new Error(`invalid SITEMAP_CURRENTNESS_DATE: ${date}`);
   const existing = await readJson(manifestPath, { schema, normalization, routes: [] });
