@@ -37,11 +37,11 @@ const cloudflareMetaCsp = [
   "base-uri 'self'",
   "object-src 'none'",
   "form-action 'self'",
-  `script-src 'self' ${cspHashes(allowlist.scripts || [])}`.trim(),
+  `script-src 'self' https://www.googletagmanager.com/gtag/ ${cspHashes(allowlist.scripts || [])}`.trim(),
   `style-src 'self' ${cspHashes(allowlist.styles || [])}`.trim(),
   "font-src 'self'",
-  "img-src 'self' data:",
-  "connect-src 'self'",
+  "img-src 'self' data: https://www.google-analytics.com/g/collect https://region1.google-analytics.com/g/collect https://analytics.google.com/g/collect https://region1.analytics.google.com/g/collect",
+  "connect-src 'self' https://www.google-analytics.com/g/collect https://region1.google-analytics.com/g/collect https://analytics.google.com/g/collect https://region1.analytics.google.com/g/collect",
   'upgrade-insecure-requests'
 ].join('; ');
 const cloudflareMetaTag = `<meta http-equiv="Content-Security-Policy" content="${cloudflareMetaCsp}" data-cloudflare-csp="hash-bound">`;

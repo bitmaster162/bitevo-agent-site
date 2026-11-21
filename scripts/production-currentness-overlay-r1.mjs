@@ -2,8 +2,8 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { evaluateScopeHandoffActivation, SCOPE_HANDOFF_R1_PRODUCTION_PROJECT_ID, SCOPE_HANDOFF_R1_PRODUCTION_ACTIVATION_MODE } from '../src/lib/scope-handoff-r1/activation.js';
 
-export const BASE_SHA='4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47';
-export const OVERLAY_SHA='7468ad76ed57e61ef161d3c265ed017891496593f952912117f5c93f39ea272a';
+export const BASE_SHA='876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5';
+export const OVERLAY_SHA='a2fcc1115cf0a42677cb9b621b48d082d06b9717da018600a4434a253a40d249';
 export const SCOPE_PATHS=Object.freeze([
   '/','/start','/pricing','/entry-audit','/mapper','/diagnostic','/audit-intake',
   '/ru','/ru/pricing','/ru/mapper','/ru/diagnostic','/ru/audit-intake','/ru/start','/ru/entry-audit'
@@ -22,11 +22,11 @@ export function verifyExactProductionOverlay(baseText,overlayText) {
  need(sha(baseText)===BASE_SHA,'BASE_MANIFEST_SHA');
  need(sha(overlayText)===OVERLAY_SHA,'OVERLAY_SHA');
  const base=JSON.parse(baseText),overlay=JSON.parse(overlayText);
- need(base.schema==='bitevo.sitemap-currentness/v1'&&base.normalization==='provider-envelope-v3','BASE_SCHEMA');
+ need(base.schema==='bitevo.sitemap-currentness/v1'&&base.normalization==='provider-envelope-v4','BASE_SCHEMA');
  need(Array.isArray(base.routes)&&base.routes.length===142,'BASE_ROUTE_COUNT');
  need(sameKeys(overlay,['schema','normalization','base_manifest_sha256','production_project_id','activation_mode','routes']),'OVERLAY_FIELDS');
  need(overlay.schema==='bitevo.sitemap-currentness.production-overlay/v1'
-  &&overlay.normalization==='provider-envelope-v3'
+  &&overlay.normalization==='provider-envelope-v4'
   &&overlay.base_manifest_sha256===BASE_SHA
   &&overlay.production_project_id===SCOPE_HANDOFF_R1_PRODUCTION_PROJECT_ID
   &&overlay.activation_mode===SCOPE_HANDOFF_R1_PRODUCTION_ACTIVATION_MODE,'OVERLAY_IDENTITY');

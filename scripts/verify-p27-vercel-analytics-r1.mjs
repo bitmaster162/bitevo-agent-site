@@ -17,7 +17,7 @@ const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'
 const tag = '<script defer src="/_vercel/insights/script.js"></script>';
 equal(layout.split(tag).length - 1, 1, 'shared Layout contains exactly one first-party Vercel analytics script');
 check(!packageJson.dependencies?.['@vercel/analytics'], 'manual first-party integration adds no analytics package dependency');
-equal(manifest.normalization, 'provider-envelope-v3', 'semantic currentness uses provider-envelope-v3');
+equal(manifest.normalization, 'provider-envelope-v4', 'semantic currentness uses provider-envelope-v4');
 check(packageJson.scripts?.['verify:core']?.includes('verify-p27-vercel-analytics-r1.mjs'), 'P27.3 verifier is wired into verify:core');
 const csp = JSON.stringify(vercel);
 check(csp.includes("script-src 'self'"), "CSP script-src keeps self");
@@ -35,8 +35,10 @@ for (const route of routes) {
   const html = await readFile(routeFile(route), 'utf8');
   equal(html.split(tag).length - 1, 1, 'analytics script exact once on ' + route);
   check(!html.includes('cdn.vercel-insights.com') && !html.includes('va.vercel-scripts.com'), 'no external analytics host on ' + route);
+  equal(html.split('<script defer src="/ga4-consent.js"></script>').length - 1, 1, 'GA4 consent control occurs once on ' + route);
+  check(!/googletagmanager\.com|google-analytics\.com|analytics\.google\.com/i.test(html), 'no Google Analytics endpoint preloaded on ' + route);
   instrumented += 1;
 }
 
 equal(instrumented, routes.length, 'all indexable routes instrumented');
-console.log('P27_3_VERCEL_ANALYTICS_R1_GATE=PASS checks=' + checks + ' indexable=' + routes.length + ' instrumented=' + instrumented + ' script=FIRST_PARTY_SELF currentness=PROVIDER_ENVELOPE_V3 external_hosts=0');
+console.log('P27_3_VERCEL_ANALYTICS_R1_GATE=PASS checks=' + checks + ' indexable=' + routes.length + ' instrumented=' + instrumented + ' script=FIRST_PARTY_SELF currentness=PROVIDER_ENVELOPE_V4 external_tags_in_html=0');

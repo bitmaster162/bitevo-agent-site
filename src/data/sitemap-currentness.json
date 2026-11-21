@@ -1,6 +1,6 @@
 {
   "schema": "bitevo.sitemap-currentness/v1",
-  "normalization": "provider-envelope-v3",
+  "normalization": "provider-envelope-v4",
   "routes": [
     {
       "path": "/",

@@ -9,10 +9,11 @@ const distRoot = join(repoRoot, 'dist');
 const registryPath = join(repoRoot, 'src/data/public-route-registry.json');
 const manifestPath = join(repoRoot, 'src/data/sitemap-currentness.json');
 const schema = 'bitevo.sitemap-currentness/v1';
-const normalization = 'provider-envelope-v3';
+const normalization = 'provider-envelope-v4';
 
 function normalizeRenderedHtml(html) {
   return html
+    .replaceAll('<script defer src="/ga4-consent.js"></script>', '')
     .replace(/<meta\b(?=[^>]*\bdata-cloudflare-csp="hash-bound")[^>]*>/gi, '')
     .replace(/<script\b(?=[^>]*\bsrc="\/_vercel\/insights\/script\.js")[^>]*><\/script>/gi, '')
     .replace(/data-scope-handoff-r1-activation="(?:disabled|isolated_staging_preview_r1|production_scope_review_r1)"/gi, 'data-scope-handoff-r1-activation="__SCOPE_HANDOFF_ACTIVATION__"')
@@ -31,6 +32,10 @@ function verifyVercelAnalyticsNormalization() {
   const base = fingerprint('<head></head>');
   const firstParty = fingerprint('<head><script defer src="/_vercel/insights/script.js"></script></head>');
   if (firstParty !== base) throw new Error('Vercel analytics provider envelope must normalize');
+  const optIn = fingerprint('<head><script defer src="/ga4-consent.js"></script></head>');
+  if (optIn !== base) throw new Error('reviewed first-party GA4 consent bootstrap must normalize');
+  const changed = fingerprint('<head><script defer src="/ga4-consent.js?changed"></script></head>');
+  if (changed === base) throw new Error('unreviewed GA4 envelope must remain significant');
   const external = fingerprint('<head><script defer src="https://cdn.vercel-insights.com/v1/script.js"></script></head>');
   if (external === base) throw new Error('external analytics script must not normalize');
 }
