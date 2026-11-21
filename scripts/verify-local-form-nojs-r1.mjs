@@ -24,6 +24,12 @@ const routes = [
     dynamicSha:'2e1658150b537abd56e341579536bef8eac8ecc3903d13149779d19201c62c6a',
     fingerprint:'sha256:996694e72f85365a3d56d0a2fa74fc77845b39efd3e45f9f80d309c7df1f676c' }
 ];
+// Exact SEO-20261121 successor: only the two synthetic heading wrappers change.
+// Keep original R1 source pins and the seven-gate dynamic-script hashes immutable.
+const SEO20261121_SOURCE_PINS = Object.freeze({
+  '/diagnostic': Object.freeze({sourceSha:'79749e4666632489f055b590eb3c7847ae81bad02804246299b17cf6ab393ee1',fingerprint:'sha256:def91ebec60f2174e36f02594548e44ee48df121f08b3bee7f2f98bf85c57ca8'}),
+  '/ru/diagnostic': Object.freeze({sourceSha:'4a8cce1cd139980fcebaddd1c17ab198d4c601e285e7e576a3a2100b0e51c533',fingerprint:'sha256:40836eefb486a6e90f0b306076dcf40eb128beed135847eb80cc79be63357892'})
+});
 let checks = 0;
 const need = (ok, message) => { assert.ok(ok, message); checks++; };
 const noJsMessage = {
@@ -85,7 +91,11 @@ const byPath = new Map(manifest.routes.map(x => [x.path, x]));
 for (const entry of routes) {
   const source = await readFile(new URL(entry.file, root), 'utf8');
   const html = await readFile(new URL('dist' + entry.path + '/index.html', root), 'utf8');
-  need(sha256(source) === entry.sourceSha, 'exact source SHA drift: ' + entry.file);
+  const successor = SEO20261121_SOURCE_PINS[entry.path];
+  const exactSuccessor = Boolean(successor && isExactRGapsSuccessor() &&
+    byPath.get(entry.path)?.fingerprint === successor.fingerprint &&
+    sha256(source) === successor.sourceSha);
+  need(sha256(source) === entry.sourceSha || exactSuccessor, 'exact source SHA drift: ' + entry.file);
   const dynamic = source.match(/<script define:vars=\{\{\s*\w+\s*\}\}>([\s\S]*?)<\/script>/);
   need(!!dynamic && sha256(dynamic[1]) === entry.dynamicSha, 'inherited dynamic handler changed: ' + entry.path);
   need(faults(source, entry).length === 0, 'new guard semantic fail: ' + entry.path + ' ' + faults(source, entry));
