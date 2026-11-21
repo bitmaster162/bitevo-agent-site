@@ -295,6 +295,12 @@ const r50R11ArticleSchemaCspSha = '27d06a2e948bfb2af14da878fc708007b47c710136f77
 // Hydrogen L01: exact one inert RU Vision JSON-LD hash rotation in both CSP headers;
 // only accepted when the 142-route sitemap successor is explicitly pinned.
 const r50HydrogenVisionCspSha = '2dddeea4d410fefc88b111447b4625b70e5c5596eaf7a4e868e8494f587e6858';
+const r50Ga4ConsentSha = Object.freeze({
+  'src/layouts/Layout.astro': 'a0be597ebaf7ce2834a0885d004c34b6910ff929ba4f356bcf6cd393d6ae9feb',
+  'src/pages/privacy.astro': '5b98ae006c9ee90ee2d60a325516cd93c338c0004e46bb398c4d73ad75b8c263',
+  'src/pages/ru/privacy.astro': '270e1fa9025efd66584c4c872f6f17a4cc49f85b0d64540166403b427894e991',
+  'vercel.json': '29fc76e5853f10b0bb007e1f4d2f851176fba7e5cf83223aa916931265ac0342'
+});
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
   if (path === 'package-lock.json' && (sha === r50Node24LockSha || sha === r50DepsPatchMinorLockSha)) return true;
@@ -302,6 +308,7 @@ function r50ProtectedShaAccepted(path, sha) {
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50Pr257ExactCspSha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50R11PriceCspSha) ||
     (isExactRGapsSuccessor() && r50R11AuditExactSha[path] === sha) ||
+    (isExactRGapsSuccessor() && r50Ga4ConsentSha[path] === sha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50R11ArticleSchemaCspSha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50HydrogenVisionCspSha) ||
     (isExactGuides34Successor() && r50Guides34SuccessorSha[path] === sha) ||
@@ -390,7 +397,7 @@ test('Node 24 isolated successor is pinned and cannot admit unrelated package or
 });
 test('Guides API header-only R50 successor is pinned, JSON and noindex on exact path',async()=>{
   const raw = (await readFile(new URL('../vercel.json',import.meta.url),'utf8')).replace(/\r\n/g,'\n');
-  assert.ok(digest(raw) === r50GuidesHeadersOnlySha || (isExactRGapsSuccessor() && (digest(raw) === r50Pr257ExactCspSha || digest(raw) === r50R11PriceCspSha || digest(raw) === r50R11AuditExactSha['vercel.json'] || digest(raw) === r50R11ArticleSchemaCspSha || digest(raw) === r50HydrogenVisionCspSha)), 'only exact historical or PR257 reviewed Vercel CSP hash');
+  assert.ok(digest(raw) === r50GuidesHeadersOnlySha || (isExactRGapsSuccessor() && (digest(raw) === r50Pr257ExactCspSha || digest(raw) === r50R11PriceCspSha || digest(raw) === r50R11AuditExactSha['vercel.json'] || digest(raw) === r50R11ArticleSchemaCspSha || digest(raw) === r50HydrogenVisionCspSha || digest(raw) === r50Ga4ConsentSha['vercel.json'])), 'only an exact reviewed Vercel CSP hash');
   assert.ok(r50ProtectedShaAccepted('vercel.json',digest(raw)));
   assert.equal(r50ProtectedShaAccepted('vercel.json','0'.repeat(64)),false);
   assert.ok(r50ProtectedShaAccepted('vercel.json',r50GuidesHeadersOnlySha));
