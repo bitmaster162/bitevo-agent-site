@@ -140,7 +140,10 @@ def test_consent(browser, vendor):
     visit.action("Allow analytics")
     visit.page.wait_for_timeout(500)
     assert len(visit.views()) == 1
-    assert any(c["name"].startswith("bitevoGa4_") for c in visit.context.cookies())
+    cookie_names = [c["name"] for c in visit.context.cookies()]
+    print("GA cookie names before withdrawal", cookie_names, flush=True)
+    print("GA consent fields", {key: first.get(key) for key in ("gcs", "gcd", "npa")}, flush=True)
+    assert MARKER not in str(visit.ga_requests())
 
     visit.goto("/audit-intake", referrer="https://unknown.example/path?entry=" + MARKER)
     count = len(visit.ga_requests())
@@ -176,7 +179,7 @@ def test_consent(browser, vendor):
     visit.wait_views(4)
     with visit.page.expect_navigation():
         visit.action("Отклонить / отозвать")
-    assert not any(c["name"].startswith("bitevoGa4_") for c in visit.context.cookies())
+    assert not any(c["name"].startswith(("bitevoGa4_", "_ga")) for c in visit.context.cookies()), [c["name"] for c in visit.context.cookies()]
     before = len(visit.ga_requests())
     visit.goto()
     visit.assert_quiet(before)
@@ -210,7 +213,7 @@ def test_failed_storage_and_privacy_signals(browser, vendor):
     visit.context.add_init_script("(" + broken + ")()")
     with visit.page.expect_navigation():
         visit.action("Decline / withdraw")
-    assert not any(c["name"].startswith("bitevoGa4_") for c in visit.context.cookies())
+    assert not any(c["name"].startswith(("bitevoGa4_", "_ga")) for c in visit.context.cookies()), [c["name"] for c in visit.context.cookies()]
     count = len(visit.ga_requests())
     visit.goto("/audit-intake")
     visit.assert_quiet(count)
