@@ -1,7 +1,7 @@
 {
   "schema": "bitevo.sitemap-currentness.production-overlay/v1",
   "normalization": "provider-envelope-v4",
-  "base_manifest_sha256": "012c14f3de0e63f4b9940c56b257a4f09a9c1236b7b18a83fd7618c13abc18c1",
+  "base_manifest_sha256": "367a64e367cad4a2f259ce0945ab2006802ce2af87e4e74ee30c2983f843c540",
   "production_project_id": "prj_U2iHyiwhJlO33r0u4uN65PpdzEiv",
   "activation_mode": "production_scope_review_r1",
   "routes": [

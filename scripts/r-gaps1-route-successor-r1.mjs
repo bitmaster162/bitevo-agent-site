@@ -33,7 +33,11 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // Same 142 page fingerprints and dates under the exact opt-in analytics envelope.
     '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5',
     // Three editorial routes for procurement links and the English school destination.
-    '012c14f3de0e63f4b9940c56b257a4f09a9c1236b7b18a83fd7618c13abc18c1'
+    '012c14f3de0e63f4b9940c56b257a4f09a9c1236b7b18a83fd7618c13abc18c1',
+    // Two localized security links in the independent review revision.
+    'cdc0cc092935caa8743b0bd499e0ab5b99d72d9b4f72b5629130407a2b51eb71',
+    // Combined editorial links, with the same 142-route inventory.
+    '367a64e367cad4a2f259ce0945ab2006802ce2af87e4e74ee30c2983f843c540'
   ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
@@ -64,7 +68,11 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // Same 142 page fingerprints and dates under the exact opt-in analytics envelope.
     '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5',
     // Three editorial routes for procurement links and the English school destination.
-    '012c14f3de0e63f4b9940c56b257a4f09a9c1236b7b18a83fd7618c13abc18c1'
+    '012c14f3de0e63f4b9940c56b257a4f09a9c1236b7b18a83fd7618c13abc18c1',
+    // Two localized security links in the independent review revision.
+    'cdc0cc092935caa8743b0bd499e0ab5b99d72d9b4f72b5629130407a2b51eb71',
+    // Combined editorial links, with the same 142-route inventory.
+    '367a64e367cad4a2f259ce0945ab2006802ce2af87e4e74ee30c2983f843c540'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;
