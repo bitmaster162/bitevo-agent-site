@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -32,10 +32,12 @@ check(workflow.includes('push:\n    branches:\n      - main'), 'workflow runs on
 check(!workflow.includes('pull_request:'), 'workflow never submits on pull requests');
 check(!workflow.includes('workflow_dispatch:'), 'workflow has no manual provider-write trigger');
 check(workflow.includes('contents: read'), 'workflow uses read-only repository permission');
-check(workflow.includes('fetch-depth: 2'), 'workflow fetches previous main commit for delta');
+check(workflow.includes('fetch-depth: 0'), 'workflow can compare across skipped pushes');
 check(workflow.includes('node scripts/indexnow-live-gate.mjs'), 'workflow waits for exact live release with checked HTTPS');
 check(workflow.includes('node scripts/indexnow-submit.mjs indexnow-payload.json'), 'workflow gates provider submission behind live readback');
-check(workflow.includes('--full > indexnow-payload.json'), 'workflow replays full sitemap after unsuccessful historic runs');
+check(workflow.includes('actions: read') && workflow.includes('indexnow.yml/runs?branch=main&event=push&status=success&per_page=1'), 'checkpoint comes from successful pushes of the same workflow');
+check(workflow.includes('"$CHECKPOINT_SHA" "$GITHUB_SHA" --since-success') && !workflow.includes('--full'), 'regular pushes only notify changes since a successful run');
+equal(workflow.split("if: steps.payload.outputs.count != '0'").length - 1, 2, 'both live check and submit skip an empty change set');
 check(!workflow.includes('curl '), 'workflow no longer uses runner curl prone to error 100');
 check(!workflow.includes('${{ secrets.'), 'IndexNow workflow requires no repository secrets');
 
@@ -110,6 +112,26 @@ const expectedPayload = buildIndexNowPayload(config, expectedPaths);
 deepEqual(generated.urlList, expectedPayload.urlList, parentIndexNow ? 'post-bootstrap history emits exact semantic delta' : 'pre-IndexNow history emits exact one-time bootstrap');
 check(generated.urlList.every(url => url.startsWith('https://bitevo.work/')), 'generated URLs stay on canonical host');
 check(generated.urlList.length <= 10000, 'generated batch stays below IndexNow bulk limit');
+
+const headSha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+function checkpointDelta(before, after, ...flags) {
+  return spawnSync(process.execPath, [join(root, 'scripts/indexnow-changed-urls.mjs'), before, after, '--since-success', ...flags], { cwd: root, encoding: 'utf8' });
+}
+const sameRelease = checkpointDelta(headSha, headSha);
+equal(sameRelease.status, 0, 'a verified unchanged release is valid');
+deepEqual(JSON.parse(sameRelease.stdout).urlList, [], 'unchanged release sends no URLs');
+for (const baseline of ['', '0'.repeat(40), 'HEAD']) {
+  const missing = checkpointDelta(baseline, headSha);
+  check(missing.status !== 0 && !missing.stdout, 'missing or unverified checkpoint cannot emit a payload');
+}
+check(checkpointDelta(headSha, headSha, '--full').status !== 0, 'normal notifications cannot enter recovery mode');
+if (parentIndexNow && parentManifest) {
+  const parentSha = execFileSync('git', ['rev-parse', 'HEAD^'], { cwd: root, encoding: 'utf8' }).trim();
+  const fromParent = checkpointDelta(parentSha, headSha);
+  equal(fromParent.status, 0, 'an earlier successful main revision is valid');
+  deepEqual(JSON.parse(fromParent.stdout).urlList, expectedPayload.urlList, 'verified delta includes only editorial changes');
+  check(checkpointDelta(headSha, parentSha).status !== 0, 'stale reruns cannot notify a backwards delta');
+}
 
 const recovery = JSON.parse(execFileSync(process.execPath, [
   join(root, 'scripts/indexnow-changed-urls.mjs'), 'HEAD^', 'HEAD', '--full'

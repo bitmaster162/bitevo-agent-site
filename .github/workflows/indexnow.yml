@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: bitevo-indexnow-main
@@ -20,21 +21,20 @@ jobs:
       - name: Checkout exact main push
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
 
-      - name: Build changed-URL payload (recovery full replay)
+      - name: Build URL delta since the last successful main notification
         id: payload
         env:
-          BEFORE_SHA: ${{ github.event.before }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          # #257-#260 never reached POST; temporarily replay the current sitemap on admitted main pushes.
-          # Remove --full in a separate PR only after a real 200/202 provider receipt.
-          node scripts/indexnow-changed-urls.mjs "$BEFORE_SHA" "$GITHUB_SHA" --full > indexnow-payload.json
+          CHECKPOINT_SHA="$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/indexnow.yml/runs?branch=main&event=push&status=success&per_page=1" --jq '.workflow_runs[0].head_sha // ""')"
+          node scripts/indexnow-changed-urls.mjs "$CHECKPOINT_SHA" "$GITHUB_SHA" --since-success > indexnow-payload.json
           COUNT="$(node -e "const p=require('./indexnow-payload.json'); process.stdout.write(String(p.urlList.length))")"
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
           echo "INDEXNOW_CHANGED_URLS=$COUNT"
