@@ -414,6 +414,35 @@ if (!fileSet.has('og-card.png')) {
   }
 }
 
+for (const [route, locale, title] of [
+  ['/buyer-pack', 'en', 'BitEvo buyer pack'],
+  ['/ru/buyer-pack', 'ru', 'Пакет BitEvo для закупки']
+]) {
+  const html = htmlByRoute.get(route) ?? '';
+  const ogImage = attr(attrTag(html, 'property', 'og:image'), 'content');
+  const secureImage = attr(attrTag(html, 'property', 'og:image:secure_url'), 'content');
+  const twitterImage = attr(attrTag(html, 'name', 'twitter:image'), 'content');
+  const ogAlt = attr(attrTag(html, 'property', 'og:image:alt'), 'content');
+  const twitterAlt = attr(attrTag(html, 'name', 'twitter:image:alt'), 'content');
+  const filename = 'social/buyer-pack-' + locale + '.png';
+
+  imageChecks += 5;
+  if (!fileSet.has(filename)) {
+    failures.push(route + ': localized sharing image missing from build');
+    continue;
+  }
+  if (ogImage !== siteOrigin + '/' + filename || secureImage !== ogImage || twitterImage !== ogImage) {
+    failures.push(route + ': social tags must reference the same localized PNG');
+  }
+  if (!ogAlt?.includes(title) || twitterAlt !== ogAlt) failures.push(route + ': localized social image description missing or inconsistent');
+  const png = await readFile(join(distPath, filename));
+  const { width, height } = decodePng(png);
+  if (width !== 1200 || height !== 630) failures.push(route + ': sharing image must be 1200 × 630');
+  for (const [key, expected] of [['type', 'image/png'], ['width', String(width)], ['height', String(height)]]) {
+    if (attr(attrTag(html, 'property', 'og:image:' + key), 'content') !== expected) failures.push(route + ': incorrect og:image:' + key);
+  }
+}
+
 if (fileSet.has('sitemap.xml')) {
   const sitemap = await readFile(sitemapFile, 'utf8');
   const currentness = JSON.parse(await readFile(join(repoRootPath, 'src/data/sitemap-currentness.json'), 'utf8'));

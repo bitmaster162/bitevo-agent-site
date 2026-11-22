@@ -16,6 +16,7 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   // fingerprint successor; do not widen route or registry acceptance.
   // Owner-approved A-D R41: exact 142-route rendered fingerprint successor only.
   const currentnessSha = hash(content['src/data/sitemap-currentness.json']);
+  const buyerPackCardsCurrentness = '4119eea4504cb937d7df46eba70976081441fbdd4341da4cd0aeafa4cf9e513f';
   const conversionCurrentness = 'aa01c26536ab407ed05b1ad2b3afba45b5a4f39f93160067a9dc965d46c81cff';
   const mobileFitCurrentness = '7ce7b80e0672e8fee1d8cd19c0b6017928a1ce25cd134f8408df633a97dddfe0';
   const guide3Currentness = 'cf52c05cd0fcaeb89d83a842df0d32830b9c1431c3042072158b67bb23d7303d';
@@ -34,6 +35,7 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5'
   ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
+    buyerPackCardsCurrentness,
     pins['src/data/sitemap-currentness.json'],
     '393afbf298aefa6de91c7b63a882a2ad2156e3fdf11c9a080068c12e8237163e',
     '5995adf644771bb29ce7afb5535235bd5aadd4047011fc1b81ffa5da8973187b',
@@ -72,10 +74,12 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
         registry.routes.filter(r => r.indexable && r.locale === 'ru').length !== 71 ||
         manifest.routes.length !== 142) return false;
     const expected = [['/contact','en'],['/ru/contact','ru'],['/buyer-pack','en'],['/ru/buyer-pack','ru'],['/ru/agent-incidents','ru']];
+    const priorBuyerPackDate = isR41ApprovedCurrentness ? '2026-11-16' : '2026-11-15';
+    const buyerPackDate = currentnessSha === buyerPackCardsCurrentness ? '2026-11-22' : priorBuyerPackDate;
     for (const [path,locale] of expected) {
       const row = registry.routes.find(r => r.path === path);
       const fingerprint = manifest.routes.find(r => r.path === path);
-      if (!row?.indexable || row.locale !== locale || fingerprint?.lastmod !== (path === '/ru/agent-incidents' ? '2026-11-07' : (path.endsWith('/buyer-pack') ? (isR41ApprovedCurrentness ? '2026-11-16' : '2026-11-15') : '2026-10-29')) ||
+      if (!row?.indexable || row.locale !== locale || fingerprint?.lastmod !== (path === '/ru/agent-incidents' ? '2026-11-07' : (path.endsWith('/buyer-pack') ? buyerPackDate : '2026-10-29')) ||
           !/^sha256:[a-f0-9]{64}$/.test(fingerprint.fingerprint)) return false;
     }
     const paired = registry.routes.find(r => r.path === '/agent-incidents');

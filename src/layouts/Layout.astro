@@ -13,6 +13,7 @@ interface Props {
   lang?: SiteLocale;
   alternates?: Partial<Record<SiteLocale, string>>;
   socialImage?: string;
+  socialImageAlt?: string;
   mainClass?: string;
   canonical?: string;
 }
@@ -25,6 +26,7 @@ const {
   lang = 'en',
   alternates = {},
   socialImage = '/og-card.png',
+  socialImageAlt,
   mainClass,
   canonical
 } = Astro.props;
@@ -39,6 +41,7 @@ const socialImageUrl = absoluteSiteUrl(socialImage);
 const language = localeMeta[lang];
 const alternateEntries = Object.entries(alternates) as [SiteLocale, string][];
 const isRu = lang === 'ru';
+const imageAlt = socialImageAlt ?? (isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence');
 const homeHref = isRu ? '/ru' : '/';
 const isActive = (href: string) => href === homeHref ? path === homeHref || path === `${homeHref}/` : path.startsWith(href);
 const showDogfoodCase = !isRu && (path === '/proof' || path === '/agent-authority-audit');
@@ -222,12 +225,12 @@ const globalStructuredData = [
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence'} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
-    <meta name="twitter:image:alt" content={isRu ? 'BitEvo — полномочия должны быть обоснованы доказательствами' : 'BitEvo — Authority is earned by evidence'} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <script type="application/ld+json" data-bitevo-identity-boundary set:html={JSON.stringify(globalStructuredData)} />
     <script is:inline defer src="/ga4-consent.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
