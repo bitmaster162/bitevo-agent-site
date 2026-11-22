@@ -39,6 +39,6 @@ const wrongOverlay=overlay.replace(selected.get('/'),selected.get('/').replace(/
 assert.notEqual(wrongOverlay,overlay);
 assert.throws(()=>verifyExactProductionOverlay(source,wrongOverlay),/OVERLAY_SHA/);
 assert.throws(()=>verifyExactProductionOverlay(source,overlay.slice(0,-1)),/OVERLAY_SHA/);
-assert.equal(BASE_SHA,'876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5');
-assert.equal(OVERLAY_SHA,'a2fcc1115cf0a42677cb9b621b48d082d06b9717da018600a4434a253a40d249');
+assert.equal(BASE_SHA,'5cb3584be3749a0858485a2c053949d407b4390f9961642b85b05c021e343ead');
+assert.equal(OVERLAY_SHA,'bfb314107fc8db55dad91edabf80e144057e0f1bec210319641135fe0d176675');
 console.log('PRODUCTION_CURRENTNESS_OVERLAY=PASS routes=14 exact_sha=2 source_variants=2 mode_negatives=7 tamper_denied=3 no_provider_io=1');
