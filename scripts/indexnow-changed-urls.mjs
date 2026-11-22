@@ -35,8 +35,14 @@ if (!currentRaw) throw new Error(`cannot read current sitemap-currentness at ${a
 const current = parseManifest(currentRaw, 'current');
 const previous = parseManifest(gitShow(before, 'src/data/sitemap-currentness.json'), 'previous');
 const hadIndexNow = Boolean(gitShow(before, 'src/data/indexnow.json'));
-// Recovery replay: #257-#260 never reached the provider; send full sitemap only from a future main push.
 const forceFull = process.argv.includes('--full');
+if (process.argv.includes('--since-success')) {
+  if (forceFull || ![before, after].every(sha => /^[0-9a-f]{40}$/.test(sha)) || !previous || !hadIndexNow) {
+    throw new Error('A successful IndexNow commit with a readable baseline is required');
+  }
+  // A delayed rerun or rewritten main must not publish a backwards delta.
+  execFileSync('git', ['merge-base', '--is-ancestor', before, after], { cwd: root });
+}
 const bootstrap = forceFull || !hadIndexNow || !previous;
 const changedPaths = changedRoutePaths(previous, current, { bootstrap });
 
