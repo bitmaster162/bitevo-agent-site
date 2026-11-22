@@ -53,6 +53,11 @@ test('current six Universe cards have exact EN/RU lane, status, href, internal p
   assert.equal(new Set(result.matched).size, 6);
 });
 
+test('the English school card cannot silently fall back to the Russian homepage', () => {
+  const en = english.map(card => card.name === 'AI Skill Lab' ? { ...card, href: 'https://aiskillab.work' } : card);
+  assert.ok(compareUniverseCards(en, russian).failures.some(issue => issue.includes('field=href')));
+});
+
 test('mismatched lane fails with named AI Skill Lab card', () => {
   expectNamedFailure(mutateCard('lane', "'ARENA'"), 'AI Skill Lab', 'lane');
 });

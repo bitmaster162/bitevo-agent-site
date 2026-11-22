@@ -131,7 +131,12 @@ export function compareUniverseCards(en, ru) {
         failures.push(fail(enCard.name, field, enCard[field], ruCard[field]));
       }
     }
-    const expectedRuHref = enCard.internal ? '/ru' + enCard.href : enCard.href;
+    const isSchool = enCard.name === 'AI Skill Lab';
+    if (isSchool && enCard.href !== 'https://aiskillab.work/en') {
+      failures.push(fail(enCard.name, 'href', 'https://aiskillab.work/en', enCard.href));
+    }
+    const expectedRuHref = isSchool ? 'https://aiskillab.work'
+      : enCard.internal ? '/ru' + enCard.href : enCard.href;
     if (ruCard.href !== expectedRuHref) {
       failures.push(fail(enCard.name, 'href', expectedRuHref, ruCard.href));
     }

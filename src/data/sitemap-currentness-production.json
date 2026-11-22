@@ -1,7 +1,7 @@
 {
   "schema": "bitevo.sitemap-currentness.production-overlay/v1",
   "normalization": "provider-envelope-v4",
-  "base_manifest_sha256": "876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5",
+  "base_manifest_sha256": "012c14f3de0e63f4b9940c56b257a4f09a9c1236b7b18a83fd7618c13abc18c1",
   "production_project_id": "prj_U2iHyiwhJlO33r0u4uN65PpdzEiv",
   "activation_mode": "production_scope_review_r1",
   "routes": [
@@ -22,8 +22,8 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-11-21",
-      "fingerprint": "sha256:b9e9031fff5ecd19c061d30297601718988dcdc8b932204c6d8a6d56ab7e4fb0"
+      "lastmod": "2026-11-22",
+      "fingerprint": "sha256:425b09187e2649e5bc3e40403219cd2d83c222db285abdff931c1ad8cc3d4a57"
     },
     {
       "path": "/mapper",
