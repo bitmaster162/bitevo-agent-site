@@ -301,8 +301,16 @@ const r50Ga4ConsentSha = Object.freeze({
   'src/pages/ru/privacy.astro': '373f1be4a8c4804531ac00ae570302531c8b0e7c09ff55d74926e05da864069c',
   'vercel.json': '89a23c5e36859fb670172addbbb1ffd64b909b5d26ad3cb29d0ec532ef3fbae9'
 });
+const buyerPackManifest = (await readFile(new URL('../src/data/sitemap-currentness.json', import.meta.url), 'utf8')).replace(/\r\n/g, '\n');
+const buyerPackLayoutPins = Object.freeze({
+  'src/layouts/Layout.astro': '23241262d043d9cb6db0cae2007c8c81be4a48b6bdcaa98c248a04d105c7ee8f',
+  'src/layouts/RuLayout.astro': 'fbb3da649d8d3d8f30a4a62c242f8f08bcbe4990bbe17b410c4ff8f7d79acee6',
+});
+const buyerPackCardsReviewed = digest(buyerPackManifest) === '4119eea4504cb937d7df46eba70976081441fbdd4341da4cd0aeafa4cf9e513f'
+  && isExactRGapsSuccessor();
 function r50ProtectedShaAccepted(path, sha) {
   if (sha === r50ProtectedSources[path]) return true;
+  if (buyerPackCardsReviewed && Object.hasOwn(buyerPackLayoutPins, path) && sha === buyerPackLayoutPins[path]) return true;
   if (path === 'package-lock.json' && (sha === r50Node24LockSha || sha === r50DepsPatchMinorLockSha)) return true;
   return (path === 'vercel.json' && sha === r50GuidesHeadersOnlySha) ||
     (path === 'vercel.json' && isExactRGapsSuccessor() && sha === r50Pr257ExactCspSha) ||
@@ -355,6 +363,15 @@ test('Guides34 R50-D successor exact SHA only; alien verifier fails',()=>{
     assert.equal(r50ProtectedShaAccepted(path,'0'.repeat(64)),false);
   }
   assert.equal(r50ProtectedShaAccepted('vercel.json',r50Guides34SuccessorSha['scripts/verify-r47a-privacy.mjs']),false);
+});
+
+test('Buyer Pack artwork admits the two matching layouts only for its exact manifest', () => {
+  for (const [path, sha] of Object.entries(buyerPackLayoutPins)) {
+    assert.equal(r50ProtectedShaAccepted(path, sha), buyerPackCardsReviewed);
+    assert.equal(r50ProtectedShaAccepted(path, '0'.repeat(64)), false);
+    assert.equal(r50ProtectedShaAccepted('vercel.json', sha), false);
+  }
+  assert.equal(r50ProtectedShaAccepted('src/layouts/Layout.astro', buyerPackLayoutPins['src/layouts/RuLayout.astro']), false);
 });
 
 test('R-GAPS-1 R50 exact pins admit only the new protected files and preserve historical pins',()=>{

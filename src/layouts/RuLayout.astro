@@ -7,9 +7,11 @@ interface Props {
   enPath: string;
   ruPath: string;
   robots?: string;
+  socialImage?: string;
+  socialImageAlt?: string;
 }
 
-const { title, description, enPath, ruPath, robots } = Astro.props;
+const { title, description, enPath, ruPath, robots, socialImage, socialImageAlt } = Astro.props;
 const isRuHome = Astro.url.pathname === '/ru' || Astro.url.pathname === '/ru/';
 ---
 
@@ -17,6 +19,8 @@ const isRuHome = Astro.url.pathname === '/ru' || Astro.url.pathname === '/ru/';
   title={title}
   description={description}
   robots={robots}
+  socialImage={socialImage}
+  socialImageAlt={socialImageAlt}
   lang="ru"
   alternates={{ en: enPath, ru: ruPath }}
 >

@@ -649,13 +649,13 @@
     },
     {
       "path": "/buyer-pack",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:e1025edc4a7eb1fec96836f2385e7e67cba6fe478891527a667e797bba4494cf"
+      "lastmod": "2026-11-22",
+      "fingerprint": "sha256:14f1bf3c229edf32b05a04f1cd76e2908917f5f7b1c565f8577ae5a447d4c9b5"
     },
     {
       "path": "/ru/buyer-pack",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:45be97ad3f01ef9876bd28485d4042cdbc0017cbd10ecd78b226301aafe0f584"
+      "lastmod": "2026-11-22",
+      "fingerprint": "sha256:b9cd4a2b8a964c9a5c73e5a6c8f97cdbcbb3ce45c595c0eba8eea5168c7b73b0"
     },
     {
       "path": "/ru/agent-incidents",
