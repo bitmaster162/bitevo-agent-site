@@ -12,21 +12,18 @@ const hypotheses = [
   {
     id: 'H1',
     title: 'Continuation setup',
-    confidence: '54%',
     text: 'Compression may be a pause before continuation if price accepts above the recent range.',
     counter: 'A failed breakout and fast return inside the range would weaken this interpretation.'
   },
   {
     id: 'H2',
     title: 'Liquidity sweep / reversal',
-    confidence: '38%',
     text: 'Equal-looking highs may attract a sweep before rotation in the opposite direction.',
     counter: 'Sustained acceptance above the highs would weaken the reversal hypothesis.'
   },
   {
     id: 'H3',
     title: 'Insufficient evidence',
-    confidence: '8%',
     text: 'The image may not contain enough context to distinguish the two stories responsibly.',
     counter: 'Additional timeframe, volume or source context could reduce this uncertainty.'
   }
@@ -112,7 +109,7 @@ const hypotheses = [
     <div class="container hypothesis-grid">
       {hypotheses.map(item => (
         <article class="hypothesis panel">
-          <div class="hypothesis-top"><span>{item.id}</span><strong>{item.confidence}</strong></div>
+          <div class="hypothesis-top"><span>{item.id}</span></div>
           <h3>{item.title}</h3>
           <p>{item.text}</p>
           <div class="counter"><small>COUNTEREVIDENCE / INVALIDATION</small><p>{item.counter}</p></div>
