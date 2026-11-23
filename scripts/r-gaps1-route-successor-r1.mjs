@@ -18,6 +18,7 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
   const currentnessSha = hash(content['src/data/sitemap-currentness.json']);
   const conversionCurrentness = 'aa01c26536ab407ed05b1ad2b3afba45b5a4f39f93160067a9dc965d46c81cff';
   const mobileFitCurrentness = '7ce7b80e0672e8fee1d8cd19c0b6017928a1ce25cd134f8408df633a97dddfe0';
+  const guidesTitleCurrentness = '6f8eebc8b6532979b8aa95f46e4b7fe85ddb65458b79dd77e73430a9af55a259';
   const guide3Currentness = 'cf52c05cd0fcaeb89d83a842df0d32830b9c1431c3042072158b67bb23d7303d';
   const isR41ApprovedCurrentness = [
     '78ebc3a97fafeb2b03e58f6b478b764cccfbafef404bdf637f531b15419a2aaa',
@@ -31,7 +32,8 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // 2026-11-21 integration of exact Hydrogen+SEO render, 142 routes, no wildcard.
     '4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47',
     // Same 142 page fingerprints and dates under the exact opt-in analytics envelope.
-    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5'
+    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5',
+    guidesTitleCurrentness
   ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
@@ -60,7 +62,8 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // 2026-11-21 integration of exact Hydrogen+SEO render, 142 routes, no wildcard.
     '4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47',
     // Same 142 page fingerprints and dates under the exact opt-in analytics envelope.
-    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5'
+    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5',
+    guidesTitleCurrentness
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;
