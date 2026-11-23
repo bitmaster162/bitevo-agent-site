@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "ac988e29-9b8a-4e79-8c2d-5265ab33d8c5",
   "nonce": "2623b318-9c9a-4180-aa1e-abbac71dd12c",
-  "state": "ACTIVE",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d4f5b8f118be801ce228263d45394dd1102464de",
@@ -11,10 +11,12 @@
   "session": "guides-title-review-20261123",
   "worktree": "c:/users/coins/appdata/local/temp/bitevo-guides-title-ee89b383",
   "acquiredAt": "2026-11-23T14:33:23.633Z",
-  "updatedAt": "2026-11-23T14:33:23.633Z",
+  "updatedAt": "2026-11-23T14:33:30.081Z",
   "expiresAt": "2026-11-23T15:03:20.728Z",
   "sealedHead": null,
   "sealedTree": null,
   "featureRef": null,
-  "predecessor": "82399ff74b6d9318f71d8c8b35cbb0c942e17e93"
+  "predecessor": "c0f59803814dd279b1b9fb11566dd471efee529b",
+  "releasedAt": "2026-11-23T14:33:30.082Z",
+  "releaseReason": "candidate-stopped-at-draft"
 }
