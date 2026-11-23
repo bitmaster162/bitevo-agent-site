@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "35970684-bb82-465b-9592-19fd92523d09",
   "nonce": "96b4cae6-dc46-4c33-b9d3-a38a16445ed8",
-  "state": "SEALED",
+  "state": "RELEASED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d4f5b8f118be801ce228263d45394dd1102464de",
@@ -11,10 +11,12 @@
   "session": "guides-title-review-20261123",
   "worktree": "c:/users/coins/appdata/local/temp/bitevo-guides-title-ee89b383",
   "acquiredAt": "2026-11-23T14:34:22.477Z",
-  "updatedAt": "2026-11-23T14:34:38.574Z",
+  "updatedAt": "2026-11-23T14:35:42.276Z",
   "expiresAt": "2026-11-23T15:04:19.464Z",
   "sealedHead": "bd2c4528d58067bb860b1f75bcd809eb57777636",
   "sealedTree": "b8cc6f47119cc29291cbfbf56f584c830705442e",
   "featureRef": "refs/heads/audit/guides-index-search-title-20261123",
-  "predecessor": "407db08d6147e0ecb36809d86b991ce99668c0fd"
+  "predecessor": "a2422e9fb1f2d80eebcc92a6cf67f75d18c98284",
+  "releasedAt": "2026-11-23T14:35:42.277Z",
+  "releaseReason": "PR 274 is an editorial review draft; reacquire before any ready or merge decision"
 }
