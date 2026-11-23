@@ -664,53 +664,53 @@
     },
     {
       "path": "/guides/before-write-access",
-      "lastmod": "2026-10-01",
-      "fingerprint": "sha256:fa3d551e5820779c3007a10ecc3d8f4bfd148242bbdd05cfedb0e88a33faac76"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:a34421f126dfd5a06f6fe2ed343c58b024ce02c232960976579a8ace12b90c9e"
     },
     {
       "path": "/guides/bitget-authority-after-orchestration-compromise",
-      "lastmod": "2026-10-07",
-      "fingerprint": "sha256:6aa947944d03803d4d83734b973235d61607420903e7f9789fcf32e73275458c"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:6566bc2c6bf702da037fa471e59c579858ee8b741ee8fcd9d26bc35db7a64c9e"
     },
     {
       "path": "/guides/false-green-and-retry-safety",
-      "lastmod": "2026-11-18",
-      "fingerprint": "sha256:dbe6f9e8044cb20b10b5c475a53ae30adb94f713f9f881546cf127e1b5caf4ef"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:1baede9a9a4cbdfaecb1145fd4f4e051853404dd81ba97ac3bc8052c04b3e16d"
     },
     {
       "path": "/guides/mcp-and-coding-agent-governance",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:b6ec7c23566e1107747a834966d54bf36589e16bfdeff66f4ddadf6f0b84d42a"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:8213f4afb674cba2a594dec881dec069fac8e55b9b9a557c5f24c87377c063e3"
     },
     {
       "path": "/guides/mcp-server-authority-review",
-      "lastmod": "2026-10-06",
-      "fingerprint": "sha256:1efab8ee743160c35dfc0fa3eeb5136cf33f0b5bcb02f80787d51d114c9ed6a1"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:fa4b9f347f707bbd883113534cdcab1e170e6e51d88a68ead54d968f2f781989"
     },
     {
       "path": "/ru/guides/before-write-access",
-      "lastmod": "2026-10-01",
-      "fingerprint": "sha256:8c75a7f8490818797507ddd9ead369618904eb1d65be445bc736940e84698dfb"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:46dab714729bf4bcf8c8f883cde7f6197e72de412e72e81343bfc0fb326c13b1"
     },
     {
       "path": "/ru/guides/bitget-authority-after-orchestration-compromise",
-      "lastmod": "2026-10-07",
-      "fingerprint": "sha256:265e395cce5400da3fb7345aed1bfcf807695eb8c5ac8c971556e965ccb63178"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:c5de0136eb78bf921b24eac6f7540b7d201845b23e0df9dd223db1f373c1d7dd"
     },
     {
       "path": "/ru/guides/false-green-and-retry-safety",
-      "lastmod": "2026-11-18",
-      "fingerprint": "sha256:6cb902ff46014652a4f7ab5c6f7515e17fcd043451064ad6aedd33f4f1e81604"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:57e62441c5d8fc86949bc3d1900fb7d1d9128e5c27f0c6d51886461404e97339"
     },
     {
       "path": "/ru/guides/mcp-and-coding-agent-governance",
-      "lastmod": "2026-11-16",
-      "fingerprint": "sha256:f160bc5578bee8bf12fd3dd41fd85785b610b56b88979e884b3662681cac320d"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:06c2d32d0b4ddb3dd51fe034987b82863cf946cd09f557ebb2bd6dc245a2c803"
     },
     {
       "path": "/ru/guides/mcp-server-authority-review",
-      "lastmod": "2026-10-06",
-      "fingerprint": "sha256:c30fa6fcad393eb9282a522d3afa48c55e41ad73473f2f08cb8fd2161a37ea5d"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:5a5e57605f57db18c1628a7ddda1fb718a3db67bb5c9c8ff11683f1c5733500d"
     }
   ]
 }
