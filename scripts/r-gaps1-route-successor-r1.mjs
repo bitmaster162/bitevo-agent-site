@@ -31,7 +31,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // 2026-11-21 integration of exact Hydrogen+SEO render, 142 routes, no wildcard.
     '4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47',
     // Same 142 page fingerprints and dates under the exact opt-in analytics envelope.
-    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5'
+    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5',
+    // Preserve Entry Audit intent on the English and Russian detailed brief links.
+    '15bc1f5550bf5b0af462e349c2cdfe4e052037c0cf1239590119ea494fa4f90a'
   ].includes(currentnessSha);
   const allowedCurrentnessHashes = new Set([
     pins['src/data/sitemap-currentness.json'],
@@ -60,7 +62,9 @@ export function isExactRGapsSuccessor(registryInput, currentnessInput) {
     // 2026-11-21 integration of exact Hydrogen+SEO render, 142 routes, no wildcard.
     '4659dad23e11bf82f608cc556200965a13c0a15a64936a7b8e22182a12c88c47',
     // Same 142 page fingerprints and dates under the exact opt-in analytics envelope.
-    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5'
+    '876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5',
+    // Preserve Entry Audit intent on the English and Russian detailed brief links.
+    '15bc1f5550bf5b0af462e349c2cdfe4e052037c0cf1239590119ea494fa4f90a'
   ]);
   if (hash(content['src/data/public-route-registry.json']) !== pins['src/data/public-route-registry.json'] ||
       !allowedCurrentnessHashes.has(currentnessSha)) return false;

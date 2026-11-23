@@ -558,8 +558,9 @@
     return Object.freeze({ mounted:true, locale, shell, machine, refresh, armGeneratedBrief, handleClick, collectFields });
   }
 
-  function renderShortForm(locale) {
+  function renderShortForm(locale, offer) {
     const text = SHORT_COPY[locale];
+    const detailedHref = offer === 'entry_audit' ? text.manualHref + '?offer=entry-audit' : text.manualHref;
     return `<form class="scope-short-form" data-scope-short-form novalidate>
       <div class="scope-short-grid">
         <label>${text.name}<input type="text" maxlength="160" autocomplete="name" required data-scope-short-field="contact_name"></label>
@@ -570,7 +571,7 @@
       <label>${text.request}<textarea rows="5" maxlength="600" required data-scope-short-field="scope_request"></textarea></label>
       <label class="scope-short-honeypot" aria-hidden="true">Website<input type="text" tabindex="-1" autocomplete="off" data-scope-honeypot></label>
       <label class="scope-short-consent"><input type="checkbox" required data-scope-short-consent><span>${text.consent}</span></label>
-      <div class="scope-short-actions"><button type="submit" class="button button-primary" data-scope-short-submit>${text.submit}</button><a class="button button-ghost" href="${text.manualHref}">${text.manual} →</a></div>
+      <div class="scope-short-actions"><button type="submit" class="button button-primary" data-scope-short-submit>${text.submit}</button><a class="button button-ghost" href="${detailedHref}">${text.manual} →</a></div>
       <output data-scope-short-client-id hidden></output>
       <p class="scope-short-status" data-scope-short-status role="status" aria-live="polite" aria-atomic="true"></p>
     </form>`;
@@ -599,7 +600,7 @@
       const locale = root.getAttribute('data-scope-locale') === 'ru' ? 'ru' : 'en';
       const offer = trim(root.getAttribute('data-scope-offer') || 'scope_review');
       if (!['start','entry_audit','pricing','diagnostic','mapper','triage','scope_review'].includes(offer)) continue;
-      root.innerHTML = renderShortForm(locale);
+      root.innerHTML = renderShortForm(locale, offer);
       root.setAttribute('data-scope-mounted','true');
       const text = SHORT_COPY[locale];
       const form = root.querySelector('[data-scope-short-form]');

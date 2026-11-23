@@ -2,8 +2,8 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { evaluateScopeHandoffActivation, SCOPE_HANDOFF_R1_PRODUCTION_PROJECT_ID, SCOPE_HANDOFF_R1_PRODUCTION_ACTIVATION_MODE } from '../src/lib/scope-handoff-r1/activation.js';
 
-export const BASE_SHA='876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5';
-export const OVERLAY_SHA='a2fcc1115cf0a42677cb9b621b48d082d06b9717da018600a4434a253a40d249';
+export const BASE_SHA='15bc1f5550bf5b0af462e349c2cdfe4e052037c0cf1239590119ea494fa4f90a';
+export const OVERLAY_SHA='715c9804b1f590a0412b0318cb8576b7090be840bc8b7eb6083e519a06614156';
 export const SCOPE_PATHS=Object.freeze([
   '/','/start','/pricing','/entry-audit','/mapper','/diagnostic','/audit-intake',
   '/ru','/ru/pricing','/ru/mapper','/ru/diagnostic','/ru/audit-intake','/ru/start','/ru/entry-audit'

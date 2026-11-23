@@ -37,6 +37,12 @@ function loadApi(extra = {}) {
 }
 
 const { api } = loadApi();
+for (const [locale, path] of [['en', '/audit-intake'], ['ru', '/ru/audit-intake']]) {
+  for (const [offer, suffix] of [['entry_audit', '?offer=entry-audit'], ['pricing', '']]) {
+    const links = [...api.renderShortForm(locale, offer).matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)];
+    equal(links.map(link => link[1]), [path + suffix], 'short form detailed brief for ' + locale + '/' + offer);
+  }
+}
 check(api && api.UI_ENABLED === false, 'UI source default is disabled without an exact marker');
 check(api.BOOTSTRAP_ACTIVATION_MARKER === null, 'missing bootstrap marker remains explicit');
 check(api.ENDPOINT === '/api/scope-handoff', 'same-origin endpoint is fixed');
