@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "617268a4-91a9-4886-a882-bfafede57642",
   "nonce": "a8535457-4de1-47ab-9417-aa5773898bb3",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d4f5b8f118be801ce228263d45394dd1102464de",
@@ -11,10 +11,10 @@
   "session": "gpt-pr275-8dab1c8d",
   "worktree": "c:/users/coins/source/bitevo-review/pr275-guide-anchors-20261123",
   "acquiredAt": "2026-11-23T16:01:19.097Z",
-  "updatedAt": "2026-11-23T16:01:19.097Z",
+  "updatedAt": "2026-11-23T16:01:45.088Z",
   "expiresAt": "2026-11-23T16:36:12.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "7d9cdcbc06c903b6bd157073524374665a1e9e8a"
+  "sealedHead": "fe557bd38a94d979f895f95575e34c3d757a9661",
+  "sealedTree": "cae170881505a3d86580ec99a153bb17af2b442d",
+  "featureRef": "refs/heads/gpt/guide-anchor-header-20261123",
+  "predecessor": "bb837b81f0c76257f6e6ef74da9d4787f40cb0a2"
 }
