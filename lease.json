@@ -3,7 +3,7 @@
   "kind": "bitevo-site-mutation-lease",
   "leaseId": "2f007b99-85fc-4678-a372-0bcd7981e963",
   "nonce": "d59d2317-41e5-4971-bcbd-52e598017dfe",
-  "state": "ACTIVE",
+  "state": "SEALED",
   "repositoryRemote": "https://github.com/bitmaster162/bitevo-agent-site.git",
   "targetRef": "refs/heads/main",
   "baseSha": "d4f5b8f118be801ce228263d45394dd1102464de",
@@ -11,10 +11,10 @@
   "session": "gpt-material-35c41b4dce",
   "worktree": "c:/users/coins/source/bitevo-review/guide-heading-links-leased-20261123",
   "acquiredAt": "2026-11-23T16:02:56.874Z",
-  "updatedAt": "2026-11-23T16:02:56.874Z",
+  "updatedAt": "2026-11-23T16:03:18.172Z",
   "expiresAt": "2026-11-23T16:37:53.000Z",
-  "sealedHead": null,
-  "sealedTree": null,
-  "featureRef": null,
-  "predecessor": "4bd901097775b8a84ebc90c63a274d3e71b17909"
+  "sealedHead": "78318b7826c024c1362170d6de49b99f7a7aa6b5",
+  "sealedTree": "cae170881505a3d86580ec99a153bb17af2b442d",
+  "featureRef": "refs/heads/gpt/guide-heading-links-leased-20261123",
+  "predecessor": "1eb583c1cd4f802912a4a7f2023c3681f9333126"
 }
