@@ -10,7 +10,8 @@ interface Props {
 const { locale = 'en', offer, id = 'send-scope' } = Astro.props;
 const ru = locale === 'ru';
 const activation = evaluateScopeHandoffActivation(process.env);
-const detailedHref = ru ? '/ru/audit-intake' : '/audit-intake';
+const detailedPath = ru ? '/ru/audit-intake' : '/audit-intake';
+const detailedHref = offer === 'entry_audit' ? detailedPath + '?offer=entry-audit' : detailedPath;
 ---
 
 <section id={id} class="section section-rule scope-short-section" hidden data-scope-short-section>

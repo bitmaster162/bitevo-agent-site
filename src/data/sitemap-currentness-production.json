@@ -1,7 +1,7 @@
 {
   "schema": "bitevo.sitemap-currentness.production-overlay/v1",
   "normalization": "provider-envelope-v4",
-  "base_manifest_sha256": "876b36853e7da32562f1e3401013932f6f5b6656469cb4385f64128005df77f5",
+  "base_manifest_sha256": "15bc1f5550bf5b0af462e349c2cdfe4e052037c0cf1239590119ea494fa4f90a",
   "production_project_id": "prj_U2iHyiwhJlO33r0u4uN65PpdzEiv",
   "activation_mode": "production_scope_review_r1",
   "routes": [
@@ -22,8 +22,8 @@
     },
     {
       "path": "/entry-audit",
-      "lastmod": "2026-11-21",
-      "fingerprint": "sha256:b9e9031fff5ecd19c061d30297601718988dcdc8b932204c6d8a6d56ab7e4fb0"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:9738e1e4c1559f0f1c94f22a5902d1be009723c7e9057c3773cd3ee6449727b1"
     },
     {
       "path": "/mapper",
@@ -72,8 +72,8 @@
     },
     {
       "path": "/ru/entry-audit",
-      "lastmod": "2026-11-19",
-      "fingerprint": "sha256:24bf828d7257c060b3d1d960e26d52c0467cad465d87393e9ae1602f7bdd713c"
+      "lastmod": "2026-11-23",
+      "fingerprint": "sha256:ae4fd3b76dcb6b284af57e9f1c1ec7b65732e4ef8731c7166a817f9d4c1354b9"
     }
   ]
 }
